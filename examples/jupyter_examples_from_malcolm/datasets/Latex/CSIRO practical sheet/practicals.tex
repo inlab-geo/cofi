@@ -1,0 +1,355 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=1.3cm]{geometry}
+\setlength{\parskip}{6pt}
+\setlength{\parindent}{0pt}
+\usepackage{amsmath,amssymb}
+\usepackage{bbding}
+\usepackage{marginnote}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{enumitem}
+\usepackage[small,compact]{titlesec}
+\def\hrulefillx{\leavevmode\leaders\hrule height 7pt \hfill\kern0pt}
+\def\hrulefilly{\leavevmode\leaders\hrule height 2pt \hfill\kern0pt}
+\newcommand{\ruleafterx}[1]{{#1}\color{gray!50}~\hrulefillx}
+
+\newcommand{\ruleaftery}[1]{{#1}\color{gray!50}\hfill\rule{16pt}{7pt}}
+%\setcounter{secnumdepth}{0}
+
+\titleformat{\section}{\bfseries}{{\color{gray!50}\rule{16pt}{7pt}}}{10pt}{\ruleafterx}[]
+\newcommand{\question}{\marginnote{\HandRight}[7pt] }
+
+\newenvironment{hint}{
+	\begin{mdframed}[backgroundcolor=gray!10,roundcorner=5pt]\textbf{Hint:} }{
+	\end{mdframed}}
+
+\setlist[enumerate]{leftmargin=2em}
+
+\begin{document}
+\reversemarginpar
+\textit{Andrew Valentine \& Malcolm Sambridge\hfill May 2018}
+\section{Introduction to Inverse Problems}
+\begin{enumerate}
+%\subsection{Simple regression}\label{q:curvefit}
+\item \label{q:curvefit}\textit{Simple regression} -- This exercise is available as a Jupyter notebook.
+%\subsection{Discretising continuous problems}
+\item \textit{Nature of inverse problems} -- Below are descriptions of inverse problems. Use what you have learned to decide for each case, i) what are the data and what are the unknowns, ii) whether each is a continuous or discrete inverse problem, and iii) whether each is a linear or nonlinear inverse problem. For the latter you could try and prove your answer using the tests of superposition and scaling:
+\begin{enumerate}
+  \item[(i)] The travel time $t_i$ of a sound wave following path $i$ through a medium can be described by
+\begin{equation*}
+t_i = \int_{path}{1\over v({\bf r})} ds
+\end{equation*}
+where $v({\bf r})$ is the sound velocity of the medium at location ${\bf r}$ and $s$ is the distance along the wave path. We want to determine $v({\bf r})$ of the medium from measuring $t$ for many ray paths. 
+   \item[(ii)] We want to find a straight line that predicts temperature increase with depth at the site of a planned tunnel. For this purpose we measure temperature $T_i$ at $n$ depths $z_i$ in a borehole, where $1 < i < n$. 
+We use the following relation: 
+\begin{equation*}
+T(z) = m_1 + m_2z
+\end{equation*}
+
+   \item[(iii)]We want to predict rock density $\rho$ in the Earth at a given radius $r$ from its center from the known mass $M$ and moment of inertia $I$ of the Earth. We use the following relation: 
+\begin{equation*}
+g(r) = \int_0^a g_i(r)\rho(r)dr
+\end{equation*}
+where $d_1 = M$ and $d_2 = I$ and $g_i(r)$ are the corresponding Frechet kernels: $g_1(r) = 4 \pi r^2$ and 
+$g_2(r) = \frac{8}{3} \pi r^4$. 
+
+   \item[(iv)] We want to predict how much of a given rock mass, fraction $X$, in the Earth melts at a given value for dimensionless temperature $T^{\prime}$, where $T^{\prime}$ depends on the temperature $T$ as well as on the solidus and liquidus of the rock. The solidus and liquidus of a rock depend on the pressure. For this purpose we measure melt fraction at various combinations of temperature and pressure. We use the following relation: 
+\begin{equation*}
+X(T^{\prime}) = \frac{1}{2} + T^{\prime} + \left({T^{\prime}}^2 - \frac{1}{4}\right)(m_o + m_1T^{\prime} + m_2{T^{\prime}}^2)
+\end{equation*}
+
+\end{enumerate}
+\item \textit{Discretising continuous problems} -- As we saw in Exercise \ref{q:curvefit}, the central assumption in a regression problem is that we can express an unknown function, $f(x)$, in terms of a set of $N$ basis functions, $\phi_i(x)$ 
+\[f(x) = \sum_{i=1}^N m_i \phi_i(x)\] 
+\begin{enumerate}
+\item By multiplying both sides of this expression by an arbitrary basis function, and integrating, obtain an expression for the model vector $\mathbf{m}$. 
+\item Suppose we have only two basis functions, $\phi_0(x)=1$ and $\phi_1(x) = x$, both defined to exist only for $-1\le x\le1$. Demonstrate that your expression allows the model parameters to be recovered exactly in the case that $f(x) = mx + c$.
+\item Using the same basis, compute the model parameters that would be recovered if $f(x) = a x^2 + bx+c$. Does the answer make sense? Why/why not?
+\item\label{q:disc} In a regression problem, we do not know $f(x)$ and so cannot compute the integrals directly. Approximate these integrals by sums. Can you see how you might estimate the solution to a regression problem? What will control the accuracy of your solution?   \end{enumerate}
+\end{enumerate}
+
+ 
+\section{Linear, over-determined problems}
+\begin{enumerate}[resume]
+
+\item \textit{Regression, revisited}\label{q:basiclsq} -- This exercise is available as a Jupyter notebook.
+
+
+\item \textit{Lines of best fit} -- 
+You wish to fit a straight line, $y=mx+c$, to a dataset $\{(x_1,y_1), (x_2,y_2),\ldots(x_N,y_N)\}$. Show that the best-fitting line has
+\[
+m =  \frac{\langle xy\rangle - \langle x \rangle \langle y \rangle}{\langle x^2\rangle - \langle x \rangle^2}\quad\quad\textrm{and}\quad\quad
+c = \frac{\langle x^2\rangle \langle y\rangle - \langle x\rangle\langle xy\rangle}{\langle x^2\rangle - \langle x\rangle^2}
+\]
+where we have introduced the notation $\langle z \rangle = \frac{1}{N}\sum_i z_i$ to denote the mean value of some quantity $z$, as estimated using the dataset.
+
+\item \textit{Deriving the least-squares algorithm}\label{q:lsderiv} -- 
+We define the misfit, $\phi(\mathbf{m}) = \left\|\mathbf{d} - \mathbf{Gm}\right\|_2^2$. By differentiating this expression with respect to an arbitrary model component, $m_\lambda$, show that $\mathbf{m} = (\mathbf{A^TA})^\mathbf{-1}\mathbf{A^Td}$.
+
+Compare this with your answer to Exercise \ref{q:disc}.
+\begin{hint}
+You will need to begin by expressing $\phi$ in index notation---that is, writing it in terms of sums over the individual components of $\mathbf{m}$, $\mathbf{d}$ and $\mathbf{G}$.
+\end{hint}
+\end{enumerate}
+
+ 
+\section{Goodness of fit, probability and statistics}
+\begin{enumerate}[resume]
+\item \textit{Performing goodness of fit }\label{q:mfit} -- This exercise is available as a Jupyter notebook.
+
+\item \textit{The multidimensional Gaussian}\label{q:mdgauss} -- 
+An $N$-dimensional normal distribution with mean $\boldsymbol{\mu}$ and covariance $\boldsymbol{\Sigma}$ has probability density function
+\[\mathbb{P}(\mathbf{x})=\mathcal{N}_N(\mathbf{x},\boldsymbol{\mu},\boldsymbol{\Sigma}) = \left[\left(2\pi\right)^{N} |\boldsymbol{\Sigma}|\right]^{-1/2}\exp\left[-\frac{1}{2}\left(\mathbf{x}-\boldsymbol\mu\right)^\mathbf{T}\boldsymbol\Sigma^{-1}\left(\mathbf{x}-\boldsymbol{\mu}\right)\right]\]
+\begin{enumerate}
+\item By noting that $\mathbf{MM^{-1}}=\mathbf{I}$, show that\[\left(\begin{array}{cc}\mathbf{A}& \mathbf{B}\\\mathbf{C}&\mathbf{D}\end{array}\right)^\mathbf{-1}=\left(\begin{array}{cc}\mathbf{P}& \mathbf{Q}\\\mathbf{R}&\mathbf{S}\end{array}\right)\quad\quad\textrm{where}\quad\quad\begin{cases}\mathbf{P} &= \mathbf{A^{-1}}+\mathbf{A^{-1}B(D-CA^{-1}B)^{-1}CA^{-1}}\\
+\mathbf{Q}&=-\mathbf{A^{-1}B(D-CA^{-1}B)^{-1}}\\
+\mathbf{R}&=-\mathbf{(D-CA^{-1}B)^{-1}CA^{-1}}\\
+\mathbf{S}&=\mathbf{(D-CA^{-1}B)^{-1}}\end{cases}\]
+%where 
+%\begin{align}\mathbf{P} &= \mathbf{A^{-1}}+\mathbf{A^{-1}B(D-CA^{-1}B)^{-1}CA^{-1}}\nonumber\\
+%\mathbf{Q}&=-\mathbf{A^{-1}B(D-CA^{-1}B)^{-1}}\nonumber\\
+%\mathbf{R}&=-\mathbf{(D-CA^{-1}B)^{-1}CA^{-1}}\nonumber\\
+%\mathbf{S}&=\mathbf{(D-CA^{-1}B)^{-1}}\nonumber\end{align}
+\item \label{q:woodbury} By performing the same computations in a different order, derive the Woodbury matrix identity,
+\[\left(\mathbf{A+BDC}\right)^\mathbf{-1} = \mathbf{A^{-1}} - \mathbf{A^{-1}B}\left(\mathbf{D^{-1}}+\mathbf{CA^{-1}B}\right)^\mathbf{-1}\mathbf{CA^{-1}}\,,\]
+and the relationship
+\[\mathbf{DC(A+BDC)^{-1}} = \mathbf{{(D^{-1}+CA^{-1}B)}^{-1}CA^{-1}}\,.\]
+
+\item If the vector $\mathbf{x}$ is partitioned into two arbitrary pieces, so that $\mathbf{x} = \left(\begin{array}{c}\mathbf{u}\\\mathbf{v}\end{array}\right)$, with corresponding partitioning of $\boldsymbol{\mu}=\left(\begin{array}{c}\boldsymbol{\mu}_\mathbf{u}\\\boldsymbol{\mu}_\mathbf{v}\end{array}\right)$ and $\boldsymbol{\Sigma}=\left(\begin{array}{cc}\boldsymbol{\Sigma}_\mathbf{u}&\boldsymbol{\Sigma}_\mathbf{uv}\\\boldsymbol{\Sigma}_\mathbf{uv}^\mathbf{T}&\boldsymbol{\Sigma}_\mathbf{v}\end{array}\right)$, write down an expression for $\mathbb{P}(\mathbf{x})$. Show that this can be factorised into the form
+\[\mathbb{P}(\mathbf{x}) = \mathcal{N}_{N_u}\left(\mathbf{u},\boldsymbol{\mu}_\mathbf{u},\boldsymbol{\Sigma}_\mathbf{u}\right)\cdot\mathcal{N}_{N_v}\left(\mathbf{v},\boldsymbol{\mu}_\mathbf{v}+\boldsymbol{\Sigma}_\mathbf{uv}^\mathbf{T}\boldsymbol{\Sigma}_\mathbf{u}^\mathbf{-1}\left(\mathbf{u}-\boldsymbol{\mu}_\mathbf{u}\right),\boldsymbol{\Sigma}_\mathbf{v} - \boldsymbol{\Sigma}_\mathbf{uv}^\mathbf{T}\boldsymbol\Sigma_\mathbf{u}^\mathbf{-1}\boldsymbol{\Sigma}_\mathbf{uv}\right)\,.\]
+
+\begin{hint}
+You will need the following property of determinants:\[\left|\left(\begin{array}{cc}\mathbf{A}&\mathbf{B}\\\mathbf{C}&\mathbf{D}\end{array}\right)\right| = \left|\mathbf{A}\right|\left|\mathbf{D}-\mathbf{CA^{-1}B}\right| = \left|\mathbf{D}\right|\left|\mathbf{A}-\mathbf{CD^{-1}B}\right|\,.\]
+\end{hint}
+\pagebreak
+\item Show that 
+\[\mathbb{P}(\mathbf{u}) = \int \mathbb{P}(\mathbf{x})\,\mathrm{d}\mathbf{v} =\mathcal{N}_{N_u}(\mathbf{u},\boldsymbol{\mu}_\mathbf{u},\boldsymbol{\Sigma}_\mathbf{u}) \quad \textrm{and hence argue}\quad
+\mathbb{P}(\mathbf{v}) = \int \mathbb{P}(\mathbf{x})\,\mathrm{d}\mathbf{u}=\mathcal{N}_{N_v}(\mathbf{v},\boldsymbol{\mu}_\mathbf{v},\boldsymbol{\Sigma}_\mathbf{v})\,.\]
+These are described as `marginal' densities, as they are obtained by `marginalising over' some of the parameters.
+\begin{hint}
+You may find it easiest to start by considering the 2-dimensional case, where $u$ and $v$ are scalar variables.
+\end{hint}
+\item \label{q:condgauss} Starting from the definition of conditional probability, show that the distribution of $\mathbf{u}$ given an observation $\mathbf{v_0}$ has density
+\[\mathbb{P}(\mathbf{u}\,|\,\mathbf{v_0}) = \mathcal{N}_{N_u}\left(\boldsymbol{\mu}_\mathbf{u}+\boldsymbol{\Sigma}_\mathbf{uv}\boldsymbol{\Sigma}_\mathbf{v}^\mathbf{-1}\left(\mathbf{v_0}-\boldsymbol{\mu}_\mathbf{v}\right),\boldsymbol{\Sigma}_\mathbf{u}-\boldsymbol{\Sigma}_\mathbf{uv}\boldsymbol{\Sigma}_\mathbf{v}^\mathbf{-1}\boldsymbol{\Sigma}_\mathbf{uv}^\mathbf{T}\right)\,. \]
+\end{enumerate}
+\end{enumerate}
+
+ 
+\section{Linear, under-determined problems}
+\begin{enumerate}[resume]
+\item \textit{X-Ray Tomography} -- 
+This exercise is available as a Jupyter notebook.
+
+\item \textit{Regression, regularised} -- Generally, regularisation isn't sensible in regression problems: if the data is insufficient to constrain a complex model, we usually adopt the principle of `Occam's razor' and fit a simpler model instead. However, it can be instructive to visualise how regularisation affects the solution to a regression problem. Adapt the examples from Exercises \ref{q:curvefit} and \ref{q:basiclsq} to incorporate regularisation, and explore how this changes performance. The function \texttt{curveFitting.curveFittingInv} accepts an argument \texttt{regularisation=eps2}, where \texttt{eps2} is the $\epsilon^2$ parameter of Tikhonov regularisation. In addition, you can (optionally) specifiy \texttt{priorModel=m}.
+
+\item \textit{Deriving Tikhonov regularisation}\label{q:tikderiv} --
+This exercise follows on from Exercise \ref{q:lsderiv}. Define a new misfit function,
+\[\phi(\mathbf{m}) = \|\mathbf{d}-\mathbf{Gm}\|_2^2 + \epsilon^2 \|\mathbf{m}\|_2^2\]
+
+Differentiate this expression with respect to an arbitrary model parameter, and hence obtain an expression for the regularised solution to an inverse problem. How does this expression change if the penalty term is, instead, $\epsilon^2 \|\mathbf{Wm}\|_2^2$ for a general matrix $\mathbf{W}$? Compare your solution to the one for Exercise \ref{q:Bayesls}. How are the two related?
+
+
+\item \textit{Inversion in the data-space} -- Using the results from Exercise \ref{q:woodbury}, rewrite the posterior distribution from Exercise \ref{q:Bayesls} in an alternate form. What are the computational pros and cons of employing this in practice? 
+\begin{hint}
+Try employing this for one of the inversion problems!
+\end{hint}
+\item \textit{Regularisation and the SVD}\label{q:svd} --
+The Singular Value Decomposition (SVD) is a tool that allows any $N\times M$ matrix $\mathbf{M}$ to be expressed in the form $\mathbf{M}=\mathbf{U\Sigma V^T}$, where $\mathbf{U}$ has dimension $N\times M$, $\boldsymbol{\Sigma}$ is $M\times M$ with entries on the diagonal only (known as `the singular values'), and where $\mathbf{V}$ is $M\times M$. Furthermore, $\mathbf{U^TU=UU^T}=\mathbf{I}$ and $\mathbf{V^TV=VV^T=I}$. In Python, you can perform an SVD by calling
+\begin{verbatim}
+> u,sigma,vt = np.linalg.svd(M)
+\end{verbatim}
+For square matrices $\mathbf{M}$, the SVD is closely-related to the concept of eigenvector/eigenvalue decompositions.
+%
+%
+%Recall that an eigenvector $\mathbf{u}^{(i)}$ of a square matrix $\mathbf{M}$ satisfies $\mathbf{Mu}^{(i)} = \lambda_i \mathbf{u}^{(i)}$, where $\lambda_i$ is the corresponding eigenvalue. Thus, if $\mathbf{U}$ is a matrix containing the eigenvectors as columns, and $\boldsymbol{\Lambda}$ a diagonal matrix of eigenvalues, we can write $\mathbf{M} = \mathbf{U\Lambda U^{-1}}$. Furthermore, if $\mathbf{M}$ is real and symmetric, the eigenvectors are orthogonal and hence $\mathbf{U^{-1}} = \mathbf{U^T}$.
+
+\begin{enumerate}
+\item Express the \emph{unregularised} least-squares algorithm in terms of the Singular Value Decomposition for $\mathbf{G}$. What happens if some of the singular values are very small or even zero?
+\item How does the addition of (Tikhonov) regularisation change your expression? What does this mean for small singular values? 
+\end{enumerate}
+
+Implement an SVD-based inversion algorithm for the X-ray tomography problem.
+\item \textit{Regularisation via an $L_1$ norm} --
+This exercise builds on Exercise \ref{q:tikderiv}, where we modified the misfit function to incorporate an $L_2$ penalty on the model length. An alternative might be to penalise the $L_1$ norm,
+\[\|\mathbf{m}\|_1 = \sum_i |m_i|\]
+by using a misfit function
+\[\phi(\mathbf{m}) = \|\mathbf{d}-\mathbf{Gm}\|_2^2 + \epsilon^2\|\mathbf{m}\|_1\,.\]
+However, the $|m_i|$ terms in this expression cannot be handled within the `standard' least-squares framework. Instead, it is necessary to employ methods of \textit{convex optimisation}. In Python, the appropriate routine is \texttt{cvxopt.solvers.qp} which can be called as follows:
+\begin{verbatim}
+sol = cvxopt.solvers.qp(P,q,G,h,A,b)
+\end{verbatim}
+This solves problems with the following form:
+\[ \textrm{minimize}~\frac{1}{2}\mathbf{x^TPx} +\mathbf{q^Tx}~\textrm{subject to}~\begin{cases}\mathbf{Gx}\le\mathbf{h}\\\mathbf{Ax}=\mathbf{b}\end{cases}\]
+
+where vector inequalities are applied element-by-element; the solution is then accessible as \texttt{sol['x']}. By introducing new `slack variables' $\mathbf{u}$ and $\mathbf{v}$, defined such that
+\[u_i=\begin{cases}m_i&m_i\ge0\\0&m_i<0\end{cases}\quad\quad\quad\quad v_i = \begin{cases}0&m_i\ge 0\\-m_i &m_i<0\end{cases}\]
+rewrite our optimisation problem in a form appropriate for \texttt{cvxopt.solvers.qp} and implement this in Python for the X-ray tomography problem. How do results compare to $L_2$ optimisation?
+\item \textit{Inversion using global basis functions} -- The X-ray tomography example employed local basis functions: we discretised the model region into individual grid cells. However, one could use any other set of basis functions. Write a forward solver that works with (for example) a model expressed as a two-dimensional Fourier series, and experiment with solving inverse problems in this basis. What are the differences in performance between this and the discretised case?
+\begin{hint}
+You can use \texttt{scipy.integrate.quad} to perform integrals along a ray path.
+\end{hint}
+\end{enumerate}
+
+ 
+\section{Bayesian inference}
+
+\begin{enumerate}[resume]
+
+\item \textit{Bayesian and Frequentist Inference of a biased coin} \label{q:Bayescoin} -- This exercise is available as a Jupyter notebook.
+\item \textit{Use Bayesian inference to infer the number of tickets sold in a Lottery} \label{q:Bayeslot} -- The unknown in the problem is the total number of entries sold, $n$, (i.e. sets of 6 numbers) which must be inferred from knowledge of the number of winners of each division $d_i, (i=1,\dots,N_{div}) $, where $N_{div}$ is  6 for the example below. The values of $d_i, (i=1,\dots,N_{div}) $ are our data and are assumed to be a known set of integers without error. In reality the real value of $n$ is never made public.
+ 
+Your task is to get a solution from a Frequentist viewpoint, using the data to make a single estimate of $n$, and also a Bayesian inference viewpoint using the data to construct  a probability distribution for $n$.
+ 
+ The probability of winning each division,  is independent of the total number of entries $n$, so these may be treated as a set of  known constants, $p_i, (i=1,\dots, N_{div})$, the value of which depends on the details of the game.
+ %  
+ \vskip 0.5cm
+\begin{table}[h!]
+%\setlength{\extrarowheight}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+$i$ & 1 & 2 & 3 & 4 & 5 & 6 \\
+
+\hline
+$d_i$ & 14 & 169 & 3059 & 149721 & 369543 & 802016 \\
+\hline
+$p_i^{-1}$ & 8145060 & 678756 & 36696 & 732 & 300 & 144 \\
+\hline
+%My results & $114.03\times10^6$ & $114.71\times10^6$ & $112.25\times10^6$ &  $109.60\times10^6$&  $110.86\times10^6$& $115.49\times10^6$  \\
+%\hline
+\end{tabular}
+\caption{\small Tattslotto dividend results for draw number 3253 on 29/09/2012. Total prize pool of \$49.92m, with division 1 prize of \$22m. The cost of a single entry is about \$0.65.}
+\end{center} 
+\label{tab:lotto}
+\end{table}
+  \begin{enumerate}
+  
+  \item Decide how to make a Frequentist solution to this problem.
+  %A Frequentist solution would be to take the number of winners of each division and divide by the probability of winning to get multiple estimates of $n$. These estimates are independent and we could average them. 
+  Do this for the data above to get an estimate for $n$. By how much do these estimates vary ?
+%({\sl My answer is \$112.82m.}) 
+  
+  \item A Bayesian inference approach requires us to find the Likelihood and prior and then multiply them together. Lets assume our prior is uniform between $1< n < 3\times 10^8$ which is a safe assumption. The likelihood is the probability of the data given the model, i.e. the probability that there would be $d_i$ winners of division $i$ and $n - d_i$ non winners when there are $n$ tickets sold. The binomial theorem tells us that this probability, $p(d_i | n)$, is given by
+%
+\[
+%p(d_i | n) = {_n}C_{d_i} \times p_i^{d_i} (1-p_i)^{n-d_i}
+p(d_i | n) = \frac{n!}{d_i! (n-d_i)!} \times p_i^{d_i} (1-p_i)^{n-d_i}
+\]
+%
+All values in this expression are known except the single unknown $n$. Since the number of winners in each division provides independent data, the total likelihood is the product of similar terms for each division, i.e.
+%
+\begin{equation}
+p({\bf d}| n) = \prod_{i=1}^{N_{div}} p(d_i | n)
+\label{eq:like}
+\end{equation}
+%
+Bayes' theorem says that to find the {\sl a posteriori} probability distribution for the unknown $n$ we just multiply the likelihood by the prior. Since the prior is a constant the result is
+%
+\[
+p(n | {\bf d}) \propto  \prod_{i=1}^{N_{div}} \frac{n!}{(n-d_i)!} \times (1-p_i)^{n-d_i}
+%\begin{cases}
+ %    \propto  \prod_{i=1}^{N_{div}} \frac{n!}{d_i! (n-d_i)!} \times p_i^{d_i} (1-p_i)^{n-d_i}, & \text{if } x\geq 1\\
+  %  0,              & \text{otherwise}
+%\end{cases}
+\]
+%
+which holds for $1 \le n \le 3\times 10^8$. Outside this range the posterior PDF is zero because the prior is zero.  Our only interest is in the unknown $n$ and so the constant of proportionality is used to absorb all quantities independent of $n$.  
+
+Your task is to use the values of $(d_i, p_i), i=1,\dots, 6$ from the table and plot the probability distribution as a function of $n$.
+Do this in the range  112.5m - 114.5m. Compare this curve to the single frequentist estimate of $n$ you obtained in part (a), what do you notice?
+
+\begin{hint}In any computer program it is always best to calculate $\log p(n | {\bf d})$ first and then take an exponent to evaluate the curve as a function of $n$. Stirling's formulae for the approximation to $n!$ may be useful. 
+%This is what is done in the example solution script {\bf lotto.py}]
+\end{hint}
+
+  \item Repeat the problem using the Maximum Likelihood (ML) approach. This is done by finding the value of $n$ which maximises the the likelihood expression in eqn. (\ref{eq:like}). Since the prior is a constant for this problem the likelihood is proportional to the curve you  produced in part (b). You could probably do it visually. Plot the average estimate you obtained in part (a) on top of the curve from part (b). How does the ML solution compare to the solution from part (a)?
+%({\sl My answer is \$113.48m.}) 
+
+  \end{enumerate}
+  
+  \pagebreak
+\item \textit{The Bayesian derivation of least squares} \label{q:Bayesls} --
+Suppose that $\mathsf{m}$ is a random vector encapsulating our state of knowledge about a model. We assert that our \emph{prior} knowledge can be represented by a Gaussian centred on some point $\mathbf{m_p}$ and with covariance matrix $\mathbf{C_m}$, so that $\mathsf{m}\sim\mathcal{N}(\mathbf{m_p},\mathbf{C_m})$. Assuming that observations are linearly related to model parameters via $\mathbf{d}=\mathbf{Gm}$, and that observational noise can be modelled by a zero-mean Gaussian with covariance matrix $\mathbf{C_d}$, show that the \emph{posterior} distribution is given by
+\[\mathsf{m}\,|\,\mathbf{d_0}\sim\mathcal{N}\left(\mathbf{m_p} + \left(\mathbf{G^TC_d^{-1}G +C_m^{-1}}\right)^\mathbf{-1}\mathbf{G^TC_d^{-1}}\left(\mathbf{d}-\mathbf{Gm_p}\right),\left(\mathbf{G^TC_d^{-1}G +C_m^{-1}}\right)^\mathbf{-1}\right)\,\mathrm{.}\]
+How does this expression compare to the one you obtained for Exercise~\ref{q:lsderiv}? What assumptions would the Bayesian claim are implicit within the form of the least-squares algorithm given in that question? 
+\begin{hint}
+Begin by obtaining an expression for the joint prior distribution of data and models. The following results may be useful.
+\begin{itemize}
+\item Linear transformations of Gaussians: If $\mathsf{x}\sim\mathcal{N}\left(\boldsymbol{\mu},\boldsymbol{\Sigma}\right)$ then $\mathbf{M}\mathsf{x}\sim\mathcal{N}\left(\mathbf{M}\boldsymbol{\mu},\mathbf{M}\boldsymbol{\Sigma}\mathbf{M^T}\right)$.
+\item The Woodbury matrix identity: see Exercise \ref{q:woodbury}.
+\item Conditioning of Gaussian distributions: see Exercise \ref{q:condgauss}. 
+\end{itemize}
+\end{hint}
+\end{enumerate}
+
+
+ 
+\section{Assessing and interpreting results}
+\begin{enumerate}[resume]
+\item \textit{Resolution and posterior covariance} -- 
+This exercise is available as a Jupyter notebook.
+\item \textit{Resolution and the SVD} -- 
+This question builds on Exercise \ref{q:svd}. Write down an expression for the resolution operator in a (Tikhonov-regularised) linear inverse problem, in terms of the SVD of the linear operator $\mathbf{G}$. How does regularisation manifest itself in the resolution of an inversion?
+\item \label{q:rescov} By combining the two expressions derived in Exercise \ref{q:woodbury}, show that the posterior covariance matrix is related to the resolution operator and the prior covariance matrix by
+\[\left(\mathbf{G^TC_d^{-1}G+C_m^{-1}}\right)^\mathbf{-1} = \left(\mathbf{I}-\mathbf{R}\right)\mathbf{C_m}\,.\]
+\end{enumerate}
+
+%\section{Statistical significance}
+
+ 
+\section{Weakly non-linear problems}
+\begin{enumerate}[resume]
+\item \textit{Travel-time tomography} -- This exercise is available as a Jupyter notebook.
+\item \textit{Gradient descent} -- Another strategy for solving weakly non-linear inverse problems is to employ gradient-based optimisation algorithms to `walk downhill' on the misfit surface. Try implementing this for the travel-time tomography problem. A variety of optimisation routines are available in \texttt{scipy.optimize}; one good choice is \texttt{scipy.optimize.fmin\_l\_bfgs\_b}.
+\item \textit{Deriving the iterative least-squares algorithm} -- Suppose that $\mathbf{g(m)}$ is a weakly non-linear forward model. Starting from a Taylor expansion of $\mathbf{g}$ about some point, $\mathbf{m}_i$, derive an expression for the optimal model update.
+\item \textit{The Bayesian update} -- A Bayesian analysis of the iterative solution to a weakly non-linear inverse problem leads to the following algorithm:
+\[\mathbf{m}_{i+1} = \mathbf{m}_i + \left(\mathbf{G^TC_d^{-1}G + C_m^{-1}}\right)^\mathbf{-1}\left[\mathbf{G^TC_d^{-1}}\left(\mathbf{d}-\mathbf{s}(\mathbf{m}_i)\right) - \mathbf{C_m^{-1}}\left(\mathbf{m}_i - \mathbf{m}_0\right)\right] \]
+where $\mathbf{m}_0$ is the prior model, and where the linear operator $\mathbf{G}$ is understood to have been computed for the model $\mathbf{m}_i$. By employing the result of Exercise \ref{q:rescov}, explain the role of the `extra' term involving $\mathbf{C_m^{-1}}\left(\mathbf{m}_i - \mathbf{m}_0\right)$.
+\item By computing the necessary partial derivatives using a finite-difference approach, implement and test a source-location algorithm for the X-ray tomography problem. \label{q:xraysrc}
+\end{enumerate}
+
+ 
+\section{Fully non-linear problems}
+\begin{enumerate}[resume]
+\item \textit{Receiver functions} -- This exercise is available as a Jupyter notebook.
+\item \textit{Monte Carlo search} -- By generating and testing candidate models completely at random, try and find good solutions to the linear regression problem of Exercise \ref{q:curvefit}. How well does it perform? How many samples do you need to test to be reasonably confident that you've found a `good' solution? How does this scale as you increase the number of model parameters sought?
+%\item \textit{The Metropolis-Hastings Rule} --
+\end{enumerate}
+
+ 
+\section{Probabilistic sampling}
+\begin{enumerate}[resume]
+\item \textit{McMC on Receiver functions} -- This exercise is available as a Jupyter notebook.
+%\item \textit{The Metropolis-Hastings Rule} --
+\end{enumerate}
+
+%\section{Practical considerations}
+%\newpage
+ 
+\section{Avoiding assumptions}
+\begin{enumerate}[resume]
+\item \textit{`Denuisanced' least squares} -- A dataset is assumed to be linearly dependent on some parameters of interest, $\mathbf{x}$, and also on some unwanted `nuisance' parameters, $\mathbf{y}$, such that $\mathbf{d}=\mathbf{Ax}+\mathbf{By}$. Show that the best-fitting value of $\mathbf{x}$ is given by
+\[\mathbf{\hat{x}} = \left[\mathbf{A^TA - A^TB\left(B^TB\right)^{-1}B^TA}\right]^\mathbf{-1}\left[\mathbf{A^Td - A^TB\left(B^TB\right)^{-1}B^Td}\right]\]
+How does this expression change in the case of a regularised, weakly non-linear inversion?
+\end{enumerate}
+
+ 
+\section{Exotic techniques}
+\begin{enumerate}[resume]
+\item Try to code up one or more of the methods discussed in lectures. You can make use of an appropriate forward model from  the \texttt{inversionCourse} module.
+\end{enumerate}
+
+\section{Unsupervised methods}
+\begin{enumerate}[resume]
+\item The file \texttt{clusters.dat} contains $(x,y)$ pairs drawn from three distinct clusters (the cluster label is given as the third column in the file).
+\begin{enumerate}
+\item Use the Python routine \texttt{scipy.cluster.vq.kmeans2} to perform k-means clustering of this dataset. How well does it perform? 
+\begin{hint}
+There are (at least) two different implementations of k-means available in Python: \texttt{scipy.cluster.vq.kmeans} and \texttt{scipy.cluster.vq.kmeans2}. They employ different  convergence criteria, but ought to give similar results. The advantage of \texttt{kmeans2} here is that it returns a list of which points have been assigned to each cluster, making it easier to assess performance.
+\end{hint}
+\item Write and test your own version of the k-means algorithm.
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

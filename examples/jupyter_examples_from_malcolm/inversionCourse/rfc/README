@@ -1,0 +1,18 @@
+
+Use install.sh
+
+Step 1.
+
+Compile all Fortran subroutines in directory RFsubs
+
+e.g. gfortran *.f *.f90 -c
+
+with subroutines in RFsubs already compiled with gfortran
+
+f2py -m rfc -c RF.F90 RFsubs/*.f*
+
+
+then
+
+mv rfc.cpython... ..
+
