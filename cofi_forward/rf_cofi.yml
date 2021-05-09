@@ -1,0 +1,21 @@
+# CoFI specification file for receiver function
+forward:
+        name: RFcalc_nonoise
+        voro: float32
+        mtype: int32
+        fs: float32
+        gauss_a: float32
+        water_c: float32
+        angle: float32
+        time_shift: float32
+        ndatar:
+        v60:
+        npt:
+        time:
+        wdata:
+        model:
+                 RFcalc_nonoise(voro,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,npt,time,wdata)
+                rfm.rfcalc_nonoise(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60)         
+age: 42
+possessions:
+- Towel
