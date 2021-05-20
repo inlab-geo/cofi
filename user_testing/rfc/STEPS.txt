@@ -1,0 +1,5 @@
+rm *.so *.o code/*.so code/*.o code/RFsubs/*.o
+#gfortran -shared -fPIC code/RFsubs/*.f code/RFsubs/*.f90 code/RF.f90 -o librfc.so
+#f2py -m rfc -c rfcofi.f90 -L/home/peter/personal/CoFI/user_testing/rfc -I/home/peter/personal/CoFI/user_testing/rfc -lrfc
+gfortran -c code/RFsubs/*.f code/RFsubs/*.f90 code/RF.f90 
+f2py -m rfc -c rfcofi.f90 code/*.o code/RFsubs/*.o  

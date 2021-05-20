@@ -6,5 +6,5 @@ RUN sudo apt-get update
 RUN sudo apt-get -y install vim less iputils-ping g++ gfortran
 RUN sudo adduser jovyan sudo
 USER jovyan
-RUN conda install -y python-dotenv psycopg2 
+RUN conda install -y plotnine 
 COPY --chown=jovyan:users $pwd /home/jovyan
