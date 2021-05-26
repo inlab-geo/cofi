@@ -1,31 +1,25 @@
+module globvars
+        integer :: npt=7
+        integer :: npt2=3
+        real :: voro(7,3) ! reference model
+        integer :: mtype=0
+        real :: fs=25.0
+        real :: gauss_a=2.5
+        real :: water_c=0.0001
+        real :: angle=35.0
+        real :: time_shift=5.0
+        real :: v60=8.043
+        integer :: ndatar=626
+        real :: time_obs(626)
+        real :: val_obs(626)
+end module
 
-subroutine cofi_init(mtype, fs, gauss_a, water_c, angle, time_shift, ndatar, v60, time_obs, value_obs)
-!F2PY INTENT(OUT) :: mtype
-!F2PY INTENT(OUT) :: fs
-!F2PY INTENT(OUT) :: gauss_a
-!F2PY INTENT(OUT) :: water_c
-!F2PY INTENT(OUT) :: angle
-!F2PY INTENT(OUT) :: time_shift
-!F2PY INTENT(OUT) :: ndatar
-!F2PY INTENT(OUT) :: v60
-!F2PY INTENT(OUT) :: time_obs
-!F2PY INTENT(OUT) :: value_obs
-real voro(7,3)
-integer ndatar,mtype,npt
-real time_obs(626)
-real value_obs(626)
-real fs, gauss_a, water_c, angle, time_shift, v60
 
-mtype=0
-fs=25.0
-gauss_a=2.5
-water_c=0.0001
-angle=35.0
-time_shift=5.0
-ndatar=626
-v60=8.043
-npt=7
-
+subroutine cofi_init()
+use globvars
+implicit none
+! these values are for the reference model (in this case, it is the 'correct' 
+! model).
 voro(1,1) = 8.370596
 voro(1,2) = 3.249075
 voro(1,3) = 1.7
@@ -48,60 +42,33 @@ voro(7,1) = 49.92358
 voro(7,2) = 4.586726
 voro(7,3) = 1.7
 
-call RFcalc_nonoise(voro,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,npt,time_obs,value_obs)
+! generate the receiver function using the reference model, and store the results in our globvars module
+! We'll need this later to calculate misfit
+call RFcalc_nonoise(voro,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,npt,time_obs,val_obs)
 
 end
 
-subroutine fwd(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,time,val)
-!F2PY INTENT(OUT) :: time
-!F2PY INTENT(OUT) :: val
+
+subroutine cofi_misfit(model,value_pred,value_obs,misfit)
 !F2PY INTENT(IN) :: model
-!F2PY INTENT(IN) :: mtype
-!F2PY INTENT(IN) :: fs
-!F2PY INTENT(IN) :: gauss_a
-!F2PY INTENT(IN) :: water_c
-!F2PY INTENT(IN) :: angle
-!F2PY INTENT(IN) :: time_shift
-!F2PY INTENT(IN) :: ndatar
-!F2PY INTENT(IN) :: v60
-!F2PY REAL :: model(7,3)
-real val(ndatar)
-real time(ndatar)
-integer ndatar,mtype
-real fs, gauss_a, water_c, angle, time_shift, v60 
-real model(7,3)
-
-call RFcalc_nonoise(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,time,val)
-
-end
-
-subroutine cofi_misfit(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,value_obs,misfit)
 !F2PY INTENT(OUT) :: misfit
+!F2PY INTENT(OUT) :: value_pred
 !F2PY INTENT(OUT) :: value_obs
-!F2PY INTENT(IN) :: model
-!F2PY INTENT(IN) :: gauss_a
-!F2PY INTENT(IN) :: water_c
-!F2PY INTENT(IN) :: angle
-!F2PY INTENT(IN) :: time_shift
-!F2PY INTENT(IN) :: ndatar
-!F2PY INTENT(IN) :: v60
 !F2PY REAL :: model(7,3)
-! Calculate waveform misfit for reference model
-real value_obs(ndatar)
-real tim2(ndatar)
-real RFp(ndatar)
-real res(ndatar)
-integer ndatar,mtype
-real fs, gauss_a, water_c, angle, time_shift, v60, misfit
-real model(:,:)
+!F2PY REAL :: value_pred(626)
+!F2PY REAL :: value_obs(626)
+!F2PY REAL :: misfit
+! Calculate misfit for reference model
+use globvars
+real :: model(7,3) 
+real :: value_pred(626) ! result of forward model for 'model'
+real :: value_obs(626)  ! result of forward model for reference model
+real :: tim2(626)       ! not used
+real :: res(626)        ! residuals between predicted and observed
+real :: misfit          ! Error between predicted and actual. Here we just use sum of squares for simplicity.
 
-call RFcalc_nonoise(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,tim2,RFp)
-res = RFp-value_obs
+call RFcalc_nonoise(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,npt,tim2,value_pred)
+res = value_pred-val_obs
+value_obs = val_obs
 misfit = sum(res*res)
 end
-
-
-
-
-
-

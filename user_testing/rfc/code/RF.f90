@@ -1,17 +1,40 @@
+PROGRAM LinearEqmain
+        call LinearEquations()
+end
+
+
+
+
+
+Subroutine LinearEquations()
+        Implicit none
+	Real*4 A(3,3), b(3)
+        integer i, j, pivot(3), ok
+        A(1,1)=3.1
+        A(1,2)=1.3
+        A(1,3)=-5.7
+        A(2,1)=1.0
+        A(2,2)=-6.9
+        A(2,3)=5.8
+        A(3,1)=3.4
+        A(3,2)=7.2
+        A(3,3)=-8.8
+        b(1)=-1.3
+        b(2)=-0.1
+        b(3)=1.8
+        call SGESV(3, 1, A, 3, pivot, b, 3, ok)
+        do i=1, 3
+           write(*,*) b(i)
+        end do
+end
+
+
+
+
+
+
+
 Subroutine RFcalc_nonoise(voro,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,npt,time,wdata) 
-!F2PY INTENT(OUT) :: wdata
-!F2PY INTENT(OUT) :: time
-!F2PY INTENT(IN) :: voro
-!F2PY INTENT(IN) :: mtype
-!F2PY INTENT(IN) :: fs
-!F2PY INTENT(IN) :: gauss_a
-!F2PY INTENT(IN) :: water_c
-!F2PY INTENT(IN) :: angle
-!F2PY INTENT(IN) :: time_shift
-!F2PY INTENT(IN) :: ndatar
-!F2PY INTENT(IN) :: v60
-!F2PY INTENT(HIDE),DEPEND(voro) :: npt
-!F2PY REAL :: voro(npt,3)
 implicit none
 
 !------------------------------------------------

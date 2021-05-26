@@ -3,7 +3,7 @@
 FROM jupyter/datascience-notebook:python-3.8.6
 USER root
 RUN sudo apt-get update
-RUN sudo apt-get -y install vim less iputils-ping g++ gfortran
+RUN sudo apt-get -y install vim less iputils-ping g++ gfortran libblas-dev liblapack-dev
 RUN sudo adduser jovyan sudo
 USER jovyan
 RUN conda install -y plotnine 
