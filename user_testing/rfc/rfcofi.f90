@@ -49,7 +49,7 @@ call RFcalc_nonoise(voro,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,np
 end
 
 
-subroutine cofi_misfit(model,value_pred,value_obs,misfit)
+subroutine cofi_misfit(model,misfit,value_pred,value_obs)
 !F2PY INTENT(IN) :: model
 !F2PY INTENT(OUT) :: misfit
 !F2PY INTENT(OUT) :: value_pred
