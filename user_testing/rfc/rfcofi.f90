@@ -1,11 +1,10 @@
 module globvars
         integer :: npt=7
-        integer :: npt2=3
-        real :: voro(7,3) ! reference model
+        real :: voro(7,3) ! reference model. Initialized in cofi_init 
         integer :: mtype=0
-        real :: fs=25.0
-        real :: gauss_a=2.5
-        real :: water_c=0.0001
+        real :: fs  ! initialized in cofi_init
+        real :: gauss_a ! initialized in cofi_init 
+        real :: water_c ! initialized in cofi_init 
         real :: angle=35.0
         real :: time_shift=5.0
         real :: v60=8.043
@@ -15,32 +14,26 @@ module globvars
 end module
 
 
-subroutine cofi_init()
+subroutine cofi_init(fs0, gauss_a0, water_c0, true_model)
+!F2PY INTENT(IN) :: fs
+!F2PY INTENT(IN) :: gauss_a
+!F2PY INTENT(IN) :: water_c
+!F2PY INTENT(IN) :: true_model
+!F2PY real  :: fs
+!F2PY real :: gauss_a
+!F2PY real :: water_c
+!F2PY real :: true_model(7,3)
+
 use globvars
 implicit none
+real fs0, gauss_a0, water_c0
+real :: true_model(7,3)
 ! these values are for the reference model (in this case, it is the 'correct' 
 ! model).
-voro(1,1) = 8.370596
-voro(1,2) = 3.249075
-voro(1,3) = 1.7
-voro(2,1) = 17.23163
-voro(2,2) = 3.001270
-voro(2,3) = 1.7
-voro(3,1) = 1.9126695E-02
-voro(3,2) = 2.509443
-voro(3,3) = 1.7
-voro(4,1) = 19.78145
-voro(4,2) = 3.562691
-voro(4,3) = 1.7
-voro(5,1) = 41.73066
-voro(5,2) = 4.225965
-voro(5,3) = 1.7
-voro(6,1) = 14.35261
-voro(6,2) = 2.963322
-voro(6,3) = 1.7
-voro(7,1) = 49.92358
-voro(7,2) = 4.586726
-voro(7,3) = 1.7
+voro = true_model
+fs = fs0
+gauss_a = gauss_a0
+water_c = water_c0
 
 ! generate the receiver function using the reference model, and store the results in our globvars module
 ! We'll need this later to calculate misfit

@@ -20,19 +20,18 @@ model: &idmodel
                 [norm 16 2, uniform 2 2, uniform 1.7 0],
                 [uniform 0 1, uniform 2 2, uniform 1.7 0],
                 [norm 18 4, uniform 2 3, uniform 1.7 0],
-                [norm 40 2 uniform 2 4, uniform 1.7 0],
+                [norm 40 2, uniform 2 4, uniform 1.7 0],
                 [norm 13 2, uniform 2 2, uniform 1.7 0],
                 [uniform 40 20, uniform 2 4, uniform 1.7 0],
               ] 
       
 # We discussed being able to attach auxilliary information to a CoFI experiment,
-# so I've just made up some stuff below (the 'true' earth model and some miscellaneous
-# other variables). But I do not know if, or how, we can use this. Since
-# CoFI only interacts with user code via the cofi_init() and cofi_misfit()
-# parameters, I am not sure what point there is in allowing specification of
-# auxilliary information in the yaml file. Random notes are fine, but anything
-# that you actually want used in your experiment must be defined in code.
-auxilliary_info:
+# This all gets passed into the cofi_init() method, but this means the user
+# has to specify cofi_init() properly so that it is expecting these arguments
+init_info:
+  fs0: 25.0
+  gauss_a0: 2.5
+  water_c0: 0.0001
   true_model: [[8.370596, 3.249075, 1.7],
       [17.23163, 3.001270, 1.7],
       [1.9126695E-02, 2.509443, 1.7],
@@ -40,8 +39,6 @@ auxilliary_info:
       [41.73066, 4.225965, 1.7],
       [14.35261, 2.963322, 1.7],
       [49.92358, 4.586726, 1.7]]
-  notes: some text
-  varx: 2.0
 
 # This is how you tell CoFI how to 'find' thhe forward model. CoFI will look here and
 # try to load code at this location, and then call the cofi_init() function
