@@ -41,7 +41,7 @@ resource affecting CoFI's success. Success thus means:
 
 I have NOT made any attempt to do any neat packaging/install of CoFI. But I think it is crucial to CoFI's success.
 So some thought (and work) needs to be put into packaging for CoFI. This probably means packaging CoFI up as a 
-`conda` or `pip` or even `apt`/`deb` package.
+`conda` or `apt`/`deb` package.
 
 In the absence of an installer, for testing the reference implementation, you will need the following installed:
 
@@ -51,10 +51,10 @@ In the absence of an installer, for testing the reference implementation, you wi
   * C and fortran compilers (e.g. g++ gfortran)
   * blas and lapack (e.g. libblas-dev liblapack-dev). These are not part of CoFI but needed for one of the examples
   * you need the plotnine python package (just for plotting in the examples)
-  * You'll also need to be sey up to run a jupyter notebook if you want to step through some of the examples
+  * You'll also need to be set up to run a jupyter notebook if you want to step through some of the examples
 
 I have included a Dockerfile in the CoFI repo which is what I have been using to develop and test in. You can refer
-to that if you want to recreate the build environment. You can pull the actual image with docker.io/peterrickwood/cofi
+to that if you want to recreate the build environment. You can pull the actual image at docker.io/peterrickwood/cofi
 
 ## Forward model interface: `cofi_misfit` and `cofi_init`
 
@@ -82,7 +82,7 @@ reading in files, doing preliminary calculations, etc.
 
 So, the general setup for CoFI is:
 
-  * User defines `cofi_init(**kwargs)` and `cofi_misfit(**kwargs)` routines, in either python or compiled
+  * User defines `cofi_init(...)` and `cofi_misfit(...)` routines, in either python or compiled
   * User defines their experiment in either YML or via python api calls (examples of which later)
   * CoFI performs the experiment by calling `cofi_init` once and then calling `cofi_misfit` many times.
 
@@ -190,5 +190,7 @@ that really need to be addressed:
      I am not clear on the requirements for situations where the user wants to use the Hessian or
      Jacobian, so I haven't tried to tackle that in the examples so far. I guess this is really
      just a special case of 2.
+  4. If possible, solve the packaging/installation problem, add detailed error checking/messaging,
+     and some help for people authoring their yaml and auto-annotating their wrapper code.
 
 
