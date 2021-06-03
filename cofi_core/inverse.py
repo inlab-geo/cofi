@@ -20,6 +20,8 @@ class DumbDescent:
     """
     A greedy dumb descent where we just take a small step in every direction, and
     only accept if it improves our misfit.
+
+    ALL inverters must take model and forward as the first two arguments
     """
     def __init__(self, model: Model, forward: Union[ObjectiveFunction, Callable], step: np.float, time: np.float):
         self.start = model
@@ -36,19 +38,19 @@ class DumbDescent:
         else:
             user_vals = self.objective(*[param.value for param in model.params])
         if isinstance(user_vals, tuple):
-            print(user_vals[0])
             return user_vals
         else:
-            print(user_vals)
             return user_vals, None
     
     def run(self) -> tuple:
-        t0 = time.time()
-        t1 = t0
+        misfits_by_time = []
         if self.best_info is None:
             user_vals = self.get_misfit(self.current)
             self.best_misfit = float('inf') if np.isnan(user_vals[0]) else user_vals[0]
             self.best_info = user_vals[1:]
+            misfits_by_time.append((0.0, self.best_misfit))
+        t0 = time.time()
+        t1 = t0
         while t1-t0 < self.time:
             newmodel = deepcopy(self.current)
             for p in newmodel.params:
@@ -62,16 +64,23 @@ class DumbDescent:
             other = user_vals[1:]
             if np.isnan(misfit):
                 pass # invalid model, ignore
-            elif misfit < self.best_misfit:
-                self.current = newmodel
-                self.best_misfit = user_vals[0]
-                self.best_info = other
+            else:
+                misfits_by_time.append((time.time()-t0, misfit))
+                if misfit < self.best_misfit:
+                    self.current = newmodel
+                    self.best_misfit = user_vals[0]
+                    self.best_info = other
             t1 = time.time()
-        if self.best_info is None:
-            return self.current, self.best_misfit
-        else:
-            return tuple([self.current, self.best_misfit] + list(self.best_info))
-
+        
+        # The result
+        result_dict = dict(model=self.current, misfit=self.best_misfit, misfit_by_time=misfits_by_time)
+        if self.best_info is not None:
+            if isinstance(self.best_info, tuple):
+                for i, item in enumerate(self.best_info):
+                    result_dict[f"cofi_misfit_results_for_best_model_{i+1}"] = item
+            else:
+                result_dict["cofi_misfit_results_for_best_model"] = self.best_info
+        return result_dict
 
 
 

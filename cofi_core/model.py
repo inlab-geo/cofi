@@ -3,6 +3,7 @@ from numbers import Number
 from dataclasses import dataclass
 from typing import List, Union
 from scipy import stats
+import yaml
 
 
 
@@ -13,7 +14,7 @@ class Parameter:
     name: str
     value: Union[Number, np.ndarray] = None
     pdf: Union[stats.rv_continuous, np.ndarray] = None
-
+ 
     def __post_init__(self):
         if self.value is None and self.pdf is None:
             raise ValueError(f"Specified parameter {name} has no initial value AND no distribution. You must either specify a value or a range/distribution for each parameter")
@@ -47,7 +48,28 @@ class Parameter:
                     raise ValueError(f"specified PDF not of expected type. Expected rv_continuous or array of rv_continuous")
         else: # PDF is None, but value is specified. This is fine, we dont need to do anything
             pass
-        
+    
+    def __repr__(self) -> str:
+        return yaml.safe_dump(self.asdict())
+
+    # utility method to convert this to a dictionary that can be turned into a dictionary, for writing to yaml
+    def asdict(self) -> dict:
+        res = dict(name=self.name)
+        if self.value is not None:
+            if isinstance(self.value, np.ndarray):
+                res['value'] = self.value.tolist()
+            else:
+                res['value'] = self.value
+        if self.pdf is not None:
+            if isinstance(self.pdf, stats.rv_continuous):
+                res['pdf'] = f"{self.pdf.dist.name} {' '.join(map(str, self.pdf.args))}"
+            else:
+                pdfa = np.empty(self.pdf.shape, dtype=object).flatten()
+                for i, item in enumerate(self.pdf.ravel()):
+                    pdfa[i] = f"{item.dist.name} {' '.join(map(str, item.args))}"
+                res['pdf'] = pdfa.reshape(self.pdf.shape).tolist()
+        return res
+
 
 
 @dataclass
@@ -65,6 +87,9 @@ class Model:
                 val, pdf = item, None
             self.params.append(Parameter(name=nm, value=val, pdf=pdf))
     
+    def to_yamlizable(self):
+        return [p.asdict() for p in self.params]
+
     @staticmethod
     def init_from_yaml(yamldict: dict):
         if "parameters" not in yamldict:
