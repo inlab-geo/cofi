@@ -1,0 +1,13 @@
+# conda env create -f environment.yml
+# conda activate ./envs
+# conda env update --file environment.yml --prune
+
+name: cofi_dev
+channels: 
+  - conda-forge
+dependencies:
+  - numpy
+  - pandas
+  - scipy
+  - plotnine
+  - pyyaml
