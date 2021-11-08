@@ -2,7 +2,7 @@ from cofi.cofi_inverse.base_inverser import BaseInverser
 from lib import rjmcmc
 
 class RjMCMC(BaseInverser):
-    def __init__(self, x, y, error):
+    def __init__(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):
         """
         n: a error value per data point and can bethought of a weighting 
            as to how well the fit will attempt to fit anindividual point. 
@@ -12,18 +12,28 @@ class RjMCMC(BaseInverser):
         Note:
         x, y, and error must be of the same length
         """
-        self.set_data(x, y, error)
+        self.set_data(x, y, error, lambda_min, lambda_max, lambda_std)
 
-    def set_data(self, x, y, error):
+    def set_data(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):
         # TODO - type validation / conversion (e.g. for numpy ndarray)
         self.x = x
         self.y = y
         self.error = error
 
+        # lambda is defined as the ratio of the estimated noise to the real noise
+        # this is set to perform hierarchical Bayesian sampling
+        self.lambda_min = lambda_min
+        self.lambda_max = lambda_max
+        self.lambda_std = lambda_std
+
         if not (len(self.x) == len(self.y) and len(self.x) == len(self.error)):
             raise ValueError("Input lists must be of same length")
 
         self.data = rjmcmc.dataset1d(self.x, self.y, self.error)
+
+        if lambda_min:
+            self.data.set_lambda_range(self.lambda_min, self.lambda_max)
+            self.data.set_lambda_std(self.lambda_std)
 
     def solve(self, burnin=10000, total=50000, max_order=5, sampler=None):
         """
@@ -50,6 +60,8 @@ class RjMCMC(BaseInverser):
                                                             burnin, 
                                                             total, 
                                                             max_order)
+
+        # solve without user's own sampling method (by default)
         else:
             self.results = rjmcmc.regression_single1d(self.data, burnin, total, max_order)
 
@@ -60,3 +72,6 @@ class RjMCMC(BaseInverser):
 
     # TODO - determine whether to write a framework for results (if it's common for other approaches)
     #        or to write wrappter functions for all the functions of resultset1d (like above order_histogram)
+    #        functions include: proposed, acceptance, partitions, order_histogram, partition_histogram,
+    #                           partition_location_histogram, x, y, mean, median, mode,
+    #                           credible_max, misfit, lambda_history, histogram

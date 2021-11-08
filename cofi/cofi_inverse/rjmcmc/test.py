@@ -3,7 +3,7 @@ import matplotlib
 import matplotlib.pyplot
 
 # --------------------- load data ---------------------
-f = open('/Users/nancyh/Documents/work/lab/CoFI/cofi/cofi_inverse/rjmcmc/data.txt', 'r')
+f = open('./test_data.txt', 'r')
 lines = f.readlines()
 
 x = []
@@ -59,9 +59,7 @@ ax = fig.add_subplot(111)
 
 yc = 0.5
 yalpha = 1.0/((1.0 - yc) * float(len(sample_curves)))
-print(yalpha)
 for sy in sample_curves:
-    # print(sy)
     ax.plot(sample_x, sy, 
             color = str(yc),
             alpha = yalpha,
@@ -71,4 +69,40 @@ for sy in sample_curves:
 ax.plot(results_x, results_mean, 'r-')
 ax.plot(x, y, 'ko')
 
+matplotlib.pyplot.show()
+
+
+# ---------------------- hierarchical ---------------------
+lambda_min = 0.5
+lambda_max = 2.0
+lambda_std = 0.05
+
+inverser_hie = RjMCMC(x, y, n, lambda_min, lambda_max, lambda_std)
+inverser_hie.solve()
+
+xc = inverser_hie.results.x()
+meancurve = inverser_hie.results.mean()
+
+# retrieve the results of the hierarchical
+p = inverser_hie.results.proposed()
+a = inverser_hie.results.acceptance()
+print('Lambda Acceptance Rate: {:.0f}%'.format(float(a[1])/float(p[1]) * 100.0))
+lambda_history = inverser_hie.results.lambda_history()
+
+fig = matplotlib.pyplot.figure(1)
+matplotlib.pyplot.plot(x, y, 'ko', xc, meancurve, 'r-')
+
+fig = matplotlib.pyplot.figure(2)
+matplotlib.pyplot.plot(range(len(lambda_history)), lambda_history)
+
+fig = matplotlib.pyplot.figure(3)
+a = matplotlib.pyplot.subplot(111)
+lsamples = lambda_history[10000:]
+
+n, bins, patches = a.hist(lsamples, 100, range=(lambda_min, lambda_max))
+a.set_title('Histogram of Lambda')
+a.set_xlabel('Lambda')
+a.set_ylabel('Count')
+
+print('Lambda average: {:.0f}%'.format(sum(lsamples)/float(len(lsamples))))
 matplotlib.pyplot.show()
