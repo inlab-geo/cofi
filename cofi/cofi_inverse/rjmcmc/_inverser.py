@@ -44,56 +44,103 @@ class ReversibleJumpMCMC(BaseInverser):
         sampler=None,
         multi_partition=False,
         partition_move_std=None,
+        max_partitions=20,
+        xsamples=100,
+        ysamples=100,
+        credible_interval=0.95,
     ):
         """
         On completion of solving, self.results is assigned a resultset1d object
         which contains various results and diagnostics about the analysis
         (Check ./lib/rjmcmc.py for inferface details)
 
+        burnin: the number of initial samples to throw away (default to 10000)
+        total: the total number of samples to use for the analysis (default to 50000)
+        max_order: the maximum order of polynomial to use to fit the data (default to 5)
+        xsamples: the number of points to sample along the x direction for the curve
+                  (default to 100)
+        ysamples: the number of points to sample along the y directory for the
+                  statistics such as mode, median and confidence intervals. This is
+                  the number of bins for the histograms in the y direction
+                  (default to 100)
+        credible_interval: the confidence interval to use for minimum and maximum
+                           confidence intervals. This should be a value between 0 and 1
+                           (default to 0.95)
         multi_partition: set to True when the data have discontinuities
+        partition_move_std: the standard deviation for the perturbation of partition
+                            boundaries (must be set when doing multiple partitions)
 
         """
+
+        if credible_interval > 1 or credible_interval < 0:
+            raise ValueError("The credible interval should be between 0 and 1")
 
         if multi_partition:
             if partition_move_std is None:
                 raise ValueError(
-                    "partition_move_std is required for multiple partition regression"
+                    "partition_move_std required for multiple partition regression"
                 )
             self.results = rjmcmc.regression_part1d(
                 self.data,
+                partition_move_std,
+                burnin,
+                total,
+                max_partitions,
+                max_order,
+                xsamples,
+                ysamples,
+                credible_interval,
             )
 
+        else:  # single partition (without discountinuities)
+            if sampler:
+                self.results = rjmcmc.regression_single1d_sampled(
+                    self.data,
+                    self.gen_sampler_callback(sampler),
+                    burnin,
+                    total,
+                    max_order,
+                    xsamples,
+                    ysamples,
+                    credible_interval,
+                )
+            else:  # solve without user's own sampling method (by default)
+                self.results = rjmcmc.regression_single1d(
+                    self.data,
+                    burnin,
+                    total,
+                    max_order,
+                    xsamples,
+                    ysamples,
+                    credible_interval,
+                )
+
+    def gen_sampler_callback(self, sampler):
         # user's own sampler takes 3 input arguments: x, y and i and returns a boolean
         # sample results are recorded in self.sample_x and self.sample_curves
-        if sampler:
-            self.sample_x = None
-            self.sample_curves = []
-            self.sample_i = 0
+        self.sample_x = None
+        self.sample_curves = []
+        self.sample_i = 0
 
-            def sampler_callback(x, y):
-                if self.sample_x is None:
-                    self.sample_x = x
-                if sampler(x, y, self.sample_i):
-                    self.sample_curves.append(y)
-                self.sample_i += 1
+        def sampler_callback(x, y):
+            if self.sample_x is None:
+                self.sample_x = x
+            if sampler(x, y, self.sample_i):
+                self.sample_curves.append(y)
+            self.sample_i += 1
 
-            self.results = rjmcmc.regression_single1d_sampled(
-                self.data, sampler_callback, burnin, total, max_order
-            )
-
-        # solve without user's own sampling method (by default)
-        else:
-            self.results = rjmcmc.regression_single1d(
-                self.data, burnin, total, max_order
-            )
+        return sampler_callback
 
     def order_historgram(self):
         if self.results is None:
             self.solve()
         return self.results.order_histogram()
 
-    # TODO - determine whether to write a framework for results (if it's common for other approaches)
-    #        or to write wrappter functions for all the functions of resultset1d (like above order_histogram)
-    #        functions include: proposed, acceptance, partitions, order_histogram, partition_histogram,
-    #                           partition_location_histogram, x, y, mean, median, mode,
-    #                           credible_max, misfit, lambda_history, histogram
+    # TODO - determine whether to write a framework for results
+    #        (if it's common for other approaches)
+    #        or to write wrappter functions for all the functions of resultset1d
+    #        (like the above order_histogram)
+    #        functions include: proposed, acceptance, partitions, order_histogram,
+    #                           partition_histogram, partition_location_histogram,
+    #                           x, y, mean, median, mode, credible_max, misfit,
+    #                           lambda_history, histogram

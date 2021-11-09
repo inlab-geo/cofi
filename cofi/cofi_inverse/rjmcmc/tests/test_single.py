@@ -75,7 +75,7 @@ lambda_min = 0.5
 lambda_max = 2.0
 lambda_std = 0.05
 
-inverser_hie = ReversibleJumpMCMC(x, y, n, False, lambda_min, lambda_max, lambda_std)
+inverser_hie = ReversibleJumpMCMC(x, y, n, lambda_min, lambda_max, lambda_std)
 inverser_hie.solve()
 
 xc = inverser_hie.results.x()
