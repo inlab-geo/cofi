@@ -71,6 +71,8 @@ matplotlib.pyplot.show()
 
 
 # ---------------------- hierarchical ---------------------
+# estimating the data noise
+# lamdba: the ratio of the estimated noise to the real noise
 lambda_min = 0.5
 lambda_max = 2.0
 lambda_std = 0.05

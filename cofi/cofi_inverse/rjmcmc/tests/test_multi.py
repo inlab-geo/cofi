@@ -18,7 +18,7 @@ for line in lines:
 
 f.close()
 
-# ---------------------- analysis ---------------------
+# ---------------------- partition analysis ---------------------
 xmin = 0.0
 xmax = 10.0
 sigma = 3.0
@@ -41,10 +41,6 @@ meancurve = results.mean()
 partlocation = results.partition_location_histogram()
 partcount = results.partition_histogram()
 
-print(len(results.partitions()))
-print("---")
-print(len(results.partition_histogram()))
-
 # Plot the data with black crosses and the mean with a red line
 fig = matplotlib.pyplot.figure(1, figsize=(6,7))
 a = matplotlib.pyplot.subplot(311)
@@ -63,4 +59,42 @@ c.set_ylabel("#partitions")
 
 matplotlib.pyplot.show()
 
+
+# ---------------------- order analysis ---------------------
+inverser_ord = ReversibleJumpMCMC(x, y, error)
+inverser_ord.solve(multi_partition=True, partition_move_std=pd)
+xc_ord = inverser_ord.results.x()
+meancurve_ord = inverser_ord.results.mean()
+partlocation_ord = inverser_ord.results.partition_location_histogram()
+partcount_ord = inverser_ord.results.partitions()
+
+fig = matplotlib.pyplot.figure(1)
+a = matplotlib.pyplot.subplot(211)
+a.plot(x, y, 'ko', xc_ord, meancurve_ord, 'r-')
+a.set_xlim(xmin, xmax)
+b = matplotlib.pyplot.subplot(212)
+b.bar(xc_ord, partlocation_ord, xc_ord[1]-xc_ord[0])
+b.set_xlim(xmin, xmax)
+
+fig = matplotlib.pyplot.figure(2)
+a = matplotlib.pyplot.subplot(111)
+a.hist(partcount_ord, bins=5, range=(0, 5), align='left')
+
+matplotlib.pyplot.show()
+
+
+# ---------------------- confidence ---------------------
+sample_rate = 250
+
+
+def sampler(x, y, i):
+    return i % sample_rate == 0
+
+burnin = 10000
+total = 50000
+max_partitions = 10
+max_order = 3
+
+inverser_sample = ReversibleJumpMCMC(x, y, error)
+inverser_sample.solve(burnin, total, max_order, sampler, True, pd, max_partitions)
 

@@ -80,17 +80,31 @@ class ReversibleJumpMCMC(BaseInverser):
                 raise ValueError(
                     "partition_move_std required for multiple partition regression"
                 )
-            self.results = rjmcmc.regression_part1d(
-                self.data,
-                partition_move_std,
-                burnin,
-                total,
-                max_partitions,
-                max_order,
-                xsamples,
-                ysamples,
-                credible_interval,
-            )
+            if sampler:
+                self.results = rjmcmc.regression_part1d_sampled(
+                    self.data,
+                    self.gen_sampler_callback(sampler),
+                    partition_move_std,
+                    burnin,
+                    total,
+                    max_partitions,
+                    max_order,
+                    xsamples,
+                    ysamples,
+                    credible_interval,
+                )
+            else:
+                self.results = rjmcmc.regression_part1d(
+                    self.data,
+                    partition_move_std,
+                    burnin,
+                    total,
+                    max_partitions,
+                    max_order,
+                    xsamples,
+                    ysamples,
+                    credible_interval,
+                )
 
         else:  # single partition (without discountinuities)
             if sampler:
