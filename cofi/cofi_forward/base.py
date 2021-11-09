@@ -1,5 +1,6 @@
 """Base class for all forwarders."""
 
+
 class BaseForwarder:
     def __init__(self, init=None):
         if init:

@@ -3,7 +3,7 @@ import matplotlib
 import matplotlib.pyplot
 
 # --------------------- load data ---------------------
-f = open('./test_data.txt', 'r')
+f = open("./test_data.txt", "r")
 lines = f.readlines()
 
 x = []
@@ -18,7 +18,6 @@ for line in lines:
 f.close()
 
 # ---------------------- analysis ---------------------
-
 sigma = 3.0
 n = [sigma] * len(x)
 
@@ -42,8 +41,11 @@ for maxorder in range(orderlimit + 1):
 
 # ---------------------- own sampler ---------------------
 sample_rate = 10
+
+
 def sampler(x, y, i):
     return i % sample_rate == 0
+
 
 burnin = 100
 total = 1000
@@ -58,16 +60,12 @@ fig = matplotlib.pyplot.figure()
 ax = fig.add_subplot(111)
 
 yc = 0.5
-yalpha = 1.0/((1.0 - yc) * float(len(sample_curves)))
+yalpha = 1.0 / ((1.0 - yc) * float(len(sample_curves)))
 for sy in sample_curves:
-    ax.plot(sample_x, sy, 
-            color = str(yc),
-            alpha = yalpha,
-            linestyle = '-',
-            linewidth = 10)
+    ax.plot(sample_x, sy, color=str(yc), alpha=yalpha, linestyle="-", linewidth=10)
 
-ax.plot(results_x, results_mean, 'r-')
-ax.plot(x, y, 'ko')
+ax.plot(results_x, results_mean, "r-")
+ax.plot(x, y, "ko")
 
 matplotlib.pyplot.show()
 
@@ -77,7 +75,7 @@ lambda_min = 0.5
 lambda_max = 2.0
 lambda_std = 0.05
 
-inverser_hie = ReversibleJumpMCMC(x, y, n, lambda_min, lambda_max, lambda_std)
+inverser_hie = ReversibleJumpMCMC(x, y, n, False, lambda_min, lambda_max, lambda_std)
 inverser_hie.solve()
 
 xc = inverser_hie.results.x()
@@ -86,11 +84,11 @@ meancurve = inverser_hie.results.mean()
 # retrieve the results of the hierarchical
 p = inverser_hie.results.proposed()
 a = inverser_hie.results.acceptance()
-print('Lambda Acceptance Rate: {:.0f}%'.format(float(a[1])/float(p[1]) * 100.0))
+print("Lambda Acceptance Rate: {:.0f}%".format(float(a[1]) / float(p[1]) * 100.0))
 lambda_history = inverser_hie.results.lambda_history()
 
 fig = matplotlib.pyplot.figure(1)
-matplotlib.pyplot.plot(x, y, 'ko', xc, meancurve, 'r-')
+matplotlib.pyplot.plot(x, y, "ko", xc, meancurve, "r-")
 
 fig = matplotlib.pyplot.figure(2)
 matplotlib.pyplot.plot(range(len(lambda_history)), lambda_history)
@@ -100,9 +98,9 @@ a = matplotlib.pyplot.subplot(111)
 lsamples = lambda_history[10000:]
 
 n, bins, patches = a.hist(lsamples, 100, range=(lambda_min, lambda_max))
-a.set_title('Histogram of Lambda')
-a.set_xlabel('Lambda')
-a.set_ylabel('Count')
+a.set_title("Histogram of Lambda")
+a.set_xlabel("Lambda")
+a.set_ylabel("Count")
 
-print('Lambda average: {:.0f}%'.format(sum(lsamples)/float(len(lsamples))))
+print("Lambda average: {:.0f}%".format(sum(lsamples) / float(len(lsamples))))
 matplotlib.pyplot.show()
