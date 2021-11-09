@@ -1,4 +1,4 @@
-from inverser import RjMCMC
+from cofi.cofi_inverse.rjmcmc import ReversibleJumpMCMC
 import matplotlib
 import matplotlib.pyplot
 
@@ -22,7 +22,7 @@ f.close()
 sigma = 3.0
 n = [sigma] * len(x)
 
-inverser = RjMCMC(x, y, n)
+inverser = ReversibleJumpMCMC(x, y, n)
 
 inverser.solve()
 # print(result)
@@ -77,7 +77,7 @@ lambda_min = 0.5
 lambda_max = 2.0
 lambda_std = 0.05
 
-inverser_hie = RjMCMC(x, y, n, lambda_min, lambda_max, lambda_std)
+inverser_hie = ReversibleJumpMCMC(x, y, n, lambda_min, lambda_max, lambda_std)
 inverser_hie.solve()
 
 xc = inverser_hie.results.x()

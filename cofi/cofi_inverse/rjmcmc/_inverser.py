@@ -1,7 +1,7 @@
-from cofi.cofi_inverse.base_inverser import BaseInverser
-from lib import rjmcmc
+from cofi.cofi_inverse import BaseInverser
+from .lib import rjmcmc
 
-class RjMCMC(BaseInverser):
+class ReversibleJumpMCMC(BaseInverser):
     def __init__(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):
         """
         n: a error value per data point and can bethought of a weighting 
