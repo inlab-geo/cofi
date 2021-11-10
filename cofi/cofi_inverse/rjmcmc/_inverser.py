@@ -134,14 +134,14 @@ class ReversibleJumpMCMC(BaseInverser):
         # sample results are recorded in self.sample_x and self.sample_curves
         self.sample_x = None
         self.sample_curves = []
-        self.sample_i = 0
+        self._sample_i = 0
 
         def sampler_callback(x, y):
             if self.sample_x is None:
                 self.sample_x = x
-            if sampler(x, y, self.sample_i):
+            if sampler(x, y, self._sample_i):
                 self.sample_curves.append(y)
-            self.sample_i += 1
+            self._sample_i += 1
 
         return sampler_callback
 
