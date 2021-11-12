@@ -1,4 +1,4 @@
-from cofi.cofi_inverse.rjmcmc import ReversibleJumpMCMC
+from cofi.cofi_inverse import ReversibleJumpMCMC
 import matplotlib
 import matplotlib.pyplot
 
