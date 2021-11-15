@@ -1,6 +1,7 @@
 from os import error
 import sys
 from cofi.cofi_inverse import ReversibleJumpMCMC
+from cofi.cofi_forward import Parameter, Model, BaseForward
 import matplotlib
 import matplotlib.pyplot
 
@@ -30,6 +31,7 @@ sigma = 5.0
 
 # (min, max, std. deviation) for each parameter.
 local_parameters = [(-50.0, 50.0, 2.0)]
+parameter = Parameter("local", )
 
 # Global parameters are parameters that are the same in all partitions,
 # an example is a dc bias that is constant across the domain. In this 
@@ -70,3 +72,10 @@ def my_loglikelihood(globalvalues, boundaries, localvalues):
 
     return phi / (2.0 * sigma * sigma)
         
+
+results = rjmcmc.forwardmodel_part1d(local_parameters,
+                                     global_parameters,
+                                     my_loglikelihood,
+                                     xmin,
+                                     xmax,
+                                     pd)

@@ -1,3 +1,3 @@
-from ._inverser import ReversibleJumpMCMC
+from ._inverse import ReversibleJumpMCMC
 
 __all__ = ["ReversibleJumpMCMC"]

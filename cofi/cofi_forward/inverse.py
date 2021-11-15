@@ -6,16 +6,8 @@ from typing import List, Union, Callable
 import numpy as np
 import time
 
-class ObjectiveFunction:
-    
-    def __init__(self, func):
-        self.obj = func
 
-    def get_misfit(self, model: Model) -> tuple:
-        return self.obj(*[p.value for p in model.params])
-
-
-
+# TODO move below to somewhere else (as an exmaple of inverse maybe)
 class DumbDescent:
     """
     A greedy dumb descent where we just take a small step in every direction, and

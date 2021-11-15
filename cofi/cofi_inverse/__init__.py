@@ -1,4 +1,4 @@
-from .base_inverser import BaseInverser
+from .base_inverse import BaseInverse
 from .rjmcmc import ReversibleJumpMCMC
 
-__all__ = ["BaseInverser", "ReversibleJumpMCMC"]
+__all__ = ["BaseInverse", "ReversibleJumpMCMC"]
