@@ -90,6 +90,7 @@ sample_rate = 250
 def sampler(x, y, i):
     return i % sample_rate == 0
 
+
 burnin = 10000
 total = 50000
 max_partitions = 10
@@ -103,23 +104,19 @@ sample_curves = inverser_sample.sample_curves
 fig = matplotlib.pyplot.figure(1)
 ax = fig.add_subplot(111)
 yc = 0.5
-yalpha = 1.0/((1.0 - yc) * float(len(sample_curves)))
+yalpha = 1.0 / ((1.0 - yc) * float(len(sample_curves)))
 for sy in sample_curves:
-    ax.plot(sample_x, sy, 
-            color = str(yc),
-            alpha = yalpha,
-            linestyle = '-',
-            linewidth = 10)
-ax.plot(results.x(), results.mean(), 'r-')
-ax.plot(x, y, 'ko')
+    ax.plot(sample_x, sy, color=str(yc), alpha=yalpha, linestyle="-", linewidth=10)
+ax.plot(results.x(), results.mean(), "r-")
+ax.plot(x, y, "ko")
 ax.set_xlim(xmin, xmax)
 
 fig = matplotlib.pyplot.figure(2)
 ax = fig.add_subplot(111)
-ax.plot(results.x(), results.mean(), 'r-')
-ax.plot(x, y, 'ko')
-ax.plot(results.x(), results.credible_min(), 'b:')
-ax.plot(results.x(), results.credible_max(), 'b:')
+ax.plot(results.x(), results.mean(), "r-")
+ax.plot(x, y, "ko")
+ax.plot(results.x(), results.credible_min(), "b:")
+ax.plot(results.x(), results.credible_max(), "b:")
 ax.set_xlim(xmin, xmax)
 
 matplotlib.pyplot.show()
@@ -141,13 +138,13 @@ p = inverser_lambda.results.proposed()
 a = inverser_lambda.results.acceptance()
 print(a, p)
 
-print('Lambda Acceptance Rate:', float(a[4])/float(p[4]) * 100.0)
+print("Lambda Acceptance Rate:", float(a[4]) / float(p[4]) * 100.0)
 
 lh = inverser_lambda.results.lambda_history()
 
 fig = matplotlib.pyplot.figure(1)
 a = matplotlib.pyplot.subplot(211)
-a.plot(x, y, 'ko', xc_lambda, meancurve_lambda, 'r-')
+a.plot(x, y, "ko", xc_lambda, meancurve_lambda, "r-")
 a.set_xlim(xmin, xmax)
 
 b = matplotlib.pyplot.subplot(212)
@@ -161,10 +158,10 @@ fig = matplotlib.pyplot.figure(3)
 a = matplotlib.pyplot.subplot(111)
 lsamples = lh[10000:]
 n, bins, patches = a.hist(lsamples, 100, range=(lambda_min, lambda_max))
-a.set_title('Histogram of Lambda')
-a.set_xlabel('Lambda')
-a.set_ylabel('Count')
+a.set_title("Histogram of Lambda")
+a.set_xlabel("Lambda")
+a.set_ylabel("Count")
 
-print('Lambda average:', sum(lsamples)/float(len(lsamples)))
+print("Lambda average:", sum(lsamples) / float(len(lsamples)))
 
 matplotlib.pyplot.show()

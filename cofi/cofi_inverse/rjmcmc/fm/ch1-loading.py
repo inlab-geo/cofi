@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 #
 # Import the libraries we will need for analysis and plotting.
 #
-import rjmcmc 
+import rjmcmc
 import matplotlib
 import matplotlib.pyplot
 
@@ -11,7 +11,7 @@ import matplotlib.pyplot
 # Open our data file which consists of one (x, y) coordinater per line
 # separated by whitespace
 #
-f = open('data.txt', 'r')
+f = open("data.txt", "r")
 lines = f.readlines()
 
 x = []
@@ -27,7 +27,7 @@ f.close()
 
 fig = matplotlib.pyplot.figure()
 
-matplotlib.pyplot.plot(x, y, 'k+')
+matplotlib.pyplot.plot(x, y, "k+")
 matplotlib.pyplot.show()
 
-fig.savefig('ch1-loading.pdf', format='PDF')
+fig.savefig("ch1-loading.pdf", format="PDF")

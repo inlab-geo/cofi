@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 #
 # Import the libraries we will need for analysis and plotting.
 #
@@ -7,7 +7,7 @@
 from __future__ import print_function
 
 import sys
-import rjmcmc 
+import rjmcmc
 import matplotlib
 import matplotlib.pyplot
 
@@ -15,7 +15,7 @@ import matplotlib.pyplot
 # Open our data file which consists of one (x, y) coordinate per line
 # separated by whitespace
 #
-f = open('data.txt', 'r')
+f = open("data.txt", "r")
 lines = f.readlines()
 
 x = []
@@ -47,7 +47,7 @@ n = [sigma] * len(x)
 data = rjmcmc.dataset1d(x, y, n)
 
 #
-# Specify the standard deviation for the move partition 
+# Specify the standard deviation for the move partition
 #
 pd = 0.01
 
@@ -57,7 +57,7 @@ pd = 0.01
 results = rjmcmc.regression_part1d_zero(data, pd)
 
 if results == None:
-    print('error: failed to run regression')
+    print("error: failed to run regression")
     sys.exit(-1)
 
 print(results.proposed())
@@ -82,20 +82,20 @@ fig = matplotlib.pyplot.figure(1)
 
 a = matplotlib.pyplot.subplot(211)
 
-a.plot(x, y, 'k+', xc, meancurve, 'r-')
+a.plot(x, y, "k+", xc, meancurve, "r-")
 a.set_xlim(xmin, xmax)
 
 b = matplotlib.pyplot.subplot(212)
 b.bar(xc, partlocation, xc[1] - xc[0])
 b.set_xlim(xmin, xmax)
 
-fig.savefig('ch2-analyse.pdf', format='PDF')
+fig.savefig("ch2-analyse.pdf", format="PDF")
 
 fig = matplotlib.pyplot.figure(2)
 
 a = matplotlib.pyplot.subplot(111)
-a.hist(partcount, bins=5, range=(0,5), align='left')
+a.hist(partcount, bins=5, range=(0, 5), align="left")
 
-fig.savefig('ch2-analyse-partcount.pdf', format='PDF')
+fig.savefig("ch2-analyse-partcount.pdf", format="PDF")
 
 matplotlib.pyplot.show()

@@ -7,7 +7,7 @@ import matplotlib.pyplot
 
 
 # --------------------- load data ---------------------
-f = open('test3_data.txt', 'r')
+f = open("test3_data.txt", "r")
 lines = f.readlines()
 
 x = []
@@ -25,19 +25,20 @@ f.close()
 # --------------------- define hyperparameters ---------------------
 xmin = 0.0
 xmax = 10.0
-pd = 1.0   # standard deviation for the move partition
+pd = 1.0  # standard deviation for the move partition
 sigma = 5.0
 
 
 # (min, max, std. deviation) for each parameter.
 local_parameters = [(-50.0, 50.0, 2.0)]
-parameter = Parameter("local", )
+parameter = Parameter("local",)
 
 # Global parameters are parameters that are the same in all partitions,
-# an example is a dc bias that is constant across the domain. In this 
-# example we have no global parameters. They are specified in the 
+# an example is a dc bias that is constant across the domain. In this
+# example we have no global parameters. They are specified in the
 # same manner as the local parameters.
 global_parameters = None
+
 
 def my_loglikelihood(globalvalues, boundaries, localvalues):
     global x, y, sigma
@@ -49,7 +50,7 @@ def my_loglikelihood(globalvalues, boundaries, localvalues):
     # returns:
     # the error between the proposed model and the data
 
-    phi = 0.0   # error accumulator
+    phi = 0.0  # error accumulator
 
     for (xi, yi) in zip(x, y):
         if (xi < boundaries[0]) or (xi > boundaries[len(boundaries) - 1]):
@@ -71,11 +72,8 @@ def my_loglikelihood(globalvalues, boundaries, localvalues):
         phi = phi + (dy * dy)
 
     return phi / (2.0 * sigma * sigma)
-        
 
-results = rjmcmc.forwardmodel_part1d(local_parameters,
-                                     global_parameters,
-                                     my_loglikelihood,
-                                     xmin,
-                                     xmax,
-                                     pd)
+
+results = rjmcmc.forwardmodel_part1d(
+    local_parameters, global_parameters, my_loglikelihood, xmin, xmax, pd
+)
