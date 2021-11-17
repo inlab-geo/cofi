@@ -30,29 +30,21 @@ pd = 1.0  # standard deviation for the move partition
 sigma = 5.0  # estimate of the noise parameter, which will affect the tightness of the fit
 
 
+# --------------------- define forward model ---------------------
+
 # (min, max, std. deviation) for each parameter.
-local_parameters = [(-50.0, 50.0, 2.0)]  # TODO delete this
-parameter = Parameter(name="theta", pdf=norm(0,2))
+# local_parameters = [(-50.0, 50.0, 2.0)]
 
 # Global parameters are parameters that are the same in all partitions,
 # an example is a dc bias that is constant across the domain. In this
 # example we have no global parameters. They are specified in the
 # same manner as the local parameters.
-global_parameters = None
+# global_parameters = None
 
+parameter = Parameter(name="local", pdf=norm(0,2))
 
-def my_loglikelihood(x, y, sigma, globalvalues, boundaries, localvalues):
-    # params:
-    # - x, y, sigma: dataset and estimated error
-    # - globalvalues: a list of the global values
-    # - boundaries: a sorted list of the boundary positions including the start and end position
-    # - localvalues: the values in each region (so len(boundaries) == len(localvalues) + 1)
-    # 
-    # returns:
-    # the error between the proposed model and the data
-
-    phi = 0.0  # error accumulator
-
+def my_misfit_partition(*localvalues, boundaries):
+    phi = 0
     for (xi, yi) in zip(x, y):
         if (xi < boundaries[0]) or (xi > boundaries[len(boundaries) - 1]):
             # if the point is outside the range then ignore it (shouldn't happen)
@@ -72,9 +64,15 @@ def my_loglikelihood(x, y, sigma, globalvalues, boundaries, localvalues):
         dy = yi - ym
         phi = phi + (dy * dy)
 
-    return phi / (2.0 * sigma * sigma)
+    return phi / (2.0 * sigma * sigma) 
 
+class MyForward(BaseForward):
+    def __init__(self):
+        super().__init__(self, my_misfit_partition)
 
-results = rjmcmc.forwardmodel_part1d(
-    local_parameters, global_parameters, my_loglikelihood, xmin, xmax, pd
-)
+# --------------------- inverse ---------------------
+inverser = ReversibleJumpMCMC(Model(("local", norm(0,2))), MyForward())
+
+# results = rjmcmc.forwardmodel_part1d(
+#     local_parameters, global_parameters, my_loglikelihood, xmin, xmax, pd
+# )

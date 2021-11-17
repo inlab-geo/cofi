@@ -1,9 +1,10 @@
 from cofi.cofi_inverse import BaseInverse
+from cofi.cofi_forward import BaseForward
 from .lib import rjmcmc
 
 
 class ReversibleJumpMCMC(BaseInverse):
-    def __init__(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):
+    def __init__(self, model=None, forward=None, x=None, y=None, error=None, lambda_min=None, lambda_max=None, lambda_std=None):
         """
         error: a error value per data point and can be thought as a weighting
            as to how well the fit will attempt to fit anindividual point.
@@ -15,10 +16,28 @@ class ReversibleJumpMCMC(BaseInverse):
         Note:
         x, y, and error must be of the same length
         """
-        self.set_data(x, y, error, lambda_min, lambda_max, lambda_std)
+        if model:
+            self.set_forward_model(model, forward)
+        else:
+            self.set_data(x, y, error, lambda_min, lambda_max, lambda_std)
+
+    def set_forward(self, forward: BaseForward):
+        if forward.distance_name != 'l2':
+            raise ValueError("rj-MCMC package only supports l2 distance")
+        
+        self.forward = forward
+        # TODO - more validation here
 
     def set_data(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):
+        if self.x is None:
+            raise ValueError("data x expected, but found None")
+        if self.y is None:
+            raise ValueError("data y expected, but found None")
+        if self.error is None:
+            raise ValueError("estimated error standard deviation of data expected, but found None on parameter 'error'")
+
         # TODO - type validation / conversion (e.g. for numpy ndarray)
+
         self.x = x
         self.y = y
         self.error = error

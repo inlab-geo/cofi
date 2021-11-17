@@ -1,4 +1,4 @@
-from .model import Model, Parameter
+from .model_params import Model, Parameter
 
 
 class BaseForward:
@@ -9,11 +9,37 @@ class BaseForward:
     2. misfit()
     """
 
-    def __init__(self, func, init=None):
-        if init:
-            self.init = init
-            self.init()
+    def __init__(self, func):
         self.objective = func
 
     def misfit(self, model: Model):
-        pass
+        return self.objective(*[p.value for p in model.params])
+
+class DataMisfitForward(BaseForward):
+    """
+    General class holder for objective functions that are calculated from data misfit
+
+    feed the data into constructor, and specify a misfit function
+    """
+
+    def __init__(self, data, distance):
+        # distance can be a function or a string
+        self.data = data
+        
+        if isinstance(distance, function):
+            self.distance = distance
+        elif isinstance(distance, str):
+            self.distance_name = distance
+            # TODO - define the actual distance functions
+            # if distance == 'l2':
+            #     pass
+            # else:
+            #     pass
+
+        # TODO self.objective = ???
+
+    def misfit(self, model: Model):
+        if self.distance_name:
+            raise NotImplementedError("distance functions specified by str not implemented yet")
+        
+        return super().misfit(model)            
