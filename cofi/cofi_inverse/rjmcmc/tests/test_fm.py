@@ -4,6 +4,7 @@ from cofi.cofi_inverse import ReversibleJumpMCMC
 from cofi.cofi_forward import Parameter, Model, BaseForward
 import matplotlib
 import matplotlib.pyplot
+from scipy.stats import norm
 
 
 # --------------------- load data ---------------------
@@ -26,12 +27,12 @@ f.close()
 xmin = 0.0
 xmax = 10.0
 pd = 1.0  # standard deviation for the move partition
-sigma = 5.0
+sigma = 5.0  # estimate of the noise parameter, which will affect the tightness of the fit
 
 
 # (min, max, std. deviation) for each parameter.
-local_parameters = [(-50.0, 50.0, 2.0)]
-parameter = Parameter("local",)
+local_parameters = [(-50.0, 50.0, 2.0)]  # TODO delete this
+parameter = Parameter(name="theta", pdf=norm(0,2))
 
 # Global parameters are parameters that are the same in all partitions,
 # an example is a dc bias that is constant across the domain. In this
@@ -40,13 +41,13 @@ parameter = Parameter("local",)
 global_parameters = None
 
 
-def my_loglikelihood(globalvalues, boundaries, localvalues):
-    global x, y, sigma
-
+def my_loglikelihood(x, y, sigma, globalvalues, boundaries, localvalues):
     # params:
-    # - a list of the global values
-    # - a sorted list of the boundary positions including the start and end position
-    # - the values in each region (so len(boundaries) == len(localvalues) + 1)
+    # - x, y, sigma: dataset and estimated error
+    # - globalvalues: a list of the global values
+    # - boundaries: a sorted list of the boundary positions including the start and end position
+    # - localvalues: the values in each region (so len(boundaries) == len(localvalues) + 1)
+    # 
     # returns:
     # the error between the proposed model and the data
 

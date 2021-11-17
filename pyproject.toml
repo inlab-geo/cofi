@@ -1,3 +1,5 @@
+# black --check .
+# black .
 [tool.black]
 line-length = 88
 target_version = ['py37', 'py38']

@@ -10,6 +10,8 @@ class ReversibleJumpMCMC(BaseInverse):
            If the value is low, then the fit will be tight and
            conversely if the value is high then the fit will be loose.
 
+        lambda: estimated noise / real noise, in cases of unknown noise std
+
         Note:
         x, y, and error must be of the same length
         """
