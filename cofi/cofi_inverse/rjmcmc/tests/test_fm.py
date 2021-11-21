@@ -1,5 +1,6 @@
 from os import error
 import sys
+from cofi.cofi_forward.base_forward import BaseObjectiveFunction
 from cofi.cofi_inverse import ReversibleJumpMCMC
 from cofi.cofi_forward import Parameter, Model, BaseForward
 import matplotlib
@@ -27,7 +28,9 @@ f.close()
 xmin = 0.0
 xmax = 10.0
 pd = 1.0  # standard deviation for the move partition
-sigma = 5.0  # estimate of the noise parameter, which will affect the tightness of the fit
+sigma = (
+    5.0  # estimate of the noise parameter, which will affect the tightness of the fit
+)
 
 
 # --------------------- define forward model ---------------------
@@ -41,7 +44,8 @@ sigma = 5.0  # estimate of the noise parameter, which will affect the tightness 
 # same manner as the local parameters.
 # global_parameters = None
 
-parameter = Parameter(name="local", pdf=norm(0,2))
+parameter = Parameter(name="local", pdf=norm(0, 2))
+
 
 def my_misfit_partition(*localvalues, boundaries):
     phi = 0
@@ -64,14 +68,16 @@ def my_misfit_partition(*localvalues, boundaries):
         dy = yi - ym
         phi = phi + (dy * dy)
 
-    return phi / (2.0 * sigma * sigma) 
+    return phi / (2.0 * sigma * sigma)
 
-class MyForward(BaseForward):
+
+class MyObjectiveFunction(BaseObjectiveFunction):
     def __init__(self):
         super().__init__(self, my_misfit_partition)
 
+
 # --------------------- inverse ---------------------
-inverser = ReversibleJumpMCMC(Model(("local", norm(0,2))), MyForward())
+inverser = ReversibleJumpMCMC(Model(("local", norm(0, 2))), MyForward())
 
 # results = rjmcmc.forwardmodel_part1d(
 #     local_parameters, global_parameters, my_loglikelihood, xmin, xmax, pd

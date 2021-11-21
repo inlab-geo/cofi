@@ -4,7 +4,17 @@ from .lib import rjmcmc
 
 
 class ReversibleJumpMCMC(BaseInverse):
-    def __init__(self, model=None, forward=None, x=None, y=None, error=None, lambda_min=None, lambda_max=None, lambda_std=None):
+    def __init__(
+        self,
+        model=None,
+        forward=None,
+        x=None,
+        y=None,
+        error=None,
+        lambda_min=None,
+        lambda_max=None,
+        lambda_std=None,
+    ):
         """
         error: a error value per data point and can be thought as a weighting
            as to how well the fit will attempt to fit anindividual point.
@@ -22,9 +32,9 @@ class ReversibleJumpMCMC(BaseInverse):
             self.set_data(x, y, error, lambda_min, lambda_max, lambda_std)
 
     def set_forward(self, forward: BaseForward):
-        if forward.distance_name != 'l2':
+        if forward.distance_name != "l2":
             raise ValueError("rj-MCMC package only supports l2 distance")
-        
+
         self.forward = forward
         # TODO - more validation here
 
@@ -34,7 +44,9 @@ class ReversibleJumpMCMC(BaseInverse):
         if self.y is None:
             raise ValueError("data y expected, but found None")
         if self.error is None:
-            raise ValueError("estimated error standard deviation of data expected, but found None on parameter 'error'")
+            raise ValueError(
+                "estimated error standard deviation of data expected, but found None on parameter 'error'"
+            )
 
         # TODO - type validation / conversion (e.g. for numpy ndarray)
 

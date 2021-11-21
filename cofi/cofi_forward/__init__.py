@@ -1,4 +1,4 @@
-from .model import Parameter, Model
-from .base_forward import BaseForward
+from .model_params import Parameter, Model
+from .base_objective import BaseObjectiveFunction
 
-__all__ = ["Parameter", "Model", "BaseForward"]
+__all__ = ["Parameter", "Model", "BaseObjectiveFunction"]

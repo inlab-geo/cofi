@@ -1,7 +1,7 @@
 from .model_params import Model, Parameter
 
 
-class BaseForward:
+class BaseObjectiveFunction:
     """Base class for all forward solvers in CoFI.
 
     All forward solvers must be sub-classes of this class and implements two methods:
@@ -15,7 +15,8 @@ class BaseForward:
     def misfit(self, model: Model):
         return self.objective(*[p.value for p in model.params])
 
-class DataMisfitForward(BaseForward):
+
+class DataMisfitForward(BaseObjectiveFunction):
     """
     General class holder for objective functions that are calculated from data misfit
 
@@ -25,7 +26,7 @@ class DataMisfitForward(BaseForward):
     def __init__(self, data, distance):
         # distance can be a function or a string
         self.data = data
-        
+
         if isinstance(distance, function):
             self.distance = distance
         elif isinstance(distance, str):
@@ -40,6 +41,8 @@ class DataMisfitForward(BaseForward):
 
     def misfit(self, model: Model):
         if self.distance_name:
-            raise NotImplementedError("distance functions specified by str not implemented yet")
-        
-        return super().misfit(model)            
+            raise NotImplementedError(
+                "distance functions specified by str not implemented yet"
+            )
+
+        return super().misfit(model)
