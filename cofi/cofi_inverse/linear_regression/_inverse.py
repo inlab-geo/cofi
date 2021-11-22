@@ -9,5 +9,3 @@ import matplotlib.pyplot as plt
 class LinearRegression(BaseInverse):
     def __init__(self, initial_model: Model, objective: BaseObjectiveFunction):
         self.initial = initial_model
-
-
