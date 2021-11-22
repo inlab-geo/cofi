@@ -3,7 +3,7 @@ from .base_objective import BaseObjectiveFunction
 from .base_forward import *
 
 __all__ = [
-    "Parameter",
+    # "Parameter",
     "Model",
     "BaseObjectiveFunction",
     "BaseForward",
