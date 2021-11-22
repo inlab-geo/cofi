@@ -1,5 +1,5 @@
 from cofi.cofi_inverse import BaseInverse
-from cofi.cofi_forward import BaseForward
+from cofi.cofi_forward import BaseObjectiveFunction
 from .lib import rjmcmc
 
 
@@ -31,11 +31,11 @@ class ReversibleJumpMCMC(BaseInverse):
         else:
             self.set_data(x, y, error, lambda_min, lambda_max, lambda_std)
 
-    def set_forward(self, forward: BaseForward):
-        if forward.distance_name != "l2":
+    def set_objective(self, objective: BaseObjectiveFunction):
+        if objective.distance_name != "l2":
             raise ValueError("rj-MCMC package only supports l2 distance")
 
-        self.forward = forward
+        self.objective = objective
         # TODO - more validation here
 
     def set_data(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):

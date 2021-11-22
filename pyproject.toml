@@ -1,5 +1,5 @@
 # python -m build
-# python setup.py develop [--uninstall]
+# python setup.py develop [--uninstall] | pip install -e . (preferred)
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"

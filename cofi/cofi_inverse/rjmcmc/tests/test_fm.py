@@ -1,6 +1,6 @@
 from os import error
 import sys
-from cofi.cofi_forward.base_forward import BaseObjectiveFunction
+from cofi.cofi_forward import BaseObjectiveFunction
 from cofi.cofi_inverse import ReversibleJumpMCMC
 from cofi.cofi_forward import Parameter, Model, BaseForward
 import matplotlib
@@ -77,7 +77,7 @@ class MyObjectiveFunction(BaseObjectiveFunction):
 
 
 # --------------------- inverse ---------------------
-inverser = ReversibleJumpMCMC(Model(("local", norm(0, 2))), MyForward())
+inverser = ReversibleJumpMCMC(Model(("local", norm(0, 2))), MyObjectiveFunction())
 
 # results = rjmcmc.forwardmodel_part1d(
 #     local_parameters, global_parameters, my_loglikelihood, xmin, xmax, pd

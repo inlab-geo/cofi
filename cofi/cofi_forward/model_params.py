@@ -18,7 +18,7 @@ class Parameter:
     def __post_init__(self):
         if self.value is None and self.pdf is None:
             raise ValueError(
-                f"Specified parameter {name} has no initial value AND no distribution. You must either specify a value or a range/distribution for each parameter"
+                f"Specified parameter {self.name} has no initial value AND no distribution. You must either specify a value or a range/distribution for each parameter"
             )
 
         # if pdfs are specified, check they are done correctly.
@@ -109,6 +109,12 @@ class Model:
             else:
                 val, pdf = item, None
             self.params.append(Parameter(name=nm, value=val, pdf=pdf))
+
+    def values(self) -> np.array:
+        return np.array([p.value for p in self.params])
+
+    def length(self) -> int:
+        return len(self.params)
 
     def to_yamlizable(self):
         return [p.asdict() for p in self.params]

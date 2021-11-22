@@ -13,10 +13,13 @@ class BaseObjectiveFunction:
         self.objective = func
 
     def misfit(self, model: Model):
+        """
+        Misfit value: try to optimise this value by lowering it
+        """
         return self.objective(*[p.value for p in model.params])
 
 
-class DataMisfitForward(BaseObjectiveFunction):
+class DataMisfitObjective(BaseObjectiveFunction):
     """
     General class holder for objective functions that are calculated from data misfit
 
