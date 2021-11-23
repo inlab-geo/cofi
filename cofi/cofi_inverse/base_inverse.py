@@ -1,3 +1,6 @@
+from cofi.cofi_forward.model_params import Model
+
+
 class BaseInverse:
     """Base class for all inverse solvers in CoFI.
 
@@ -9,5 +12,5 @@ class BaseInverse:
     def __init__(self):
         pass
 
-    def solve(self):
-        pass
+    def solve(self) -> Model:
+        raise NotImplementedError("inversion 'solve' method not implemented")

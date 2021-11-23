@@ -111,7 +111,7 @@ class Model:
             self.params.append(Parameter(name=nm, value=val, pdf=pdf))
 
     def values(self) -> np.array:
-        return np.array([p.value for p in self.params])
+        return np.array([p.value if p.value else 0 for p in self.params])
 
     def length(self) -> int:
         return len(self.params)
