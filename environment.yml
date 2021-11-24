@@ -12,3 +12,5 @@ dependencies:
   - plotnine
   - pyyaml
   - black
+  - sphinx
+  - insipid-sphinx-theme
