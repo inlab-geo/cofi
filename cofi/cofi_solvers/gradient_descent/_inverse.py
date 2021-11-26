@@ -1,4 +1,4 @@
-from cofi.cofi_forward import Model, Parameter
+from cofi.cofi_objective import Model, Parameter
 from dataclasses import dataclass
 from copy import deepcopy
 from typing import List, Union, Callable

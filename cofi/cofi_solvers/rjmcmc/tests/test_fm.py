@@ -1,8 +1,8 @@
 from os import error
 import sys
-from cofi.cofi_forward import BaseObjectiveFunction
-from cofi.cofi_inverse import ReversibleJumpMCMC
-from cofi.cofi_forward import Parameter, Model, BaseForward
+from cofi.cofi_objective import BaseObjectiveFunction
+from cofi.cofi_solvers import ReversibleJumpMCMC
+from cofi.cofi_objective import Parameter, Model, BaseForward
 import matplotlib
 import matplotlib.pyplot
 from scipy.stats import norm

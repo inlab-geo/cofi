@@ -1,5 +1,5 @@
-from cofi.cofi_forward import PolynomialFittingFwd, Model
-from cofi.cofi_inverse import LinearRegression
+from cofi.cofi_objective import PolynomialFittingFwd, Model
+from cofi.cofi_solvers import LinearRegression
 
 import numpy as np
 import matplotlib.pyplot as plt

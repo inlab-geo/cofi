@@ -1,5 +1,5 @@
-from cofi.cofi_inverse import BaseInverse
-from cofi.cofi_forward import BaseObjectiveFunction
+from cofi.cofi_solvers import BaseInverse
+from cofi.cofi_objective import BaseObjectiveFunction
 from .lib import rjmcmc
 
 

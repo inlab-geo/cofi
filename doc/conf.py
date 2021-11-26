@@ -56,4 +56,5 @@ html_static_path = ['_static']
 # -- Cutomised variables ------------------------------------------------------
 rst_epilog = """
 .. _repository: https://github.com/inlab-geo/cofi
+.. _Slack: inlab-geo.slack.com
 """

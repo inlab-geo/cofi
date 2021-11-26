@@ -1,4 +1,4 @@
-from cofi.cofi_forward.model_params import Model
+from cofi.cofi_objective.model_params import Model
 
 
 class BaseInverse:

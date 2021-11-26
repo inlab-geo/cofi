@@ -29,7 +29,7 @@ Typical API calls and some examples are explained in the getting-started page:
 API
 ---
 
-Want to find out how to use a specific problem example or inverse solver? Check our auto-generated
+Want to find out how to use a problem type or inverse solver? Check our auto-generated
 API documentation:
 
 .. toctree::
@@ -38,3 +38,24 @@ API documentation:
 
     api/*
 
+
+Contribute to CoFI
+------------------
+
+Found bugs? Wanna improve something? See the contribute page:
+
+.. toctree::
+    :maxdepth: 1
+    
+    contribute
+
+
+FAQ
+---
+
+Got a question?
+
+.. toctree::
+    :maxdepth: 1
+
+    faq

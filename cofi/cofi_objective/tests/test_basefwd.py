@@ -1,4 +1,4 @@
-from cofi.cofi_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd, Model
+from cofi.cofi_objective import BaseForward, LinearFittingFwd, PolynomialFittingFwd, Model
 
 import matplotlib.pyplot as plt
 import numpy as np

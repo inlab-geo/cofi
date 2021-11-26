@@ -1,6 +1,6 @@
-from cofi.cofi_forward.model_params import Model
-from cofi.cofi_inverse import BaseInverse
-from cofi.cofi_forward import BaseObjectiveFunction, Model, Parameter
+from cofi.cofi_objective.model_params import Model
+from cofi.cofi_solvers import BaseInverse
+from cofi.cofi_objective import BaseObjectiveFunction, Model, Parameter
 
 import numpy as np
 import matplotlib.pyplot as plt
