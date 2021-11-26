@@ -1,9 +1,9 @@
-from cofi.cofi_solvers import BaseInverse
-from cofi.cofi_objective import BaseObjectiveFunction
+from ..base_solver import BaseSolver
+from cofi.cofi_objective import BaseObjective
 from .lib import rjmcmc
 
 
-class ReversibleJumpMCMC(BaseInverse):
+class ReversibleJumpMCMC(BaseSolver):
     def __init__(
         self,
         model=None,
@@ -26,12 +26,12 @@ class ReversibleJumpMCMC(BaseInverse):
         Note:
         x, y, and error must be of the same length
         """
-        if model:
-            self.set_forward_model(model, forward)
+        if forward:
+            self.set_objective(forward)
         else:
             self.set_data(x, y, error, lambda_min, lambda_max, lambda_std)
 
-    def set_objective(self, objective: BaseObjectiveFunction):
+    def set_objective(self, objective: BaseObjective):
         if objective.distance_name != "l2":
             raise ValueError("rj-MCMC package only supports l2 distance")
 
@@ -39,11 +39,11 @@ class ReversibleJumpMCMC(BaseInverse):
         # TODO - more validation here
 
     def set_data(self, x, y, error, lambda_min=None, lambda_max=None, lambda_std=None):
-        if self.x is None:
+        if x is None:
             raise ValueError("data x expected, but found None")
-        if self.y is None:
+        if y is None:
             raise ValueError("data y expected, but found None")
-        if self.error is None:
+        if error is None:
             raise ValueError(
                 "estimated error standard deviation of data expected, but found None on parameter 'error'"
             )
@@ -87,21 +87,28 @@ class ReversibleJumpMCMC(BaseInverse):
         which contains various results and diagnostics about the analysis
         (Check ./lib/rjmcmc.py for inferface details)
 
-        burnin: the number of initial samples to throw away (default to 10000)
-        total: the total number of samples to use for the analysis (default to 50000)
-        max_order: the maximum order of polynomial to use to fit the data (default to 5)
-        xsamples: the number of points to sample along the x direction for the curve
-                  (default to 100)
-        ysamples: the number of points to sample along the y directory for the
-                  statistics such as mode, median and confidence intervals. This is
-                  the number of bins for the histograms in the y direction
-                  (default to 100)
-        credible_interval: the confidence interval to use for minimum and maximum
-                           confidence intervals. This should be a value between 0 and 1
-                           (default to 0.95)
-        multi_partition: set to True when the data have discontinuities
-        partition_move_std: the standard deviation for the perturbation of partition
-                            boundaries (must be set when doing multiple partitions)
+        Parameters
+        ----------
+            burnin: Number
+                the number of initial samples to throw away (default to 10000)
+            total: Number
+                the total number of samples to use for the analysis (default to 50000)
+            max_order: Number
+                the maximum order of polynomial to use to fit the data (default to 5)
+            xsamples: Number
+                the number of points to sample along the x direction for the curve (default to 100)
+            ysamples: Number 
+                the number of points to sample along the y directory for the
+                statistics such as mode, median and confidence intervals. This is
+                the number of bins for the histograms in the y direction (default to 100)
+            credible_interval: Number
+                the confidence interval to use for minimum and maximum confidence intervals. 
+                This should be a value between 0 and 1 (default to 0.95)
+            multi_partition: Boolean
+                set to True when the data have discontinuities
+            partition_move_std: Number
+                the standard deviation for the perturbation of partition boundaries 
+                (must be set when doing multiple partitions)
 
         """
 

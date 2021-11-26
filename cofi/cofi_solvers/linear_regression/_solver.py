@@ -1,13 +1,11 @@
-from cofi.cofi_objective.model_params import Model
-from cofi.cofi_solvers import BaseInverse
-from cofi.cofi_objective import BaseObjectiveFunction, Model, Parameter
+from cofi.cofi_solvers import BaseSolver
+from cofi.cofi_objective import BaseObjective, Model
 
 import numpy as np
-import matplotlib.pyplot as plt
 
 
-class LinearRegression(BaseInverse):
-    def __init__(self, initial_model: Model, objective: BaseObjectiveFunction):
+class LinearRegression(BaseSolver):
+    def __init__(self, initial_model: Model, objective: BaseObjective):
         self.prior = initial_model
         self.objective = objective
         self.forward = objective.forward

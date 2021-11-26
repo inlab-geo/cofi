@@ -1,12 +1,10 @@
 from cofi.cofi_objective.model_params import Model
 
 
-class BaseInverse:
-    """Base class for all inverse solvers in CoFI.
-
-    All inverser solvers must be sub-classes of this class and implements two methods:
-    1. __init__
-    2. solve()
+class BaseSolver:
+    """
+    Base class for all inverse solvers in CoFI.
+    All inverse solvers must be sub-classes of this class and implements the 'solve()' method.
     """
 
     def __init__(self):

@@ -1,6 +1,11 @@
 cofi\_objective package
 =======================
 
+.. automodule:: cofi_objective
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Submodules
 ----------
 
@@ -24,14 +29,6 @@ cofi\_objective.model\_params module
 ------------------------------------
 
 .. automodule:: cofi_objective.model_params
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: cofi_objective
    :members:
    :undoc-members:
    :show-inheritance:

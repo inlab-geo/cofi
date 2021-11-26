@@ -1,4 +1,4 @@
-from cofi.cofi_objective import Model, Parameter
+from cofi.cofi_objective import Model, BaseObjective
 from dataclasses import dataclass
 from copy import deepcopy
 from typing import List, Union, Callable
@@ -6,7 +6,7 @@ import numpy as np
 import time
 
 
-class DumbDescent:
+class DumbDescent(BaseObjective):
     """
     A greedy dumb descent where we just take a small step in every direction, and
     only accept if it improves our misfit.
@@ -17,7 +17,7 @@ class DumbDescent:
     def __init__(
         self,
         model: Model,
-        forward: Union[ObjectiveFunction, Callable],
+        forward: Union[BaseObjective, Callable],
         step: np.float,
         time: np.float,
     ):
@@ -30,7 +30,7 @@ class DumbDescent:
         self.time = time
 
     def get_misfit(self, model: Model) -> Union[float, tuple]:
-        if isinstance(self.objective, ObjectiveFunction):
+        if isinstance(self.objective, BaseObjective):
             user_vals = self.objective.get_misfit(model)
         else:
             user_vals = self.objective(*[param.value for param in model.params])
@@ -39,7 +39,7 @@ class DumbDescent:
         else:
             return user_vals, None
 
-    def run(self) -> tuple:
+    def solve(self) -> tuple:
         misfits_by_time = []
         if self.best_info is None:
             user_vals = self.get_misfit(self.current)

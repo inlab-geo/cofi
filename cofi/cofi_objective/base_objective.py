@@ -1,6 +1,6 @@
 from cofi.cofi_objective.base_forward import LinearFittingFwd
 from .model_params import Model
-from cofi.cofi_objective import BaseForward
+from .base_forward import BaseForward
 
 from typing import Protocol
 from numbers import Number
@@ -12,9 +12,9 @@ class _ObjectiveCallable(Protocol):
 
 
 class BaseObjective:
-    """Base class for all forward solvers in CoFI.
+    """Base class for all problem setup in CoFI.
 
-    All forward solvers must be sub-classes of this class and implements two methods:
+    All objective problems must be sub-classes of this class and implements two methods:
     1. __init__
     2. misfit()
     """

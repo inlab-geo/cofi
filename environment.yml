@@ -13,4 +13,5 @@ dependencies:
   - pyyaml
   - black
   - sphinx
-  - insipid-sphinx-theme
+  - pip:
+    - insipid-sphinx-theme

@@ -1,5 +1,13 @@
-from .base_inverse import BaseInverse
-from .rjmcmc import ReversibleJumpMCMC
-from .linear_regression import LinearRegression
+__doc__='''
+cofi.cofi_solvers
+-----------------
 
-__all__ = ["BaseInverse", "ReversibleJumpMCMC", "LinearRegression"]
+This package contains inversion solvers that interface with existing tools
+or are depended on the implementation done by InLab.
+'''
+
+from .base_solver import BaseSolver
+from .rjmcmc._solver import ReversibleJumpMCMC
+from .linear_regression._solver import LinearRegression
+
+__all__ = ["BaseSolver", "ReversibleJumpMCMC", "LinearRegression"]

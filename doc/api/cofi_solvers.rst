@@ -1,6 +1,11 @@
 cofi\_solvers package
 =====================
 
+.. automodule:: cofi_solvers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Subpackages
 -----------
 
@@ -13,18 +18,10 @@ Subpackages
 Submodules
 ----------
 
-cofi\_solvers.base\_inverse module
-----------------------------------
+cofi\_solvers.base\_solver module
+---------------------------------
 
-.. automodule:: cofi_solvers.base_inverse
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: cofi_solvers
+.. automodule:: cofi_solvers.base_solver
    :members:
    :undoc-members:
    :show-inheritance:

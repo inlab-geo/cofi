@@ -21,7 +21,7 @@ f.close()
 sigma = 3.0
 n = [sigma] * len(x)
 
-inverser = ReversibleJumpMCMC(x, y, n)
+inverser = ReversibleJumpMCMC(x=x, y=y, error=n)
 
 inverser.solve()
 # print(result)
@@ -77,7 +77,7 @@ lambda_min = 0.5
 lambda_max = 2.0
 lambda_std = 0.05
 
-inverser_hie = ReversibleJumpMCMC(x, y, n, lambda_min, lambda_max, lambda_std)
+inverser_hie = ReversibleJumpMCMC(x=x, y=y, error=n, lambda_min=lambda_min, lambda_max=lambda_max, lambda_std=lambda_std)
 inverser_hie.solve()
 
 xc = inverser_hie.results.x()
