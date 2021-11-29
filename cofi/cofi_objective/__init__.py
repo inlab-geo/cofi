@@ -1,6 +1,6 @@
 from .model_params import Model
 from .base_objective import BaseObjective
-from .base_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd, FourierFittingFwd
+from .base_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd
 
 __all__ = [
     "Model",
@@ -8,5 +8,4 @@ __all__ = [
     "BaseForward",
     "LinearFittingFwd",
     "PolynomialFittingFwd",
-    "FourierFittingFwd",
 ]

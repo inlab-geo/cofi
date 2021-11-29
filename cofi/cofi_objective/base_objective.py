@@ -28,7 +28,13 @@ class BaseObjective:
         """
         return self.objective(*model.values())
 
-    def gradient(self, model: Model): # TODO
+    def jacobian(self, model: Model): # TODO (with Jax maybe)
+        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+
+    def hessian(self, model: Model):
+        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+
+    def log_posterior(self, model: Model):
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
 
@@ -40,8 +46,8 @@ class DataBasedObjective(BaseObjective):
     """
 
     def __init__(self, X, Y, forward: BaseForward, distance):
-        if isinstance(X, list): X = np.array(X)
-        if isinstance(Y, list): Y = np.array(Y)
+        X = np.asanyarray(X)
+        Y = np.asanyarray(Y)
         if X.shape[0] != Y.shape[0]:
             raise ValueError(f"Numbers of data points don't match between X ({X.shape}) and Y ({Y.shape})")
 

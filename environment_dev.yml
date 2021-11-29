@@ -1,17 +1,17 @@
-# conda env create -f environment.yml
+# conda env create -f environment_dev.yml
 # conda activate ./envs
-# conda env update --file environment.yml --prune
+# conda env update --file environment_dev.yml --prune
 
 name: cofi_dev
 channels: 
   - conda-forge
 dependencies:
   - numpy
-  - pandas
   - scipy
-  - plotnine
   - pyyaml
+  - setuptools
   - black
   - sphinx
+  - pip
   - pip:
     - insipid-sphinx-theme
