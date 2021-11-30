@@ -1,6 +1,11 @@
-# conda env create -f environment_dev.yml
-# conda activate ./envs
-# conda env update --file environment_dev.yml --prune
+# new virtual environment: 
+#     conda env create -f environment_dev.yml
+# activate: 
+#     conda activate cofi_dev
+# update from file:
+#     conda env update --file environment_dev.yml --prune
+# share current env: 
+#     conda env export > environment_ref.yml
 
 name: cofi_dev
 channels: 
@@ -14,6 +19,12 @@ dependencies:
   - setuptools
   - black
   - sphinx
+  - mpi4py
+  - petsc
+  - petsc4py
+  - jupyter
+  - jupyterlab
+  - matplotlib
   - pip
   - pip:
     - insipid-sphinx-theme

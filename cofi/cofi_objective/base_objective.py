@@ -2,7 +2,7 @@ from cofi.cofi_objective.base_forward import LinearFittingFwd
 from .model_params import Model
 from .base_forward import BaseForward
 
-from typing import Protocol
+from typing import Protocol, Union
 from numbers import Number
 import numpy as np
 
@@ -28,13 +28,16 @@ class BaseObjective:
         """
         return self.objective(*model.values())
 
-    def jacobian(self, model: Model): # TODO (with Jax maybe)
+    def jacobian(self, model: Union(Model, np.array)): # TODO (with Jax maybe)
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
-    def hessian(self, model: Model):
+    def gradient(self, model: Union(Model, np.array)):
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
-    def log_posterior(self, model: Model):
+    def hessian(self, model: Union(Model, np.array)):
+        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+
+    def log_posterior(self, model: Union(Model, np.array)):
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
 
