@@ -20,24 +20,24 @@ class BaseObjective:
     """
 
     def __init__(self, func: _ObjectiveCallable):
-        self.objective = func
+        self._objective = func
 
     def misfit(self, model: Model):
         """
         Misfit value: try to optimise this value by lowering it
         """
-        return self.objective(*model.values())
+        return self._objective(*model.values())
 
-    def jacobian(self, model: Union(Model, np.array)): # TODO (with Jax maybe)
+    def jacobian(self, model: Union[Model, np.array]): # TODO (with Jax maybe)
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
-    def gradient(self, model: Union(Model, np.array)):
+    def gradient(self, model: Union[Model, np.array]):
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
-    def hessian(self, model: Union(Model, np.array)):
+    def hessian(self, model: Union[Model, np.array]):
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
-    def log_posterior(self, model: Union(Model, np.array)):
+    def log_posterior(self, model: Union[Model, np.array]):
         raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
 
 

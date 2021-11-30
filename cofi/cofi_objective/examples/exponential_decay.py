@@ -17,26 +17,27 @@ class ExpDecay(BaseObjective):
         self._last_validated_model = None
 
 
-    def forward(self, model: Union[Model, np.array], ret_model=False):
+    def _forward(self, model: Union[Model, np.array], ret_model=False):
         model = self.validate_model(model)
     
         yhat = np.zeros_like(self.x)
-        for i in range(self.n_params/2):
-            yhat += model[i*2] * np.exp(-model[i+1] * self.t)
+        for i in range(int(self.n_params/2)):
+            yhat += model[i*2] * np.exp(-model[i+1] * self.x)
         return (yhat, model) if ret_model else yhat
 
 
-    def objective(self, model: Union(Model, np.array)):
-        yhat, model = self.forward(model, True)
+    def objective(self, model: Union[Model, np.array]):
+        yhat, model = self._forward(model, True)
         residuals = yhat - self.y
-        return residuals @ residuals
+        res = residuals @ residuals
+        return res
 
     
-    def jacobian(self, model: Union(Model, np.array)):
+    def jacobian(self, model: Union[Model, np.array]):
         model = self.validate_model(model)
         
         jac = np.zeros([np.shape(self.x)[0], self.n_params])
-        for i in range(self.n_params/2):
+        for i in range(int(self.n_params/2)):
             for j in range(len(self.x)):
                 jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
                 jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
@@ -44,7 +45,7 @@ class ExpDecay(BaseObjective):
 
     
     def gradient(self, model: Union[Model, np.array]):
-        yhat, model = self.forward(model, True)
+        yhat, model = self._forward(model, True)
         jac = self.jacobian(model)
         return jac.T @ (yhat - self.y)
 
@@ -56,7 +57,7 @@ class ExpDecay(BaseObjective):
         return hessian
 
 
-    def validate_model(self, model: Union(Model, np.array)) -> np.array:
+    def validate_model(self, model: Union[Model, np.array]) -> np.array:
         if model is self._last_validated_model:   # validated already (and converted if needed)
             return model
 
