@@ -5,9 +5,21 @@ from typing import Union
 
 
 class ExpDecay(BaseObjective):
+    """Defines the problem of exponential decay (sum of exponentials)
+
+    Must implement the 'objective' function.
+    Depending on solvers, the following functions may also need to be provided:
+    'residuals', 'jacobian', 'gradient', 'hessian'
+
+    Apart from that, 'data_x', 'data_y', 'initial_model' are also required for
+    some solvers.
+    """
+
     def __init__(self, data_x, data_y, initial_model):
         self.x = np.asanyarray(data_x)
         self.y = np.asanyarray(data_y)
+        if isinstance(initial_model, Model):
+            initial_model = initial_model.values()
         self.m0 = np.asanyarray(initial_model)
         self.n_params = self.m0.shape[0]
 
@@ -18,7 +30,7 @@ class ExpDecay(BaseObjective):
 
 
     def _forward(self, model: Union[Model, np.ndarray], ret_model=False):
-        model = self.validate_model(model)
+        model = self._validate_model(model)
     
         yhat = np.zeros_like(self.x)
         for i in range(int(self.n_params/2)):
@@ -37,7 +49,7 @@ class ExpDecay(BaseObjective):
 
     
     def jacobian(self, model: Union[Model, np.ndarray]):
-        model = self.validate_model(model)
+        model = self._validate_model(model)
         
         jac = np.zeros([np.shape(self.x)[0], self.n_params])
         for i in range(int(self.n_params/2)):
@@ -60,7 +72,7 @@ class ExpDecay(BaseObjective):
         return hessian
 
 
-    def validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
+    def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
         if model is self._last_validated_model:   # validated already (and converted if needed)
             return model
 

@@ -81,10 +81,9 @@ class TAOSolver(BaseSolver):
         params = self.x.getArray()
         tao.destroy()
 
-        param_name = lambda idx: ("a" if idx % 2 == 0 else "b") + str(int(idx / 2))
         model = Model(
             **dict(
-                [(param_name(index[0]), val) for (index, val) in np.ndenumerate(params)]
+                [("p" + str(index[0]), val) for (index, val) in np.ndenumerate(params)]
             )
         )
         return model
@@ -137,6 +136,9 @@ class _TAOAppCtx:
 
     def __init__(self, objective: BaseObjective):
         self._obj = objective
+        if objective.y is None or objective.x is None or objective.m0 is None:
+            raise ValueError("Data x, y and initial model are required for TAO solver")
+
         self.y = objective.y
         self.t = objective.x
         self.x0 = objective.m0

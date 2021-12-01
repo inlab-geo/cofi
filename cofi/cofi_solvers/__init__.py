@@ -11,10 +11,12 @@ from .base_solver import BaseSolver
 # from .rjmcmc._solver import ReversibleJumpMCMC
 from .linear_regression._solver import LinearRegression
 from .petsc import *
+from .scipy import *
 
 __all__ = [
     "BaseSolver",
     # "ReversibleJumpMCMC",
     "LinearRegression",
     "TAOSolver",
+    "ScipyOptimizerSolver",
 ]
