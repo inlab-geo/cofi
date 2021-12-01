@@ -8,9 +8,20 @@ from typing import Union, List
 
 # ref doc for TAO: https://petsc.org/release/docs/manual/tao/
 
-# methods available in PETSc 
+# methods available in PETSc
 # https://petsc.org/main/docs/manualpages/Tao/TaoSetType.html
-valid_methods_unconstrained_min = ["nls", "ntr", "ntl", "lmvm", "cg", "nm", "tron", "gpcg", "blmvm", "pounders"]
+valid_methods_unconstrained_min = [
+    "nls",
+    "ntr",
+    "ntl",
+    "lmvm",
+    "cg",
+    "nm",
+    "tron",
+    "gpcg",
+    "blmvm",
+    "pounders",
+]
 valid_methods_brgn = ["brgn"]
 
 
@@ -21,8 +32,9 @@ class TAOSolver(BaseSolver):
         self.n_params = self.tao_app_ctx.nm
         self.n_points = self.tao_app_ctx.t.shape[0]
 
-
-    def solve(self, method: str, extra_options: Union[List[str], str] =None, verbose=1) -> Model:
+    def solve(
+        self, method: str, extra_options: Union[List[str], str] = None, verbose=1
+    ) -> Model:
         # access PETSc options database
         if extra_options:
             OptDB = PETSc.Options()
@@ -31,7 +43,7 @@ class TAOSolver(BaseSolver):
                     OptDB.insertString(option)
             else:
                 OptDB.insertString(extra_options)
-        
+
         self._pre_solve(method)
         user = self.tao_app_ctx
 
@@ -61,12 +73,11 @@ class TAOSolver(BaseSolver):
             tao.setJacobianResidual(user.evaluateJacobian, self.J, self.Jp)
             self.x.setValues(range(0, self.n_params), user.x0)
             tao.solve(self.x)
-        
+
         if verbose:
-            print('------------------', method, '------------------')
+            print("------------------", method, "------------------")
             self.x.view()
         tao.destroy()
-
 
     def _pre_solve(self, method: str):
         if method in valid_methods_unconstrained_min:
@@ -82,7 +93,7 @@ class TAOSolver(BaseSolver):
             self.H.setFromOptions()
             self.H.setOption(PETSc.Mat.Option.SYMMETRIC, True)
             self.H.setUp()
-        
+
         elif method in valid_methods_brgn:
             # create solution vector
             self.x = PETSc.Vec().create(PETSc.COMM_SELF)
@@ -102,7 +113,7 @@ class TAOSolver(BaseSolver):
 
             self.Jp = PETSc.Mat().createDense([self.n_points, self.n_params])
             self.Jp.setFromOptions()
-            self.Jp.setUp() 
+            self.Jp.setUp()
 
         # TODO - there are other TaoType not implemented yet here
         # else:
@@ -111,7 +122,7 @@ class TAOSolver(BaseSolver):
 
 class _TAOAppCtx:
     """Application context struct in C, required in TAO.
-        This class is initialised and converted from an objective.
+    This class is initialised and converted from an objective.
     """
 
     def __init__(self, objective: BaseObjective):
@@ -161,4 +172,3 @@ class _TAOAppCtx:
             f.assemble()
         else:
             self.evaluateFunction = None
-

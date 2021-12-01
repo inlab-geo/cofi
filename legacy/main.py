@@ -29,12 +29,14 @@ if __name__ == "__main__":
             cofi_spec = yaml.load(f, Loader=yaml.FullLoader)
         except e:
             print(
-                f"Could not parse specified yaml imput file {yamlpath}. Fix your specification"
+                f"Could not parse specified yaml imput file {yamlpath}. Fix your"
+                " specification"
             )
             print("")
             print("")
             print(
-                "Underlying exception follows, in case that is helpful in fixing your yaml file:"
+                "Underlying exception follows, in case that is helpful in fixing your"
+                " yaml file:"
             )
             print("")
             print(e)
@@ -54,7 +56,8 @@ if __name__ == "__main__":
 
         if "cofi_init" not in dir(usermodule) or "cofi_misfit" not in dir(usermodule):
             print(
-                f"Specified user module/code {modulename} at {codepath} does not contain mandatory functions cofi_init and cofi_misfit"
+                f"Specified user module/code {modulename} at {codepath} does not"
+                " contain mandatory functions cofi_init and cofi_misfit"
             )
             sys.exit(4)
 

@@ -14,7 +14,7 @@ class LinearRegression(BaseSolver):
         G = self.forward.get_G(self.objective.X)
         Y = self.objective.Y
         GTG = G.T @ G
-        # TODO regularisation handling? prior model? (ref: inverseionCourse.curveFitting) 
+        # TODO regularisation handling? prior model? (ref: inverseionCourse.curveFitting)
         # TODO return posterior covariance? (ref: inverseionCourse.curveFitting)
         estimated_model = np.linalg.inv(GTG) @ (G.T @ (Y - G @ self.prior.values()))
         # TODO estimate value

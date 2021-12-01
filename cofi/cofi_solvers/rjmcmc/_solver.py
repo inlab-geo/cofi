@@ -45,7 +45,8 @@ class ReversibleJumpMCMC(BaseSolver):
             raise ValueError("data y expected, but found None")
         if error is None:
             raise ValueError(
-                "estimated error standard deviation of data expected, but found None on parameter 'error'"
+                "estimated error standard deviation of data expected, but found None on"
+                " parameter 'error'"
             )
 
         # TODO - type validation / conversion (e.g. for numpy ndarray)
@@ -97,17 +98,17 @@ class ReversibleJumpMCMC(BaseSolver):
                 the maximum order of polynomial to use to fit the data (default to 5)
             xsamples: Number
                 the number of points to sample along the x direction for the curve (default to 100)
-            ysamples: Number 
+            ysamples: Number
                 the number of points to sample along the y directory for the
                 statistics such as mode, median and confidence intervals. This is
                 the number of bins for the histograms in the y direction (default to 100)
             credible_interval: Number
-                the confidence interval to use for minimum and maximum confidence intervals. 
+                the confidence interval to use for minimum and maximum confidence intervals.
                 This should be a value between 0 and 1 (default to 0.95)
             multi_partition: Boolean
                 set to True when the data have discontinuities
             partition_move_std: Number
-                the standard deviation for the perturbation of partition boundaries 
+                the standard deviation for the perturbation of partition boundaries
                 (must be set when doing multiple partitions)
 
         """

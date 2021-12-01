@@ -17,7 +17,6 @@ exclude = '''
   | \.vscode
   | build
   | dist
-  | docs
   | examples
   | lib
 )/

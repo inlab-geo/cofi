@@ -9,5 +9,5 @@ __all__ = [
     "BaseForward",
     "LinearFittingFwd",
     "PolynomialFittingFwd",
-    "ExpDecay"
+    "ExpDecay",
 ]

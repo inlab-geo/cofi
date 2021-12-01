@@ -8,7 +8,7 @@ import yaml
 
 @dataclass
 class Parameter:
-    """ general class for holding a CoFI model parameter """
+    """general class for holding a CoFI model parameter"""
 
     name: str
     value: Union[Number, np.ndarray] = None
@@ -18,7 +18,9 @@ class Parameter:
     def __post_init__(self):
         if self.value is None and self.pdf is None:
             raise ValueError(
-                f"Specified parameter {self.name} has no initial value AND no distribution. You must either specify a value or a range/distribution for each parameter"
+                f"Specified parameter {self.name} has no initial value AND no"
+                " distribution. You must either specify a value or a"
+                " range/distribution for each parameter"
             )
 
         # if pdfs are specified, check they are done correctly.
@@ -27,21 +29,28 @@ class Parameter:
                 if isinstance(self.value, Number):
                     if not isinstance(self.pdf, stats.rv_continuous):
                         raise ValueError(
-                            f"Specified PDF for parameter {self.name} id not a continuous distribution! It is instead a {type(self.pdf)} which is not allowed"
+                            f"Specified PDF for parameter {self.name} id not a"
+                            " continuous distribution! It is instead a"
+                            f" {type(self.pdf)} which is not allowed"
                         )
                     if self.pdf.pdf(self.value) == 0.0:
                         raise ValueError(
-                            f"Initial value {self.value} for parameter {self.name} has zero density in specified pdf"
+                            f"Initial value {self.value} for parameter {self.name} has"
+                            " zero density in specified pdf"
                         )
                 elif isinstance(self.value, np.ndarray):
                     # so pdf should be same shape as value and should be all pdfs
                     if not isinstance(self.pdf, np.ndarray):
                         raise ValueError(
-                            f"Specified PDF for parameter {self.name} must be an array of PDFs"
+                            f"Specified PDF for parameter {self.name} must be an array"
+                            " of PDFs"
                         )
                     elif self.pdf.shape != self.value.shape:
                         raise ValueError(
-                            f"Specified PDF for parameter {self.name} must be an array of PDFs with same shape as {self.name}, but {self.name} was shape {self.value.shape} and pdf was shape {self.pdf.shape}"
+                            f"Specified PDF for parameter {self.name} must be an array"
+                            f" of PDFs with same shape as {self.name}, but"
+                            f" {self.name} was shape {self.value.shape} and pdf was"
+                            f" shape {self.pdf.shape}"
                         )
                     # OK, so its an array of the right shape. Check the type
                     if False in [
@@ -49,12 +58,14 @@ class Parameter:
                         for item in self.pdf.ravel()
                     ]:
                         raise ValueError(
-                            f"Specified PDF for parameter {self.name} must be an array of PDFs"
+                            f"Specified PDF for parameter {self.name} must be an array"
+                            " of PDFs"
                         )
                     for i, v in enumerate(self.value.ravel()):
                         if self.pdf.ravel()[i].pdf(v) == 0.0:
                             raise ValueError(
-                                f"Initial value at index {i} for parameter {self.name} has zero density in specified pdf"
+                                f"Initial value at index {i} for parameter"
+                                f" {self.name} has zero density in specified pdf"
                             )
             else:  # value is None, so we need to initialize it from pdf
                 if isinstance(self.pdf, stats.rv_continuous):
@@ -65,7 +76,8 @@ class Parameter:
                     ).reshape(self.pdf.shape)
                 else:
                     raise ValueError(
-                        f"specified PDF not of expected type. Expected rv_continuous or array of rv_continuous"
+                        f"specified PDF not of expected type. Expected rv_continuous or"
+                        f" array of rv_continuous"
                     )
         else:  # PDF is None, but value is specified. This is fine, we dont need to do anything
             pass
@@ -94,7 +106,7 @@ class Parameter:
 
 @dataclass
 class Model:
-    """ general class for holding a CoFI model """
+    """general class for holding a CoFI model"""
 
     def __init__(self, **kwargs):
         self.params = []
@@ -102,7 +114,8 @@ class Model:
         for nm, item in kwargs.items():
             if not isinstance(nm, str):
                 raise ValueError(
-                    f"Invalid argument to Model(): expected a list of name,value tuples, but first element of one was not a string: {nm}"
+                    "Invalid argument to Model(): expected a list of name,value"
+                    f" tuples, but first element of one was not a string: {nm}"
                 )
             if isinstance(item, tuple):
                 val, pdf = item
@@ -123,13 +136,15 @@ class Model:
     def init_from_yaml(yamldict: dict):
         if "parameters" not in yamldict:
             raise Exception(
-                f"Model specification in YML file *must* contain 'parameters' information for your model"
+                f"Model specification in YML file *must* contain 'parameters'"
+                f" information for your model"
             )
 
         # parameters should be a list of dictionaries
         if not isinstance(yamldict["parameters"], list):
             raise ValueError(
-                f"In your YML file, you must specify 'parameters' for your model as a list"
+                f"In your YML file, you must specify 'parameters' for your model as a"
+                f" list"
             )
         args = {}
         for p in yamldict["parameters"]:

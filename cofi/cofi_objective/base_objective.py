@@ -8,7 +8,8 @@ import numpy as np
 
 
 class _ObjectiveCallable(Protocol):
-    def __call__(self, *args: Number) -> Number: ...
+    def __call__(self, *args: Number) -> Number:
+        ...
 
 
 class BaseObjective:
@@ -28,17 +29,25 @@ class BaseObjective:
         """
         return self._objective(*model.values())
 
-    def jacobian(self, model: Union[Model, np.array]): # TODO (with Jax maybe)
-        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+    def jacobian(self, model: Union[Model, np.array]):  # TODO (with Jax maybe)
+        raise NotImplementedError(
+            "This is a TOOD task, or to be implemented by subclasses"
+        )
 
     def gradient(self, model: Union[Model, np.array]):
-        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+        raise NotImplementedError(
+            "This is a TOOD task, or to be implemented by subclasses"
+        )
 
     def hessian(self, model: Union[Model, np.array]):
-        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+        raise NotImplementedError(
+            "This is a TOOD task, or to be implemented by subclasses"
+        )
 
     def log_posterior(self, model: Union[Model, np.array]):
-        raise NotImplementedError("This is a TOOD task, or to be implemented by subclasses")
+        raise NotImplementedError(
+            "This is a TOOD task, or to be implemented by subclasses"
+        )
 
 
 class DataBasedObjective(BaseObjective):
@@ -52,7 +61,10 @@ class DataBasedObjective(BaseObjective):
         X = np.asanyarray(X)
         Y = np.asanyarray(Y)
         if X.shape[0] != Y.shape[0]:
-            raise ValueError(f"Numbers of data points don't match between X ({X.shape}) and Y ({Y.shape})")
+            raise ValueError(
+                f"Numbers of data points don't match between X ({X.shape}) and Y"
+                f" ({Y.shape})"
+            )
 
         self.X = X
         self.Y = Y
