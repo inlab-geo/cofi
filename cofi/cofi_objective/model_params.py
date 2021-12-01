@@ -91,6 +91,8 @@ class Parameter:
         if self.value is not None:
             if isinstance(self.value, np.ndarray):
                 res["value"] = self.value.tolist()
+            elif isinstance(self.value, np.generic):
+                res["value"] = self.value.item()
             else:
                 res["value"] = self.value
         if self.pdf is not None:
@@ -123,7 +125,7 @@ class Model:
                 val, pdf = item, None
             self.params.append(Parameter(name=nm, value=val, pdf=pdf))
 
-    def values(self) -> np.array:
+    def values(self) -> np.ndarray:
         return np.array([p.value if p.value else 0 for p in self.params])
 
     def length(self) -> int:

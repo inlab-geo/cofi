@@ -77,7 +77,17 @@ class TAOSolver(BaseSolver):
         if verbose:
             print("------------------", method, "------------------")
             self.x.view()
+
+        params = self.x.getArray()
         tao.destroy()
+
+        param_name = lambda idx: ("a" if idx % 2 == 0 else "b") + str(int(idx / 2))
+        model = Model(
+            **dict(
+                [(param_name(index[0]), val) for (index, val) in np.ndenumerate(params)]
+            )
+        )
+        return model
 
     def _pre_solve(self, method: str):
         if method in valid_methods_unconstrained_min:

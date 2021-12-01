@@ -29,22 +29,22 @@ class BaseObjective:
         """
         return self._objective(*model.values())
 
-    def jacobian(self, model: Union[Model, np.array]):  # TODO (with Jax maybe)
+    def jacobian(self, model: Union[Model, np.ndarray]):  # TODO (with Jax maybe)
         raise NotImplementedError(
             "This is a TOOD task, or to be implemented by subclasses"
         )
 
-    def gradient(self, model: Union[Model, np.array]):
+    def gradient(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
             "This is a TOOD task, or to be implemented by subclasses"
         )
 
-    def hessian(self, model: Union[Model, np.array]):
+    def hessian(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
             "This is a TOOD task, or to be implemented by subclasses"
         )
 
-    def log_posterior(self, model: Union[Model, np.array]):
+    def log_posterior(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
             "This is a TOOD task, or to be implemented by subclasses"
         )

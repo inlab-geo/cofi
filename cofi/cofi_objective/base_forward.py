@@ -8,7 +8,7 @@ class BaseForward:
     def __init__(self, forward: Callable):
         self._forward = forward
 
-    def solve(self, model: Model, X) -> np.array:
+    def solve(self, model: Model, X) -> np.ndarray:
         X = np.asanyarray(X)
         return self._forward(model, X)
 
@@ -34,7 +34,7 @@ class LinearFittingFwd(BaseForward):
 
         return self._forward(model, X)
 
-    def _forward(self, model: Model, X: np.array) -> np.array:
+    def _forward(self, model: Model, X: np.ndarray) -> np.ndarray:
         return X @ model.values()
 
     def get_G(self, X, order=None):

@@ -17,7 +17,7 @@ class ExpDecay(BaseObjective):
         self._last_validated_model = None
 
 
-    def _forward(self, model: Union[Model, np.array], ret_model=False):
+    def _forward(self, model: Union[Model, np.ndarray], ret_model=False):
         model = self.validate_model(model)
     
         yhat = np.zeros_like(self.x)
@@ -26,17 +26,17 @@ class ExpDecay(BaseObjective):
         return (yhat, model) if ret_model else yhat
 
 
-    def residuals(self, model: Union[Model, np.array]):
+    def residuals(self, model: Union[Model, np.ndarray]):
         yhat = self._forward(model)
         return yhat - self.y
 
 
-    def objective(self, model: Union[Model, np.array]):
+    def objective(self, model: Union[Model, np.ndarray]):
         residuals = self.residuals(model)
         return residuals @ residuals
 
     
-    def jacobian(self, model: Union[Model, np.array]):
+    def jacobian(self, model: Union[Model, np.ndarray]):
         model = self.validate_model(model)
         
         jac = np.zeros([np.shape(self.x)[0], self.n_params])
@@ -47,20 +47,20 @@ class ExpDecay(BaseObjective):
         return jac
 
     
-    def gradient(self, model: Union[Model, np.array]):
+    def gradient(self, model: Union[Model, np.ndarray]):
         yhat, model = self._forward(model, True)
         jac = self.jacobian(model)
         return jac.T @ (yhat - self.y)
 
 
-    def hessian(self, model: Union[Model, np.array]):
+    def hessian(self, model: Union[Model, np.ndarray]):
         # using the standard approximation (J^T J)
         jac = self.jacobian(model)
         hessian = jac.T @ jac
         return hessian
 
 
-    def validate_model(self, model: Union[Model, np.array]) -> np.array:
+    def validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
         if model is self._last_validated_model:   # validated already (and converted if needed)
             return model
 
