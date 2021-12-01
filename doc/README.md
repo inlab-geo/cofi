@@ -1,0 +1,36 @@
+# CoFI Documentation
+
+## How to build this documentation?
+
+`sphinx` and `sphinx-insipid-theme` are required for building this documentation.
+
+So if you are in a hurry, simply use `pip install sphinx sphinx-insipid-theme`.
+
+Alternatively, the *recommended* way is to use a virtual environment so that it doesn't conflict with the dependencies of your other Python programs. We have listed all the dependencies required for developing CoFI in the root level of this repository. 
+
+So perform the following steps on your terminal:
+
+```bash
+# clone the repo
+cd <path-where-you-want-cofi-to-be-in>
+git clone https://github.com/inlab-geo/cofi.git
+
+# create a virtual environment
+cd cofi
+conda env create -f environment_dev.yml
+conda activate cofi_dev
+
+# build the documentation
+cd doc
+make html
+```
+
+If you already have cofi repository cloned and virtual environment ready, then do the following:
+
+```bash
+cd <path-where-you-have-your-cofi>/cofi
+conda activate cofi_dev
+make html
+```
+
+Then use your browser to open the `index.html` file located in: `<path-of-cofi>/doc/_build/`.
