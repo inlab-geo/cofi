@@ -4,11 +4,11 @@
 
 `sphinx` and `sphinx-insipid-theme` are required for building this documentation.
 
-So if you are in a hurry, simply use `pip install sphinx sphinx-insipid-theme`.
+So if you are in a hurry, simply use `pip install sphinx sphinx-insipid-theme` to ensure the dependencies.
 
-Alternatively, the *recommended* way is to use a virtual environment so that it doesn't conflict with the dependencies of your other Python programs. We have listed all the dependencies required for developing CoFI in the root level of this repository. 
+Alternatively, the *recommended* way is to use a virtual environment so that it doesn't conflict with the dependencies of your other Python programs. We have listed all the dependencies required for developing CoFI in a file (`environment_dev.yml`) at the root level of this repository. 
 
-So perform the following steps on your terminal:
+### Building for the first time
 
 ```bash
 # clone the repo
@@ -25,6 +25,7 @@ cd doc
 make html
 ```
 
+### Updating the documentation
 If you already have cofi repository cloned and virtual environment ready, then do the following:
 
 ```bash
