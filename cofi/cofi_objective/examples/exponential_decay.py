@@ -5,14 +5,14 @@ from typing import Union
 
 
 class ExpDecay(BaseObjective):
-    def __init__(self, x, y, m0):
-        self.x = np.asanyarray(x)
-        self.y = np.asanyarray(y)
-        self.m0 = np.asanyarray(m0)
-        self.n_params = m0.shape[0]
+    def __init__(self, data_x, data_y, initial_model):
+        self.x = np.asanyarray(data_x)
+        self.y = np.asanyarray(data_y)
+        self.m0 = np.asanyarray(initial_model)
+        self.n_params = self.m0.shape[0]
 
         if self.n_params % 2 != 0:
-            raise ValueError(f"Exponential decay sums need to have an even number of parameters, but got ${self.n_params} instead")
+            raise ValueError(f"Exponential decay sums need to have an even number of parameters, but got {self.n_params} instead")
 
         self._last_validated_model = None
 
@@ -22,15 +22,18 @@ class ExpDecay(BaseObjective):
     
         yhat = np.zeros_like(self.x)
         for i in range(int(self.n_params/2)):
-            yhat += model[i*2] * np.exp(-model[i+1] * self.x)
+            yhat += model[i*2] * np.exp(-model[i*2+1] * self.x)
         return (yhat, model) if ret_model else yhat
 
 
+    def residuals(self, model: Union[Model, np.array]):
+        yhat = self._forward(model)
+        return yhat - self.y
+
+
     def objective(self, model: Union[Model, np.array]):
-        yhat, model = self._forward(model, True)
-        residuals = yhat - self.y
-        res = residuals @ residuals
-        return res
+        residuals = self.residuals(model)
+        return residuals @ residuals
 
     
     def jacobian(self, model: Union[Model, np.array]):
@@ -38,7 +41,7 @@ class ExpDecay(BaseObjective):
         
         jac = np.zeros([np.shape(self.x)[0], self.n_params])
         for i in range(int(self.n_params/2)):
-            for j in range(len(self.x)):
+            for j in range(self.x.shape[0]):
                 jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
                 jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
         return jac
@@ -69,7 +72,7 @@ class ExpDecay(BaseObjective):
             n_params = model.shape[0]
         
         if n_params != self.n_params:
-            raise ValueError(f"Model length doesn't match initialisation, expected %{self.n_params} parameters but got ${model.length()} instead")
+            raise ValueError(f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {model.length()} instead")
         
         self._last_validated_model = model
         return model

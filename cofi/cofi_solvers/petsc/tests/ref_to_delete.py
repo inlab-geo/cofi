@@ -1,16 +1,21 @@
-"""
-TAO solvers that work with an objective function and a gradient
-
-"""
-
-
-from petsc4py import PETSc
 import numpy
+import matplotlib.pyplot as plt
+from petsc4py import PETSc
 
+"""PETSc does have a Levenberg-Marquardt optimizer.
+it is a special case of its Bounded Regularized Gauss-Newton
+"""
+
+
+x=numpy.array([1,0.1,2,0.2,3,0.3])
+t=numpy.linspace(0,10)
+y=predict(x,t)
+x0=numpy.array([2,0.2,3,0.3,4,0.1])
+y0=predict(x0,t)
+plt.plot(t,y)
+plt.plot(t,y0)
 
 class AppCtx(object):
-    """Application context struct in C, similar to our Objective class
-    """
 
     def __init__(self,t,y,x0):
         self.y  = y
@@ -18,95 +23,66 @@ class AppCtx(object):
         self.x0 = x0
         self.nm = len(x0)
 
-        
-    def formObjective(self, tao, x):
-        #print ('formObjective')
-        yhat = numpy.zeros_like(self.t)
-        for i in range(int(numpy.shape(x)[0]/2)):
-            yhat += x[i*2]*numpy.exp(-x[i*2+1]*self.t)
-        return numpy.matmul((yhat-self.y),numpy.transpose(yhat-self.y))
-
-
-    def formGradient(self, tao, x, G):
-        #print ('formGradient')
-        yhat = numpy.zeros_like(self.t)
-        for i in range(int(numpy.shape(x)[0]/2)):
-            yhat += x[i*2]*numpy.exp(-x[i*2+1]*self.t)
+    def evaluateJacobian(self, tao, x, J, Jp):
         jac = numpy.zeros([numpy.shape(self.t)[0],numpy.shape(x)[0]])
         for i in range(int(numpy.shape(x)[0]/2)):
             for j in range(len(self.t)):
-                jac[j,i*2]=numpy.exp(-x[i+1]*self.t[j])
-                jac[j,i*2+1]=-x[i*2]*self.t[j]*numpy.exp(-x[i+1]*self.t[j])
-        G.setArray(numpy.matmul(numpy.transpose(jac),yhat-self.y))
-        G.assemble()
+                jac[j,i*2]=numpy.exp(-x[i*2+1]*t[j])
+                jac[j,i*2+1]=-x[i*2]*t[j]*numpy.exp(-x[i*2+1]*t[j])
+        J.setValues(range(0,len(self.t)), range(0,len(self.x0)), jac)   ## obj.jacobian(x)
+        J.assemble()
+        Jp.setValues(range(0,len(self.t)), range(0,len(self.x0)),  jac)   ## obj.jacobian(x) 
+        Jp.assemble()
 
-      
-    def formObjGrad(self, tao, x, G):
-        #print ('formObjGrad')
+    def evaluateFunction(self, tao, x, f):
         yhat = numpy.zeros_like(self.t)
         for i in range(int(numpy.shape(x)[0]/2)):
-            yhat += x[i*2]*numpy.exp(-x[i*2+1]*self.t)
-        jac = numpy.zeros([numpy.shape(self.t)[0],numpy.shape(x)[0]])
-        for i in range(int(numpy.shape(x)[0]/2)):
-            for j in range(len(self.t)):
-                jac[j,i*2]=numpy.exp(-x[i+1]*self.t[j])
-                jac[j,i*2+1]=-x[i*2]*self.t[j]*numpy.exp(-x[i+1]*self.t[j])
-        G.setArray(numpy.matmul(numpy.transpose(jac),yhat-self.y))
-        G.assemble()
-        return numpy.matmul((yhat-self.y),numpy.transpose(yhat-self.y))
+            yhat += x[i*2]*numpy.exp(-x[i*2+1]*self.t) 
+        f.setArray(yhat-self.y)            ## obj.residuals(x)
+        f.assemble()
 
-    def formHessian(self, tao, x, H, HP):
-        #print ('formHessian')
-        # Using the standard approximation (J^T J)
-        jac = numpy.zeros([numpy.shape(self.t)[0],numpy.shape(x)[0]])
-        for i in range(int(numpy.shape(x)[0]/2)):
-            for j in range(len(self.t)):
-                jac[j,i*2]=numpy.exp(-x[i+1]*self.t[j])
-                jac[j,i*2+1]=-x[i*2]*self.t[j]*numpy.exp(-x[i+1]*self.t[j])
-        
-        Hessian=(numpy.matmul(numpy.transpose(jac),jac))
-        H.setValues(range(0,self.nm), range(0,self.nm), Hessian) 
-        H.assemble()
-
+%%time
 
 # access PETSc options database
 OptDB = PETSc.Options()
+OptDB.insertString("-tao_brgn_regularization_type lm") 
 
 # create user application context and set the data and inital guess
 user = AppCtx(t,y,x0)
 
-# create solution vector
+# create solution vector, residual vector etc as PETSc vectors and matrices
+
 x = PETSc.Vec().create(PETSc.COMM_SELF)
 x.setSizes(user.nm)
 x.setFromOptions()
 x.setValues(range(0,len(x0)), x0) 
 
+f = PETSc.Vec().create(PETSc.COMM_SELF)
+f.setSizes(len(y))
+f.setFromOptions()
+f.set(0)
 
-# create Hessian matrix
-H = PETSc.Mat().create(PETSc.COMM_SELF)
-H.setSizes([user.nm, user.nm])
-H.setFromOptions()
-H.setOption(PETSc.Mat.Option.SYMMETRIC, True)
-H.setUp()
+J = PETSc.Mat().createDense([len(t),len(x0)])
+J.setFromOptions()
+J.setUp()
+
+Jp = PETSc.Mat().createDense([len(t),len(x0)])
+Jp.setFromOptions()
+Jp.setUp()
 
 
-# use some of the methods available in PETSc 
-# https://petsc.org/main/docs/manualpages/Tao/TaoSetType.html
-methods=["nm","lmvm","nls","ntr","cg","blmvm","tron"]
+# create TAO Solver
+tao = PETSc.TAO().create(PETSc.COMM_SELF)
+tao.setType(PETSc.TAO.Type.BRGN)
+#tao.setJacobian(user.evaluateJacobian, J)
+tao.setResidual(user.evaluateFunction, f)
+tao.setJacobianResidual(user.evaluateJacobian, J, Jp)
 
-for method in methods:
-    # create TAO Solver
-    tao = PETSc.TAO().create(PETSc.COMM_SELF)
-    tao.setType(method)
-    tao.setFromOptions()
-    # solve the problem
-    tao.setObjectiveGradient(user.formObjGrad)
-    tao.setObjective(user.formObjective)
-    tao.setGradient(user.formGradient)
-    tao.setHessian(user.formHessian, H)
-    x.setValues(range(0,len(x0)), x0) 
-    tao.setInitial(x)
-    tao.solve(x)
-    print(method)
-    x.view()
-    tao.destroy()
+
+tao.setFromOptions()
+x.setValues(range(0,len(x0)), x0) 
+tao.solve(x)
+x.view()
+
+
+

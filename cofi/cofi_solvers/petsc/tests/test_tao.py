@@ -33,6 +33,23 @@ tao_solver = TAOSolver(exp_decay_objective)
 # https://petsc.org/main/docs/manualpages/Tao/TaoSetType.html
 methods=["nm","lmvm","nls","ntr","cg","blmvm","tron"]
 
-tao_solver.pre_solve()
 for method in methods:
     tao_solver.solve(method)
+
+
+# ---------- Levenberg-Marquardt optimizer ----------------------------------
+x=np.array([1,0.1,2,0.2,3,0.3])
+t=np.linspace(0,10)
+y=predict(x,t)
+x0=np.array([2,0.2,3,0.3,4,0.1])
+y0=predict(x0,t)
+plt.plot(t,y)
+plt.plot(t,y0)
+
+
+
+exp_decay_objective_for_BRGN = ExpDecay(t, y, x0)
+exp_decay_objective_for_BRGN.gradient = None
+exp_decay_objective_for_BRGN.hessian = None
+tao_solver = TAOSolver(exp_decay_objective_for_BRGN)
+tao_solver.solve('brgn', "-tao_brgn_regularization_type lm")
