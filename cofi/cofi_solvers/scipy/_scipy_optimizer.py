@@ -30,6 +30,20 @@ from scipy.optimize import minimize, least_squares
 
 
 class ScipyOptimizerSolver(BaseSolver):
+    """Optimizer wrapper of scipy.optimizer.minimize
+
+    Objective definition needs to implement the following functions:
+    - misfit(model)
+    - gradient(model), optional depending on method
+    - hessian(model), optional depending on method
+    - data_x()
+    - data_y()
+    - initial_model()
+    - n_params()
+
+    More details on methods and functions to implement WIP... #TODO
+    """
+
     def __init__(self, objective: BaseObjective):
         self._obj = objective
         self._x0 = objective.m0
@@ -60,11 +74,12 @@ class ScipyOptimizerSolver(BaseSolver):
         :param gradient: a function that calculates the gradient of your objective
             function from a given model (numpy.ndarray). Only for CG, BFGS, Newton-CG,
             L-BFGS-B, TNC, SLSQP, dogleg, trust-ncg, trust-krylov, trust-exact and
-            trust-constr. Defaults to None
+            trust-constr. Defaults to the `gradient` function defined in objective.
         :type gradient: {callable, ‘2-point’, ‘3-point’, ‘cs’, bool}, optional
         :param hess: a function that calculates the Hessian of your objective
             function from a given model (numpy.ndarray). Only for Newton-CG, dogleg,
-            trust-ncg, trust-krylov, trust-exact and trust-constr. Defaults to None
+            trust-ncg, trust-krylov, trust-exact and trust-constr. Defaults to the
+            `hessian` function defined in objective.
         :type hess: {callable, ‘2-point’, ‘3-point’, ‘cs’, HessianUpdateStrategy}, optional
         :param hessp: a function that calculates the Hessian of objective function
             times an arbitrary vector p. Only for Newton-CG, trust-ncg, trust-krylov,
@@ -94,7 +109,7 @@ class ScipyOptimizerSolver(BaseSolver):
 
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         res = minimize(
-            self._obj.objective,
+            self._obj.misfit,
             self._x0,
             method=method,
             jac=gradient,
@@ -116,6 +131,19 @@ class ScipyOptimizerSolver(BaseSolver):
 
 
 class ScipyOptimizerLMSolver(BaseSolver):
+    """Optimizer wrapper of scipy.optimizer.least_squares
+
+    Objective definition needs to implement the following functions:
+    - residuals(model)
+    - jacobian(model), optional depending on method
+    - data_x()
+    - data_y()
+    - initial_model()
+    - n_params()
+
+    More details on methods and functions to implement WIP... #TODO
+    """
+
     def __init__(self, objective: BaseObjective):
         self._obj = objective
         self._x0 = objective.m0

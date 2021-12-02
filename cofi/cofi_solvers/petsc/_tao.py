@@ -26,6 +26,22 @@ valid_methods_brgn = ["brgn"]
 
 
 class TAOSolver(BaseSolver):
+    """Optimizer wrapper of TAO
+
+    Objective definition needs to implement the following functions:
+    - misfit(model)
+    - residuals(model), optional depending on method
+    - jacobian(model), optional depending on method
+    - gradient(model), optional depending on method
+    - hessian(model), optional depending on method
+    - data_x()
+    - data_y()
+    - initial_model()
+    - n_params()
+
+    More details on methods and functions to implement WIP... #TODO
+    """
+
     def __init__(self, objective: BaseObjective):
         self.obj = objective
         self.tao_app_ctx = _TAOAppCtx(objective)
@@ -139,13 +155,13 @@ class _TAOAppCtx:
         if objective.y is None or objective.x is None or objective.m0 is None:
             raise ValueError("Data x, y and initial model are required for TAO solver")
 
-        self.y = objective.y
-        self.t = objective.x
-        self.x0 = objective.m0
-        self.nm = objective.n_params
+        self.y = objective.data_y()
+        self.t = objective.data_x()
+        self.x0 = objective.initial_model()
+        self.nm = objective.params_size()
 
     def formObjective(self, tao, x):
-        return self._obj.objective(x)
+        return self._obj.misfit(x)
 
     def formGradient(self, tao, x, G):
         if self._obj.gradient:

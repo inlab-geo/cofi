@@ -7,7 +7,7 @@ from typing import Union
 class ExpDecay(BaseObjective):
     """Defines the problem of exponential decay (sum of exponentials)
 
-    Must implement the 'objective' function.
+    Must implement the 'misfit' function.
     Depending on solvers, the following functions may also need to be provided:
     'residuals', 'jacobian', 'gradient', 'hessian'
 
@@ -43,7 +43,7 @@ class ExpDecay(BaseObjective):
         return yhat - self.y
 
 
-    def objective(self, model: Union[Model, np.ndarray]):
+    def misfit(self, model: Union[Model, np.ndarray]):
         residuals = self.residuals(model)
         return residuals @ residuals
 
@@ -70,6 +70,22 @@ class ExpDecay(BaseObjective):
         jac = self.jacobian(model)
         hessian = jac.T @ jac
         return hessian
+
+    
+    def data_x(self):
+        return self.x
+
+
+    def data_y(self):
+        return self.y
+
+    
+    def initial_model(self):
+        return self.m0
+
+    
+    def params_size(self):
+        return self.n_params
 
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
