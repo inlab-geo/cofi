@@ -10,8 +10,8 @@ from .base_solver import BaseSolver
 
 # from .rjmcmc._solver import ReversibleJumpMCMC
 from .linear_regression._solver import LinearRegression
-from .petsc import *
-from .scipy import *
+from .scipy._scipy_optimizer import ScipyOptimizerSolver
+from .petsc._tao import TAOSolver
 
 __all__ = [
     "BaseSolver",

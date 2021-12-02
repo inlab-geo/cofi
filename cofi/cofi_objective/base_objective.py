@@ -1,5 +1,5 @@
 from cofi.cofi_objective.base_forward import LinearFittingFwd
-from .model_params import Model
+from . import Model
 from .base_forward import BaseForward
 
 from typing import Protocol, Union

@@ -34,4 +34,4 @@ conda activate cofi_dev
 make html
 ```
 
-Then use your browser to open the `index.html` file located in: `<path-of-cofi>/doc/_build/`.
+Then use your browser to open the `index.html` file located in: `<path-of-cofi>/doc/_build/html/`.

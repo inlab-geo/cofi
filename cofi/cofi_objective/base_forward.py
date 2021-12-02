@@ -1,5 +1,5 @@
 from typing import Callable
-from .model_params import Model
+from . import Model
 
 import numpy as np
 

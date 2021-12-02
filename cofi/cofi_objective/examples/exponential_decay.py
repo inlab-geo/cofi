@@ -15,7 +15,7 @@ class ExpDecay(BaseObjective):
     some solvers.
     """
 
-    def __init__(self, data_x, data_y, initial_model):
+    def __init__(self, data_x, data_y, initial_model: Union[Model, np.ndarray]):
         self.x = np.asanyarray(data_x)
         self.y = np.asanyarray(data_y)
         if isinstance(initial_model, Model):
@@ -58,7 +58,7 @@ class ExpDecay(BaseObjective):
                 jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
         return jac
 
-    
+
     def gradient(self, model: Union[Model, np.ndarray]):
         yhat, model = self._forward(model, True)
         jac = self.jacobian(model)
@@ -84,7 +84,7 @@ class ExpDecay(BaseObjective):
             n_params = model.shape[0]
         
         if n_params != self.n_params:
-            raise ValueError(f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {model.length()} instead")
+            raise ValueError(f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {n_params} instead")
         
         self._last_validated_model = model
         return model

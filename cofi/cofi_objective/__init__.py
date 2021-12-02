@@ -1,7 +1,7 @@
 from .model_params import Model
 from .base_objective import BaseObjective
 from .base_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd
-from .examples import *
+from .examples.exponential_decay import ExpDecay
 
 __all__ = [
     "Model",

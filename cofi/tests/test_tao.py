@@ -35,7 +35,7 @@ tao_solver = TAOSolver(exp_decay_objective)
 methods = ["nm", "lmvm", "nls", "ntr", "cg", "blmvm", "tron"]
 
 for method in methods:
-    tao_solver.solve(method)
+    model = tao_solver.solve(method)
 
 
 # ---------- Levenberg-Marquardt optimizer ----------------------------------

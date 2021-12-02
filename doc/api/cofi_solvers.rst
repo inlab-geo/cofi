@@ -6,15 +6,6 @@ cofi\_solvers package
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   cofi_solvers.linear_regression
-   cofi_solvers.rjmcmc
-
 Submodules
 ----------
 
