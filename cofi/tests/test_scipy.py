@@ -1,4 +1,4 @@
-from cofi.cofi_solvers import ScipyOptimizerSolver
+from cofi.cofi_solvers import ScipyOptimizerSolver, ScipyOptimizerLMSolver
 from cofi.cofi_objective import ExpDecay
 
 import numpy as np
@@ -60,3 +60,26 @@ print(model_2_nm.values())
 print("-------------- 2 exps, BFGS -----------------------------")
 model_2_bfgs = scipy_solver_2.solve(method="BFGS", options={"disp": True})
 print(model_2_bfgs.values())
+
+
+# ---------- three exponentials, Levenberg-Marquardt ---------------------------
+# generate data
+x_3 = np.array([1, 0.01, 2, 0.2, 3, 0.3])
+t_3 = np.linspace(0, 100, 100)
+y_3 = predict(x_3, t_3)
+x0_3 = np.array([2, 0.001, 5, 0.1, 5, 1])
+y0_3 = predict(x0_3, t_3)
+
+# define problem (objective) and solver
+exp_decay_objective_3 = ExpDecay(t_3, y_3, x0_3)
+scipy_solver_3 = ScipyOptimizerLMSolver(exp_decay_objective_3)
+
+# solve with lm
+print("-------------- 3 exps, Levenberg-Marquardt with Jacobian ------------")
+model_3_lm = scipy_solver_3.solve(method="lm")
+print(model_3_lm.values())
+
+print("------------ 3 exps, Levenberg-Marquardt without Jacobian -----------")
+exp_decay_objective_3.jacobian = None
+model_3_lm = scipy_solver_3.solve(method="lm")
+print(model_3_lm.values())
