@@ -9,9 +9,9 @@ class ExpDecay(BaseObjective):
 
     Must implement the 'misfit' function.
     Depending on solvers, the following functions may also need to be provided:
-    'residuals', 'jacobian', 'gradient', 'hessian'
+    'residuals(model)', 'jacobian(model)', 'gradient(model)', 'hessian(model)'
 
-    Apart from that, 'data_x', 'data_y', 'initial_model' are also required for
+    Apart from that, 'data_x()', 'data_y()', 'initial_model()' are also required for
     some solvers.
     """
 
