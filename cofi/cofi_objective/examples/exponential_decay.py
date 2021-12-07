@@ -5,7 +5,10 @@ from typing import Union
 
 
 class ExpDecay(BaseObjective):
-    """Defines the problem of exponential decay (sum of exponentials)
+    """Defines the problem of exponential decay (sum of exponentials).
+
+    :math:`y = f(t) = \sum_{i=0}^{M}{a_i e^{-b_i t}}` where :math:`M` is the 
+    number of addends, and is equal to the number of parameters divided by 2.
 
     Must implement the 'misfit' function.
     Depending on solvers, the following functions may also need to be provided:
