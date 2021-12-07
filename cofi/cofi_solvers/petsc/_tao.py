@@ -4,6 +4,8 @@ from cofi.cofi_objective import BaseObjective, Model
 import numpy as np
 from petsc4py import PETSc
 from typing import Union, List
+import traceback
+import logging
 
 
 # ref doc for TAO: https://petsc.org/release/docs/manual/tao/
@@ -87,13 +89,23 @@ class TAOSolver(BaseSolver):
             # solve the problem
             tao.setResidual(user.evaluateResiduals, self.f)
             tao.setJacobianResidual(user.evaluateJacobian, self.J, self.Jp)
+            if verbose and self._use_mpi:
+                if (self._comm.Get_rank() == 0):
+                    print('x0', flush=True)
+                self._comm.barrier()
+                self.x.view()
             tao.solve(self.x)
 
         if verbose:
-            print("------------------", method, "------------------")
             if self._use_mpi:
-                print("MPI enabled.")
-            self.x.view()
+                if (self._comm.Get_rank() == 0):
+                    print("------------------", method, "with MPI ------------------")
+                    print('x hat', flush=True)
+                self._comm.barrier()
+                self.x.view()
+            else:
+                print("------------------", method, "------------------")
+                self.x.view()
 
         params = self.x.getArray()
         tao.destroy()
@@ -235,11 +247,23 @@ class _TAOAppCtx:
         self.nm = objective.params_size()
 
     def formObjective(self, tao, x):
-        return self._obj.misfit(x)
+        try:
+            res = self._obj.misfit(x)
+        except Exception as e:
+            logging.error(traceback.format_exc())
+            print("An error occurred while forming objective:", e)
+
+        return res
 
     def formGradient(self, tao, x, G):
         if self._obj.gradient:
-            G.setArray(self._obj.gradient(x))
+            try:
+                grad = self._obj.gradient(x)
+            except Exception as e:
+                logging.error(traceback.format_exc())
+                print("An error occurred while forming gradient:", e)
+
+            G.setArray(grad)
             G.assemble()
         else:
             self.formGradient = None
@@ -253,14 +277,25 @@ class _TAOAppCtx:
 
     def formHessian(self, tao, x, H, HP):
         if self._obj.hessian:
-            H.setValues(range(0, self.nm), range(0, self.nm), self._obj.hessian(x))
+            try:
+                hess = self._obj.hessian(x)
+            except Exception as e:
+                logging.error(traceback.format_exc())
+                print("An error occurred while forming Hessian:", e)
+
+            H.setValues(range(0, self.nm), range(0, self.nm), hess)
             H.assemble()
         else:
             self.formHessian = None
 
     def evaluateJacobian(self, tao, x, J, Jp):
         if self._obj.jacobian:
-            jac = self._obj.jacobian(x)
+            try:
+                jac = self._obj.jacobian(x)
+            except Exception as e:
+                logging.error(traceback.format_exc())
+                print("An error occurred while evaluating Jacobian:", e)
+
             J.setValues(range(0, self.t.shape[0]), range(0, self.nm), jac)
             J.assemble()
             Jp.setValues(range(0, self.t.shape[0]), range(0, self.nm), jac)
@@ -270,7 +305,13 @@ class _TAOAppCtx:
 
     def evaluateResiduals(self, tao, x, f):
         if self._obj.residuals:
-            f.setArray(self._obj.residuals(x))
+            try:
+                res = self._obj.residuals(x)
+            except Exception as e:
+                logging.error(traceback.format_exc())
+                print("An error occurred while evaluating residuals:", e)
+
+            f.setArray(res)
             f.assemble()
         else:
             self.evaluateResiduals = None
@@ -299,21 +340,24 @@ class _TAOAppCtxMPI:
         scatter, self.xseq = PETSc.Scatter.toAll(x)
         scatter.begin(x, self.xseq)
         scatter.end(x, self.xseq)
-        print("self.xseq.view()", flush=True)
-        self.xseq.view()
 
     def evaluateJacobian(self, tao, x, J, Jp):
         if self._obj.jacobian_mpi:
             self.formSequentialModelVector(x)
             n, m = self.t_mpitype.getOwnershipRange()
             xseq = self.xseq.getArray()
-            jac = self._obj.jacobian_mpi(xseq, n, m)
-            J.setValue(range(n, m), range(0, self.nm), jac)
+
+            try:
+                jac = self._obj.jacobian_mpi(xseq, n, m)
+            except Exception as e:
+                logging.error(traceback.format_exc())
+                print("An error occurred while evaluating Jacobian:", e)
+
+            J.setValues(range(n, m), range(0, self.nm), jac)
             J.assemble()
-            Jp.setValue(range(n, m), range(0, self.nm), jac)
+            Jp.setValues(range(n, m), range(0, self.nm), jac)
             Jp.assemble()
-            print("J.view()", flush=True)
-            J.view()
+
         else:
             self.evaluateJacobian = None
 
@@ -322,11 +366,16 @@ class _TAOAppCtxMPI:
             self.formSequentialModelVector(x)
             n, m = self.t_mpitype.getOwnershipRange()
             xseq = self.xseq.getArray()
-            res = self._obj.residuals_mpi(xseq, n, m)
-            f.setValue(range(n, m), res)
+
+            try:
+                res = self._obj.residuals_mpi(xseq, n, m)
+            except Exception as e:
+                logging.error(traceback.format_exc())
+                print("An error occurred while evaluating residuals:", e)
+
+            f.setValues(range(n, m), res)
             f.assemble()
-            print("f.view()", flush=True)
-            f.view()
+
         else:
             self.evaluateResiduals = None
 

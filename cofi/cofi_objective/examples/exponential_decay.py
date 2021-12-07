@@ -45,9 +45,9 @@ class ExpDecay(BaseObjective):
     def _forward_mpi(self, model: Union[Model, np.ndarray], n, m, ret_model=False):
         model = self._validate_model(model)
 
-        yhat = np.zeros((n-m,))
+        yhat = np.zeros((m-n,))
         for i in range(int(self.n_params/2)):
-            yhat += model[i*2] * np.exp(-model[i*2+1, self.x[n:m]])
+            yhat += model[i*2] * np.exp(-model[i*2+1], self.x[n:m])
         return (yhat, model) if ret_model else yhat
 
 
@@ -87,8 +87,8 @@ class ExpDecay(BaseObjective):
         jac = np.zeros([m-n, self.n_params])
         for i in range(int(self.n_params/2)):
             for j in range(n, m):
-                jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
-                jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
+                jac[j-n,i*2] = np.exp(-model[i*2+1]*self.x[j])
+                jac[j-n,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
         return jac
 
 

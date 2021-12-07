@@ -24,5 +24,5 @@ y0_ = predict(x0_, t_)
 # ---------- define problem & solve ------------------------------------------
 exp_decay_objective_for_mpi = ExpDecay(t_, y_, x0_)
 tao_solver_mpi = TAOSolver(exp_decay_objective_for_mpi, True)
-tao_solver_mpi.set_options("-tao_monitor -tao_brgn_regularization_type lm")
+tao_solver_mpi.set_options("-tao_type brgn -tao_monitor -tao_brgn_regularization_type lm")
 tao_solver_mpi.solve('brgn')
