@@ -52,10 +52,6 @@ class ExpDecay(BaseObjective):
 
 
     def residuals(self, model: Union[Model, np.ndarray]):
-        # yhat = self._forward(model)
-        # return yhat - self.y
-        # print(self._forward(model), self._forward_mpi(model, 0, np.shape(self.x)[0]))
-
         return self.residuals_mpi(model, 0, np.shape(self.x)[0])
 
 
@@ -68,17 +64,13 @@ class ExpDecay(BaseObjective):
         residuals = self.residuals(model)
         return residuals @ residuals
 
+
+    def misfit_mpi(self, model: Union[Model, np.ndarray], n, m):
+        residuals = self.residuals_mpi(model, n, m)
+        return residuals @ residuals
+
     
     def jacobian(self, model: Union[Model, np.ndarray]):
-        # model = self._validate_model(model)
-        
-        # jac = np.zeros([np.shape(self.x)[0], self.n_params])
-        # for i in range(int(self.n_params/2)):
-        #     for j in range(self.x.shape[0]):
-        #         jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
-        #         jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
-        # return jac
-
         return self.jacobian_mpi(model, 0, np.shape(self.x)[0])
 
 
@@ -99,9 +91,21 @@ class ExpDecay(BaseObjective):
         return jac.T @ (yhat - self.y)
 
 
+    def gradient_mpi(self, model: Union[Model, np.ndarray], n, m):
+        yhat, model = self._forward_mpi(model, n, m, True)
+        jac = self.jacobian_mpi(model, n, m)
+        return jac.T @ (yhat - self.y[n:m])
+
+
     def hessian(self, model: Union[Model, np.ndarray]):
         # using the standard approximation (J^T J)
         jac = self.jacobian(model)
+        hessian = jac.T @ jac
+        return hessian
+
+    
+    def hessian_mpi(self, model: Union[Model, np.ndarray], n, m):
+        jac = self.jacobian_mpi(model, n, m)
         hessian = jac.T @ jac
         return hessian
 

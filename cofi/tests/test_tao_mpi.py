@@ -26,3 +26,11 @@ exp_decay_objective_for_mpi = ExpDecay(t_, y_, x0_)
 tao_solver_mpi = TAOSolver(exp_decay_objective_for_mpi, True)
 tao_solver_mpi.set_options("-tao_type brgn -tao_monitor -tao_brgn_regularization_type lm")
 tao_solver_mpi.solve('brgn')
+
+# ---------- other methods ---------------------------------------------------
+tao_solver_mpi_2 = TAOSolver(exp_decay_objective_for_mpi, True)
+methods = ["nm", "lmvm", "nls", "ntr", "cg", "blmvm", "tron"]
+
+for method in methods:
+    model = tao_solver_mpi_2.solve(method)
+
