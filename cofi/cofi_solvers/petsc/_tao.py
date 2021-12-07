@@ -85,7 +85,7 @@ class TAOSolver(BaseSolver):
             tao.setFromOptions()
 
             # solve the problem
-            tao.setResidual(user.evaluateFunction, self.f)
+            tao.setResidual(user.evaluateResiduals, self.f)
             tao.setJacobianResidual(user.evaluateJacobian, self.J, self.Jp)
             tao.solve(self.x)
 
@@ -106,7 +106,7 @@ class TAOSolver(BaseSolver):
         return model
 
 
-    def set_options(options: Union[List[str], str]):
+    def set_options(self, options: Union[List[str], str]):
         # access PETSc options database
         OptDB = PETSc.Options()
         if isinstance(options, list):
@@ -163,6 +163,8 @@ class TAOSolver(BaseSolver):
 
     def _pre_solve_mpi(self, method: str):
         if method in valid_methods_unconstrained_min:
+            # TODO
+            # remember to set MPI variables to self.tao_app_ctx
             pass
             
         elif method in valid_methods_brgn:
@@ -176,12 +178,12 @@ class TAOSolver(BaseSolver):
             self.x.setValues(range(n, m), self.tao_app_ctx.x0[n:m])
             self.x.assemble()
 
-            # create time, observation, predicction vectors and Jacobian matrix as mpi types
+            # create time, observation, prediction vectors and Jacobian matrix as mpi types
             self.t = PETSc.Vec().create(self._comm)
             self.t.setSizes(self.n_points)
             self.t.setType('mpi')
             self.t.setFromOptions()
-            n, = self.t.getOwnershipRange()
+            n, m = self.t.getOwnershipRange()
             self.t.setValues(range(n, m), self.tao_app_ctx.t[n:m])
             self.t.assemble()
 
@@ -209,6 +211,8 @@ class TAOSolver(BaseSolver):
             self.Jp.setSizes([self.n_points, self.n_params])
             self.Jp.setFromOptions()
             self.Jp.setUp()
+
+            self.tao_app_ctx.set_MPI_variables(t_mpitype=self.t, y=self.y)
 
         # TODO - there are other TaoType not implemented yet here
         # else:
@@ -264,12 +268,12 @@ class _TAOAppCtx:
         else:
             self.evaludateJacobian = None
 
-    def evaluateFunction(self, tao, x, f):
+    def evaluateResiduals(self, tao, x, f):
         if self._obj.residuals:
             f.setArray(self._obj.residuals(x))
             f.assemble()
         else:
-            self.evaluateFunction = None
+            self.evaluateResiduals = None
 
 
 class _TAOAppCtxMPI:
@@ -280,10 +284,14 @@ class _TAOAppCtxMPI:
         if objective.data_y is None or objective.data_x is None or objective.initial_model is None:
             raise ValueError("Data x, y and initial model are required for TAO solver")
 
-        self.y = objective.data_y()
         self.t = objective.data_x()
         self.x0 = objective.initial_model()
         self.nm = objective.params_size()
+        self.y = objective.data_y()
+
+    def set_MPI_variables(self, **kwargs):
+        # self.t should be passed in here 
+        self.__dict__.update(kwargs)
 
     def formSequentialModelVector(self,x):
         self.xseq = PETSc.Vec().create(PETSc.COMM_SELF)
@@ -291,24 +299,34 @@ class _TAOAppCtxMPI:
         scatter, self.xseq = PETSc.Scatter.toAll(x)
         scatter.begin(x, self.xseq)
         scatter.end(x, self.xseq)
+        print("self.xseq.view()", flush=True)
+        self.xseq.view()
 
     def evaluateJacobian(self, tao, x, J, Jp):
-        self.formSequentialModelVector(x)
-        n, m = self.t.getOwnershipRange()
-        nx = x.getSize()
+        if self._obj.jacobian_mpi:
+            self.formSequentialModelVector(x)
+            n, m = self.t_mpitype.getOwnershipRange()
+            xseq = self.xseq.getArray()
+            jac = self._obj.jacobian_mpi(xseq, n, m)
+            J.setValue(range(n, m), range(0, self.nm), jac)
+            J.assemble()
+            Jp.setValue(range(n, m), range(0, self.nm), jac)
+            Jp.assemble()
+            print("J.view()", flush=True)
+            J.view()
+        else:
+            self.evaluateJacobian = None
 
-        for j in range(n, m):
-            tt = self.t.getValue(j)
-            for i in range(int(nx/2)):
-                x1 = self.xseq.getValue(i*2)
-                x2 = self.xseq.getValue(i*2+1)
-
-                val = np.exp(-x2*tt)
-                J.setValue(j, i*2, val)
-                Jp.setValue(j, i*2, val)
-                val = -x1*tt*np.exp(-x2*tt)
-                J.setValue(j, i*2+1, val)
-                Jp.setvalue(j, i*2+1, val)
-
-    
+    def evaluateResiduals(self, tao, x, f):
+        if self._obj.residuals_mpi:
+            self.formSequentialModelVector(x)
+            n, m = self.t_mpitype.getOwnershipRange()
+            xseq = self.xseq.getArray()
+            res = self._obj.residuals_mpi(xseq, n, m)
+            f.setValue(range(n, m), res)
+            f.assemble()
+            print("f.view()", flush=True)
+            f.view()
+        else:
+            self.evaluateResiduals = None
 

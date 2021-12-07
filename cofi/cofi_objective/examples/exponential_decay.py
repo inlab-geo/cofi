@@ -9,10 +9,14 @@ class ExpDecay(BaseObjective):
 
     Must implement the 'misfit' function.
     Depending on solvers, the following functions may also need to be provided:
-    'residuals(model)', 'jacobian(model)', 'gradient(model)', 'hessian(model)'
+    `residuals(model)`, `jacobian(model)`, `gradient(model)`, `hessian(model)`
 
-    Apart from that, 'data_x()', 'data_y()', 'initial_model()' are also required for
+    Apart from that, `data_x()`, `data_y()`, `initial_model()` are also required for
     some solvers.
+
+    For parallel computing, respective functions like `jacobian` need to have its
+    parallel version and have `_mpi` as suffix of the function name, with additional
+    range of data in the signatures (e.g. `jacobian_mpi(model, n, m)`)
     """
 
     def __init__(self, data_x, data_y, initial_model: Union[Model, np.ndarray]):
@@ -38,9 +42,25 @@ class ExpDecay(BaseObjective):
         return (yhat, model) if ret_model else yhat
 
 
+    def _forward_mpi(self, model: Union[Model, np.ndarray], n, m, ret_model=False):
+        model = self._validate_model(model)
+
+        yhat = np.zeros((n-m,))
+        for i in range(int(self.n_params/2)):
+            yhat += model[i*2] * np.exp(-model[i*2+1, self.x[n:m]])
+        return (yhat, model) if ret_model else yhat
+
+
     def residuals(self, model: Union[Model, np.ndarray]):
-        yhat = self._forward(model)
-        return yhat - self.y
+        # yhat = self._forward(model)
+        # return yhat - self.y
+
+        return self.residuals_mpi(model, 0, np.shape(self.x)[0])
+
+
+    def residuals_mpi(self, model: Union[Model, np.ndarray], n, m):
+        yhat = self._forward_mpi(model, n, m)
+        return yhat - self.y[n:m]
 
 
     def misfit(self, model: Union[Model, np.ndarray]):
@@ -49,11 +69,24 @@ class ExpDecay(BaseObjective):
 
     
     def jacobian(self, model: Union[Model, np.ndarray]):
-        model = self._validate_model(model)
+        # model = self._validate_model(model)
         
-        jac = np.zeros([np.shape(self.x)[0], self.n_params])
+        # jac = np.zeros([np.shape(self.x)[0], self.n_params])
+        # for i in range(int(self.n_params/2)):
+        #     for j in range(self.x.shape[0]):
+        #         jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
+        #         jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
+        # return jac
+
+        return self.jacobian_mpi(model, 0, np.shape(self.x)[0])
+
+
+    def jacobian_mpi(self, model: Union[Model, np.ndarray], n, m):
+        model = self._validate_model(model)
+
+        jac = np.zeros([m-n, self.n_params])
         for i in range(int(self.n_params/2)):
-            for j in range(self.x.shape[0]):
+            for j in range(n, m):
                 jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
                 jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
         return jac
