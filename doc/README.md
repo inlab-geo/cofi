@@ -1,5 +1,9 @@
 # CoFI Documentation
 
+> Note that our latest documentation is now hosted by [readthedocs](https://readthedocs.org/) and can be accessed [**here**](https://cofi.readthedocs.io/en/latest/). 
+> 
+> Instructions below are only for development and testing purposes.
+
 ## How to build this documentation?
 
 `sphinx` and `sphinx-insipid-theme` are required for building this documentation.
