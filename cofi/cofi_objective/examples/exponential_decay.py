@@ -47,13 +47,14 @@ class ExpDecay(BaseObjective):
 
         yhat = np.zeros((m-n,))
         for i in range(int(self.n_params/2)):
-            yhat += model[i*2] * np.exp(-model[i*2+1], self.x[n:m])
+            yhat += model[i*2] * np.exp(-model[i*2+1] * self.x[n:m])
         return (yhat, model) if ret_model else yhat
 
 
     def residuals(self, model: Union[Model, np.ndarray]):
         # yhat = self._forward(model)
         # return yhat - self.y
+        # print(self._forward(model), self._forward_mpi(model, 0, np.shape(self.x)[0]))
 
         return self.residuals_mpi(model, 0, np.shape(self.x)[0])
 

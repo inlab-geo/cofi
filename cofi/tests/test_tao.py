@@ -1,4 +1,3 @@
-from petsc4py.PETSc import PETSc
 from cofi.cofi_solvers import TAOSolver
 from cofi.cofi_objective import ExpDecay
 
