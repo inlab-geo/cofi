@@ -1,5 +1,5 @@
 from cofi.cofi_solvers import TAOSolver
-from cofi.cofi_objective import ExpDecay
+from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
 import matplotlib.pyplot as plt
