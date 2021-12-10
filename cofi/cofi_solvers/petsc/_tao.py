@@ -85,6 +85,7 @@ class TAOSolver(BaseSolver):
             tao.setHessian(user.formHessian, self.H)
             tao.setInitial(self.x)
             try:
+                print("-----begin")
                 tao.solve(self.x)
             except:
                 logging.error(traceback.format_exc())
@@ -137,7 +138,6 @@ class TAOSolver(BaseSolver):
     def set_options(self, options: Union[List[str], str]):
         # access PETSc options database
         OptDB = PETSc.Options()
-        print(OptDB.getAll())
         if isinstance(options, list):
             for option in options:
                 if not isinstance(option, str):
@@ -147,7 +147,6 @@ class TAOSolver(BaseSolver):
             OptDB.insertString(options) 
         else:
             raise ValueError("options of TAOSolver needs to be of type `str` or `List[str]`")
-        print(OptDB.getAll())
 
     def _pre_solve(self, method: str):
         if self._use_mpi:
@@ -404,8 +403,9 @@ class _TAOAppCtxMPI(_TAOAppCtx):
         # print("< formObjective")
 
     def formGradient(self, tao, x, G):
-        # print("> formGradient")
+        print("> formGradient")
         if self._obj.gradient_mpi:
+            print(G.getSize(), flush=True)
             self.formSequentialModelVector(x)
             n, m = self.t_mpitype.getOwnershipRange()
             xseq = self.xseq.getArray()
@@ -414,9 +414,9 @@ class _TAOAppCtxMPI(_TAOAppCtx):
             except Exception as e:
                 logging.error(traceback.format_exc())
                 print("An error occurred while forming gradient:", e)
-            n, m = x.getOwnershipRange()
-            grad = grad[n:m]
-            G.setArray(grad)
+            print(G.getSize(), grad.shape)
+            # G.setArray(grad)
+            G.setValues(range(0, G.getSize()), grad)
             G.assemble()
         else:
             self.formGradient = None
