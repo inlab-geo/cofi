@@ -62,7 +62,7 @@ class TAOSolver(BaseSolver):
 
     def __init__(self, objective: BaseObjective, mpi=False):
         petsc4py.init(sys.argv)
-        
+
         self.obj = objective
         self._use_mpi = mpi
         if mpi:
@@ -84,9 +84,21 @@ class TAOSolver(BaseSolver):
     def solve(
         self, method: str = "nm", extra_options: Union[List[str], str] = None, verbose=1
     ) -> Model:
-        if (self._use_mpi and not (method in _methods_need_objective or method in _methods_need_residual)) \
-            or (not self._use_mpi and not (method in _methods_need_objective_mpi or method in _methods_need_residual_mpi)):
-            raise ValueError(f"method {method} is not a valid option or hasn't been supported yet")
+        if (
+            self._use_mpi
+            and not (
+                method in _methods_need_objective or method in _methods_need_residual
+            )
+        ) or (
+            not self._use_mpi
+            and not (
+                method in _methods_need_objective_mpi
+                or method in _methods_need_residual_mpi
+            )
+        ):
+            raise ValueError(
+                f"method {method} is not a valid option or hasn't been supported yet"
+            )
 
         if extra_options:
             self.set_options(extra_options)
@@ -125,7 +137,7 @@ class TAOSolver(BaseSolver):
             # solve the problem
             tao.setResidual(user.evaluateResiduals, self.f)
             tao.setJacobianResidual(user.evaluateJacobian, self.J, self.Jp)
-    
+
             tao.solve(self.x)
 
         self._comm.barrier()
@@ -133,9 +145,9 @@ class TAOSolver(BaseSolver):
         if verbose:
             if self._use_mpi:
                 print(self._rank)
-                if (self._rank == 0):
+                if self._rank == 0:
                     print("------------------", method, "with MPI ------------------")
-                    print('x hat', flush=True)
+                    print("x hat", flush=True)
                 self.x.view()
             else:
                 print("------------------", method, "------------------")
@@ -151,19 +163,22 @@ class TAOSolver(BaseSolver):
         )
         return model
 
-
     def set_options(self, options: Union[List[str], str]):
         # access PETSc options database
         OptDB = PETSc.Options()
         if isinstance(options, list):
             for option in options:
                 if not isinstance(option, str):
-                    raise ValueError("options of TAOSolver needs to be of type `str` or `List[str]`")
+                    raise ValueError(
+                        "options of TAOSolver needs to be of type `str` or `List[str]`"
+                    )
                 OptDB.insertString(option)
         elif isinstance(options, str):
-            OptDB.insertString(options) 
+            OptDB.insertString(options)
         else:
-            raise ValueError("options of TAOSolver needs to be of type `str` or `List[str]`")
+            raise ValueError(
+                "options of TAOSolver needs to be of type `str` or `List[str]`"
+            )
 
     def _pre_solve(self, method: str):
         if self._use_mpi:
@@ -212,7 +227,7 @@ class TAOSolver(BaseSolver):
             # create solution model vector
             self.x = PETSc.Vec().create(self._comm)
             self.x.setSizes(self.n_params)
-            self.x.setType('mpi')
+            self.x.setType("mpi")
             self.x.setFromOptions()
             self.x.setUp()
             n, m = self.x.getOwnershipRange()
@@ -222,7 +237,7 @@ class TAOSolver(BaseSolver):
             # create time, observation, prediction vectors and Hessian matrix as mpi types
             self.t = PETSc.Vec().create(self._comm)
             self.t.setSizes(self.n_points)
-            self.t.setType('mpi')
+            self.t.setType("mpi")
             self.t.setFromOptions()
             n, m = self.t.getOwnershipRange()
             self.t.setValues(range(n, m), self.tao_app_ctx.t[n:m])
@@ -230,7 +245,7 @@ class TAOSolver(BaseSolver):
 
             self.y = PETSc.Vec().create(self._comm)
             self.y.setSizes(self.n_points)
-            self.y.setType('mpi')
+            self.y.setType("mpi")
             self.y.setFromOptions()
             n, m = self.t.getOwnershipRange()
             self.y.setValues(range(n, m), self.tao_app_ctx.y[n:m])
@@ -238,21 +253,21 @@ class TAOSolver(BaseSolver):
 
             self.f = PETSc.Vec().create(self._comm)
             self.f.setSizes(self.n_points)
-            self.f.setType('mpi')
+            self.f.setType("mpi")
             self.f.setFromOptions()
 
             self.H = PETSc.Mat().create(self._comm)
-            self.H.setType('mpidense')
+            self.H.setType("mpidense")
             self.H.setSizes([self.n_params, self.n_params])
             self.H.setFromOptions()
             self.H.setOption(PETSc.Mat.Option.SYMMETRIC, True)
             self.H.setUp()
-            
+
         elif method in _methods_need_residual_mpi:
             # create solution model vector
             self.x = PETSc.Vec().create(self._comm)
             self.x.setSizes(self.n_params)
-            self.x.setType('mpi')
+            self.x.setType("mpi")
             self.x.setFromOptions()
             self.x.setUp()
             n, m = self.x.getOwnershipRange()
@@ -262,7 +277,7 @@ class TAOSolver(BaseSolver):
             # create time, observation, prediction vectors and Jacobian matrix as mpi types
             self.t = PETSc.Vec().create(self._comm)
             self.t.setSizes(self.n_points)
-            self.t.setType('mpi')
+            self.t.setType("mpi")
             self.t.setFromOptions()
             n, m = self.t.getOwnershipRange()
             self.t.setValues(range(n, m), self.tao_app_ctx.t[n:m])
@@ -270,7 +285,7 @@ class TAOSolver(BaseSolver):
 
             self.y = PETSc.Vec().create(self._comm)
             self.y.setSizes(self.n_points)
-            self.y.setType('mpi')
+            self.y.setType("mpi")
             self.y.setFromOptions()
             n, m = self.t.getOwnershipRange()
             self.y.setValues(range(n, m), self.tao_app_ctx.y[n:m])
@@ -278,17 +293,17 @@ class TAOSolver(BaseSolver):
 
             self.f = PETSc.Vec().create(self._comm)
             self.f.setSizes(self.n_points)
-            self.f.setType('mpi')
+            self.f.setType("mpi")
             self.f.setFromOptions()
 
             self.J = PETSc.Mat().create(self._comm)
-            self.J.setType('mpidense')
+            self.J.setType("mpidense")
             self.J.setSizes([self.n_points, self.n_params])
             self.J.setFromOptions()
             self.J.setUp()
 
             self.Jp = PETSc.Mat().create(self._comm)
-            self.Jp.setType('mpidense')
+            self.Jp.setType("mpidense")
             self.Jp.setSizes([self.n_points, self.n_params])
             self.Jp.setFromOptions()
             self.Jp.setUp()
@@ -303,7 +318,11 @@ class _TAOAppCtx:
 
     def __init__(self, objective: BaseObjective):
         self._obj = objective
-        if objective.data_y is None or objective.data_x is None or objective.initial_model is None:
+        if (
+            objective.data_y is None
+            or objective.data_x is None
+            or objective.initial_model is None
+        ):
             raise ValueError("Data x, y and initial model are required for TAO solver")
 
         self.y = objective.data_y()
@@ -389,12 +408,12 @@ class _TAOAppCtxMPI(_TAOAppCtx):
         self._rank = comm.Get_rank()
 
     def set_MPI_variables(self, **kwargs):
-        # self.t should be passed in here 
+        # self.t should be passed in here
         self.__dict__.update(kwargs)
 
-    def formSequentialModelVector(self,x):
+    def formSequentialModelVector(self, x):
         self.xseq = PETSc.Vec().create(PETSc.COMM_SELF)
-        self.xseq.setType('seq')
+        self.xseq.setType("seq")
         try:
             scatter, self.xseq = PETSc.Scatter.toAll(x)
             scatter.begin(x, self.xseq)
@@ -413,7 +432,10 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                 return res
             except Exception as e:
                 logging.error(traceback.format_exc())
-                print(f"An error occurred while forming objective: {e} on process #{self._rank}")
+                print(
+                    f"An error occurred while forming objective: {e} on process"
+                    f" #{self._rank}"
+                )
         else:
             self.formObjective = None
 
@@ -429,7 +451,10 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                 G.assemble()
             except Exception as e:
                 logging.error(traceback.format_exc())
-                print(f"An error occurred while forming gradient: {e} on process #{self._rank}")
+                print(
+                    f"An error occurred while forming gradient: {e} on process"
+                    f" #{self._rank}"
+                )
         else:
             self.formGradient = None
 
@@ -452,7 +477,10 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                 H.assemble()
             except Exception as e:
                 logging.error(traceback.format_exc())
-                print(f"An error occurred while forming Hessian: {e} on process #{self._rank}")
+                print(
+                    f"An error occurred while forming Hessian: {e} on process"
+                    f" #{self._rank}"
+                )
         else:
             self.formHessian = None
 
@@ -469,7 +497,10 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                 Jp.assemble()
             except Exception as e:
                 logging.error(traceback.format_exc())
-                print(f"An error occurred while evaluating Jacobian: {e} on process #{self._rank}")
+                print(
+                    f"An error occurred while evaluating Jacobian: {e} on process"
+                    f" #{self._rank}"
+                )
         else:
             self.evaluateJacobian = None
 
@@ -484,7 +515,9 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                 f.assemble()
             except Exception as e:
                 logging.error(traceback.format_exc())
-                print(f"An error occurred while evaluating residuals: {e} on process #{self._rank}")
+                print(
+                    f"An error occurred while evaluating residuals: {e} on process"
+                    f" #{self._rank}"
+                )
         else:
             self.evaluateResiduals = None
-
