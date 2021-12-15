@@ -9,4 +9,4 @@ except ImportError:
           ' or you need to install the PEP 518 requirements in pyproject.toml yourself', file=sys.stderr)
     raise
 
-setup()
+setup(packages=['cofi'])

@@ -1,8 +1,7 @@
-from cofi.cofi_objective.base_forward import LinearFittingFwd
 from . import Model
-from .base_forward import BaseForward
+from .base_forward import BaseForward, LinearFittingFwd
 
-from typing import Protocol, Union
+from typing import Callable, Protocol, Union
 from numbers import Number
 import numpy as np
 
@@ -40,11 +39,6 @@ class BaseObjective:
         """
         return self._objective(*model.values())
 
-    def jacobian(self, model: Union[Model, np.ndarray]):  # TODO (with Jax maybe)
-        raise NotImplementedError(
-            "This is a TOOD task, or to be implemented by subclasses"
-        )
-
     def gradient(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
             "This is a TOOD task, or to be implemented by subclasses"
@@ -55,20 +49,30 @@ class BaseObjective:
             "This is a TOOD task, or to be implemented by subclasses"
         )
 
+    def residual(self, model: Union[Model, np.ndarray]):
+        raise NotImplementedError(
+            "This is a TOOD task, or to be implemented by subclasses"
+        )
+
+    def jacobian(self, model: Union[Model, np.ndarray]):  # TODO (with Jax maybe)
+        raise NotImplementedError(
+            "This is a TOOD task, or to be implemented by subclasses"
+        )
+
     def log_posterior(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
             "This is a TOOD task, or to be implemented by subclasses"
         )
 
 
-class DataBasedObjective(BaseObjective):
+class LeastSquareObjective(BaseObjective):
     """
     General class holder for objective functions that are calculated from data misfit
 
-    feed the data into constructor, and specify a misfit function
+    Feed the data into constructor, and least squares misfit will be generated automatically
     """
 
-    def __init__(self, X, Y, forward: BaseForward, distance):
+    def __init__(self, X, Y, forward: Union[BaseForward, Callable]):
         X = np.asanyarray(X)
         Y = np.asanyarray(Y)
         if X.shape[0] != Y.shape[0]:
@@ -79,29 +83,18 @@ class DataBasedObjective(BaseObjective):
 
         self.X = X
         self.Y = Y
+        if not isinstance(forward, BaseForward):
+            forward = BaseForward(forward)
         self.forward = forward
         self.n_params = forward.model_dimension()
 
         if isinstance(forward, LinearFittingFwd):
             self.linear = True
 
-        # distance can be a function or a string
-        if isinstance(distance, function):
-            self.distance = distance
-        elif isinstance(distance, str):
-            self.distance_name = distance
-            # TODO - define the actual distance functions
-            # if distance == 'l2':
-            #     pass
-            # else:
-            #     pass
-
-        # TODO self.objective = ???
-
     def misfit(self, model: Model):
-        if self.distance_name:
-            raise NotImplementedError(
-                "distance functions specified by str not implemented yet"
-            )
+        residual = self.residual(model)
+        return residual @ residual
 
-        return super().misfit(model)
+    def residual(self, model: Model):
+        predicted_Y = np.apply_along_axis(self.forward.solve_curried(model), 1, self.X)
+        return predicted_Y - self.Y

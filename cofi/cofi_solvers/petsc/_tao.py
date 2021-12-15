@@ -51,13 +51,11 @@ class TAOSolver(BaseSolver):
     - n_params()
 
     Methods can be classified into 2 sets that:
-    1. require you to specify objective function
-        - (optionally) with the gradient
-        - (optionally) with the hessian
-    2. require you to specify residual vector
-        - (optioanlly) with the jacobian
+    1. require you to specify objective function, (optionally) with the gradient and hessian
+    2. require you to specify residual vector, (optioanlly) with the jacobian
 
     More details on methods and functions to implement WIP... #TODO
+
     """
 
     def __init__(self, objective: BaseObjective, mpi=False):

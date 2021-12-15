@@ -17,6 +17,14 @@ cofi\_objective.examples.bandit\_multi\_armed module
    :undoc-members:
    :show-inheritance:
 
+cofi\_objective.examples.curve\_fitting module
+----------------------------------------------
+
+.. automodule:: cofi_objective.examples.curve_fitting
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 cofi\_objective.examples.exponential\_decay module
 --------------------------------------------------
 

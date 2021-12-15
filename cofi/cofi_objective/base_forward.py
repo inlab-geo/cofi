@@ -12,6 +12,11 @@ class BaseForward:
         X = np.asanyarray(X)
         return self._forward(model, X)
 
+    def solve_curried(self, model: Model) -> np.ndarray:
+        def solve_with_model(X):
+            return self.solve(model, X)
+        return solve_with_model
+
     def get_G(self, X):  # only solver targeting linear forward will call this
         raise NotImplementedError(
             "Linear solvers should have 'LinearFittingFwd' as forward solver or"
