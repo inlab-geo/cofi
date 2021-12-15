@@ -1,11 +1,24 @@
+####### TO BUILD #######
 # python -m build
 # python setup.py develop [--uninstall] | pip install -e . (preferred)
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
 
+####### TO FORMAT #######
 # black --check .
 # black .
+
+[build-system]
+requires = [
+  "setuptools>=42",
+  "wheel",
+  "scikit-build>=0.12",
+  "cmake>=3.18",
+  "ninja"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
+
 [tool.black]
 line-length = 88
 target_version = ['py37', 'py38']

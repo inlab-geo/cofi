@@ -13,10 +13,11 @@ channels:
 dependencies:
   - numpy
   - scipy
-  - jax
-  - jaxlib
+  # - jax
+  # - jaxlib
   - pyyaml
   - setuptools
+  - scikit-build
   - black
   - sphinx
   - mpi4py
