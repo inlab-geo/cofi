@@ -5,14 +5,21 @@ from typing import Union
 
 
 class ExpDecay(BaseObjective):
-    """Defines the problem of exponential decay (sum of exponentials)
+    """Defines the problem of exponential decay (sum of exponentials).
 
-    Must implement the 'objective' function.
+    :math:`y = f(t) = \sum_{i=0}^{M}{a_i e^{-b_i t}}` where :math:`M` is the 
+    number of addends, and is equal to the number of parameters divided by 2.
+
+    Must implement the 'misfit' function.
     Depending on solvers, the following functions may also need to be provided:
-    'residuals', 'jacobian', 'gradient', 'hessian'
+    `residuals(model)`, `jacobian(model)`, `gradient(model)`, `hessian(model)`
 
-    Apart from that, 'data_x', 'data_y', 'initial_model' are also required for
+    Apart from that, `data_x()`, `data_y()`, `initial_model()` are also required for
     some solvers.
+
+    For parallel computing, respective functions like `jacobian` need to have its
+    parallel version and have `_mpi` as suffix of the function name, with additional
+    range of data in the signatures (e.g. `jacobian_mpi(model, n, m)`)
     """
 
     def __init__(self, data_x, data_y, initial_model: Union[Model, np.ndarray]):
@@ -38,24 +45,46 @@ class ExpDecay(BaseObjective):
         return (yhat, model) if ret_model else yhat
 
 
+    def _forward_mpi(self, model: Union[Model, np.ndarray], n, m, ret_model=False):
+        model = self._validate_model(model)
+
+        yhat = np.zeros((m-n,))
+        for i in range(int(self.n_params/2)):
+            yhat += model[i*2] * np.exp(-model[i*2+1] * self.x[n:m])
+        return (yhat, model) if ret_model else yhat
+
+
     def residuals(self, model: Union[Model, np.ndarray]):
-        yhat = self._forward(model)
-        return yhat - self.y
+        return self.residuals_mpi(model, 0, np.shape(self.x)[0])
 
 
-    def objective(self, model: Union[Model, np.ndarray]):
+    def residuals_mpi(self, model: Union[Model, np.ndarray], n, m):
+        yhat = self._forward_mpi(model, n, m)
+        return yhat - self.y[n:m]
+
+
+    def misfit(self, model: Union[Model, np.ndarray]):
         residuals = self.residuals(model)
+        return residuals @ residuals
+
+
+    def misfit_mpi(self, model: Union[Model, np.ndarray], n, m):
+        residuals = self.residuals_mpi(model, n, m)
         return residuals @ residuals
 
     
     def jacobian(self, model: Union[Model, np.ndarray]):
+        return self.jacobian_mpi(model, 0, np.shape(self.x)[0])
+
+
+    def jacobian_mpi(self, model: Union[Model, np.ndarray], n, m):
         model = self._validate_model(model)
-        
-        jac = np.zeros([np.shape(self.x)[0], self.n_params])
+
+        jac = np.zeros([m-n, self.n_params])
         for i in range(int(self.n_params/2)):
-            for j in range(self.x.shape[0]):
-                jac[j,i*2] = np.exp(-model[i*2+1]*self.x[j])
-                jac[j,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
+            for j in range(n, m):
+                jac[j-n,i*2] = np.exp(-model[i*2+1]*self.x[j])
+                jac[j-n,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
         return jac
 
 
@@ -65,11 +94,39 @@ class ExpDecay(BaseObjective):
         return jac.T @ (yhat - self.y)
 
 
+    def gradient_mpi(self, model: Union[Model, np.ndarray], n, m):
+        yhat, model = self._forward_mpi(model, n, m, True)
+        jac = self.jacobian_mpi(model, n, m)
+        return jac.T @ (yhat - self.y[n:m])
+
+
     def hessian(self, model: Union[Model, np.ndarray]):
         # using the standard approximation (J^T J)
         jac = self.jacobian(model)
         hessian = jac.T @ jac
         return hessian
+
+    
+    def hessian_mpi(self, model: Union[Model, np.ndarray], n, m):
+        jac = self.jacobian_mpi(model, n, m)
+        hessian = jac.T @ jac
+        return hessian
+
+    
+    def data_x(self):
+        return self.x
+
+
+    def data_y(self):
+        return self.y
+
+    
+    def initial_model(self):
+        return self.m0
+
+    
+    def params_size(self):
+        return self.n_params
 
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:

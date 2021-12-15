@@ -17,7 +17,18 @@ class BaseObjective:
 
     All objective problems must be sub-classes of this class and implements two methods:
     1. __init__
-    2. misfit()
+    2. misfit(model: Union[Model, np.ndarray]) -> Number
+
+    Optional implementations (depending on solvers):
+    - jacobian(model: Union[Model, np.ndarray])
+    - gradient(model: Union[Model, np.ndarray])
+    - hessian(model: Union[Model, np.ndarray])
+    - residuals(model: Union[Model, np.ndarray])
+    - log_posterior(model: Union[Model, np.ndarray])
+    - data_x()
+    - data_y()
+    - initial_model()
+    - n_params()
     """
 
     def __init__(self, func: _ObjectiveCallable):

@@ -6,6 +6,14 @@ cofi\_objective package
    :undoc-members:
    :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   cofi_objective.examples
+
 Submodules
 ----------
 
