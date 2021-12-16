@@ -91,10 +91,12 @@ class LeastSquareObjective(BaseObjective):
         if isinstance(forward, LinearFittingFwd):
             self.linear = True
 
-    def misfit(self, model: Model):
+    def misfit(self, model: Union[Model, np.ndarray]):
         residual = self.residual(model)
         return residual @ residual
 
-    def residual(self, model: Model):
+    def residual(self, model: Union[Model, np.ndarray]):
+        if isinstance(model, Model):
+            model = model.values()
         predicted_Y = np.apply_along_axis(self.forward.solve_curried(model), 1, self.X)
         return predicted_Y - self.Y
