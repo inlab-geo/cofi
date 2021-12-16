@@ -13,8 +13,8 @@ class SimpleLinearRegression(BaseSolver):
     def solve(self) -> Model:
         warn("You are using linear regression formula solver, please note that this is only for small scale of data")
 
-        G = self.objective.transform(self.objective.X)
-        Y = self.objective.Y
+        G = self.objective.basis_transform(self.objective.data_x())
+        Y = self.objective.data_y()
         # TODO regularisation handling? prior model? (ref: inverseionCourse.curveFitting)
         # TODO return posterior covariance? (ref: inverseionCourse.curveFitting)
         res = np.linalg.inv(G.T @ G) @ (G.T @ Y)

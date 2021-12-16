@@ -17,20 +17,24 @@ class BaseForward:
             return self.solve(model, X)
         return solve_with_model
 
-    def transform(self, X):  # only solver targeting linear forward will call this
+    def basis_transform(self, X):  # only solver targeting linear forward will call this
         raise NotImplementedError(
             "Linear solvers should have 'LinearFittingFwd' as forward solver or"
-            " implements transform method"
+            " implements basis_transform method"
         )
 
 
 class LinearFittingFwd(BaseForward):
-    def __init__(self):
-        pass
+    def __init__(self, params_count, basis_transform=None):
+        self.params_count = params_count
+        if basis_transform:
+            self.basis_transform = basis_transform
+        else:
+            self.basis_transform = lambda X: X
 
     def solve(self, model: Union[Model, np.ndarray], X):
         self.params_count = model.length() if isinstance(model, Model) else len(model)
-        X = self.transform(X)
+        X = self.basis_transform(X)
         if self.params_count != X.shape[1]:
             raise ValueError(
                 f"Parameters count ({self.params_count}) doesn't match X shape"
@@ -43,22 +47,18 @@ class LinearFittingFwd(BaseForward):
     def _forward(self, model: np.ndarray, X: np.ndarray) -> np.ndarray:
         return X @ model
 
-    def transform(self, X, order=None):
-        X = np.asanyarray(X)
-        return X
-
     def model_dimension(self):
         return self.params_count
 
 
 class PolynomialFittingFwd(LinearFittingFwd):
     def __init__(self, order: int = None):
-        self.params_count = order+1
+        if order: self.params_count = order+1
 
     def solve(self, model: Union[Model, np.ndarray], x):  # put here to avoid confusion
         return super().solve(model, x)
 
-    def transform(self, x):
+    def basis_transform(self, x):
         """
         This is invoked by solve(model, x) from superclass prior to solving.
         The polynomial transformation happens here
