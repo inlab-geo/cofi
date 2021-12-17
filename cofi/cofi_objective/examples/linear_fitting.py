@@ -1,28 +1,45 @@
-from cofi.cofi_objective import LeastSquareObjective
+from cofi.cofi_objective import LeastSquareObjective, Model
 from cofi.cofi_objective.base_forward import LinearFittingFwd
 
+import numpy as np
 from typing import Callable, Union
 
 
 class LinearFitting(LeastSquareObjective):
-    def __init__(self, X, Y, params_count, basis_transform: Callable = None, forward: LinearFittingFwd = None):
-        self.basis_transform = basis_transform
-        if forward and hasattr(forward, "basis_transform"):
-            self.basis_transform = forward.basis_transform
+    def __init__(
+        self,
+        X,
+        Y,
+        params_count,
+        design_matrix: Callable = None,
+        forward: LinearFittingFwd = None,
+        initial_model: Union[Model, np.ndarray, list] = None,
+    ):
+        self.calc_design_matrix = design_matrix
+        if forward and hasattr(forward, "design_matrix"):
+            self.calc_design_matrix = forward.design_matrix
         elif forward is None:
-            if basis_transform is None:
-                raise ValueError("Please specify at least one of basis_transform and forward")
-            forward = LinearFittingFwd(params_count, basis_transform)
+            if design_matrix is None:
+                raise ValueError(
+                    "Please specify at least one of design_matrix and forward"
+                )
+            forward = LinearFittingFwd(params_count, design_matrix)
 
-        super().__init__(X, Y, forward)
+        super().__init__(X, Y, forward, initial_model)
 
-    def misfit(self):
-        if self.forward:
-            return 
+    def design_matrix(self):
+        if hasattr(self, "_design_matrix"):
+            return self._design_matrix
+        else:
+            self._design_matrix = self.calc_design_matrix(self.X)
+            return self._design_matrix
 
-    def data_x(self):
-        return self.X
+    def gradient(self, model: Union[Model, np.ndarray]):
+        return np.squeeze(self.jacobian(model).T @ self.residual(model))
 
-    def data_y(self):
-        return self.Y
+    def hessian(self, model: Union[Model, np.ndarray]):
+        g = self.design_matrix()
+        return g.T @ g
 
+    def jacobian(self, model: Union[Model, np.ndarray]):
+        return self.design_matrix()

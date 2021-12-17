@@ -1,65 +1,116 @@
 from cofi.cofi_objective.examples import LinearFitting
 from cofi.cofi_objective import PolynomialFittingFwd
-from cofi.cofi_solvers import SimpleLinearRegression
+import cofi.cofi_solvers as solvers
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 # ------------ #0 generate data -----------------------------------------
-true_model = [3,2,5]
+true_model = [3, 2, 5]
 npts = 25
 xpts = np.random.uniform(0, 1, npts)
 forward = PolynomialFittingFwd(2)
-ypts = forward.solve(true_model, xpts) + np.random.normal(0,0.5,size=npts)
+ypts = forward.solve(true_model, xpts) + np.random.normal(0, 0.5, size=npts)
 
-print("--> ground truth model:", np.array(true_model))
+print(f"--> ground truth model: {np.array(true_model)}\n")
 
 plot = False
 if plot:
     plt.figure(figsize=(10, 8))
-    plt.plot(xpts, ypts, 'x')
-    plt.plot(np.linspace(0,1,100), forward.solve(true_model, np.linspace(0,1,100)))
+    plt.plot(xpts, ypts, "x")
+    plt.plot(np.linspace(0, 1, 100), forward.solve(true_model, np.linspace(0, 1, 100)))
     plt.show()
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
-objective = LinearFitting(xpts, ypts, forward.model_dimension(), forward=forward)
+objective_1 = LinearFitting(xpts, ypts, forward.model_dimension(), forward=forward)
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
-solver = SimpleLinearRegression(objective)
-model = solver.solve()
-print("--> model predicted by pure Python solver:", model.values())
+solver_1_pure = solvers.SimpleLinearRegression(objective_1)
+model_1_pure = solver_1_pure.solve()
+print(f"--> model predicted by pure Python solver: {model_1_pure.values()}\n")
 
-ypts_predicted = forward.solve(model, xpts)
+ypts_predicted = forward.solve(model_1_pure, xpts)
 # plot = True
 if plot:
     plt.figure(figsize=(10, 8))
-    plt.plot(xpts, ypts, 'x', label="Data")
-    plt.plot(np.linspace(0,1,100), forward.solve(true_model, np.linspace(0,1,100)), label="Input")
-    plt.plot(np.linspace(0,1,100), forward.solve(model, np.linspace(0,1,100)), label="Predicted")
+    plt.plot(xpts, ypts, "x", label="Data")
+    plt.plot(
+        np.linspace(0, 1, 100),
+        forward.solve(true_model, np.linspace(0, 1, 100)),
+        label="Input",
+    )
+    plt.plot(
+        np.linspace(0, 1, 100),
+        forward.solve(model_1_pure, np.linspace(0, 1, 100)),
+        label="Predicted",
+    )
     plt.legend()
     plt.show()
+
+
+# ------------ #1.3 scipy.optimize.minimize solver -----------------------------------
+solver_1_scipy_minimize = solvers.ScipyOptimizerSolver(objective_1)
+model_1_scipy_minimize = solver_1_scipy_minimize.solve()
+print(
+    "--> model predicted by scipy.optimize.minimize:"
+    f" {model_1_scipy_minimize.values()}\n"
+)
+
+
+# ------------ #1.4 scipy.optimize.least_squares solver -----------------------------------
+solver_1_scipy_ls = solvers.ScipyOptimizerLSSolver(objective_1)
+model_1_scipy_ls = solver_1_scipy_ls.solve()
+print(
+    "--> model predicted by scipy.optimize.least_squares:"
+    f" {model_1_scipy_ls.values()}\n"
+)
+
+
+# ------------ #1.5 TAO "nm" solver -----------------------------------
+solver_1_tao_nm = solvers.TAOSolver(objective_1)
+model_1_tao_nm = solver_1_tao_nm.solve()
+print(f"--> model predicted by TAO 'nm': {model_1_tao_nm.values()}\n")
+
+
+# ------------ #1.6 TAO "brgn" solver -----------------------------------
+solver_1_tao_brgn = solvers.TAOSolver(objective_1)
+model_1_tao_brgn = solver_1_tao_brgn.solve("brgn")
+print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 
 
 # ------------ #2.1 define objective another way ---------------------------
 params_count = 3
-basis_transform = lambda x: np.array([x ** o for o in range(params_count)]).T 
-objective_2 = LinearFitting(xpts, ypts, params_count, basis_transform)
+design_matrix = lambda x: np.array([x ** o for o in range(params_count)]).T
+objective_2 = LinearFitting(xpts, ypts, params_count, design_matrix)
+
 
 # ------------ #2.2 pure Python solver -----------------------------------
-solver_2 = SimpleLinearRegression(objective_2)
-model_2 = solver_2.solve()
 print("--------- objective defined another way -------------------")
-print("--> model predicted by pure Python solver:", model.values())
+solver_2_pure = solvers.SimpleLinearRegression(objective_2)
+model_2_pure = solver_2_pure.solve()
+print(f"--> model predicted by pure Python solver: {model_2_pure.values()}\n")
 # plot = True
 if plot:
     plt.figure(figsize=(10, 8))
-    plt.plot(xpts, ypts, 'x', label="Data")
-    plt.plot(np.linspace(0,1,100), forward.solve(true_model, np.linspace(0,1,100)), label="Input")
-    plt.plot(np.linspace(0,1,100), forward.solve(model, np.linspace(0,1,100)), label="Predicted 1", linewidth=3)
-    plt.plot(np.linspace(0,1,100), forward.solve(model_2, np.linspace(0,1,100)), label="Predicted 2")
+    plt.plot(xpts, ypts, "x", label="Data")
+    plt.plot(
+        np.linspace(0, 1, 100),
+        forward.solve(true_model, np.linspace(0, 1, 100)),
+        label="Input",
+    )
+    plt.plot(
+        np.linspace(0, 1, 100),
+        forward.solve(model_1_pure, np.linspace(0, 1, 100)),
+        label="Predicted 1",
+        linewidth=3,
+    )
+    plt.plot(
+        np.linspace(0, 1, 100),
+        forward.solve(model_2_pure, np.linspace(0, 1, 100)),
+        label="Predicted 2",
+    )
     plt.legend()
     plt.show()
-

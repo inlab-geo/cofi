@@ -12,7 +12,7 @@ class ExpDecay(BaseObjective):
 
     Must implement the 'misfit' function.
     Depending on solvers, the following functions may also need to be provided:
-    `residuals(model)`, `jacobian(model)`, `gradient(model)`, `hessian(model)`
+    `residual(model)`, `jacobian(model)`, `gradient(model)`, `hessian(model)`
 
     Apart from that, `data_x()`, `data_y()`, `initial_model()` are also required for
     some solvers.
@@ -54,22 +54,22 @@ class ExpDecay(BaseObjective):
         return (yhat, model) if ret_model else yhat
 
 
-    def residuals(self, model: Union[Model, np.ndarray]):
-        return self.residuals_mpi(model, 0, np.shape(self.x)[0])
+    def residual(self, model: Union[Model, np.ndarray]):
+        return self.residual_mpi(model, 0, np.shape(self.x)[0])
 
 
-    def residuals_mpi(self, model: Union[Model, np.ndarray], n, m):
+    def residual_mpi(self, model: Union[Model, np.ndarray], n, m):
         yhat = self._forward_mpi(model, n, m)
         return yhat - self.y[n:m]
 
 
     def misfit(self, model: Union[Model, np.ndarray]):
-        residuals = self.residuals(model)
+        residuals = self.residual(model)
         return residuals @ residuals
 
 
     def misfit_mpi(self, model: Union[Model, np.ndarray], n, m):
-        residuals = self.residuals_mpi(model, n, m)
+        residuals = self.residual_mpi(model, n, m)
         return residuals @ residuals
 
     

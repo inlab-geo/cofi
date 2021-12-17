@@ -15,33 +15,35 @@ class BaseForward:
     def solve_curried(self, model: Union[Model, np.ndarray]) -> np.ndarray:
         def solve_with_model(X):
             return self.solve(model, X)
+
         return solve_with_model
 
-    def basis_transform(self, X):  # only solver targeting linear forward will call this
+    def design_matrix(self, X):  # only solver targeting linear forward will call this
         raise NotImplementedError(
             "Linear solvers should have 'LinearFittingFwd' as forward solver or"
-            " implements basis_transform method"
+            " implements design_matrix method"
         )
 
 
 class LinearFittingFwd(BaseForward):
-    def __init__(self, params_count, basis_transform=None):
+    def __init__(self, params_count, design_matrix=None):
         self.params_count = params_count
-        if basis_transform:
-            self.basis_transform = basis_transform
+        if design_matrix:
+            self.design_matrix = design_matrix
         else:
-            self.basis_transform = lambda X: X
+            self.design_matrix = lambda X: X
 
     def solve(self, model: Union[Model, np.ndarray], X):
         self.params_count = model.length() if isinstance(model, Model) else len(model)
-        X = self.basis_transform(X)
+        X = self.design_matrix(X)
         if self.params_count != X.shape[1]:
             raise ValueError(
                 f"Parameters count ({self.params_count}) doesn't match X shape"
                 f" {X.shape} in linear curve forward fitting"
             )
 
-        if isinstance(model, Model): model = model.values()
+        if isinstance(model, Model):
+            model = model.values()
         return self._forward(model, X)
 
     def _forward(self, model: np.ndarray, X: np.ndarray) -> np.ndarray:
@@ -53,12 +55,13 @@ class LinearFittingFwd(BaseForward):
 
 class PolynomialFittingFwd(LinearFittingFwd):
     def __init__(self, order: int = None):
-        if order: self.params_count = order+1
+        if order:
+            self.params_count = order + 1
 
     def solve(self, model: Union[Model, np.ndarray], x):  # put here to avoid confusion
         return super().solve(model, x)
 
-    def basis_transform(self, x):
+    def design_matrix(self, x):
         """
         This is invoked by solve(model, x) from superclass prior to solving.
         The polynomial transformation happens here
