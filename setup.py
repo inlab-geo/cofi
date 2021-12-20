@@ -12,4 +12,11 @@ except ImportError:
     )
     raise
 
-setup(packages=["cofi"])
+setup(
+    packages=["cofi"],
+    install_requires=[
+        'numpy',
+        'scipy',
+        'pyyaml',
+    ]
+)
