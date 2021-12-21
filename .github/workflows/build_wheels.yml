@@ -14,7 +14,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Clean up _skbuild
-        run: rm -rf _skbuild
+        uses: JesseTG/rm@v1.0.2
+        with:
+          path: _skbuild
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.3.1
