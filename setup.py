@@ -13,8 +13,13 @@ except ImportError:
     raise
 
 setup(
-    packages=["cofi"],
+    name="cofi",
+    version="0.1.0",
+    description="Common Framework for Inference",
+    author="InLab",
+    packages=["cofi", "cofi.cofi_solvers", "cofi.cofi_objective"],
     install_requires=[
+        'cython',
         'numpy',
         'scipy',
         'pyyaml',
