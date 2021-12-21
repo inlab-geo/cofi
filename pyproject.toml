@@ -6,16 +6,16 @@
 # black --check .
 # black .
 
-#[build-system]
-#requires = [
-#  "setuptools>=42",
-#  "wheel",
-#  "scikit-build>=0.12",
-#  "cmake>=3.18",
-#  "ninja",
-#  "cython",
-#]
-#build-backend = "setuptools.build_meta"
+[build-system]
+requires = [
+  "setuptools>=42",
+  "wheel",
+  "scikit-build>=0.12",
+  "cmake>=3.18",
+  "ninja",
+  "cython",
+]
+build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
 testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
