@@ -1,4 +1,4 @@
-# pip install -e .
+# rm -rf _skbuild; pip install -e .
 
 import sys
 
