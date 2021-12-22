@@ -8,9 +8,6 @@ project(CoFI)
 find_package(PythonExtensions REQUIRED)
 find_package(Cython REQUIRED)
 
-message(STATUS "    including $C_INCLUDE_PATH")
-include_directories(${C_INCLUDE_PATH})
-
 
 ################################################################################
 # Libraries
