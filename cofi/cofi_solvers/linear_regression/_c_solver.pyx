@@ -1,6 +1,8 @@
+# distutils: sources = lib/_c_solver.c
+# distutils: include_dirs = lib/
+
 # from .lib._c_solver import solve as c_solve
-# from .lib._c_solver_lib cimport hello
-from libc.math cimport sin
+cimport _c_solver
 from cofi.cofi_solvers import BaseSolver
 from cofi.cofi_objective import LeastSquareObjective, Model
 
@@ -9,7 +11,7 @@ from warnings import warn
 
 
 cdef hello_wrapper():
-    print(sin(3.14))
+    hello()
 
 
 class SimpleLinearRegressionC(BaseSolver):

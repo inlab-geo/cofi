@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include "_c_solver.h"
+#include "_c_solver_lib.h"
 
 void hello() {
     printf("Hello, world!\n");
