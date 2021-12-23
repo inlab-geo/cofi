@@ -9,6 +9,6 @@
 
 EXPORT_SYMBOL void hello();
 
-// void solve(float g[][], float y[], float *res[]);
+void solve(int m, int n, double g[n][m], double y[n], double res[m]);
 
-#endif // FOO_H_
+#endif
