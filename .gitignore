@@ -24,6 +24,7 @@ dist
 .libs
 .eggs
 pip-wheel-metadata
+wheelhouse
 
 # pytest cache #
 ################
