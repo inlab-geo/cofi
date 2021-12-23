@@ -14,7 +14,7 @@ cdef hello_wrapper():
     hello()
 
 
-class SimpleLinearRegressionC(BaseSolver):
+class LRNormalEquationC(BaseSolver):
     def __init__(self, objective: LeastSquareObjective):
         hello_wrapper()
         self.objective = objective

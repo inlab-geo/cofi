@@ -1,7 +1,6 @@
 ################################################################################
 # Project configuration and settings
 ################################################################################
-message(STATUS "    reach root level")
 cmake_minimum_required(VERSION 3.11.0)
 
 project(CoFI)
@@ -16,5 +15,3 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # Libraries
 ################################################################################
 add_subdirectory(cofi/cofi_solvers/linear_regression)
-
-message(STATUS "    finished root level")

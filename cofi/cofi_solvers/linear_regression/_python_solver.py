@@ -5,7 +5,7 @@ import numpy as np
 from warnings import warn
 
 
-class SimpleLinearRegression(BaseSolver):
+class LRNormalEquation(BaseSolver):
     def __init__(self, objective: LeastSquareObjective):
         self.objective = objective
 

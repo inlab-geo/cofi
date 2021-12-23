@@ -4,7 +4,7 @@
 # for developers (in case): rm -rf _skbuild; pip uninstall cofi; pip install -e .
 
 ####### TO TEST WHEELS ######
-# export CIBW_SKIP='pp*'; rm -rf _skbuild; cibuildwheel --platform linux
+# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; cibuildwheel --platform linux
 
 ####### TO FORMAT #######
 # black --check .

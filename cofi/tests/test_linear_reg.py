@@ -28,7 +28,7 @@ objective_1 = LinearFitting(xpts, ypts, forward.model_dimension(), forward=forwa
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
-solver_1_pure = solvers.SimpleLinearRegression(objective_1)
+solver_1_pure = solvers.LRNormalEquation(objective_1)
 model_1_pure = solver_1_pure.solve()
 print(f"--> model predicted by pure Python solver: {model_1_pure.values()}\n")
 
@@ -89,7 +89,7 @@ objective_2 = LinearFitting(xpts, ypts, params_count, design_matrix)
 
 # ------------ #2.2 pure Python solver -----------------------------------
 print("--------- objective defined another way -------------------")
-solver_2_pure = solvers.SimpleLinearRegression(objective_2)
+solver_2_pure = solvers.LRNormalEquation(objective_2)
 model_2_pure = solver_2_pure.solve()
 print(f"--> model predicted by pure Python solver: {model_2_pure.values()}\n")
 # plot = True
