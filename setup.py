@@ -1,6 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
+# import numpy
 
 try:
     from skbuild import setup
@@ -23,5 +24,6 @@ setup(
         'numpy',
         'scipy',
         'pyyaml',
-    ]
+    ],
+    # include_dirs=[]
 )

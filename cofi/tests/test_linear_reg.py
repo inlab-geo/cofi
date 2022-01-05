@@ -85,10 +85,10 @@ print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 params_count = 3
 design_matrix = lambda x: np.array([x ** o for o in range(params_count)]).T
 objective_2 = LinearFitting(xpts, ypts, params_count, design_matrix)
+print("--------- objective defined another way -------------------")
 
 
 # ------------ #2.2 pure Python solver -----------------------------------
-print("--------- objective defined another way -------------------")
 solver_2_pure = solvers.LRNormalEquation(objective_2)
 model_2_pure = solver_2_pure.solve()
 print(f"--> model predicted by pure Python solver: {model_2_pure.values()}\n")
@@ -114,3 +114,11 @@ if plot:
     )
     plt.legend()
     plt.show()
+
+
+# ------------ #2.2 C solver -----------------------------------
+solver_2_c = solvers.LRNormalEquationC(objective_2)
+model_2_c = solver_2_c.solve()
+print(f"--> model predicted by pure Python solver: {model_2_c.values()}\n")
+
+
