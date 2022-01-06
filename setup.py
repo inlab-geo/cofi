@@ -25,5 +25,4 @@ setup(
         'scipy',
         'pyyaml',
     ],
-    # include_dirs=[]
 )
