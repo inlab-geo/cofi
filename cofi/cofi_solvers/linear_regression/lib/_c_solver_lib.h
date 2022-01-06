@@ -9,7 +9,6 @@
 
 EXPORT_SYMBOL void hello();
 
-// EXPORT_SYMBOL void solve(int m, int n, double g[n][m], double y[n], double res[m]);
 EXPORT_SYMBOL void solve(int m, int n, double **g, double *y, double *res);
 
 #endif
