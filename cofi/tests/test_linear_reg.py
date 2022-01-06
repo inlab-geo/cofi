@@ -118,7 +118,11 @@ if plot:
 
 # ------------ #2.2 C solver -----------------------------------
 solver_2_c = solvers.LRNormalEquationC(objective_2)
+g = objective_2.design_matrix()
+y = objective_2.data_y()
+print(g.T @ g)
+print(np.linalg.inv(g.T @ g))
 model_2_c = solver_2_c.solve()
-print(f"--> model predicted by pure Python solver: {model_2_c.values()}\n")
+print(f"--> model predicted by C/Cython solver: {model_2_c.values()}\n")
 
 

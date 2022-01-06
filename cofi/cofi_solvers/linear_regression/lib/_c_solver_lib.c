@@ -103,9 +103,7 @@ void matrix_mult_vect(int m, int n, double a[m][n], double b[n], double res[m]) 
     }
 }
 
-// void solve(int m, int n, double g[n][m], double y[n], double res[m]) {
 void solve(int m, int n, double **g_pt, double *y_pt, double *res_pt) {
-    // printf("start solving\n"); fflush(stdout);
     double g[n][m];
     double y[n];
     int i, j;
@@ -114,21 +112,26 @@ void solve(int m, int n, double **g_pt, double *y_pt, double *res_pt) {
         y[i] = *(y_pt + i);
     }
 
-    // printf("matrix intialised\n"); fflush(stdout);
+    display(n, m, g);
+
     double gtg[m][m];
     matrix_mult_transA(n, m, m, g, g, gtg);
+    display(m, m, gtg);
 
     double gtg_inv[m][m];
     inverse(m, gtg, gtg_inv);
+    display(m, m, gtg_inv);
 
     double gtg_inv_gt[m][n];
     matrix_mult_transB(m, m, n, gtg_inv, g, gtg_inv_gt);
+    display(m, n, gtg_inv_gt);
 
     double res[m];
     matrix_mult_vect(m, n, gtg_inv_gt, y, res);
 
     for (i = 0; i < m; i++)
         *(res_pt + i) = res[i];
+    printf(" %f %f %f\n", res_pt[0], res_pt[1], res_pt[2]);
 }
 
 // int main() {
