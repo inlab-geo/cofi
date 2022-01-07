@@ -140,6 +140,10 @@ void solve(int m, int n, double **g, double *y, double *res) {
 
     // double res[m];
     matrix_mult_vect(m, n, gtg_inv_gt, y, res);
+
+    free_mat(m, gtg);
+    free_mat(m, gtg_inv);
+    free_mat(m, gtg_inv_gt);
 }
 
 
