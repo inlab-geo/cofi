@@ -69,16 +69,16 @@ print(
 )
 
 
-# ------------ #1.5 TAO "nm" solver -----------------------------------
-solver_1_tao_nm = solvers.TAOSolver(objective_1)
-model_1_tao_nm = solver_1_tao_nm.solve()
-print(f"--> model predicted by TAO 'nm': {model_1_tao_nm.values()}\n")
+# # ------------ #1.5 TAO "nm" solver -----------------------------------
+# solver_1_tao_nm = solvers.TAOSolver(objective_1)
+# model_1_tao_nm = solver_1_tao_nm.solve()
+# print(f"--> model predicted by TAO 'nm': {model_1_tao_nm.values()}\n")
 
 
-# ------------ #1.6 TAO "brgn" solver -----------------------------------
-solver_1_tao_brgn = solvers.TAOSolver(objective_1)
-model_1_tao_brgn = solver_1_tao_brgn.solve("brgn")
-print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
+# # ------------ #1.6 TAO "brgn" solver -----------------------------------
+# solver_1_tao_brgn = solvers.TAOSolver(objective_1)
+# model_1_tao_brgn = solver_1_tao_brgn.solve("brgn")
+# print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 
 
 # ------------ #2.1 define objective another way ---------------------------
@@ -125,4 +125,13 @@ y = objective_2.data_y()
 model_2_c = solver_2_c.solve()
 print(f"--> model predicted by C/Cython solver: {model_2_c.values()}\n")
 
+
+# ------------ #2.3 C++ solver -----------------------------------
+solver_2_cpp = solvers.LRNormalEquationCpp(objective_2)
+g = objective_2.design_matrix()
+y = objective_2.data_y()
+# print(g.T @ g)
+# print(np.linalg.inv(g.T @ g))
+model_2_cpp = solver_2_cpp.solve()
+print(f"--> model predicted by C/Cython solver: {model_2_cpp.values()}\n")
 
