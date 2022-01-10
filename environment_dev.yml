@@ -24,6 +24,8 @@ dependencies:
   - jupyter
   - jupyterlab
   - matplotlib
+  - cython
+  - cibuildwheel
   - pip
   - pip:
     - insipid-sphinx-theme
