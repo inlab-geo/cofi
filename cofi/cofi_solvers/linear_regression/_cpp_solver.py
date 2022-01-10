@@ -19,7 +19,6 @@ class LRNormalEquationCpp(BaseSolver):
         Y = self.objective.data_y()
 
         res = cpp_solve(G.shape[1], G.shape[0], G, Y)
-        # res = np.linalg.inv(G.T @ G) @ (G.T @ Y)
 
         model = Model(
             **dict([("p" + str(index[0]), val) for (index, val) in np.ndenumerate(res)])
