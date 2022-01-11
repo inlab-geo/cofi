@@ -84,6 +84,7 @@ std::vector< std::vector<double> > matrix_mult_transA(int m, int n, int k, std::
     int i, j, p;
     for (i = 0; i < n; i++) {
         for (j = 0; j < k; j++) {
+            res[i][j] = 0;
             for (p = 0; p < m; p++)
                 res[i][j] += a[p][i] * b[p][j];
         }
