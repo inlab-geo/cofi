@@ -118,16 +118,17 @@ if plot:
 
 # ------------ #2.2 C solver -----------------------------------
 solver_2_c = solvers.LRNormalEquationC(objective_2)
-g = objective_2.design_matrix()
-y = objective_2.data_y()
 model_2_c = solver_2_c.solve()
 print(f"--> model predicted by C/Cython solver: {model_2_c.values()}\n")
 
 
 # ------------ #2.3 C++ solver -----------------------------------
 solver_2_cpp = solvers.LRNormalEquationCpp(objective_2)
-g = objective_2.design_matrix()
-y = objective_2.data_y()
 model_2_cpp = solver_2_cpp.solve()
 print(f"--> model predicted by C++/PyBind11 solver: {model_2_cpp.values()}\n")
 
+
+# ------------ #2.4 Fortran 77 solver -----------------------------------
+solver_2_f77 = solvers.LRNormalEquationF77(objective_2)
+model_2_f77 = solver_2_f77.solve()
+print(f"--> model predicted by Fortran77/f2py solver: {model_2_f77.values()}\n")

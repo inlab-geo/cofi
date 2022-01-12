@@ -19,6 +19,7 @@ requires = [
   "ninja",
   "cython",
   "numpy",
+  "pybind11[global]",
 ]
 build-backend = "setuptools.build_meta"
 

@@ -24,5 +24,6 @@ setup(
         'numpy',
         'scipy',
         'pyyaml',
+        'pybind11[global]',
     ],
 )

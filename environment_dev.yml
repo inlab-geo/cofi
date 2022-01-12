@@ -26,6 +26,7 @@ dependencies:
   - matplotlib
   - cython
   - cibuildwheel
+  - pybind11
   - pip
   - pip:
     - insipid-sphinx-theme

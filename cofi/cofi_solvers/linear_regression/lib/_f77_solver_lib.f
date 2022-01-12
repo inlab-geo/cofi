@@ -1,8 +1,5 @@
 C FILE: _f77_solver_lib.f
 
-      module normal_equation_solve
-      contains
-
 C ****************** SUBROUTINE: SOLVE ***********************
       subroutine solve(m, n, g, y, res)
 
@@ -24,7 +21,7 @@ Cf2py depend(m) res
       call matrix_mult_transB(m, m, n, gtg_inv, g, gtg_inv_gt)
       call matrix_mult_vect(m, n, gtg_inv_gt, y, res)
 
-      end
+      end subroutine solve
 
 C **************** SUBROUTINE: MATRIX MULT (TRANS A) ****************
       subroutine matrix_mult_transA(m, n, k, a, b, res)
@@ -47,7 +44,7 @@ Cf2py depend(n,k) res
 11        continue
 12      continue
 13    continue
-      end
+      end subroutine matrix_mult_transA
 
 C **************** SUBROUTINE: MATRIX MULT (TRANS B) ****************
       subroutine matrix_mult_transB(m, n, k, a, b, res)
@@ -70,7 +67,7 @@ Cf2py depend(m,k) res
 14        continue
 15      continue
 16    continue
-      end
+      end subroutine matrix_mult_transB
 
 C **************** SUBROUTINE: MATRIX MULT VECTOR *******************
       subroutine matrix_mult_vect(m, n, a, b, res)
@@ -90,7 +87,7 @@ Cf2py depend(m) res
           res(i) = res(i) + a(i,j) * b(j)
 17      continue
 18    continue
-      end
+      end subroutine matrix_mult_vect
 
 C **************** SUBROUTINE: MATRIX INVERSE ************************
       subroutine inverse(n, mat, res)
@@ -103,14 +100,15 @@ Cf2py depend(n) res
       integer n
       integer p, q, a, b, i, j
       double precision mat(n,n), res(n,n)
-      double precision det, tmp(n,n), fac(n,n)
-      det = determinant(n, mat)
+      double precision det, det_tmp, tmp(n,n), fac(n,n)
+      call get_determinant(n, mat, det)
       do 20 q=1,n
         do 19 p=1,n
           a = 0
           b = 0
           call get_cofactor(n, q, p, mat, tmp)
-          fac(q,p) = (-1)**(q+p) * determinant(n-1, tmp)
+          call get_determinant(n-1, tmp, det_tmp)
+          fac(q,p) = (-1)**(q+p) * det_tmp
 19      continue
 20    continue
       do 22 i=1,n
@@ -118,18 +116,18 @@ Cf2py depend(n) res
           res(i,j) = fac(j,i) / det
 21      continue
 22    continue
-      end
+      end subroutine inverse
 
 C Calculating determinant of a matrix
 C ref: http://web.hku.hk/~gdli/UsefulFiles/Example-Fortran-program.html
-      double precision pure function determinant(n, mat)
+      subroutine get_determinant(n, mat, det)
 Cf2py intent(in) n
 Cf2py intent(in) mat
-Cf2py intent(out) determinant
+Cf2py intent(out) det
 Cf2py depend(n) mat
       implicit none
       integer n, i, j, k
-      double precision mat(n,n), mat_copy(n,n), m, tmp, l
+      double precision mat(n,n), mat_copy(n,n), m, tmp, l, det
       logical det_exists
       intent(in) n
       intent(in) mat
@@ -152,7 +150,7 @@ Cf2py depend(n) mat
             endif
 24        continue
           if (det_exists .EQV. .FALSE.) then
-            determinant = 0.0
+            det = 0.0
             return
           endif
         endif
@@ -163,12 +161,12 @@ Cf2py depend(n) mat
 25        continue
 26      continue
 27    continue
-      determinant = l
+      det = l
       do 28 i=1,n
-        determinant = determinant * mat_copy(i,i)
+        det = det * mat_copy(i,i)
 28    continue
       return
-      end
+      end subroutine get_determinant
 
       subroutine get_cofactor(n, p, q, mat, res)
 Cf2py intent(in) n
@@ -180,19 +178,21 @@ Cf2py depend(n) mat
 Cf2py depend(n) res
       integer n, p, q, i, j, row, col
       double precision mat(n,n), res(n-1,n-1)
+      i = 1
+      j = 1
       do 30 row=1,n
         do 29 col=1,n
           if (row /= p .AND. col /= q) then
             res(i,j) = mat(row,col)
             j = j + 1
             if (j .EQ. (n-1)) then
-              j = 0
+              j = 1
               i = i + 1
             endif
           endif
 29      continue
 30    continue
-      end
+      end subroutine get_cofactor
 
 C **************** SUBROUTINE: DISPLAY MATRIX ************************
       subroutine display(m, n, mat)
@@ -206,7 +206,7 @@ Cf2py depend(m,n) mat
         write(*,'(999f8.3)') mat(i,:)
 33    continue
       write(*,*)
-      end
+      end subroutine display
 
 C **************** SUBROUTINE: DISPLAY VECTOR ************************
       subroutine display_vec(n, vec)
@@ -217,17 +217,14 @@ Cf2py depend(n) vec
       double precision vec(n)
       write(*,'(999f8.3)') vec
       write(*,*)
-      end
+      end subroutine display_vec
 
       subroutine hello()
       write ( *, '(a)' ) '  Hello, world!'
-      end
-
-      end module
+      end subroutine hello
 
 C *********************** MAIN ***************************************
       program main
-      use normal_equation_solve
       integer m, n
       double precision g(3,2), y(3), res(2)
       m = 2
@@ -236,10 +233,6 @@ C *********************** MAIN ***************************************
       data y/ 6, 12, 6 /
       call solve(m, n, g, y, res)
       call display_vec(m, res)
-
-    !   double precision array(3,3)
-    !   array = reshape((/ 1, 2, 3, 4, 5, 6, 7, 8, 9 /), shape(array))
-    !   call display(3,3,array)
       stop
       end
 C END FILE _f77_solver_lib.f
