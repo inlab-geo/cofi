@@ -10,20 +10,32 @@ install(TARGETS _cpp_solver_lib LIBRARY DESTINATION cofi/cofi_solvers/linear_reg
 
 
 ################## Fortran 77 solver #####################################
-# set(f2py_module_name "_cylinder_methods")
-# set(fortran_src_file "${CMAKE_CURRENT_SOURCE_DIR}/cylinder_methods.f90")
-# set(generated_module_file ${CMAKE_CURRENT_BINARY_DIR}/${f2py_module_name}${PYTHON_EXTENSION_MODULE_SUFFIX})
-
-set(f2py_module_name "_f77_solver_lib")
-set(fortran_src_file "${CMAKE_CURRENT_SOURCE_DIR}/_f77_solver_lib.f")
-set(generated_module_file ${CMAKE_CURRENT_BINARY_DIR}/${f2py_module_name}${PYTHON_EXTENSION_MODULE_SUFFIX})
-add_custom_target(${f2py_module_name} ALL DEPENDS ${generated_module_file})
+set(f2py_module_name_77 "_f77_solver_lib")
+set(fortran_77_src_file "${CMAKE_CURRENT_SOURCE_DIR}/_f77_solver_lib.f")
+set(generated_module_file_77 ${CMAKE_CURRENT_BINARY_DIR}/${f2py_module_name_77}${PYTHON_EXTENSION_MODULE_SUFFIX})
+add_custom_target(${f2py_module_name_77} ALL DEPENDS ${generated_module_file_77})
 add_custom_command(
-  OUTPUT ${generated_module_file}
+  OUTPUT ${generated_module_file_77}
   COMMAND ${F2PY_EXECUTABLE}
-    -m ${f2py_module_name}
+    -m ${f2py_module_name_77}
     -c
-    ${fortran_src_file}
+    ${fortran_77_src_file}
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
-install(FILES ${generated_module_file} DESTINATION cofi/cofi_solvers/linear_regression)
+install(FILES ${generated_module_file_77} DESTINATION cofi/cofi_solvers/linear_regression)
+
+
+################## Fortran 90 solver #####################################
+set(f2py_module_name_90 "_f90_solver_lib")
+set(fortran_90_src_file "${CMAKE_CURRENT_SOURCE_DIR}/_f90_solver_lib.f90")
+set(generated_module_file_90 ${CMAKE_CURRENT_BINARY_DIR}/${f2py_module_name_90}${PYTHON_EXTENSION_MODULE_SUFFIX})
+add_custom_target(${f2py_module_name_90} ALL DEPENDS ${generated_module_file_90})
+add_custom_command(
+  OUTPUT ${generated_module_file_90}
+  COMMAND ${F2PY_EXECUTABLE}
+    -m ${f2py_module_name_90}
+    -c
+    ${fortran_90_src_file}
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+)
+install(FILES ${generated_module_file_90} DESTINATION cofi/cofi_solvers/linear_regression)

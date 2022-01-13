@@ -132,3 +132,9 @@ print(f"--> model predicted by C++/PyBind11 solver: {model_2_cpp.values()}\n")
 solver_2_f77 = solvers.LRNormalEquationF77(objective_2)
 model_2_f77 = solver_2_f77.solve()
 print(f"--> model predicted by Fortran77/f2py solver: {model_2_f77.values()}\n")
+
+
+# ------------ #2.5 Fortran 90 solver -----------------------------------
+solver_2_f90 = solvers.LRNormalEquationF90(objective_2)
+model_2_f90 = solver_2_f90.solve()
+print(f"--> model predicted by Fortran90/f2py solver: {model_2_f90.values()}\n")
