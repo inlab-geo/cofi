@@ -515,5 +515,5 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                     f"An error occurred while evaluating residuals: {e} on process"
                     f" #{self._rank}"
                 )
-        else:
+        else：
             self.evaluateResidual = None
