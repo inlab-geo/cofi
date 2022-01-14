@@ -1,4 +1,4 @@
-from cofi.cofi_objective.examples import LinearFitting
+from cofi.cofi_objective import LinearFittingObjective
 from cofi.cofi_objective import PolynomialFittingFwd
 import cofi.cofi_solvers as solvers
 
@@ -24,7 +24,7 @@ if plot:
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
-objective_1 = LinearFitting(xpts, ypts, forward.model_dimension(), forward=forward)
+objective_1 = LinearFittingObjective(xpts, ypts, forward.model_dimension(), forward=forward)
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
@@ -84,7 +84,7 @@ print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 # ------------ #2.1 define objective another way ---------------------------
 params_count = 3
 design_matrix = lambda x: np.array([x ** o for o in range(params_count)]).T
-objective_2 = LinearFitting(xpts, ypts, params_count, design_matrix)
+objective_2 = LinearFittingObjective(xpts, ypts, params_count, design_matrix)
 print("--------- objective defined another way -------------------")
 
 

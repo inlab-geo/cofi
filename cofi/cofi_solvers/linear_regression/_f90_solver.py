@@ -1,12 +1,12 @@
 from cofi.cofi_solvers import BaseSolver
-from cofi.cofi_objective import LeastSquareObjective, Model
+from cofi.cofi_objective import LinearFittingObjective, Model
 from ._f90_solver_lib import f90_lr_mod
 
 import numpy as np
 from warnings import warn
 
 class LRNormalEquationF90(BaseSolver):
-    def __init__(self, objective: LeastSquareObjective):
+    def __init__(self, objective: LinearFittingObjective):
         self.objective = objective
 
     def solve(self) -> Model:

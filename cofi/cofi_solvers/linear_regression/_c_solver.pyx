@@ -3,7 +3,7 @@
 
 cimport _c_solver
 from cofi.cofi_solvers import BaseSolver
-from cofi.cofi_objective import LeastSquareObjective, Model
+from cofi.cofi_objective import LinearFittingObjective, Model
 
 from libc.stdlib cimport malloc, free
 import numpy as np
@@ -38,7 +38,7 @@ def c_solve(g, y):
 
 
 class LRNormalEquationC(BaseSolver):
-    def __init__(self, objective: LeastSquareObjective):
+    def __init__(self, objective: LinearFittingObjective):
         self.objective = objective
 
     def solve(self) -> Model:
@@ -51,7 +51,6 @@ class LRNormalEquationC(BaseSolver):
         Y = self.objective.data_y()
 
         res = c_solve(G, Y)
-        # res = np.linalg.inv(G.T @ G) @ (G.T @ Y)
 
         model = Model(
             **dict([("p" + str(index[0]), val) for (index, val) in np.ndenumerate(res)])
