@@ -1,8 +1,7 @@
-from cofi.cofi_objective.base_forward import LinearFittingFwd
 from . import Model
-from .base_forward import BaseForward
+from .base_forward import BaseForward, LinearFittingFwd
 
-from typing import Protocol, Union
+from typing import Callable, Protocol, Union
 from numbers import Number
 import numpy as np
 
@@ -20,10 +19,10 @@ class BaseObjective:
     2. misfit(model: Union[Model, np.ndarray]) -> Number
 
     Optional implementations (depending on solvers):
-    - jacobian(model: Union[Model, np.ndarray])
-    - gradient(model: Union[Model, np.ndarray])
-    - hessian(model: Union[Model, np.ndarray])
-    - residuals(model: Union[Model, np.ndarray])
+    - jacobian(model: Union[Model, np.ndarray]), the Jacobian of the forward function
+    - gradient(model: Union[Model, np.ndarray]), the gradient of the misfit function
+    - hessian(model: Union[Model, np.ndarray]), the Hessian of the misfit function
+    - residual(model: Union[Model, np.ndarray]), the difference between observed and predicted data
     - log_posterior(model: Union[Model, np.ndarray])
     - data_x()
     - data_y()
@@ -40,35 +39,75 @@ class BaseObjective:
         """
         return self._objective(*model.values())
 
-    def jacobian(self, model: Union[Model, np.ndarray]):  # TODO (with Jax maybe)
-        raise NotImplementedError(
-            "This is a TOOD task, or to be implemented by subclasses"
-        )
-
     def gradient(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
-            "This is a TOOD task, or to be implemented by subclasses"
+            "`gradient` is required in the solving approach but you haven't"
+            " implemented it"
         )
 
     def hessian(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
-            "This is a TOOD task, or to be implemented by subclasses"
+            "`hessian` is required in the solving approach but you haven't"
+            " implemented it"
+        )
+
+    def residual(self, model: Union[Model, np.ndarray]):
+        raise NotImplementedError(
+            "`residual` is required in the solving approach but you haven't"
+            " implemented it"
+        )
+
+    def jacobian(self, model: Union[Model, np.ndarray]):  # TODO (with Jax maybe)
+        raise NotImplementedError(
+            "`jacobian` is required in the solving approach but you haven't"
+            " implemented it"
         )
 
     def log_posterior(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
-            "This is a TOOD task, or to be implemented by subclasses"
+            "`log_posterior` is required in the solving approach but you haven't"
+            " implemented it"
+        )
+
+    def data_x(self):
+        raise NotImplementedError(
+            "`data_x` is required in the solving approach but you haven't"
+            " implemented it"
+        )
+
+    def data_y(self):
+        raise NotImplementedError(
+            "`data_y` is required in the solving approach but you haven't"
+            " implemented it"
+        )
+
+    def initial_model(self):
+        raise NotImplementedError(
+            "`initial_model` is required in the solving approach but you haven't"
+            " implemented it"
+        )
+
+    def n_params(self):
+        raise NotImplementedError(
+            "`n_params` is required in the solving approach but you haven't"
+            " implemented it"
         )
 
 
-class DataBasedObjective(BaseObjective):
+class LeastSquareObjective(BaseObjective):
     """
     General class holder for objective functions that are calculated from data misfit
 
-    feed the data into constructor, and specify a misfit function
+    Feed the data into constructor, and least squares misfit will be generated automatically
     """
 
-    def __init__(self, X, Y, forward: BaseForward, distance):
+    def __init__(
+        self,
+        X,
+        Y,
+        forward: Union[BaseForward, Callable],
+        initial_model: Union[Model, np.ndarray, list] = None,
+    ):
         X = np.asanyarray(X)
         Y = np.asanyarray(Y)
         if X.shape[0] != Y.shape[0]:
@@ -78,30 +117,85 @@ class DataBasedObjective(BaseObjective):
             )
 
         self.X = X
-        self.Y = Y
+        self.Y = np.expand_dims(Y, axis=1)
+        if not isinstance(forward, BaseForward):
+            forward = BaseForward(forward)
         self.forward = forward
-        self.n_params = forward.model_dimension()
+        self.nparams = forward.model_dimension()
 
-        if isinstance(forward, LinearFittingFwd):
-            self.linear = True
-
-        # distance can be a function or a string
-        if isinstance(distance, function):
-            self.distance = distance
-        elif isinstance(distance, str):
-            self.distance_name = distance
-            # TODO - define the actual distance functions
-            # if distance == 'l2':
-            #     pass
-            # else:
-            #     pass
-
-        # TODO self.objective = ???
-
-    def misfit(self, model: Model):
-        if self.distance_name:
-            raise NotImplementedError(
-                "distance functions specified by str not implemented yet"
+        if initial_model:
+            self.prior = (
+                initial_model.values()
+                if isinstance(initial_model, Model)
+                else np.asanyarray(initial_model)
             )
+        else:
+            self.prior = np.zeros(self.nparams)
 
-        return super().misfit(model)
+    def misfit(self, model: Union[Model, np.ndarray]):
+        # TODO weight to the data? (ref: inversion textbook p31)
+        residual = self.residual(model)
+        return residual.T @ residual
+
+    def residual(self, model: Union[Model, np.ndarray]):
+        if isinstance(model, Model):
+            model = model.values()
+        X = np.expand_dims(self.X, axis=1)
+        model = np.squeeze(model)
+        predicted_Y = np.apply_along_axis(self.forward.solve_curried(model), 1, X)
+        return np.squeeze(predicted_Y - self.Y)
+
+    def data_x(self):
+        return self.X
+
+    def data_y(self):
+        return self.Y
+
+    def n_params(self):
+        return self.nparams
+
+    def initial_model(self):
+        return self.prior
+
+    def params_size(self):
+        return len(self.prior)
+
+
+class LinearFittingObjective(LeastSquareObjective):
+    def __init__(
+        self,
+        X,
+        Y,
+        params_count,
+        design_matrix: Callable = None,
+        forward: LinearFittingFwd = None,
+        initial_model: Union[Model, np.ndarray, list] = None,
+    ):
+        self.calc_design_matrix = design_matrix
+        if forward and hasattr(forward, "design_matrix"):
+            self.calc_design_matrix = forward.design_matrix
+        elif forward is None:
+            if design_matrix is None:
+                raise ValueError(
+                    "Please specify at least one of design_matrix and forward"
+                )
+            forward = LinearFittingFwd(params_count, design_matrix)
+
+        super().__init__(X, Y, forward, initial_model)
+
+    def design_matrix(self):
+        if hasattr(self, "_design_matrix"):
+            return self._design_matrix
+        else:
+            self._design_matrix = self.calc_design_matrix(self.X)
+            return self._design_matrix
+
+    def gradient(self, model: Union[Model, np.ndarray]):
+        return np.squeeze(self.jacobian(model).T @ self.residual(model))
+
+    def hessian(self, model: Union[Model, np.ndarray]):
+        g = self.design_matrix()
+        return g.T @ g
+
+    def jacobian(self, model: Union[Model, np.ndarray]):
+        return self.design_matrix()

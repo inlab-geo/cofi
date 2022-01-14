@@ -28,7 +28,7 @@ a.set_title("Using BaseForward")
 
 
 # ------------------------------ test LinearFittingFwd ------------------------------
-linear_fwd = LinearFittingFwd()
+linear_fwd = LinearFittingFwd(3)
 x_linear = np.linspace(0, 1, 100)
 X_linear = np.array([x_linear ** o for o in range(3)]).T
 y_linear = linear_fwd.solve(model, X_linear)

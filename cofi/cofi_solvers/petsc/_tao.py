@@ -41,7 +41,7 @@ class TAOSolver(BaseSolver):
 
     Objective definition needs to implement the following functions:
     - misfit(model)
-    - residuals(model), optional depending on method
+    - residual(model), optional depending on method
     - jacobian(model), optional depending on method
     - gradient(model), optional depending on method
     - hessian(model), optional depending on method
@@ -51,13 +51,11 @@ class TAOSolver(BaseSolver):
     - n_params()
 
     Methods can be classified into 2 sets that:
-    1. require you to specify objective function
-        - (optionally) with the gradient
-        - (optionally) with the hessian
-    2. require you to specify residual vector
-        - (optioanlly) with the jacobian
+    1. require you to specify objective function, (optionally) with the gradient and hessian
+    2. require you to specify residual vector, (optioanlly) with the jacobian
 
     More details on methods and functions to implement WIP... #TODO
+
     """
 
     def __init__(self, objective: BaseObjective, mpi=False):
@@ -82,15 +80,15 @@ class TAOSolver(BaseSolver):
             OptDB.delValue(option)
 
     def solve(
-        self, method: str = "nm", extra_options: Union[List[str], str] = None, verbose=1
+        self, method: str = "nm", extra_options: Union[List[str], str] = None, verbose=0
     ) -> Model:
         if (
-            self._use_mpi
+            not self._use_mpi
             and not (
                 method in _methods_need_objective or method in _methods_need_residual
             )
         ) or (
-            not self._use_mpi
+            self._use_mpi
             and not (
                 method in _methods_need_objective_mpi
                 or method in _methods_need_residual_mpi
@@ -120,9 +118,7 @@ class TAOSolver(BaseSolver):
             tao.setHessian(user.formHessian, self.H)
             tao.setInitial(self.x)
             try:
-                print("start")
                 tao.solve(self.x)
-                print("end")
             except:
                 if self._rank == 0:
                     logging.error(f"Something wrong in solving by method {method}")
@@ -135,7 +131,7 @@ class TAOSolver(BaseSolver):
             tao.setFromOptions()
 
             # solve the problem
-            tao.setResidual(user.evaluateResiduals, self.f)
+            tao.setResidual(user.evaluateResidual, self.f)
             tao.setJacobianResidual(user.evaluateJacobian, self.J, self.Jp)
 
             tao.solve(self.x)
@@ -201,7 +197,7 @@ class TAOSolver(BaseSolver):
             self.H.setOption(PETSc.Mat.Option.SYMMETRIC, True)
             self.H.setUp()
 
-        elif method in _methods_need_objective:
+        elif method in _methods_need_residual:
             # create solution vector
             self.x = PETSc.Vec().create(self._comm)
             self.x.setSizes(self.n_params)
@@ -387,10 +383,10 @@ class _TAOAppCtx:
         else:
             self.evaludateJacobian = None
 
-    def evaluateResiduals(self, tao, x, f):
-        if self._obj.residuals:
+    def evaluateResidual(self, tao, x, f):
+        if self._obj.residual:
             try:
-                res = self._obj.residuals(x)
+                res = self._obj.residual(x)
             except Exception as e:
                 logging.error(traceback.format_exc())
                 print("An error occurred while evaluating residuals:", e)
@@ -398,7 +394,7 @@ class _TAOAppCtx:
             f.setArray(res)
             f.assemble()
         else:
-            self.evaluateResiduals = None
+            self.evaluateResidual = None
 
 
 class _TAOAppCtxMPI(_TAOAppCtx):
@@ -504,13 +500,13 @@ class _TAOAppCtxMPI(_TAOAppCtx):
         else:
             self.evaluateJacobian = None
 
-    def evaluateResiduals(self, tao, x, f):
-        if self._obj.residuals_mpi:
+    def evaluateResidual(self, tao, x, f):
+        if self._obj.residual_mpi:
             try:
                 self.formSequentialModelVector(x)
                 n, m = self.t_mpitype.getOwnershipRange()
                 xseq = self.xseq.getArray()
-                res = self._obj.residuals_mpi(xseq, n, m)
+                res = self._obj.residual_mpi(xseq, n, m)
                 f.setValues(range(n, m), res)
                 f.assemble()
             except Exception as e:
@@ -519,5 +515,5 @@ class _TAOAppCtxMPI(_TAOAppCtx):
                     f"An error occurred while evaluating residuals: {e} on process"
                     f" #{self._rank}"
                 )
-        else:
-            self.evaluateResiduals = None
+        else：
+            self.evaluateResidual = None

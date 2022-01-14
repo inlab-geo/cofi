@@ -13,10 +13,9 @@ channels:
 dependencies:
   - numpy
   - scipy
-  - jax
-  - jaxlib
+  # - jax
+  # - jaxlib
   - pyyaml
-  - setuptools
   - black
   - sphinx
   - mpi4py
@@ -25,6 +24,9 @@ dependencies:
   - jupyter
   - jupyterlab
   - matplotlib
+  - cython
+  - cibuildwheel
+  - pybind11
   - pip
   - pip:
     - insipid-sphinx-theme

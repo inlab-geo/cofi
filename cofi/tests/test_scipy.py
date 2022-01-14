@@ -1,4 +1,4 @@
-from cofi.cofi_solvers import ScipyOptimizerSolver, ScipyOptimizerLMSolver
+from cofi.cofi_solvers import ScipyOptimizerSolver, ScipyOptimizerLSSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
@@ -72,7 +72,7 @@ y0_3 = predict(x0_3, t_3)
 
 # define problem (objective) and solver
 exp_decay_objective_3 = ExpDecay(t_3, y_3, x0_3)
-scipy_solver_3 = ScipyOptimizerLMSolver(exp_decay_objective_3)
+scipy_solver_3 = ScipyOptimizerLSSolver(exp_decay_objective_3)
 
 # solve with lm
 print("-------------- 3 exps, Levenberg-Marquardt with Jacobian ------------")

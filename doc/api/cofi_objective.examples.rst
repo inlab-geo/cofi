@@ -24,3 +24,11 @@ cofi\_objective.examples.exponential\_decay module
    :members:
    :undoc-members:
    :show-inheritance:
+
+cofi\_objective.examples.linear\_fitting module
+-----------------------------------------------
+
+.. automodule:: cofi_objective.examples.linear_fitting
+   :members:
+   :undoc-members:
+   :show-inheritance:

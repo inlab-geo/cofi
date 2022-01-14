@@ -1,11 +1,31 @@
-# python -m build
-# python setup.py develop [--uninstall] | pip install -e . (preferred)
-[build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+####### TO BUILD #######
+# for users: python -m build
+# for developers: python setup.py develop [--uninstall] | pip install -e . (preferred)
+# for developers (in case): rm -rf _skbuild; pip uninstall cofi; pip install -e .
 
+####### TO TEST WHEELS ######
+# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; cibuildwheel --platform linux
+
+####### TO FORMAT #######
 # black --check .
 # black .
+
+[build-system]
+requires = [
+  "setuptools>=42",
+  "wheel",
+  "scikit-build>=0.12",
+  "cmake>=3.18",
+  "ninja",
+  "cython",
+  "numpy",
+  "pybind11[global]",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
+
 [tool.black]
 line-length = 88
 target_version = ['py37', 'py38']

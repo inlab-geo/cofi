@@ -46,9 +46,9 @@ class ScipyOptimizerSolver(BaseSolver):
 
     def __init__(self, objective: BaseObjective):
         self._obj = objective
-        self._x0 = objective.m0
-        self._t = objective.x
-        self._y = objective.y
+        self._x0 = objective.initial_model()
+        self._t = objective.data_x()
+        self._y = objective.data_y()
 
     def solve(
         self,
@@ -130,11 +130,11 @@ class ScipyOptimizerSolver(BaseSolver):
         return model
 
 
-class ScipyOptimizerLMSolver(BaseSolver):
+class ScipyOptimizerLSSolver(BaseSolver):
     """Optimizer wrapper of scipy.optimizer.least_squares
 
     Objective definition needs to implement the following functions:
-    - residuals(model)
+    - residual(model)
     - jacobian(model), optional depending on method
     - data_x()
     - data_y()
@@ -146,13 +146,13 @@ class ScipyOptimizerLMSolver(BaseSolver):
 
     def __init__(self, objective: BaseObjective):
         self._obj = objective
-        self._x0 = objective.m0
-        self._t = objective.x
-        self._y = objective.y
+        self._x0 = objective.initial_model()
+        self._t = objective.data_x()
+        self._y = objective.data_y()
 
     def solve(
         self,
-        method: str,
+        method: str = "trf",
         jac=None,
         bounds=(-inf, inf),
         ftol=1e-08,
@@ -176,7 +176,7 @@ class ScipyOptimizerLMSolver(BaseSolver):
                 jac = "2-point"
 
         res = least_squares(
-            self._obj.residuals,
+            self._obj.residual,
             self._x0,
             method=method,
             jac=jac,

@@ -7,11 +7,12 @@
 *.a
 *.o
 *.so
+*.mod
 
 # Python files #
 ################
 # setup.py working directory
-build
+_skbuild
 # sphinx build directory
 doc/_build
 # setup.py dist directory
@@ -24,6 +25,7 @@ dist
 .libs
 .eggs
 pip-wheel-metadata
+wheelhouse
 
 # pytest cache #
 ################
