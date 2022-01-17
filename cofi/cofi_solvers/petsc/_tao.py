@@ -48,7 +48,7 @@ class TAOSolver(BaseSolver):
     - data_x()
     - data_y()
     - initial_model()
-    - n_params()
+    - params_size()
 
     Methods can be classified into 2 sets that:
     1. require you to specify objective function, (optionally) with the gradient and hessian

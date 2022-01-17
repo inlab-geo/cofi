@@ -39,7 +39,6 @@ class ScipyOptimizerSolver(BaseSolver):
     - data_x()
     - data_y()
     - initial_model()
-    - n_params()
 
     More details on methods and functions to implement WIP... #TODO
     """
@@ -139,7 +138,6 @@ class ScipyOptimizerLSSolver(BaseSolver):
     - data_x()
     - data_y()
     - initial_model()
-    - n_params()
 
     More details on methods and functions to implement WIP... #TODO
     """

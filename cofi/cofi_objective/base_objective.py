@@ -27,7 +27,7 @@ class BaseObjective:
     - data_x()
     - data_y()
     - initial_model()
-    - n_params()
+    - params_size()
     """
 
     def __init__(self, func: _ObjectiveCallable):
@@ -87,9 +87,9 @@ class BaseObjective:
             " implemented it"
         )
 
-    def n_params(self):
+    def params_size(self):
         raise NotImplementedError(
-            "`n_params` is required in the solving approach but you haven't"
+            "`params_size` is required in the solving approach but you haven't"
             " implemented it"
         )
 
@@ -150,9 +150,6 @@ class LeastSquareObjective(BaseObjective):
 
     def data_y(self):
         return self.Y
-
-    def n_params(self):
-        return self.nparams
 
     def initial_model(self):
         return self.prior
