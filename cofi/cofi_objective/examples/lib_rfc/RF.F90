@@ -5,7 +5,7 @@ Subroutine RFcalc_nonoise(voro,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,
 !F2PY INTENT(IN) :: mtype
 !F2PY INTENT(IN) :: fs
 !F2PY INTENT(IN) :: gauss_a
-!F2PY INTENT(IN) :: water_c
+!F2PY INTENT(IN) :: water_a
 !F2PY INTENT(IN) :: angle
 !F2PY INTENT(IN) :: time_shift
 !F2PY INTENT(IN) :: ndatar
