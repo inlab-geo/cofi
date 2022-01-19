@@ -17,11 +17,11 @@ class ReceiverFunctionObjective(BaseObjective):
        the crustal structure. This deconvolved signal is the receiver function, and 
        has a highly non-linear dependencies on the local crustal properties.
 
-       The model that this objective takes in is of dimension [nlayers,3]. The 
-       values in model[:,0] give the depths of discontinuities in the model, while
-       model[:,1] contains the S-wave speed above the interface. model[:,2] is the
-       ratio of S-wave speed to P-wave speed. The maximum depth of discontinuity
-       that can be considered is 60km.
+       The model that this objective takes in is of dimension [nlayers,3]:
+       - model[:,0] gives the depths of discontinuities in the model,
+       - model[:,1] contains the S-wave speed above the interface,
+       - model[:,2] is the ratio of S-wave speed to P-wave speed. 
+       The maximum depth of discontinuity that can be considered is 60km.
     """
     def __init__(self):
         pass
@@ -40,17 +40,30 @@ class ReceiverFunction(BaseForward):
                   [8.0,4.2,2.0],
                   [20, 6,1.7],
                   [45,6.2,1.7]])
-        t, rfunc = rf.rfcalc(self._validate_model(model))
+        model = self._validate_model(model)
+        t, rfunc = rf.rfcalc(model)
         px = np.zeros([2*len(model),2])
         py = np.zeros([2*len(model),2])
         n=len(model)
+
         px[0::2,0],px[1::2,0],px[1::2,1],px[2::2,1] = model[:,1],model[:,1],model[:,0],model[:-1,0]
         plt.figure(figsize=(4,6))
         plt.xlabel('Vs (km/s)')
         plt.ylabel('Depth (km)')
         plt.gca().invert_yaxis()
         plt.plot(px[:,0],px[:,1],'y-')
-        plt.show()
+        plt.savefig("earth_model.png")
+
+        plt.figure()
+        t,rfunc = rf.rfcalc(model)          # Receiver function
+        t2,rfunc2 = rf.rfcalc(model,sn=0.5) # Receiver function with added correlated noise
+        print(t2, rfunc2)
+        plt.plot(t,rfunc,label='No noise RF')
+        plt.plot(t2,rfunc2,'r-',label='Noisy RF')
+        plt.xlabel('Time/s')
+        plt.ylabel('Amplitude')
+        plt.legend()
+        plt.savefig("receiver_func.png")
 
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:

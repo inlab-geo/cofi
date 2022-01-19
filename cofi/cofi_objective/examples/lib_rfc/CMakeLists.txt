@@ -11,6 +11,7 @@ add_custom_command(
     -c
     ${fortran_src_file_rfc} 
     ${fortran_src_file_rfcsubs}
+    --opt='-O3'
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 install(FILES ${generated_module_file_rfc} DESTINATION cofi/cofi_objective/examples/lib_rfc)
