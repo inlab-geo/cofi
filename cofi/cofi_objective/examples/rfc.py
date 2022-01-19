@@ -4,7 +4,7 @@ from .lib_rfc import rf
 from .lib_rfc import _rfc
 
 import numpy as np
-from typing import Union
+from typing import Tuple, Union
 import matplotlib.pyplot as plt
 
 
@@ -23,48 +23,28 @@ class ReceiverFunctionObjective(BaseObjective):
        - model[:,2] is the ratio of S-wave speed to P-wave speed. 
        The maximum depth of discontinuity that can be considered is 60km.
     """
-    def __init__(self):
-        pass
+    def __init__(self, t, rf_data):
+        self.fwd = ReceiverFunction()
+        self.t = t
+        self.rf_data = rf_data
 
-    def misfit(self, model: Union[Model, np.ndarray]):
-        model = np.asanyarray(model)
+    def misfit(self, model: Union[Model, np.ndarray], mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1):
+        t, rf_calculated = self.fwd.solve(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        if not np.array_equal(t, self.t):
+            raise ValueError("Please ensure the time array matches your data")
+        return np.linalg.norm(rf_calculated - self.rf_data)
+
+    # def log_likelihood(self, model, )
 
 
 class ReceiverFunction(BaseForward):
     def __init__(self):
         pass
 
-    def solve(self, model: Union[Model, np.ndarray]) -> np.ndarray:
-        model = np.array([[1,4.0,1.7],
-                  [3.5,4.3,1.7],
-                  [8.0,4.2,2.0],
-                  [20, 6,1.7],
-                  [45,6.2,1.7]])
+    def solve(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple(np.ndarray,np.ndarray):
         model = self._validate_model(model)
-        t, rfunc = rf.rfcalc(model)
-        px = np.zeros([2*len(model),2])
-        py = np.zeros([2*len(model),2])
-        n=len(model)
-
-        px[0::2,0],px[1::2,0],px[1::2,1],px[2::2,1] = model[:,1],model[:,1],model[:,0],model[:-1,0]
-        plt.figure(figsize=(4,6))
-        plt.xlabel('Vs (km/s)')
-        plt.ylabel('Depth (km)')
-        plt.gca().invert_yaxis()
-        plt.plot(px[:,0],px[:,1],'y-')
-        plt.savefig("earth_model.png")
-
-        plt.figure()
-        t,rfunc = rf.rfcalc(model)          # Receiver function
-        t2,rfunc2 = rf.rfcalc(model,sn=0.5) # Receiver function with added correlated noise
-        print(t2, rfunc2)
-        plt.plot(t,rfunc,label='No noise RF')
-        plt.plot(t2,rfunc2,'r-',label='Noisy RF')
-        plt.xlabel('Time/s')
-        plt.ylabel('Amplitude')
-        plt.legend()
-        plt.savefig("receiver_func.png")
-
+        t, rfunc = rf.rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        return t, rfunc
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
         model = np.asanyarray(model)
