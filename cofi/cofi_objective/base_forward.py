@@ -8,15 +8,15 @@ class BaseForward:
     def __init__(self, forward: Callable):
         self._forward = forward
 
-    def solve(self, model: Union[Model, np.ndarray], X) -> np.ndarray:
+    def calc(self, model: Union[Model, np.ndarray], X) -> np.ndarray:
         X = np.asanyarray(X)
         return self._forward(model, X)
 
-    def solve_curried(self, model: Union[Model, np.ndarray]) -> np.ndarray:
-        def solve_with_model(X):
-            return self.solve(model, X)
+    def calc_curried(self, model: Union[Model, np.ndarray]) -> np.ndarray:
+        def calc_with_model(X):
+            return self.calc(model, X)
 
-        return solve_with_model
+        return calc_with_model
 
     def design_matrix(self, X):  # only solver targeting linear forward will call this
         raise NotImplementedError(
@@ -33,7 +33,7 @@ class LinearFittingFwd(BaseForward):
         else:
             self.design_matrix = lambda X: X
 
-    def solve(self, model: Union[Model, np.ndarray], X):
+    def calc(self, model: Union[Model, np.ndarray], X):
         self.params_count = model.length() if isinstance(model, Model) else len(model)
         X = self.design_matrix(X)
         if self.params_count != X.shape[1]:
@@ -58,12 +58,12 @@ class PolynomialFittingFwd(LinearFittingFwd):
         if order:
             self.params_count = order + 1
 
-    def solve(self, model: Union[Model, np.ndarray], x):  # put here to avoid confusion
-        return super().solve(model, x)
+    def calc(self, model: Union[Model, np.ndarray], x):  # put here to avoid confusion
+        return super().calc(model, x)
 
     def design_matrix(self, x):
         """
-        This is invoked by solve(model, x) from superclass prior to solving.
+        This is invoked by calc(model, x) from superclass prior to solving.
         The polynomial transformation happens here
         """
         x = np.asanyarray(x)
