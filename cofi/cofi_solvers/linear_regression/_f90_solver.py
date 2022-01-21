@@ -3,17 +3,15 @@ from cofi.cofi_objective import LinearFittingObjective, Model
 from ._f90_solver_lib import f90_lr_mod
 
 import numpy as np
-from warnings import warn
+from ._utils import warn_normal_equation
+
 
 class LRNormalEquationF90(BaseSolver):
     def __init__(self, objective: LinearFittingObjective):
         self.objective = objective
 
     def solve(self) -> Model:
-        warn(
-            "You are using linear regression formula solver, please note that this is"
-            " only for small scale of data"
-        )
+        warn_normal_equation()
 
         G = self.objective.design_matrix()
         Y = self.objective.data_y()

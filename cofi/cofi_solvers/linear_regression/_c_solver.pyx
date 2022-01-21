@@ -7,7 +7,8 @@ from cofi.cofi_objective import LinearFittingObjective, Model
 
 from libc.stdlib cimport malloc, free
 import numpy as np
-from warnings import warn
+from ._utils import warn_normal_equation
+
 
 cdef hello_wrapper():
     hello()
@@ -42,10 +43,7 @@ class LRNormalEquationC(BaseSolver):
         self.objective = objective
 
     def solve(self) -> Model:
-        warn(
-            "You are using linear regression formula solver, please note that this is"
-            " only for small scale of data"
-        )
+        warn_normal_equation()
 
         G = self.objective.design_matrix()
         Y = self.objective.data_y()

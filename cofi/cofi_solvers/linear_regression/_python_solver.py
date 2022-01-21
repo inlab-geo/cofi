@@ -2,7 +2,7 @@ from cofi.cofi_solvers import BaseSolver
 from cofi.cofi_objective import LeastSquareObjective, Model
 
 import numpy as np
-from warnings import warn
+from ._utils import warn_normal_equation
 
 
 class LRNormalEquation(BaseSolver):
@@ -10,11 +10,7 @@ class LRNormalEquation(BaseSolver):
         self.objective = objective
 
     def solve(self) -> Model:
-        # TODO only possible if gtg is full rank (has no zero eigenvalues, or even small eigenvalues)
-        warn(
-            "You are using linear regression formula solver, please note that this is"
-            " only for small scale of data"
-        )
+        warn_normal_equation()
 
         G = self.objective.design_matrix()
         Y = self.objective.data_y()
