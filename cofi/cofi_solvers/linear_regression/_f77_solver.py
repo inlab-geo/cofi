@@ -16,7 +16,9 @@ class LRNormalEquationF77(BaseSolver):
         G = self.objective.design_matrix()
         Y = self.objective.data_y()
 
-        res = f77_solve(G.shape[1], G.shape[0], np.asfortranarray(G), np.asfortranarray(Y))
+        res = f77_solve(
+            G.shape[1], G.shape[0], np.asfortranarray(G), np.asfortranarray(Y)
+        )
 
         model = Model(
             **dict([("p" + str(index[0]), val) for (index, val) in np.ndenumerate(res)])

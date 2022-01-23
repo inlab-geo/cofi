@@ -39,5 +39,6 @@ exclude = '''
   | dist
   | examples
   | lib
+  | _skbuild
 )/
 '''

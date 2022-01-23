@@ -1,6 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
+
 # import numpy
 
 try:
@@ -20,10 +21,10 @@ setup(
     author="InLab",
     packages=["cofi", "cofi.cofi_solvers", "cofi.cofi_objective"],
     install_requires=[
-        'cython',
-        'numpy',
-        'scipy',
-        'pyyaml',
-        'pybind11[global]',
+        "cython",
+        "numpy",
+        "scipy",
+        "pyyaml",
+        "pybind11[global]",
     ],
 )

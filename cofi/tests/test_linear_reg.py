@@ -24,7 +24,9 @@ if plot:
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
-objective_1 = LinearFittingObjective(xpts, ypts, forward.model_dimension(), forward=forward)
+objective_1 = LinearFittingObjective(
+    xpts, ypts, forward.model_dimension(), forward=forward
+)
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
