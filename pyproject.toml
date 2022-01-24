@@ -1,7 +1,7 @@
 ####### TO BUILD #######
 # for users: python -m build
 # for developers: python setup.py develop [--uninstall] | pip install -e . (preferred)
-# for developers (in case): rm -rf _skbuild; pip uninstall cofi; pip install -e .
+# for developers (in case): rm -rf _skbuild; pip uninstall -y cofi; pip install -e .
 
 ####### TO TEST WHEELS ######
 # export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; cibuildwheel --platform linux
@@ -28,7 +28,7 @@ testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
 
 [tool.black]
 line-length = 88
-target_version = ['py37', 'py38']
+target_version = ['py38', 'py39', 'py310']
 experimental_string_processing = true
 exclude = '''
 /(

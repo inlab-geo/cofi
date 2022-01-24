@@ -26,6 +26,8 @@ dist
 .eggs
 pip-wheel-metadata
 wheelhouse
+.tox
+MANIFEST
 
 # pytest cache #
 ################
