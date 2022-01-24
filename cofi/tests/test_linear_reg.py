@@ -11,7 +11,7 @@ true_model = [3, 2, 5]
 npts = 25
 xpts = np.random.uniform(0, 1, npts)
 forward = PolynomialFittingFwd(2)
-ypts = forward.solve(true_model, xpts) + np.random.normal(0, 0.5, size=npts)
+ypts = forward.calc(true_model, xpts) + np.random.normal(0, 0.5, size=npts)
 
 print(f"--> ground truth model: {np.array(true_model)}\n")
 
@@ -19,7 +19,7 @@ plot = False
 if plot:
     plt.figure(figsize=(10, 8))
     plt.plot(xpts, ypts, "x")
-    plt.plot(np.linspace(0, 1, 100), forward.solve(true_model, np.linspace(0, 1, 100)))
+    plt.plot(np.linspace(0, 1, 100), forward.calc(true_model, np.linspace(0, 1, 100)))
     plt.show()
 
 
@@ -34,19 +34,19 @@ solver_1_pure = solvers.LRNormalEquation(objective_1)
 model_1_pure = solver_1_pure.solve()
 print(f"--> model predicted by pure Python solver: {model_1_pure.values()}\n")
 
-ypts_predicted = forward.solve(model_1_pure, xpts)
+ypts_predicted = forward.calc(model_1_pure, xpts)
 # plot = True
 if plot:
     plt.figure(figsize=(10, 8))
     plt.plot(xpts, ypts, "x", label="Data")
     plt.plot(
         np.linspace(0, 1, 100),
-        forward.solve(true_model, np.linspace(0, 1, 100)),
+        forward.calc(true_model, np.linspace(0, 1, 100)),
         label="Input",
     )
     plt.plot(
         np.linspace(0, 1, 100),
-        forward.solve(model_1_pure, np.linspace(0, 1, 100)),
+        forward.calc(model_1_pure, np.linspace(0, 1, 100)),
         label="Predicted",
     )
     plt.legend()
@@ -100,18 +100,18 @@ if plot:
     plt.plot(xpts, ypts, "x", label="Data")
     plt.plot(
         np.linspace(0, 1, 100),
-        forward.solve(true_model, np.linspace(0, 1, 100)),
+        forward.calc(true_model, np.linspace(0, 1, 100)),
         label="Input",
     )
     plt.plot(
         np.linspace(0, 1, 100),
-        forward.solve(model_1_pure, np.linspace(0, 1, 100)),
+        forward.calc(model_1_pure, np.linspace(0, 1, 100)),
         label="Predicted 1",
         linewidth=3,
     )
     plt.plot(
         np.linspace(0, 1, 100),
-        forward.solve(model_2_pure, np.linspace(0, 1, 100)),
+        forward.calc(model_2_pure, np.linspace(0, 1, 100)),
         label="Predicted 2",
     )
     plt.legend()

@@ -18,7 +18,7 @@ model = Model(m1=3, m2=2, m3=5)
 x_basefwd = np.linspace(0, 1, 100)
 X_basefwd = np.array([x_basefwd ** o for o in range(3)]).T
 base_fwd = BaseForward(forward=(lambda m, X: X @ m.values()))
-y_basefwd = base_fwd.solve(model, X_basefwd)
+y_basefwd = base_fwd.calc(model, X_basefwd)
 
 plt.figure(1, figsize=(10, 3))
 a = plt.subplot(1, 3, 1)
@@ -31,7 +31,7 @@ a.set_title("Using BaseForward")
 linear_fwd = LinearFittingFwd(3)
 x_linear = np.linspace(0, 1, 100)
 X_linear = np.array([x_linear ** o for o in range(3)]).T
-y_linear = linear_fwd.solve(model, X_linear)
+y_linear = linear_fwd.calc(model, X_linear)
 
 b = plt.subplot(1, 3, 2)
 b.plot(x_linear, y_linear)

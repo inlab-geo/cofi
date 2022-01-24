@@ -1,0 +1,56 @@
+from cofi.cofi_objective import BaseObjective, Model
+from cofi.cofi_objective.base_forward import BaseForward
+from .lib_rfc import rf
+from .lib_rfc import _rfc
+
+import numpy as np
+from typing import Tuple, Union
+import matplotlib.pyplot as plt
+
+
+class ReceiverFunctionObjective(BaseObjective):
+    """Receiver functions are a class of seismic data used to study discontinuities
+       (layering) in the Earth's crust. At each discontinuity, P-to-S conversions
+       occur, introducing complexity in the waveform. By deconvolving horizontal- 
+       and vertical-channel waveforms from earthquakes at teleseismic distances,
+       we can isolate information about these conversions, and hence learn about
+       the crustal structure. This deconvolved signal is the receiver function, and 
+       has a highly non-linear dependencies on the local crustal properties.
+
+       The model that this objective takes in is of dimension [nlayers,3]:
+       - model[:,0] gives the depths of discontinuities in the model,
+       - model[:,1] contains the S-wave speed above the interface,
+       - model[:,2] is the ratio of S-wave speed to P-wave speed. 
+       The maximum depth of discontinuity that can be considered is 60km.
+    """
+    def __init__(self, t, rf_data):
+        self.fwd = ReceiverFunction()
+        self.t = t
+        self.rf_data = rf_data
+
+    def misfit(self, model: Union[Model, np.ndarray], mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1):
+        t, rf_calculated = self.fwd.solve(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        if not np.array_equal(t, self.t):
+            raise ValueError("Please ensure the time array matches your data")
+        return np.linalg.norm(rf_calculated - self.rf_data)
+
+    # def log_likelihood(self, model, )
+
+
+class ReceiverFunction(BaseForward):
+    def __init__(self):
+        pass
+
+    def solve(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple(np.ndarray,np.ndarray):
+        model = self._validate_model(model)
+        t, rfunc = rf.rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        return t, rfunc
+
+    def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
+        model = np.asanyarray(model)
+        if model.shape[1] != 3:
+            raise ValueError(f"Model dimension should be (nlayers,3) but instead got {model.shape}")
+        if np.any(model[:,0] > 60):
+            raise ValueError(f"The first column of model represents depths of discontinuities and the maximum depth that can be considered is 60km")
+        return model
+
