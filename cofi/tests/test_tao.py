@@ -1,4 +1,4 @@
-from cofi.cofi_solvers import TAOSolver
+from cofi.optimizers import TAOSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
