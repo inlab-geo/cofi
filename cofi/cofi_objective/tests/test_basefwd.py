@@ -42,7 +42,7 @@ b.set_title("Using LinearFittingFwd")
 # ------------------------------ test PolynomialFittingFwd ------------------------------
 poly_fwd = PolynomialFittingFwd()
 x_poly = np.linspace(0, 1, 100)
-y_poly = poly_fwd.solve(model, x_poly)
+y_poly = poly_fwd.calc(model, x_poly)
 
 c = plt.subplot(1, 3, 3)
 c.plot(x_poly, y_poly)

@@ -3,6 +3,10 @@ from cofi.cofi_objective import PolynomialFittingFwd
 import cofi.linear_reg as solvers
 import cofi.optimizers as optim
 
+import os
+print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
+print("PATH:", os.environ.get('PATH'))
+
 import numpy as np
 import matplotlib.pyplot as plt
 

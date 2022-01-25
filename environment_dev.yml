@@ -27,9 +27,9 @@ dependencies:
   - cython
   - pybind11
   - scikit-build
+  - pytest
   - pip
   - pip:
-    - pytest
     - coverage
     - insipid-sphinx-theme
     - cibuildwheel
