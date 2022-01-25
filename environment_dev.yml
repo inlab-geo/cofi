@@ -25,10 +25,12 @@ dependencies:
   - jupyterlab
   - matplotlib
   - cython
-  - cibuildwheel
   - pybind11
+  - scikit-build
   - pip
   - pip:
     - pytest
     - coverage
     - insipid-sphinx-theme
+    - cibuildwheel
+    - tox
