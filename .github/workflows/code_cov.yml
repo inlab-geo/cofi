@@ -13,8 +13,8 @@ jobs:
           python-version: 3.9
       - name: Set up environment
         run: |
-          $CONDA/bin/conda install -c conda-forge gfortran
-          $CONDA/bin/conda install numpy scipy petsc petsc4py matplotlib cython pybind11 scikit-build pytest pip
+          $CONDA/bin/conda install -c conda-forge gfortran petsc4py
+          $CONDA/bin/conda install numpy scipy matplotlib cython pybind11 scikit-build pytest pip
           $CONDA/bin/pip install coverage
           $CONDA/bin/pip install .
       - name: Run tests and collect coverage
