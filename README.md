@@ -2,6 +2,7 @@
 
 [![Build](https://github.com/inlab-geo/cofi/actions/workflows/build_wheels.yml/badge.svg?branch=main)](https://github.com/inlab-geo/cofi/actions/workflows/build_wheels.yml)
 [![Documentation Status](https://readthedocs.org/projects/cofi/badge/?version=latest)](https://cofi.readthedocs.io/en/latest/?badge=latest)
+[![Slack](https://img.shields.io/badge/Slack-inlab-4A154B?logo=slack)](inlab-geo.slack.com)
 
 
 # Introduction

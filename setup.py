@@ -33,5 +33,7 @@ setup(
         "scipy",
         "pyyaml",
         "pybind11[global]",
+        "petsc",
+        "petsc4py",
     ],
 )

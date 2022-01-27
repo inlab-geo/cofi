@@ -1,7 +1,8 @@
+# --------------------------- BEGIN NOTES ---------------------------
+
 ####### TO BUILD #######
 # for users: python -m build
-# for developers: python setup.py develop [--uninstall] | pip install -e . (preferred)
-# for developers (in case): rm -rf _skbuild; pip uninstall -y cofi; pip install -e .
+# for developers: rm -rf _skbuild; pip uninstall -y cofi; pip install -e .
 
 ####### TO TEST WHEELS ######
 # export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform linux
@@ -9,6 +10,19 @@
 ####### TO FORMAT #######
 # black --check .
 # black .
+
+####### TO TEST #######
+# pytest
+
+####### COVERAGE #######
+# coverage run -m pytest
+# coverage report
+
+####### PYLINT #######
+# pylint cofi
+
+# --------------------------- END NOTES ---------------------------
+
 
 [build-system]
 requires = [
@@ -28,7 +42,7 @@ testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
 
 [tool.black]
 line-length = 88
-target_version = ['py38', 'py39', 'py310']
+target_version = ['py38']
 experimental_string_processing = true
 exclude = '''
 /(
