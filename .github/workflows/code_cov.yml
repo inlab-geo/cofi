@@ -13,6 +13,7 @@ jobs:
           python-version: 3.9
       - name: Set up environment
         run: |
+          $CONDA/bin/conda init bash
           $CONDA/bin/conda create -n ci_test
           $CONDA/bin/conda activate ci_test
           conda install -c conda-forge gfortran petsc4py -y
