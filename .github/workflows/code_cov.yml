@@ -13,8 +13,12 @@ jobs:
           python-version: 3.9
       - name: Set up environment
         run: |
+          $CONDA/bin/conda update conda
           $CONDA/bin/conda info
           $CONDA/bin/conda env update --file environment_test.yml --name base
+          $CONDA/bin/conda list | grep numpy
+          $CONDA/bin/conda update numpy
+          $CONDA/bin/conda list | grep numpy
           $CONDA/bin/pip install -e .
       - name: Run tests and collect coverage
         run: |
