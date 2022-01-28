@@ -1,0 +1,10 @@
+name: cofi_test
+dependencies:
+  - conda-forge::petsc4py
+  - numpy
+  - scipy
+  - matplotlib
+  - scikit-build
+  - pytest
+  - coverage
+  - pip

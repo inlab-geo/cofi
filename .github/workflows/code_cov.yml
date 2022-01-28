@@ -13,17 +13,12 @@ jobs:
           python-version: 3.9
       - name: Set up environment
         run: |
-          $CONDA/bin/conda init bash
-          source /home/runner/.bashrc
-          $CONDA/bin/conda create -n ci_test
-          $CONDA/bin/conda activate ci_test
-          conda install -c conda-forge gfortran petsc4py -y
-          conda install numpy scipy matplotlib scikit-build pytest coverage pip -y
-          pip install -e .
+          $CONDA/bin/conda info
+          $CONDA/bin/conda env update --file environment_test.yml --name base
+          $CONDA/bin/pip install -e .
       - name: Run tests and collect coverage
         run: |
-          $CONDA/bin/conda activate ci_test
-          coverage run -m pytest
-          coverage xml
+          $CONDA/bin/coverage run -m pytest
+          $CONDA/bin/coverage xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
