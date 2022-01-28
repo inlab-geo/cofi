@@ -21,6 +21,10 @@ jobs:
         run: |
           $CONDA/bin/conda list | grep petsc
           $CONDA/bin/conda update petsc4py
+      - name: Update numpy
+        run: |
+          $CONDA/bin/pip uninstall numpy
+          $CONDA/bin/pip install -U numpy
       - name: Run tests and collect coverage
         run: |
           $CONDA/bin/coverage run -m pytest
