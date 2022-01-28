@@ -24,7 +24,7 @@ jobs:
       - name: Update numpy
         run: |
           $CONDA/bin/pip uninstall numpy
-          yes | $CONDA/bin/pip install -U numpy
+          yes | $CONDA/bin/pip install -U numpy --quiet
       - name: Run tests and collect coverage
         run: |
           $CONDA/bin/coverage run -m pytest
