@@ -38,14 +38,15 @@ tao_solver_mpi.set_options(
 tao_solver_mpi.solve("brgn")
 
 # ---------- other methods ---------------------------------------------------
-tao_solver_mpi_2 = TAOSolver(exp_decay_objective_for_mpi, True)
-tao_solver_mpi_2.set_options("-tao_monitor")
-methods = [
-    # "nm",
-    # "lmvm",
-    # "cg",
-    # "blmvm"
-]
+# THIS IS NOT FULLY IMPLEMENTED YET, since it's not decided yet how to split computation
+# tao_solver_mpi_2 = TAOSolver(exp_decay_objective_for_mpi, True)
+# tao_solver_mpi_2.set_options("-tao_monitor")
+# methods = [
+#     "nm",
+#     "lmvm",
+#     "cg",
+#     "blmvm"
+# ]
 
-for method in methods:
-    model = tao_solver_mpi_2.solve(method)
+# for method in methods:
+#     model = tao_solver_mpi_2.solve(method)

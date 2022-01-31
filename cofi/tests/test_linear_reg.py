@@ -3,12 +3,9 @@ from cofi.cofi_objective import PolynomialFittingFwd
 import cofi.linear_reg as solvers
 import cofi.optimizers as optim
 
-import os
-print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
-print("PATH:", os.environ.get('PATH'))
-
 import numpy as np
 import matplotlib.pyplot as plt
+import pytest
 
 
 # ------------ #0 generate data -----------------------------------------
@@ -20,12 +17,11 @@ ypts = forward.calc(true_model, xpts) + np.random.normal(0, 0.5, size=npts)
 
 print(f"--> ground truth model: {np.array(true_model)}\n")
 
-plot = False
-if plot:
-    plt.figure(figsize=(10, 8))
-    plt.plot(xpts, ypts, "x")
-    plt.plot(np.linspace(0, 1, 100), forward.calc(true_model, np.linspace(0, 1, 100)))
-    plt.show()
+# uncomment plt.show() in the end to display the plot
+plt.figure(figsize=(10, 8))
+plt.plot(xpts, ypts, "x")
+plt.plot(np.linspace(0, 1, 100), forward.calc(true_model, np.linspace(0, 1, 100)))
+# plt.show()
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
@@ -35,27 +31,28 @@ objective_1 = LinearFittingObjective(
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
-solver_1_pure = solvers.LRNormalEquation(objective_1)
-model_1_pure = solver_1_pure.solve()
-print(f"--> model predicted by pure Python solver: {model_1_pure.values()}\n")
+with pytest.warns(UserWarning):
+    solver_1_pure = solvers.LRNormalEquation(objective_1)
+    model_1_pure = solver_1_pure.solve()
+    print(f"--> model predicted by pure Python solver: {model_1_pure.values()}\n")
 
 ypts_predicted = forward.calc(model_1_pure, xpts)
-# plot = True
-if plot:
-    plt.figure(figsize=(10, 8))
-    plt.plot(xpts, ypts, "x", label="Data")
-    plt.plot(
-        np.linspace(0, 1, 100),
-        forward.calc(true_model, np.linspace(0, 1, 100)),
-        label="Input",
-    )
-    plt.plot(
-        np.linspace(0, 1, 100),
-        forward.calc(model_1_pure, np.linspace(0, 1, 100)),
-        label="Predicted",
-    )
-    plt.legend()
-    plt.show()
+
+# uncomment plt.show() in the end to display the plot
+plt.figure(figsize=(10, 8))
+plt.plot(xpts, ypts, "x", label="Data")
+plt.plot(
+    np.linspace(0, 1, 100),
+    forward.calc(true_model, np.linspace(0, 1, 100)),
+    label="Input",
+)
+plt.plot(
+    np.linspace(0, 1, 100),
+    forward.calc(model_1_pure, np.linspace(0, 1, 100)),
+    label="Predicted",
+)
+plt.legend()
+# plt.show()
 
 
 # ------------ #1.3 scipy.optimize.minimize solver -----------------------------------
@@ -89,18 +86,19 @@ print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 
 
 # ------------ #2.1 define objective another way ---------------------------
-params_count = 3
-design_matrix = lambda x: np.array([x ** o for o in range(params_count)]).T
-objective_2 = LinearFittingObjective(xpts, ypts, params_count, design_matrix)
+nparams = 3
+design_matrix = lambda x: np.array([x ** o for o in range(nparams)]).T
+objective_2 = LinearFittingObjective(xpts, ypts, nparams, design_matrix)
 print("--------- objective defined another way -------------------")
 
 
 # ------------ #2.2 pure Python solver -----------------------------------
-solver_2_pure = solvers.LRNormalEquation(objective_2)
-model_2_pure = solver_2_pure.solve()
-print(f"--> model predicted by pure Python solver: {model_2_pure.values()}\n")
-# plot = True
-if plot:
+with pytest.warns(UserWarning):
+    solver_2_pure = solvers.LRNormalEquation(objective_2)
+    model_2_pure = solver_2_pure.solve()
+    print(f"--> model predicted by pure Python solver: {model_2_pure.values()}\n")
+    
+    # uncomment plt.show() in the end to display the plot
     plt.figure(figsize=(10, 8))
     plt.plot(xpts, ypts, "x", label="Data")
     plt.plot(
@@ -120,28 +118,32 @@ if plot:
         label="Predicted 2",
     )
     plt.legend()
-    plt.show()
+    # plt.show()
 
 
 # ------------ #2.2 C solver -----------------------------------
-solver_2_c = solvers.LRNormalEquationC(objective_2)
-model_2_c = solver_2_c.solve()
-print(f"--> model predicted by C/Cython solver: {model_2_c.values()}\n")
+with pytest.warns(UserWarning):
+    solver_2_c = solvers.LRNormalEquationC(objective_2)
+    model_2_c = solver_2_c.solve()
+    print(f"--> model predicted by C/Cython solver: {model_2_c.values()}\n")
 
 
 # ------------ #2.3 C++ solver -----------------------------------
-solver_2_cpp = solvers.LRNormalEquationCpp(objective_2)
-model_2_cpp = solver_2_cpp.solve()
-print(f"--> model predicted by C++/PyBind11 solver: {model_2_cpp.values()}\n")
+with pytest.warns(UserWarning):
+    solver_2_cpp = solvers.LRNormalEquationCpp(objective_2)
+    model_2_cpp = solver_2_cpp.solve()
+    print(f"--> model predicted by C++/PyBind11 solver: {model_2_cpp.values()}\n")
 
 
 # ------------ #2.4 Fortran 77 solver -----------------------------------
-solver_2_f77 = solvers.LRNormalEquationF77(objective_2)
-model_2_f77 = solver_2_f77.solve()
-print(f"--> model predicted by Fortran77/f2py solver: {model_2_f77.values()}\n")
+with pytest.warns(UserWarning):
+    solver_2_f77 = solvers.LRNormalEquationF77(objective_2)
+    model_2_f77 = solver_2_f77.solve()
+    print(f"--> model predicted by Fortran77/f2py solver: {model_2_f77.values()}\n")
 
 
 # ------------ #2.5 Fortran 90 solver -----------------------------------
-solver_2_f90 = solvers.LRNormalEquationF90(objective_2)
-model_2_f90 = solver_2_f90.solve()
-print(f"--> model predicted by Fortran90/f2py solver: {model_2_f90.values()}\n")
+with pytest.warns(UserWarning):
+    solver_2_f90 = solvers.LRNormalEquationF90(objective_2)
+    model_2_f90 = solver_2_f90.solve()
+    print(f"--> model predicted by Fortran90/f2py solver: {model_2_f90.values()}\n")

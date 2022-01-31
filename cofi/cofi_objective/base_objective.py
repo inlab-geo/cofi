@@ -1,14 +1,9 @@
 from . import Model
 from .base_forward import BaseForward, LinearFittingFwd
 
-from typing import Callable, Protocol, Union
+from typing import Callable, Union
 from numbers import Number
 import numpy as np
-
-
-class _ObjectiveCallable(Protocol):
-    def __call__(self, *args: Number) -> Number:
-        ...
 
 
 class BaseObjective:
@@ -30,14 +25,15 @@ class BaseObjective:
     - params_size()
     """
 
-    def __init__(self, func: _ObjectiveCallable):
+    def __init__(self, func: Callable[[np.ndarray], Number]):
         self._objective = func
 
-    def misfit(self, model: Model):
+    def misfit(self, model: Union[Model, np.ndarray]):
         """
         Misfit value: try to optimise this value by lowering it
         """
-        return self._objective(*model.values())
+        model = np.asanyarray(model.values() if isinstance(model, Model) else model)
+        return self._objective(model)
 
     def gradient(self, model: Union[Model, np.ndarray]):
         raise NotImplementedError(
@@ -98,7 +94,7 @@ class LeastSquareObjective(BaseObjective):
     """
     General class holder for objective functions that are calculated from data misfit
 
-    Feed the data into constructor, and least squares misfit will be generated automatically
+    Feed the data into constructor, and least squares misfit will be generated automatically.
     """
 
     def __init__(
@@ -112,23 +108,19 @@ class LeastSquareObjective(BaseObjective):
         Y = np.asanyarray(Y)
         if X.shape[0] != Y.shape[0]:
             raise ValueError(
-                f"Numbers of data points don't match between X ({X.shape}) and Y"
-                f" ({Y.shape})"
+                f"Numbers of data points don't match between X:{X.shape} and Y:"
+                f"{Y.shape}"
             )
 
         self.X = X
         self.Y = np.expand_dims(Y, axis=1)
         if not isinstance(forward, BaseForward):
-            forward = BaseForward(forward)
+            forward = BaseForward(forward, X.shape[1])
         self.forward = forward
         self.nparams = forward.model_dimension()
 
-        if initial_model:
-            self.prior = (
-                initial_model.values()
-                if isinstance(initial_model, Model)
-                else np.asanyarray(initial_model)
-            )
+        if initial_model is not None:
+            self.initial_model = np.asanyarray(initial_model.values() if isinstance(initial_model, Model) else initial_model)
         else:
             self.prior = np.zeros(self.nparams)
 
@@ -140,9 +132,10 @@ class LeastSquareObjective(BaseObjective):
     def residual(self, model: Union[Model, np.ndarray]):
         if isinstance(model, Model):
             model = model.values()
-        X = np.expand_dims(self.X, axis=1)
+        X = np.expand_dims(self.X, axis=1) if len(self.X.shape) == 1 else self.X
         model = np.squeeze(model)
-        predicted_Y = np.apply_along_axis(self.forward.calc_curried(model), 1, X)
+        print(X.shape, np.expand_dims(model, axis=1).shape)
+        predicted_Y = np.apply_along_axis(self.forward.calc_curried(model), 0, X)
         return np.squeeze(predicted_Y - self.Y)
 
     def data_x(self):
@@ -163,7 +156,7 @@ class LinearFittingObjective(LeastSquareObjective):
         self,
         X,
         Y,
-        params_count,
+        nparams,
         design_matrix: Callable = None,
         forward: LinearFittingFwd = None,
         initial_model: Union[Model, np.ndarray, list] = None,
@@ -176,7 +169,7 @@ class LinearFittingObjective(LeastSquareObjective):
                 raise ValueError(
                     "Please specify at least one of design_matrix and forward"
                 )
-            forward = LinearFittingFwd(params_count, design_matrix)
+            forward = LinearFittingFwd(nparams, design_matrix)
 
         super().__init__(X, Y, forward, initial_model)
 
