@@ -17,14 +17,6 @@ jobs:
           $CONDA/bin/conda info
           $CONDA/bin/conda env update --file environment_test.yml --name base
           $CONDA/bin/pip install -e .
-      - name: Update petsc4py
-        run: |
-          $CONDA/bin/conda list | grep petsc
-          $CONDA/bin/conda update petsc4py
-      - name: Update numpy
-        run: |
-          $CONDA/bin/pip uninstall numpy
-          echo "y" | $CONDA/bin/pip install -U numpy --quiet
       - name: Run tests and collect coverage
         run: |
           $CONDA/bin/coverage run -m pytest
