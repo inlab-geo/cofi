@@ -19,7 +19,7 @@ jobs:
           $CONDA/bin/pip install -e .
       - name: Run tests and collect coverage
         run: |
-          $CONDA/bin/coverage run -m pytest
+          $CONDA/bin/coverage run -m pytest --disable-warnings
           $CONDA/bin/coverage xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
