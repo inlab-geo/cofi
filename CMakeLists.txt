@@ -28,7 +28,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ################################################################################
 # Solver Libraries
 ################################################################################
-add_subdirectory(cofi/cofi_solvers/linear_regression)
+add_subdirectory(cofi/linear_reg)
 
 
 ################################################################################

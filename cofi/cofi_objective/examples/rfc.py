@@ -41,7 +41,7 @@ class ReceiverFunction(BaseForward):
     def __init__(self):
         pass
 
-    def solve(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple(np.ndarray,np.ndarray):
+    def solve(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple[np.ndarray,np.ndarray]:
         model = self._validate_model(model)
         t, rfunc = rf.rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
         return t, rfunc

@@ -1,4 +1,4 @@
-from cofi.cofi_solvers import ScipyOptimizerSolver, ScipyOptimizerLSSolver
+from cofi.optimizers import ScipyOptimizerSolver, ScipyOptimizerLSSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np

@@ -1,6 +1,11 @@
 from cofi.cofi_objective import LinearFittingObjective
 from cofi.cofi_objective import PolynomialFittingFwd
-import cofi.cofi_solvers as solvers
+import cofi.linear_reg as solvers
+import cofi.optimizers as optim
+
+import os
+print("PYTHONPATH:", os.environ.get('PYTHONPATH'))
+print("PATH:", os.environ.get('PATH'))
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,7 +29,9 @@ if plot:
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
-objective_1 = LinearFittingObjective(xpts, ypts, forward.model_dimension(), forward=forward)
+objective_1 = LinearFittingObjective(
+    xpts, ypts, forward.model_dimension(), forward=forward
+)
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
@@ -52,7 +59,7 @@ if plot:
 
 
 # ------------ #1.3 scipy.optimize.minimize solver -----------------------------------
-solver_1_scipy_minimize = solvers.ScipyOptimizerSolver(objective_1)
+solver_1_scipy_minimize = optim.ScipyOptimizerSolver(objective_1)
 model_1_scipy_minimize = solver_1_scipy_minimize.solve()
 print(
     "--> model predicted by scipy.optimize.minimize:"
@@ -61,7 +68,7 @@ print(
 
 
 # ------------ #1.4 scipy.optimize.least_squares solver -----------------------------------
-solver_1_scipy_ls = solvers.ScipyOptimizerLSSolver(objective_1)
+solver_1_scipy_ls = optim.ScipyOptimizerLSSolver(objective_1)
 model_1_scipy_ls = solver_1_scipy_ls.solve()
 print(
     "--> model predicted by scipy.optimize.least_squares:"
@@ -70,13 +77,13 @@ print(
 
 
 # ------------ #1.5 TAO "nm" solver -----------------------------------
-solver_1_tao_nm = solvers.TAOSolver(objective_1)
+solver_1_tao_nm = optim.TAOSolver(objective_1)
 model_1_tao_nm = solver_1_tao_nm.solve()
 print(f"--> model predicted by TAO 'nm': {model_1_tao_nm.values()}\n")
 
 
 # ------------ #1.6 TAO "brgn" solver -----------------------------------
-solver_1_tao_brgn = solvers.TAOSolver(objective_1)
+solver_1_tao_brgn = optim.TAOSolver(objective_1)
 model_1_tao_brgn = solver_1_tao_brgn.solve("brgn")
 print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 

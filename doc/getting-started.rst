@@ -40,7 +40,7 @@ In order to do blabla, we can define the following objective::
 
 Then, it's possible to pass the above example into several inverse solvers::
 
-  from cofi.cofi_solvers import *
+  from cofi.optimizers import *
 
   # biubiubiu
   # TODO
@@ -78,7 +78,7 @@ It's also easy to plug in your own inverse solver through the commonly defined i
 Similarly, do this by extending the ```BaseSolver``` class.
 For instance::
 
-  from cofi.cofi_solvers import BaseSolver
+  from cofi import BaseSolver
 
   class MyDirectSearch(BaseSolver):
       def __init__(self, objective: BaseObjective):

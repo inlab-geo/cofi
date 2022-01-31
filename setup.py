@@ -1,6 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
+
 # import numpy
 
 try:
@@ -18,12 +19,19 @@ setup(
     version="0.1.0",
     description="Common Framework for Inference",
     author="InLab",
-    packages=["cofi", "cofi.cofi_solvers", "cofi.cofi_objective"],
+    packages=[
+        "cofi", 
+        "cofi.utils",
+        "cofi.cofi_objective",
+        "cofi.linear_reg",
+        "cofi.optimizers",
+        "cofi.samplers",
+    ],
     install_requires=[
-        'cython',
-        'numpy',
-        'scipy',
-        'pyyaml',
-        'pybind11[global]',
+        "cython",
+        "numpy",
+        "scipy",
+        "pyyaml",
+        "pybind11[global]",
     ],
 )
