@@ -41,7 +41,6 @@ class LinearFittingFwd(BaseForward):
     def calc(self, model: Union[Model, np.ndarray], X):
         self.nparams = model.length() if isinstance(model, Model) else len(model)
         X = self.design_matrix(X)
-        print("X", X.shape, "nparams", self.nparams)
         if self.nparams != X.shape[1]:
             raise ValueError(
                 f"Parameters count ({self.nparams}) doesn't match X shape"
