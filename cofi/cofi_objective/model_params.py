@@ -1,7 +1,7 @@
 import numpy as np
 from numbers import Number
 from dataclasses import dataclass
-from typing import List, Union
+from typing import Union
 from scipy import stats
 import yaml
 

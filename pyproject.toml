@@ -41,6 +41,9 @@ build-backend = "setuptools.build_meta"
 testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
 
+[tool.coverage.run]
+omit = ["*/lib*/*"]
+
 [tool.black]
 line-length = 88
 target_version = ['py38']
