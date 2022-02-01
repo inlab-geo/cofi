@@ -1,0 +1,13 @@
+model: &idmodel
+  params:
+    - name: earthmodel
+      bounds: [
+                [uniform 7 2, uniform 2 2, uniform 1.7 0],
+                [norm 16 2, uniform 2 2, uniform 1.7 0],
+                [uniform 0 1, uniform 2 2, uniform 1.7 0],
+                [norm 18 4, uniform 2 3, uniform 1.7 0],
+                [norm 40 2, uniform 2 4, uniform 1.7 0],
+                [norm 13 2, uniform 2 2, uniform 1.7 0],
+                [uniform 40 20, uniform 2 4, uniform 1.7 0],
+              ] 
+    

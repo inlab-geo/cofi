@@ -1,3 +1,4 @@
+import pytest
 from cofi.optimizers import TAOSolver
 from cofi.cofi_objective.examples import ExpDecay
 
@@ -36,6 +37,13 @@ methods = ["nm", "lmvm", "nls", "ntr", "cg", "blmvm", "tron"]
 
 for method in methods:
     model = tao_solver.solve(method, verbose=1)
+
+with pytest.raises(ValueError, match=r".*not a valid option.*"):
+    tao_solver.solve("xyz")
+
+# with pytest.raises(Exception):
+# exp_decay_objective.misfit = None
+# tao_solver.solve()
 
 
 # ---------- Levenberg-Marquardt optimizer ----------------------------------

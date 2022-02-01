@@ -21,6 +21,7 @@ dist
 *.egg-info
 # other temporary files
 .coverage
+coverage.xml
 .deps
 .libs
 .eggs

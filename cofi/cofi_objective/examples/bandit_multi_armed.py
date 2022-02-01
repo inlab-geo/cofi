@@ -1,13 +1,8 @@
 from cofi.cofi_objective import BaseObjective, Model
 
 import numpy as np
-from typing import Union, Protocol
+from typing import Callable, Union
 from numbers import Number
-
-
-class _PullCallable(Protocol):
-    def __call__(self, i: int) -> Union[bool, Number]:
-        ...
 
 
 class MultiArmedBandit(BaseObjective):
@@ -19,9 +14,10 @@ class MultiArmedBandit(BaseObjective):
 
     """
 
-    def __init__(self, n_bandits: int, pull_bandit: _PullCallable):
-        self.n_bandits = n_bandits
-        self.pull_bandit = pull_bandit
+    def __init__(self, n_bandits: int, pull_bandit: Callable[[int], Union[bool, Number]]):
+        # self.n_bandits = n_bandits
+        # self.pull_bandit = pull_bandit
+        pass
 
     def misfit(self, model: Union[Model, np.ndarray]):
         pass

@@ -1,7 +1,7 @@
 import numpy as np
 from numbers import Number
 from dataclasses import dataclass
-from typing import List, Union
+from typing import Union
 from scipy import stats
 import yaml
 
@@ -27,7 +27,7 @@ class Parameter:
         if self.pdf is not None:
             if self.value is not None:
                 if isinstance(self.value, Number):
-                    if not isinstance(self.pdf, stats.rv_continuous):
+                    if not hasattr(self.pdf, "dist") or not isinstance(self.pdf.dist, stats.rv_continuous):
                         raise ValueError(
                             f"Specified PDF for parameter {self.name} id not a"
                             " continuous distribution! It is instead a"
@@ -53,36 +53,38 @@ class Parameter:
                             f" shape {self.pdf.shape}"
                         )
                     # OK, so its an array of the right shape. Check the type
-                    if False in [
-                        isinstance(item, stats.rv_continuous)
-                        for item in self.pdf.ravel()
-                    ]:
-                        raise ValueError(
-                            f"Specified PDF for parameter {self.name} must be an array"
-                            " of PDFs"
-                        )
-                    for i, v in enumerate(self.value.ravel()):
-                        if self.pdf.ravel()[i].pdf(v) == 0.0:
+                    pdfs = self.pdf.ravel()
+                    for i, pdf in enumerate(pdfs):
+                        if not hasattr(pdf, "dist") or not isinstance(pdf.dist, stats.rv_continuous):
+                            raise ValueError(
+                                f"Specified PDF at index {i} for parameter {self.name} id not a"
+                                " continuous distribution! It is instead a"
+                                f" {type(self.pdf)} which is not allowed"
+                            )
+                    values = self.value.ravel()
+                    for i, v in enumerate(values):
+                        if pdfs[i].pdf(v) == 0.0:
                             raise ValueError(
                                 f"Initial value at index {i} for parameter"
                                 f" {self.name} has zero density in specified pdf"
                             )
             else:  # value is None, so we need to initialize it from pdf
-                if isinstance(self.pdf, stats.rv_continuous):
-                    self.value = self.pdf.rvs()
-                elif isinstance(self.pdf, np.ndarray):
+                if isinstance(self.pdf, np.ndarray):
                     self.value = np.array(
                         [item.rvs() for item in self.pdf.ravel()]
                     ).reshape(self.pdf.shape)
+                elif hasattr(self.pdf, "dist") and isinstance(self.pdf.dist, stats.rv_continuous):
+                    self.value = self.pdf.rvs()
                 else:
                     raise ValueError(
-                        f"specified PDF not of expected type. Expected rv_continuous or"
-                        f" array of rv_continuous"
+                        f"specified PDF for parameter {self.name} not a continuous distribution!"
+                        f" It is instead of {type(self.pdf)} which is not allowed"
                     )
         else:  # PDF is None, but value is specified. This is fine, we dont need to do anything
             pass
 
     def __repr__(self) -> str:
+        print(self.asdict())
         return yaml.safe_dump(self.asdict())
 
     # utility method to convert this to a dictionary that can be turned into a dictionary, for writing to yaml
@@ -96,13 +98,13 @@ class Parameter:
             else:
                 res["value"] = self.value
         if self.pdf is not None:
-            if isinstance(self.pdf, stats.rv_continuous):
-                res["pdf"] = f"{self.pdf.dist.name} {' '.join(map(str, self.pdf.args))}"
-            else:
+            if isinstance(self.pdf, np.ndarray):
                 pdfa = np.empty(self.pdf.shape, dtype=object).flatten()
                 for i, item in enumerate(self.pdf.ravel()):
                     pdfa[i] = f"{item.dist.name} {' '.join(map(str, item.args))}"
                 res["pdf"] = pdfa.reshape(self.pdf.shape).tolist()
+            elif hasattr(self.pdf, "dist") and isinstance(self.pdf.dist, stats.rv_continuous):
+                res["pdf"] = f"{self.pdf.dist.name} {' '.join(map(str, self.pdf.args))}"
         return res
 
 
@@ -114,15 +116,11 @@ class Model:
         self.params = []
 
         for nm, item in kwargs.items():
-            if not isinstance(nm, str):
-                raise ValueError(
-                    "Invalid argument to Model(): expected a list of name,value"
-                    f" tuples, but first element of one was not a string: {nm}"
-                )
             if isinstance(item, tuple):
                 val, pdf = item
             else:
                 val, pdf = item, None
+            val = np.asanyarray(val) if isinstance(val, list) else val
             self.params.append(Parameter(name=nm, value=val, pdf=pdf))
 
     def values(self) -> np.ndarray:
@@ -137,7 +135,7 @@ class Model:
     @staticmethod
     def init_from_yaml(yamldict: dict):
         if "parameters" not in yamldict:
-            raise Exception(
+            raise ValueError(
                 f"Model specification in YML file *must* contain 'parameters'"
                 f" information for your model"
             )
@@ -155,7 +153,7 @@ class Model:
                     f"each paramater in model in YML file must be (key, value) pairs"
                 )
             if "name" not in p or not isinstance(p["name"], str):
-                raise ValueError(f"Each parameter must have a name")
+                raise ValueError(f"Each parameter must have a 'name' of string type")
             nm = p["name"]
             val = p["value"] if "value" in p else None
             pdf = p["bounds"] if "bounds" in p else None
