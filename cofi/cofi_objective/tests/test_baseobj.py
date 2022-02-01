@@ -2,6 +2,7 @@ from cofi.cofi_objective import BaseObjective, LeastSquareObjective
 
 import numpy as np
 import pytest
+from cofi.cofi_objective.base_objective import LinearFittingObjective
 
 from cofi.cofi_objective.model_params import Model
 
@@ -14,6 +15,7 @@ def test_base_obj():
     dumb_model = np.array([1,2,3])
     pytest.raises(NotImplementedError, base_obj.gradient, dumb_model)
     pytest.raises(NotImplementedError, base_obj.hessian, dumb_model)
+    pytest.raises(NotImplementedError, base_obj.residual, dumb_model)
     pytest.raises(NotImplementedError, base_obj.jacobian, dumb_model)
     pytest.raises(NotImplementedError, base_obj.log_posterior, dumb_model)
     pytest.raises(NotImplementedError, base_obj.data_x)
@@ -48,3 +50,10 @@ def test_ls_obj_model_input_types():
     residual_2 = ls_obj_2.residual(initial_model_list)
     residual_3 = ls_obj_3.residual(initial_model_nparray)
     assert residual_1 == residual_2 == residual_3
+
+def test_linear_obj_none_specified():
+    X = np.array([[1,2,3]])
+    Y = np.array([6])
+    with pytest.raises(ValueError):
+        linear_obj = LinearFittingObjective(X, Y, 3)
+

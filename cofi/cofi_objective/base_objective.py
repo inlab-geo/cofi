@@ -135,7 +135,7 @@ class LeastSquareObjective(BaseObjective):
         X = np.expand_dims(self.X, axis=1) if len(self.X.shape) == 1 else self.X
         model = np.squeeze(model)
         print(X.shape, np.expand_dims(model, axis=1).shape)
-        predicted_Y = np.apply_along_axis(self.forward.calc_curried(model), 0, X)
+        predicted_Y = np.apply_along_axis(self.forward.calc_curried(model), 1, X)
         return np.squeeze(predicted_Y - self.Y)
 
     def data_x(self):

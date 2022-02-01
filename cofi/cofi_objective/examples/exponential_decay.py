@@ -138,7 +138,7 @@ class ExpDecay(BaseObjective):
             model = np.asanyarray(model.values())
         else:
             model = np.asanyarray(model)
-            n_params = model.shape[0]
+            n_params = model.shape[0] if len(model.shape)>0 else 1
         
         if n_params != self.n_params:
             raise ValueError(f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {n_params} instead")

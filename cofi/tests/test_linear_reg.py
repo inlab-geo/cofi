@@ -62,6 +62,11 @@ print(
     "--> model predicted by scipy.optimize.minimize:"
     f" {model_1_scipy_minimize.values()}\n"
 )
+model_1_scipy_minimize_newtoncg = solver_1_scipy_minimize.solve("Newton-CG")
+print(
+    "--> model predicted by scipy.optimize.minimize(Newton-CG):"
+    f" {model_1_scipy_minimize_newtoncg.values()}\n"
+)
 
 
 # ------------ #1.4 scipy.optimize.least_squares solver -----------------------------------

@@ -12,7 +12,6 @@ class BaseForward:
 
     def calc(self, model: Union[Model, np.ndarray], X) -> np.ndarray:
         X = np.asanyarray(X)
-        print(X.shape, model.shape)
         return self._forward(model, X)
 
     def calc_curried(self, model: Union[Model, np.ndarray]) -> np.ndarray:
@@ -42,6 +41,7 @@ class LinearFittingFwd(BaseForward):
     def calc(self, model: Union[Model, np.ndarray], X):
         self.nparams = model.length() if isinstance(model, Model) else len(model)
         X = self.design_matrix(X)
+        print("X", X.shape, "nparams", self.nparams)
         if self.nparams != X.shape[1]:
             raise ValueError(
                 f"Parameters count ({self.nparams}) doesn't match X shape"
@@ -70,9 +70,8 @@ class PolynomialFittingFwd(LinearFittingFwd):
         The polynomial transformation happens here
         """
         x = np.asanyarray(x)
-        if len(x.shape) == 1:
-            x = np.expand_dims(x, axis=1)
-        if x.shape[1] != 1:
+        ncolumns = 1 if len(x.shape) == 1 else x.shape[1]
+        if ncolumns != 1:
             raise ValueError(
                 "Shape of x should be a column vertex in the context of polynomial"
                 f" fitting, however got shape {x.shape}"
@@ -81,6 +80,8 @@ class PolynomialFittingFwd(LinearFittingFwd):
         try:
             x = np.squeeze(x)
             X = np.array([x ** o for o in range(self.nparams)]).T
+            if len(X.shape) == 1:
+                X = np.expand_dims(X, axis=0)
             return X
         except AttributeError:
             raise ValueError("Please specify the order of linear curve fitting by either passing it through the constructor or passing in a model through the 'calc' method")
