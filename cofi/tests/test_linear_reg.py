@@ -102,7 +102,7 @@ with pytest.warns(UserWarning):
     solver_2_pure = solvers.LRNormalEquation(objective_2)
     model_2_pure = solver_2_pure.solve()
     print(f"--> model predicted by pure Python solver: {model_2_pure.values()}\n")
-    
+
     # uncomment plt.show() in the end to display the plot
     plt.figure(figsize=(10, 8))
     plt.plot(xpts, ypts, "x", label="Data")

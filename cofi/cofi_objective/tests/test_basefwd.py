@@ -41,7 +41,7 @@ def test_linear_fwd():
     X_linear = np.array([x_linear ** o for o in range(3)]).T
     y_linear = linear_fwd.calc(model, X_linear)
 
-    pytest.raises(ValueError, linear_fwd.calc, np.array([1,2,3,4]), X_linear)
+    pytest.raises(ValueError, linear_fwd.calc, np.array([1, 2, 3, 4]), X_linear)
 
     b = plt.subplot(1, 3, 2)
     b.plot(x_linear, y_linear)

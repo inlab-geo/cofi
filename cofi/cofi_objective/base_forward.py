@@ -84,4 +84,6 @@ class PolynomialFittingFwd(LinearFittingFwd):
                 X = np.expand_dims(X, axis=0)
             return X
         except AttributeError:
-            raise ValueError("Please specify the order of linear curve fitting by either passing it through the constructor or passing in a model through the 'calc' method")
+            raise ValueError(
+                "Please specify the order of linear curve fitting by either passing it through the constructor or passing in a model through the 'calc' method"
+            )

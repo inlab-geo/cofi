@@ -20,18 +20,12 @@ setup(
     description="Common Framework for Inference",
     author="InLab",
     packages=[
-        "cofi", 
+        "cofi",
         "cofi.utils",
         "cofi.cofi_objective",
         "cofi.linear_reg",
         "cofi.optimizers",
         "cofi.samplers",
     ],
-    install_requires=[
-        "cython",
-        "numpy",
-        "scipy",
-        "pyyaml",
-        "pybind11[global]",
-    ],
+    install_requires=["cython", "numpy", "scipy", "pyyaml", "pybind11[global]",],
 )

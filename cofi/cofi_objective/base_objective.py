@@ -120,7 +120,11 @@ class LeastSquareObjective(BaseObjective):
         self.nparams = forward.model_dimension()
 
         if initial_model is not None:
-            self.initial_model = np.asanyarray(initial_model.values() if isinstance(initial_model, Model) else initial_model)
+            self.initial_model = np.asanyarray(
+                initial_model.values()
+                if isinstance(initial_model, Model)
+                else initial_model
+            )
         else:
             self.prior = np.zeros(self.nparams)
 

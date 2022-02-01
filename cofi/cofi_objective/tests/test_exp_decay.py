@@ -13,15 +13,24 @@ def predict(x, t):
         yhat += x[i * 2] * np.exp(-x[i * 2 + 1] * t)
     return yhat
 
+
 def _test_exp(data):
     x, t, y, x0, y0 = data
     exp_decay_obj = ExpDecay(t, y, x0)
     assert np.array_equal(exp_decay_obj.residual(x), np.zeros(y.shape))
-    assert np.array_equal(exp_decay_obj.residual(x), exp_decay_obj.residual_mpi(x,0,t.shape[0]))
+    assert np.array_equal(
+        exp_decay_obj.residual(x), exp_decay_obj.residual_mpi(x, 0, t.shape[0])
+    )
     assert exp_decay_obj.misfit(x) == exp_decay_obj.misfit_mpi(x, 0, t.shape[0])
-    assert np.array_equal(exp_decay_obj.jacobian(x), exp_decay_obj.jacobian_mpi(x,0,t.shape[0]))
-    assert np.array_equal(exp_decay_obj.gradient(x), exp_decay_obj.gradient_mpi(x,0,t.shape[0]))
-    assert np.array_equal(exp_decay_obj.hessian(x), exp_decay_obj.hessian_mpi(x,0,t.shape[0]))
+    assert np.array_equal(
+        exp_decay_obj.jacobian(x), exp_decay_obj.jacobian_mpi(x, 0, t.shape[0])
+    )
+    assert np.array_equal(
+        exp_decay_obj.gradient(x), exp_decay_obj.gradient_mpi(x, 0, t.shape[0])
+    )
+    assert np.array_equal(
+        exp_decay_obj.hessian(x), exp_decay_obj.hessian_mpi(x, 0, t.shape[0])
+    )
 
 
 # ---------- one exponential -------------------------------------------------
@@ -34,6 +43,7 @@ def one_exp_data():
     x0 = np.array([1.0, 0.012])
     y0 = predict(x0, t)
     return x, t, y, x0, y0
+
 
 def test_one_exp(one_exp_data):
     _test_exp(one_exp_data)
@@ -50,6 +60,7 @@ def two_exp_data():
     y0 = predict(x0, t)
     return x, t, y, x0, y0
 
+
 def test_two_exp(two_exp_data):
     _test_exp(two_exp_data)
 
@@ -62,11 +73,13 @@ def test_init(one_exp_data):
     exp_decay_obj = ExpDecay(t, y, x0)
     assert exp_decay_obj.misfit(x) == 0
 
+
 def test_invalid_init(one_exp_data):
     x, t, y, x0, y0 = one_exp_data
     x0 = Model(a0=x0[0])
     with pytest.raises(ValueError):
         exp_decay_obj = ExpDecay(t, y, x0)
+
 
 def test_invalid_model(one_exp_data):
     x, t, y, x0, y0 = one_exp_data

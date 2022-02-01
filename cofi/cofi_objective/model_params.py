@@ -27,7 +27,9 @@ class Parameter:
         if self.pdf is not None:
             if self.value is not None:
                 if isinstance(self.value, Number):
-                    if not hasattr(self.pdf, "dist") or not isinstance(self.pdf.dist, stats.rv_continuous):
+                    if not hasattr(self.pdf, "dist") or not isinstance(
+                        self.pdf.dist, stats.rv_continuous
+                    ):
                         raise ValueError(
                             f"Specified PDF for parameter {self.name} id not a"
                             " continuous distribution! It is instead a"
@@ -55,7 +57,9 @@ class Parameter:
                     # OK, so its an array of the right shape. Check the type
                     pdfs = self.pdf.ravel()
                     for i, pdf in enumerate(pdfs):
-                        if not hasattr(pdf, "dist") or not isinstance(pdf.dist, stats.rv_continuous):
+                        if not hasattr(pdf, "dist") or not isinstance(
+                            pdf.dist, stats.rv_continuous
+                        ):
                             raise ValueError(
                                 f"Specified PDF at index {i} for parameter {self.name} id not a"
                                 " continuous distribution! It is instead a"
@@ -73,7 +77,9 @@ class Parameter:
                     self.value = np.array(
                         [item.rvs() for item in self.pdf.ravel()]
                     ).reshape(self.pdf.shape)
-                elif hasattr(self.pdf, "dist") and isinstance(self.pdf.dist, stats.rv_continuous):
+                elif hasattr(self.pdf, "dist") and isinstance(
+                    self.pdf.dist, stats.rv_continuous
+                ):
                     self.value = self.pdf.rvs()
                 else:
                     raise ValueError(
@@ -103,7 +109,9 @@ class Parameter:
                 for i, item in enumerate(self.pdf.ravel()):
                     pdfa[i] = f"{item.dist.name} {' '.join(map(str, item.args))}"
                 res["pdf"] = pdfa.reshape(self.pdf.shape).tolist()
-            elif hasattr(self.pdf, "dist") and isinstance(self.pdf.dist, stats.rv_continuous):
+            elif hasattr(self.pdf, "dist") and isinstance(
+                self.pdf.dist, stats.rv_continuous
+            ):
                 res["pdf"] = f"{self.pdf.dist.name} {' '.join(map(str, self.pdf.args))}"
         return res
 
