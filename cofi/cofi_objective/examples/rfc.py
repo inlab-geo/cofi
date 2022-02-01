@@ -1,11 +1,9 @@
 from cofi.cofi_objective import BaseObjective, Model
 from cofi.cofi_objective.base_forward import BaseForward
 from .lib_rfc import rf
-from .lib_rfc import _rfc
 
 import numpy as np
 from typing import Tuple, Union
-import matplotlib.pyplot as plt
 
 
 class ReceiverFunctionObjective(BaseObjective):
@@ -29,7 +27,8 @@ class ReceiverFunctionObjective(BaseObjective):
         self.rf_data = rf_data
 
     def misfit(self, model: Union[Model, np.ndarray], mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1):
-        t, rf_calculated = self.fwd.solve(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        model = self.fwd._validate_model(model)
+        t, rf_calculated = self.fwd.calc(model,0,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
         if not np.array_equal(t, self.t):
             raise ValueError("Please ensure the time array matches your data")
         return np.linalg.norm(rf_calculated - self.rf_data)
@@ -41,7 +40,7 @@ class ReceiverFunction(BaseForward):
     def __init__(self):
         pass
 
-    def solve(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple[np.ndarray,np.ndarray]:
+    def calc(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple[np.ndarray,np.ndarray]:
         model = self._validate_model(model)
         t, rfunc = rf.rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
         return t, rfunc
