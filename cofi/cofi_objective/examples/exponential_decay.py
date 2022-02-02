@@ -31,74 +31,67 @@ class ExpDecay(BaseObjective):
         self.n_params = self.m0.shape[0]
 
         if self.n_params % 2 != 0:
-            raise ValueError(f"Exponential decay sums need to have an even number of parameters, but got {self.n_params} instead")
+            raise ValueError(
+                f"Exponential decay sums need to have an even number of parameters, but got {self.n_params} instead"
+            )
 
         self._last_validated_model = None
 
-
     def _forward(self, model: Union[Model, np.ndarray], ret_model=False):
         model = self._validate_model(model)
-    
-        yhat = np.zeros_like(self.x)
-        for i in range(int(self.n_params/2)):
-            yhat += model[i*2] * np.exp(-model[i*2+1] * self.x)
-        return (yhat, model) if ret_model else yhat
 
+        yhat = np.zeros_like(self.x)
+        for i in range(int(self.n_params / 2)):
+            yhat += model[i * 2] * np.exp(-model[i * 2 + 1] * self.x)
+        return (yhat, model) if ret_model else yhat
 
     def _forward_mpi(self, model: Union[Model, np.ndarray], n, m, ret_model=False):
         model = self._validate_model(model)
 
-        yhat = np.zeros((m-n,))
-        for i in range(int(self.n_params/2)):
-            yhat += model[i*2] * np.exp(-model[i*2+1] * self.x[n:m])
+        yhat = np.zeros((m - n,))
+        for i in range(int(self.n_params / 2)):
+            yhat += model[i * 2] * np.exp(-model[i * 2 + 1] * self.x[n:m])
         return (yhat, model) if ret_model else yhat
-
 
     def residual(self, model: Union[Model, np.ndarray]):
         return self.residual_mpi(model, 0, np.shape(self.x)[0])
-
 
     def residual_mpi(self, model: Union[Model, np.ndarray], n, m):
         yhat = self._forward_mpi(model, n, m)
         return yhat - self.y[n:m]
 
-
     def misfit(self, model: Union[Model, np.ndarray]):
         residuals = self.residual(model)
         return residuals @ residuals
-
 
     def misfit_mpi(self, model: Union[Model, np.ndarray], n, m):
         residuals = self.residual_mpi(model, n, m)
         return residuals @ residuals
 
-    
     def jacobian(self, model: Union[Model, np.ndarray]):
         return self.jacobian_mpi(model, 0, np.shape(self.x)[0])
-
 
     def jacobian_mpi(self, model: Union[Model, np.ndarray], n, m):
         model = self._validate_model(model)
 
-        jac = np.zeros([m-n, self.n_params])
-        for i in range(int(self.n_params/2)):
+        jac = np.zeros([m - n, self.n_params])
+        for i in range(int(self.n_params / 2)):
             for j in range(n, m):
-                jac[j-n,i*2] = np.exp(-model[i*2+1]*self.x[j])
-                jac[j-n,i*2+1] = -model[i*2] * self.x[j] * np.exp(-model[i*2+1]*self.x[j])
+                jac[j - n, i * 2] = np.exp(-model[i * 2 + 1] * self.x[j])
+                jac[j - n, i * 2 + 1] = (
+                    -model[i * 2] * self.x[j] * np.exp(-model[i * 2 + 1] * self.x[j])
+                )
         return jac
-
 
     def gradient(self, model: Union[Model, np.ndarray]):
         yhat, model = self._forward(model, True)
         jac = self.jacobian(model)
         return jac.T @ (yhat - self.y)
 
-
     def gradient_mpi(self, model: Union[Model, np.ndarray], n, m):
         yhat, model = self._forward_mpi(model, n, m, True)
         jac = self.jacobian_mpi(model, n, m)
         return jac.T @ (yhat - self.y[n:m])
-
 
     def hessian(self, model: Union[Model, np.ndarray]):
         # using the standard approximation (J^T J)
@@ -106,31 +99,27 @@ class ExpDecay(BaseObjective):
         hessian = jac.T @ jac
         return hessian
 
-    
     def hessian_mpi(self, model: Union[Model, np.ndarray], n, m):
         jac = self.jacobian_mpi(model, n, m)
         hessian = jac.T @ jac
         return hessian
 
-    
     def data_x(self):
         return self.x
-
 
     def data_y(self):
         return self.y
 
-    
     def initial_model(self):
         return self.m0
 
-    
     def params_size(self):
         return self.n_params
 
-
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
-        if model is self._last_validated_model:   # validated already (and converted if needed)
+        if (
+            model is self._last_validated_model
+        ):  # validated already (and converted if needed)
             return model
 
         if isinstance(model, Model):
@@ -138,10 +127,12 @@ class ExpDecay(BaseObjective):
             model = np.asanyarray(model.values())
         else:
             model = np.asanyarray(model)
-            n_params = model.shape[0] if len(model.shape)>0 else 1
-        
+            n_params = model.shape[0] if len(model.shape) > 0 else 1
+
         if n_params != self.n_params:
-            raise ValueError(f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {n_params} instead")
-        
+            raise ValueError(
+                f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {n_params} instead"
+            )
+
         self._last_validated_model = model
         return model

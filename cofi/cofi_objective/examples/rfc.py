@@ -1,5 +1,4 @@
-from cofi.cofi_objective import BaseObjective, Model
-from cofi.cofi_objective.base_forward import BaseForward
+from cofi.cofi_objective import BaseObjective, BaseForward, Model
 from .lib_rf import rfcalc
 
 import numpy as np
@@ -21,14 +20,29 @@ class ReceiverFunctionObjective(BaseObjective):
        - model[:,2] is the ratio of S-wave speed to P-wave speed. 
        The maximum depth of discontinuity that can be considered is 60km.
     """
+
     def __init__(self, t, rf_data):
         self.fwd = ReceiverFunction()
         self.t = t
         self.rf_data = rf_data
 
-    def misfit(self, model: Union[Model, np.ndarray], mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1):
+    def misfit(
+        self,
+        model: Union[Model, np.ndarray],
+        mtype=0,
+        fs=25.0,
+        gauss_a=2.5,
+        water_c=0.0001,
+        angle=35.0,
+        time_shift=5.0,
+        ndatar=626,
+        v60=8.043,
+        seed=1,
+    ):
         model = self.fwd._validate_model(model)
-        t, rf_calculated = self.fwd.calc(model,0,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        t, rf_calculated = self.fwd.calc(
+            model, 0, mtype, fs, gauss_a, water_c, angle, time_shift, ndatar, v60, seed
+        )
         if not np.array_equal(t, self.t):
             raise ValueError("Please ensure the time array matches your data")
         return np.linalg.norm(rf_calculated - self.rf_data)
@@ -40,16 +54,34 @@ class ReceiverFunction(BaseForward):
     def __init__(self):
         pass
 
-    def calc(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple[np.ndarray,np.ndarray]:
+    def calc(
+        self,
+        model: Union[Model, np.ndarray],
+        sn=0.0,
+        mtype=0,
+        fs=25.0,
+        gauss_a=2.5,
+        water_c=0.0001,
+        angle=35.0,
+        time_shift=5.0,
+        ndatar=626,
+        v60=8.043,
+        seed=1,
+    ) -> Tuple[np.ndarray, np.ndarray]:
         model = self._validate_model(model)
-        t, rfunc = rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        t, rfunc = rfcalc(
+            model, sn, mtype, fs, gauss_a, water_c, angle, time_shift, ndatar, v60, seed
+        )
         return t, rfunc
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
         model = np.asanyarray(model)
         if model.shape[1] != 3:
-            raise ValueError(f"Model dimension should be (nlayers,3) but instead got {model.shape}")
-        if np.any(model[:,0] > 60):
-            raise ValueError(f"The first column of model represents depths of discontinuities and the maximum depth that can be considered is 60km")
+            raise ValueError(
+                f"Model dimension should be (nlayers,3) but instead got {model.shape}"
+            )
+        if np.any(model[:, 0] > 60):
+            raise ValueError(
+                f"The first column of model represents depths of discontinuities and the maximum depth that can be considered is 60km"
+            )
         return model
-

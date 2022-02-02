@@ -14,14 +14,15 @@ class MultiArmedBandit(BaseObjective):
 
     """
 
-    def __init__(self, n_bandits: int, pull_bandit: Callable[[int], Union[bool, Number]]):
+    def __init__(
+        self, n_bandits: int, pull_bandit: Callable[[int], Union[bool, Number]]
+    ):
         # self.n_bandits = n_bandits
         # self.pull_bandit = pull_bandit
         pass
 
     def misfit(self, model: Union[Model, np.ndarray]):
         pass
- 
-    def propose(self, ):
-        pass
 
+    def propose(self,):
+        pass
