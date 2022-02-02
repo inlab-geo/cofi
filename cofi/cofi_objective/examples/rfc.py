@@ -1,6 +1,6 @@
 from cofi.cofi_objective import BaseObjective, Model
 from cofi.cofi_objective.base_forward import BaseForward
-from .lib_rfc import rf
+from .lib_rf import rfcalc
 
 import numpy as np
 from typing import Tuple, Union
@@ -42,7 +42,7 @@ class ReceiverFunction(BaseForward):
 
     def calc(self, model: Union[Model, np.ndarray], sn=0.0, mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1) -> Tuple[np.ndarray,np.ndarray]:
         model = self._validate_model(model)
-        t, rfunc = rf.rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
+        t, rfunc = rfcalc(model,sn,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
         return t, rfunc
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
