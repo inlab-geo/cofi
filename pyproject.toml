@@ -49,14 +49,16 @@ line-length = 88
 target_version = ['py38']
 experimental_string_processing = true
 exclude = '''
-/(
-   \.git
-  | \.mypy_cache
-  | \.vscode
-  | build
-  | dist
-  | examples
-  | lib
-  | _skbuild
-)/
+(
+  /(
+    \.git
+    | \.mypy_cache
+    | \.vscode
+    | build
+    | lib.*
+    | dist
+    | _skbuild
+  )/
+  | examples\/lib.*\.py 
+)
 '''
