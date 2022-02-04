@@ -36,12 +36,50 @@ def test_xrt_obj(data_path):
     A = xrt_obj.fwd.design_matrix(xrt_obj.paths, 50, 50)
     assert A.shape[0] == xrt_obj.paths.shape[0]
     assert A.shape[1] == 50*50
+    xrt_obj.set_grid_dimensions(60, 60)
+    A = xrt_obj.fwd.design_matrix(xrt_obj.paths, 60, 60)
+    assert A.shape[0] == xrt_obj.paths.shape[0]
+    assert A.shape[1] == 60*60
+
+def test_xrt_obj_init(data_path):
+    # test #1
+    with pytest.raises(ValueError, match=r".*provide observed data.*"):
+        XRayTomographyObjective()
+    # test #2
+    with pytest.raises(ValueError, match=r".*provide a valid file path.*"):
+        XRayTomographyObjective("an_invalid_path")
+    # test #3
+    loaded_data = np.loadtxt(data_path)
+    src_intensity = loaded_data[:, 2]
+    rec_intensity = loaded_data[:, 5]
+    paths = np.zeros([np.shape(loaded_data)[0], 4])
+    paths[:,0] = loaded_data[:,0]
+    paths[:,1] = loaded_data[:,1]
+    paths[:,2] = loaded_data[:,3]
+    paths[:,3] = loaded_data[:,4]
+    with pytest.raises(ValueError, match=r".*provide full data.*"):
+        XRayTomographyObjective(src_intensity)
+    # test #4
+    with pytest.raises(ValueError, match=r".*dimensions between.*don't match.*"):
+        XRayTomographyObjective(src_intensity, rec_intensity[0:10], paths)
+    # test #5
+    with pytest.raises(ValueError, match=r".*should have exactly 4 columns"):
+        XRayTomographyObjective(src_intensity, rec_intensity, paths[:,0:3])
+    # test #6
+    XRayTomographyObjective(src_intensity, rec_intensity, paths)
+    # test #7
+    with pytest.raises(ValueError, match=r".*paths data is out of bounds.*"):
+        XRayTomographyObjective(src_intensity, rec_intensity, paths, extent=(0,1,0,0.5))
+    # test #8
+    XRayTomographyObjective(src_intensity, rec_intensity, paths, extent=(0,1,0,1))
+    
 
 def test_solving_xrt(data_path, monkeypatch):
     xrt_obj = XRayTomographyObjective(data_path)
     solver = LRNormalEquation(xrt_obj)
-    model = solver.solve(0.001)
-    monkeypatch.setattr(plt, "show", lambda: None)
+    with pytest.warns(UserWarning, match=r".*using linear regression formula solver.*"):
+        model = solver.solve(0.001)
+    monkeypatch.setattr(plt, "show", lambda: None)   # comment this line if you want to see the plot
     xrt_obj.display(model.values())
 
     

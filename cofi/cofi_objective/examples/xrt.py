@@ -26,7 +26,7 @@ class XRayTomographyObjective(BaseObjective):
         if isinstance(data_src_intensity, str):
             data_file = data_src_intensity
             data_src_intensity = None
-        if data_src_intensity is None:
+        if data_src_intensity is None:      # data from file path
             # ####### INPUT VALIDATION #######
             if data_file is None:
                 raise ValueError(
@@ -40,14 +40,14 @@ class XRayTomographyObjective(BaseObjective):
                     "Please provide a valid file path while initialising XRayTomographyObjective"
                 )
             # ####### END VALIDATION #######
-            data_src_intensity = dataset[:, data_attributes["rec_intensity"]]
-            data_rec_intensity = dataset[:, data_attributes["src_intensity"]]
+            data_src_intensity = dataset[:, data_attributes["src_intensity"]]
+            data_rec_intensity = dataset[:, data_attributes["rec_intensity"]]
             self.paths = np.zeros([dataset.shape[0], 4])
             self.paths[:, 0] = dataset[:, data_attributes["src_x"]]
             self.paths[:, 1] = dataset[:, data_attributes["src_y"]]
             self.paths[:, 2] = dataset[:, data_attributes["rec_x"]]
             self.paths[:, 3] = dataset[:, data_attributes["rec_y"]]
-        else:
+        else:       # data as arguments passed in
             # ####### INPUT VALIDATION #######
             if data_rec_intensity is None or data_paths is None:
                 raise ValueError(
@@ -55,28 +55,22 @@ class XRayTomographyObjective(BaseObjective):
                     "including data_src_intensity, data_rec_intensity and data_paths"
                 )
             if (
-                data_src_intensity.shape[0] != data_rec_intensity.shape[0]
-                or data_src_intensity.shape[0] != data_paths[0]
+                (data_src_intensity.shape[0] != data_rec_intensity.shape[0])
+                or (data_src_intensity.shape[0] != data_paths.shape[0])
             ):
                 raise ValueError(
                     "The dimensions between data_src_intensity, data_rec_intensity and "
                     "data_paths don't match; you need to provide them with the same rows count"
                 )
-            if data_src_intensity.shape[1] != 2:
+            if data_paths.shape[1] != 4:
                 raise ValueError(
-                    f"The given data_src_intensity should have exactly 2 columns that refer "
-                    f"to source locations in forms of x and y coordinates; instead we got "
-                    f"data_src_intensity of shape {data_src_intensity.shape}"
-                )
-            if data_rec_intensity.shape[1] != 2:
-                raise ValueError(
-                    f"The given data_rec_intensity should have exactly 2 columns that refer "
-                    f"to source locations in forms of x and y coordinates; instead we got "
-                    f"data_rec_intensity of shape {data_rec_intensity.shape}"
+                    f"The given data_paths should have exactly 4 columns that refer "
+                    f"to source and receiver locations in forms of x and y coordinates; "
+                    f"instead we got data_paths of shape {data_paths.shape}"
                 )
             # ####### END VALIDATION #######
             self.paths = data_paths
-        self.d = -np.log(data_src_intensity) + np.log(data_rec_intensity)
+        self.d = -np.log(data_rec_intensity) + np.log(data_src_intensity)
         self.fwd = XRayTomographyForward()
         self.n_x = n_x
         self.n_y = n_y
@@ -89,7 +83,7 @@ class XRayTomographyObjective(BaseObjective):
         )
         if extent is None:
             self.extent = inferred_extent
-        else:
+        else:       # given extent, check bounds from paths data
             # ####### INPUT VALIDATION #######
             if (
                 extent[0] > inferred_extent[0]
