@@ -10,6 +10,7 @@ class XRayTomographyObjective(BaseObjective):
         data_src_intensity=None,
         data_rec_intensity=None,
         data_paths=None,
+        data_attns=None,
         data_file=None,
         data_attributes={
             "src_x": 0,
@@ -23,10 +24,48 @@ class XRayTomographyObjective(BaseObjective):
         n_y=50,
         extent=None,
     ):
+        """Constructor for XRayTomographyObjective
+
+        When initialising an instance of XRayTomographyObjective, make sure to
+        specify in one of the following 3 forms:
+        - data_src_intensity, data_rec_intensity, data_paths
+        - data_paths, data_attns
+        - data_file
+
+        The other arguments, including data_attributes, n_x, n_y and extent, are 
+        optional (or have default values as described below). extent can be 
+        important to specify when your dataset is not big enough to cover the
+        whole range.
+
+        :param data_src_intensity: [description], defaults to None
+        :type data_src_intensity: [type], optional
+        :param data_rec_intensity: [description], defaults to None
+        :type data_rec_intensity: [type], optional
+        :param data_paths: [description], defaults to None
+        :type data_paths: [type], optional
+        :param data_attns: [description], defaults to None
+        :type data_attns: [type], optional
+        :param data_file: [description], defaults to None
+        :type data_file: [type], optional
+        :param data_attributes: [description], defaults to { "src_x": 0, "src_y": 1, "src_intensity": 2, "rec_x": 3, "rec_y": 4, "rec_intensity": 5, }
+        :type data_attributes: dict, optional
+        :param n_x: [description], defaults to 50
+        :type n_x: int, optional
+        :param n_y: [description], defaults to 50
+        :type n_y: int, optional
+        :param extent: [description], defaults to None
+        :type extent: [type], optional
+        :raises ValueError: [description]
+        :raises ValueError: [description]
+        :raises ValueError: [description]
+        :raises ValueError: [description]
+        :raises ValueError: [description]
+        :raises ValueError: [description]
+        """
         if isinstance(data_src_intensity, str):
             data_file = data_src_intensity
             data_src_intensity = None
-        if data_src_intensity is None:      # data from file path
+        if data_src_intensity is None and data_attns is None:      # data from file path
             # ####### INPUT VALIDATION #######
             if data_file is None:
                 raise ValueError(
@@ -35,7 +74,6 @@ class XRayTomographyObjective(BaseObjective):
             try:
                 dataset = np.loadtxt(data_file)
             except Exception as e:
-                print(e)
                 raise ValueError(
                     "Please provide a valid file path while initialising XRayTomographyObjective"
                 )
@@ -47,7 +85,7 @@ class XRayTomographyObjective(BaseObjective):
             self.paths[:, 1] = dataset[:, data_attributes["src_y"]]
             self.paths[:, 2] = dataset[:, data_attributes["rec_x"]]
             self.paths[:, 3] = dataset[:, data_attributes["rec_y"]]
-        else:       # data as arguments passed in
+        elif data_src_intensity is not None:   # <- data as arguments passed in (source/receiver locations + paths)
             # ####### INPUT VALIDATION #######
             if data_rec_intensity is None or data_paths is None:
                 raise ValueError(
@@ -70,7 +108,30 @@ class XRayTomographyObjective(BaseObjective):
                 )
             # ####### END VALIDATION #######
             self.paths = data_paths
-        self.d = -np.log(data_rec_intensity) + np.log(data_src_intensity)
+        else:       # <- data as arguments passed in (d as attenuation coefficients + paths)
+            # ####### INPUT VALIDATION #######
+            if data_paths is None:
+                raise ValueError(
+                    "Please provide full data while initialising XRayTomographyObjective, "
+                    "including data_attns and data_paths"
+                )
+            if data_attns.shape[0] != data_paths.shape[0]:
+                raise ValueError(
+                    "The dimensions between data_attns and data_paths don't match; "
+                    "you need to provide them with the same rows count"
+                )
+            if data_paths.shape[1] != 4:
+                raise ValueError(
+                    f"The given data_paths should have exactly 4 columns that refer "
+                    f"to source and receiver locations in forms of x and y coordinates; "
+                    f"instead we got data_paths of shape {data_paths.shape}"
+                )
+            # ####### END VALIDATION #######
+            self.paths = data_paths
+            self.d = data_attns
+
+        if not hasattr(self, "d"):
+            self.d = -np.log(data_rec_intensity) + np.log(data_src_intensity)
         self.fwd = XRayTomographyForward()
         self.n_x = n_x
         self.n_y = n_y
@@ -99,7 +160,27 @@ class XRayTomographyObjective(BaseObjective):
             self.extent = extent
 
     def misfit(self, model):
-        pass
+        model = model.values() if isinstance(model, Model) else np.asanyarray(model)
+        if len(model.shape) == 1:
+            try:
+                model = model.reshape([self.n_x, self.n_y])
+            except:
+                raise ValueError(
+                    f"You've provided model if shape: {model.shape}, however we expect "
+                    f"one in shape ({self.n_x}, {self.n_y}); alternatively, reset the grid "
+                    f"dimensions using method 'set_grid_dimensions(n_x, n_y)' on objective "
+                    f"instance and try again."
+                )
+        else:
+            if model.shape[0] != self.n_x or model.shape[1] != self.n_y:
+                raise ValueError(
+                    f"You've provided model if shape: {model.shape}, however we expect "
+                    f"one in shape ({self.n_x}, {self.n_y}); alternatively, reset the grid "
+                    f"dimensions using method 'set_grid_dimensions(n_x, n_y)' on objective "
+                    f"instance and try again."
+                )
+        d_estimated = self.fwd.calc(model, self.paths, self.extent)
+        return np.linalg.norm(self.d - d_estimated)
 
     def set_grid_dimensions(self, n_x, n_y):
         self.n_x = n_x
