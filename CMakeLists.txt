@@ -21,6 +21,24 @@ find_package(F2PY REQUIRED)
 # )
 # FetchContent_MakeAvailable(pybind11)
 
+# Add proper -fPIC and MINGW handling
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    if (NOT MINGW)
+        set(common "-fPIC")
+    else()
+        set(common "-D_hypot=hypot -Doff64_t=_off64_t")
+        if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
+            set(common "${common} -DMS_WIN64")
+        endif()
+    endif()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${common}")
+endif ()
+if (CMAKE_CXX_COMPILER_ID MATCHES Clang)
+    set(common "-fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${common}")
+endif ()
+
+
 if(SKBUILD)
   # Scikit-Build does not add your site-packages to the search path
   # automatically, so we need to add it _or_ the pybind11 specific directory

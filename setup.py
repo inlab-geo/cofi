@@ -1,6 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
+import os
 
 # import numpy
 
@@ -35,4 +36,5 @@ setup(
         "pyyaml>=6.0", 
         "pybind11[global]>=2.9.1",
     ],
+    # cmake_args=['-DMS_WIN64']
 )
