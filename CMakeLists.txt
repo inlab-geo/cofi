@@ -8,18 +8,18 @@ find_package(PythonExtensions REQUIRED)
 find_package(Cython REQUIRED)
 find_package(NumPy REQUIRED)
 find_package(F2PY REQUIRED)
-# find_package(pybind11 REQUIRED)
+find_package(pybind11 REQUIRED)
 # find_package(Python3 COMPONENTS Interpreter Development NumPy REQUIRED)
 
 # PyBind11 related
-include(GNUInstallDirs)
-include(FetchContent)
-FetchContent_Declare(
-  pybind11
-  URL https://github.com/pybind/pybind11/archive/refs/tags/v2.9.1.tar.gz
-  URL_HASH SHA256=c6160321dc98e6e1184cc791fbeadd2907bb4a0ce0e447f2ea4ff8ab56550913
-)
-FetchContent_MakeAvailable(pybind11)
+# include(GNUInstallDirs)
+# include(FetchContent)
+# FetchContent_Declare(
+#   pybind11
+#   URL https://github.com/pybind/pybind11/archive/refs/tags/v2.9.1.tar.gz
+#   URL_HASH SHA256=c6160321dc98e6e1184cc791fbeadd2907bb4a0ce0e447f2ea4ff8ab56550913
+# )
+# FetchContent_MakeAvailable(pybind11)
 
 # if(SKBUILD)
 #   # Scikit-Build does not add your site-packages to the search path
@@ -34,7 +34,7 @@ FetchContent_MakeAvailable(pybind11)
 # endif()
 
 # Now we can find pybind11
-find_package(pybind11 CONFIG REQUIRED)
+# find_package(pybind11 CONFIG REQUIRED)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 # set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
