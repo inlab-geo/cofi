@@ -42,21 +42,23 @@ testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
 
 [tool.coverage.run]
-omit = ["*/lib*/*", "cofi/cofi_objective/examples/bandit_multi_armed.py"]
+omit = ["*/lib*/*", "*/lib*", "cofi/cofi_objective/examples/bandit_multi_armed.py"]
 
 [tool.black]
 line-length = 88
 target_version = ['py38']
 experimental_string_processing = true
 exclude = '''
-/(
-   \.git
-  | \.mypy_cache
-  | \.vscode
-  | build
-  | dist
-  | examples
-  | lib
-  | _skbuild
-)/
+(
+  /(
+    \.git
+    | \.mypy_cache
+    | \.vscode
+    | build
+    | lib.*
+    | dist
+    | _skbuild
+  )/
+  | examples\/lib.*\.py 
+)
 '''

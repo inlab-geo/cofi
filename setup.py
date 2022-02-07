@@ -1,6 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
+import os
 
 # import numpy
 
@@ -23,9 +24,17 @@ setup(
         "cofi",
         "cofi.utils",
         "cofi.cofi_objective",
+        "cofi.cofi_objective.examples",
         "cofi.linear_reg",
         "cofi.optimizers",
         "cofi.samplers",
     ],
-    install_requires=["cython", "numpy", "scipy", "pyyaml", "pybind11[global]",],
+    install_requires=[
+        "cython>=0.29.27", 
+        "numpy>=1.22.2", 
+        "scipy>=1.8.0", 
+        "pyyaml>=6.0", 
+        "pybind11[global]>=2.9.1",
+    ],
+    # cmake_args=['-DMS_WIN64']
 )

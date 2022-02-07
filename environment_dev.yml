@@ -30,7 +30,7 @@ dependencies:
   - pytest
   - pip
   - pip:
-    - coverage
+    - coverage[toml]
     - insipid-sphinx-theme
     - cibuildwheel
     - tox

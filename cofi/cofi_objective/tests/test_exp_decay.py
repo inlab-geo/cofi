@@ -1,4 +1,3 @@
-from re import X
 from cofi.cofi_objective.examples import ExpDecay
 from cofi.cofi_objective import Model
 

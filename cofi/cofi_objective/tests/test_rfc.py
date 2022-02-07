@@ -2,6 +2,7 @@ import pytest
 from cofi.cofi_objective.examples import ReceiverFunctionObjective, ReceiverFunction
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 model = np.array(
@@ -10,6 +11,15 @@ model = np.array(
 
 rfc_fwd = ReceiverFunction()
 t, rf_data = rfc_fwd.calc(model, sn=0.1)
+t2, rf_data2 = rfc_fwd.calc(
+    model, sn=0.5
+)  # Receiver function with added correlated noise
+plt.plot(t, rf_data, label="No noise RF")
+plt.plot(t2, rf_data2, "r-", label="Noisy RF")
+plt.xlabel("Time/s")
+plt.ylabel("Amplitude")
+plt.legend()
+# plt.show()
 
 rfc_obj = ReceiverFunctionObjective(t, rf_data)
 model_guess = np.array(

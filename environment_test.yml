@@ -1,3 +1,10 @@
+# conda env create -f environment_test.yml
+# conda activate cofi_test
+# pip install .
+
+# python cofi/cofi_objective/tests/test_rfc.py
+# python cofi/tests/test_linear_reg.py
+
 name: cofi_test
 dependencies:
   - numpy>=1.22.1
@@ -6,6 +13,7 @@ dependencies:
   - scikit-build>=0.11.1
   - pytest>=6.2.5
   - conda-forge::petsc4py>=3.16.1
+  - conda-forge::gfortran
   - pip>=21.2.4
   - pip:
     - coverage[toml]>=6.2
