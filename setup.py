@@ -19,7 +19,7 @@ setup(
 
     # -------- BELOW FOR TEST_PYPI ------
     name="cofi_test",
-    version="0.1.1",
+    version="0.1.2",
     # -------- END TEST CONFIG --------
 
     description="Common Framework for Inference",
@@ -37,6 +37,8 @@ setup(
         "numpy>=1.22.2", 
         "scipy>=1.8.0", 
         "pyyaml>=6.0",
-        "petsc4py>=3.16.0",
     ],
+    extras_require={
+        "petsc": ["petsc4py>=3.16.0"],
+    },
 )

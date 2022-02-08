@@ -3,8 +3,11 @@ from cofi.cofi_objective import BaseObjective, Model
 
 import sys
 import numpy as np
-import petsc4py
-from petsc4py import PETSc
+try:
+    import petsc4py
+    from petsc4py import PETSc
+except:
+    raise Exception("Please install petsc4py if you'd like to use its solvers")
 from typing import Union, List
 import traceback
 import logging
