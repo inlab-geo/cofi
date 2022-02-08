@@ -1,9 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
-import os
 
-# import numpy
 
 try:
     from skbuild import setup
@@ -16,8 +14,14 @@ except ImportError:
     raise
 
 setup(
-    name="cofi",
-    version="0.1.0",
+    # name="cofi",
+    # version="0.1.0",
+
+    # -------- BELOW FOR TEST_PYPI ------
+    name="cofi_test",
+    version="0.1.1",
+    # -------- END TEST CONFIG --------
+
     description="Common Framework for Inference",
     author="InLab",
     packages=[
@@ -30,11 +34,9 @@ setup(
         "cofi.samplers",
     ],
     install_requires=[
-        "cython>=0.29.27", 
         "numpy>=1.22.2", 
         "scipy>=1.8.0", 
-        "pyyaml>=6.0", 
-        "pybind11[global]>=2.9.1",
+        "pyyaml>=6.0",
+        "petsc4py>=3.16.0",
     ],
-    # cmake_args=['-DMS_WIN64']
 )

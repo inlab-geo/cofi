@@ -31,9 +31,9 @@ requires = [
   "scikit-build>=0.12",
   "cmake>=3.18",
   "ninja",
-  "cython",
-  "numpy",
-  "pybind11[global]",
+  "cython>=0.29.27",
+  "numpy>=1.22.2",
+  "pybind11[global]>=2.9.1",
 ]
 build-backend = "setuptools.build_meta"
 
