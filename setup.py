@@ -19,7 +19,7 @@ setup(
 
     # -------- BELOW FOR TEST_PYPI ------
     name="cofi_test",
-    version="0.1.3",
+    version="0.1.4",
     # -------- END TEST CONFIG --------
 
     description="Common Framework for Inference",

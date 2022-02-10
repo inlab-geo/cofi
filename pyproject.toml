@@ -6,6 +6,12 @@
 
 ####### TO TEST WHEELS ######
 # export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform linux
+# twine upload --repository testpypi wheelhouse/*manylinux*
+# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos
+# twine upload --repository testpypi wheelhouse/*macos*
+# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos --archs arm64
+# twine upload --repository testpypi wheelhouse/*macos*
+
 
 ####### TO FORMAT #######
 # black --check .

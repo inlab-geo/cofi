@@ -186,15 +186,38 @@ class XRayTomographyObjective(BaseObjective):
         self.n_x = n_x
         self.n_y = n_y
 
+    def initial_model(self):
+        return np.random.rand(self.n_x, self.n_y)
+
     def design_matrix(self):
         return self.fwd.design_matrix(self.paths, self.n_x, self.n_y, self.extent)
+
+    def data_x(self):
+        return self.design_matrix()
 
     def data_y(self):
         return self.d
 
+    def residual(self, model):
+        model = model.reshape([self.n_x, self.n_y])
+        d_estimated = self.fwd.calc(model, self.paths, self.extent)
+        return self.d - d_estimated
+
+    def gradient(self, model):
+        return np.squeeze(self.jacobian(model).T @ self.residual(model))
+
+    def hessian(self, model):
+        g = self.design_matrix()
+        return g.T @ g
+
+    def jacobian(self, model):
+        return self.design_matrix()
+
     def display(
         self, model, paths=None, extent=None, clim=None, cmap=None, figsize=(6,6)
     ):
+        if isinstance(model, Model):
+            model = model.values()
         if len(model.shape) == 1:
             model = model.reshape([self.n_x, self.n_y])
         self.fwd.display(
