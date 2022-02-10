@@ -21,10 +21,11 @@ class ReceiverFunctionObjective(BaseObjective):
        The maximum depth of discontinuity that can be considered is 60km.
     """
 
-    def __init__(self, t, rf_data):
+    def __init__(self, t, rf_data, initial_model):
         self.fwd = ReceiverFunction()
         self.t = t
         self.rf_data = rf_data
+        self.prior = initial_model
 
     def misfit(
         self,
@@ -46,6 +47,15 @@ class ReceiverFunctionObjective(BaseObjective):
         if not np.array_equal(t, self.t):
             raise ValueError("Please ensure the time array matches your data")
         return np.linalg.norm(rf_calculated - self.rf_data)
+
+    def initial_model(self):
+        return self.prior
+
+    def data_x(self):
+        return self.t
+
+    def data_y(self):
+        return self.rf_data
 
     # def log_likelihood(self, model, )
 
@@ -75,8 +85,12 @@ class ReceiverFunction(BaseForward):
         return t, rfunc
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
+        if isinstance(model, Model):
+            model = model.values()
         model = np.asanyarray(model)
-        if model.shape[1] != 3:
+        try:
+            model = model.reshape([-1,3])
+        except:
             raise ValueError(
                 f"Model dimension should be (nlayers,3) but instead got {model.shape}"
             )
