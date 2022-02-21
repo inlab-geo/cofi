@@ -1,5 +1,6 @@
 from cofi.cofi_objective.examples import XRayTomographyForward, XRayTomographyObjective
 from cofi.linear_reg import LRNormalEquation
+from cofi.optimizers import ScipyOptimizerSolver
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -113,9 +114,14 @@ def test_xrt_misfit(example_model_paths):
 
 def test_solving_xrt(data_path, monkeypatch):
     xrt_obj = XRayTomographyObjective(data_path)
-    solver = LRNormalEquation(xrt_obj)
+    # linear system solver
+    linear_solver = LRNormalEquation(xrt_obj)
     with pytest.warns(UserWarning, match=r".*using linear regression formula solver.*"):
-        model = solver.solve(0.001)
+        model = linear_solver.solve(0.001)
     monkeypatch.setattr(plt, "show", lambda: None)   # comment out this line if you want to see the plot
     xrt_obj.display(model.values())
+    # scipy optimizer solver
+    scipy_solver = ScipyOptimizerSolver(xrt_obj)
+    scipy_model = scipy_solver.solve()
+    xrt_obj.display(scipy_model)
     
