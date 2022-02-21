@@ -21,7 +21,7 @@ class ReceiverFunctionObjective(BaseObjective):
        The maximum depth of discontinuity that can be considered is 60km.
     """
 
-    def __init__(self, t, rf_data, initial_model):
+    def __init__(self, t, rf_data, initial_model=None):
         self.fwd = ReceiverFunction()
         self.t = t
         self.rf_data = rf_data
