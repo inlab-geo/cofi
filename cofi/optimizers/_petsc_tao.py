@@ -2,9 +2,13 @@ from cofi import BaseSolver
 from cofi.cofi_objective import BaseObjective, Model
 
 import sys
+import warnings
 import numpy as np
-import petsc4py
-from petsc4py import PETSc
+try:
+    import petsc4py
+    from petsc4py import PETSc
+except:
+    warnings.warn("Please install petsc4py if you'd like to use its solvers")
 from typing import Union, List
 import traceback
 import logging
@@ -59,7 +63,10 @@ class TAOSolver(BaseSolver):
     """
 
     def __init__(self, objective: BaseObjective, mpi=False):
-        petsc4py.init(sys.argv)
+        try:
+            petsc4py.init(sys.argv)
+        except:
+            raise Exception("Please install petsc4py if you'd like to use its solvers")
 
         self.obj = objective
         self._use_mpi = mpi

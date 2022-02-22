@@ -6,6 +6,14 @@
 
 ####### TO TEST WHEELS ######
 # export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform linux
+# twine upload --repository testpypi wheelhouse/*manylinux*
+# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos
+# twine upload --repository testpypi wheelhouse/*macos*
+# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos --archs arm64
+# twine upload --repository testpypi wheelhouse/*macos*
+# python setup.py sdist
+# twine upload --repository testpypi dist/cofi_test*tar.gz
+
 
 ####### TO FORMAT #######
 # black --check .
@@ -31,9 +39,9 @@ requires = [
   "scikit-build>=0.12",
   "cmake>=3.18",
   "ninja",
-  "cython",
-  "numpy",
-  "pybind11[global]",
+  "cython>=0.29.27",
+  "numpy>=1.22.2",
+  "pybind11[global]>=2.9.1",
 ]
 build-backend = "setuptools.build_meta"
 

@@ -33,4 +33,3 @@ dependencies:
     - coverage[toml]
     - insipid-sphinx-theme
     - cibuildwheel
-    - tox

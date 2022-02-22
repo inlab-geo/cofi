@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 from PIL import Image
 
 tqdm_installed = True
-try:
-    import tqdm
-except:
-    tqdm_installed = False
-    print("Note: tqdm is not installed in current environment, progress bar won't be printed while evaluating paths")
+# try:
+#     import tqdm
+# except:
+#     tqdm_installed = False
+#     print("Note: tqdm is not installed in current environment, progress bar won't be printed while evaluating paths")
 
 # Andrew Valentine (andrew.valentine@anu.edu.au)
 # Malcolm Sambridge (malcolm.sambridge@anu.edu.au)
@@ -144,7 +144,7 @@ def tracer(model,paths,extent=(0,1,0,1)):
     A = np.zeros([npaths,nx*ny])
     attns = np.zeros([npaths])
     #print ""
-    if (tqdm_installed): t = tqdm.tqdm(desc="Evaluating paths",total=npaths)
+    # if (tqdm_installed): t = tqdm.tqdm(desc="Evaluating paths",total=npaths)
     for ip,p in enumerate(paths):
         xs,ys,xr,yr = p
         pathLength = np.sqrt((xr-xs)**2 + (yr-ys)**2)
@@ -200,7 +200,7 @@ def tracer(model,paths,extent=(0,1,0,1)):
             if lam[lamSort[ilam]]==1.:break
 
         A[ip,:] = pathSensitivity.flatten()
-        if (tqdm_installed): t.update(1)
-    if (tqdm_installed): t.close()
+        # if (tqdm_installed): t.update(1)
+    # if (tqdm_installed): t.close()
 
     return attns,A
