@@ -109,10 +109,14 @@ class ScipyOptimizerSolver(BaseSolver):
         # If unimplementederror is raised, then set gradient and hess to None
         # Scipy optimizers choose methods based on whether gradient or hess are provided
         # Avoid cases where they are not implemented but are also not None
-        try: gradient(self._x0) 
-        except: gradient = None
-        try: hess(self._x0) 
-        except: hess = None
+        try:
+            gradient(self._x0)
+        except:
+            gradient = None
+        try:
+            hess(self._x0)
+        except:
+            hess = None
 
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         res = minimize(

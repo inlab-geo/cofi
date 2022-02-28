@@ -4,6 +4,7 @@ from cofi.cofi_objective import BaseObjective, Model
 import sys
 import warnings
 import numpy as np
+
 try:
     import petsc4py
     from petsc4py import PETSc

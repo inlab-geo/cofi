@@ -89,6 +89,42 @@ class BaseObjective:
             " implemented it"
         )
 
+    def setMisfit(self, misfit_func: Callable[[Union[Model, np.ndarray]], Number]):
+        self.misfit = misfit_func
+
+    def setGradient(
+        self, gradient_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
+    ):
+        self.gradient = gradient_func
+
+    def setHessian(
+        self, hessian_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
+    ):
+        self.hessian = hessian_func
+
+    def setResidual(
+        self, residual_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
+    ):
+        self.residual = residual_func
+
+    def setJacobian(
+        self, jacobian_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
+    ):
+        self.jacobian = jacobian_func
+
+    def setDataX(self, data_x: np.ndarray):
+        self.data_x = lambda _: data_x
+
+    def setDataY(self, data_y: np.ndarray):
+        self.data_y = lambda _: data_y
+
+    def setInitialModel(self, initial_model: Union[Model, np.ndarray]):
+        self.initial_model = (
+            lambda _: initial_model.values()
+            if isinstance(initial_model, Model)
+            else initial_model
+        )
+
 
 class LeastSquareObjective(BaseObjective):
     """

@@ -65,7 +65,7 @@ class XRayTomographyObjective(BaseObjective):
         if isinstance(data_src_intensity, str):
             data_file = data_src_intensity
             data_src_intensity = None
-        if data_src_intensity is None and data_attns is None:      # data from file path
+        if data_src_intensity is None and data_attns is None:  # data from file path
             # ####### INPUT VALIDATION #######
             if data_file is None:
                 raise ValueError(
@@ -85,16 +85,17 @@ class XRayTomographyObjective(BaseObjective):
             self.paths[:, 1] = dataset[:, data_attributes["src_y"]]
             self.paths[:, 2] = dataset[:, data_attributes["rec_x"]]
             self.paths[:, 3] = dataset[:, data_attributes["rec_y"]]
-        elif data_src_intensity is not None:   # <- data as arguments passed in (source/receiver locations + paths)
+        elif (
+            data_src_intensity is not None
+        ):  # <- data as arguments passed in (source/receiver locations + paths)
             # ####### INPUT VALIDATION #######
             if data_rec_intensity is None or data_paths is None:
                 raise ValueError(
                     "Please provide full data while initialising XRayTomographyObjective, "
                     "including data_src_intensity, data_rec_intensity and data_paths"
                 )
-            if (
-                (data_src_intensity.shape[0] != data_rec_intensity.shape[0])
-                or (data_src_intensity.shape[0] != data_paths.shape[0])
+            if (data_src_intensity.shape[0] != data_rec_intensity.shape[0]) or (
+                data_src_intensity.shape[0] != data_paths.shape[0]
             ):
                 raise ValueError(
                     "The dimensions between data_src_intensity, data_rec_intensity and "
@@ -108,7 +109,7 @@ class XRayTomographyObjective(BaseObjective):
                 )
             # ####### END VALIDATION #######
             self.paths = data_paths
-        else:       # <- data as arguments passed in (d as attenuation coefficients + paths)
+        else:  # <- data as arguments passed in (d as attenuation coefficients + paths)
             # ####### INPUT VALIDATION #######
             if data_paths is None:
                 raise ValueError(
@@ -144,7 +145,7 @@ class XRayTomographyObjective(BaseObjective):
         )
         if extent is None:
             self.extent = inferred_extent
-        else:       # given extent, check bounds from paths data
+        else:  # given extent, check bounds from paths data
             # ####### INPUT VALIDATION #######
             if (
                 extent[0] > inferred_extent[0]
@@ -214,7 +215,7 @@ class XRayTomographyObjective(BaseObjective):
         return self.design_matrix()
 
     def display(
-        self, model, paths=None, extent=None, clim=None, cmap=None, figsize=(6,6)
+        self, model, paths=None, extent=None, clim=None, cmap=None, figsize=(6, 6)
     ):
         if isinstance(model, Model):
             model = model.values()

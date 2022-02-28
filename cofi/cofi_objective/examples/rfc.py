@@ -89,7 +89,7 @@ class ReceiverFunction(BaseForward):
             model = model.values()
         model = np.asanyarray(model)
         try:
-            model = model.reshape([-1,3])
+            model = model.reshape([-1, 3])
         except:
             raise ValueError(
                 f"Model dimension should be (nlayers,3) but instead got {model.shape}"
