@@ -16,12 +16,10 @@ except ImportError:
 setup(
     # name="cofi",
     # version="0.1.0",
-
     # -------- BELOW FOR TEST_PYPI ------
     name="cofi_test",
     version="0.1.4",
     # -------- END TEST CONFIG --------
-
     description="Common Framework for Inference",
     author="InLab",
     packages=[
@@ -30,15 +28,9 @@ setup(
         "cofi.cofi_objective",
         "cofi.cofi_objective.examples",
         "cofi.linear_reg",
-        "cofi.optimizers",
+        "cofi.optimisers",
         "cofi.samplers",
     ],
-    install_requires=[
-        "numpy>=1.22.2", 
-        "scipy>=1.8.0", 
-        "pyyaml>=6.0",
-    ],
-    extras_require={
-        "petsc": ["petsc4py>=3.16.0"],
-    },
+    install_requires=["numpy>=1.22.2", "scipy>=1.8.0", "pyyaml>=6.0",],
+    extras_require={"petsc": ["petsc4py>=3.16.0"],},
 )

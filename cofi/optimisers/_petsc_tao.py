@@ -1,9 +1,10 @@
-from cofi import BaseSolver
+from cofi import BaseSolver, OptimiserMixin
 from cofi.cofi_objective import BaseObjective, Model
 
 import sys
 import warnings
 import numpy as np
+
 try:
     import petsc4py
     from petsc4py import PETSc
@@ -40,8 +41,8 @@ _methods_need_residual = ["brgn"]
 _methods_need_residual_mpi = ["brgn"]
 
 
-class TAOSolver(BaseSolver):
-    """Optimizer wrapper of TAO
+class TAOSolver(BaseSolver, OptimiserMixin):
+    """Optimiser wrapper of TAO
 
     Objective definition needs to implement the following functions:
     - misfit(model)
@@ -87,8 +88,14 @@ class TAOSolver(BaseSolver):
             OptDB.delValue(option)
 
     def solve(
-        self, method: str = "nm", extra_options: Union[List[str], str] = None, verbose=0
+        self, method: str = None, extra_options: Union[List[str], str] = None, verbose=0
     ) -> Model:
+        if method is None:
+            if hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+                method = self.method
+            else:  # default option
+                method = "nm"
+
         if (
             not self._use_mpi
             and not (

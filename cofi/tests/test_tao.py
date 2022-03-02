@@ -1,5 +1,5 @@
 import pytest
-from cofi.optimizers import TAOSolver
+from cofi.optimisers import TAOSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
@@ -36,7 +36,8 @@ tao_solver = TAOSolver(exp_decay_objective)
 methods = ["nm", "lmvm", "nls", "ntr", "cg", "blmvm", "tron"]
 
 for method in methods:
-    model = tao_solver.solve(method, verbose=1)
+    tao_solver.setMethod(method)
+    model = tao_solver.solve(verbose=1)
 
 with pytest.raises(ValueError, match=r".*not a valid option.*"):
     tao_solver.solve("xyz")
@@ -46,7 +47,7 @@ with pytest.raises(ValueError, match=r".*not a valid option.*"):
 # tao_solver.solve()
 
 
-# ---------- Levenberg-Marquardt optimizer ----------------------------------
+# ---------- Levenberg-Marquardt optimiser ----------------------------------
 x = np.array([1, 0.1, 2, 0.2, 3, 0.3])
 t = np.linspace(0, 10)
 y = predict(x, t)
