@@ -73,13 +73,14 @@ y0_3 = predict(x0_3, t_3)
 # define problem (objective) and solver
 exp_decay_objective_3 = ExpDecay(t_3, y_3, x0_3)
 scipy_solver_3 = ScipyOptimiserLSSolver(exp_decay_objective_3)
+scipy_solver_3.setMethod("lm")
 
 # solve with lm
 print("-------------- 3 exps, Levenberg-Marquardt with Jacobian ------------")
-model_3_lm = scipy_solver_3.solve(method="lm")
+model_3_lm = scipy_solver_3.solve()
 print(model_3_lm.values())
 
 print("------------ 3 exps, Levenberg-Marquardt without Jacobian -----------")
 exp_decay_objective_3.jacobian = None
-model_3_lm = scipy_solver_3.solve(method="lm")
+model_3_lm = scipy_solver_3.solve()
 print(model_3_lm.values())

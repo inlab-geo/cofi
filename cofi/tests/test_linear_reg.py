@@ -57,12 +57,14 @@ plt.legend()
 
 # ------------ #1.3 scipy.optimize.minimize solver -----------------------------------
 solver_1_scipy_minimize = optim.ScipyOptimiserSolver(objective_1)
+solver_1_scipy_minimize.setOptions({"tol":1e-6})
 model_1_scipy_minimize = solver_1_scipy_minimize.solve()
 print(
     "--> model predicted by scipy.optimize.minimize:"
     f" {model_1_scipy_minimize.values()}\n"
 )
-model_1_scipy_minimize_newtoncg = solver_1_scipy_minimize.solve("Newton-CG")
+solver_1_scipy_minimize.setMethod("Newton-CG")
+model_1_scipy_minimize_newtoncg = solver_1_scipy_minimize.solve()
 print(
     "--> model predicted by scipy.optimize.minimize(Newton-CG):"
     f" {model_1_scipy_minimize_newtoncg.values()}\n"
@@ -71,6 +73,7 @@ print(
 
 # ------------ #1.4 scipy.optimize.least_squares solver -----------------------------------
 solver_1_scipy_ls = optim.ScipyOptimiserLSSolver(objective_1)
+solver_1_scipy_ls.setMethod()
 model_1_scipy_ls = solver_1_scipy_ls.solve()
 print(
     "--> model predicted by scipy.optimize.least_squares:"

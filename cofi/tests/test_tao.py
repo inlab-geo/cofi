@@ -36,7 +36,8 @@ tao_solver = TAOSolver(exp_decay_objective)
 methods = ["nm", "lmvm", "nls", "ntr", "cg", "blmvm", "tron"]
 
 for method in methods:
-    model = tao_solver.solve(method, verbose=1)
+    tao_solver.setMethod(method)
+    model = tao_solver.solve(verbose=1)
 
 with pytest.raises(ValueError, match=r".*not a valid option.*"):
     tao_solver.solve("xyz")

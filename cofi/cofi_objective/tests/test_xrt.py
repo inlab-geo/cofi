@@ -37,10 +37,10 @@ data_files_to_test = ["data_xrt.dat", "data_xrt_uneven.dat"]
 
 
 @pytest.fixture(params=data_files_to_test)
-def data_path():
+def data_path(request):
     path_to_current_file = os.path.realpath(__file__)
     current_directory = os.path.split(path_to_current_file)[0]
-    data_path = os.path.join(current_directory, "data_xrt.dat")
+    data_path = os.path.join(current_directory, request.param)
     return data_path
 
 

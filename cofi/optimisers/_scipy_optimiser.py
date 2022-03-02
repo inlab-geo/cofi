@@ -101,7 +101,7 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         :return: the optimization result - a model in the inversion context
         :rtype: cofi.cofi_objective.Model
         """
-        if method is None and hasattr(self, "method"):  # method set by setMethod()
+        if method is None and hasattr(self, "method") and self.method is not None:  # method set by setMethod()
             method = self.method
 
         if gradient is None:
@@ -131,9 +131,9 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
             hessp=hessp,
             bounds=bounds,
             constraints=constraints,
-            tol=tol,
+            tol=self.options["tol"] if tol is None and hasattr(self, "options") and "tol" in self.options else tol,
             options=options,
-            callback=callback,
+            callback=self.options["callback"] if callback is None and hasattr(self, "options") and "callback" in self.options else callback,
         )
 
         model = Model(
@@ -165,7 +165,7 @@ class ScipyOptimiserLSSolver(BaseSolver, OptimiserMixin):
 
     def solve(
         self,
-        method: str = "trf",
+        method: str = None,
         jac=None,
         bounds=(-inf, inf),
         ftol=1e-08,
@@ -183,6 +183,12 @@ class ScipyOptimiserLSSolver(BaseSolver, OptimiserMixin):
         args=(),
         kwargs={},
     ) -> Model:
+        if method is None:
+            if hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+                method = self.method
+            else:
+                method = "trf"
+
         if jac is None:
             jac = self._obj.jacobian
             if jac is None:
