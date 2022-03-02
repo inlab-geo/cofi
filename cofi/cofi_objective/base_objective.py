@@ -25,7 +25,7 @@ class BaseObjective:
     - params_size()
     """
 
-    def __init__(self, func: Callable[[np.ndarray], Number]):
+    def __init__(self, func: Callable[[np.ndarray], Number]=None):
         self._objective = func
 
     def misfit(self, model: Union[Model, np.ndarray]):

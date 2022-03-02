@@ -73,7 +73,6 @@ print(
 
 # ------------ #1.4 scipy.optimize.least_squares solver -----------------------------------
 solver_1_scipy_ls = optim.ScipyOptimiserLSSolver(objective_1)
-solver_1_scipy_ls.setMethod()
 model_1_scipy_ls = solver_1_scipy_ls.solve()
 print(
     "--> model predicted by scipy.optimize.least_squares:"
