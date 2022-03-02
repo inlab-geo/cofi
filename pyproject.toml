@@ -5,15 +5,14 @@
 # for developers: rm -rf _skbuild; pip uninstall -y cofi; pip install -e .
 
 ####### TO TEST WHEELS ######
-# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform linux
-# twine upload --repository testpypi wheelhouse/*manylinux*
-# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos
-# twine upload --repository testpypi wheelhouse/*macos*
-# export CIBW_SKIP='pp*'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos --archs arm64
-# twine upload --repository testpypi wheelhouse/*macos*
+# rm -rf wheelhouse
+# export CIBW_SKIP='pp*'; export CIBW_REPAIR_WHEEL_COMMAND_MACOS=''; export CIBW_ARCHS_MACOS='x86_64 arm64'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform macos
+# export CIBW_SKIP='pp*'; export CIBW_ARCHS_LINUX='x86_64 aarch64'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform linux
+# export CIBW_SKIP='pp*'; export CIBW_ARCHS_WINDOWS='AMD64 x86'; rm -rf _skbuild; find . -type f -name "*.so" -exec rm {} \; ; cibuildwheel --platform windows
 # python setup.py sdist
-# twine upload --repository testpypi dist/cofi_test*tar.gz
-
+# twine upload --repository testpypi wheelhouse/*macos*
+# twine upload --repository testpypi wheelhouse/*manylinux*
+# twine upload --repository testpypi dist/cofi*tar.gz
 
 ####### TO FORMAT #######
 # black --check .

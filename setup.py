@@ -13,14 +13,22 @@ except ImportError:
     )
     raise
 
-setup(
-    # name="cofi",
-    # version="0.1.0",
+# get version number
+_ROOT = pathlib.Path(__file__).parent
+with open(str(_ROOT / '_version.py')) as f:
+    for line in f:
+        if line.startswith('__version__ ='):
+            _, _, version = line.partition('=')
+            VERSION = version.strip(" \n'\"")
+            break
+    else:
+        raise RuntimeError(
+            'unable to read the version from ./_version.py')
 
-    # -------- BELOW FOR TEST_PYPI ------
-    name="cofi_test",
-    version="0.1.4",
-    # -------- END TEST CONFIG --------
+
+setup(
+    name="cofi",
+    version=VERSION,
 
     description="Common Framework for Inference",
     author="InLab",
