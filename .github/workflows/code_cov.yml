@@ -1,5 +1,10 @@
 name: Workflow for Codecov CoFI
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+    types:
+      - ready_for_review
 jobs:
   code_coverage:
     name: Run coverage on ubuntu-latest
