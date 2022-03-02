@@ -1,7 +1,7 @@
 # rm -rf _skbuild; pip install -e .
 
 import sys
-
+import pathlib
 
 try:
     from skbuild import setup
