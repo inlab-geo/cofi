@@ -1,4 +1,4 @@
-from cofi.optimizers import ScipyOptimizerSolver, ScipyOptimizerLSSolver
+from cofi.optimisers import ScipyOptimiserSolver, ScipyOptimiserLSSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
@@ -25,7 +25,7 @@ y0 = predict(x0, t)
 
 # define problem (objective) and solver
 exp_decay_objective = ExpDecay(t, y, x0)
-scipy_solver = ScipyOptimizerSolver(exp_decay_objective)
+scipy_solver = ScipyOptimiserSolver(exp_decay_objective)
 
 # solve with Nelder-Mead
 print("-------------- 1 exp, Nelder-Mead ----------------------")
@@ -49,7 +49,7 @@ y0_2 = predict(x0_2, t_2)
 
 # define problem (objective) and solver
 exp_decay_objective_2 = ExpDecay(t_2, y_2, x0_2)
-scipy_solver_2 = ScipyOptimizerSolver(exp_decay_objective_2)
+scipy_solver_2 = ScipyOptimiserSolver(exp_decay_objective_2)
 
 # solve with Nelder-Mead
 print("-------------- 2 exps, Newton-CG ------------------------")
@@ -72,7 +72,7 @@ y0_3 = predict(x0_3, t_3)
 
 # define problem (objective) and solver
 exp_decay_objective_3 = ExpDecay(t_3, y_3, x0_3)
-scipy_solver_3 = ScipyOptimizerLSSolver(exp_decay_objective_3)
+scipy_solver_3 = ScipyOptimiserLSSolver(exp_decay_objective_3)
 
 # solve with lm
 print("-------------- 3 exps, Levenberg-Marquardt with Jacobian ------------")

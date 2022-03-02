@@ -1,7 +1,7 @@
 from cofi.cofi_objective import LinearFittingObjective
 from cofi.cofi_objective import PolynomialFittingFwd
 import cofi.linear_reg as solvers
-import cofi.optimizers as optim
+import cofi.optimisers as optim
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -56,7 +56,7 @@ plt.legend()
 
 
 # ------------ #1.3 scipy.optimize.minimize solver -----------------------------------
-solver_1_scipy_minimize = optim.ScipyOptimizerSolver(objective_1)
+solver_1_scipy_minimize = optim.ScipyOptimiserSolver(objective_1)
 model_1_scipy_minimize = solver_1_scipy_minimize.solve()
 print(
     "--> model predicted by scipy.optimize.minimize:"
@@ -70,7 +70,7 @@ print(
 
 
 # ------------ #1.4 scipy.optimize.least_squares solver -----------------------------------
-solver_1_scipy_ls = optim.ScipyOptimizerLSSolver(objective_1)
+solver_1_scipy_ls = optim.ScipyOptimiserLSSolver(objective_1)
 model_1_scipy_ls = solver_1_scipy_ls.solve()
 print(
     "--> model predicted by scipy.optimize.least_squares:"

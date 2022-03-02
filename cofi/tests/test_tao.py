@@ -1,5 +1,5 @@
 import pytest
-from cofi.optimizers import TAOSolver
+from cofi.optimisers import TAOSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
@@ -46,7 +46,7 @@ with pytest.raises(ValueError, match=r".*not a valid option.*"):
 # tao_solver.solve()
 
 
-# ---------- Levenberg-Marquardt optimizer ----------------------------------
+# ---------- Levenberg-Marquardt optimiser ----------------------------------
 x = np.array([1, 0.1, 2, 0.2, 3, 0.3])
 t = np.linspace(0, 10)
 y = predict(x, t)

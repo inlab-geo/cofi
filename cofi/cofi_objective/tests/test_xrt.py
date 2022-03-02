@@ -1,6 +1,6 @@
 from cofi.cofi_objective.examples import XRayTomographyForward, XRayTomographyObjective
 from cofi.linear_reg import LRNormalEquation
-from cofi.optimizers import ScipyOptimizerSolver
+from cofi.optimisers import ScipyOptimiserSolver
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -132,7 +132,7 @@ def test_solving_xrt(data_path, monkeypatch):
         plt, "show", lambda: None
     )  # comment out this line if you want to see the plot
     xrt_obj.display(model.values())
-    # scipy optimizer solver
-    scipy_solver = ScipyOptimizerSolver(xrt_obj)
+    # scipy optimiser solver
+    scipy_solver = ScipyOptimiserSolver(xrt_obj)
     scipy_model = scipy_solver.solve()
     xrt_obj.display(scipy_model)

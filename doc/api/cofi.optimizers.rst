@@ -1,7 +1,7 @@
-cofi.optimizers package
+cofi.optimisers package
 =======================
 
-.. automodule:: cofi.optimizers
+.. automodule:: cofi.optimisers
    :members:
    :undoc-members:
    :show-inheritance:
