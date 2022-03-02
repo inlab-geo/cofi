@@ -2,9 +2,15 @@ name: Workflow for Codecov CoFI
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'cofi/**'
+      - 'pyproject.toml'
   pull_request:
     types:
       - ready_for_review
+    paths:
+      - 'cofi/**'
+      - 'pyproject.toml'
 jobs:
   code_coverage:
     name: Run coverage on ubuntu-latest
