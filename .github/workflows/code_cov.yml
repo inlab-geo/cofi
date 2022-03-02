@@ -2,6 +2,9 @@ name: Workflow for Codecov CoFI
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'cofi/**'
+      - 'pyproject.toml'
   pull_request:
     types:
       - ready_for_review
