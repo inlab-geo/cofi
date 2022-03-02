@@ -40,7 +40,7 @@ In order to do blabla, we can define the following objective::
 
 Then, it's possible to pass the above example into several inverse solvers::
 
-  from cofi.optimizers import *
+  from cofi.optimisers import *
 
   # biubiubiu
   # TODO

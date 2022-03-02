@@ -28,7 +28,7 @@ class ExpDecay(BaseObjective):
         if isinstance(initial_model, Model):
             initial_model = initial_model.values()
         self.m0 = np.asanyarray(initial_model)
-        self.n_params = self.m0.shape[0] if len(self.m0.shape)>0 else 1
+        self.n_params = self.m0.shape[0] if len(self.m0.shape) > 0 else 1
 
         if self.n_params % 2 != 0:
             raise ValueError(

@@ -14,7 +14,7 @@ Subpackages
 
    cofi.cofi_objective
    cofi.linear_reg
-   cofi.optimizers
+   cofi.optimisers
    cofi.samplers
    cofi.utils
 

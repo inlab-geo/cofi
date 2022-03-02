@@ -18,7 +18,7 @@ class LRNormalEquation(BaseSolver):
         # TODO return posterior covariance? (ref: inverseionCourse.curveFitting)
         if reg_eps_squared is None:
             res = np.linalg.inv(G.T @ G) @ G.T @ Y
-        else:       # Tikhonov-regularised solution
+        else:  # Tikhonov-regularised solution
             res = (
                 np.linalg.inv(G.T @ G + reg_eps_squared * np.eye(G.shape[1])) @ G.T @ Y
             )

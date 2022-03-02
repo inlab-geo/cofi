@@ -1,4 +1,4 @@
-from cofi import BaseSolver
+from cofi import BaseSolver, OptimiserMixin
 from cofi.cofi_objective import BaseObjective, Model
 
 import warnings
@@ -29,8 +29,8 @@ from scipy.optimize import minimize, least_squares
 # other arguments include: tol, options, callback
 
 
-class ScipyOptimizerSolver(BaseSolver):
-    """Optimizer wrapper of scipy.optimizer.minimize
+class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
+    """Optimiser wrapper of scipy.optimizer.minimize
 
     Objective definition needs to implement the following functions:
     - misfit(model)
@@ -101,18 +101,25 @@ class ScipyOptimizerSolver(BaseSolver):
         :return: the optimization result - a model in the inversion context
         :rtype: cofi.cofi_objective.Model
         """
+        if method is None and hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+            method = self.method
+
         if gradient is None:
             gradient = self._obj.gradient
         if hess is None:
             hess = self._obj.hessian
 
         # If unimplementederror is raised, then set gradient and hess to None
-        # Scipy optimizers choose methods based on whether gradient or hess are provided
+        # Scipy optimisers choose methods based on whether gradient or hess are provided
         # Avoid cases where they are not implemented but are also not None
-        try: gradient(self._x0) 
-        except: gradient = None
-        try: hess(self._x0) 
-        except: hess = None
+        try:
+            gradient(self._x0)
+        except:
+            gradient = None
+        try:
+            hess(self._x0)
+        except:
+            hess = None
 
         warnings.filterwarnings("ignore", category=RuntimeWarning)
         res = minimize(
@@ -124,9 +131,9 @@ class ScipyOptimizerSolver(BaseSolver):
             hessp=hessp,
             bounds=bounds,
             constraints=constraints,
-            tol=tol,
+            tol=self.options["tol"] if tol is None and hasattr(self, "options") and "tol" in self.options else tol,
             options=options,
-            callback=callback,
+            callback=self.options["callback"] if callback is None and hasattr(self, "options") and "callback" in self.options else callback,
         )
 
         model = Model(
@@ -137,8 +144,8 @@ class ScipyOptimizerSolver(BaseSolver):
         return model
 
 
-class ScipyOptimizerLSSolver(BaseSolver):
-    """Optimizer wrapper of scipy.optimizer.least_squares
+class ScipyOptimiserLSSolver(BaseSolver, OptimiserMixin):
+    """Optimiser wrapper of scipy.optimizer.least_squares
 
     Objective definition needs to implement the following functions:
     - residual(model)
@@ -158,7 +165,7 @@ class ScipyOptimizerLSSolver(BaseSolver):
 
     def solve(
         self,
-        method: str = "trf",
+        method: str = None,
         jac=None,
         bounds=(-inf, inf),
         ftol=1e-08,
@@ -176,6 +183,12 @@ class ScipyOptimizerLSSolver(BaseSolver):
         args=(),
         kwargs={},
     ) -> Model:
+        if method is None:
+            if hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+                method = self.method
+            else:
+                method = "trf"
+
         if jac is None:
             jac = self._obj.jacobian
             if jac is None:

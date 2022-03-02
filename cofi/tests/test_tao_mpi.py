@@ -5,7 +5,7 @@
 #   same path that contains your python (use `which python` to find out)
 
 
-from cofi.optimizers import TAOSolver
+from cofi.optimisers import TAOSolver
 from cofi.cofi_objective.examples import ExpDecay
 
 import numpy as np
