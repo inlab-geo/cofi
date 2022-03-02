@@ -91,9 +91,9 @@ class TAOSolver(BaseSolver, OptimiserMixin):
         self, method: str = None, extra_options: Union[List[str], str] = None, verbose=0
     ) -> Model:
         if method is None:
-            if self.method is not None:     # method set by setMethod()
+            if self.method is not None:  # method set by setMethod()
                 method = self.method
-            else:       # default option
+            else:  # default option
                 method = "nm"
 
         if (

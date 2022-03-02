@@ -22,7 +22,9 @@ class BaseSolver:
     def setMethod(self, method: str):
         self.method = method
 
+
 class OptimiserMixin:
     """Mixin class for all optimisation based solvers in cofi."""
+
     def setOptions(self, options: dict):
         self.options = options

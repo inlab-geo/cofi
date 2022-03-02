@@ -101,7 +101,7 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         :return: the optimization result - a model in the inversion context
         :rtype: cofi.cofi_objective.Model
         """
-        if method is None and self.method is not None:      # method set by setMethod()
+        if method is None and self.method is not None:  # method set by setMethod()
             method = self.method
 
         if gradient is None:
