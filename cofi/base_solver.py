@@ -16,5 +16,13 @@ class BaseSolver:
     def __init__(self):
         pass
 
-    def solve(self) -> Model:
+    def solve(self, method=None) -> Model:
         raise NotImplementedError("inversion 'solve' method not implemented")
+
+    def setMethod(self, method: str):
+        self.method = method
+
+class OptimiserMixin:
+    """Mixin class for all optimisation based solvers in cofi."""
+    def setOptions(self, options: dict):
+        self.options = options
