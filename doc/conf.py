@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath("../cofi"))
 # -- Project information -----------------------------------------------------
 
 project = "CoFI"
-copyright = "2021, InLab"
+copyright = "2022, InLab"
 author = "InLab"
 
 
@@ -46,7 +46,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 #
 # html_theme = 'alabaster'
 # html_permalinks_icon = '§'
-html_theme = "insipid"
+html_theme = "sphinx_book_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
