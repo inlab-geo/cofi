@@ -47,6 +47,9 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # html_theme = 'alabaster'
 # html_permalinks_icon = '§'
 html_theme = "sphinx_book_theme"
+html_theme_options = {'launch_buttons': {'notebook_interface': 'classic', 'inlab_url': 'http://www.inlab.edu.au/'}, 'path_to_docs': 'doc', 'repository_url': 'https://github.com/inlab-geo/cofi', 'repository_branch': 'main', 'extra_footer': '', 'home_page_in_toc': False, 'use_repository_button': True, 'use_edit_page_button': True, 'use_issues_button': True}
+html_logo = 'assets/cofi-logo-thumbnail.jpg'
+html_favicon = 'assets/inlab_logo_60px.png'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
