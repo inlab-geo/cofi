@@ -68,49 +68,65 @@ inference problems with the tools for their solution.
     ..     :text: Cite Pooch
     ..     :classes: btn-outline-primary btn-block stretched-link
 
-
-Getting started
----------------
-
-Typical API calls and some examples are explained in the getting-started page:
+Table of contents
+-----------------
 
 .. toctree::
-    :maxdepth: 2
-
-    getting-started
-
-
-
-API
----
-
-Want to find out how to use a problem type or inverse solver? Check our auto-generated
-API documentation:
-
-.. toctree::
+    :caption: Getting started
     :maxdepth: 1
-    :glob:
 
-    api/*
-
-
-Contribute to CoFI
-------------------
-
-Found bugs? Wanna improve something? See the contribute page:
+    getting-started.rst
+    faq.rst
 
 .. toctree::
+    :caption: Reference
     :maxdepth: 1
+
+    api/index.rst
+    contribute.rst
+
+.. Getting started
+.. ---------------
+
+.. Typical API calls and some examples are explained in the getting-started page:
+
+.. .. toctree::
+..     :maxdepth: 2
+
+..     getting-started
+
+
+
+.. API
+.. ---
+
+.. Want to find out how to use a problem type or inverse solver? Check our auto-generated
+.. API documentation:
+
+.. .. toctree::
+..     :maxdepth: 1
+..     :glob:
+
+..     api/*
+
+
+.. Contribute to CoFI
+.. ------------------
+
+.. Found bugs? Wanna improve something? See the contribute page:
+
+.. .. toctree::
+..     :maxdepth: 1
     
-    contribute
+..     contribute
 
 
-FAQ
----
+.. FAQ
+.. ---
 
-Got a question?
+.. Got a question?
 
-.. toctree::
-    :maxdepth: 1
+.. .. toctree::
+..     :maxdepth: 1
 
-    faq
+..     faq
