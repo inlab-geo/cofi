@@ -18,10 +18,8 @@ except:
 
 
 __all__ = [
-    # Solver
     "BaseSolver",
     "OptimiserMixin",
-    # Objective
     "Model",
     "BaseObjective",
     "LeastSquareObjective",

@@ -5,8 +5,8 @@ List of functions and classes (API)
 
 .. automodule:: cofi
 
-BaseSolver & BaseObjective
---------------------------
+Base classes for solvers and objectives
+---------------------------------------
 
 `BaseSolver` is the base class of all inversion solvers included in cofi.
 
@@ -21,8 +21,8 @@ BaseSolver & BaseObjective
     cofi.BaseForward
 
 
-cofi.optimisers
----------------
+Inversion solvers based on optimisation
+----------------------------------
 
 .. autosummary ::
     :toctree: generated/
@@ -32,15 +32,27 @@ cofi.optimisers
     cofi.optimisers.TAOSolver
 
 
-cofi.samplers
--------------
+Inversion solvers based on sampling
+-----------------------------------
 
 .. autosummary ::
     :toctree: generated/
 
 
-cofi.utils
+Utility
 ----------
 
 .. autosummary ::
     :toctree: generated/
+
+Examples of CoFI objectives
+---------------------------
+
+.. autosummary ::
+    :toctree: generated/
+
+    cofi.cofi_objective.ExpDecay
+    cofi.cofi_objective.ReceiverFunctionObjective,
+    cofi.cofi_objective.ReceiverFunction
+    cofi.cofi_objective.XRayTomographyObjective
+    cofi.cofi_objective.XRayTomographyForward
