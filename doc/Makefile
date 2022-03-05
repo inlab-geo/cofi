@@ -8,7 +8,7 @@ SPHINXBUILD   ?= sphinx-build
 SPHINXAPIDOC  ?= sphinx-apidoc
 SOURCEDIR     = .
 BUILDDIR      = _build
-APIDIR        = api/
+APIDIR        = api
 CODEDIR       = ../cofi/
 
 # Put it first so that "make" without argument is like "make help".
@@ -18,7 +18,7 @@ help:
 .PHONY: help Makefile
 
 update_api:
-	rm -r "$(APIDIR)"
+	rm -rf $(APIDIR)/cofi* $(APIDIR)/modules*
 	@$(SPHINXAPIDOC) -M -o "$(APIDIR)" "$(CODEDIR)" 
 
 # Catch-all target: route all unknown targets to Sphinx using the new

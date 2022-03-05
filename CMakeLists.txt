@@ -69,4 +69,4 @@ add_subdirectory(cofi/linear_reg)
 ################################################################################
 # Objective Libraries
 ################################################################################
-add_subdirectory(cofi/cofi_objective/examples/lib_rfc)
+add_subdirectory(cofi/cofi_objective/lib_rfc)

@@ -1,11 +1,7 @@
-__doc__ = """
-cofi
------------------
-
-Common Framework for Inference
-"""
-
 from .base_solver import BaseSolver, OptimiserMixin
+from .base_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd
+from .base_objective import BaseObjective, LeastSquareObjective, LinearFittingObjective
+from .model_params import Model
 
 from . import cofi_objective
 from . import utils
@@ -22,6 +18,15 @@ except:
 
 
 __all__ = [
+    # Solver
     "BaseSolver",
     "OptimiserMixin",
+    # Objective
+    "Model",
+    "BaseObjective",
+    "LeastSquareObjective",
+    "LinearFittingObjective",
+    "BaseForward",
+    "LinearFittingFwd",
+    "PolynomialFittingFwd",
 ]

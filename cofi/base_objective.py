@@ -1,4 +1,4 @@
-from . import Model
+from .model_params import Model
 from .base_forward import BaseForward, LinearFittingFwd
 
 from typing import Callable, Union

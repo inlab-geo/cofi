@@ -21,10 +21,34 @@ Subpackages
 Submodules
 ----------
 
+cofi.base\_forward module
+-------------------------
+
+.. automodule:: cofi.base_forward
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cofi.base\_objective module
+---------------------------
+
+.. automodule:: cofi.base_objective
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 cofi.base\_solver module
 ------------------------
 
 .. automodule:: cofi.base_solver
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cofi.model\_params module
+-------------------------
+
+.. automodule:: cofi.model_params
    :members:
    :undoc-members:
    :show-inheritance:

@@ -4,3 +4,11 @@ span.project-version {
     font-weight: 600;
     margin-left: 5px;
 }
+
+.lead {
+    font-size: 1.5rem;
+}
+
+.text-large {
+    font-size: 1.35rem;
+}

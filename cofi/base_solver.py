@@ -1,4 +1,4 @@
-from cofi.cofi_objective import Model
+from .model_params import Model
 
 
 class BaseSolver:

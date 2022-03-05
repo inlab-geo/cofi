@@ -1,4 +1,4 @@
-from . import Model
+from .model_params import Model
 
 import numpy as np
 from typing import Callable, Union

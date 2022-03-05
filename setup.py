@@ -36,7 +36,6 @@ setup(
         "cofi",
         "cofi.utils",
         "cofi.cofi_objective",
-        "cofi.cofi_objective.examples",
         "cofi.linear_reg",
         "cofi.optimisers",
         "cofi.samplers",

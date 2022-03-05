@@ -1,4 +1,5 @@
-from cofi.cofi_objective import BaseObjective, Model
+from ..base_objective import BaseObjective
+from ..model_params import Model
 
 import numpy as np
 from typing import Callable, Union

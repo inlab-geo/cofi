@@ -1,5 +1,6 @@
-from cofi import BaseSolver
-from cofi.cofi_objective import LinearFittingObjective, Model
+from ..base_solver import BaseSolver
+from ..base_objective import LinearFittingObjective
+from ..model_params import Model
 from ._f90_solver_lib import f90_lr_mod
 
 import numpy as np

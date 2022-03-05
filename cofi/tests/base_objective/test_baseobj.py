@@ -1,10 +1,12 @@
-from cofi.cofi_objective import BaseObjective, LeastSquareObjective
+from cofi import (
+    BaseObjective, 
+    LeastSquareObjective,
+    LinearFittingObjective,
+    Model,
+)
 
 import numpy as np
 import pytest
-from cofi.cofi_objective.base_objective import LinearFittingObjective
-
-from cofi.cofi_objective.model_params import Model
 
 
 def test_base_obj():

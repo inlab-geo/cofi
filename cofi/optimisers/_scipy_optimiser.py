@@ -1,5 +1,6 @@
-from cofi import BaseSolver, OptimiserMixin
-from cofi.cofi_objective import BaseObjective, Model
+from ..base_solver import BaseSolver, OptimiserMixin
+from ..base_objective import BaseObjective
+from ..model_params import Model
 
 import warnings
 from typing import Callable, Union

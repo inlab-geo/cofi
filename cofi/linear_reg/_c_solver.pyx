@@ -1,9 +1,10 @@
 # distutils: sources = lib/_c_solver_lib.c
 # distutils: include_dirs = lib/
 
-from cofi.linear_reg cimport _c_solver
-from cofi import BaseSolver
-from cofi.cofi_objective import LinearFittingObjective, Model
+from . cimport _c_solver
+from ..base_solver import BaseSolver
+from ..base_objective import LinearFittingObjective
+from ..model_params import Model
 
 from libc.stdlib cimport malloc, free
 import numpy as np

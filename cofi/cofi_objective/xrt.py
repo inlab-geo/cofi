@@ -1,4 +1,6 @@
-from cofi.cofi_objective import BaseObjective, BaseForward, Model
+from ..base_objective import BaseObjective
+from ..base_forward import BaseForward
+from ..model_params import Model
 from .lib_xrayTomography import tracer, displayModel
 
 import numpy as np

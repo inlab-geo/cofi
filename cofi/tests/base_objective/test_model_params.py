@@ -1,4 +1,4 @@
-from cofi.cofi_objective import Model
+from cofi import Model
 
 import yaml
 import os
