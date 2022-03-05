@@ -25,7 +25,7 @@ inference problems with the tools for their solution.
     **Getting started**
     ^^^^^^^^^^^^^^^^^^^
 
-    New to Pooch?
+    New to CoFI?
 
     .. link-button:: getting-started
         :type: ref
@@ -34,17 +34,17 @@ inference problems with the tools for their solution.
 
     ---
 
-    **Need help?**
-    ^^^^^^^^^^^^^^
+    .. **Need help?**
+    .. ^^^^^^^^^^^^^^
 
-    Ask on our community channels
+    .. Ask on our community channels
 
-    .. link-button:: https://www.fatiando.org/contact
-        :type: url
-        :text: Join the conversation
-        :classes: btn-outline-primary btn-block stretched-link
+    .. .. link-button:: https://www.fatiando.org/contact
+    ..     :type: url
+    ..     :text: Join the conversation
+    ..     :classes: btn-outline-primary btn-block stretched-link
 
-    ---
+    .. ---
 
     **Reference documentation**
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
