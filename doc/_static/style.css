@@ -24,5 +24,7 @@ p {
 main.bd-content #main-content a.btn:hover {
     color: white;
     background-color: lightblue;
+}
+main.bd-content #main-content a.btn {
     border-color: lightblue;
 }
