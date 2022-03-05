@@ -5,12 +5,14 @@ on:
     paths:
       - 'cofi/**'
       - 'pyproject.toml'
+      - '!cofi/_version.py'
   pull_request:
     types:
       - ready_for_review
     paths:
       - 'cofi/**'
       - 'pyproject.toml'
+      - '!cofi/_version.py'
 jobs:
   code_coverage:
     name: Run coverage on ubuntu-latest

@@ -14,6 +14,12 @@ from . import linear_reg
 from . import optimisers
 from . import samplers
 
+try:
+    from . import _version
+    __version__ = _version.__version__
+except:
+    pass
+
 
 __all__ = [
     "BaseSolver",

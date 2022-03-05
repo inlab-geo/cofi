@@ -1,6 +1,8 @@
 .. CoFI documentation master file, created by
    sphinx-quickstart on Wed Nov 24 12:24:06 2021.
 
+.. title: Home
+
 ================================
 Welcome to CoFI's documentation!
 ================================

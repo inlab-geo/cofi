@@ -15,7 +15,7 @@ except ImportError:
 
 # get version number
 _ROOT = pathlib.Path(__file__).parent
-with open(str(_ROOT / '_version.py')) as f:
+with open(str(_ROOT / 'cofi' / '_version.py')) as f:
     for line in f:
         if line.startswith('__version__ ='):
             _, _, version = line.partition('=')
