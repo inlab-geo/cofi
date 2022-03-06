@@ -1,6 +1,6 @@
 import pytest
 from cofi.optimisers import TAOSolver
-from cofi.cofi_objective.examples import ExpDecay
+from cofi.cofi_objective import ExpDecay
 
 import numpy as np
 import matplotlib.pyplot as plt
