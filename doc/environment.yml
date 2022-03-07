@@ -4,5 +4,5 @@ dependencies:
   - conda-forge::gfortran=11.2.0
   - pip
   - pip:
-    - sphinx-book-theme=0.2.0
-    - sphinx-panels=0.6.0
+    - sphinx-book-theme==0.2.0
+    - sphinx-panels==0.6.0
