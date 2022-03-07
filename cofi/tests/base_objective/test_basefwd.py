@@ -1,7 +1,7 @@
 from cofi import (
     BaseForward,
     LinearForward,
-    PolynomialFittingFwd,
+    PolynomialForward,
     Model,
 )
 
@@ -49,9 +49,9 @@ def test_linear_fwd():
     # plt.show()
 
 
-# ------------------------------ test PolynomialFittingFwd ------------------------------
+# ------------------------------ test PolynomialForward ------------------------------
 def test_poly_fwd():
-    poly_fwd = PolynomialFittingFwd()
+    poly_fwd = PolynomialForward()
     x_poly = np.linspace(0, 1, 100)
     pytest.raises(ValueError, poly_fwd.basis_function, x_poly)
     y_poly = poly_fwd.calc(model, x_poly)
@@ -60,5 +60,5 @@ def test_poly_fwd():
 
     c = plt.subplot(1, 3, 3)
     c.plot(x_poly, y_poly)
-    c.set_title("Using PolynomialFittingFwd")
+    c.set_title("Using PolynomialForward")
     # plt.show()

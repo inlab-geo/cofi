@@ -1,8 +1,8 @@
+import numpy as np
+
 from ..base_solver import BaseSolver
 from ..base_objective import LeastSquareObjective
 from ..model_params import Model
-
-import numpy as np
 from ._utils import warn_normal_equation
 
 

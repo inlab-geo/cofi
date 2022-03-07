@@ -1,9 +1,9 @@
+import numpy as np
+
 from ..base_solver import BaseSolver
 from ..base_objective import LinearObjective
 from ..model_params import Model
 from ._f90_solver_lib import f90_lr_mod
-
-import numpy as np
 from ._utils import warn_normal_equation
 
 

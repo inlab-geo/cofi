@@ -1,9 +1,10 @@
-from ..base_objective import BaseObjective
-from ..model_params import Model
-
-import numpy as np
 from typing import Callable, Union
 from numbers import Number
+
+import numpy as np
+
+from ..base_objective import BaseObjective
+from ..model_params import Model
 
 
 class MultiArmedBandit(BaseObjective):

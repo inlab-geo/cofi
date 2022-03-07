@@ -1,10 +1,11 @@
+from typing import Tuple, Union
+
+import numpy as np
+
 from ..base_objective import BaseObjective
 from ..base_forward import BaseForward
 from ..model_params import Model
 from .lib_rf import rfcalc
-
-import numpy as np
-from typing import Tuple, Union
 
 
 class ReceiverFunctionObjective(BaseObjective):

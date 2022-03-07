@@ -75,7 +75,7 @@ class XRayTomographyObjective(BaseObjective):
                 )
             try:
                 dataset = np.loadtxt(data_file)
-            except Exception as e:
+            except Exception:
                 raise ValueError(
                     "Please provide a valid file path while initialising XRayTomographyObjective"
                 )

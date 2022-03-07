@@ -1,5 +1,5 @@
 from cofi import (
-    BaseObjective, 
+    BaseObjective,
     LeastSquareObjective,
     LinearObjective,
     Model,
@@ -25,16 +25,20 @@ def test_base_obj():
     pytest.raises(NotImplementedError, base_obj.initial_model)
     pytest.raises(NotImplementedError, base_obj.params_size)
 
+
 def test_base_obj_set_methods():
     base_obj = BaseObjective()
-    base_obj.setDataX(np.array([[1,1,1],[2,2,2],[3,3,3]]))
-    base_obj.setDataY(np.array([3.1,5.9,9.2]))
-    base_obj.setInitialModel(np.array([1,0,1]))
-    base_obj.setMisfit(lambda model: np.norm(base_obj.data_x() @ model.T - base_obj.data_y()))
-    base_obj.setGradient(lambda model: model)
-    base_obj.setHessian(lambda model: np.zeros((3,1)))
-    base_obj.setResidual(lambda model: base_obj.data_x() @ model.T - base_obj.data_y())
-    base_obj.setJacobian(lambda model: base_obj.data_x())
+    base_obj.set_data_X(np.array([[1, 1, 1], [2, 2, 2], [3, 3, 3]]))
+    base_obj.set_data_Y(np.array([3.1, 5.9, 9.2]))
+    base_obj.set_initial_model(np.array([1, 0, 1]))
+    base_obj.set_misfit(
+        lambda model: np.norm(base_obj.data_x() @ model.T - base_obj.data_y())
+    )
+    base_obj.set_gradient(lambda model: model)
+    base_obj.set_hessian(lambda model: np.zeros((3, 1)))
+    base_obj.set_residual(lambda model: base_obj.data_x() @ model.T - base_obj.data_y())
+    base_obj.set_jacobian(lambda model: base_obj.data_x())
+
 
 def test_ls_obj_wrong_dim():
     X = np.array([[1, 2, 3]])

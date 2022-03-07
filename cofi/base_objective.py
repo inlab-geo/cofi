@@ -1,9 +1,10 @@
-from .model_params import Model
-from .base_forward import BaseForward, LinearForward
-
 from typing import Callable, Union
 from numbers import Number
+
 import numpy as np
+
+from .model_params import Model
+from .base_forward import BaseForward, LinearForward
 
 
 class BaseObjective:
@@ -25,7 +26,7 @@ class BaseObjective:
     - params_size()
     """
 
-    def __init__(self, func: Callable[[np.ndarray], Number]=None):
+    def __init__(self, func: Callable[[np.ndarray], Number] = None):
         self._objective = func
 
     def misfit(self, model: Union[Model, np.ndarray]):
@@ -89,36 +90,36 @@ class BaseObjective:
             " implemented it"
         )
 
-    def setMisfit(self, misfit_func: Callable[[Union[Model, np.ndarray]], Number]):
+    def set_misfit(self, misfit_func: Callable[[Union[Model, np.ndarray]], Number]):
         self.misfit = misfit_func
 
-    def setGradient(
+    def set_gradient(
         self, gradient_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.gradient = gradient_func
 
-    def setHessian(
+    def set_hessian(
         self, hessian_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.hessian = hessian_func
 
-    def setResidual(
+    def set_residual(
         self, residual_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.residual = residual_func
 
-    def setJacobian(
+    def set_jacobian(
         self, jacobian_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.jacobian = jacobian_func
 
-    def setDataX(self, data_x: np.ndarray):
+    def set_data_X(self, data_x: np.ndarray):
         self.data_x = lambda _: data_x
 
-    def setDataY(self, data_y: np.ndarray):
+    def set_data_Y(self, data_y: np.ndarray):
         self.data_y = lambda _: data_y
 
-    def setInitialModel(self, initial_model: Union[Model, np.ndarray]):
+    def set_initial_model(self, initial_model: Union[Model, np.ndarray]):
         self.initial_model = (
             lambda _: initial_model.values()
             if isinstance(initial_model, Model)
