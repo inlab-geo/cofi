@@ -1,5 +1,5 @@
 from ..base_solver import BaseSolver
-from ..base_objective import LinearFittingObjective
+from ..base_objective import LinearObjective
 from ..model_params import Model
 from ._f77_solver_lib import solve as f77_solve
 
@@ -8,13 +8,13 @@ from ._utils import warn_normal_equation
 
 
 class LRNormalEquationF77(BaseSolver):
-    def __init__(self, objective: LinearFittingObjective):
+    def __init__(self, objective: LinearObjective):
         self.objective = objective
 
     def solve(self) -> Model:
         warn_normal_equation()
 
-        G = self.objective.design_matrix()
+        G = self.objective.basis_matrix()
         Y = self.objective.data_y()
 
         res = f77_solve(

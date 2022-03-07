@@ -1,6 +1,6 @@
 from .base_solver import BaseSolver, OptimiserMixin
-from .base_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd
-from .base_objective import BaseObjective, LeastSquareObjective, LinearFittingObjective
+from .base_forward import BaseForward, LinearForward, PolynomialFittingFwd
+from .base_objective import BaseObjective, LeastSquareObjective, LinearObjective
 from .model_params import Model
 
 from . import cofi_objective
@@ -23,8 +23,8 @@ __all__ = [
     "Model",
     "BaseObjective",
     "LeastSquareObjective",
-    "LinearFittingObjective",
+    "LinearObjective",
     "BaseForward",
-    "LinearFittingFwd",
+    "LinearForward",
     "PolynomialFittingFwd",
 ]

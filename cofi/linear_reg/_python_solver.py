@@ -13,7 +13,7 @@ class LRNormalEquation(BaseSolver):
     def solve(self, reg_eps_squared=None) -> Model:
         warn_normal_equation()
 
-        G = self.objective.design_matrix()
+        G = self.objective.basis_matrix()
         Y = self.objective.data_y()
         # TODO regularisation handling? prior model? (ref: inverseionCourse.curveFitting)
         # TODO return posterior covariance? (ref: inverseionCourse.curveFitting)

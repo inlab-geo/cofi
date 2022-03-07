@@ -192,11 +192,11 @@ class XRayTomographyObjective(BaseObjective):
     def initial_model(self):
         return np.random.rand(self.n_x, self.n_y)
 
-    def design_matrix(self):
-        return self.fwd.design_matrix(self.paths, self.n_x, self.n_y, self.extent)
+    def basis_matrix(self):
+        return self.fwd.basis_function(self.paths, self.n_x, self.n_y, self.extent)
 
     def data_x(self):
-        return self.design_matrix()
+        return self.basis_matrix()
 
     def data_y(self):
         return self.d
@@ -210,11 +210,11 @@ class XRayTomographyObjective(BaseObjective):
         return np.squeeze(self.jacobian(model).T @ self.residual(model))
 
     def hessian(self, model):
-        g = self.design_matrix()
+        g = self.basis_matrix()
         return g.T @ g
 
     def jacobian(self, model):
-        return self.design_matrix()
+        return self.basis_matrix()
 
     def display(
         self, model, paths=None, extent=None, clim=None, cmap=None, figsize=(6, 6)
@@ -265,7 +265,7 @@ class XRayTomographyForward(BaseForward):
         attns, self.A = tracer(model, self.paths, extent)
         return attns
 
-    def design_matrix(self, paths, n_x, n_y, extent=(0, 1, 0, 1)):
+    def basis_function(self, paths, n_x, n_y, extent=(0, 1, 0, 1)):
         paths = np.asanyarray(paths)
         return tracer(np.ones([n_x, n_y]), paths, extent)[1]
 

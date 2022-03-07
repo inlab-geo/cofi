@@ -20,27 +20,27 @@ class BaseForward:
 
         return calc_with_model
 
-    def design_matrix(self, X):  # only solver targeting linear forward will call this
+    def basis_function(self, X):  # only solver targeting linear forward will call this
         raise NotImplementedError(
-            "Linear solvers should have 'LinearFittingFwd' as forward solver or"
-            " implements design_matrix method"
+            "Linear solvers should have 'LinearForward' as forward solver or"
+            " implements basis_function method"
         )
 
     def model_dimension(self):
         return self.nparams
 
 
-class LinearFittingFwd(BaseForward):
-    def __init__(self, nparams, design_matrix=None):
+class LinearForward(BaseForward):
+    def __init__(self, nparams, basis_function=None):
         self.nparams = nparams
-        if design_matrix:
-            self.design_matrix = design_matrix
+        if basis_function:
+            self.basis_function = basis_function
         else:
-            self.design_matrix = lambda X: X
+            self.basis_function = lambda X: X
 
     def calc(self, model: Union[Model, np.ndarray], X):
         self.nparams = model.length() if isinstance(model, Model) else len(model)
-        X = self.design_matrix(X)
+        X = self.basis_function(X)
         if self.nparams != X.shape[1]:
             raise ValueError(
                 f"Parameters count ({self.nparams}) doesn't match X shape"
@@ -55,7 +55,7 @@ class LinearFittingFwd(BaseForward):
         return X @ model
 
 
-class PolynomialFittingFwd(LinearFittingFwd):
+class PolynomialFittingFwd(LinearForward):
     def __init__(self, order: int = None):
         if order:
             self.nparams = order + 1
@@ -63,7 +63,7 @@ class PolynomialFittingFwd(LinearFittingFwd):
     def calc(self, model: Union[Model, np.ndarray], x):  # put here to avoid confusion
         return super().calc(model, x)
 
-    def design_matrix(self, x):
+    def basis_function(self, x):
         """
         This is invoked by calc(model, x) from superclass prior to solving.
         The polynomial transformation happens here

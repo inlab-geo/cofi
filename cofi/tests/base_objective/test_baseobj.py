@@ -1,7 +1,7 @@
 from cofi import (
     BaseObjective, 
     LeastSquareObjective,
-    LinearFittingObjective,
+    LinearObjective,
     Model,
 )
 
@@ -71,4 +71,4 @@ def test_linear_obj_none_specified():
     X = np.array([[1, 2, 3]])
     Y = np.array([6])
     with pytest.raises(ValueError):
-        linear_obj = LinearFittingObjective(X, Y, 3)
+        linear_obj = LinearObjective(X, Y, 3)

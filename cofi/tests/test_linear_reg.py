@@ -1,4 +1,4 @@
-from cofi import LinearFittingObjective, PolynomialFittingFwd
+from cofi import LinearObjective, PolynomialFittingFwd
 import cofi.linear_reg as solvers
 import cofi.optimisers as optim
 
@@ -24,7 +24,7 @@ plt.plot(np.linspace(0, 1, 100), forward.calc(true_model, np.linspace(0, 1, 100)
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
-objective_1 = LinearFittingObjective(
+objective_1 = LinearObjective(
     xpts, ypts, forward.model_dimension(), forward=forward
 )
 
@@ -93,8 +93,8 @@ print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 
 # ------------ #2.1 define objective another way ---------------------------
 nparams = 3
-design_matrix = lambda x: np.array([x ** o for o in range(nparams)]).T
-objective_2 = LinearFittingObjective(xpts, ypts, nparams, design_matrix)
+basis_function = lambda x: np.array([x ** o for o in range(nparams)]).T
+objective_2 = LinearObjective(xpts, ypts, nparams, basis_function)
 print("--------- objective defined another way -------------------")
 
 
