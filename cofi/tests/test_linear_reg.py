@@ -1,4 +1,4 @@
-from cofi import LinearFittingObjective, PolynomialFittingFwd
+from cofi import LinearObjective, PolynomialForward
 import cofi.linear_reg as solvers
 import cofi.optimisers as optim
 
@@ -11,7 +11,7 @@ import pytest
 true_model = [3, 2, 5]
 npts = 25
 xpts = np.random.uniform(0, 1, npts)
-forward = PolynomialFittingFwd(2)
+forward = PolynomialForward(2)
 ypts = forward.calc(true_model, xpts) + np.random.normal(0, 0.5, size=npts)
 
 print(f"--> ground truth model: {np.array(true_model)}\n")
@@ -24,9 +24,7 @@ plt.plot(np.linspace(0, 1, 100), forward.calc(true_model, np.linspace(0, 1, 100)
 
 
 # ------------ #1.1 define objective from pre-defined forward ------------
-objective_1 = LinearFittingObjective(
-    xpts, ypts, forward.model_dimension(), forward=forward
-)
+objective_1 = LinearObjective(xpts, ypts, forward.model_dimension(), forward=forward)
 
 
 # ------------ #1.2 pure Python solver -----------------------------------
@@ -56,13 +54,13 @@ plt.legend()
 
 # ------------ #1.3 scipy.optimize.minimize solver -----------------------------------
 solver_1_scipy_minimize = optim.ScipyOptimiserSolver(objective_1)
-solver_1_scipy_minimize.setOptions({"tol":1e-6})
+solver_1_scipy_minimize.set_options({"tol": 1e-6})
 model_1_scipy_minimize = solver_1_scipy_minimize.solve()
 print(
     "--> model predicted by scipy.optimize.minimize:"
     f" {model_1_scipy_minimize.values()}\n"
 )
-solver_1_scipy_minimize.setMethod("Newton-CG")
+solver_1_scipy_minimize.set_method("Newton-CG")
 model_1_scipy_minimize_newtoncg = solver_1_scipy_minimize.solve()
 print(
     "--> model predicted by scipy.optimize.minimize(Newton-CG):"
@@ -93,8 +91,8 @@ print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 
 # ------------ #2.1 define objective another way ---------------------------
 nparams = 3
-design_matrix = lambda x: np.array([x ** o for o in range(nparams)]).T
-objective_2 = LinearFittingObjective(xpts, ypts, nparams, design_matrix)
+basis_function = lambda x: np.array([x ** o for o in range(nparams)]).T
+objective_2 = LinearObjective(xpts, ypts, nparams, basis_function)
 print("--------- objective defined another way -------------------")
 
 

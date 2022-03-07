@@ -1,19 +1,21 @@
-from ..base_solver import BaseSolver, OptimiserMixin
-from ..base_objective import BaseObjective
-from ..model_params import Model
-
 import warnings
 from typing import Callable, Union
 from math import inf
+
 import numpy as np
 from scipy.optimize import minimize, least_squares
+
+from ..base_solver import BaseSolver, OptimiserMixin
+from ..base_objective import BaseObjective
+from ..model_params import Model
 
 
 # methods available in scipy (can be string or callable):
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
 
 # 'jac' is only for:
-# CG, BFGS, Newton-CG, L-BFGS-B, TNC, SLSQP, dogleg, trust-ncg, trust-krylov, trust-exact and trust-constr
+# CG, BFGS, Newton-CG, L-BFGS-B, TNC, SLSQP, dogleg, trust-ncg, trust-krylov, trust-exact
+# and trust-constr
 
 # 'hess' is only for:
 # Newton-CG, dogleg, trust-ncg, trust-krylov, trust-exact and trust-constr
@@ -68,7 +70,8 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         `hess` may also be used depending on the method selected.
 
         :param method: optimization algorithm, check
-            `SciPy's documentation on minimize <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html>`_
+            `SciPy's documentation on minimize 
+            <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html>`_
             for a detailed list and argumnets required for each method. Defaults to None
         :type method: Union[str, Callable], optional
         :param gradient: a function that calculates the gradient of your objective
@@ -88,7 +91,9 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         :type hessp: callable, optional
         :param bounds: bounds on variables for Nelder-Mead, L-BFGS-B, TNC, SLSQP, Powell,
             and trust-constr methods. Defaults to None
-        :type bounds: sequence or `scipy.optimize.Bounds <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.Bounds.html#scipy.optimize.Bounds>`_, optional
+        :type bounds: sequence or `scipy.optimize.Bounds 
+        <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.Bounds.html#scipy.optimize.Bounds>`_
+        , optional
         :param constraints: Constraints definition (only for COBYLA, SLSQP and trust-constr).
             Check SciPy documentation for more details on types. Defaults to None
         :type constraints: {Constraint, dict} or List of {Constraint, dict}, optional
@@ -102,7 +107,9 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         :return: the optimization result - a model in the inversion context
         :rtype: cofi.cofi_objective.Model
         """
-        if method is None and hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+        if (
+            method is None and hasattr(self, "method") and self.method is not None
+        ):  # method set by set_method()
             method = self.method
 
         if gradient is None:
@@ -132,9 +139,15 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
             hessp=hessp,
             bounds=bounds,
             constraints=constraints,
-            tol=self.options["tol"] if tol is None and hasattr(self, "options") and "tol" in self.options else tol,
+            tol=self.options["tol"]
+            if tol is None and hasattr(self, "options") and "tol" in self.options
+            else tol,
             options=options,
-            callback=self.options["callback"] if callback is None and hasattr(self, "options") and "callback" in self.options else callback,
+            callback=self.options["callback"]
+            if callback is None
+            and hasattr(self, "options")
+            and "callback" in self.options
+            else callback,
         )
 
         model = Model(
@@ -185,7 +198,9 @@ class ScipyOptimiserLSSolver(BaseSolver, OptimiserMixin):
         kwargs={},
     ) -> Model:
         if method is None:
-            if hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+            if (
+                hasattr(self, "method") and self.method is not None
+            ):  # method set by set_method()
                 method = self.method
             else:
                 method = "trf"

@@ -1,9 +1,9 @@
-from ..base_solver import BaseSolver, OptimiserMixin
-from ..base_objective import BaseObjective
-from ..model_params import Model
-
+from typing import Union, List
+import traceback
+import logging
 import sys
 import warnings
+
 import numpy as np
 
 try:
@@ -11,9 +11,10 @@ try:
     from petsc4py import PETSc
 except:
     warnings.warn("Please install petsc4py if you'd like to use its solvers")
-from typing import Union, List
-import traceback
-import logging
+
+from ..base_solver import BaseSolver, OptimiserMixin
+from ..base_objective import BaseObjective
+from ..model_params import Model
 
 
 # ref doc for TAO: https://petsc.org/release/docs/manual/tao/
@@ -92,7 +93,9 @@ class TAOSolver(BaseSolver, OptimiserMixin):
         self, method: str = None, extra_options: Union[List[str], str] = None, verbose=0
     ) -> Model:
         if method is None:
-            if hasattr(self, "method") and self.method is not None:  # method set by setMethod()
+            if (
+                hasattr(self, "method") and self.method is not None
+            ):  # method set by set_method()
                 method = self.method
             else:  # default option
                 method = "nm"

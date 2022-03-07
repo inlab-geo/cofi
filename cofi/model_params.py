@@ -1,7 +1,7 @@
-import numpy as np
 from numbers import Number
-from dataclasses import dataclass
 from typing import Union
+from dataclasses import dataclass
+import numpy as np
 from scipy import stats
 import yaml
 
@@ -66,10 +66,10 @@ class Parameter:
                                 f" {type(self.pdf)} which is not allowed"
                             )
                     values = self.value.ravel()
-                    for i, v in enumerate(values):
-                        if pdfs[i].pdf(v) == 0.0:
+                    for index, value in enumerate(values):
+                        if pdfs[index].pdf(value) == 0.0:
                             raise ValueError(
-                                f"Initial value at index {i} for parameter"
+                                f"Initial value at index {index} for parameter"
                                 f" {self.name} has zero density in specified pdf"
                             )
             else:  # value is None, so we need to initialize it from pdf
@@ -93,7 +93,8 @@ class Parameter:
         print(self.asdict())
         return yaml.safe_dump(self.asdict())
 
-    # utility method to convert this to a dictionary that can be turned into a dictionary, for writing to yaml
+    # utility method to convert this to a dictionary that can be turned into a dictionary,
+    # in preparation for writing to yaml
     def asdict(self) -> dict:
         res = dict(name=self.name)
         if self.value is not None:
@@ -123,13 +124,13 @@ class Model:
     def __init__(self, **kwargs):
         self.params = []
 
-        for nm, item in kwargs.items():
+        for name, item in kwargs.items():
             if isinstance(item, tuple):
                 val, pdf = item
             else:
                 val, pdf = item, None
             val = np.asanyarray(val) if isinstance(val, list) else val
-            self.params.append(Parameter(name=nm, value=val, pdf=pdf))
+            self.params.append(Parameter(name=name, value=val, pdf=pdf))
 
     def values(self) -> np.ndarray:
         return np.squeeze(np.array([p.value if p.value else 0 for p in self.params]))
@@ -144,27 +145,27 @@ class Model:
     def init_from_yaml(yamldict: dict):
         if "parameters" not in yamldict:
             raise ValueError(
-                f"Model specification in YML file *must* contain 'parameters'"
-                f" information for your model"
+                "Model specification in YML file *must* contain 'parameters'"
+                " information for your model"
             )
 
         # parameters should be a list of dictionaries
         if not isinstance(yamldict["parameters"], list):
             raise ValueError(
-                f"In your YML file, you must specify 'parameters' for your model as a"
-                f" list"
+                "In your YML file, you must specify 'parameters' for your model as a"
+                " list"
             )
         args = {}
-        for p in yamldict["parameters"]:
-            if not isinstance(p, dict):
+        for param in yamldict["parameters"]:
+            if not isinstance(param, dict):
                 raise ValueError(
-                    f"each paramater in model in YML file must be (key, value) pairs"
+                    "each paramater in model in YML file must be (key, value) pairs"
                 )
-            if "name" not in p or not isinstance(p["name"], str):
-                raise ValueError(f"Each parameter must have a 'name' of string type")
-            nm = p["name"]
-            val = p["value"] if "value" in p else None
-            pdf = p["bounds"] if "bounds" in p else None
+            if "name" not in param or not isinstance(param["name"], str):
+                raise ValueError("Each parameter must have a 'name' of string type")
+            name = param["name"]
+            val = param["value"] if "value" in param else None
+            pdf = param["bounds"] if "bounds" in param else None
 
             def parsepdf(toparse: str) -> stats.rv_continuous:
                 bits = toparse.split()
@@ -181,5 +182,5 @@ class Model:
                     )
                 else:
                     pdf = parsepdf(pdf)
-            args[nm] = (val, pdf)
+            args[name] = (val, pdf)
         return Model(**args)

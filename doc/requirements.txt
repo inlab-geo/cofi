@@ -1,2 +1,2 @@
-sphinx-book-theme
-sphinx-panels
+sphinx-book-theme==0.2.0
+sphinx-panels==0.6.0

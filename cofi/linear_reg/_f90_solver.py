@@ -1,20 +1,20 @@
+import numpy as np
+
 from ..base_solver import BaseSolver
-from ..base_objective import LinearFittingObjective
+from ..base_objective import LinearObjective
 from ..model_params import Model
 from ._f90_solver_lib import f90_lr_mod
-
-import numpy as np
 from ._utils import warn_normal_equation
 
 
 class LRNormalEquationF90(BaseSolver):
-    def __init__(self, objective: LinearFittingObjective):
+    def __init__(self, objective: LinearObjective):
         self.objective = objective
 
     def solve(self) -> Model:
         warn_normal_equation()
 
-        G = self.objective.design_matrix()
+        G = self.objective.basis_matrix()
         Y = self.objective.data_y()
 
         res = f90_lr_mod.solve(

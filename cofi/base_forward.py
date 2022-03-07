@@ -1,8 +1,9 @@
-from .model_params import Model
+from numbers import Number
+from typing import Callable, Union
 
 import numpy as np
-from typing import Callable, Union
-from numbers import Number
+
+from .model_params import Model
 
 
 class BaseForward:
@@ -10,60 +11,65 @@ class BaseForward:
         self._forward = forward
         self.nparams = nparams
 
-    def calc(self, model: Union[Model, np.ndarray], X) -> np.ndarray:
-        X = np.asanyarray(X)
-        return self._forward(model, X)
+    def calc(self, model: Union[Model, np.ndarray], data_X) -> np.ndarray:
+        data_X = np.asanyarray(data_X)
+        return self._forward(model, data_X)
 
     def calc_curried(self, model: Union[Model, np.ndarray]) -> np.ndarray:
-        def calc_with_model(X):
-            return self.calc(model, X)
+        def calc_with_model(data_X):
+            return self.calc(model, data_X)
 
         return calc_with_model
 
-    def design_matrix(self, X):  # only solver targeting linear forward will call this
+    def basis_function(
+        self, data_X
+    ):  # only solver targeting linear forward will call this
         raise NotImplementedError(
-            "Linear solvers should have 'LinearFittingFwd' as forward solver or"
-            " implements design_matrix method"
+            "Linear solvers should have 'LinearForward' as forward solver or"
+            " implements basis_function method"
         )
 
     def model_dimension(self):
         return self.nparams
 
 
-class LinearFittingFwd(BaseForward):
-    def __init__(self, nparams, design_matrix=None):
+class LinearForward(BaseForward):
+    def __init__(self, nparams, basis_function=None):
         self.nparams = nparams
-        if design_matrix:
-            self.design_matrix = design_matrix
+        if basis_function:
+            self.basis_function = basis_function
         else:
-            self.design_matrix = lambda X: X
+            self.basis_function = lambda X: X
 
-    def calc(self, model: Union[Model, np.ndarray], X):
+    def calc(self, model: Union[Model, np.ndarray], data_X):
         self.nparams = model.length() if isinstance(model, Model) else len(model)
-        X = self.design_matrix(X)
-        if self.nparams != X.shape[1]:
+        basis_matrix = self.basis_function(data_X)
+        if self.nparams != basis_matrix.shape[1]:
             raise ValueError(
-                f"Parameters count ({self.nparams}) doesn't match X shape"
-                f" {X.shape} in linear curve forward fitting"
+                f"Parameters count ({self.nparams}) doesn't match the shape of basis_matrix"
+                f" {basis_matrix.shape} in linear curve forward fitting"
             )
 
         if isinstance(model, Model):
             model = model.values()
-        return self._forward(model, X)
-
-    def _forward(self, model: np.ndarray, X: np.ndarray) -> np.ndarray:
-        return X @ model
+        return _linear_forward(model, basis_matrix)
 
 
-class PolynomialFittingFwd(LinearFittingFwd):
+def _linear_forward(model: np.ndarray, basis_matrix: np.ndarray) -> np.ndarray:
+    return basis_matrix @ model
+
+
+class PolynomialForward(LinearForward):
     def __init__(self, order: int = None):
         if order:
             self.nparams = order + 1
 
-    def calc(self, model: Union[Model, np.ndarray], x):  # put here to avoid confusion
-        return super().calc(model, x)
+    def calc(
+        self, model: Union[Model, np.ndarray], data_x
+    ):  # put here to avoid confusion
+        return super().calc(model, data_x)
 
-    def design_matrix(self, x):
+    def basis_function(self, x):
         """
         This is invoked by calc(model, x) from superclass prior to solving.
         The polynomial transformation happens here
@@ -78,11 +84,12 @@ class PolynomialFittingFwd(LinearFittingFwd):
 
         try:
             x = np.squeeze(x)
-            X = np.array([x ** o for o in range(self.nparams)]).T
-            if len(X.shape) == 1:
-                X = np.expand_dims(X, axis=0)
-            return X
+            basis_matrix = np.array([x ** o for o in range(self.nparams)]).T
+            if len(basis_matrix.shape) == 1:
+                basis_matrix = np.expand_dims(basis_matrix, axis=0)
+            return basis_matrix
         except AttributeError:
             raise ValueError(
-                "Please specify the order of linear curve fitting by either passing it through the constructor or passing in a model through the 'calc' method"
+                "Please specify the order of linear curve fitting by either passing it "
+                "through the constructor or passing in a model through the 'calc' method"
             )

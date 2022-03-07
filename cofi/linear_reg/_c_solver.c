@@ -1406,12 +1406,12 @@ static const char __pyx_k_BaseSolver[] = "BaseSolver";
 static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_ndenumerate[] = "ndenumerate";
 static const char __pyx_k_c_solver_pyx[] = "_c_solver.pyx";
-static const char __pyx_k_design_matrix[] = "design_matrix";
+static const char __pyx_k_basis_matrix[] = "basis_matrix";
 static const char __pyx_k_LRNormalEquationC[] = "LRNormalEquationC";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_cofi_cofi_objective[] = "cofi.cofi_objective";
 static const char __pyx_k_warn_normal_equation[] = "warn_normal_equation";
-static const char __pyx_k_LinearFittingObjective[] = "LinearFittingObjective";
+static const char __pyx_k_LinearObjective[] = "LinearObjective";
 static const char __pyx_k_LRNormalEquationC_solve[] = "LRNormalEquationC.solve";
 static const char __pyx_k_LRNormalEquationC___init[] = "LRNormalEquationC.__init__";
 static const char __pyx_k_cofi_linear_reg__c_solver[] = "cofi.linear_reg._c_solver";
@@ -1420,7 +1420,7 @@ static PyObject *__pyx_n_s_G;
 static PyObject *__pyx_n_s_LRNormalEquationC;
 static PyObject *__pyx_n_s_LRNormalEquationC___init;
 static PyObject *__pyx_n_s_LRNormalEquationC_solve;
-static PyObject *__pyx_n_s_LinearFittingObjective;
+static PyObject *__pyx_n_s_LinearObjective;
 static PyObject *__pyx_n_s_MemoryError;
 static PyObject *__pyx_n_s_Model;
 static PyObject *__pyx_n_s_Y;
@@ -1431,7 +1431,7 @@ static PyObject *__pyx_n_s_cofi;
 static PyObject *__pyx_n_s_cofi_cofi_objective;
 static PyObject *__pyx_n_s_cofi_linear_reg__c_solver;
 static PyObject *__pyx_n_s_data_y;
-static PyObject *__pyx_n_s_design_matrix;
+static PyObject *__pyx_n_s_basis_matrix;
 static PyObject *__pyx_n_s_doc;
 static PyObject *__pyx_n_s_g;
 static PyObject *__pyx_n_s_g_pt;
@@ -1898,7 +1898,7 @@ static PyObject *__pyx_pf_4cofi_10linear_reg_9_c_solver_c_solve(CYTHON_UNUSED Py
 /* "cofi/linear_reg/_c_solver.pyx":42
  * 
  * class LRNormalEquationC(BaseSolver):
- *     def __init__(self, objective: LinearFittingObjective):             # <<<<<<<<<<<<<<
+ *     def __init__(self, objective: LinearObjective):             # <<<<<<<<<<<<<<
  *         self.objective = objective
  * 
  */
@@ -1978,7 +1978,7 @@ static PyObject *__pyx_pf_4cofi_10linear_reg_9_c_solver_17LRNormalEquationC___in
 
   /* "cofi/linear_reg/_c_solver.pyx":43
  * class LRNormalEquationC(BaseSolver):
- *     def __init__(self, objective: LinearFittingObjective):
+ *     def __init__(self, objective: LinearObjective):
  *         self.objective = objective             # <<<<<<<<<<<<<<
  * 
  *     def solve(self) -> Model:
@@ -1988,7 +1988,7 @@ static PyObject *__pyx_pf_4cofi_10linear_reg_9_c_solver_17LRNormalEquationC___in
   /* "cofi/linear_reg/_c_solver.pyx":42
  * 
  * class LRNormalEquationC(BaseSolver):
- *     def __init__(self, objective: LinearFittingObjective):             # <<<<<<<<<<<<<<
+ *     def __init__(self, objective: LinearObjective):             # <<<<<<<<<<<<<<
  *         self.objective = objective
  * 
  */
@@ -2058,7 +2058,7 @@ static PyObject *__pyx_pf_4cofi_10linear_reg_9_c_solver_17LRNormalEquationC_2sol
  *     def solve(self) -> Model:
  *         warn_normal_equation()             # <<<<<<<<<<<<<<
  * 
- *         G = self.objective.design_matrix()
+ *         G = self.objective.basis_matrix()
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_warn_normal_equation); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -2082,13 +2082,13 @@ static PyObject *__pyx_pf_4cofi_10linear_reg_9_c_solver_17LRNormalEquationC_2sol
   /* "cofi/linear_reg/_c_solver.pyx":48
  *         warn_normal_equation()
  * 
- *         G = self.objective.design_matrix()             # <<<<<<<<<<<<<<
+ *         G = self.objective.basis_matrix()             # <<<<<<<<<<<<<<
  *         Y = self.objective.data_y()
  * 
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_objective); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_design_matrix); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_basis_matrix); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2111,7 +2111,7 @@ static PyObject *__pyx_pf_4cofi_10linear_reg_9_c_solver_17LRNormalEquationC_2sol
 
   /* "cofi/linear_reg/_c_solver.pyx":49
  * 
- *         G = self.objective.design_matrix()
+ *         G = self.objective.basis_matrix()
  *         Y = self.objective.data_y()             # <<<<<<<<<<<<<<
  * 
  *         res = c_solve(G, Y)
@@ -2469,7 +2469,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_LRNormalEquationC, __pyx_k_LRNormalEquationC, sizeof(__pyx_k_LRNormalEquationC), 0, 0, 1, 1},
   {&__pyx_n_s_LRNormalEquationC___init, __pyx_k_LRNormalEquationC___init, sizeof(__pyx_k_LRNormalEquationC___init), 0, 0, 1, 1},
   {&__pyx_n_s_LRNormalEquationC_solve, __pyx_k_LRNormalEquationC_solve, sizeof(__pyx_k_LRNormalEquationC_solve), 0, 0, 1, 1},
-  {&__pyx_n_s_LinearFittingObjective, __pyx_k_LinearFittingObjective, sizeof(__pyx_k_LinearFittingObjective), 0, 0, 1, 1},
+  {&__pyx_n_s_LinearObjective, __pyx_k_LinearObjective, sizeof(__pyx_k_LinearObjective), 0, 0, 1, 1},
   {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
   {&__pyx_n_s_Model, __pyx_k_Model, sizeof(__pyx_k_Model), 0, 0, 1, 1},
   {&__pyx_n_s_Y, __pyx_k_Y, sizeof(__pyx_k_Y), 0, 0, 1, 1},
@@ -2480,7 +2480,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_cofi_cofi_objective, __pyx_k_cofi_cofi_objective, sizeof(__pyx_k_cofi_cofi_objective), 0, 0, 1, 1},
   {&__pyx_n_s_cofi_linear_reg__c_solver, __pyx_k_cofi_linear_reg__c_solver, sizeof(__pyx_k_cofi_linear_reg__c_solver), 0, 0, 1, 1},
   {&__pyx_n_s_data_y, __pyx_k_data_y, sizeof(__pyx_k_data_y), 0, 0, 1, 1},
-  {&__pyx_n_s_design_matrix, __pyx_k_design_matrix, sizeof(__pyx_k_design_matrix), 0, 0, 1, 1},
+  {&__pyx_n_s_basis_matrix, __pyx_k_basis_matrix, sizeof(__pyx_k_basis_matrix), 0, 0, 1, 1},
   {&__pyx_n_s_doc, __pyx_k_doc, sizeof(__pyx_k_doc), 0, 0, 1, 1},
   {&__pyx_n_s_g, __pyx_k_g, sizeof(__pyx_k_g), 0, 0, 1, 1},
   {&__pyx_n_s_g_pt, __pyx_k_g_pt, sizeof(__pyx_k_g_pt), 0, 0, 1, 1},
@@ -2546,7 +2546,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "cofi/linear_reg/_c_solver.pyx":42
  * 
  * class LRNormalEquationC(BaseSolver):
- *     def __init__(self, objective: LinearFittingObjective):             # <<<<<<<<<<<<<<
+ *     def __init__(self, objective: LinearObjective):             # <<<<<<<<<<<<<<
  *         self.objective = objective
  * 
  */
@@ -2852,7 +2852,7 @@ if (!__Pyx_RefNanny) {
  * 
  * from cofi.linear_reg cimport _c_solver
  * from cofi import BaseSolver             # <<<<<<<<<<<<<<
- * from cofi.cofi_objective import LinearFittingObjective, Model
+ * from cofi.cofi_objective import LinearObjective, Model
  * 
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
@@ -2872,24 +2872,24 @@ if (!__Pyx_RefNanny) {
   /* "cofi/linear_reg/_c_solver.pyx":6
  * from cofi.linear_reg cimport _c_solver
  * from cofi import BaseSolver
- * from cofi.cofi_objective import LinearFittingObjective, Model             # <<<<<<<<<<<<<<
+ * from cofi.cofi_objective import LinearObjective, Model             # <<<<<<<<<<<<<<
  * 
  * from libc.stdlib cimport malloc, free
  */
   __pyx_t_2 = PyList_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_n_s_LinearFittingObjective);
-  __Pyx_GIVEREF(__pyx_n_s_LinearFittingObjective);
-  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_LinearFittingObjective);
+  __Pyx_INCREF(__pyx_n_s_LinearObjective);
+  __Pyx_GIVEREF(__pyx_n_s_LinearObjective);
+  PyList_SET_ITEM(__pyx_t_2, 0, __pyx_n_s_LinearObjective);
   __Pyx_INCREF(__pyx_n_s_Model);
   __Pyx_GIVEREF(__pyx_n_s_Model);
   PyList_SET_ITEM(__pyx_t_2, 1, __pyx_n_s_Model);
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_cofi_cofi_objective, __pyx_t_2, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_LinearFittingObjective); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_LinearObjective); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_LinearFittingObjective, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_LinearObjective, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = __Pyx_ImportFrom(__pyx_t_1, __pyx_n_s_Model); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -2946,7 +2946,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  * class LRNormalEquationC(BaseSolver):             # <<<<<<<<<<<<<<
- *     def __init__(self, objective: LinearFittingObjective):
+ *     def __init__(self, objective: LinearObjective):
  *         self.objective = objective
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_BaseSolver); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
@@ -2964,13 +2964,13 @@ if (!__Pyx_RefNanny) {
   /* "cofi/linear_reg/_c_solver.pyx":42
  * 
  * class LRNormalEquationC(BaseSolver):
- *     def __init__(self, objective: LinearFittingObjective):             # <<<<<<<<<<<<<<
+ *     def __init__(self, objective: LinearObjective):             # <<<<<<<<<<<<<<
  *         self.objective = objective
  * 
  */
   __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_LinearFittingObjective); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_LinearObjective); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_objective, __pyx_t_5) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -3005,7 +3005,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  * class LRNormalEquationC(BaseSolver):             # <<<<<<<<<<<<<<
- *     def __init__(self, objective: LinearFittingObjective):
+ *     def __init__(self, objective: LinearObjective):
  *         self.objective = objective
  */
   __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_LRNormalEquationC, __pyx_t_1, __pyx_t_3, NULL, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)

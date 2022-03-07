@@ -3,7 +3,7 @@
 
 from . cimport _c_solver
 from ..base_solver import BaseSolver
-from ..base_objective import LinearFittingObjective
+from ..base_objective import LinearObjective
 from ..model_params import Model
 
 from libc.stdlib cimport malloc, free
@@ -40,13 +40,13 @@ def c_solve(g, y):
 
 
 class LRNormalEquationC(BaseSolver):
-    def __init__(self, objective: LinearFittingObjective):
+    def __init__(self, objective: LinearObjective):
         self.objective = objective
 
     def solve(self) -> Model:
         warn_normal_equation()
 
-        G = self.objective.design_matrix()
+        G = self.objective.basis_matrix()
         Y = self.objective.data_y()
 
         res = c_solve(G, Y)

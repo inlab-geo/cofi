@@ -46,11 +46,11 @@ def data_path(request):
 
 def test_xrt_obj(data_path):
     xrt_obj = XRayTomographyObjective(data_path)
-    A = xrt_obj.fwd.design_matrix(xrt_obj.paths, 50, 50)
+    A = xrt_obj.fwd.basis_function(xrt_obj.paths, 50, 50)
     assert A.shape[0] == xrt_obj.paths.shape[0]
     assert A.shape[1] == 50 * 50
     xrt_obj.set_grid_dimensions(60, 60)
-    A = xrt_obj.fwd.design_matrix(xrt_obj.paths, 60, 60)
+    A = xrt_obj.fwd.basis_function(xrt_obj.paths, 60, 60)
     assert A.shape[0] == xrt_obj.paths.shape[0]
     assert A.shape[1] == 60 * 60
 

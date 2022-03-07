@@ -1,7 +1,7 @@
 from cofi import (
     BaseForward,
-    LinearFittingFwd,
-    PolynomialFittingFwd,
+    LinearForward,
+    PolynomialForward,
     Model,
 )
 
@@ -25,7 +25,7 @@ def test_base_foward():
     print(y_basefwd)
     assert np.array_equal(y_basefwd, y_basefwd_true)
 
-    pytest.raises(NotImplementedError, base_fwd.design_matrix, x_basefwd)
+    pytest.raises(NotImplementedError, base_fwd.basis_function, x_basefwd)
 
     plt.figure(1, figsize=(10, 3))
     a = plt.subplot(1, 3, 1)
@@ -34,9 +34,9 @@ def test_base_foward():
     # plt.show()
 
 
-# ------------------------------ test LinearFittingFwd ------------------------------
+# ------------------------------ test LinearForward ------------------------------
 def test_linear_fwd():
-    linear_fwd = LinearFittingFwd(3)
+    linear_fwd = LinearForward(3)
     x_linear = np.linspace(0, 1, 100)
     X_linear = np.array([x_linear ** o for o in range(3)]).T
     y_linear = linear_fwd.calc(model, X_linear)
@@ -45,20 +45,20 @@ def test_linear_fwd():
 
     b = plt.subplot(1, 3, 2)
     b.plot(x_linear, y_linear)
-    b.set_title("Using LinearFittingFwd")
+    b.set_title("Using LinearForward")
     # plt.show()
 
 
-# ------------------------------ test PolynomialFittingFwd ------------------------------
+# ------------------------------ test PolynomialForward ------------------------------
 def test_poly_fwd():
-    poly_fwd = PolynomialFittingFwd()
+    poly_fwd = PolynomialForward()
     x_poly = np.linspace(0, 1, 100)
-    pytest.raises(ValueError, poly_fwd.design_matrix, x_poly)
+    pytest.raises(ValueError, poly_fwd.basis_function, x_poly)
     y_poly = poly_fwd.calc(model, x_poly)
 
-    pytest.raises(ValueError, poly_fwd.design_matrix, np.array([x_poly, x_poly]))
+    pytest.raises(ValueError, poly_fwd.basis_function, np.array([x_poly, x_poly]))
 
     c = plt.subplot(1, 3, 3)
     c.plot(x_poly, y_poly)
-    c.set_title("Using PolynomialFittingFwd")
+    c.set_title("Using PolynomialForward")
     # plt.show()

@@ -66,6 +66,6 @@ exclude = '''
     | dist
     | _skbuild
   )/
-  | examples\/lib.*\.py 
+  | cofi_objective\/lib.*\.py 
 )
 '''

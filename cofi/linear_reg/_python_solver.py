@@ -1,8 +1,8 @@
+import numpy as np
+
 from ..base_solver import BaseSolver
 from ..base_objective import LeastSquareObjective
 from ..model_params import Model
-
-import numpy as np
 from ._utils import warn_normal_equation
 
 
@@ -13,7 +13,7 @@ class LRNormalEquation(BaseSolver):
     def solve(self, reg_eps_squared=None) -> Model:
         warn_normal_equation()
 
-        G = self.objective.design_matrix()
+        G = self.objective.basis_matrix()
         Y = self.objective.data_y()
         # TODO regularisation handling? prior model? (ref: inverseionCourse.curveFitting)
         # TODO return posterior covariance? (ref: inverseionCourse.curveFitting)

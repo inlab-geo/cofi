@@ -4,7 +4,7 @@
 # to an appropriate value, and push the commit to main branch.h
 #
 # The release automation will: build and test the packages for the
-# supported platforms, publish the packages on PyPI, create a Git tag 
+# supported platforms, publish the packages on PyPI, create a Git tag
 # pointing to the commit.
 
-__version__ = '0.1.0.dev1'
+__version__ = "0.1.0.dev2"

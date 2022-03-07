@@ -74,23 +74,23 @@ panels_css_variables = {
 # html_permalinks_icon = '§'
 html_title = f'{project} <span class="project-version">{version}</span>'
 html_short_title = project
-html_logo = '_static/cofi-logo-thumbnail.jpg'
-html_favicon = '_static/inlab_logo_60px.png'
+html_logo = "_static/cofi-logo-thumbnail.jpg"
+html_favicon = "_static/inlab_logo_60px.png"
 
 html_theme = "sphinx_book_theme"
 html_theme_options = {
-    'launch_buttons': {
-        'notebook_interface': 'classic',
-        'inlab_url': 'http://www.inlab.edu.au/'
-    }, 
-    'path_to_docs': 'doc',
-    'repository_url': 'https://github.com/inlab-geo/cofi',
-    'repository_branch': 'main',
-    'extra_footer': '',
-    'home_page_in_toc': False,
-    'use_repository_button': True,
-    'use_edit_page_button': True,
-    'use_issues_button': True
+    "launch_buttons": {
+        "notebook_interface": "classic",
+        "inlab_url": "http://www.inlab.edu.au/",
+    },
+    "path_to_docs": "doc",
+    "repository_url": "https://github.com/inlab-geo/cofi",
+    "repository_branch": "main",
+    "extra_footer": "",
+    "home_page_in_toc": False,
+    "use_repository_button": True,
+    "use_edit_page_button": True,
+    "use_issues_button": True,
 }
 
 

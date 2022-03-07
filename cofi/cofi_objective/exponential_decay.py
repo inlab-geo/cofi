@@ -1,8 +1,9 @@
-from ..base_objective import BaseObjective
-from ..model_params import Model
+from typing import Union
 
 import numpy as np
-from typing import Union
+
+from ..base_objective import BaseObjective
+from ..model_params import Model
 
 
 class ExpDecay(BaseObjective):

@@ -1,9 +1,10 @@
-from .model_params import Model
-from .base_forward import BaseForward, LinearFittingFwd
-
 from typing import Callable, Union
 from numbers import Number
+
 import numpy as np
+
+from .model_params import Model
+from .base_forward import BaseForward, LinearForward
 
 
 class BaseObjective:
@@ -25,7 +26,7 @@ class BaseObjective:
     - params_size()
     """
 
-    def __init__(self, func: Callable[[np.ndarray], Number]=None):
+    def __init__(self, func: Callable[[np.ndarray], Number] = None):
         self._objective = func
 
     def misfit(self, model: Union[Model, np.ndarray]):
@@ -89,36 +90,36 @@ class BaseObjective:
             " implemented it"
         )
 
-    def setMisfit(self, misfit_func: Callable[[Union[Model, np.ndarray]], Number]):
+    def set_misfit(self, misfit_func: Callable[[Union[Model, np.ndarray]], Number]):
         self.misfit = misfit_func
 
-    def setGradient(
+    def set_gradient(
         self, gradient_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.gradient = gradient_func
 
-    def setHessian(
+    def set_hessian(
         self, hessian_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.hessian = hessian_func
 
-    def setResidual(
+    def set_residual(
         self, residual_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.residual = residual_func
 
-    def setJacobian(
+    def set_jacobian(
         self, jacobian_func: Callable[[Union[Model, np.ndarray]], np.ndarray]
     ):
         self.jacobian = jacobian_func
 
-    def setDataX(self, data_x: np.ndarray):
+    def set_data_X(self, data_x: np.ndarray):
         self.data_x = lambda _: data_x
 
-    def setDataY(self, data_y: np.ndarray):
+    def set_data_Y(self, data_y: np.ndarray):
         self.data_y = lambda _: data_y
 
-    def setInitialModel(self, initial_model: Union[Model, np.ndarray]):
+    def set_initial_model(self, initial_model: Union[Model, np.ndarray]):
         self.initial_model = (
             lambda _: initial_model.values()
             if isinstance(initial_model, Model)
@@ -190,41 +191,41 @@ class LeastSquareObjective(BaseObjective):
         return len(self.prior)
 
 
-class LinearFittingObjective(LeastSquareObjective):
+class LinearObjective(LeastSquareObjective):
     def __init__(
         self,
         X,
         Y,
         nparams,
-        design_matrix: Callable = None,
-        forward: LinearFittingFwd = None,
+        basis_function: Callable = None,
+        forward: LinearForward = None,
         initial_model: Union[Model, np.ndarray, list] = None,
     ):
-        self.calc_design_matrix = design_matrix
-        if forward and hasattr(forward, "design_matrix"):
-            self.calc_design_matrix = forward.design_matrix
+        self.basis_function = basis_function
+        if forward and hasattr(forward, "basis_function"):
+            self.basis_function = forward.basis_function
         elif forward is None:
-            if design_matrix is None:
+            if basis_function is None:
                 raise ValueError(
-                    "Please specify at least one of design_matrix and forward"
+                    "Please specify at least one between `basis_function` and `forward`"
                 )
-            forward = LinearFittingFwd(nparams, design_matrix)
+            forward = LinearForward(nparams, basis_function)
 
         super().__init__(X, Y, forward, initial_model)
 
-    def design_matrix(self):
-        if hasattr(self, "_design_matrix"):
-            return self._design_matrix
+    def basis_matrix(self):
+        if hasattr(self, "_basis_matrix"):
+            return self._basis_matrix
         else:
-            self._design_matrix = self.calc_design_matrix(self.X)
-            return self._design_matrix
+            self._basis_matrix = self.basis_function(self.X)
+            return self._basis_matrix
 
     def gradient(self, model: Union[Model, np.ndarray]):
         return np.squeeze(self.jacobian(model).T @ self.residual(model))
 
     def hessian(self, model: Union[Model, np.ndarray]):
-        g = self.design_matrix()
+        g = self.basis_matrix()
         return g.T @ g
 
     def jacobian(self, model: Union[Model, np.ndarray]):
-        return self.design_matrix()
+        return self.basis_matrix()
