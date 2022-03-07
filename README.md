@@ -1,6 +1,5 @@
 # CoFI (Common Framework for Inference)
 
-<!-- [![PyPI version](https://badge.fury.io/py/cofi.svg)](https://badge.fury.io/py/cofi) -->
 [![PyPI version](https://img.shields.io/pypi/v/cofi)](https://pypi.org/project/cofi/)
 [![Wheels](https://img.shields.io/pypi/wheel/cofi)](https://pypi.org/project/cofi/)
 [![Python versions](https://img.shields.io/pypi/pyversions/cofi)](https://pypi.org/project/cofi/)
