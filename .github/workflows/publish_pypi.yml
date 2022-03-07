@@ -97,6 +97,7 @@ jobs:
 
       - name: Extract Release Version
         id: release_version
+        working-directory: cofi
         run: |
           set -e
           echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
