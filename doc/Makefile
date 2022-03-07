@@ -30,7 +30,7 @@ update_api: clean
 	@echo
 	$(SPHINXAUTOGEN) -i -t _templates -o api/generated api/index.rst
 
-html: update_api
+html:
 	@echo
 	@echo "Building HTML files..."
 	@echo
