@@ -1,0 +1,30 @@
+/* https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html */
+/* https://github.com/executablebooks/sphinx-book-theme/blob/master/src/sphinx_book_theme/theme/sphinx_book_theme/layout.html */
+
+span.project-version {
+    color: #999999;
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.lead {
+    font-size: 1.5rem;
+}
+
+.text-large {
+    font-size: 1.35rem;
+}
+
+p {
+    font-size: 0.9rem;
+}
+
+
+main.bd-content #main-content a.btn:hover {
+    color: white;
+    background-color: lightblue;
+}
+main.bd-content #main-content a.btn {
+    border-color: lightblue;
+}

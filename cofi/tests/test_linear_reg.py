@@ -1,5 +1,4 @@
-from cofi.cofi_objective import LinearFittingObjective
-from cofi.cofi_objective import PolynomialFittingFwd
+from cofi import LinearFittingObjective, PolynomialFittingFwd
 import cofi.linear_reg as solvers
 import cofi.optimisers as optim
 

@@ -1,5 +1,5 @@
 import pytest
-from cofi.cofi_objective.examples import ReceiverFunctionObjective, ReceiverFunction
+from cofi.cofi_objective import ReceiverFunctionObjective, ReceiverFunction
 from cofi.optimisers import ScipyOptimiserSolver
 
 import numpy as np

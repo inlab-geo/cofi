@@ -1,2 +1,2 @@
-insipid-sphinx-theme
-
+sphinx-book-theme
+sphinx-panels

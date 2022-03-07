@@ -1,4 +1,4 @@
-from cofi.cofi_objective.examples import XRayTomographyForward, XRayTomographyObjective
+from cofi.cofi_objective import XRayTomographyForward, XRayTomographyObjective
 from cofi.linear_reg import LRNormalEquation
 from cofi.optimisers import ScipyOptimiserSolver
 

@@ -31,5 +31,6 @@ dependencies:
   - pip
   - pip:
     - coverage[toml]
-    - insipid-sphinx-theme
+    - sphinx-book-theme
+    - sphinx_panels
     - cibuildwheel

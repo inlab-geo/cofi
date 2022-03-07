@@ -1,4 +1,4 @@
-from cofi.cofi_objective import (
+from cofi import (
     BaseForward,
     LinearFittingFwd,
     PolynomialFittingFwd,

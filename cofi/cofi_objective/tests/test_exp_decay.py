@@ -1,5 +1,5 @@
-from cofi.cofi_objective.examples import ExpDecay
-from cofi.cofi_objective import Model
+from cofi.cofi_objective import ExpDecay
+from cofi import Model
 
 import numpy as np
 import pytest

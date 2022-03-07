@@ -1,13 +1,13 @@
-from .model_params import Model
-from .base_objective import BaseObjective, LeastSquareObjective, LinearFittingObjective
-from .base_forward import BaseForward, LinearFittingFwd, PolynomialFittingFwd
+from .exponential_decay import ExpDecay
+from .bandit_multi_armed import MultiArmedBandit
+from .rfc import ReceiverFunctionObjective, ReceiverFunction
+from .xrt import XRayTomographyObjective, XRayTomographyForward
 
 __all__ = [
-    "Model",
-    "BaseObjective",
-    "LeastSquareObjective",
-    "LinearFittingObjective",
-    "BaseForward",
-    "LinearFittingFwd",
-    "PolynomialFittingFwd",
+    "ExpDecay",
+    "MultiArmedBandit",
+    "ReceiverFunctionObjective",
+    "ReceiverFunction",
+    "XRayTomographyObjective",
+    "XRayTomographyForward",
 ]
