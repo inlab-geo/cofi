@@ -1,3 +1,7 @@
+"""The cofi package contains base classes for inversion solvers, forward operators and
+   objective classes.
+"""
+
 from .base_solver import BaseSolver, OptimiserMixin
 from .base_forward import BaseForward, LinearForward, PolynomialForward
 from .base_objective import BaseObjective, LeastSquareObjective, LinearObjective

@@ -1,5 +1,3 @@
-:noindex:
-
 cofi
 ====
 

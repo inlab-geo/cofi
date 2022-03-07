@@ -22,7 +22,7 @@ Base classes for solvers and objectives
 
 
 Inversion solvers based on optimisation
-----------------------------------
+---------------------------------------
 
 .. autosummary ::
     :toctree: generated/
