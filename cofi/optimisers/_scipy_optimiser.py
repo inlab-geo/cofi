@@ -69,9 +69,7 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         function is necessary for this method. Optionally, `gradient` and
         `hess` may also be used depending on the method selected.
 
-        :param method: optimization algorithm, check
-            `SciPy's documentation on minimize 
-            <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html>`_
+        :param method: optimization algorithm, check :func:`scipy.optimize.minimize`
             for a detailed list and argumnets required for each method. Defaults to None
         :type method: Union[str, Callable], optional
         :param gradient: a function that calculates the gradient of your objective
@@ -91,9 +89,7 @@ class ScipyOptimiserSolver(BaseSolver, OptimiserMixin):
         :type hessp: callable, optional
         :param bounds: bounds on variables for Nelder-Mead, L-BFGS-B, TNC, SLSQP, Powell,
             and trust-constr methods. Defaults to None
-        :type bounds: sequence or `scipy.optimize.Bounds 
-        <https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.Bounds.html#scipy.optimize.Bounds>`_
-        , optional
+        :type bounds: sequence or :class:`scipy.optimize.Bounds`, optional
         :param constraints: Constraints definition (only for COBYLA, SLSQP and trust-constr).
             Check SciPy documentation for more details on types. Defaults to None
         :type constraints: {Constraint, dict} or List of {Constraint, dict}, optional

@@ -58,7 +58,7 @@ inference problems with the tools for their solution.
 
     .. ---
 
-    .. **Using Pooch for research?**
+    .. **Using CoFI for research?**
     .. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     .. Citations help support our work

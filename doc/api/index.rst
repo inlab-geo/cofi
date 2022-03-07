@@ -12,7 +12,7 @@ Base classes for solvers and objectives
 
 `BaseObjective` is the base class of all forward problems.
 
-.. autosummary ::
+.. autosummary::
     :toctree: generated/
 
     cofi.BaseSolver
@@ -24,7 +24,7 @@ Base classes for solvers and objectives
 Inversion solvers based on optimisation
 ---------------------------------------
 
-.. autosummary ::
+.. autosummary::
     :toctree: generated/
 
     cofi.optimisers.ScipyOptimiserSolver
@@ -32,27 +32,27 @@ Inversion solvers based on optimisation
     cofi.optimisers.TAOSolver
 
 
-Inversion solvers based on sampling
------------------------------------
+.. Inversion solvers based on sampling
+.. -----------------------------------
 
-.. autosummary ::
-    :toctree: generated/
+.. .. autosummary::
+..     :toctree: generated/
 
 
-Utility
-----------
+.. Utility
+.. ----------
 
-.. autosummary ::
-    :toctree: generated/
+.. .. autosummary::
+..     :toctree: generated/
 
 Examples of CoFI objectives
 ---------------------------
 
-.. autosummary ::
+.. autosummary::
     :toctree: generated/
 
     cofi.cofi_objective.ExpDecay
-    cofi.cofi_objective.ReceiverFunctionObjective,
+    cofi.cofi_objective.ReceiverFunctionObjective
     cofi.cofi_objective.ReceiverFunction
     cofi.cofi_objective.XRayTomographyObjective
     cofi.cofi_objective.XRayTomographyForward
