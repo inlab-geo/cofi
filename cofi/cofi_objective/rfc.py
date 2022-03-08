@@ -2,9 +2,7 @@ from typing import Tuple, Union
 
 import numpy as np
 
-from ..base_objective import BaseObjective
-from ..base_forward import BaseForward
-from ..model_params import Model
+from .. import Model, BaseForward, BaseObjective
 from .lib_rf import rfcalc
 
 

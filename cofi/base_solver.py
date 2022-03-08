@@ -1,4 +1,4 @@
-from .model_params import Model
+from . import Model
 
 
 class BaseSolver:

@@ -3,8 +3,7 @@ from numbers import Number
 
 import numpy as np
 
-from ..base_objective import BaseObjective
-from ..model_params import Model
+from .. import Model, BaseObjective
 
 
 class MultiArmedBandit(BaseObjective):

@@ -9,12 +9,15 @@
 *.so
 *.mod
 
+# Doc generated files #
+#######################
+doc/_build
+doc/api/generated
+
 # Python files #
 ################
 # setup.py working directory
 _skbuild
-# sphinx build directory
-doc/_build
 # setup.py dist directory
 dist
 # Egg metadata
@@ -36,6 +39,7 @@ MANIFEST
 .pytest_cache/*
 *__pycache__/
 .ipynb_checkpoints/
+*.pyc
 
 # OS generated files #
 ######################

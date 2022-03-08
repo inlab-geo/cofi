@@ -2,9 +2,7 @@
 # distutils: include_dirs = lib/
 
 from . cimport _c_solver
-from ..base_solver import BaseSolver
-from ..base_objective import LinearObjective
-from ..model_params import Model
+from .. import Model, BaseSolver, LinearObjective
 
 from libc.stdlib cimport malloc, free
 import numpy as np
