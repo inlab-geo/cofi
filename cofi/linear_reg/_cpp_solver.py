@@ -1,8 +1,6 @@
 import numpy as np
 
-from ..base_solver import BaseSolver
-from ..base_objective import LinearObjective
-from ..model_params import Model
+from .. import Model, BaseSolver, LinearObjective
 from ._cpp_solver_lib import solve as cpp_solve
 from ._utils import warn_normal_equation
 

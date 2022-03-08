@@ -12,9 +12,7 @@ try:
 except:
     warnings.warn("Please install petsc4py if you'd like to use its solvers")
 
-from ..base_solver import BaseSolver, OptimiserMixin
-from ..base_objective import BaseObjective
-from ..model_params import Model
+from .. import Model, BaseObjective, BaseSolver, OptimiserMixin
 
 
 # ref doc for TAO: https://petsc.org/release/docs/manual/tao/

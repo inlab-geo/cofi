@@ -1,4 +1,4 @@
-from ..base_solver import BaseSolver
+from .. import BaseSolver
 from cofi.cofi_objective import BaseObjective
 from .lib import rjmcmc
 

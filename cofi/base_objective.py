@@ -3,8 +3,7 @@ from numbers import Number
 
 import numpy as np
 
-from .model_params import Model
-from .base_forward import BaseForward, LinearForward
+from . import Model, BaseForward, LinearForward
 
 
 class BaseObjective:

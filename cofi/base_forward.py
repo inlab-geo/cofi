@@ -3,7 +3,7 @@ from typing import Callable, Union
 
 import numpy as np
 
-from .model_params import Model
+from . import Model
 
 
 class BaseForward:

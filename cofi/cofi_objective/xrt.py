@@ -1,6 +1,4 @@
-from ..base_objective import BaseObjective
-from ..base_forward import BaseForward
-from ..model_params import Model
+from .. import Model, BaseForward, BaseObjective
 from .lib_xrayTomography import tracer, displayModel
 
 import numpy as np

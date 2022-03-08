@@ -5,9 +5,7 @@ from math import inf
 import numpy as np
 from scipy.optimize import minimize, least_squares
 
-from ..base_solver import BaseSolver, OptimiserMixin
-from ..base_objective import BaseObjective
-from ..model_params import Model
+from .. import Model, BaseObjective, BaseSolver, OptimiserMixin
 
 
 # methods available in scipy (can be string or callable):
