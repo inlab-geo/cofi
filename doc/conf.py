@@ -45,6 +45,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.doctest",
     "sphinx_panels",
+    "nbsphinx",
 ]
 
 templates_path = ["_templates"]

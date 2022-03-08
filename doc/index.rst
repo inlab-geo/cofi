@@ -84,6 +84,7 @@ Table of contents
     :maxdepth: 1
 
     installation.rst
+    notebooks/index.rst
     getting-started.rst
     faq.rst
 
@@ -95,7 +96,7 @@ Table of contents
 
 .. toctree::
     :caption: Developer notes
-    
+
     contribute.rst
 
 .. Getting started

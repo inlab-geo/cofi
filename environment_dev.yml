@@ -34,3 +34,4 @@ dependencies:
     - sphinx-book-theme
     - sphinx-panels
     - cibuildwheel
+    - nbsphinx
