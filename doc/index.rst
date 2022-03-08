@@ -7,8 +7,8 @@
 Welcome to CoFI's documentation!
 ================================
 
-The CoFI (Common Framework For Inference) project aims to link geoscience
-inference problems with the tools for their solution.
+CoFI (Common Framework For Inference) aims to link geoscience inference
+problems with the tools for their solution.
 
 
 .. seealso::
