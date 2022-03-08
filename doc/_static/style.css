@@ -21,6 +21,12 @@ span.project-version {
 .topbar .topbar-main button.topbarbtn {
     font-size: 1.2em;
 }
+[aria-label] {
+    position: relative;
+}
+div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
+    font-size: .85em !important;
+}
 
 /* LEFT: side bar font size */
 .bd-sidenav a.reference.internal {

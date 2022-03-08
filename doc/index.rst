@@ -7,14 +7,22 @@
 Welcome to CoFI's documentation!
 ================================
 
-CoFI (Common Framework For Inference) aims to link geoscience inference
-problems with the tools for their solution.
+.. What CoFI is
+
+CoFI (**Co**\ mmon **F**\ ramework for **I**\ nference) is an open-source 
+initiative for interfacing between generic inference algorithms and specific 
+geoscience problems.
+
+This Python package provides an interface across a wide range of inference 
+algorithms from different sources, as well as ways of defining inverse 
+problems with examples included.
 
 
 .. seealso::
 
-    This site includes CoFI's usage & API documentation. 
-    For more information on what CoFI & InLab are, 
+    This site includes basic usage, tutorials & API documentation of CoFI (the
+    Python package). For more information on **InLab**, which is what this 
+    project is lead by, 
     please check out `the InLab website <http://www.inlab.edu.au/>`_.
 
 
@@ -72,9 +80,10 @@ Table of contents
 -----------------
 
 .. toctree::
-    :caption: Getting started
+    :caption: Basic usage
     :maxdepth: 1
 
+    installation.rst
     getting-started.rst
     faq.rst
 
@@ -83,6 +92,10 @@ Table of contents
     :maxdepth: 1
 
     api/index.rst
+
+.. toctree::
+    :caption: Developer notes
+    
     contribute.rst
 
 .. Getting started
