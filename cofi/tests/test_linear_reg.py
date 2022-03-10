@@ -91,7 +91,7 @@ print(f"--> model predicted by TAO 'brgn': {model_1_tao_brgn.values()}\n")
 
 # ------------ #2.1 define objective another way ---------------------------
 nparams = 3
-basis_function = lambda x: np.array([x ** o for o in range(nparams)]).T
+basis_function = lambda x: np.array([x**o for o in range(nparams)]).T
 objective_2 = LinearObjective(xpts, ypts, nparams, basis_function)
 print("--------- objective defined another way -------------------")
 

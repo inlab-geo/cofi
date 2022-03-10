@@ -38,6 +38,12 @@ setup(
         "cofi.optimisers",
         "cofi.samplers",
     ],
-    install_requires=["numpy>=1.22.2", "scipy>=1.8.0", "pyyaml>=6.0",],
-    extras_require={"petsc": ["petsc4py>=3.16.0"],},
+    install_requires=[
+        "numpy>=1.22.2",
+        "scipy>=1.8.0",
+        "pyyaml>=6.0",
+    ],
+    extras_require={
+        "petsc": ["petsc4py>=3.16.0"],
+    },
 )

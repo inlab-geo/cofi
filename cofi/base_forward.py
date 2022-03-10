@@ -46,8 +46,8 @@ class LinearForward(BaseForward):
         basis_matrix = self.basis_function(data_X)
         if self.nparams != basis_matrix.shape[1]:
             raise ValueError(
-                f"Parameters count ({self.nparams}) doesn't match the shape of basis_matrix"
-                f" {basis_matrix.shape} in linear curve forward fitting"
+                f"Parameters count ({self.nparams}) doesn't match the shape of"
+                f" basis_matrix {basis_matrix.shape} in linear curve forward fitting"
             )
 
         if isinstance(model, Model):
@@ -84,12 +84,13 @@ class PolynomialForward(LinearForward):
 
         try:
             x = np.squeeze(x)
-            basis_matrix = np.array([x ** o for o in range(self.nparams)]).T
+            basis_matrix = np.array([x**o for o in range(self.nparams)]).T
             if len(basis_matrix.shape) == 1:
                 basis_matrix = np.expand_dims(basis_matrix, axis=0)
             return basis_matrix
         except AttributeError:
             raise ValueError(
-                "Please specify the order of linear curve fitting by either passing it "
-                "through the constructor or passing in a model through the 'calc' method"
+                "Please specify the order of linear curve fitting by either passing it"
+                " through the constructor or passing in a model through the 'calc'"
+                " method"
             )

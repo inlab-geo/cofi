@@ -22,13 +22,16 @@ sys.path.insert(0, os.path.abspath("../cofi"))
 # -- Generate API references doc ---------------------------------------------
 def run_autogen(_):
     cmd_path = "sphinx-autogen"
-    if hasattr(sys, 'real_prefix'):  # Check to see if we are in a virtualenv
+    if hasattr(sys, "real_prefix"):  # Check to see if we are in a virtualenv
         # If we are, assemble the path manually
-        cmd_path = os.path.abspath(os.path.join(sys.prefix, 'bin', cmd_path))
-    subprocess.check_call([cmd_path, '-i', '-t', '_templates', '-o', 'api/generated', 'api/index.rst'])
+        cmd_path = os.path.abspath(os.path.join(sys.prefix, "bin", cmd_path))
+    subprocess.check_call(
+        [cmd_path, "-i", "-t", "_templates", "-o", "api/generated", "api/index.rst"]
+    )
+
 
 def setup(app):
-    app.connect('builder-inited', run_autogen)
+    app.connect("builder-inited", run_autogen)
 
 
 # -- Project information -----------------------------------------------------

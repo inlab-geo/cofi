@@ -61,9 +61,9 @@ class Parameter:
                             pdf.dist, stats.rv_continuous
                         ):
                             raise ValueError(
-                                f"Specified PDF at index {i} for parameter {self.name} id not a"
-                                " continuous distribution! It is instead a"
-                                f" {type(self.pdf)} which is not allowed"
+                                f"Specified PDF at index {i} for parameter"
+                                f" {self.name} id not a continuous distribution! It is"
+                                f" instead a {type(self.pdf)} which is not allowed"
                             )
                     values = self.value.ravel()
                     for index, value in enumerate(values):
@@ -83,8 +83,9 @@ class Parameter:
                     self.value = self.pdf.rvs()
                 else:
                     raise ValueError(
-                        f"specified PDF for parameter {self.name} not a continuous distribution!"
-                        f" It is instead of {type(self.pdf)} which is not allowed"
+                        f"specified PDF for parameter {self.name} not a continuous"
+                        f" distribution! It is instead of {type(self.pdf)} which is not"
+                        " allowed"
                     )
         else:  # PDF is None, but value is specified. This is fine, we dont need to do anything
             pass

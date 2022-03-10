@@ -8,7 +8,7 @@ from .. import Model, BaseObjective
 class ExpDecay(BaseObjective):
     """Defines the problem of exponential decay (sum of exponentials).
 
-    :math:`y = f(t) = \sum_{i=0}^{M}{a_i e^{-b_i t}}` where :math:`M` is the 
+    :math:`y = f(t) = \sum_{i=0}^{M}{a_i e^{-b_i t}}` where :math:`M` is the
     number of addends, and is equal to the number of parameters divided by 2.
 
     Must implement the 'misfit' function.
@@ -33,7 +33,8 @@ class ExpDecay(BaseObjective):
 
         if self.n_params % 2 != 0:
             raise ValueError(
-                f"Exponential decay sums need to have an even number of parameters, but got {self.n_params} instead"
+                "Exponential decay sums need to have an even number of parameters, but"
+                f" got {self.n_params} instead"
             )
 
         self._last_validated_model = None
@@ -132,7 +133,8 @@ class ExpDecay(BaseObjective):
 
         if n_params != self.n_params:
             raise ValueError(
-                f"Model length doesn't match initialisation, expected {self.n_params} parameters but got {n_params} instead"
+                "Model length doesn't match initialisation, expected"
+                f" {self.n_params} parameters but got {n_params} instead"
             )
 
         self._last_validated_model = model

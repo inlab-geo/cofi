@@ -18,7 +18,7 @@ model = Model(m1=3, m2=2, m3=5)
 # ------------------------------ test BaseForward ------------------------------
 def test_base_foward():
     x_basefwd = np.linspace(0, 1, 100)
-    X_basefwd = np.array([x_basefwd ** o for o in range(3)]).T
+    X_basefwd = np.array([x_basefwd**o for o in range(3)]).T
     base_fwd = BaseForward(forward=(lambda m, X: X @ m.values()), nparams=3)
     y_basefwd = base_fwd.calc(model, X_basefwd)
     y_basefwd_true = X_basefwd @ params
@@ -38,7 +38,7 @@ def test_base_foward():
 def test_linear_fwd():
     linear_fwd = LinearForward(3)
     x_linear = np.linspace(0, 1, 100)
-    X_linear = np.array([x_linear ** o for o in range(3)]).T
+    X_linear = np.array([x_linear**o for o in range(3)]).T
     y_linear = linear_fwd.calc(model, X_linear)
 
     pytest.raises(ValueError, linear_fwd.calc, np.array([1, 2, 3, 4]), X_linear)

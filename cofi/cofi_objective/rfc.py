@@ -3,23 +3,25 @@ from typing import Tuple, Union
 import numpy as np
 
 from .. import Model, BaseForward, BaseObjective
-from .lib_rf import rfcalc
+
+# from .lib_rf import rfcalc
+from . import _rfc
 
 
 class ReceiverFunctionObjective(BaseObjective):
     """Receiver functions are a class of seismic data used to study discontinuities
-       (layering) in the Earth's crust. At each discontinuity, P-to-S conversions
-       occur, introducing complexity in the waveform. By deconvolving horizontal- 
-       and vertical-channel waveforms from earthquakes at teleseismic distances,
-       we can isolate information about these conversions, and hence learn about
-       the crustal structure. This deconvolved signal is the receiver function, and 
-       has a highly non-linear dependencies on the local crustal properties.
+    (layering) in the Earth's crust. At each discontinuity, P-to-S conversions
+    occur, introducing complexity in the waveform. By deconvolving horizontal-
+    and vertical-channel waveforms from earthquakes at teleseismic distances,
+    we can isolate information about these conversions, and hence learn about
+    the crustal structure. This deconvolved signal is the receiver function, and
+    has a highly non-linear dependencies on the local crustal properties.
 
-       The model that this objective takes in is of dimension [nlayers,3]:
-       - model[:,0] gives the depths of discontinuities in the model,
-       - model[:,1] contains the S-wave speed above the interface,
-       - model[:,2] is the ratio of S-wave speed to P-wave speed. 
-       The maximum depth of discontinuity that can be considered is 60km.
+    The model that this objective takes in is of dimension [nlayers,3]:
+    - model[:,0] gives the depths of discontinuities in the model,
+    - model[:,1] contains the S-wave speed above the interface,
+    - model[:,2] is the ratio of S-wave speed to P-wave speed.
+    The maximum depth of discontinuity that can be considered is 60km.
     """
 
     def __init__(self, t, rf_data, initial_model=None):
@@ -80,9 +82,24 @@ class ReceiverFunction(BaseForward):
         seed=1,
     ) -> Tuple[np.ndarray, np.ndarray]:
         model = self._validate_model(model)
-        t, rfunc = rfcalc(
-            model, sn, mtype, fs, gauss_a, water_c, angle, time_shift, ndatar, v60, seed
-        )
+        if sn == 0.0:
+            t, rfunc = _rfc.rfcalc_nonoise(
+                model, mtype, fs, gauss_a, water_c, angle, time_shift, ndatar, v60
+            )
+        else:
+            t, rfunc = _rfc.rfcalc_noise(
+                model,
+                mtype,
+                sn,
+                fs,
+                gauss_a,
+                water_c,
+                angle,
+                time_shift,
+                ndatar,
+                v60,
+                seed,
+            )
         return t, rfunc
 
     def _validate_model(self, model: Union[Model, np.ndarray]) -> np.ndarray:
@@ -97,6 +114,7 @@ class ReceiverFunction(BaseForward):
             )
         if np.any(model[:, 0] > 60):
             raise ValueError(
-                f"The first column of model represents depths of discontinuities and the maximum depth that can be considered is 60km"
+                f"The first column of model represents depths of discontinuities and"
+                f" the maximum depth that can be considered is 60km"
             )
         return model

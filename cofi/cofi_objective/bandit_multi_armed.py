@@ -10,8 +10,8 @@ class MultiArmedBandit(BaseObjective):
     """The Multi-armed Bandit Model (bandit or MAB for short).
 
     The problem aims to maximize the sum of the collected rewards, given a set of
-    distributions :math:`B = \{R_1, ..., R_k\}` where each distribution is associated 
-    with the rewards delivered by one of the :math:`K` levers. 
+    distributions :math:`B = \{R_1, ..., R_k\}` where each distribution is associated
+    with the rewards delivered by one of the :math:`K` levers.
 
     """
 
@@ -25,5 +25,7 @@ class MultiArmedBandit(BaseObjective):
     def misfit(self, model: Union[Model, np.ndarray]):
         pass
 
-    def propose(self,):
+    def propose(
+        self,
+    ):
         pass
