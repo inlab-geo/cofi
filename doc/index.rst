@@ -13,9 +13,39 @@ CoFI (**Co**\ mmon **F**\ ramework for **I**\ nference) is an open-source
 initiative for interfacing between generic inference algorithms and specific 
 geoscience problems.
 
-This Python package provides an interface across a wide range of inference 
-algorithms from different sources, as well as ways of defining inverse 
-problems with examples included.
+With a mission to bridge the gap between the domain expertise and the 
+inference expertise, this Python package provides an interface across a 
+wide range of inference algorithms from different sources, as well as ways 
+of defining inverse problems with examples included.
+
+.. A small code example
+
+Applying inversion techniques on a defined problem yeilds useful Python
+object in return:
+
+.. container:: toggle, toggle-hidden
+
+    .. doctest:: basic
+
+        >>> from cofi.cofi_objective import XRayTomographyObjective
+        >>> xrt_problem = XRayTomographyObjective("data.csv")
+        >>> from cofi.optimisers import LeastSquareSolver
+        >>> solver = LeastSquareSolver(xrt_problem)
+        >>> result = solver.solve(tool="numpy.linalg.lstsq")
+        >>> result.ok
+        True
+        >>> result.solver_tool
+        'numpy.linalg.lstsq'
+        >>> len(result.model)
+        2500
+
+
+.. attention::
+
+    This package is still under initial development stage, so public APIs are 
+    not expected to be stable. Please stay updated and don't hesitate to raise
+    feedback or issues through `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_ 
+    or `Slack workspace <https://inlab-geo.slack.com>`_.
 
 
 .. seealso::
@@ -42,17 +72,17 @@ problems with examples included.
 
     ---
 
-    .. **Need help?**
-    .. ^^^^^^^^^^^^^^
+    **Need support?**
+    ^^^^^^^^^^^^^^
 
-    .. Ask on our community channels
+    Ask in our Slack workspace
 
-    .. .. link-button:: https://www.fatiando.org/contact
-    ..     :type: url
-    ..     :text: Join the conversation
-    ..     :classes: btn-outline-primary btn-block stretched-link
+    .. link-button:: https://inlab-geo.slack.com
+        :type: url
+        :text: Join the conversation
+        :classes: btn-outline-primary btn-block stretched-link
 
-    .. ---
+    ---
 
     **Reference documentation**
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -64,17 +94,18 @@ problems with examples included.
         :text: API reference
         :classes: btn-outline-primary btn-block stretched-link
 
-    .. ---
+    ---
 
-    .. **Using CoFI for research?**
-    .. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    **Contribute to CoFI**
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    .. Citations help support our work
+    Features or bug fixes are always welcomed!
 
-    .. .. link-button:: citing
-    ..     :type: ref
-    ..     :text: Cite Pooch
-    ..     :classes: btn-outline-primary btn-block stretched-link
+    .. link-button:: contribute
+        :type: ref
+        :text: Developer notes
+        :classes: btn-outline-primary btn-block stretched-link
+
 
 Table of contents
 -----------------

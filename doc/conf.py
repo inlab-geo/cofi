@@ -48,6 +48,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.doctest",
     "sphinx_panels",
+    "sphinx_togglebutton",
     "nbsphinx",
 ]
 
