@@ -4,8 +4,8 @@ Tutorials
 =========
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
+   :caption: Sections
 
    1_basic_concepts.ipynb
    2_cofi_example_linear_reg.ipynb
