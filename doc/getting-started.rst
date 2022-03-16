@@ -2,6 +2,11 @@
 Getting started
 ===============
 
+.. attention::
+
+    This page is still under construction. More precisely, I'm trying to figure out
+    what best goes to "getting-started" and what goes to "tutorials".
+
 Welcome! This tutorial provides basic usage and examples of CoFI. 
 
 

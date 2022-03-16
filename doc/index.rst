@@ -52,7 +52,7 @@ object in return:
 
     This site includes basic usage, tutorials & API documentation of CoFI (the
     Python package). For more information on **InLab**, which is what this 
-    project is lead by, 
+    project is led by, 
     please check out `the InLab website <http://www.inlab.edu.au/>`_.
 
 
