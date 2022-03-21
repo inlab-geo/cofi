@@ -10,73 +10,22 @@ Getting started
 Welcome! This tutorial provides basic usage and examples of CoFI. 
 
 
-Installation
-============
+To use a pre-defined problem from inversion-test-suite::
+
+  from inversion_test_suite import ExampleProblem
+
+  problem = ExampleProblem.generate_basics()
+  problem.setInitialModel(my_fancy_init_routine())
 
 
+To define a custom problem from scratch, there are 4 possible layers, depending the
+level of flexibility you want.
 
-
-A Minimal Example
-=================
-
-In order to do blabla, we can define the following objective::
-
-  from cofi.cofi_objective import BaseObjective
-
-  # blablabla
-  # here are some code
-  # TODO
-
-Then, it's possible to pass the above example into several inverse solvers::
-
-  from cofi.optimisers import *
-
-  # biubiubiu
-  # TODO
-  # more explanation below #TODO
-
-In principal, you are able to utilise the whole group of common use examples, or to customize
-your own ones, in both the problems side and inverse solverse side.
-
-Defining Your Own Problem
-=========================
-
-To define your own objective or forward solving workflow, extend the ```BaseObjective``` class.
-For instance::
-
-  from cofi.cofi_objective import BaseObjective
-
-  class MyCurveFittingProblem(BaseObjective):
-      def __init__(self, X, Y, forward, distance):
-          # mamamimi hong
-          # TODO
-
-      def misfit(self, model: Model):
-          # return something
-          # TODO
-
-Note that ```__init__``` and ```misfit``` are two functions that are generally required by
-most inverse solvers. However for some other approaches, more functions may be required and
-```misfit``` may not be necessary. Please check out API reference for details on what needs
-to be implemented for the type of solvers you'd like to use.
-
-Plugging In Your Own Solver
-===========================
-
-It's also easy to plug in your own inverse solver through the commonly defined interface.
-Similarly, do this by extending the ```BaseSolver``` class.
-For instance::
-
-  from cofi import BaseSolver
-
-  class MyDirectSearch(BaseSolver):
-      def __init__(self, objective: BaseObjective):
-          # mamamimi hong
-          # TODO
-
-      def solve(self, ) -> Model:
-          # calculate something
-          # TODO
-
-For a more complete manual, please check out the API section.
+Layer 0::
   
+  from cofi import BaseProblem
+
+  problem = BaseProblem()
+  problem.setMisfit(objective_function)
+  problem.setInitialModel(my_init_routine())
+
