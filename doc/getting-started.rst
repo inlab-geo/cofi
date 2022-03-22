@@ -24,7 +24,12 @@ distinguish it from "data misfit", as we assume "misfit" to also include regular
 To discuss: inversion options as a separate object?
 ---------------------------------------------------
 
-option#1::
+Workflow 1 - Pass a problem definition directly to solver
+
+.. image:: _static/cofi_workflow1.jpeg
+  :scale: 80%
+
+.. code-block:: python
 
   from cofi import SomeSolver
 
@@ -35,7 +40,14 @@ option#1::
   print(result.ok)
 
 
-option#2::
+Workflow 2 - Pass a problem definition + inversion options to a runner
+
+
+.. image:: _static/cofi_workflow2.jpeg
+  :scale: 75%
+
+
+.. code-block:: python
 
   from cofi import BaseInversionOptions
 
@@ -54,12 +66,16 @@ option#2::
 Pre-defined inversion problem
 -----------------------------
 
-To use a pre-defined problem from inversion-test-suite::
+To use a pre-defined problem from inversion-test-suite:
+
+
+.. code-block:: python
 
   from inversion_test_suite import ExampleProblem
 
   problem = ExampleProblem.generate_basics()
   problem.setInitialModel(my_fancy_init_routine())
+
 
 
 Self-defined inversion problem
@@ -68,15 +84,19 @@ Self-defined inversion problem
 To define a custom problem from scratch, there are 4 possible layers, depending the
 level of flexibility you want.
 
-Layer 0::
+Layer 0
   
+.. code-block:: python
+
   from cofi import BaseProblem
 
   problem = BaseProblem()
   problem.setMisfit(objective_function)
   problem.setInitialModel(my_init_routine())
 
-Layer 1::
+Layer 1
+
+.. code-block:: python
 
   from cofi import BaseProblem
 
@@ -85,7 +105,9 @@ Layer 1::
   problem.setRegularisation(regularisation_function)
   problem.setInitialModel(my_init_routine())
 
-Layer 2::
+Layer 2
+
+.. code-block:: python
 
   from cofi import BaseProblem
 
@@ -96,7 +118,7 @@ Layer 2::
   problem.setRegularisation("L1")
   problem.setInitialModel(my_init_routine())
 
-Layer 3:
+Layer 3
 
 .. code-block:: python
   
