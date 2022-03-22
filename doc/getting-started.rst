@@ -2,92 +2,110 @@
 Getting started
 ===============
 
+.. attention::
+
+    This page is still under construction. More precisely, I'm trying to figure out
+    what best goes to "getting-started" and what goes to "tutorials".
+
 Welcome! This tutorial provides basic usage and examples of CoFI. 
 
 
-Installation
-============
+To discuss: objective or problem?
+---------------------------------
 
-The simplest way to install CoFI is using ```pip```::
+We had some discussion over the term "objective", and are not sure whether moving to
+"problem" would make it more intuitive to understand.
 
-  pip install cofi
-
-Alternatively you can build from source by following instructions in the Github `repository`_.
-Then run::
-
-  pip install .
-
-or::
-
-  pip install -e .
-
-for development purpose.
-
-Note that building from source involves more pre-requisites, including C/C++/Fortran compilers
-and CMake.
+Reason: If we were to use the term "objective", we should distinguish it from "objective
+function". If we further name "objective function" to be "misfit", then we should
+distinguish it from "data misfit", as we assume "misfit" to also include regularisation.
 
 
-A Minimal Example
-=================
+To discuss: inversion options as a separate object?
+---------------------------------------------------
 
-In order to do blabla, we can define the following objective::
+option#1::
 
-  from cofi.cofi_objective import BaseObjective
+  from cofi import SomeSolver
 
-  # blablabla
-  # here are some code
-  # TODO
+  solver = SomeSolver(problem)
+  solver.setIterationLimit(100)
+  result = solver.solve()
+  print(result.model)
+  print(result.ok)
 
-Then, it's possible to pass the above example into several inverse solvers::
 
-  from cofi.optimisers import *
+option#2::
 
-  # biubiubiu
-  # TODO
-  # more explanation below #TODO
+  from cofi import BaseInversionOptions
 
-In principal, you are able to utilise the whole group of common use examples, or to customize
-your own ones, in both the problems side and inverse solverse side.
+  inversion = BaseInversionOptions()
+  inversion.setMethod("optimisation")
+  inversion.setTool("scipy.optimize.minimize")
+  inversion.setIterationLimit(100)
 
-Defining Your Own Problem
-=========================
+  from cofi import Runner
+  inversion_runner = Runner(problem, inversion)
+  result = inversion_runner.run()
+  print(result.model)
+  print(result.ok)
 
-To define your own objective or forward solving workflow, extend the ```BaseObjective``` class.
-For instance::
 
-  from cofi.cofi_objective import BaseObjective
+Pre-defined inversion problem
+-----------------------------
 
-  class MyCurveFittingProblem(BaseObjective):
-      def __init__(self, X, Y, forward, distance):
-          # mamamimi hong
-          # TODO
+To use a pre-defined problem from inversion-test-suite::
 
-      def misfit(self, model: Model):
-          # return something
-          # TODO
+  from inversion_test_suite import ExampleProblem
 
-Note that ```__init__``` and ```misfit``` are two functions that are generally required by
-most inverse solvers. However for some other approaches, more functions may be required and
-```misfit``` may not be necessary. Please check out API reference for details on what needs
-to be implemented for the type of solvers you'd like to use.
+  problem = ExampleProblem.generate_basics()
+  problem.setInitialModel(my_fancy_init_routine())
 
-Plugging In Your Own Solver
-===========================
 
-It's also easy to plug in your own inverse solver through the commonly defined interface.
-Similarly, do this by extending the ```BaseSolver``` class.
-For instance::
+Self-defined inversion problem
+------------------------------
 
-  from cofi import BaseSolver
+To define a custom problem from scratch, there are 4 possible layers, depending the
+level of flexibility you want.
 
-  class MyDirectSearch(BaseSolver):
-      def __init__(self, objective: BaseObjective):
-          # mamamimi hong
-          # TODO
-
-      def solve(self, ) -> Model:
-          # calculate something
-          # TODO
-
-For a more complete manual, please check out the API section.
+Layer 0::
   
+  from cofi import BaseProblem
+
+  problem = BaseProblem()
+  problem.setMisfit(objective_function)
+  problem.setInitialModel(my_init_routine())
+
+Layer 1::
+
+  from cofi import BaseProblem
+
+  problem = BaseProblem()
+  problem.setDataMisfit(data_misfit_function)
+  problem.setRegularisation(regularisation_function)
+  problem.setInitialModel(my_init_routine())
+
+Layer 2::
+
+  from cofi import BaseProblem
+
+  problem = BaseProblem()
+  problem.setData("dataset.csv")
+  problem.setForwardOperator(forward_function)
+  problem.setDataMisfit("L2")
+  problem.setRegularisation("L1")
+  problem.setInitialModel(my_init_routine())
+
+Layer 3:
+
+.. code-block:: python
+  
+  from cofi import BaseProblem
+
+  problem = BaseProblem()
+  problem.setData("dataset.csv")
+  problem.setForwardOperator("XRay Tomography")
+  problem.setDataMisfit("L2")
+  problem.setRegularisation("L1")
+  problem.setInitialModel(my_init_routine())
+

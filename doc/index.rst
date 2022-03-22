@@ -7,14 +7,52 @@
 Welcome to CoFI's documentation!
 ================================
 
-The CoFI (Common Framework For Inference) project aims to link geoscience
-inference problems with the tools for their solution.
+.. What CoFI is
+
+CoFI (**Co**\ mmon **F**\ ramework for **I**\ nference) is an open-source 
+initiative for interfacing between generic inference algorithms and specific 
+geoscience problems.
+
+With a mission to bridge the gap between the domain expertise and the 
+inference expertise, this Python package provides an interface across a 
+wide range of inference algorithms from different sources, as well as ways 
+of defining inverse problems with examples included.
+
+.. A small code example
+
+Applying inversion techniques on a defined problem yeilds useful Python
+object in return:
+
+.. container:: toggle, toggle-hidden
+
+    .. doctest:: basic
+
+        >>> from cofi.cofi_objective import XRayTomographyObjective
+        >>> xrt_problem = XRayTomographyObjective("data.csv")
+        >>> from cofi.optimisers import LeastSquareSolver
+        >>> solver = LeastSquareSolver(xrt_problem)
+        >>> result = solver.solve(tool="numpy.linalg.lstsq")
+        >>> result.ok
+        True
+        >>> result.solver_tool
+        'numpy.linalg.lstsq'
+        >>> len(result.model)
+        2500
+
+
+.. attention::
+
+    This package is still under initial development stage, so public APIs are 
+    not expected to be stable. Please stay updated and don't hesitate to raise
+    feedback or issues through `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_ 
+    or `Slack workspace <https://inlab-geo.slack.com>`_.
 
 
 .. seealso::
 
-    This site includes CoFI's usage & API documentation. 
-    For more information on what CoFI & InLab are, 
+    This site includes basic usage, tutorials & API documentation of CoFI (the
+    Python package). For more information on **InLab**, which is what this 
+    project is led by, 
     please check out `the InLab website <http://www.inlab.edu.au/>`_.
 
 
@@ -34,17 +72,17 @@ inference problems with the tools for their solution.
 
     ---
 
-    .. **Need help?**
-    .. ^^^^^^^^^^^^^^
+    **Need support?**
+    ^^^^^^^^^^^^^^
 
-    .. Ask on our community channels
+    Ask in our Slack workspace
 
-    .. .. link-button:: https://www.fatiando.org/contact
-    ..     :type: url
-    ..     :text: Join the conversation
-    ..     :classes: btn-outline-primary btn-block stretched-link
+    .. link-button:: https://inlab-geo.slack.com
+        :type: url
+        :text: Join the conversation
+        :classes: btn-outline-primary btn-block stretched-link
 
-    .. ---
+    ---
 
     **Reference documentation**
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -56,25 +94,28 @@ inference problems with the tools for their solution.
         :text: API reference
         :classes: btn-outline-primary btn-block stretched-link
 
-    .. ---
+    ---
 
-    .. **Using CoFI for research?**
-    .. ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    **Contribute to CoFI**
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    .. Citations help support our work
+    Features or bug fixes are always welcomed!
 
-    .. .. link-button:: citing
-    ..     :type: ref
-    ..     :text: Cite Pooch
-    ..     :classes: btn-outline-primary btn-block stretched-link
+    .. link-button:: contribute
+        :type: ref
+        :text: Developer notes
+        :classes: btn-outline-primary btn-block stretched-link
+
 
 Table of contents
 -----------------
 
 .. toctree::
-    :caption: Getting started
+    :caption: Basic usage
     :maxdepth: 1
 
+    installation.rst
+    notebooks/index.rst
     getting-started.rst
     faq.rst
 
@@ -83,6 +124,10 @@ Table of contents
     :maxdepth: 1
 
     api/index.rst
+
+.. toctree::
+    :caption: Developer notes
+
     contribute.rst
 
 .. Getting started

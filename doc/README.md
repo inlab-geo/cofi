@@ -2,40 +2,38 @@
 
 > Note that our latest documentation is now hosted by [readthedocs](https://readthedocs.org/) and can be accessed [**here**](https://cofi.readthedocs.io/en/latest/). 
 > 
-> Instructions below are only for development and testing purposes.
+> Instructions below are only for development and testing of this documentation.
 
 ## How to build this documentation?
 
-`sphinx` and `sphinx-insipid-theme` are required for building this documentation.
+The file [environment.yml](environment.yml) specifies packages required for developing this documentation. 
 
-So if you are in a hurry, simply use `pip install sphinx sphinx-insipid-theme` to ensure the dependencies.
+1. To create a new `conda` environment from the file:
 
-Alternatively, the *recommended* way is to use a virtual environment so that it doesn't conflict with the dependencies of your other Python programs. We have listed all the dependencies required for developing CoFI in a file (`environment_dev.yml`) at the root level of this repository. 
+    ```console
+    conda env create -f environment.yml
+    ```
 
-### Building for the first time
+2. To build / update documentation from this `doc` folder:
 
-```bash
-# clone the repo
-cd <path-where-you-want-cofi-to-be-in>
-git clone https://github.com/inlab-geo/cofi.git
+    ```console
+    cd <path-to-cofi>/doc
+    make html
+    ```
 
-# create a virtual environment
-cd cofi
-conda env create -f environment_dev.yml
-conda activate cofi_dev
+    The above command cleans up previous build files (if exist), updates API reference list and builds webpage files.
 
-# build the documentation
-cd doc
-make html
-```
+3. To open the documentation built locally, use your browser to open the file: `<path-to-cofi>/doc/_build/html/index.html`.
 
-### Updating the documentation
-If you already have cofi repository cloned and virtual environment ready, then do the following:
+## Structure of this documentation
 
-```bash
-cd <path-where-you-have-your-cofi>/cofi
-conda activate cofi_dev
-make html
-```
+This documentation follows the guide [here](https://www.writethedocs.org/guide/writing/beginners-guide-to-docs/), so aims to include:
 
-Then use your browser to open the `index.html` file located in: `<path-of-cofi>/doc/_build/html/`.
+1. what `cofi` is & what problem it solves
+2. small code example
+3. a link to code & issue tracker
+4. frequently asked questions
+5. how to get support
+6. information for people who want to contribute back
+7. installation instructions
+8. license

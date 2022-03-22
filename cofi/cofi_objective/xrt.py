@@ -32,8 +32,8 @@ class XRayTomographyObjective(BaseObjective):
         - data_paths, data_attns
         - data_file
 
-        The other arguments, including data_attributes, n_x, n_y and extent, are 
-        optional (or have default values as described below). extent can be 
+        The other arguments, including data_attributes, n_x, n_y and extent, are
+        optional (or have default values as described below). extent can be
         important to specify when your dataset is not big enough to cover the
         whole range.
 
@@ -69,13 +69,15 @@ class XRayTomographyObjective(BaseObjective):
             # ####### INPUT VALIDATION #######
             if data_file is None:
                 raise ValueError(
-                    "Please provide observed data while initialising XRayTomographyObjective"
+                    "Please provide observed data while initialising"
+                    " XRayTomographyObjective"
                 )
             try:
                 dataset = np.loadtxt(data_file)
             except Exception:
                 raise ValueError(
-                    "Please provide a valid file path while initialising XRayTomographyObjective"
+                    "Please provide a valid file path while initialising"
+                    " XRayTomographyObjective"
                 )
             # ####### END VALIDATION #######
             data_src_intensity = dataset[:, data_attributes["src_intensity"]]
@@ -91,21 +93,23 @@ class XRayTomographyObjective(BaseObjective):
             # ####### INPUT VALIDATION #######
             if data_rec_intensity is None or data_paths is None:
                 raise ValueError(
-                    "Please provide full data while initialising XRayTomographyObjective, "
-                    "including data_src_intensity, data_rec_intensity and data_paths"
+                    "Please provide full data while initialising"
+                    " XRayTomographyObjective, including data_src_intensity,"
+                    " data_rec_intensity and data_paths"
                 )
             if (data_src_intensity.shape[0] != data_rec_intensity.shape[0]) or (
                 data_src_intensity.shape[0] != data_paths.shape[0]
             ):
                 raise ValueError(
-                    "The dimensions between data_src_intensity, data_rec_intensity and "
-                    "data_paths don't match; you need to provide them with the same rows count"
+                    "The dimensions between data_src_intensity, data_rec_intensity and"
+                    " data_paths don't match; you need to provide them with the same"
+                    " rows count"
                 )
             if data_paths.shape[1] != 4:
                 raise ValueError(
-                    f"The given data_paths should have exactly 4 columns that refer "
-                    f"to source and receiver locations in forms of x and y coordinates; "
-                    f"instead we got data_paths of shape {data_paths.shape}"
+                    "The given data_paths should have exactly 4 columns that refer to"
+                    " source and receiver locations in forms of x and y coordinates;"
+                    f" instead we got data_paths of shape {data_paths.shape}"
                 )
             # ####### END VALIDATION #######
             self.paths = data_paths
@@ -113,8 +117,8 @@ class XRayTomographyObjective(BaseObjective):
             # ####### INPUT VALIDATION #######
             if data_paths is None:
                 raise ValueError(
-                    "Please provide full data while initialising XRayTomographyObjective, "
-                    "including data_attns and data_paths"
+                    "Please provide full data while initialising"
+                    " XRayTomographyObjective, including data_attns and data_paths"
                 )
             if data_attns.shape[0] != data_paths.shape[0]:
                 raise ValueError(
@@ -123,9 +127,9 @@ class XRayTomographyObjective(BaseObjective):
                 )
             if data_paths.shape[1] != 4:
                 raise ValueError(
-                    f"The given data_paths should have exactly 4 columns that refer "
-                    f"to source and receiver locations in forms of x and y coordinates; "
-                    f"instead we got data_paths of shape {data_paths.shape}"
+                    "The given data_paths should have exactly 4 columns that refer to"
+                    " source and receiver locations in forms of x and y coordinates;"
+                    f" instead we got data_paths of shape {data_paths.shape}"
                 )
             # ####### END VALIDATION #######
             self.paths = data_paths
@@ -154,8 +158,8 @@ class XRayTomographyObjective(BaseObjective):
                 or extent[3] < inferred_extent[3]
             ):
                 raise ValueError(
-                    f"The paths data is out of bounds based on provided region's extent; "
-                    f"inferred region's extent: {inferred_extent}"
+                    "The paths data is out of bounds based on provided region's"
+                    f" extent; inferred region's extent: {inferred_extent}"
                 )
             # ####### END VALIDATION #######
             self.extent = extent
@@ -167,18 +171,18 @@ class XRayTomographyObjective(BaseObjective):
                 model = model.reshape([self.n_x, self.n_y])
             except:
                 raise ValueError(
-                    f"You've provided model if shape: {model.shape}, however we expect "
-                    f"one in shape ({self.n_x}, {self.n_y}); alternatively, reset the grid "
-                    f"dimensions using method 'set_grid_dimensions(n_x, n_y)' on objective "
-                    f"instance and try again."
+                    f"You've provided model if shape: {model.shape}, however we expect"
+                    f" one in shape ({self.n_x}, {self.n_y}); alternatively, reset the"
+                    " grid dimensions using method 'set_grid_dimensions(n_x, n_y)' on"
+                    " objective instance and try again."
                 )
         else:
             if model.shape[0] != self.n_x or model.shape[1] != self.n_y:
                 raise ValueError(
-                    f"You've provided model if shape: {model.shape}, however we expect "
-                    f"one in shape ({self.n_x}, {self.n_y}); alternatively, reset the grid "
-                    f"dimensions using method 'set_grid_dimensions(n_x, n_y)' on objective "
-                    f"instance and try again."
+                    f"You've provided model if shape: {model.shape}, however we expect"
+                    f" one in shape ({self.n_x}, {self.n_y}); alternatively, reset the"
+                    " grid dimensions using method 'set_grid_dimensions(n_x, n_y)' on"
+                    " objective instance and try again."
                 )
         d_estimated = self.fwd.calc(model, self.paths, self.extent)
         return np.linalg.norm(self.d - d_estimated)
@@ -239,11 +243,11 @@ class XRayTomographyForward(BaseForward):
         """Perform the forward operation to the X-Ray Tomography problem.
 
         :param model: the discretized version of the position-dependent attenuation coefficient.
-            This is expressed as an array of dimension :math:`(N_x, N_y)`, where :math:`N_x` 
+            This is expressed as an array of dimension :math:`(N_x, N_y)`, where :math:`N_x`
             and :math:`N_y` are the number of cells in :math:`x`-direction and :math:`y`-direction
             respectively.
         :type model: Union[cofi.cofi_objective.Model, np.ndarray, list]
-        :param paths: an array of source and receiver locations. This has dimension 
+        :param paths: an array of source and receiver locations. This has dimension
             :math:`(N_{paths}, 4)` so that
             - ``paths[i,0]`` - :math:`x`-location of source for path :math:`i`
             - ``paths[i,1]`` - :math:`y`-location of source for path :math:`i`
@@ -254,7 +258,7 @@ class XRayTomographyForward(BaseForward):
             Note that all sources and receivers must lie within, or on the boundary of, this model
             region.
         :type extent: tuple, optional
-        :return: the attenuation for each path. It is an array of dimension :math:`(N_{paths})`, 
+        :return: the attenuation for each path. It is an array of dimension :math:`(N_{paths})`,
             with the :math:`i`-th element being :math:`{-\\log{\\frac{I_{rec}^{(i)}}{I_{src}^{(i)}}}}`.
         :rtype: np.ndarray
         """

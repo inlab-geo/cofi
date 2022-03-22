@@ -9,3 +9,5 @@ dependencies:
   - pip:
     - sphinx-book-theme==0.2.0
     - sphinx-panels==0.6.0
+    - nbsphinx==0.8.8
+    - sphinx-togglebutton==0.3.0

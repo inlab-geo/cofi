@@ -13,18 +13,16 @@
 #
 #-----------------------------------------------------------------------
 #import sys
-# try:
-#     from . import _rfc as rfm # if file is only to be used as library
-# except:
-#     import ._rfc as rfm # if file is to be executed
-from . import _rfc as rfm
+try:
+    from . import _rfc as rfm # if file is only to be used as library
+except:
+    import _rfc as rfm # if file is to be executed
 import numpy as np
 #matplotlib.use('Qt4Agg')
 #import matplotlib
 from matplotlib import pyplot as plt
 ##################################################################################
-# Calculate Data covariance matrix for evaluation of waveform fit
-def rfcalc(model,sn=0.0,mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1): 
+def rfcalc(model,sn=0.0,mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,time_shift=5.0,ndatar=626,v60=8.043,seed=1): # Calculate Data covariance matrix for evaluation of waveform fit
     #print ('sn ',sn)
     if(sn==0.0):
         a,b = rfm.rfcalc_nonoise(model,mtype,fs,gauss_a,water_c,angle,time_shift,ndatar,v60)
@@ -32,8 +30,7 @@ def rfcalc(model,sn=0.0,mtype=0,fs=25.0,gauss_a=2.5,water_c=0.0001,angle=35.0,ti
         a,b = rfm.rfcalc_noise(model,mtype,sn,fs,gauss_a,water_c,angle,time_shift,ndatar,v60,seed)
     return a,b
 ##################################################################################
-# Calculate Data covariance matrix for evaluation of waveform fit
-def InvDataCov(width,Ar,ndata): 
+def InvDataCov(width,Ar,ndata): # Calculate Data covariance matrix for evaluation of waveform fit
     sigsq = width**2
     Arsq = Ar*Ar # waveform noise variance    
     Cd = np.zeros((ndata,ndata))
@@ -47,8 +44,7 @@ def InvDataCov(width,Ar,ndata):
     return Cdinv/Arsq
 
 ##################################################################################
-# Calculate Data sub-covariance matrix for evaluation of waveform fit
-def InvDataCovSub(width,Ar,ndata,ind): 
+def InvDataCovSub(width,Ar,ndata,ind): # Calculate Data sub-covariance matrix for evaluation of waveform fit
     sigsq = width**2
     Arsq = Ar*Ar # waveform noise variance    
     Cd = np.zeros((ndata,ndata))
@@ -62,8 +58,7 @@ def InvDataCovSub(width,Ar,ndata,ind):
     Cdinv = np.dot(V.T[:,:pmax], np.dot(Sinv, U.T[:pmax,:]))
     return Cdinv/Arsq        
 ##################################################################################
-# Plot calculated and observed RF waveform 
-def plot_misfit_profile(x,misfit,xtrue,iparam): 
+def plot_misfit_profile(x,misfit,xtrue,iparam): # Plot calculated and observed RF waveform 
     fig, ax = plt.subplots()
     
     if(iparam[1]==1): strx = "Layer "+repr(iparam[0]+1)+" velocity (km/s)" # plot axis labels
@@ -91,16 +86,14 @@ def plot_misfit_profile(x,misfit,xtrue,iparam):
     plt.legend()
     plt.show()
 ##################################################################################
-# Transform layer thickness representation to (depth vel) plot format
-def l2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0): 
+def l2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0): # Transform layer thickness representation to (depth vel) plot format
     px = np.zeros([2*len(model)])
     py = np.zeros([2*len(model)])
     py[1::2],py[2::2],px[0::2],px[1::2] = list(np.cumsum(model.T[0])),list(np.cumsum(model.T[0]))[:-1],model.T[1],model.T[1]
     py[-1] = dmax
     return px,py
 ##################################################################################
-# Transform Voronoi nucleus representation to (depth vel) plot format
-def v2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0): 
+def v2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0): # Transform Voronoi nucleus representation to (depth vel) plot format
     a,b,c,d,e = rfm.voro2mod(model)
     px = np.zeros([2*len(d)])
     py = np.zeros([2*len(d)])
@@ -109,8 +102,7 @@ def v2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0):
     py[-1] = dmax
     return np.cumsum(a),b,c,d,e,px,py
 ##################################################################################
-# Transform depth representation to (depth vel) plot format
-def d2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0): 
+def d2mod(model,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0): # Transform depth representation to (depth vel) plot format
     px = np.zeros([2*len(model)])
     py = np.zeros([2*len(model)])
     py[1::2],py[2::2],px[0::2],px[1::2] = list(model.T[0]),list(model.T[0])[:-1],model.T[1],model.T[1]
@@ -129,8 +121,7 @@ def plot_RFs(time1,RFo,time2,RFp,string="Observed and predicted receiver functio
     plt.show()
     plt.savefig('RF_plot.pdf',format='PDF')
 ##################################################################################
-# plot velocity model and receiver function
-def plotRFm(velmod,time1,RFo,time2,RFp,mtype = 0,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0,string="Observed and predicted receiver functions"): 
+def plotRFm(velmod,time1,RFo,time2,RFp,mtype = 0,vmin=2.4,vmax=4.7,dmin=0.0,dmax=60.0,string="Observed and predicted receiver functions"): # plot velocity model and receiver function
     f, (a0, a1) = plt.subplots(1,2, figsize=(12,4), gridspec_kw = {'width_ratios':[1, 3]})
 
     a1.set_title(string)
@@ -161,7 +152,6 @@ def plotRFm(velmod,time1,RFo,time2,RFp,mtype = 0,vmin=2.4,vmax=4.7,dmin=0.0,dmax
     plt.show()
     plt.savefig('RF_mod_plot.pdf',format='PDF')
     return pv,pd
-
 ##################################################################################
 if __name__ == "__main__":
     #print(sys.path)
