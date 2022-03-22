@@ -2,12 +2,17 @@
 Getting started
 ===============
 
+.. .. attention::
+
+..     This page is still under construction. More precisely, I'm trying to figure out
+..     what best goes to "getting-started" and what goes to "tutorials".
+
+.. Welcome! This tutorial provides basic usage and examples of CoFI. 
+
 .. attention::
 
-    This page is still under construction. More precisely, I'm trying to figure out
-    what best goes to "getting-started" and what goes to "tutorials".
-
-Welcome! This tutorial provides basic usage and examples of CoFI. 
+  This page is under construction. Now it serves as our internal communication channel
+  temporarily.
 
 
 To discuss: objective or problem?
@@ -81,10 +86,10 @@ To use a pre-defined problem from inversion-test-suite:
 Self-defined inversion problem
 ------------------------------
 
-To define a custom problem from scratch, there are 4 possible layers, depending the
+To define a custom problem from scratch, there are 4 possible tiers, depending the
 level of flexibility you want.
 
-Layer 0
+Tier 3
   
 .. code-block:: python
 
@@ -94,7 +99,7 @@ Layer 0
   problem.setMisfit(objective_function)
   problem.setInitialModel(my_init_routine())
 
-Layer 1
+Tier 2
 
 .. code-block:: python
 
@@ -105,7 +110,7 @@ Layer 1
   problem.setRegularisation(regularisation_function)
   problem.setInitialModel(my_init_routine())
 
-Layer 2
+Tier 1
 
 .. code-block:: python
 
@@ -118,7 +123,7 @@ Layer 2
   problem.setRegularisation("L1")
   problem.setInitialModel(my_init_routine())
 
-Layer 3
+Tier 0
 
 .. code-block:: python
   
