@@ -59,7 +59,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 source_suffix = ".rst"
 source_encoding = "utf-8"
 master_doc = "index"
-pygments_style = "default"
+pygments_style = "xcode"        # https://pygments.org/styles/
 add_function_parentheses = False
 
 # Configuration to include links to other project docs
