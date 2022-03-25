@@ -8,18 +8,6 @@ find_package(PythonExtensions REQUIRED)
 find_package(Cython REQUIRED)
 find_package(NumPy REQUIRED)
 find_package(F2PY REQUIRED)
-# find_package(pybind11 REQUIRED)
-# find_package(Python3 COMPONENTS Interpreter REQUIRED)
-
-# PyBind11 related
-# include(GNUInstallDirs)
-# include(FetchContent)
-# FetchContent_Declare(
-#   pybind11
-#   URL https://github.com/pybind/pybind11/archive/refs/tags/v2.9.1.tar.gz
-#   URL_HASH SHA256=c6160321dc98e6e1184cc791fbeadd2907bb4a0ce0e447f2ea4ff8ab56550913
-# )
-# FetchContent_MakeAvailable(pybind11)
 
 # Add proper -fPIC and MINGW handling
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -63,10 +51,10 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ################################################################################
 # Solver Libraries
 ################################################################################
-add_subdirectory(cofi/linear_reg)
+# add_subdirectory(cofi/linear_reg)
 
 
 ################################################################################
 # Objective Libraries
 ################################################################################
-add_subdirectory(cofi/cofi_objective/lib_rfc)
+add_subdirectory(cofi/inv_problems/lib_rfc)

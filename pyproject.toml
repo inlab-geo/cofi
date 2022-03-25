@@ -22,8 +22,7 @@
 # pytest
 
 ####### COVERAGE #######
-# coverage run -m pytest
-# coverage report
+# coverage run -m pytest; coverage report; coverage xml
 
 ####### PYLINT #######
 # pylint cofi
@@ -45,11 +44,11 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
-testpaths = ["cofi/tests", "cofi/cofi_objective/tests"]
+testpaths = ["cofi/tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
 
 [tool.coverage.run]
-omit = ["*/lib*/*", "*/lib*", "cofi/cofi_objective/bandit_multi_armed.py"]
+omit = ["*/lib*/*", "*/lib*", "cofi_toberemoved"]
 
 [tool.black]
 line-length = 88
