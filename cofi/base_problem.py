@@ -231,5 +231,11 @@ class BaseProblem:
         # TODO
         raise NotImplementedError
 
+    def summary(self):
+        # TODO - print detailed information, including what have been defined and data shape
+        # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
+        raise NotImplementedError
+
     def __repr__(self) -> str:
-        pass
+        # TODO - make a list of what functions are defined so far
+        return f"{self.__class__.__name__} with the following information defined: []"
