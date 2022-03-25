@@ -43,9 +43,9 @@ inv_problem = BaseProblem()
 inv_problem.set_objective_function(my_objective_func)
 ```
 
-We have a series of pre-defined problems and ways of calculating your misfit. Feel free to check out
-our [getting-started](https://cofi.readthedocs.io/en/latest/getting-started.html) doc more how to
-plug in your own inference problems.
+We have a series of pre-defined problems and ways of setting up the problem. Feel free to check out
+our [getting-started](https://cofi.readthedocs.io/en/latest/getting-started.html) page on how to
+plug in your own inference problems (with different tiers of flexibility)
 
 Once a problem is defined, `cofi` can tell you what inference solvers you can use based on what level of
 information you've provided:
