@@ -2,9 +2,7 @@ from typing import Tuple, Union
 
 import numpy as np
 
-from .. import BaseForward, BaseProblem
-
-# from .lib_rf import rfcalc
+from .. import BaseProblem
 from . import _rfc
 
 
@@ -26,8 +24,7 @@ class ReceiverFunctionObjective(BaseProblem):
 
     def __init__(self, t, rf_data, initial_model=None):
         self.fwd = ReceiverFunction()
-        self.t = t
-        self.rf_data = rf_data
+        self.set_dataset(t, rf_data)
         self.initial_model = initial_model
 
     def objective(
@@ -54,16 +51,10 @@ class ReceiverFunctionObjective(BaseProblem):
     def initial_model(self):
         return self.initial_model
 
-    def data_x(self):
-        return self.t
-
-    def data_y(self):
-        return self.rf_data
-
     # def log_likelihood(self, model, )
 
 
-class ReceiverFunction(BaseForward):
+class ReceiverFunction:
     def __init__(self):
         pass
 

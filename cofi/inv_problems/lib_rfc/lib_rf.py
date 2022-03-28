@@ -14,7 +14,7 @@
 #-----------------------------------------------------------------------
 #import sys
 try:
-    from . import _rfc as rfm # if file is only to be used as library
+    from .. import _rfc as rfm # if file is only to be used as library
 except:
     import _rfc as rfm # if file is to be executed
 import numpy as np

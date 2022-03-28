@@ -81,6 +81,12 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
+    # TO ADD a set method, remember to do the following:
+    # - def set_something(self, something)
+    # - def something(self), this is a property / function
+    # - def something_defined(self) -> bool
+    # - add checking to self.defined_list
+    # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
         self.objective = obj_func
 
@@ -204,20 +210,35 @@ class BaseProblem:
         return self.check_defined(self.jacobian)
 
     @property
-    def dataset_defined(self):
-        return self.check_defined(self.data_x) and self.check_defined(self.data_y)
+    def data_misfit_defined(self):
+        return self.check_defined(self.data_misfit)
 
-    @staticmethod
-    def check_defined(func, one_arg=True):
+    @property
+    def regularisation_defined(self):
+        return self.check_defined(self.regularisation)
+
+    @property
+    def dataset_defined(self):
         try:
-            if one_arg: func(np.array([]))
-            else: func()
+            self.data_x
+            self.data_y
         except NameError:
             return False
+        else:
+            return True
+
+    @staticmethod
+    def check_defined(func):
+        try:
+            func(np.array([]))
         except NotImplementedError:
             return False
         else:
             return True
+
+    def defined_list(self) -> list:
+        # TODO
+        return []
 
     def _data_misfit_L2(self,  model: np.ndarray) -> Number:
         # TODO
