@@ -1,4 +1,4 @@
-from cofi.base_solver import BaseSolver
+from cofi.solvers.base_solver import BaseSolver
 import pytest
 
 

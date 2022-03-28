@@ -159,8 +159,12 @@ class BaseProblem:
         data = np.loadtxt(file_path, delimiter=delimiter)
         self.set_dataset(np.delete(data,obs_idx,1), data[:,obs_idx])
 
+    def defined_components(self) -> list:
+        # TODO - return a list of functions that are defined
+        raise NotImplementedError
+
     def suggest_solvers(self) -> list:
-        # TODO
+        # TODO - use self.defined_components() to suggest solvers
         raise NotImplementedError
 
     @property
