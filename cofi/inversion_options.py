@@ -15,5 +15,17 @@ class InversionOptions:
         # TODO - suggest backend tool given chosen method
         raise NotImplementedError
 
+    def summary(self):
+        # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
+        # TODO
+        title = "Summary for inversion options"
+        display_width = len(title)
+        double_line = "=" * display_width
+        single_line = "-" * display_width
+        print(title)
+        print(double_line)
+        raise NotImplementedError       
+
     def __repr__(self) -> str:
+        # TODO
         raise NotImplementedError

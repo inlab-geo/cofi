@@ -176,6 +176,21 @@ class BaseProblem:
         data = np.loadtxt(file_path, delimiter=delimiter)
         self.set_dataset(np.delete(data,obs_idx,1), data[:,obs_idx])
 
+    def set_initial_model(self, init_model: np.ndarray):
+        self._initial_model = init_model
+        self._model_shape = init_model.shape
+
+    def set_model_shape(self, model_shape: tuple):
+        if self.initial_model_defined and self._model_shape != model_shape:
+            try:
+                np.reshape(self.initial_model, model_shape)
+            except ValueError as e:
+                raise ValueError(
+                    f"The model_shape you've provided {model_shape} doesn't match the "
+                    f"initial_model you set which has the shape: {self.initial_model.shape}"
+                ) from e
+        self._model_shape = model_shape
+
     def defined_components(self) -> list:
         _to_check = [
             "objective",
@@ -187,6 +202,8 @@ class BaseProblem:
             "regularisation",
             "forward",
             "dataset",
+            "initial_model",
+            "model_shape",
         ]
         return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
 
@@ -208,6 +225,22 @@ class BaseProblem:
         raise NameError(
             "data has not been set, please use either `set_dataset()` or "
             "`set_dataset_from_file()` to add dataset to the problem setup"
+        )
+
+    @property
+    def initial_model(self):
+        if hasattr(self, "_initial_model"): return self._initial_model
+        raise NameError(
+            "initial model has not been set, please use `set_initial_model()`"
+            " to add to the problem setup"
+        )
+
+    @property
+    def model_shape(self):
+        if hasattr(self, "_model_shape"): return self._model_shape
+        raise NameError(
+            "model shape has not been set, please use either `set_initial_model()`"
+            " or `set_model_shape() to add to the problem setup"
         )
 
     @property
@@ -252,6 +285,24 @@ class BaseProblem:
         else:
             return True
 
+    @property
+    def initial_model_defined(self):
+        try:
+            self.initial_model
+        except NameError:
+            return False
+        else:
+            return True
+
+    @property
+    def model_shape_defined(self):
+        try:
+            self.model_shape
+        except NameError:
+            return False
+        else:
+            return True
+
     @staticmethod
     def check_defined(func):
         try:
@@ -263,6 +314,14 @@ class BaseProblem:
         else:
             return True
 
+    @property
+    def name(self):
+        return self._name if hasattr(self, "_name") else self.__class__.__name__
+
+    @name.setter
+    def name(self, problem_name):
+        self._name = problem_name
+
     def _data_misfit_L2(self, model: np.ndarray) -> Number:
         if self.residual_defined:
             return np.linalg.norm(self.residual(model)) / self.data_x.shape[0]
@@ -270,9 +329,19 @@ class BaseProblem:
             raise NotImplementedError("insufficient information provided to calculate mean squared error")
 
     def summary(self):
-        # TODO - print detailed information, including what have been defined and data shape
         # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
-        raise NotImplementedError
+        title = f"Summary for inversion problem: {self.name}"
+        sub_title = "List of functions / properties defined:"
+        display_width = max(len(title), len(sub_title))
+        double_line = "=" * display_width
+        single_line = "-" * display_width
+        print(title)
+        print(double_line)
+        model_shape = self.model_shape if self.model_shape_defined else "Unknown"
+        print(f"Model shape: {model_shape}")
+        print(single_line)
+        print(sub_title)
+        print(self.defined_components())
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}"
+        return f"{self.name}"

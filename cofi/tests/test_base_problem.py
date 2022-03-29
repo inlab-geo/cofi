@@ -10,6 +10,7 @@ from cofi import BaseProblem
 data_files_to_test = [
     "datasets/dummy_test1_comma.txt",
     "datasets/dummy_test2_tab.txt",
+    "datasets/dummy_test3_idx.txt",
 ]
 
 @pytest.fixture(params=data_files_to_test)
@@ -21,7 +22,10 @@ def data_path(request):
 
 def test_set_dataset_from_file(data_path):
     inv_problem = BaseProblem()
-    inv_problem.set_dataset_from_file(data_path)
+    if "idx" in data_path:
+        inv_problem.set_dataset_from_file(data_path, 0)
+    else:
+        inv_problem.set_dataset_from_file(data_path)
 
 
 ############### TEST empty problem ####################################################
@@ -37,6 +41,8 @@ def test_non_set():
     with pytest.raises(NotImplementedError): inv_problem.forward(1)
     with pytest.raises(NameError): inv_problem.data_x
     with pytest.raises(NameError): inv_problem.data_y
+    with pytest.raises(NameError): inv_problem.initial_model
+    with pytest.raises(NameError): inv_problem.model_shape
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -46,7 +52,10 @@ def test_non_set():
     assert not inv_problem.regularisation_defined
     assert not inv_problem.forward_defined
     assert not inv_problem.dataset_defined
+    assert not inv_problem.initial_model_defined
+    assert not inv_problem.model_shape_defined
     assert len(inv_problem.defined_components()) == 0
+    inv_problem.summary()
 
 def test_x_set():
     inv_problem = BaseProblem()
@@ -90,6 +99,7 @@ def inv_problem_with_misfit():
     return inv_problem
 
 def check_defined_misfit_reg(inv_problem):
+    inv_problem.summary()
     assert inv_problem.data_misfit_defined
     assert inv_problem.regularisation_defined
     assert inv_problem.objective_defined
@@ -165,6 +175,7 @@ def inv_problem_with_data():
     return inv_problem, forward
 
 def check_defined_data_fwd_misfit_reg(inv_problem):
+    inv_problem.summary()
     assert inv_problem.dataset_defined
     assert inv_problem.forward_defined
     assert inv_problem.data_misfit_defined
@@ -228,5 +239,12 @@ def test_check_defined():
     inv_problem.set_objective(lambda a: a+1)
     assert inv_problem.objective_defined
     assert str(inv_problem) == "BaseProblem"
-
-
+    inv_problem.name = "AnotherProblem"
+    assert str(inv_problem) == "AnotherProblem"
+    inv_problem.set_initial_model(np.array([1,2,3]))
+    assert inv_problem.initial_model_defined
+    assert inv_problem.model_shape_defined
+    assert inv_problem.model_shape == (3,)
+    with pytest.raises(ValueError):
+        inv_problem.set_model_shape((2,1))
+    inv_problem.set_model_shape((3,1))
