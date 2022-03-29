@@ -52,7 +52,8 @@ class BaseProblem:
         )
 
     def residual(self, model: np.ndarray) -> Number:
-        # TODO - this can be calculated once forward + data are supplied
+        if self.forward_defined and self.dataset_defined:
+            return self.forward(model) - self.data_y
         raise NotImplementedError(
             "`residual` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -88,6 +89,7 @@ class BaseProblem:
     # - def something_defined(self) -> bool
     # - add checking to self.defined_components
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
+
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
         self.objective = obj_func
 
@@ -126,7 +128,7 @@ class BaseProblem:
                 _reg = lambda x: np.linalg.norm(x, ord=1)
             elif regularisation in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
                 _reg = lambda x: np.linalg.norm(x, ord=2)
-            else:   # TODO - other options?
+            else:
                 raise NotImplementedError(
                     "the regularisation method you've specified isn't supported yet, please "
                     "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
@@ -176,6 +178,7 @@ class BaseProblem:
             "jacobian",
             "data_misfit",
             "regularisation",
+            "forward",
             "dataset",
         ]
         return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
@@ -229,6 +232,10 @@ class BaseProblem:
         return self.check_defined(self.regularisation)
 
     @property
+    def forward_defined(self):
+        return self.check_defined(self.forward)
+
+    @property
     def dataset_defined(self):
         try:
             self.data_x
@@ -249,21 +256,11 @@ class BaseProblem:
         else:
             return True
 
-    def _data_misfit_L2(self,  model: np.ndarray) -> Number:
-        # TODO
-        raise NotImplementedError
-
-    # def _regularisation_L0(self, model: np.ndarray) -> Number:
-    #     # TODO
-    #     return 
-
-    # def _regularisation_L1(self, model: np.ndarray) -> Number:
-    #     # TODO
-    #     raise NotImplementedError
-
-    # def _regularisation_L2(self, model: np.ndarray) -> Number:
-    #     # TODO
-    #     raise NotImplementedError
+    def _data_misfit_L2(self, model: np.ndarray) -> Number:
+        if self.residual_defined:
+            return np.linalg.norm(self.residual(model)) / self.data_x.shape[0]
+        else:
+            raise NotImplementedError("insufficient information provided to calculate mean squared error")
 
     def summary(self):
         # TODO - print detailed information, including what have been defined and data shape

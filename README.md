@@ -40,7 +40,7 @@ CoFI API has flexible ways of defining an inversion problem. For instance:
 from cofi import BaseProblem
 
 inv_problem = BaseProblem()
-inv_problem.set_objective_function(my_objective_func)
+inv_problem.set_objective(my_objective_func)
 ```
 
 We have a series of pre-defined problems and ways of setting up the problem. Feel free to check out
@@ -69,5 +69,5 @@ print(result.ok)
 print(result.model)
 ```
 
-And now we are done! Check out our [tutorial](https://cofi.readthedocs.io/en/latest/notebooks/index.html) pages for more examples.
+And now we are done! Check out our [tutorial](https://cofi.readthedocs.io/en/latest/notebooks/index.html) pages for more examples and advanced usages.
 
