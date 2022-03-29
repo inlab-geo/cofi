@@ -61,14 +61,35 @@ def test_set_obj():
     _forward_true = lambda x_i: 2 + x_i + x_i**2
     _y_true = np.vectorize(_forward_true)(_x)
     inv_problem.set_objective(lambda m: np.sum((_y_true-_forward(m,_x))**2)/_x.shape[0]) # mse
+    assert inv_problem.objective_defined
+    assert not inv_problem.gradient_defined
+    assert not inv_problem.hessian_defined
+    assert not inv_problem.residual_defined
+    assert not inv_problem.jacobian_defined
+    assert not inv_problem.data_misfit_defined
+    assert not inv_problem.regularisation_defined
+    assert not inv_problem.dataset_defined
+    assert len(inv_problem.defined_list()) == 1
     assert inv_problem.objective(np.array([2,1,1])) == 0
     assert inv_problem.objective(np.array([2,1,2])) == 195.8
     # TODO - test suggest_solvers()
 
 
 ############### TEST set methods Tier 2 ###############################################
-def test_set_misfit_reg():
+@pytest.fixture
+def inv_problem_with_misfit():
     inv_problem = BaseProblem()
+    _x = np.array([1,2,3,4,5])
+    _forward = lambda m, x_i: m[0] + m[1]*x_i + m[2]*x_i**2
+    _forward_true = lambda x_i: 2 + x_i + x_i**2
+    _data_misfit = lambda m: np.sum((_y_true-_forward(m,_x))**2)/_x.shape[0]
+    _y_true = np.vectorize(_forward_true)(_x)
+    inv_problem.set_data_misfit(_data_misfit)
+    return inv_problem
+
+def test_set_misfit_reg(inv_problem_with_misfit):
+    inv_problem_with_misfit.set_regularisation(lambda m: m.T@m, 0.5)
+    
 
 def test_set_misfit_reg_L0():
     inv_problem = BaseProblem()

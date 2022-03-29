@@ -11,7 +11,7 @@ class InversionOptions:
         # TODO - check this
         self.tool = tool
 
-    def suggets_tool(self):
+    def suggets_tools(self):
         # TODO - suggest backend tool given chosen method
         raise NotImplementedError
 

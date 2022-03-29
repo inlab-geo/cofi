@@ -116,15 +116,15 @@ class BaseProblem:
         else:
             self.data_misfit = data_misfit
 
-    def set_regularisation(self, regularisation: Union[str, Callable[[np.ndarray], Number]]):
+    def set_regularisation(self, regularisation: Union[str, Callable[[np.ndarray], Number]], factor:Number=0.1):
         if isinstance(regularisation, str):
             # TODO - define a dict on top of this file for available reg methods
             if regularisation in ["L0", "l0", "L0 norm", "l0 norm"]:
-                self.regularisation = self._regularisation_L0
+                _reg = self._regularisation_L0
             elif regularisation in ["L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"]:
-                self.regularisation = self._regularisation_L1
+                _reg = self._regularisation_L1
             elif regularisation in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
-                self.regularisation = self._regularisation_L2
+                _reg = self._regularisation_L2
             else:   # TODO - other options?
                 raise NotImplementedError(
                     "the regularisation method you've specified isn't supported yet, please "
@@ -132,7 +132,8 @@ class BaseProblem:
                     "find it valuable to support it from our side"
                 )
         else:
-            self.regularisation = regularisation
+            _reg = regularisation
+        self.regularisation = lambda m: _reg(m) * factor
 
     def set_forward(self, forward: Union[str, Callable[[np.ndarray], Union[np.ndarray,Number]]]):
         if isinstance(forward, str):
@@ -233,12 +234,23 @@ class BaseProblem:
             func(np.array([]))
         except NotImplementedError:
             return False
+        except:  # it's ok if there're errors caused by dummy input argument np.array([])
+            return True
         else:
             return True
 
     def defined_list(self) -> list:
-        # TODO
-        return []
+        _to_check = [
+            "objective",
+            "gradient",
+            "hessian",
+            "residual",
+            "jacobian",
+            "data_misfit",
+            "regularisation",
+            "dataset",
+        ]
+        return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
 
     def _data_misfit_L2(self,  model: np.ndarray) -> Number:
         # TODO
