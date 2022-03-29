@@ -3,6 +3,7 @@ from .inversion_options import InversionOptions
 from .runner import InversionRunner, InversionResult
 
 from . import inv_problems
+from . import solvers
 
 
 try:

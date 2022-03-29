@@ -5,7 +5,7 @@ from .. import BaseProblem
 
 
 _default_data_x = np.array([1,2,3,4,5])
-_default_data_y = np.vectorize(lambda x_i: 2 + x_i + x_i**2)(_default_data_x) + np.random.randn(_default_data_x.shape)
+_default_data_y = np.vectorize(lambda x_i: 2 + x_i + x_i**2)(_default_data_x) + np.random.randn(_default_data_x.shape[0])
 
 
 class PolynomialProblem(BaseProblem):

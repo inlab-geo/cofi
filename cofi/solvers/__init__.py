@@ -1,4 +1,5 @@
 from .base_solver import BaseSolver
+
 from .scipy_opt import ScipyOptMinSolver
 
 

@@ -197,6 +197,29 @@ def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
 
 def test_set_data_fwd_misfit_reg_all_inbuilt(inv_problem_with_data):
     inv_problem, _ = inv_problem_with_data
+    inv_problem.set_forward("polynomial")
+    inv_problem.set_data_misfit("L2")
+    inv_problem.set_regularisation("L1")
+    check_defined_data_fwd_misfit_reg(inv_problem)
+    check_values_data_fwd_misfit_reg(inv_problem)
+
+def test_invalid_fwd_options():
+    inv_problem = BaseProblem()
+    with pytest.raises(NotImplementedError):    # dataset not provided
+        inv_problem.set_forward("polynomial")
+    _x = np.array([1,2,3,4,5])
+    _y = np.vectorize(lambda x_i: 2 + x_i + x_i**2)(_x)
+    inv_problem.set_dataset(_x, _y)
+    with pytest.raises(NotImplementedError):    # forward name not supported
+        inv_problem.set_forward("FOO")
+
+def test_invalid_misfit_options():
+    inv_problem = BaseProblem()
+    with pytest.raises(NotImplementedError):
+        inv_problem.set_data_misfit("FOO")
+    inv_problem.set_data_misfit("mse")
+    with pytest.raises(NotImplementedError):
+        inv_problem.data_misfit(np.array([1,2,3]))
 
 
 ############### TEST properties #######################################################
@@ -204,6 +227,6 @@ def test_check_defined():
     inv_problem = BaseProblem()
     inv_problem.set_objective(lambda a: a+1)
     assert inv_problem.objective_defined
-
+    assert str(inv_problem) == "BaseProblem"
 
 

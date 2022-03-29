@@ -3,6 +3,8 @@ from typing import Callable, Union
 
 import numpy as np
 
+from .inv_problems import forward_dispatch_table
+
 
 class BaseProblem:
     """Base class for a inversion problem setup.
@@ -108,7 +110,7 @@ class BaseProblem:
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
         if isinstance(data_misfit, str):
             # TODO - define a dict on top of this file for available data_misfit methods
-            if data_misfit in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
+            if data_misfit in ["L2", "l2", "euclidean", "L2 norm", "l2 norm", "mse", "MSE"]:
                 self.data_misfit = self._data_misfit_L2
             else:   # TODO - other options?
                 raise NotImplementedError(
@@ -141,10 +143,15 @@ class BaseProblem:
     def set_forward(self, forward: Union[str, Callable[[np.ndarray], Union[np.ndarray,Number]]]):
         if isinstance(forward, str):
             # TODO - add available forward operator here, maybe a dict defined on top of this file is nice
-            raise NotImplementedError(
-                "the forward operator you've specified is not implemented by cofi, please "
-                "supply a full function or check our documentation for available forwrad problems"
-            )
+            if forward not in forward_dispatch_table:
+                raise NotImplementedError(
+                    "the forward operator you've specified is not implemented by cofi, please "
+                    "supply a full function or check our documentation for available forwrad problems"
+                )
+            elif not self.dataset_defined:
+                raise NotImplementedError("dataset is not provided before setting your forward function")
+            else:
+                self.forward = forward_dispatch_table[forward](self.data_x)
         else:
             self.forward = forward
 
@@ -268,5 +275,4 @@ class BaseProblem:
         raise NotImplementedError
 
     def __repr__(self) -> str:
-        # TODO - make a list of what functions are defined so far
-        return f"{self.__class__.__name__} with the following information defined: []"
+        return f"{self.__class__.__name__}"
