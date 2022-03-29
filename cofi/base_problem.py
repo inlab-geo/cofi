@@ -32,7 +32,8 @@ class BaseProblem:
         self.__dict__.update(kwargs)
 
     def objective(self, model: np.ndarray) -> Number:
-        # TODO - this can be calculated once data misfit + regularisation are defined
+        if self.data_misfit_defined and self.regularisation_defined:
+            return self.data_misfit(model) + self.regularisation(model)
         raise NotImplementedError(
             "`objective` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -85,7 +86,7 @@ class BaseProblem:
     # - def set_something(self, something)
     # - def something(self), this is a property / function
     # - def something_defined(self) -> bool
-    # - add checking to self.defined_list
+    # - add checking to self.defined_components
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
         self.objective = obj_func
@@ -120,11 +121,11 @@ class BaseProblem:
         if isinstance(regularisation, str):
             # TODO - define a dict on top of this file for available reg methods
             if regularisation in ["L0", "l0", "L0 norm", "l0 norm"]:
-                _reg = self._regularisation_L0
+                _reg = lambda x: np.linalg.norm(x, ord=0)
             elif regularisation in ["L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"]:
-                _reg = self._regularisation_L1
+                _reg = lambda x: np.linalg.norm(x, ord=1)
             elif regularisation in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
-                _reg = self._regularisation_L2
+                _reg = lambda x: np.linalg.norm(x, ord=2)
             else:   # TODO - other options?
                 raise NotImplementedError(
                     "the regularisation method you've specified isn't supported yet, please "
@@ -144,7 +145,7 @@ class BaseProblem:
             )
         else:
             self.forward = forward
-            
+
     def set_dataset(self, data_x:np.ndarray, data_y:np.ndarray):
         self._data_x = data_x
         self._data_y = data_y
@@ -167,8 +168,17 @@ class BaseProblem:
         self.set_dataset(np.delete(data,obs_idx,1), data[:,obs_idx])
 
     def defined_components(self) -> list:
-        # TODO - return a list of functions that are defined
-        raise NotImplementedError
+        _to_check = [
+            "objective",
+            "gradient",
+            "hessian",
+            "residual",
+            "jacobian",
+            "data_misfit",
+            "regularisation",
+            "dataset",
+        ]
+        return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
 
     def suggest_solvers(self) -> list:
         # TODO - use self.defined_components() to suggest solvers
@@ -239,34 +249,21 @@ class BaseProblem:
         else:
             return True
 
-    def defined_list(self) -> list:
-        _to_check = [
-            "objective",
-            "gradient",
-            "hessian",
-            "residual",
-            "jacobian",
-            "data_misfit",
-            "regularisation",
-            "dataset",
-        ]
-        return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
-
     def _data_misfit_L2(self,  model: np.ndarray) -> Number:
         # TODO
         raise NotImplementedError
 
-    def _regularisation_L0(self, model: np.ndarray) -> Number:
-        # TODO
-        raise NotImplementedError
+    # def _regularisation_L0(self, model: np.ndarray) -> Number:
+    #     # TODO
+    #     return 
 
-    def _regularisation_L1(self, model: np.ndarray) -> Number:
-        # TODO
-        raise NotImplementedError
+    # def _regularisation_L1(self, model: np.ndarray) -> Number:
+    #     # TODO
+    #     raise NotImplementedError
 
-    def _regularisation_L2(self, model: np.ndarray) -> Number:
-        # TODO
-        raise NotImplementedError
+    # def _regularisation_L2(self, model: np.ndarray) -> Number:
+    #     # TODO
+    #     raise NotImplementedError
 
     def summary(self):
         # TODO - print detailed information, including what have been defined and data shape

@@ -45,7 +45,7 @@ def test_non_set():
     assert not inv_problem.data_misfit_defined
     assert not inv_problem.regularisation_defined
     assert not inv_problem.dataset_defined
-    assert len(inv_problem.defined_list()) == 0
+    assert len(inv_problem.defined_components()) == 0
 
 def test_x_set():
     inv_problem = BaseProblem()
@@ -69,7 +69,7 @@ def test_set_obj():
     assert not inv_problem.data_misfit_defined
     assert not inv_problem.regularisation_defined
     assert not inv_problem.dataset_defined
-    assert len(inv_problem.defined_list()) == 1
+    assert len(inv_problem.defined_components()) == 1
     assert inv_problem.objective(np.array([2,1,1])) == 0
     assert inv_problem.objective(np.array([2,1,2])) == 195.8
     # TODO - test suggest_solvers()
@@ -87,19 +87,69 @@ def inv_problem_with_misfit():
     inv_problem.set_data_misfit(_data_misfit)
     return inv_problem
 
+def check_defined_misfit_reg(inv_problem):
+    assert inv_problem.data_misfit_defined
+    assert inv_problem.regularisation_defined
+    assert inv_problem.objective_defined
+    assert not inv_problem.gradient_defined
+    assert not inv_problem.hessian_defined
+    assert not inv_problem.residual_defined
+    assert not inv_problem.jacobian_defined
+    assert not inv_problem.dataset_defined
+    assert len(inv_problem.defined_components()) == 3
+
 def test_set_misfit_reg(inv_problem_with_misfit):
     inv_problem_with_misfit.set_regularisation(lambda m: m.T@m, 0.5)
-    
+    check_defined_misfit_reg(inv_problem_with_misfit)
+    true_model = np.array([2,1,1])
+    assert inv_problem_with_misfit.data_misfit(true_model) == 0
+    assert inv_problem_with_misfit.regularisation(true_model) == (4+1+1)*0.5
+    assert inv_problem_with_misfit.objective(true_model) == (4+1+1)*0.5
+    worse_model = np.array([2,1,2])
+    assert inv_problem_with_misfit.data_misfit(worse_model) == 195.8
+    assert inv_problem_with_misfit.regularisation(worse_model) == (4+1+4)*0.5
+    assert inv_problem_with_misfit.objective(worse_model) == 195.8+(4+1+4)*0.5
 
-def test_set_misfit_reg_L0():
+def test_set_misfit_reg_L0(inv_problem_with_misfit):
+    inv_problem_with_misfit.set_regularisation("L0", 0.5)
+    check_defined_misfit_reg(inv_problem_with_misfit)
+    true_model = np.array([2,1,1])
+    assert inv_problem_with_misfit.data_misfit(true_model) == 0
+    assert inv_problem_with_misfit.regularisation(true_model) == 3*0.5
+    assert inv_problem_with_misfit.objective(true_model) == 3*0.5
+    worse_model = np.array([2,1,2])
+    assert inv_problem_with_misfit.data_misfit(worse_model) == 195.8
+    assert inv_problem_with_misfit.regularisation(worse_model) == 3*0.5
+    assert inv_problem_with_misfit.objective(worse_model) == 195.8+3*0.5
+
+def test_set_misfit_reg_L1(inv_problem_with_misfit):
+    inv_problem_with_misfit.set_regularisation("L1", 0.5)
+    check_defined_misfit_reg(inv_problem_with_misfit)
+    true_model = np.array([2,1,1])
+    assert inv_problem_with_misfit.data_misfit(true_model) == 0
+    assert inv_problem_with_misfit.regularisation(true_model) == 4*0.5
+    assert inv_problem_with_misfit.objective(true_model) == 4*0.5
+    worse_model = np.array([2,1,2])
+    assert inv_problem_with_misfit.data_misfit(worse_model) == 195.8
+    assert inv_problem_with_misfit.regularisation(worse_model) == 5*0.5
+    assert inv_problem_with_misfit.objective(worse_model) == 195.8+5*0.5
+
+def test_set_misfit_reg_L2(inv_problem_with_misfit):
+    inv_problem_with_misfit.set_regularisation("L2", 0.5)
+    check_defined_misfit_reg(inv_problem_with_misfit)
+    true_model = np.array([2,1,1])
+    assert inv_problem_with_misfit.data_misfit(true_model) == 0
+    assert inv_problem_with_misfit.regularisation(true_model) == np.sqrt(4+1+1)*0.5
+    assert inv_problem_with_misfit.objective(true_model) == np.sqrt(4+1+1)*0.5
+    worse_model = np.array([2,1,2])
+    assert inv_problem_with_misfit.data_misfit(worse_model) == 195.8
+    assert inv_problem_with_misfit.regularisation(worse_model) == np.sqrt(4+1+4)*0.5
+    assert inv_problem_with_misfit.objective(worse_model) == 195.8+np.sqrt(4+1+4)*0.5
+
+def test_invalid_reg_options():
     inv_problem = BaseProblem()
-
-def test_set_misfit_reg_L1():
-    inv_problem = BaseProblem()
-
-def test_set_misfit_reg_L2():
-    inv_problem = BaseProblem()
-
+    with pytest.raises(NotImplementedError):
+        inv_problem.set_regularisation("FOO")
 
 ############### TEST set methods Tier 1 ###############################################
 def test_set_data_fwd_misfit_reg():
