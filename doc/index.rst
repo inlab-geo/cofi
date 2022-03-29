@@ -127,6 +127,7 @@ Table of contents
 
 .. toctree::
     :caption: Developer notes
+    :maxdepth: 1
 
     contribute.rst
 

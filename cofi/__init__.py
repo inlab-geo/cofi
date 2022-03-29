@@ -1,20 +1,10 @@
-"""The cofi package contains base classes for inversion solvers, forward operators and
-   objective classes.
-"""
+from .base_problem import BaseProblem
+from .inversion_options import InversionOptions
+from .runner import InversionRunner, InversionResult
 
-__all__ = []
+from . import inv_problems
+from . import solvers
 
-from .model_params import Model
-from .base_forward import BaseForward, LinearForward, PolynomialForward
-from .base_objective import BaseObjective, LeastSquareObjective, LinearObjective
-from .base_solver import BaseSolver, OptimiserMixin
-
-from . import cofi_objective
-from . import utils
-
-from . import linear_reg
-from . import optimisers
-from . import samplers
 
 try:
     from . import _version
@@ -23,14 +13,10 @@ try:
 except ImportError:
     pass
 
+
 __all__ = [
-    "BaseSolver",
-    "OptimiserMixin",
-    "Model",
-    "BaseObjective",
-    "LeastSquareObjective",
-    "LinearObjective",
-    "BaseForward",
-    "LinearForward",
-    "PolynomialForward",
+    "BaseProblem",          # public API, basic usage
+    "InversionOptions",     # public API, basic usage
+    "InversionRunner",      # public API, basic usage
+    "InversionResult",      # public API, for advanced usage (own solver)
 ]
