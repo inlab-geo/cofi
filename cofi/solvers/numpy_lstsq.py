@@ -1,8 +1,10 @@
+
+
 from .. import BaseProblem, InversionOptions
 from . import BaseSolver
 
 
-class ScipyOptMinSolver(BaseSolver):
+class NumpyLstSqSolver(BaseSolver):
     def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
         # TODO
         super().__init__(inv_problem, inv_options)

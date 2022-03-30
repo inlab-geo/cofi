@@ -37,7 +37,10 @@ class InversionRunner:
 
     def _dispatch_solver(self) -> Type[BaseSolver]:
         # TODO - look up solver_dispatch_table to return constructor for a BaseSolver subclass
-        raise NotImplementedError
+        if isinstance(self.inv_options.tool, str):
+            raise NotImplementedError
+        else:
+            return self.inv_options.tool
 
     def summary(self):      # TODO to test
         title = "Summary for inversion runner"
