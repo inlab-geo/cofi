@@ -1,9 +1,10 @@
 from abc import abstractmethod, abstractproperty
-from .. import BaseProblem, InversionOptions
+# from .. import BaseProblem, InversionOptions
 
 
 class BaseSolver:
-    def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
+    # def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
+    def __init__(self, inv_problem, inv_options):
         self.inv_problem = inv_problem
         self.inv_options = inv_options
         self._validate_inv_options()

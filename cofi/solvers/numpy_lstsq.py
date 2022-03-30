@@ -1,11 +1,11 @@
 
 
-from .. import BaseProblem, InversionOptions
+# from .. import BaseProblem, InversionOptions
 from . import BaseSolver
 
 
 class NumpyLstSqSolver(BaseSolver):
-    def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
+    def __init__(self, inv_problem, inv_options):
         # TODO
         super().__init__(inv_problem, inv_options)
         raise NotImplementedError
