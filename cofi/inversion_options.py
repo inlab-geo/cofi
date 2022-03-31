@@ -13,6 +13,9 @@ class InversionOptions:
 
     def set_params(self, **kwargs):
         self.hyper_params.update(kwargs)
+    
+    def get_params(self):
+        return self.hyper_params
 
     def set_solving_method(self, method: str):
         if method is None:
@@ -72,7 +75,6 @@ class InversionOptions:
 
     def summary(self):
         # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
-        # TODO
         title = "Summary for inversion options"
         display_width = len(title)
         double_line = "=" * display_width
@@ -88,7 +90,10 @@ class InversionOptions:
         print(f"Solver-specific parameters: {params_suffix}")
         for k, v in self.hyper_params.items():
             print(f"{k} = {v}")
+        # TODO print required/optional options
 
     def __repr__(self) -> str:
-        # TODO
-        raise NotImplementedError
+        class_name = self.__class__.__name__
+        method = f"'{self.method}'" if hasattr(self, "method") else "unknown"
+        tool = f"'{self.tool}'" if hasattr(self, "tool") else f"(default)'{self.get_default_tool()}'"
+        return f"{class_name}(method={method},tool={tool})"
