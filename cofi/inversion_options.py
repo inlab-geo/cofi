@@ -1,5 +1,6 @@
 import warnings
 from typing import Union, Type
+from collections.abc import Callable
 import json
 
 from .solvers import solver_suggest_table, solver_dispatch_table, solver_methods
@@ -7,7 +8,11 @@ from .solvers import solver_suggest_table, solver_dispatch_table, solver_methods
 
 class InversionOptions:
     def __init__(self):
+        self.hyper_params = {}
         pass
+
+    def set_params(self, **kwargs):
+        self.hyper_params.update(kwargs)
 
     def set_solving_method(self, method: str):
         if method is None:
@@ -23,6 +28,14 @@ class InversionOptions:
     def set_tool(self, tool: Union[str, Type]):
         if tool is None:
             self.unset_tool()
+        elif isinstance(tool, Type):        # TODO - check callable
+            if issubclass(tool, Callable) and "__call__" not in tool.__abstractmethods__:
+                self.tool = tool
+            else:
+                raise ValueError(
+                    "the custom solver class you've provided should implement __call__(self,) function"
+                    "read CoFI documentation 'Advanced Usage' section for how to plug in your own solver"
+                )
         else:
             if tool not in solver_dispatch_table:
                 raise ValueError(
@@ -37,6 +50,12 @@ class InversionOptions:
     def unset_tool(self):
         del self.tool
 
+    def get_default_tool(self):
+        if hasattr(self, "method"):
+            return solver_suggest_table[self.method][0]
+        else:
+            return solver_suggest_table["optimisation"][0]
+
     def suggest_tools(self):
         # TODO - suggest backend tool given chosen method
         if hasattr(self, "method"):
@@ -46,6 +65,7 @@ class InversionOptions:
             print("\nUse `InversionOptions.set_tool(tool_name)` to set a specific tool from above")
             print("Use `InversionOptions.set_solving_method(tool_name)` to change solving method")
             print("Use `InversionOptions.unset_solving_method()` if you'd like to see more options")
+            print("Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver")
         else:
             print("Here's a complete list of inversion solvers supported by CoFI (grouped by methods):")
             print(json.dumps(solver_suggest_table, indent=4))
@@ -59,7 +79,15 @@ class InversionOptions:
         single_line = "-" * display_width
         print(title)
         print(double_line)
-        raise NotImplementedError       
+        solving_method = self.method if hasattr(self, "method") else "Not set yet"
+        tool = self.tool if hasattr(self, "tool") else f"{self.get_default_tool()} (by default)"
+        print(f"Solving method: {solving_method}")
+        print(f"Backend tool: {tool}")
+        print(single_line)
+        params_suffix = "Not set yet" if len(self.hyper_params) == 0 else ""
+        print(f"Solver-specific parameters: {params_suffix}")
+        for k, v in self.hyper_params.items():
+            print(f"{k} = {v}")
 
     def __repr__(self) -> str:
         # TODO

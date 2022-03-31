@@ -8,7 +8,7 @@ class ScipyOptMinSolver(BaseSolver):
         super().__init__(inv_problem, inv_options)
         raise NotImplementedError
 
-    def solve(self) -> dict:
+    def __call__(self) -> dict:
         # TODO
         raise NotImplementedError
 

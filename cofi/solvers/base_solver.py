@@ -1,8 +1,8 @@
-from abc import abstractmethod, abstractproperty
+from abc import abstractmethod, abstractproperty, ABCMeta
 # from .. import BaseProblem, InversionOptions
 
 
-class BaseSolver:
+class BaseSolver(metaclass=ABCMeta):
     # def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
     def __init__(self, inv_problem, inv_options):
         self.inv_problem = inv_problem
@@ -12,7 +12,7 @@ class BaseSolver:
         raise NotImplementedError
 
     @abstractmethod
-    def solve(self) -> dict:
+    def __call__(self) -> dict:
         raise NotImplementedError
 
     @abstractmethod

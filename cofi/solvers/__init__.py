@@ -20,14 +20,15 @@ solvers_table = {
         "numpy.linalg.lstsq": NumpyLstSqSolver
     }
 }
-# solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}
-solver_suggest_table = {k:list(val.keys()) for k,val in solvers_table.items()}
-# solvers dispatch table grouped by tool: {inv_options.tool -> BaseSolver}
-solver_dispatch_table = {k:val for values in solvers_table.values() for k,val in values.items()}
-# all solving methods: {inv_options.method}
-solver_methods = solvers_table.keys()
 
-print(solvers_table)
-print(solver_suggest_table)
-print(solver_dispatch_table)
-print(solver_methods)
+# solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}
+# e.g. {'optimisation': ['scipy.optimize.minimize'], 'least square': ['numpy.linalg.lstsq']}
+solver_suggest_table = {k:list(val.keys()) for k,val in solvers_table.items()}
+
+# solvers dispatch table grouped by tool: {inv_options.tool -> BaseSolver}
+# e.g. {'scipy.optimize.minimize': <class 'cofi.solvers.scipy_opt.ScipyOptMinSolver'>, 'numpy.linalg.lstsq': <class 'cofi.solvers.numpy_lstsq.NumpyLstSqSolver'>}
+solver_dispatch_table = {k:val for values in solvers_table.values() for k,val in values.items()}
+
+# all solving methods: {inv_options.method}
+# e.g. {'optimisation', 'least square'}
+solver_methods = set(solvers_table.keys())
