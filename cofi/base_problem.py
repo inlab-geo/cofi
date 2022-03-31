@@ -98,14 +98,20 @@ class BaseProblem:
     def set_gradient(self, grad_func: Callable[[np.ndarray], Number]):
         self.gradient = grad_func
 
-    def set_hessian(self, hess_func: Callable[[np.ndarray], Number]):
-        self.hessian = hess_func
+    def set_hessian(self, hess_func: Union[Callable[[np.ndarray], Number], np.ndarray]):
+        if isinstance(hess_func, np.ndarray):
+            self.hessian = lambda _: hess_func
+        else:
+            self.hessian = hess_func
 
     def set_residual(self, res_func: Callable[[np.ndarray], Number]):
         self.residual = res_func
 
-    def set_jacobian(self, jac_func: Callable[[np.ndarray], Number]):
-        self.jacobian = jac_func
+    def set_jacobian(self, jac_func: Union[Callable[[np.ndarray], Number], np.ndarray]):
+        if isinstance(jac_func, np.ndarray):
+            self.jacobian = lambda _: jac_func
+        else:
+            self.jacobian = jac_func
 
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
         if isinstance(data_misfit, str):

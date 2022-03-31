@@ -53,6 +53,9 @@ class InversionOptions:
     def unset_tool(self):
         del self.tool
 
+    def get_tool(self):
+        return self.tool if hasattr(self, "tool") else self.get_default_tool()
+
     def get_default_tool(self):
         if hasattr(self, "method"):
             return solver_suggest_table[self.method][0]

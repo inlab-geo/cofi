@@ -5,8 +5,8 @@ from .solvers import solver_dispatch_table, BaseSolver
 
 
 class InversionResult:
-    def __init__(self, ) -> None:
-        pass
+    def __init__(self, res: dict) -> None:
+        self.__dict__.update(res)
 
     def summary(self) -> None:
         # TODO - directly print to console
@@ -16,11 +16,11 @@ class InversionResult:
         single_line = "-" * display_width
         print(title)
         print(double_line)
-        raise NotImplementedError
+        # TODO
 
     def __repr__(self) -> str:
-        # TODO
-        raise NotImplementedError
+        ok_or_not = "success" if hasattr(self, "ok") and self.ok else "failure"
+        return f"{self.__class__.__name__}({ok_or_not})"
 
 
 class InversionRunner:
@@ -28,18 +28,19 @@ class InversionRunner:
         self.inv_problem = inv_problem
         self.inv_options = inv_options
         # dispatch inversion_solver from self.inv_options, validation is done by solver
-        self.inv_solver = self._dispatch_solver()(inv_problem, inv_options)
+        self.inv_solve = self._dispatch_solver()(inv_problem, inv_options)
 
     def run(self) -> InversionResult:
-        res_dict = self.inv_solver.solve()
+        res_dict = self.inv_solve()
         self.inv_result = InversionResult(res_dict)
         return self.inv_result
 
     def _dispatch_solver(self) -> Type[BaseSolver]:
-        # TODO - look up solver_dispatch_table to return constructor for a BaseSolver subclass
-        if isinstance(self.inv_options.tool, str):
-            raise NotImplementedError
-        else:
+        tool = self.inv_options.get_tool()
+        # look up solver_dispatch_table to return constructor for a BaseSolver subclass
+        if isinstance(tool, str):
+            return solver_dispatch_table[tool]
+        else:      # self-defined BaseSolver (note that a BaseSolver object is a callable)
             return self.inv_options.tool
 
     def summary(self):      # TODO to test
