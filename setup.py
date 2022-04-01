@@ -33,6 +33,7 @@ setup(
     packages=[
         "cofi",
         "cofi.inv_problems",
+        "cofi.solvers",
     ],
     install_requires=[
         "numpy>=1.22.2",
