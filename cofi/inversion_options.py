@@ -77,18 +77,21 @@ class InversionOptions:
             print(json.dumps(solver_suggest_table, indent=4))
 
     def summary(self):
+        self._summary()
+
+    def _summary(self, display_lines=True):
         # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
         title = "Summary for inversion options"
         display_width = len(title)
         double_line = "=" * display_width
         single_line = "-" * display_width
         print(title)
-        print(double_line)
+        if display_lines: print(double_line)
         solving_method = self.method if hasattr(self, "method") else "Not set yet"
         tool = self.tool if hasattr(self, "tool") else f"{self.get_default_tool()} (by default)"
         print(f"Solving method: {solving_method}")
         print(f"Backend tool: {tool}")
-        print(single_line)
+        if display_lines: print(single_line)
         params_suffix = "Not set yet" if len(self.hyper_params) == 0 else ""
         print(f"Solver-specific parameters: {params_suffix}")
         for k, v in self.hyper_params.items():

@@ -335,6 +335,9 @@ class BaseProblem:
             raise NotImplementedError("insufficient information provided to calculate mean squared error")
 
     def summary(self):
+        self._summary()
+
+    def _summary(self, display_lines=True):
         # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
         title = f"Summary for inversion problem: {self.name}"
         sub_title = "List of functions / properties defined:"
@@ -342,10 +345,10 @@ class BaseProblem:
         double_line = "=" * display_width
         single_line = "-" * display_width
         print(title)
-        print(double_line)
+        if display_lines: print(double_line)
         model_shape = self.model_shape if self.model_shape_defined else "Unknown"
         print(f"Model shape: {model_shape}")
-        print(single_line)
+        if display_lines: print(single_line)
         print(sub_title)
         print(self.defined_components())
 

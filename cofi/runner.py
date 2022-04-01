@@ -1,4 +1,5 @@
 from typing import Type
+import json
 
 from . import BaseProblem, InversionOptions
 from .solvers import solver_dispatch_table, BaseSolver
@@ -7,20 +8,33 @@ from .solvers import solver_dispatch_table, BaseSolver
 class InversionResult:
     def __init__(self, res: dict) -> None:
         self.__dict__.update(res)
+        self.res = res
+        if not hasattr(self, "ok"):
+            raise ValueError(
+                "inversion termination status not returned in result dictionary, "
+                "fix your solver to return properly. Check CoFI documentation "
+                "'Advanced Usage' section for how to plug in your own solver"
+            )
+        self.ok_or_not = "success" if hasattr(self, "ok") and self.ok else "failure"
 
     def summary(self) -> None:
-        # TODO - directly print to console
+        self._summary()
+
+    def _summary(self, display_lines=True) -> None:
         title = "Summary for inversion result"
         display_width = len(title)
         double_line = "=" * display_width
         single_line = "-" * display_width
         print(title)
-        print(double_line)
-        # TODO
+        if display_lines: print(double_line)
+        print(self.ok_or_not.upper())
+        if display_lines: print(single_line)
+        for key, val in self.res.items():
+            if key != "ok":
+                print(f"{key}: {val}")
 
     def __repr__(self) -> str:
-        ok_or_not = "success" if hasattr(self, "ok") and self.ok else "failure"
-        return f"{self.__class__.__name__}({ok_or_not})"
+        return f"{self.__class__.__name__}({self.ok_or_not})"
 
 
 class InversionRunner:
@@ -45,20 +59,23 @@ class InversionRunner:
 
     def summary(self):      # TODO to test
         title = "Summary for inversion runner"
-        subtitle_result = "Trained with the following result"
-        subtitle_options = "With inversion solver defined as below"
-        subtitle_problem = "For inversion problem defined as below"
+        subtitle_result = "Trained with the following result:"
+        subtitle_options = "With inversion solver defined as below:"
+        subtitle_problem = "For inversion problem defined as below:"
         display_width = max(len(title), len(subtitle_result), len(subtitle_options), len(subtitle_problem))
         double_line = "=" * display_width
         single_line = "-" * display_width
         print(title)
         print(double_line)
         if hasattr(self, "inv_result"):
-            print(subtitle_result)
-            self.inv_result.summary()
+            print(f"{subtitle_result}\n")
+            self.inv_result._summary(False)
             print(single_line)
-        print(subtitle_options)
-        self.inv_options.summary()
+        else:
+            print("Inversion hasn't started, try `runner.run()` to see result")
+            print(single_line)
+        print(f"{subtitle_options}\n")
+        self.inv_options._summary(False)
         print(single_line)
-        print(subtitle_problem)
-        self.inv_problem.summary()
+        print(f"{subtitle_problem}\n")
+        self.inv_problem._summary(False)
