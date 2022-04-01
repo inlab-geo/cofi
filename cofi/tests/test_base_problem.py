@@ -164,6 +164,7 @@ def test_invalid_reg_options():
     with pytest.raises(NotImplementedError):
         inv_problem.set_regularisation("FOO")
 
+
 ############### TEST set methods Tier 1 ###############################################
 @pytest.fixture
 def inv_problem_with_data():

@@ -5,59 +5,37 @@ List of functions and classes (API)
 
 .. automodule:: cofi
 
-Base solver & objective
+APIs for Basic Usage
+--------------------
+
+`BaseProblem` is the base class of all forward problems. It includes methods you
+can use so as to define a forward problem.
+
+`InversionOptions` is a holder for you to define how you'd like the inversion problem
+to be solved.
+
+With instances of `BaseProblem` and `InversionOptions` defined, they are passed InversionOptions
+an `InversionRunner` and an inversion run gives a result object of the type `InversionResult`.
+
+
+.. autosummary::
+    :toctree: generated/
+    :caption: Basic usage
+
+    cofi.BaseProblem
+    cofi.InversionOptions
+    cofi.InversionRunner
+    cofi.InversionResult
+
+
+APIs for Advanced Usage
 -----------------------
 
-`BaseSolver` is the base class of all inversion solvers included in cofi.
-
-`BaseObjective` is the base class of all forward problems.
+`BaseSolver` is 
 
 .. autosummary::
     :toctree: generated/
-    :caption: Base classes
+    :caption: Advanced usage
 
-    cofi.BaseSolver
-    cofi.BaseObjective
-    cofi.Model
-    cofi.BaseForward
-
-
-Solvers - optimisation based
-----------------------------
-
-.. autosummary::
-    :toctree: generated/
-    :caption: Inversion - optimisation
-
-    cofi.optimisers.ScipyOptimiserSolver
-    cofi.optimisers.ScipyOptimiserLSSolver
-    cofi.optimisers.TAOSolver
-
-
-Solvers - sampling based
-------------------------
-
-.. autosummary::
-    :toctree: generated/
-    :caption: Inversion - sampling
-
-
-Utility
--------
-
-.. autosummary::
-    :toctree: generated/
-    :caption: Utility
-
-Examples of CoFI objectives
----------------------------
-
-.. autosummary::
-    :toctree: generated/
-    :caption: Example objectives
-
-    cofi.cofi_objective.ExpDecay
-    cofi.cofi_objective.ReceiverFunctionObjective
-    cofi.cofi_objective.ReceiverFunction
-    cofi.cofi_objective.XRayTomographyObjective
-    cofi.cofi_objective.XRayTomographyForward
+    cofi.solvers.BaseSolver
+    cofi.inv_problems.BaseForward
