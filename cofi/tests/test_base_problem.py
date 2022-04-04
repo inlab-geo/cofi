@@ -11,6 +11,9 @@ data_files_to_test = [
     "datasets/dummy_test1_comma.txt",
     "datasets/dummy_test2_tab.txt",
     "datasets/dummy_test3_idx.txt",
+    "datasets/dummy_test4_npy.npy",
+    "datasets/dummy_test5_pickle.pickle",
+    "datasets/dummy_test6_pickle.pkl",
 ]
 
 @pytest.fixture(params=data_files_to_test)

@@ -175,11 +175,16 @@ class BaseProblem:
         :type obs_idx: int, optional
         """
         delimiter = None    # try to detect what delimiter is used
-        with open(file_path) as f:
-            first_line = f.readline()
-            if "," in first_line:
-                delimiter = ","
-        data = np.loadtxt(file_path, delimiter=delimiter)
+        if file_path.endswith(("npy", "npz")):
+            data = np.load(file_path)
+        elif file_path.endswith(("pickle", "pkl")):
+            data = np.load(file_path, allow_pickle=True)
+        else:
+            with open(file_path) as f:
+                first_line = f.readline()
+                if "," in first_line:
+                    delimiter = ","
+            data = np.loadtxt(file_path, delimiter=delimiter)
         self.set_dataset(np.delete(data,obs_idx,1), data[:,obs_idx])
 
     def set_initial_model(self, init_model: np.ndarray):
