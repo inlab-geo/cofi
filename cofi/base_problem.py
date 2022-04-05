@@ -202,7 +202,7 @@ class BaseProblem:
                 ) from e
         self._model_shape = model_shape
 
-    def defined_components(self) -> list:
+    def defined_components(self) -> set:
         _to_check = [
             "objective",
             "gradient",
@@ -216,7 +216,7 @@ class BaseProblem:
             "initial_model",
             "model_shape",
         ]
-        return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
+        return {func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")}
 
     def suggest_solvers(self) -> list:
         # TODO - use self.defined_components() to suggest solvers
