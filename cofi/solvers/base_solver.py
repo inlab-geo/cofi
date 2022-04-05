@@ -7,7 +7,6 @@ class BaseSolver(metaclass=ABCMeta):
     required_in_options = set()
     optional_in_options = dict()
 
-    # def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
     def __init__(self, inv_problem, inv_options):
         self.inv_problem = inv_problem
         self.inv_options = inv_options
@@ -47,5 +46,4 @@ class BaseSolver(metaclass=ABCMeta):
             )
 
     def __repr__(self) -> str:
-        # TODO - refine this (more info?)
-        return self.__class__
+        return self.__class__.__name__

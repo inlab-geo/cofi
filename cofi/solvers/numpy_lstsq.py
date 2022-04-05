@@ -19,7 +19,13 @@ class NumpyLstSqSolver(BaseSolver):
     def _validate_inv_problem(self):
         super()._validate_inv_problem()
         try:
-            self._G = self.inv_problem.jacobian(np.ndarray([]))
+            if self.inv_problem.initial_model_defined:
+                jac_arg = self.inv_problem.initial_model
+            elif self.inv_problem.model_shape_defined:
+                jac_arg = np.ones(self.inv_problem.model_shape)
+            else:
+                jac_arg = np.ndarray([])
+            self._G = self.inv_problem.jacobian(jac_arg)
         except:
             raise ValueError(
                 "jacobian function isn't set properly for least squares solver, "

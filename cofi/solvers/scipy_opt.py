@@ -5,17 +5,18 @@ from . import BaseSolver
 
 
 class ScipyOptMinSolver(BaseSolver):
-    required_in_problem: set = {"hessian", "jacobian", "dataset"}
-    optional_in_problem: dict  = {}
-    required_in_options: set = {}
-    optional_in_options: dict = {"rcond": None}
+        # get a list of arguments and defaults for scipy.optimize.minimize
+    _scipy_minimize_args = dict(inspect.signature(minimize).parameters)
+    _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")
+    _scipy_minimize_args["hessian"] = _scipy_minimize_args.pop("hess")
+    _scipy_minimize_args["hessian_times_vector"] = _scipy_minimize_args.pop("hessp")
+    required_in_problem = {"objective", "initial_model"}           # `fun`, `x0`
+    optional_in_problem = {k:v.default for k,v in _scipy_minimize_args.items() if k in {"gradient", "hessian", "hessian_times_vector", "bounds", "constraints", "args"}}
+    required_in_options = {}
+    optional_in_options = {k:v.default for k,v in _scipy_minimize_args.items() if k in {"method", "tol", "callback", "options"}}
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        # get a list of argumnets and defaults for scipy.optimize.minimize
-        scipy_minimize_args = dict(inspect.signature(minimize).parameters)
-        self.required_in_problem = {"objective", "initial_model"}        # `fun`, `x0`
-        optional_args = {k:v.default for k,v in scipy_minimize_args.items() if k not in ['fun', 'x0']}
         raise NotImplementedError
 
     def __call__(self) -> dict:
