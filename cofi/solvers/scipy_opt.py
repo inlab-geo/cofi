@@ -22,9 +22,3 @@ class ScipyOptMinSolver(BaseSolver):
     def __call__(self) -> dict:
         # TODO
         raise NotImplementedError
-
-    def _validate_inv_options(self):
-        raise NotImplementedError
-
-    def _validate_inv_problem(self):
-        raise NotImplementedError
