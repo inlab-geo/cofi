@@ -29,6 +29,8 @@ from . import BaseSolver
 
 class ScipyOptMinSolver(BaseSolver):
     # get a list of arguments and defaults for scipy.optimize.minimize
+    # `args` not supported by BaseProblem yet, since I'm not sure how this can be
+    #         handled for other backend solvers yet 
     _scipy_minimize_args = dict(inspect.signature(minimize).parameters)
     _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")
     _scipy_minimize_args["hessian"] = _scipy_minimize_args.pop("hess")
@@ -43,6 +45,7 @@ class ScipyOptMinSolver(BaseSolver):
         params = inv_options.get_params()
         self._func = inv_problem.objective
         self._x0 = inv_problem.initial_model
+        self._args = inv_problem.args if hasattr(inv_problem, "args") else self.optional_in_problem["args"]
         self._method = params["method"] if "method" in params else self.optional_in_options["method"]
         self._jac = inv_problem.gradient if inv_problem.gradient_defined else self.optional_in_problem["gradient"]
         self._hess = inv_problem.hessian if inv_problem.hessian_defined else self.optional_in_problem["hessian"]
@@ -54,7 +57,20 @@ class ScipyOptMinSolver(BaseSolver):
         self._options = params["options"] if "options" in params else self.optional_in_options["options"]
 
     def __call__(self) -> dict:
-        opt_result = minimize(self._func, self._x0, self._method, self._jac, self._hess, self._hessp, self._bounds, self._constraints, self._tol, self._callback, self._options)
+        opt_result = minimize(
+            fun=self._func,
+            x0=self._x0,
+            args=self._args,
+            method=self._method,
+            jac=self._jac,
+            hess=self._hess,
+            hessp=self._hessp,
+            bounds=self._bounds,
+            constraints=self._constraints,
+            tol=self._tol,
+            callback=self._callback,
+            options=self._options,
+        )
         result = dict(opt_result.items())
         result["model"] = result.pop("x")
         return result
