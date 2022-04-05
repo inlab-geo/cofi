@@ -1,5 +1,6 @@
 from numbers import Number
 from typing import Callable, Union
+from collections.abc import Sequence
 
 import numpy as np
 
@@ -41,19 +42,27 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def gradient(self, model: np.ndarray) -> Number:
+    def gradient(self, model: np.ndarray) -> np.ndarray:
         raise NotImplementedError(
             "`gradient` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
-    def hessian(self, model: np.ndarray) -> Number:
+    def hessian(self, model: np.ndarray) -> np.ndarray:
         raise NotImplementedError(
             "`hessian` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
-    def residual(self, model: np.ndarray) -> Number:
+    def hessian_times_vector(self, model: np.ndarray, vector: np.ndarray) -> np.ndarray:
+        if self.hessian_defined:
+            return self.hessian(model) @ vector
+        raise NotImplementedError(
+            "`hessian_times_vector` is required in the solving approach but you haven't"
+            " implemented or added it to the problem setup"
+        )
+
+    def residual(self, model: np.ndarray) -> np.ndarray:
         if self.forward_defined and self.dataset_defined:
             return self.forward(model) - self.data_y
         raise NotImplementedError(
@@ -61,9 +70,17 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def jacobian(self, model: np.ndarray) -> Number:
+    def jacobian(self, model: np.ndarray) -> np.ndarray:
         raise NotImplementedError(
             "`jacobian` is required in the solving approach but you haven't"
+            " implemented or added it to the problem setup"
+        )
+
+    def jacobian_times_vector(self, model: np.ndarray, vector: np.ndarray) -> np.ndarray:
+        if self.jacobian_defined:
+            return self.jacobian(model) @ vector
+        raise NotImplementedError(
+            "`jacobian_times_vector` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
@@ -95,23 +112,29 @@ class BaseProblem:
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
         self.objective = obj_func
 
-    def set_gradient(self, grad_func: Callable[[np.ndarray], Number]):
+    def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
         self.gradient = grad_func
 
-    def set_hessian(self, hess_func: Union[Callable[[np.ndarray], Number], np.ndarray]):
+    def set_hessian(self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]):
         if isinstance(hess_func, np.ndarray):
             self.hessian = lambda _: hess_func
         else:
             self.hessian = hess_func
 
-    def set_residual(self, res_func: Callable[[np.ndarray], Number]):
+    def set_hessian_times_vector(self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]):
+        self.hessian_times_vector = hess_vec_func
+
+    def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray]):
         self.residual = res_func
 
-    def set_jacobian(self, jac_func: Union[Callable[[np.ndarray], Number], np.ndarray]):
+    def set_jacobian(self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]):
         if isinstance(jac_func, np.ndarray):
             self.jacobian = lambda _: jac_func
         else:
             self.jacobian = jac_func
+
+    def set_jacobian_times_vector(self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]):
+        self.jacobian_times_vector = jac_vec_func
 
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
         if isinstance(data_misfit, str):
@@ -189,7 +212,7 @@ class BaseProblem:
 
     def set_initial_model(self, init_model: np.ndarray):
         self._initial_model = init_model
-        self._model_shape = init_model.shape
+        self._model_shape = init_model.shape if hasattr(init_model, "shape") else (1,)
 
     def set_model_shape(self, model_shape: tuple):
         if self.initial_model_defined and self._model_shape != model_shape:
@@ -202,19 +225,30 @@ class BaseProblem:
                 ) from e
         self._model_shape = model_shape
 
+    def set_bounds(self, bounds: Sequence[tuple[Number,Number]]):
+        self._bounds = bounds
+
+    def set_constraints(self, constraints):
+        # TODO - what's the type of this? (ref: scipy has Constraint class)
+        self._constraints = constraints
+
     def defined_components(self) -> set:
         _to_check = [
             "objective",
             "gradient",
             "hessian",
+            "hessian_times_vector",
             "residual",
             "jacobian",
+            "jacobian_times_vector",
             "data_misfit",
             "regularisation",
             "forward",
             "dataset",
             "initial_model",
             "model_shape",
+            "bounds",
+            "constraints",
         ]
         return {func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")}
 
@@ -255,6 +289,22 @@ class BaseProblem:
         )
 
     @property
+    def bounds(self):
+        if hasattr(self, "_boundsj"): return self._bounds
+        raise NameError(
+            "bounds have not been set, please use `set_bounds()` to add to the "
+            "problem setup"
+        )
+
+    @property
+    def constraints(self):
+        if hasattr(self, "_constraints"): return self._constraints
+        raise NameError(
+            "constraints have not been set, please use `set_constraints()` to add "
+            "to the problem setup"
+        )
+
+    @property
     def objective_defined(self):
         return self.check_defined(self.objective)
 
@@ -265,6 +315,10 @@ class BaseProblem:
     @property
     def hessian_defined(self):
         return self.check_defined(self.hessian)
+    
+    @property
+    def hessian_times_vector_defined(self):
+        return self.check_defined(self.hessian_times_vector, 2)
 
     @property
     def residual_defined(self):
@@ -273,6 +327,10 @@ class BaseProblem:
     @property
     def jacobian_defined(self):
         return self.check_defined(self.jacobian)
+
+    @property
+    def jacobian_times_vector_defined(self):
+        return self.check_defined(self.jacobian_times_vector, 2)
 
     @property
     def data_misfit_defined(self):
@@ -314,10 +372,28 @@ class BaseProblem:
         else:
             return True
 
-    @staticmethod
-    def check_defined(func):
+    @property
+    def bounds_defined(self):
         try:
-            func(np.array([]))
+            self.bounds
+        except NameError:
+            return False
+        else:
+            return True
+
+    @property
+    def constraints_defined(self):
+        try:
+            self.constraints
+        except NameError:
+            return False
+        else:
+            return True
+
+    @staticmethod
+    def check_defined(func, args_num=1):
+        try:
+            func(*[np.array([])]*args_num)
         except NotImplementedError:
             return False
         except:  # it's ok if there're errors caused by dummy input argument np.array([])

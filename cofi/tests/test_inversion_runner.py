@@ -21,7 +21,7 @@ def polynomial_problem():
 def test_solve(polynomial_problem):
     runner = InversionRunner(*polynomial_problem)
     inv_result = runner.run()
-    assert inv_result.ok
+    assert inv_result.success
 
 def test_runner_result_summary(polynomial_problem, capsys):
     runner = InversionRunner(*polynomial_problem)
@@ -40,4 +40,3 @@ def test_runner_result_summary(polynomial_problem, capsys):
     runner.summary()
     console_output = capsys.readouterr()
     assert "SUCCESS" in console_output.out
-
