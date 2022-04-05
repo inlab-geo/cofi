@@ -1,11 +1,10 @@
 import inspect
-from pyexpat import model
 from scipy.optimize import minimize
 
 from . import BaseSolver
 
 
-# methods available in scipy (can be string or callable):
+# Official documentation for scipy.optimize.minimize
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
 
 # 'jac' is only for:
@@ -29,8 +28,8 @@ from . import BaseSolver
 
 class ScipyOptMinSolver(BaseSolver):
     # get a list of arguments and defaults for scipy.optimize.minimize
-    # `args` not supported by BaseProblem yet, since I'm not sure how this can be
-    #         handled for other backend solvers yet 
+    # arguments not supported by BaseProblem due to myself not sure how this can be
+    #    handled for other backend solvers: `args` 
     _scipy_minimize_args = dict(inspect.signature(minimize).parameters)
     _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")
     _scipy_minimize_args["hessian"] = _scipy_minimize_args.pop("hess")
@@ -42,8 +41,12 @@ class ScipyOptMinSolver(BaseSolver):
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        params = inv_options.get_params()
-        self._func = inv_problem.objective
+        self._assign_args()
+        
+    def _assign_args(self):
+        params = self.inv_options.get_params()
+        inv_problem = self.inv_problem
+        self._fun = inv_problem.objective
         self._x0 = inv_problem.initial_model
         self._args = inv_problem.args if hasattr(inv_problem, "args") else self.optional_in_problem["args"]
         self._method = params["method"] if "method" in params else self.optional_in_options["method"]
@@ -58,7 +61,7 @@ class ScipyOptMinSolver(BaseSolver):
 
     def __call__(self) -> dict:
         opt_result = minimize(
-            fun=self._func,
+            fun=self._fun,
             x0=self._x0,
             args=self._args,
             method=self._method,

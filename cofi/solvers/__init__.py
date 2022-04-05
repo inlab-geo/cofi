@@ -1,6 +1,7 @@
 from .base_solver import BaseSolver
 
 from .scipy_opt_min import ScipyOptMinSolver
+from .scipy_opt_lstsq import ScipyOptLstSqSolver
 from .numpy_lstsq import NumpyLstSqSolver
 
 
@@ -14,10 +15,11 @@ __all__ = [
 # solvers table grouped by method: {inv_options.method -> {inv_options.tool -> BaseSolver}}
 solvers_table = {
     "optimisation": {
-        "scipy.optimize.minimize": ScipyOptMinSolver
+        "scipy.optimize.minimize": ScipyOptMinSolver,
+        "scipy.optimize.least_squares": ScipyOptLstSqSolver,
     },
     "least square": {
-        "numpy.linalg.lstsq": NumpyLstSqSolver
+        "numpy.linalg.lstsq": NumpyLstSqSolver,
     }
 }
 
