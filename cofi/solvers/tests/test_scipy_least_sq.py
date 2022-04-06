@@ -18,4 +18,4 @@ def test_run():
     solver = ScipyOptLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
-    assert pytest.approx(res["model"], abs=0.5) == np.array([0,0,1])
+    assert pytest.approx(res["model"], abs=1) == np.array([0,0,1])

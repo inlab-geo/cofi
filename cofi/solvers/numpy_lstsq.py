@@ -4,7 +4,7 @@ from . import BaseSolver
 
 
 class NumpyLstSqSolver(BaseSolver):
-    required_in_problem: set = {"hessian", "jacobian", "dataset"}
+    required_in_problem: set = {"jacobian", "dataset"}
     optional_in_problem: dict  = {}
     required_in_options: set = {}
     optional_in_options: dict = {"rcond": None}
