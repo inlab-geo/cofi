@@ -28,7 +28,7 @@ from . import BaseSolver
 
 class ScipyOptMinSolver(BaseSolver):
     # get a list of arguments and defaults for scipy.optimize.minimize
-    # arguments not supported by BaseProblem due to myself not sure how this can be
+    # TODO arguments not supported by BaseProblem due to myself not sure how this can be
     #    handled for other backend solvers: `args` 
     _scipy_minimize_args = dict(inspect.signature(minimize).parameters)
     _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")

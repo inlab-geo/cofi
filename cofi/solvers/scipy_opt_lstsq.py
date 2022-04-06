@@ -10,7 +10,7 @@ from . import BaseSolver
 
 class ScipyOptLstSqSolver(BaseSolver):
     # get a list of arguments and defaults for scipy.minimize.least_squares
-    # arguments not supported by BaseProblem due to myself not sure how this can be
+    # TODO arguments not supported by BaseProblem due to myself not sure how this can be
     #    handled for other backend solvers: `args`, `kwargs`, `x_scale`, `loss`, `f_scale`
     _scipy_ls_args = dict(inspect.signature(least_squares).parameters)
     _scipy_ls_args["jacobian"] = _scipy_ls_args.pop("jac")
