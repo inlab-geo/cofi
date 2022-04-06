@@ -14,7 +14,7 @@ class InversionOptions:
     def set_params(self, **kwargs):
         self.hyper_params.update(kwargs)
     
-    def get_params(self):
+    def get_params(self) -> set:
         return self.hyper_params
 
     def set_solving_method(self, method: str):
@@ -31,7 +31,7 @@ class InversionOptions:
     def set_tool(self, tool: Union[str, Type]):
         if tool is None:
             self.unset_tool()
-        elif isinstance(tool, Type):        # TODO - check callable
+        elif isinstance(tool, Type):
             if issubclass(tool, Callable) and "__call__" not in tool.__abstractmethods__:
                 self.tool = tool
             else:

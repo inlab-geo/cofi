@@ -9,13 +9,13 @@ class InversionResult:
     def __init__(self, res: dict) -> None:
         self.__dict__.update(res)
         self.res = res
-        if not hasattr(self, "ok"):
+        if not hasattr(self, "success"):
             raise ValueError(
                 "inversion termination status not returned in result dictionary, "
                 "fix your solver to return properly. Check CoFI documentation "
                 "'Advanced Usage' section for how to plug in your own solver"
             )
-        self.ok_or_not = "success" if hasattr(self, "ok") and self.ok else "failure"
+        self.success_or_not = "success" if hasattr(self, "success") and self.success else "failure"
 
     def summary(self) -> None:
         self._summary()
@@ -27,14 +27,14 @@ class InversionResult:
         single_line = "-" * display_width
         print(title)
         if display_lines: print(double_line)
-        print(self.ok_or_not.upper())
+        print(self.success_or_not.upper())
         if display_lines: print(single_line)
         for key, val in self.res.items():
-            if key != "ok":
+            if key != "success":
                 print(f"{key}: {val}")
 
     def __repr__(self) -> str:
-        return f"{self.__class__.__name__}({self.ok_or_not})"
+        return f"{self.__class__.__name__}({self.success_or_not})"
 
 
 class InversionRunner:

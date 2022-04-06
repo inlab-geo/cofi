@@ -1,9 +1,12 @@
-from abc import abstractmethod, abstractproperty, ABCMeta
-# from .. import BaseProblem, InversionOptions
+from abc import abstractmethod, ABCMeta
 
 
 class BaseSolver(metaclass=ABCMeta):
-    # def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
+    required_in_problem = set()
+    optional_in_problem = dict()
+    required_in_options = set()
+    optional_in_options = dict()
+
     def __init__(self, inv_problem, inv_options):
         self.inv_problem = inv_problem
         self.inv_options = inv_options
@@ -14,34 +17,33 @@ class BaseSolver(metaclass=ABCMeta):
     def __call__(self) -> dict:
         raise NotImplementedError
 
-    @abstractmethod
+    def _validate_inv_problem(self):
+        # check whether enough information from inv_problem is provided
+        defined = self.inv_problem.defined_components()
+        required = self.required_in_problem
+        if all({component in defined for component in required}):
+            return True
+        else:
+            raise ValueError(
+                f"you've chosen {self.__class__.__name__} to be your solving tool, but "
+                f"not enough information is provided in the BaseProblem object - "
+                f"required: {required}; provided: {defined}"
+            )
+
     def _validate_inv_options(self):
         # check whether inv_options matches current solver (correctness of dispatch) from callee
         #      (don't use the dispatch table in runner.py, avoid circular import)
         # check whether required options are provided (algorithm-specific)
-        raise NotImplementedError
-
-    @abstractmethod
-    def _validate_inv_problem(self):
-        # check whether enough information from inv_problem is provided
-        raise NotImplementedError
-
-    @staticmethod
-    def _required_in_problem() -> set:
-        raise NotImplementedError
-
-    @staticmethod
-    def _optional_in_problem() -> dict:
-        raise NotImplementedError
-
-    @staticmethod
-    def _required_in_options() -> set:
-        raise NotImplementedError
-
-    @staticmethod
-    def _optional_in_options() -> dict:
-        raise NotImplementedError
+        defined = self.inv_options.get_params()
+        required = self.required_in_options
+        if all({option in defined for option in required}):
+            return True
+        else:
+            raise ValueError(
+                f"you've chosen {self.__class__.__name__} to be your solving tool, but "
+                f"not enough information is provided in the InversionOptions object - "
+                f"required: {required}; provided: {defined}"
+            )
 
     def __repr__(self) -> str:
-        # TODO - refine this (more info?)
-        return self.__class__
+        return self.__class__.__name__

@@ -11,6 +11,9 @@ data_files_to_test = [
     "datasets/dummy_test1_comma.txt",
     "datasets/dummy_test2_tab.txt",
     "datasets/dummy_test3_idx.txt",
+    "datasets/dummy_test4_npy.npy",
+    "datasets/dummy_test5_pickle.pickle",
+    "datasets/dummy_test6_pickle.pkl",
 ]
 
 @pytest.fixture(params=data_files_to_test)
@@ -34,8 +37,10 @@ def test_non_set():
     with pytest.raises(NotImplementedError): inv_problem.objective(1)
     with pytest.raises(NotImplementedError): inv_problem.gradient(1)
     with pytest.raises(NotImplementedError): inv_problem.hessian(1)
+    with pytest.raises(NotImplementedError): inv_problem.hessian_times_vector(1,2)
     with pytest.raises(NotImplementedError): inv_problem.residual(1)
     with pytest.raises(NotImplementedError): inv_problem.jacobian(1)
+    with pytest.raises(NotImplementedError): inv_problem.jacobian_times_vector(1,2)
     with pytest.raises(NotImplementedError): inv_problem.data_misfit(1)
     with pytest.raises(NotImplementedError): inv_problem.regularisation(1)
     with pytest.raises(NotImplementedError): inv_problem.forward(1)
@@ -43,17 +48,23 @@ def test_non_set():
     with pytest.raises(NameError): inv_problem.data_y
     with pytest.raises(NameError): inv_problem.initial_model
     with pytest.raises(NameError): inv_problem.model_shape
+    with pytest.raises(NameError): inv_problem.bounds
+    with pytest.raises(NameError): inv_problem.constraints
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
+    assert not inv_problem.hessian_times_vector_defined
     assert not inv_problem.residual_defined
     assert not inv_problem.jacobian_defined
+    assert not inv_problem.jacobian_times_vector_defined
     assert not inv_problem.data_misfit_defined
     assert not inv_problem.regularisation_defined
     assert not inv_problem.forward_defined
     assert not inv_problem.dataset_defined
     assert not inv_problem.initial_model_defined
     assert not inv_problem.model_shape_defined
+    assert not inv_problem.bounds_defined
+    assert not inv_problem.constraints_defined
     assert len(inv_problem.defined_components()) == 0
     inv_problem.summary()
 
