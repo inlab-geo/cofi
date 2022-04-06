@@ -1,6 +1,5 @@
 from numbers import Number
-from typing import Callable, Union, Tuple
-from collections.abc import Sequence
+from typing import Callable, Union, Tuple, Sequence
 
 import numpy as np
 
