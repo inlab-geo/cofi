@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Callable, Union
+from typing import Callable, Union, Tuple
 from collections.abc import Sequence
 
 import numpy as np
@@ -214,7 +214,7 @@ class BaseProblem:
         self._initial_model = init_model
         self._model_shape = init_model.shape if hasattr(init_model, "shape") else (1,)
 
-    def set_model_shape(self, model_shape: tuple):
+    def set_model_shape(self, model_shape: Tuple):
         if self.initial_model_defined and self._model_shape != model_shape:
             try:
                 np.reshape(self.initial_model, model_shape)
@@ -225,7 +225,7 @@ class BaseProblem:
                 ) from e
         self._model_shape = model_shape
 
-    def set_bounds(self, bounds: Sequence[tuple[Number,Number]]):
+    def set_bounds(self, bounds: Sequence[Tuple[Number,Number]]):
         self._bounds = bounds
 
     def set_constraints(self, constraints):
