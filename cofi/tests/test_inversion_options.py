@@ -14,6 +14,8 @@ def test_set_unset_solving_method(capsys):
     # 1
     with pytest.raises(ValueError):
         inv_options.set_solving_method("abc")
+    with pytest.raises(ValueError, match=".*Did you mean 'optimisation'?.*"):
+        inv_options.set_solving_method("optimisations")
     # 2
     inv_options.set_solving_method("linear least square")
     inv_options.suggest_tools()
@@ -39,6 +41,8 @@ def test_set_unset_tool():
     # 0 - invalid input
     with pytest.raises(ValueError):
         inv_options.set_tool("abc")
+    with pytest.raises(ValueError, match=".*Did you mean 'scipy.optimize.minimize'?.*"):
+        inv_options.set_tool("scipy.minimise")
     # 1 - mismatch with solving_method
     inv_options.set_solving_method("optimisation")
     with pytest.warns(UserWarning):

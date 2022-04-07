@@ -1,5 +1,6 @@
 from numbers import Number
 from typing import Callable, Union, Tuple, Sequence
+import difflib
 
 import numpy as np
 
@@ -137,11 +138,11 @@ class BaseProblem:
 
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
         if isinstance(data_misfit, str):
-            # TODO - define a dict on top of this file for available data_misfit methods
+            # TODO - define a dict for available data_misfit methods
             if data_misfit in ["L2", "l2", "euclidean", "L2 norm", "l2 norm", "mse", "MSE"]:
                 self.data_misfit = self._data_misfit_L2
             else:   # TODO - other options?
-                raise NotImplementedError(
+                raise ValueError(
                     "the data misfit method you've specified isn't supported yet, please "
                     "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
                     "find it valuable to support it from our side"
@@ -151,7 +152,11 @@ class BaseProblem:
 
     def set_regularisation(self, regularisation: Union[str, Callable[[np.ndarray], Number]], factor:Number=0.1):
         if isinstance(regularisation, str):
-            # TODO - define a dict on top of this file for available reg methods
+            _reg_dispatch_table = {
+                ("L0", "l0", "L0 norm", "l0 norm"): (lambda x: np.linalg.norm(x, ord=0)),
+                ("L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"): (lambda x: np.linalg.norm(x, ord=1)),
+                ("L2", "l2", "euclidean", "L2 norm", "l2 norm"): (lambda x: np.linalg.norm(x, ord=1)),
+            }
             if regularisation in ["L0", "l0", "L0 norm", "l0 norm"]:
                 _reg = lambda x: np.linalg.norm(x, ord=0)
             elif regularisation in ["L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"]:
@@ -159,10 +164,13 @@ class BaseProblem:
             elif regularisation in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
                 _reg = lambda x: np.linalg.norm(x, ord=2)
             else:
-                raise NotImplementedError(
+                _reg_valid_strings = {s for tpl in _reg_dispatch_table.keys() for s in tpl}
+                close_matches = difflib.get_close_matches(regularisation, _reg_valid_strings)
+                _error_msg_suffix = f"\n\nDid you mean '{close_matches[0]}'?" if len(close_matches) else ""
+                raise ValueError(
                     "the regularisation method you've specified isn't supported yet, please "
                     "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
-                    "find it valuable to support it from our side"
+                    "find it valuable to support it from our side" + _error_msg_suffix
                 )
         else:
             _reg = regularisation
@@ -172,9 +180,9 @@ class BaseProblem:
         if isinstance(forward, str):
             # TODO - add available forward operator here, maybe a dict defined on top of this file is nice
             if forward not in forward_dispatch_table:
-                raise NotImplementedError(
-                    "the forward operator you've specified is not implemented by cofi, please "
-                    "supply a full function or check our documentation for available forwrad problems"
+                raise ValueError(
+                    "the forward operator you've specified is not supported by cofi, please "
+                    "supply a full function or check our documentation for available forward problems"
                 )
             elif not self.dataset_defined:
                 raise NotImplementedError("dataset is not provided before setting your forward function")
@@ -412,7 +420,7 @@ class BaseProblem:
         if self.residual_defined:
             return np.linalg.norm(self.residual(model)) / self.data_x.shape[0]
         else:
-            raise NotImplementedError("insufficient information provided to calculate mean squared error")
+            raise ValueError("insufficient information provided to calculate mean squared error")
 
     def summary(self):
         self._summary()

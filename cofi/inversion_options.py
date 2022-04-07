@@ -1,4 +1,5 @@
 import warnings
+import difflib
 from typing import Union, Type
 from collections.abc import Callable
 import json
@@ -23,7 +24,11 @@ class InversionOptions:
         elif method in solver_methods:
             self.method = method
         else:
-            raise ValueError(f"the solver method is invalid, please choose from {solver_methods}")
+            close_matches = difflib.get_close_matches(method, solver_methods)
+            _error_msg_suffix = f"\n\nDid you mean '{close_matches[0]}?'" if len(close_matches) else ""
+            raise ValueError(
+                f"the solver method is invalid, please choose from {solver_methods}{_error_msg_suffix}"
+            )
 
     def unset_solving_method(self):
         del self.method
@@ -41,8 +46,11 @@ class InversionOptions:
                 )
         else:
             if tool not in solver_dispatch_table:
+                close_matches = difflib.get_close_matches(tool, solver_dispatch_table.keys())
+                _error_msg_suffix = f"\n\nDid you mean '{close_matches[0]}?'" if len(close_matches) else ""
                 raise ValueError(
                     "the tool is invalid, please use `InversionOptions.suggest_tools()` to see options"
+                    f"{_error_msg_suffix}"
                 )
             elif hasattr(self, "method") and tool not in solver_suggest_table[self.method]:
                 warnings.warn(

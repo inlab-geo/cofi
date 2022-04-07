@@ -172,8 +172,10 @@ def test_set_misfit_reg_L2(inv_problem_with_misfit):
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         inv_problem.set_regularisation("FOO")
+    with pytest.raises(ValueError, match=".*Did you mean 'L0 norm'?.*"):
+        inv_problem.set_regularisation("L0 nrom")
 
 
 ############### TEST set methods Tier 1 ###############################################
@@ -233,15 +235,15 @@ def test_invalid_fwd_options():
     _x = np.array([1,2,3,4,5])
     _y = np.vectorize(lambda x_i: 2 + x_i + x_i**2)(_x)
     inv_problem.set_dataset(_x, _y)
-    with pytest.raises(NotImplementedError):    # forward name not supported
+    with pytest.raises(ValueError):    # forward name not supported
         inv_problem.set_forward("FOO")
 
 def test_invalid_misfit_options():
     inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         inv_problem.set_data_misfit("FOO")
     inv_problem.set_data_misfit("mse")
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         inv_problem.data_misfit(np.array([1,2,3]))
 
 
