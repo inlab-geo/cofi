@@ -11,6 +11,10 @@ def test_set_unset_solving_method(capsys):
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
     assert "numpy.linalg.lstsq" in console_output.out
+    inv_options.suggest_solving_methods()
+    console_output = capsys.readouterr()
+    assert "optimisation" in console_output.out
+    assert "`suggest_tools()` to see a full list of backend tools" in console_output.out
     # 1
     with pytest.raises(ValueError):
         inv_options.set_solving_method("abc")
@@ -36,7 +40,7 @@ def test_set_unset_solving_method(capsys):
     assert "optimisation" in console_output.out
     assert "numpy.linalg.lstsq" in console_output.out
 
-def test_set_unset_tool():
+def test_set_unset_tool(capsys):
     inv_options = InversionOptions()
     # 0 - invalid input
     with pytest.raises(ValueError):
@@ -54,9 +58,16 @@ def test_set_unset_tool():
     # 3 - default without solving_method
     inv_options.unset_solving_method()
     assert inv_options.get_default_tool() == "scipy.optimize.minimize"
+    inv_options.suggest_solver_params()
+    console_output = capsys.readouterr()
+    assert "default" in console_output.out
+    assert "Required parameters" in console_output.out
+    assert "Optional parameters & default settings" in console_output.out
     # 4 - default given solving_method
     inv_options.set_solving_method("optimisation")
     assert inv_options.get_default_tool() == "scipy.optimize.minimize"
+
+    # 5 - suggest solving method
     # 5 - set None
     inv_options.set_tool(inv_options.get_default_tool())
     inv_options.set_tool(None)

@@ -70,8 +70,12 @@ class InversionOptions:
         else:
             return solver_suggest_table["optimisation"][0]
 
+    def suggest_solving_methods(self):
+        print("The following solving methods are supported:")
+        print(solver_methods)
+        print("\nUse `suggest_tools()` to see a full list of backend tools for each method")
+
     def suggest_tools(self):
-        # TODO - suggest backend tool given chosen method
         if hasattr(self, "method"):
             tools = solver_suggest_table[self.method]
             print("Based on the solving method you've set, the following tools are suggested:")
@@ -83,6 +87,15 @@ class InversionOptions:
         else:
             print("Here's a complete list of inversion solvers supported by CoFI (grouped by methods):")
             print(json.dumps(solver_suggest_table, indent=4))
+
+    def suggest_solver_params(self):
+        tool, dft_suffix = (self.tool,"") if hasattr(self, "tool") else (f"{self.get_default_tool()}"," (default)")
+        solver = solver_dispatch_table[tool]
+        print(f"Current backend tool {tool}{dft_suffix} has the following solver-specific parameters:")
+        print("Required parameters:")
+        print(solver.required_in_options if solver.required_in_options else "-- nothing mandatory --")
+        print("Optional parameters & default settings:")
+        print(solver.optional_in_options)
 
     def summary(self):
         self._summary()
