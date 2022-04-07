@@ -110,7 +110,10 @@ class BaseProblem:
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
 
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
-        self.objective = obj_func
+        if obj_func:
+            self.objective = obj_func
+        else:
+            del self.objective
 
     def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
         self.gradient = grad_func
@@ -239,7 +242,7 @@ class BaseProblem:
         # TODO - what's the type of this? (ref: scipy has Constraint class)
         self._constraints = constraints
 
-    def defined_components(self) -> set:
+    def _defined_components(self, defined_only=True) -> Tuple[set, set]:
         _to_check = [
             "objective",
             "gradient",
@@ -257,7 +260,13 @@ class BaseProblem:
             "bounds",
             "constraints",
         ]
-        return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
+        defined = [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
+        if defined_only: return defined
+        created_by_us = [elem for elem in defined if elem!="dataset" and hasattr(getattr(self,elem),"__self__")]
+        return [elem for elem in defined if elem not in created_by_us], created_by_us
+
+    def defined_components(self) -> set:
+        return self._defined_components()
 
     def suggest_solvers(self) -> list:
         # TODO - use self.defined_components() to suggest solvers
@@ -428,17 +437,22 @@ class BaseProblem:
     def _summary(self, display_lines=True):
         # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
         title = f"Summary for inversion problem: {self.name}"
-        sub_title = "List of functions / properties defined:"
-        display_width = max(len(title), len(sub_title))
+        sub_title1 = "List of functions/properties set by you:"
+        sub_title2 = "List of functions/properties created based on what you have provided:"
+        display_width = max(len(title), len(sub_title1), len(sub_title2))
         double_line = "=" * display_width
         single_line = "-" * display_width
+        set_by_user, created_for_user = self._defined_components(False)
         print(title)
         if display_lines: print(double_line)
         model_shape = self.model_shape if self.model_shape_defined else "Unknown"
         print(f"Model shape: {model_shape}")
         if display_lines: print(single_line)
-        print(sub_title)
-        print(self.defined_components())
+        print(sub_title1)
+        print(set_by_user if set_by_user else "-- nothing --")
+        print(single_line)
+        print(sub_title2)
+        print(created_for_user if created_for_user else "-- nothing --")
 
     def __repr__(self) -> str:
         return f"{self.name}"

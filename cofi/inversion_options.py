@@ -93,9 +93,9 @@ class InversionOptions:
         solver = solver_dispatch_table[tool]
         print(f"Current backend tool {tool}{dft_suffix} has the following solver-specific parameters:")
         print("Required parameters:")
-        print(solver.required_in_options if solver.required_in_options else "-- nothing mandatory --")
+        print(solver.required_in_options if solver.required_in_options else "-- nothing --")
         print("Optional parameters & default settings:")
-        print(solver.optional_in_options)
+        print(solver.optional_in_options if solver.optional_in_options else "-- nothing --")
 
     def summary(self):
         self._summary()
