@@ -18,7 +18,7 @@ solvers_table = {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
     },
-    "least square": {
+    "linear least square": {
         "numpy.linalg.lstsq": NumpyLstSqSolver,
     }
 }

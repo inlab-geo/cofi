@@ -14,7 +14,7 @@ class NumpyLstSqSolver(BaseSolver):
         
     def __call__(self) -> dict:
         x, residuals, rank, s = np.linalg.lstsq(self._G, self._y, self._rcond)
-        return {"success":True, "model":x, "residuals":residuals, "rank":rank, "singular_values":s}
+        return {"success":True, "model":x, "sum of squared residuals":residuals, "rank":rank, "singular_values":s}
 
     def _validate_inv_problem(self):
         super()._validate_inv_problem()

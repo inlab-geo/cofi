@@ -249,7 +249,7 @@ class BaseProblem:
             "bounds",
             "constraints",
         ]
-        return {func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")}
+        return [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
 
     def suggest_solvers(self) -> list:
         # TODO - use self.defined_components() to suggest solvers

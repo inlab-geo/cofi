@@ -15,7 +15,7 @@ def test_set_unset_solving_method(capsys):
     with pytest.raises(ValueError):
         inv_options.set_solving_method("abc")
     # 2
-    inv_options.set_solving_method("least square")
+    inv_options.set_solving_method("linear least square")
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" not in console_output.out
@@ -27,7 +27,7 @@ def test_set_unset_solving_method(capsys):
     assert "optimisation" in console_output.out
     assert "numpy.linalg.lstsq" in console_output.out
     # 4
-    inv_options.set_solving_method("least square")
+    inv_options.set_solving_method("linear least square")
     inv_options.set_solving_method(None)
     inv_options.suggest_tools()
     console_output = capsys.readouterr()

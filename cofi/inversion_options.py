@@ -69,7 +69,7 @@ class InversionOptions:
             print("Based on the solving method you've set, the following tools are suggested:")
             print(tools)
             print("\nUse `InversionOptions.set_tool(tool_name)` to set a specific tool from above")
-            print("Use `InversionOptions.set_solving_method(tool_name)` to change solving method")
+            print("Use `InversionOptions.set_solving_method(method_name)` to change solving method")
             print("Use `InversionOptions.unset_solving_method()` if you'd like to see more options")
             print("Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver")
         else:
