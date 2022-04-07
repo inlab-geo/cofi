@@ -262,7 +262,15 @@ class BaseProblem:
         ]
         defined = [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
         if defined_only: return defined
-        created_by_us = [elem for elem in defined if elem!="dataset" and hasattr(getattr(self,elem),"__self__")]
+        def _check_created(elem):
+            if elem == "dataset":       # dataset won't be derived, it's always provided if exists
+                return False
+            not_defined_by_set_methods = hasattr(getattr(self, elem), "__self__")
+            in_base_class = self.__class__.__name__ == "BaseProblem"
+            in_sub_class_not_overridden = getattr(self.__class__,elem) == getattr(BaseProblem,elem)
+            not_overridden = in_base_class or in_sub_class_not_overridden
+            return not_defined_by_set_methods and not_overridden
+        created_by_us = [elem for elem in defined if _check_created(elem)]
         return [elem for elem in defined if elem not in created_by_us], created_by_us
 
     def defined_components(self) -> set:
