@@ -10,7 +10,7 @@ def test_set_unset_solving_method(capsys):
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
     inv_options.suggest_solving_methods()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
@@ -25,20 +25,20 @@ def test_set_unset_solving_method(capsys):
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" not in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
     # 3
     inv_options.unset_solving_method()
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
     # 4
     inv_options.set_solving_method("linear least square")
     inv_options.set_solving_method(None)
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
 
 def test_set_unset_tool(capsys):
     inv_options = InversionOptions()
@@ -50,7 +50,7 @@ def test_set_unset_tool(capsys):
     # 1 - mismatch with solving_method
     inv_options.set_solving_method("optimisation")
     with pytest.warns(UserWarning):
-        inv_options.set_tool("numpy.linalg.lstsq")
+        inv_options.set_tool("scipy.linalg.lstsq")
     # 2 - unset
     inv_options.unset_tool()
     with pytest.raises(AttributeError):

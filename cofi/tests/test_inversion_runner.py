@@ -15,7 +15,7 @@ def polynomial_problem():
     inv_problem.set_jacobian(_G)
     inv_problem.set_hessian(_G.T @ _G)
     inv_options = InversionOptions()
-    inv_options.set_tool("numpy.linalg.lstsq")
+    inv_options.set_tool("scipy.linalg.lstsq")
     return inv_problem, inv_options
 
 def test_solve(polynomial_problem):
@@ -28,7 +28,7 @@ def test_runner_result_summary(polynomial_problem, capsys):
     # 0
     runner.summary()
     console_output = capsys.readouterr()
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
     assert "Inversion hasn't started" in console_output.out
     # 1
     inv_result = runner.run()
