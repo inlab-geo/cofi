@@ -6,6 +6,10 @@ from . import BaseSolver
 
 
 class ScipyLstSqSolver(BaseSolver):
+    documentation_link = "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html"
+    short_description = "SciPy's wrapper function over LAPACK's linear least-squares solver, " \
+                        "using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver"
+
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     required_in_problem: set = {"jacobian", "dataset"}
     optional_in_problem: dict  = {}

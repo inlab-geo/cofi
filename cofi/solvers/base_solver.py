@@ -2,6 +2,8 @@ from abc import abstractmethod, ABCMeta
 
 
 class BaseSolver(metaclass=ABCMeta):
+    documentation_link = str()
+    short_description = str()
     required_in_problem = set()
     optional_in_problem = dict()
     required_in_options = set()

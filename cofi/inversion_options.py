@@ -109,15 +109,21 @@ class InversionOptions:
         print(title)
         if display_lines: print(double_line)
         solving_method = self.method if hasattr(self, "method") else "Not set yet"
-        tool = self.tool if hasattr(self, "tool") else f"{self.get_default_tool()} (by default)"
+        tool, dft_suffix = (self.tool,"") if hasattr(self, "tool") else (f"{self.get_default_tool()}"," (by default)")
+        solver = solver_dispatch_table[tool]
         print(f"Solving method: {solving_method}")
-        print(f"Backend tool: {tool}")
+        print("Use `suggest_solving_methods()` to check available solving methods.")
+        if display_lines: print(single_line)
+        print(f"Backend tool: {tool}{dft_suffix}")
+        print(f"Backend tool description: {solver.short_description}")
+        print(f"Backend tool documentation: {solver.documentation_link}")
+        print("Use `suggest_tools()` to check available backend tools.")
         if display_lines: print(single_line)
         params_suffix = "Not set yet" if len(self.hyper_params) == 0 else ""
         print(f"Solver-specific parameters: {params_suffix}")
         for k, v in self.hyper_params.items():
             print(f"{k} = {v}")
-        # TODO print required/optional options
+        print("Use `suggest_solver_params()` to check required/optional solver-specific parameters.")
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
