@@ -2,12 +2,15 @@ from .base_solver import BaseSolver
 
 from .scipy_opt_min import ScipyOptMinSolver
 from .scipy_opt_lstsq import ScipyOptLstSqSolver
+from .scipy_lstsq import ScipyLstSqSolver
 from .numpy_lstsq import NumpyLstSqSolver
 
 
 __all__ = [
     "BaseSolver",           # public API, for advanced usage (own solver)
     "ScipyOptMinSolver",
+    "ScipyOptLstSqSolver",
+    "ScipyLstSqSolver",
     "NumpyLstSqSolver",
 ]
 
@@ -19,6 +22,7 @@ solvers_table = {
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
     },
     "linear least square": {
+        "scipy.linalg.lstsq": ScipyLstSqSolver,
         "numpy.linalg.lstsq": NumpyLstSqSolver,
     }
 }
