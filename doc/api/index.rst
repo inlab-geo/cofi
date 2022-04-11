@@ -38,4 +38,4 @@ APIs for Advanced Usage
     :caption: Advanced usage
 
     cofi.solvers.BaseSolver
-    cofi.inv_problems.BaseForward
+    .. cofi.inv_problems.BaseForward

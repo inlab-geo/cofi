@@ -5,7 +5,6 @@ import json
 
 import numpy as np
 
-from .inv_problems import forward_dispatch_table
 from .solvers import solvers_table
 
 
@@ -198,20 +197,8 @@ class BaseProblem:
             _reg = regularisation
         self.regularisation = lambda m: _reg(m) * factor
 
-    def set_forward(self, forward: Union[str, Callable[[np.ndarray], Union[np.ndarray,Number]]]):
-        if isinstance(forward, str):
-            # TODO - add available forward operator here, maybe a dict defined on top of this file is nice
-            if forward not in forward_dispatch_table:
-                raise ValueError(
-                    "the forward operator you've specified is not supported by cofi, please "
-                    "supply a full function or check our documentation for available forward problems"
-                )
-            elif not self.dataset_defined:
-                raise NotImplementedError("dataset is not provided before setting your forward function")
-            else:
-                self.forward = forward_dispatch_table[forward](self.data_x)
-        else:
-            self.forward = forward
+    def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray,Number]]):
+        self.forward = forward
 
     def set_dataset(self, data_x:np.ndarray, data_y:np.ndarray):
         self._data_x = data_x
