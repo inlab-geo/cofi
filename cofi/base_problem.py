@@ -1,10 +1,12 @@
 from numbers import Number
 from typing import Callable, Union, Tuple, Sequence
 import difflib
+import json
 
 import numpy as np
 
 from .inv_problems import forward_dispatch_table
+from .solvers import solvers_table
 
 
 class BaseProblem:
@@ -276,9 +278,23 @@ class BaseProblem:
     def defined_components(self) -> set:
         return self._defined_components()
 
-    def suggest_solvers(self) -> list:
+    def suggest_solvers(self, print_to_console=True) -> dict:
         # TODO - use self.defined_components() to suggest solvers
-        raise NotImplementedError
+        to_suggest = dict()
+        all_components = self.defined_components()
+        for solving_method in solvers_table:
+            backend_tools = solvers_table[solving_method]
+            to_suggest[solving_method] = []
+            for tool in backend_tools:
+                solver_class = backend_tools[tool]
+                required = solver_class.required_in_problem
+                if required.issubset(all_components):
+                    to_suggest[solving_method].append(tool)
+        if print_to_console:
+            print("Based on what you've provided so far, here are possible solvers:")
+            print(json.dumps(to_suggest, indent=4))
+        else:
+            return to_suggest
 
     @property
     def data_x(self):

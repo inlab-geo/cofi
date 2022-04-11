@@ -25,6 +25,7 @@ solvers_table = {
 }
 
 # solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}
+# NOTE: the default backend solver is from this table, set the first one manually when necessary
 # e.g. {'optimisation': ['scipy.optimize.minimize'], 'linear least square': ['scipy.linalg.lstsq']}
 solver_suggest_table = {k:list(val.keys()) for k,val in solvers_table.items()}
 

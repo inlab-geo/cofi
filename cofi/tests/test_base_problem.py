@@ -262,3 +262,34 @@ def test_check_defined():
     with pytest.raises(ValueError):
         inv_problem.set_model_shape((2,1))
     inv_problem.set_model_shape((3,1))
+
+
+############### TEST suggest_solvers ##################################################
+def test_suggest_solvers(capsys):
+    inv_problem = BaseProblem()
+    # 0
+    inv_problem.suggest_solvers()
+    console_output = capsys.readouterr().out
+    assert "scipy.optimize.minimize" not in console_output
+    assert "scipy.linalg.lstsq" not in console_output
+    # 1
+    inv_problem.set_initial_model(1)
+    inv_problem.set_objective(lambda x: x)
+    inv_problem.suggest_solvers()
+    console_output = capsys.readouterr().out
+    assert "scipy.optimize.minimize" in console_output
+    assert "scipy.optimize.least_squares" not in console_output
+    assert "scipy.linalg.lstsq" not in console_output
+    # 2
+    inv_problem.set_jacobian(np.array([1]))
+    inv_problem.set_dataset(1,2)
+    inv_problem.suggest_solvers()
+    console_output = capsys.readouterr().out
+    assert "scipy.linalg.lstsq" in console_output
+
+def test_suggest_solvers_return():
+    inv_problem = BaseProblem()
+    inv_problem.set_jacobian(np.array([1]))
+    inv_problem.set_dataset(1,2)
+    suggested = inv_problem.suggest_solvers(print_to_console=False)
+    assert "scipy.linalg.lstsq" in suggested["linear least square"]
