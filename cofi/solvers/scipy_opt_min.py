@@ -27,6 +27,10 @@ from . import BaseSolver
 
 
 class ScipyOptMinSolver(BaseSolver):
+    documentation_link = "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"
+    short_description = "SciPy's optimisers that minimises a scalar function with respect to " \
+                        "one or more variables, check SciPy's documentation page for a list of methods"
+
     # get a list of arguments and defaults for scipy.optimize.minimize
     # TODO arguments not supported by BaseProblem due to myself not sure how this can be
     #    handled for other backend solvers: `args` 

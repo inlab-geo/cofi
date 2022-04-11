@@ -48,7 +48,7 @@ testpaths = ["cofi/tests", "cofi/solvers/tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
 
 [tool.coverage.run]
-omit = ["*/lib*/*", "*/lib*", "cofi_toberemoved"]
+omit = ["*/lib*/*", "*/lib*", "cofi_toberemoved", "cofi/inv_problems"]
 
 [tool.black]
 line-length = 88

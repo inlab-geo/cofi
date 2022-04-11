@@ -2,13 +2,14 @@ from .base_solver import BaseSolver
 
 from .scipy_opt_min import ScipyOptMinSolver
 from .scipy_opt_lstsq import ScipyOptLstSqSolver
-from .numpy_lstsq import NumpyLstSqSolver
+from .scipy_lstsq import ScipyLstSqSolver
 
 
 __all__ = [
     "BaseSolver",           # public API, for advanced usage (own solver)
     "ScipyOptMinSolver",
-    "NumpyLstSqSolver",
+    "ScipyOptLstSqSolver",
+    "ScipyLstSqSolver",
 ]
 
 
@@ -18,19 +19,20 @@ solvers_table = {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
     },
-    "least square": {
-        "numpy.linalg.lstsq": NumpyLstSqSolver,
+    "linear least square": {
+        "scipy.linalg.lstsq": ScipyLstSqSolver,
     }
 }
 
 # solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}
-# e.g. {'optimisation': ['scipy.optimize.minimize'], 'least square': ['numpy.linalg.lstsq']}
+# NOTE: the default backend solver is from this table, set the first one manually when necessary
+# e.g. {'optimisation': ['scipy.optimize.minimize'], 'linear least square': ['scipy.linalg.lstsq']}
 solver_suggest_table = {k:list(val.keys()) for k,val in solvers_table.items()}
 
 # solvers dispatch table grouped by tool: {inv_options.tool -> BaseSolver}
-# e.g. {'scipy.optimize.minimize': <class 'cofi.solvers.scipy_opt_min.ScipyOptMinSolver'>, 'numpy.linalg.lstsq': <class 'cofi.solvers.numpy_lstsq.NumpyLstSqSolver'>}
+# e.g. {'scipy.optimize.minimize': <class 'cofi.solvers.scipy_opt_min.ScipyOptMinSolver'>, 'scipy.linalg.lstsq': <class 'cofi.solvers.scipy_lstsq.ScipyLstSqSolver'>}
 solver_dispatch_table = {k:val for values in solvers_table.values() for k,val in values.items()}
 
 # all solving methods: {inv_options.method}
-# e.g. {'optimisation', 'least square'}
+# e.g. {'optimisation', 'linear least square'}
 solver_methods = set(solvers_table.keys())

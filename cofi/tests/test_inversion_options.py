@@ -10,39 +10,47 @@ def test_set_unset_solving_method(capsys):
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
+    inv_options.suggest_solving_methods()
+    console_output = capsys.readouterr()
+    assert "optimisation" in console_output.out
+    assert "`suggest_tools()` to see a full list of backend tools" in console_output.out
     # 1
     with pytest.raises(ValueError):
         inv_options.set_solving_method("abc")
+    with pytest.raises(ValueError, match=".*Did you mean 'optimisation'?.*"):
+        inv_options.set_solving_method("optimisations")
     # 2
-    inv_options.set_solving_method("least square")
+    inv_options.set_solving_method("linear least square")
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" not in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
     # 3
     inv_options.unset_solving_method()
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
     # 4
-    inv_options.set_solving_method("least square")
+    inv_options.set_solving_method("linear least square")
     inv_options.set_solving_method(None)
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimisation" in console_output.out
-    assert "numpy.linalg.lstsq" in console_output.out
+    assert "scipy.linalg.lstsq" in console_output.out
 
-def test_set_unset_tool():
+def test_set_unset_tool(capsys):
     inv_options = InversionOptions()
     # 0 - invalid input
     with pytest.raises(ValueError):
         inv_options.set_tool("abc")
+    with pytest.raises(ValueError, match=".*Did you mean 'scipy.optimize.minimize'?.*"):
+        inv_options.set_tool("scipy.minimise")
     # 1 - mismatch with solving_method
     inv_options.set_solving_method("optimisation")
     with pytest.warns(UserWarning):
-        inv_options.set_tool("numpy.linalg.lstsq")
+        inv_options.set_tool("scipy.linalg.lstsq")
     # 2 - unset
     inv_options.unset_tool()
     with pytest.raises(AttributeError):
@@ -50,9 +58,16 @@ def test_set_unset_tool():
     # 3 - default without solving_method
     inv_options.unset_solving_method()
     assert inv_options.get_default_tool() == "scipy.optimize.minimize"
+    inv_options.suggest_solver_params()
+    console_output = capsys.readouterr()
+    assert "default" in console_output.out
+    assert "Required parameters" in console_output.out
+    assert "Optional parameters & default settings" in console_output.out
     # 4 - default given solving_method
     inv_options.set_solving_method("optimisation")
     assert inv_options.get_default_tool() == "scipy.optimize.minimize"
+
+    # 5 - suggest solving method
     # 5 - set None
     inv_options.set_tool(inv_options.get_default_tool())
     inv_options.set_tool(None)
@@ -80,8 +95,8 @@ def test_summary(capsys):
     # 0
     inv_options.summary()
     console_output = capsys.readouterr()
-    assert "Solving method: Not set yet" in console_output.out
-    assert "Solver-specific parameters: Not set yet" in console_output.out
+    assert "Solving method: None set" in console_output.out
+    assert "Solver-specific parameters: None set" in console_output.out
     assert "Backend tool" in console_output.out
     assert "(by default)" in console_output.out
     # 1
@@ -89,7 +104,7 @@ def test_summary(capsys):
     inv_options.summary()
     console_output = capsys.readouterr()
     assert "Solving method: optimisation" in console_output.out
-    assert "Solver-specific parameters: Not set yet" in console_output.out
+    assert "Solver-specific parameters: None set" in console_output.out
     assert "Backend tool" in console_output.out
     assert "(by default)" in console_output.out
     # 2
@@ -97,7 +112,7 @@ def test_summary(capsys):
     inv_options.summary()
     console_output = capsys.readouterr()
     assert "Solving method: optimisation" in console_output.out
-    assert "Solver-specific parameters: Not set yet" in console_output.out
+    assert "Solver-specific parameters: None set" in console_output.out
     assert "Backend tool" in console_output.out
     assert "(by default)" not in console_output.out
     # 3

@@ -1,4 +1,5 @@
 import warnings
+import difflib
 from typing import Union, Type
 from collections.abc import Callable
 import json
@@ -23,7 +24,11 @@ class InversionOptions:
         elif method in solver_methods:
             self.method = method
         else:
-            raise ValueError(f"the solver method is invalid, please choose from {solver_methods}")
+            close_matches = difflib.get_close_matches(method, solver_methods)
+            _error_msg_suffix = f"\n\nDid you mean '{close_matches[0]}?'" if len(close_matches) else ""
+            raise ValueError(
+                f"the solver method is invalid, please choose from {solver_methods}{_error_msg_suffix}"
+            )
 
     def unset_solving_method(self):
         del self.method
@@ -41,8 +46,11 @@ class InversionOptions:
                 )
         else:
             if tool not in solver_dispatch_table:
+                close_matches = difflib.get_close_matches(tool, solver_dispatch_table.keys())
+                _error_msg_suffix = f"\n\nDid you mean '{close_matches[0]}?'" if len(close_matches) else ""
                 raise ValueError(
                     "the tool is invalid, please use `InversionOptions.suggest_tools()` to see options"
+                    f"{_error_msg_suffix}"
                 )
             elif hasattr(self, "method") and tool not in solver_suggest_table[self.method]:
                 warnings.warn(
@@ -62,19 +70,32 @@ class InversionOptions:
         else:
             return solver_suggest_table["optimisation"][0]
 
+    def suggest_solving_methods(self):
+        print("The following solving methods are supported:")
+        print(solver_methods)
+        print("\nUse `suggest_tools()` to see a full list of backend tools for each method")
+
     def suggest_tools(self):
-        # TODO - suggest backend tool given chosen method
         if hasattr(self, "method"):
             tools = solver_suggest_table[self.method]
             print("Based on the solving method you've set, the following tools are suggested:")
             print(tools)
             print("\nUse `InversionOptions.set_tool(tool_name)` to set a specific tool from above")
-            print("Use `InversionOptions.set_solving_method(tool_name)` to change solving method")
+            print("Use `InversionOptions.set_solving_method(method_name)` to change solving method")
             print("Use `InversionOptions.unset_solving_method()` if you'd like to see more options")
             print("Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver")
         else:
             print("Here's a complete list of inversion solvers supported by CoFI (grouped by methods):")
             print(json.dumps(solver_suggest_table, indent=4))
+
+    def suggest_solver_params(self):
+        tool, dft_suffix = (self.tool,"") if hasattr(self, "tool") else (f"{self.get_default_tool()}"," (default)")
+        solver = solver_dispatch_table[tool]
+        print(f"Current backend tool {tool}{dft_suffix} has the following solver-specific parameters:")
+        print("Required parameters:")
+        print(solver.required_in_options if solver.required_in_options else "-- nothing --")
+        print("Optional parameters & default settings:")
+        print(solver.optional_in_options if solver.optional_in_options else "-- nothing --")
 
     def summary(self):
         self._summary()
@@ -87,16 +108,22 @@ class InversionOptions:
         single_line = "-" * display_width
         print(title)
         if display_lines: print(double_line)
-        solving_method = self.method if hasattr(self, "method") else "Not set yet"
-        tool = self.tool if hasattr(self, "tool") else f"{self.get_default_tool()} (by default)"
+        solving_method = self.method if hasattr(self, "method") else "None set"
+        tool, dft_suffix = (self.tool,"") if hasattr(self, "tool") else (f"{self.get_default_tool()}"," (by default)")
+        solver = solver_dispatch_table[tool]
         print(f"Solving method: {solving_method}")
-        print(f"Backend tool: {tool}")
+        print("Use `suggest_solving_methods()` to check available solving methods.")
         if display_lines: print(single_line)
-        params_suffix = "Not set yet" if len(self.hyper_params) == 0 else ""
+        print(f"Backend tool: {tool}{dft_suffix}")
+        print(f"Backend tool description: {solver.short_description}")
+        print(f"Backend tool documentation: {solver.documentation_link}")
+        print("Use `suggest_tools()` to check available backend tools.")
+        if display_lines: print(single_line)
+        params_suffix = "None set" if len(self.hyper_params) == 0 else ""
         print(f"Solver-specific parameters: {params_suffix}")
         for k, v in self.hyper_params.items():
             print(f"{k} = {v}")
-        # TODO print required/optional options
+        print("Use `suggest_solver_params()` to check required/optional solver-specific parameters.")
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__

@@ -172,8 +172,10 @@ def test_set_misfit_reg_L2(inv_problem_with_misfit):
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         inv_problem.set_regularisation("FOO")
+    with pytest.raises(ValueError, match=".*Did you mean 'L0 norm'?.*"):
+        inv_problem.set_regularisation("L0 nrom")
 
 
 ############### TEST set methods Tier 1 ###############################################
@@ -218,30 +220,12 @@ def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
     check_defined_data_fwd_misfit_reg(inv_problem)
     check_values_data_fwd_misfit_reg(inv_problem)
 
-def test_set_data_fwd_misfit_reg_all_inbuilt(inv_problem_with_data):
-    inv_problem, _ = inv_problem_with_data
-    inv_problem.set_forward("polynomial")
-    inv_problem.set_data_misfit("L2")
-    inv_problem.set_regularisation("L1")
-    check_defined_data_fwd_misfit_reg(inv_problem)
-    check_values_data_fwd_misfit_reg(inv_problem)
-
-def test_invalid_fwd_options():
-    inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):    # dataset not provided
-        inv_problem.set_forward("polynomial")
-    _x = np.array([1,2,3,4,5])
-    _y = np.vectorize(lambda x_i: 2 + x_i + x_i**2)(_x)
-    inv_problem.set_dataset(_x, _y)
-    with pytest.raises(NotImplementedError):    # forward name not supported
-        inv_problem.set_forward("FOO")
-
 def test_invalid_misfit_options():
     inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         inv_problem.set_data_misfit("FOO")
     inv_problem.set_data_misfit("mse")
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValueError):
         inv_problem.data_misfit(np.array([1,2,3]))
 
 
@@ -260,3 +244,34 @@ def test_check_defined():
     with pytest.raises(ValueError):
         inv_problem.set_model_shape((2,1))
     inv_problem.set_model_shape((3,1))
+
+
+############### TEST suggest_solvers ##################################################
+def test_suggest_solvers(capsys):
+    inv_problem = BaseProblem()
+    # 0
+    inv_problem.suggest_solvers()
+    console_output = capsys.readouterr().out
+    assert "scipy.optimize.minimize" not in console_output
+    assert "scipy.linalg.lstsq" not in console_output
+    # 1
+    inv_problem.set_initial_model(1)
+    inv_problem.set_objective(lambda x: x)
+    inv_problem.suggest_solvers()
+    console_output = capsys.readouterr().out
+    assert "scipy.optimize.minimize" in console_output
+    assert "scipy.optimize.least_squares" not in console_output
+    assert "scipy.linalg.lstsq" not in console_output
+    # 2
+    inv_problem.set_jacobian(np.array([1]))
+    inv_problem.set_dataset(1,2)
+    inv_problem.suggest_solvers()
+    console_output = capsys.readouterr().out
+    assert "scipy.linalg.lstsq" in console_output
+
+def test_suggest_solvers_return():
+    inv_problem = BaseProblem()
+    inv_problem.set_jacobian(np.array([1]))
+    inv_problem.set_dataset(1,2)
+    suggested = inv_problem.suggest_solvers(print_to_console=False)
+    assert "scipy.linalg.lstsq" in suggested["linear least square"]
