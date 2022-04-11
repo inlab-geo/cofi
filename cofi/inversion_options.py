@@ -108,7 +108,7 @@ class InversionOptions:
         single_line = "-" * display_width
         print(title)
         if display_lines: print(double_line)
-        solving_method = self.method if hasattr(self, "method") else "Not set yet"
+        solving_method = self.method if hasattr(self, "method") else "None set"
         tool, dft_suffix = (self.tool,"") if hasattr(self, "tool") else (f"{self.get_default_tool()}"," (by default)")
         solver = solver_dispatch_table[tool]
         print(f"Solving method: {solving_method}")
@@ -119,7 +119,7 @@ class InversionOptions:
         print(f"Backend tool documentation: {solver.documentation_link}")
         print("Use `suggest_tools()` to check available backend tools.")
         if display_lines: print(single_line)
-        params_suffix = "Not set yet" if len(self.hyper_params) == 0 else ""
+        params_suffix = "None set" if len(self.hyper_params) == 0 else ""
         print(f"Solver-specific parameters: {params_suffix}")
         for k, v in self.hyper_params.items():
             print(f"{k} = {v}")

@@ -33,6 +33,23 @@ class BaseProblem:
     method can be used to get a list of solvers that can be applied on your problem
     based on what have been supplied so far.
     """
+    all_components = [
+        "objective",
+        "gradient",
+        "hessian",
+        "hessian_times_vector",
+        "residual",
+        "jacobian",
+        "jacobian_times_vector",
+        "data_misfit",
+        "regularisation",
+        "forward",
+        "dataset",
+        "initial_model",
+        "model_shape",
+        "bounds",
+        "constraints",
+    ]
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
 
@@ -245,23 +262,7 @@ class BaseProblem:
         self._constraints = constraints
 
     def _defined_components(self, defined_only=True) -> Tuple[set, set]:
-        _to_check = [
-            "objective",
-            "gradient",
-            "hessian",
-            "hessian_times_vector",
-            "residual",
-            "jacobian",
-            "jacobian_times_vector",
-            "data_misfit",
-            "regularisation",
-            "forward",
-            "dataset",
-            "initial_model",
-            "model_shape",
-            "bounds",
-            "constraints",
-        ]
+        _to_check = self.all_components
         defined = [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
         if defined_only: return defined
         def _check_created(elem):
@@ -463,20 +464,25 @@ class BaseProblem:
         title = f"Summary for inversion problem: {self.name}"
         sub_title1 = "List of functions/properties set by you:"
         sub_title2 = "List of functions/properties created based on what you have provided:"
+        sub_title3 = "List of functions/properties not set by you"
         display_width = max(len(title), len(sub_title1), len(sub_title2))
         double_line = "=" * display_width
         single_line = "-" * display_width
         set_by_user, created_for_user = self._defined_components(False)
+        not_set = [component for component in self.all_components if component not in set_by_user]
         print(title)
         if display_lines: print(double_line)
         model_shape = self.model_shape if self.model_shape_defined else "Unknown"
         print(f"Model shape: {model_shape}")
         if display_lines: print(single_line)
         print(sub_title1)
-        print(set_by_user if set_by_user else "-- nothing --")
-        print(single_line)
+        print(set_by_user if set_by_user else "-- none --")
+        if display_lines: print(single_line)
         print(sub_title2)
-        print(created_for_user if created_for_user else "-- nothing --")
+        print(created_for_user if created_for_user else "-- none --")
+        if display_lines: print(single_line)
+        print(sub_title3)
+        print(not_set if not_set else "-- none --")
 
     def __repr__(self) -> str:
         return f"{self.name}"

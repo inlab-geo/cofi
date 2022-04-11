@@ -95,8 +95,8 @@ def test_summary(capsys):
     # 0
     inv_options.summary()
     console_output = capsys.readouterr()
-    assert "Solving method: Not set yet" in console_output.out
-    assert "Solver-specific parameters: Not set yet" in console_output.out
+    assert "Solving method: None set" in console_output.out
+    assert "Solver-specific parameters: None set" in console_output.out
     assert "Backend tool" in console_output.out
     assert "(by default)" in console_output.out
     # 1
@@ -104,7 +104,7 @@ def test_summary(capsys):
     inv_options.summary()
     console_output = capsys.readouterr()
     assert "Solving method: optimisation" in console_output.out
-    assert "Solver-specific parameters: Not set yet" in console_output.out
+    assert "Solver-specific parameters: None set" in console_output.out
     assert "Backend tool" in console_output.out
     assert "(by default)" in console_output.out
     # 2
@@ -112,7 +112,7 @@ def test_summary(capsys):
     inv_options.summary()
     console_output = capsys.readouterr()
     assert "Solving method: optimisation" in console_output.out
-    assert "Solver-specific parameters: Not set yet" in console_output.out
+    assert "Solver-specific parameters: None set" in console_output.out
     assert "Backend tool" in console_output.out
     assert "(by default)" not in console_output.out
     # 3
