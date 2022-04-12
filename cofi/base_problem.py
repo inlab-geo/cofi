@@ -439,7 +439,8 @@ class BaseProblem:
 
     def _data_misfit_L2(self, model: np.ndarray) -> Number:
         if self.residual_defined:
-            return np.linalg.norm(self.residual(model)) / self.data_x.shape[0]
+            res = self.residual(model)
+            return np.linalg.norm(res) / res.shape[0]
         else:
             raise ValueError("insufficient information provided to calculate mean squared error")
 
