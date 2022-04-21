@@ -62,7 +62,7 @@ class Inversion:
             return self.inv_options.tool
 
     def summary(self):  # TODO to test
-        title = "Summary for inversion runner"
+        title = "Summary for Inversion"
         subtitle_result = "Trained with the following result:"
         subtitle_options = "With inversion solver defined as below:"
         subtitle_problem = "For inversion problem defined as below:"
@@ -81,10 +81,13 @@ class Inversion:
             self.inv_result._summary(False)
             print(single_line)
         else:
-            print("Inversion hasn't started, try `runner.run()` to see result")
+            print("Inversion hasn't started, try `inversion.run()` to see result")
             print(single_line)
         print(f"{subtitle_options}\n")
         self.inv_options._summary(False)
         print(single_line)
         print(f"{subtitle_problem}\n")
         self.inv_problem._summary(False)
+        if hasattr(self, "inv_result"):
+            print("List of functions/properties got used by the backend tool:")
+            print(self.inv_solve.components_used)

@@ -79,3 +79,5 @@ def test_validation_options(empty_setup, subclass_solver2):
         inv_solver()
     # 3
     assert str(inv_solver) == "MyOwnSolverRequiringOptionsDef"
+    # 4
+    inv_solver._assign_options()

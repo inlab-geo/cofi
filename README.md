@@ -57,14 +57,14 @@ inv_problem.suggest_solvers()   # a list will be returned
 Run an inversion with these lines:
 
 ```python
-from cofi import InversionOptions, InversionRunner
+from cofi import InversionOptions, Inversion
 
 inv_options = InversionOptions()
 inv_options.set_method("optimisation")
 inv_options.set_iteration_limit(100)
 
-inv_runner = InversionRunner(inv_problem, inv_options)
-result = inv_runner.run()
+inv = Inversion(inv_problem, inv_options)
+result = inv.run()
 print(result.ok)
 print(result.model)
 ```

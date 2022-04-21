@@ -20,3 +20,16 @@ def test_run():
     res = solver()
     assert res["success"]
     assert pytest.approx(res["model"], abs=1) == np.array([0, 0, 1])
+
+def test_components_used():
+    inv_problem = BaseProblem()
+    inv_problem.set_residual(lambda x:x)
+    inv_problem.set_initial_model(1)
+    inv_options = InversionOptions()
+    solver1 = ScipyOptLstSqSolver(inv_problem, inv_options)
+    assert "residual" in solver1.components_used
+    assert "initial_model" in solver1.components_used
+    assert "jacobian" not in solver1.components_used
+    inv_problem.set_jacobian(lambda x:x)
+    solver2 = ScipyOptLstSqSolver(inv_problem, inv_options)
+    assert "jacobian" in solver2.components_used
