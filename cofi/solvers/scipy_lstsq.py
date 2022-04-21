@@ -1,7 +1,5 @@
 import inspect
-from warnings import warn
 import numpy as np
-from regex import E
 from scipy.linalg import lstsq
 
 from . import BaseSolver
