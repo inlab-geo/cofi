@@ -114,9 +114,9 @@ class InversionOptions:
         print(f"Solving method: {solving_method}")
         print("Use `suggest_solving_methods()` to check available solving methods.")
         if display_lines: print(single_line)
-        print(f"Backend tool: {tool}{dft_suffix}")
-        print(f"Backend tool description: {solver.short_description}")
-        print(f"Backend tool documentation: {solver.documentation_link}")
+        print(f"Backend tool: `{tool}{dft_suffix}` - {solver.short_description}")
+        # print(f"Backend tool description: {solver.short_description}")
+        print(f"References: {solver.documentation_links}")
         print("Use `suggest_tools()` to check available backend tools.")
         if display_lines: print(single_line)
         params_suffix = "None set" if len(self.hyper_params) == 0 else ""

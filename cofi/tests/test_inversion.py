@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from cofi import InversionRunner, BaseProblem, InversionOptions
+from cofi import Inversion, BaseProblem, InversionOptions
 
 
 @pytest.fixture
@@ -19,12 +19,12 @@ def polynomial_problem():
     return inv_problem, inv_options
 
 def test_solve(polynomial_problem):
-    runner = InversionRunner(*polynomial_problem)
+    runner = Inversion(*polynomial_problem)
     inv_result = runner.run()
     assert inv_result.success
 
 def test_runner_result_summary(polynomial_problem, capsys):
-    runner = InversionRunner(*polynomial_problem)
+    runner = Inversion(*polynomial_problem)
     # 0
     runner.summary()
     console_output = capsys.readouterr()

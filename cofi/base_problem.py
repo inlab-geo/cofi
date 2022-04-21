@@ -452,7 +452,7 @@ class BaseProblem:
         title = f"Summary for inversion problem: {self.name}"
         sub_title1 = "List of functions/properties set by you:"
         sub_title2 = "List of functions/properties created based on what you have provided:"
-        sub_title3 = "List of functions/properties not set by you"
+        sub_title3 = "List of functions/properties not set by you:"
         display_width = max(len(title), len(sub_title1), len(sub_title2))
         double_line = "=" * display_width
         single_line = "-" * display_width

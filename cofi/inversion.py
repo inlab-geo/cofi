@@ -37,7 +37,7 @@ class InversionResult:
         return f"{self.__class__.__name__}({self.success_or_not})"
 
 
-class InversionRunner:
+class Inversion:
     def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
         self.inv_problem = inv_problem
         self.inv_options = inv_options

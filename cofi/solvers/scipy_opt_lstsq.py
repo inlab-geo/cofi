@@ -9,7 +9,7 @@ from . import BaseSolver
 
 
 class ScipyOptLstSqSolver(BaseSolver):
-    documentation_link = "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"
+    documentation_links = ["https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"]
     short_description = "SciPy's non-linear least squares solver with bounds on variables, " \
                         "algorithms inlcude 'trf' (default), 'dogbox', and 'lm'"
 

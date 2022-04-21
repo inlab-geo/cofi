@@ -1,6 +1,6 @@
 from .base_problem import BaseProblem
 from .inversion_options import InversionOptions
-from .runner import InversionRunner, InversionResult
+from .inversion import Inversion, InversionResult
 
 # from . import inv_problems
 from . import solvers
@@ -17,6 +17,6 @@ except ImportError:
 __all__ = [
     "BaseProblem",          # public API, basic usage
     "InversionOptions",     # public API, basic usage
-    "InversionRunner",      # public API, basic usage
+    "Inversion",      # public API, basic usage
     "InversionResult",      # public API, for advanced usage (own solver)
 ]
