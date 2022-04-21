@@ -42,6 +42,7 @@ class ScipyOptMinSolver(BaseSolver):
     _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")
     _scipy_minimize_args["hessian"] = _scipy_minimize_args.pop("hess")
     _scipy_minimize_args["hessian_times_vector"] = _scipy_minimize_args.pop("hessp")
+    components_used: list = []
     required_in_problem = {"objective", "initial_model"}  # `fun`, `x0`
     optional_in_problem = {
         k: v.default
@@ -65,22 +66,42 @@ class ScipyOptMinSolver(BaseSolver):
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
+        self.components_used = list(self.required_in_problem)
         self._assign_args()
 
     def _assign_args(self):
-        params = self.inv_options.get_params()
         inv_problem = self.inv_problem
+        # required_in_problem
         self._fun = inv_problem.objective
         self._x0 = inv_problem.initial_model
+        # optional_in_problem
+        _optional_in_problem_map = {
+            "args": "args",
+            "gradient": "jac",
+            "hessian": "hess",
+            "hessian_times_vector": "hessp",
+            "bounds": "bounds",
+            "constraints": "constraints",
+        }
+        defined_in_problem = self.inv_problem.defined_components()
+        for component in _optional_in_problem_map:
+            if component in defined_in_problem:
+                setattr(
+                    self,
+                    f"_{_optional_in_problem_map[component]}",
+                    getattr(self.inv_problem, component),
+                )
+                self.components_used.append(component)
+            else:  # default
+                setattr(
+                    self,
+                    f"_{_optional_in_problem_map[component]}",
+                    self.optional_in_problem[component],
+                )
         self._args = (
             inv_problem.args
             if hasattr(inv_problem, "args")
             else self.optional_in_problem["args"]
-        )
-        self._method = (
-            params["method"]
-            if "method" in params
-            else self.optional_in_options["method"]
         )
         self._jac = (
             inv_problem.gradient
@@ -107,19 +128,8 @@ class ScipyOptMinSolver(BaseSolver):
             if inv_problem.constraints_defined
             else self.optional_in_problem["constraints"]
         )
-        self._tol = (
-            params["tol"] if "tol" in params else self.optional_in_options["tol"]
-        )
-        self._callback = (
-            params["callback"]
-            if "callback" in params
-            else self.optional_in_options["callback"]
-        )
-        self._options = (
-            params["options"]
-            if "options" in params
-            else self.optional_in_options["options"]
-        )
+        # required_in_options, optional_in_options
+        self._assign_options()
 
     def __call__(self) -> dict:
         opt_result = minimize(

@@ -66,5 +66,6 @@ exclude = '''
     | _skbuild
   )/
   | cofi_objective\/lib.*\.py 
+  | tests
 )
 '''

@@ -4,6 +4,7 @@ from abc import abstractmethod, ABCMeta
 class BaseSolver(metaclass=ABCMeta):
     documentation_links = list()
     short_description = str()
+    components_used = set()
     required_in_problem = set()
     optional_in_problem = dict()
     required_in_options = set()
@@ -45,6 +46,17 @@ class BaseSolver(metaclass=ABCMeta):
                 f"you've chosen {self.__class__.__name__} to be your solving tool, but "
                 f"not enough information is provided in the InversionOptions object - "
                 f"required: {required}; provided: {defined}"
+            )
+
+    def _assign_options(self):
+        params = self.inv_options.get_params()
+        for opt in self.required_in_options:
+            setattr(self, f"_{opt}", params[opt])
+        for opt in self.optional_in_options:
+            setattr(
+                self,
+                f"_{opt}",
+                params[opt] if opt in params else self.optional_in_options[opt],
             )
 
     def __repr__(self) -> str:

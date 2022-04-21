@@ -378,7 +378,7 @@ class BaseProblem:
 
     @property
     def bounds(self):
-        if hasattr(self, "_boundsj"):
+        if hasattr(self, "_bounds"):
             return self._bounds
         raise NameError(
             "bounds have not been set, please use `set_bounds()` to add to the "
