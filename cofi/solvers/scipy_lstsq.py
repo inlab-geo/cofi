@@ -10,14 +10,18 @@ class ScipyLstSqSolver(BaseSolver):
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html",
         "https://www.netlib.org/lapack/lug/node27.html",
     ]
-    short_description = "SciPy's wrapper function over LAPACK's linear least-squares solver, " \
-                        "using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver"
+    short_description = (
+        "SciPy's wrapper function over LAPACK's linear least-squares solver, "
+        "using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver"
+    )
 
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     required_in_problem: set = {"jacobian", "dataset"}
-    optional_in_problem: dict  = {}
+    optional_in_problem: dict = {}
     required_in_options: set = {}
-    optional_in_options: dict = {k:v.default for k,v in _scipy_lstsq_args.items() if k not in {'a','b'}}
+    optional_in_options: dict = {
+        k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
+    }
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -41,7 +45,11 @@ class ScipyLstSqSolver(BaseSolver):
             )
         self._b = inv_problem.data_y
         for opt in self.optional_in_options:
-            setattr(self, f"_{opt}", params[opt] if opt in params else self.optional_in_options[opt])
+            setattr(
+                self,
+                f"_{opt}",
+                params[opt] if opt in params else self.optional_in_options[opt],
+            )
 
     def __call__(self) -> dict:
         p, res, rnk, s = lstsq(
@@ -58,5 +66,5 @@ class ScipyLstSqSolver(BaseSolver):
             "model": p,
             "sum of squared residuals": res,
             "effective rank": rnk,
-            "singular values": s
+            "singular values": s,
         }

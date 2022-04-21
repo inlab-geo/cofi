@@ -40,6 +40,7 @@ def test_set_unset_solving_method(capsys):
     assert "optimisation" in console_output.out
     assert "scipy.linalg.lstsq" in console_output.out
 
+
 def test_set_unset_tool(capsys):
     inv_options = InversionOptions()
     # 0 - invalid input
@@ -75,20 +76,28 @@ def test_set_unset_tool(capsys):
         inv_options.tool
     # 6 - self-defined tool
     class MyOwnSolver(BaseSolver):
-        def __init__(self, inv_problem, inv_options): pass
-        def __call__(self): return 1
+        def __init__(self, inv_problem, inv_options):
+            pass
+
+        def __call__(self):
+            return 1
+
     inv_options.set_tool(MyOwnSolver)
     # 7 - self-defined invalid tool
     class AnotherSolver(BaseSolver):
-        def __init__(self, inv_problem, inv_options): pass
+        def __init__(self, inv_problem, inv_options):
+            pass
+
     with pytest.raises(ValueError):
         inv_options.set_tool(AnotherSolver)
 
+
 def test_set_params():
     inv_options = InversionOptions()
-    inv_options.set_params(a=3,b=5)
+    inv_options.set_params(a=3, b=5)
     assert inv_options.get_params()["a"] == 3
     assert inv_options.get_params()["b"] == 5
+
 
 def test_summary(capsys):
     inv_options = InversionOptions()
@@ -116,7 +125,7 @@ def test_summary(capsys):
     assert "Backend tool" in console_output.out
     assert "(by default)" not in console_output.out
     # 3
-    inv_options.set_params(a=3,b=5)
+    inv_options.set_params(a=3, b=5)
     inv_options.summary()
     console_output = capsys.readouterr()
     assert "Solving method: optimisation" in console_output.out
@@ -124,6 +133,7 @@ def test_summary(capsys):
     assert "Backend tool" in console_output.out
     assert "a = 3" in console_output.out
     assert "b = 5" in console_output.out
+
 
 def test_repr():
     inv_options = InversionOptions()

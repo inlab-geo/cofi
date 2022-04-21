@@ -15,8 +15,8 @@ except ImportError:
 
 
 __all__ = [
-    "BaseProblem",          # public API, basic usage
-    "InversionOptions",     # public API, basic usage
-    "Inversion",      # public API, basic usage
-    "InversionResult",      # public API, for advanced usage (own solver)
+    "BaseProblem",  # public API, basic usage
+    "InversionOptions",  # public API, basic usage
+    "Inversion",  # public API, basic usage
+    "InversionResult",  # public API, for advanced usage (own solver)
 ]

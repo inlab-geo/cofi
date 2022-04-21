@@ -15,7 +15,9 @@ class InversionResult:
                 "fix your solver to return properly. Check CoFI documentation "
                 "'Advanced Usage' section for how to plug in your own solver"
             )
-        self.success_or_not = "success" if hasattr(self, "success") and self.success else "failure"
+        self.success_or_not = (
+            "success" if hasattr(self, "success") and self.success else "failure"
+        )
 
     def summary(self) -> None:
         self._summary()
@@ -26,9 +28,11 @@ class InversionResult:
         double_line = "=" * display_width
         single_line = "-" * display_width
         print(title)
-        if display_lines: print(double_line)
+        if display_lines:
+            print(double_line)
         print(self.success_or_not.upper())
-        if display_lines: print(single_line)
+        if display_lines:
+            print(single_line)
         for key, val in self.res.items():
             if key != "success":
                 print(f"{key}: {val}")
@@ -54,15 +58,20 @@ class Inversion:
         # look up solver_dispatch_table to return constructor for a BaseSolver subclass
         if isinstance(tool, str):
             return solver_dispatch_table[tool]
-        else:      # self-defined BaseSolver (note that a BaseSolver object is a callable)
+        else:  # self-defined BaseSolver (note that a BaseSolver object is a callable)
             return self.inv_options.tool
 
-    def summary(self):      # TODO to test
+    def summary(self):  # TODO to test
         title = "Summary for inversion runner"
         subtitle_result = "Trained with the following result:"
         subtitle_options = "With inversion solver defined as below:"
         subtitle_problem = "For inversion problem defined as below:"
-        display_width = max(len(title), len(subtitle_result), len(subtitle_options), len(subtitle_problem))
+        display_width = max(
+            len(title),
+            len(subtitle_result),
+            len(subtitle_options),
+            len(subtitle_problem),
+        )
         double_line = "=" * display_width
         single_line = "-" * display_width
         print(title)
