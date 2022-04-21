@@ -115,7 +115,6 @@ def test_set_obj():
     assert len(inv_problem.defined_components()) == 1
     assert inv_problem.objective(np.array([2, 1, 1])) == 0
     assert pytest.approx(inv_problem.objective(np.array([2, 1, 2]))) == 6.25779513
-    # TODO - test suggest_solvers()
 
 
 ############### TEST set methods Tier 2 ###############################################
@@ -146,6 +145,7 @@ def check_defined_misfit_reg(inv_problem):
 
 
 def test_set_misfit_reg(inv_problem_with_misfit):
+    inv_problem_with_misfit.summary()
     inv_problem_with_misfit.set_regularisation(lambda m: m.T @ m, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])

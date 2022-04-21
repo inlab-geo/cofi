@@ -57,6 +57,8 @@ class BaseProblem:
     def objective(self, model: np.ndarray) -> Number:
         if self.data_misfit_defined and self.regularisation_defined:
             return self.data_misfit(model) + self.regularisation(model)
+        elif self.data_misfit_defined:
+            return self.data_misfit(model)
         raise NotImplementedError(
             "`objective` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -541,6 +543,8 @@ class BaseProblem:
             print(single_line)
         print(sub_title2)
         print(created_for_user if created_for_user else "-- none --")
+        if "objective" in created_for_user and self.data_misfit_defined and not self.regularisation_defined:
+            print("( Note that you did not set regularisation )")
         if display_lines:
             print(single_line)
         print(sub_title3)
