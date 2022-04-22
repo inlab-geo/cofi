@@ -1,15 +1,15 @@
 import numpy as np
 import pytest
 
-from cofi import InversionRunner, BaseProblem, InversionOptions
+from cofi import Inversion, BaseProblem, InversionOptions
 
 
 @pytest.fixture
 def polynomial_problem():
     inv_problem = BaseProblem()
-    _x = np.array([1,2,3,4,5])
-    _G = np.array([_x**i for i in range(3)]).T
-    _m_true = np.array([2,1,1])
+    _x = np.array([1, 2, 3, 4, 5])
+    _G = np.array([_x ** i for i in range(3)]).T
+    _m_true = np.array([2, 1, 1])
     _y = _G @ _m_true
     inv_problem.set_dataset(_x, _y)
     inv_problem.set_jacobian(_G)
@@ -18,13 +18,15 @@ def polynomial_problem():
     inv_options.set_tool("scipy.linalg.lstsq")
     return inv_problem, inv_options
 
+
 def test_solve(polynomial_problem):
-    runner = InversionRunner(*polynomial_problem)
+    runner = Inversion(*polynomial_problem)
     inv_result = runner.run()
     assert inv_result.success
 
+
 def test_runner_result_summary(polynomial_problem, capsys):
-    runner = InversionRunner(*polynomial_problem)
+    runner = Inversion(*polynomial_problem)
     # 0
     runner.summary()
     console_output = capsys.readouterr()

@@ -9,9 +9,13 @@ from . import BaseSolver
 
 
 class ScipyOptLstSqSolver(BaseSolver):
-    documentation_link = "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"
-    short_description = "SciPy's non-linear least squares solver with bounds on variables, " \
-                        "algorithms inlcude 'trf' (default), 'dogbox', and 'lm'"
+    documentation_links = [
+        "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"
+    ]
+    short_description = (
+        "SciPy's non-linear least squares solver with bounds on variables, "
+        "algorithms inlcude 'trf' (default), 'dogbox', and 'lm'"
+    )
 
     # get a list of arguments and defaults for scipy.minimize.least_squares
     # TODO arguments not supported by BaseProblem due to myself not sure how this can be
@@ -19,36 +23,58 @@ class ScipyOptLstSqSolver(BaseSolver):
     _scipy_ls_args = dict(inspect.signature(least_squares).parameters)
     _scipy_ls_args["jacobian"] = _scipy_ls_args.pop("jac")
     required_in_problem = {"residual", "initial_model"}
-    optional_in_problem = {k:v.default for k,v in _scipy_ls_args.items() if k in {"jacobian", "bounds", "x_scale", "loss", "f_scale", "args", "kwargs"}}
+    optional_in_problem = {
+        k: v.default
+        for k, v in _scipy_ls_args.items()
+        if k in {"jacobian", "bounds", "x_scale", "loss", "f_scale", "args", "kwargs"}
+    }
     required_in_options = {}
-    optional_in_options = {k:v.default for k,v in _scipy_ls_args.items() if k in {"method", "ftol", "xtol", "gtol", "diff_step", "tr_solver", "tr_options", "jac_sparsity", "max_nfev", "verbose"}}
+    optional_in_options = {
+        k: v.default
+        for k, v in _scipy_ls_args.items()
+        if k
+        in {
+            "method",
+            "ftol",
+            "xtol",
+            "gtol",
+            "diff_step",
+            "tr_solver",
+            "tr_options",
+            "jac_sparsity",
+            "max_nfev",
+            "verbose",
+        }
+    }
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self._assign_args()
 
     def _assign_args(self):
-        params = self.inv_options.get_params()
         inv_problem = self.inv_problem
+        self.components_used = list(self.required_in_problem)
+        # required_in_problem
         self._fun = inv_problem.residual
         self._x0 = inv_problem.initial_model
-        self._args = inv_problem.args if hasattr(inv_problem, "args") else self.optional_in_problem["args"]
-        self._kwargs = inv_problem.kwargs if hasattr(inv_problem, "kwargs") else self.optional_in_problem["kwargs"]
-        self._jac = inv_problem.jacobian if inv_problem.jacobian_defined else self.optional_in_problem["jacobian"]
-        self._bounds = inv_problem.bounds if inv_problem.bounds_defined else self.optional_in_problem["bounds"]
-        self._method = params["method"] if "method" in params else self.optional_in_options["method"]
-        self._ftol = params["ftol"] if "ftol" in params else self.optional_in_options["ftol"]
-        self._xtol = params["xtol"] if "xtol" in params else self.optional_in_options["xtol"]
-        self._gtol = params["gtol"] if "gtol" in params else self.optional_in_options["gtol"]
-        self._x_scale = inv_problem.x_scale if hasattr(inv_problem, "x_scale") else self.optional_in_problem["x_scale"]
-        self._loss = inv_problem.loss if hasattr(inv_problem, "loss") else self.optional_in_problem["loss"]
-        self._f_scale = inv_problem.f_scale if hasattr(inv_problem, "f_scale") else self.optional_in_problem["f_scale"]
-        self._diff_step = params["diff_step"] if "diff_step" in params else self.optional_in_options["diff_step"]
-        self._tr_solver = params["tr_solver"] if "tr_solver" in params else self.optional_in_options["tr_solver"]
-        self._tr_options = params["tr_options"] if "tr_optiosn" in params else self.optional_in_options["tr_options"]
-        self._jac_sparsity = params["jac_sparsity"] if "jac_sparsity" in params else self.optional_in_options["jac_sparsity"]
-        self._max_nfev = params["max_nfev"] if "max_nfev" in params else self.optional_in_options["max_nfev"]
-        self._verbose = params["verbose"] if "verbose" in params else self.optional_in_options["verbose"]
+        # optional_in_problem
+        defined_in_problem = self.inv_problem.defined_components()
+        for component in self.optional_in_problem:
+            if component in defined_in_problem:
+                setattr(
+                    self,
+                    f"_{component}" if component != "jacobian" else "_jac",
+                    getattr(self.inv_problem, component),
+                )
+                self.components_used.append(component)
+            else:  # default
+                setattr(
+                    self,
+                    f"_{component}" if component != "jacobian" else "_jac",
+                    self.optional_in_problem[component],
+                )
+        # required_in_options, optional_in_options
+        self._assign_options()
 
     def __call__(self) -> dict:
         opt_result = least_squares(

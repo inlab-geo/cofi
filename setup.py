@@ -36,8 +36,8 @@ setup(
         "cofi.solvers",
     ],
     install_requires=[
-        "numpy>=1.22.2",
-        "scipy>=1.8.0",
+        "numpy>=1.20",
+        "scipy>=1.0.0",
         "pyyaml>=6.0",
     ],
     extras_require={

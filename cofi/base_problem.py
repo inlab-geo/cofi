@@ -32,6 +32,7 @@ class BaseProblem:
     method can be used to get a list of solvers that can be applied on your problem
     based on what have been supplied so far.
     """
+
     all_components = [
         "objective",
         "gradient",
@@ -49,12 +50,15 @@ class BaseProblem:
         "bounds",
         "constraints",
     ]
+
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
 
     def objective(self, model: np.ndarray) -> Number:
         if self.data_misfit_defined and self.regularisation_defined:
             return self.data_misfit(model) + self.regularisation(model)
+        elif self.data_misfit_defined:
+            return self.data_misfit(model)
         raise NotImplementedError(
             "`objective` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -94,7 +98,9 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def jacobian_times_vector(self, model: np.ndarray, vector: np.ndarray) -> np.ndarray:
+    def jacobian_times_vector(
+        self, model: np.ndarray, vector: np.ndarray
+    ) -> np.ndarray:
         if self.jacobian_defined:
             return self.jacobian(model) @ vector
         raise NotImplementedError(
@@ -136,33 +142,49 @@ class BaseProblem:
     def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
         self.gradient = grad_func
 
-    def set_hessian(self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]):
+    def set_hessian(
+        self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+    ):
         if isinstance(hess_func, np.ndarray):
             self.hessian = lambda _: hess_func
         else:
             self.hessian = hess_func
 
-    def set_hessian_times_vector(self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]):
+    def set_hessian_times_vector(
+        self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]
+    ):
         self.hessian_times_vector = hess_vec_func
 
     def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray]):
         self.residual = res_func
 
-    def set_jacobian(self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]):
+    def set_jacobian(
+        self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+    ):
         if isinstance(jac_func, np.ndarray):
             self.jacobian = lambda _: jac_func
         else:
             self.jacobian = jac_func
 
-    def set_jacobian_times_vector(self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]):
+    def set_jacobian_times_vector(
+        self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]
+    ):
         self.jacobian_times_vector = jac_vec_func
 
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
         if isinstance(data_misfit, str):
             # TODO - define a dict for available data_misfit methods
-            if data_misfit in ["L2", "l2", "euclidean", "L2 norm", "l2 norm", "mse", "MSE"]:
+            if data_misfit in [
+                "L2",
+                "l2",
+                "euclidean",
+                "L2 norm",
+                "l2 norm",
+                "mse",
+                "MSE",
+            ]:
                 self.data_misfit = self._data_misfit_L2
-            else:   # TODO - other options?
+            else:  # TODO - other options?
                 raise ValueError(
                     "the data misfit method you've specified isn't supported yet, please "
                     "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
@@ -171,23 +193,48 @@ class BaseProblem:
         else:
             self.data_misfit = data_misfit
 
-    def set_regularisation(self, regularisation: Union[str, Callable[[np.ndarray], Number]], factor:Number=0.1):
+    def set_regularisation(
+        self,
+        regularisation: Union[str, Callable[[np.ndarray], Number]],
+        factor: Number = 0.1,
+    ):
         if isinstance(regularisation, str):
             _reg_dispatch_table = {
-                ("L0", "l0", "L0 norm", "l0 norm"): (lambda x: np.linalg.norm(x, ord=0)),
-                ("L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"): (lambda x: np.linalg.norm(x, ord=1)),
-                ("L2", "l2", "euclidean", "L2 norm", "l2 norm"): (lambda x: np.linalg.norm(x, ord=1)),
+                ("L0", "l0", "L0 norm", "l0 norm"): (
+                    lambda x: np.linalg.norm(x, ord=0)
+                ),
+                ("L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"): (
+                    lambda x: np.linalg.norm(x, ord=1)
+                ),
+                ("L2", "l2", "euclidean", "L2 norm", "l2 norm"): (
+                    lambda x: np.linalg.norm(x, ord=1)
+                ),
             }
             if regularisation in ["L0", "l0", "L0 norm", "l0 norm"]:
                 _reg = lambda x: np.linalg.norm(x, ord=0)
-            elif regularisation in ["L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"]:
+            elif regularisation in [
+                "L1",
+                "l1",
+                "manhattan",
+                "taxicab",
+                "L1 norm",
+                "l1 norm",
+            ]:
                 _reg = lambda x: np.linalg.norm(x, ord=1)
             elif regularisation in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
                 _reg = lambda x: np.linalg.norm(x, ord=2)
             else:
-                _reg_valid_strings = {s for tpl in _reg_dispatch_table.keys() for s in tpl}
-                close_matches = difflib.get_close_matches(regularisation, _reg_valid_strings)
-                _error_msg_suffix = f"\n\nDid you mean '{close_matches[0]}'?" if len(close_matches) else ""
+                _reg_valid_strings = {
+                    s for tpl in _reg_dispatch_table.keys() for s in tpl
+                }
+                close_matches = difflib.get_close_matches(
+                    regularisation, _reg_valid_strings
+                )
+                _error_msg_suffix = (
+                    f"\n\nDid you mean '{close_matches[0]}'?"
+                    if len(close_matches)
+                    else ""
+                )
                 raise ValueError(
                     "the regularisation method you've specified isn't supported yet, please "
                     "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
@@ -197,10 +244,10 @@ class BaseProblem:
             _reg = regularisation
         self.regularisation = lambda m: _reg(m) * factor
 
-    def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray,Number]]):
+    def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray, Number]]):
         self.forward = forward
 
-    def set_dataset(self, data_x:np.ndarray, data_y:np.ndarray):
+    def set_dataset(self, data_x: np.ndarray, data_y: np.ndarray):
         self._data_x = data_x
         self._data_y = data_y
 
@@ -213,7 +260,7 @@ class BaseProblem:
         :param obs_idx: _description_, defaults to -1
         :type obs_idx: int, optional
         """
-        delimiter = None    # try to detect what delimiter is used
+        delimiter = None  # try to detect what delimiter is used
         if file_path.endswith(("npy", "npz")):
             data = np.load(file_path)
         elif file_path.endswith(("pickle", "pkl")):
@@ -224,7 +271,7 @@ class BaseProblem:
                 if "," in first_line:
                     delimiter = ","
             data = np.loadtxt(file_path, delimiter=delimiter)
-        self.set_dataset(np.delete(data,obs_idx,1), data[:,obs_idx])
+        self.set_dataset(np.delete(data, obs_idx, 1), data[:, obs_idx])
 
     def set_initial_model(self, init_model: np.ndarray):
         self._initial_model = init_model
@@ -241,7 +288,7 @@ class BaseProblem:
                 ) from e
         self._model_shape = model_shape
 
-    def set_bounds(self, bounds: Sequence[Tuple[Number,Number]]):
+    def set_bounds(self, bounds: Sequence[Tuple[Number, Number]]):
         self._bounds = bounds
 
     def set_constraints(self, constraints):
@@ -250,16 +297,27 @@ class BaseProblem:
 
     def _defined_components(self, defined_only=True) -> Tuple[set, set]:
         _to_check = self.all_components
-        defined = [func_name for func_name in _to_check if getattr(self, f"{func_name}_defined")]
-        if defined_only: return defined
+        defined = [
+            func_name
+            for func_name in _to_check
+            if getattr(self, f"{func_name}_defined")
+        ]
+        if defined_only:
+            return defined
+
         def _check_created(elem):
-            if elem == "dataset":       # dataset won't be derived, it's always provided if exists
+            if (
+                elem == "dataset"
+            ):  # dataset won't be derived, it's always provided if exists
                 return False
             not_defined_by_set_methods = hasattr(getattr(self, elem), "__self__")
             in_base_class = self.__class__.__name__ == "BaseProblem"
-            in_sub_class_not_overridden = getattr(self.__class__,elem) == getattr(BaseProblem,elem)
+            in_sub_class_not_overridden = getattr(self.__class__, elem) == getattr(
+                BaseProblem, elem
+            )
             not_overridden = in_base_class or in_sub_class_not_overridden
             return not_defined_by_set_methods and not_overridden
+
         created_by_us = [elem for elem in defined if _check_created(elem)]
         return [elem for elem in defined if elem not in created_by_us], created_by_us
 
@@ -286,7 +344,8 @@ class BaseProblem:
 
     @property
     def data_x(self):
-        if hasattr(self, "_data_x"): return self._data_x
+        if hasattr(self, "_data_x"):
+            return self._data_x
         raise NameError(
             "data has not been set, please use either `set_dataset()` or "
             "`set_dataset_from_file()` to add dataset to the problem setup"
@@ -294,7 +353,8 @@ class BaseProblem:
 
     @property
     def data_y(self):
-        if hasattr(self, "_data_y"): return self._data_y
+        if hasattr(self, "_data_y"):
+            return self._data_y
         raise NameError(
             "data has not been set, please use either `set_dataset()` or "
             "`set_dataset_from_file()` to add dataset to the problem setup"
@@ -302,7 +362,8 @@ class BaseProblem:
 
     @property
     def initial_model(self):
-        if hasattr(self, "_initial_model"): return self._initial_model
+        if hasattr(self, "_initial_model"):
+            return self._initial_model
         raise NameError(
             "initial model has not been set, please use `set_initial_model()`"
             " to add to the problem setup"
@@ -310,7 +371,8 @@ class BaseProblem:
 
     @property
     def model_shape(self):
-        if hasattr(self, "_model_shape"): return self._model_shape
+        if hasattr(self, "_model_shape"):
+            return self._model_shape
         raise NameError(
             "model shape has not been set, please use either `set_initial_model()`"
             " or `set_model_shape() to add to the problem setup"
@@ -318,7 +380,8 @@ class BaseProblem:
 
     @property
     def bounds(self):
-        if hasattr(self, "_boundsj"): return self._bounds
+        if hasattr(self, "_bounds"):
+            return self._bounds
         raise NameError(
             "bounds have not been set, please use `set_bounds()` to add to the "
             "problem setup"
@@ -326,7 +389,8 @@ class BaseProblem:
 
     @property
     def constraints(self):
-        if hasattr(self, "_constraints"): return self._constraints
+        if hasattr(self, "_constraints"):
+            return self._constraints
         raise NameError(
             "constraints have not been set, please use `set_constraints()` to add "
             "to the problem setup"
@@ -343,7 +407,7 @@ class BaseProblem:
     @property
     def hessian_defined(self):
         return self.check_defined(self.hessian)
-    
+
     @property
     def hessian_times_vector_defined(self):
         return self.check_defined(self.hessian_times_vector, 2)
@@ -421,7 +485,7 @@ class BaseProblem:
     @staticmethod
     def check_defined(func, args_num=1):
         try:
-            func(*[np.array([])]*args_num)
+            func(*[np.array([])] * args_num)
         except NotImplementedError:
             return False
         except:  # it's ok if there're errors caused by dummy input argument np.array([])
@@ -439,9 +503,12 @@ class BaseProblem:
 
     def _data_misfit_L2(self, model: np.ndarray) -> Number:
         if self.residual_defined:
-            return np.linalg.norm(self.residual(model)) / self.data_x.shape[0]
+            res = self.residual(model)
+            return np.linalg.norm(res) / res.shape[0]
         else:
-            raise ValueError("insufficient information provided to calculate mean squared error")
+            raise ValueError(
+                "insufficient information provided to calculate mean squared error"
+            )
 
     def summary(self):
         self._summary()
@@ -450,24 +517,36 @@ class BaseProblem:
         # inspiration from keras: https://keras.io/examples/vision/mnist_convnet/
         title = f"Summary for inversion problem: {self.name}"
         sub_title1 = "List of functions/properties set by you:"
-        sub_title2 = "List of functions/properties created based on what you have provided:"
-        sub_title3 = "List of functions/properties not set by you"
+        sub_title2 = (
+            "List of functions/properties created based on what you have provided:"
+        )
+        sub_title3 = "List of functions/properties not set by you:"
         display_width = max(len(title), len(sub_title1), len(sub_title2))
         double_line = "=" * display_width
         single_line = "-" * display_width
         set_by_user, created_for_user = self._defined_components(False)
-        not_set = [component for component in self.all_components if component not in set_by_user]
+        not_set = [
+            component
+            for component in self.all_components
+            if component not in set_by_user
+        ]
         print(title)
-        if display_lines: print(double_line)
+        if display_lines:
+            print(double_line)
         model_shape = self.model_shape if self.model_shape_defined else "Unknown"
         print(f"Model shape: {model_shape}")
-        if display_lines: print(single_line)
+        if display_lines:
+            print(single_line)
         print(sub_title1)
         print(set_by_user if set_by_user else "-- none --")
-        if display_lines: print(single_line)
+        if display_lines:
+            print(single_line)
         print(sub_title2)
         print(created_for_user if created_for_user else "-- none --")
-        if display_lines: print(single_line)
+        if "objective" in created_for_user and self.data_misfit_defined and not self.regularisation_defined:
+            print("( Note that you did not set regularisation )")
+        if display_lines:
+            print(single_line)
         print(sub_title3)
         print(not_set if not_set else "-- none --")
 

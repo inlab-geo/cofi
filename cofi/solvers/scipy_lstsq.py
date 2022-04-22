@@ -6,24 +6,32 @@ from . import BaseSolver
 
 
 class ScipyLstSqSolver(BaseSolver):
-    documentation_link = "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html"
-    short_description = "SciPy's wrapper function over LAPACK's linear least-squares solver, " \
-                        "using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver"
+    documentation_links = [
+        "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html",
+        "https://www.netlib.org/lapack/lug/node27.html",
+    ]
+    short_description = (
+        "SciPy's wrapper function over LAPACK's linear least-squares solver, "
+        "using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver"
+    )
 
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
+    components_used: list = []
     required_in_problem: set = {"jacobian", "dataset"}
-    optional_in_problem: dict  = {}
+    optional_in_problem: dict = {}
     required_in_options: set = {}
-    optional_in_options: dict = {k:v.default for k,v in _scipy_lstsq_args.items() if k not in {'a','b'}}
+    optional_in_options: dict = {
+        k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
+    }
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
+        self.components_used = list(self.required_in_problem)
         self._assign_args()
 
     def _assign_args(self):
-        params = self.inv_options.get_params()
         inv_problem = self.inv_problem
-        try:
+        try:  # to get jacobian matrix (presumably jacobian is a constant)
             if inv_problem.initial_model_defined:
                 jac_arg = inv_problem.initial_model
             elif inv_problem.model_shape_defined:
@@ -37,8 +45,7 @@ class ScipyLstSqSolver(BaseSolver):
                 "this should return a matrix unrelated to model vector"
             )
         self._b = inv_problem.data_y
-        for opt in self.optional_in_options:
-            setattr(self, f"_{opt}", params[opt] if opt in params else self.optional_in_options[opt])
+        self._assign_options()
 
     def __call__(self) -> dict:
         p, res, rnk, s = lstsq(
@@ -55,5 +62,5 @@ class ScipyLstSqSolver(BaseSolver):
             "model": p,
             "sum of squared residuals": res,
             "effective rank": rnk,
-            "singular values": s
+            "singular values": s,
         }
