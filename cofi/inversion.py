@@ -63,7 +63,7 @@ class Inversion:
 
     def summary(self):  # TODO to test
         title = "Summary for Inversion"
-        subtitle_result = "Trained with the following result:"
+        subtitle_result = "Completed with the following result:"
         subtitle_options = "With inversion solver defined as below:"
         subtitle_problem = "For inversion problem defined as below:"
         display_width = max(
