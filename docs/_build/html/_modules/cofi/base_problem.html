@@ -1,0 +1,938 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>cofi.base_problem | CoFI dev</title>
+    
+
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.87249bd3f7b54630a2508c1b61607c7f.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/inlab_logo_60px.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/cofi-logo-removebg.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CoFI <span class="project-version">dev</span></h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome to CoFI’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic usage
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../notebooks/index.html">
+   Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/1_basic_concepts.html">
+     1. CoFI Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/2_cofi_example_linear_reg.html">
+     2. Linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/3_cofi_example_xrt.html">
+     3. X-ray tomography
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/4_cofi_example_rfc.html">
+     4. Receiver function
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started.html">
+   Getting started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../faq.html">
+   Frequently Asked Questions
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../api/index.html">
+   List of functions and classes (API)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.BaseProblem.html">
+     cofi.BaseProblem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.InversionOptions.html">
+     cofi.InversionOptions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.Inversion.html">
+     cofi.Inversion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.InversionResult.html">
+     cofi.InversionResult
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.solvers.BaseSolver.html">
+     cofi.solvers.BaseSolver
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Developer notes
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contribute.html">
+   Contribute to CoFI
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/inlab-geo/cofi"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/inlab-geo/cofi/issues/new?title=Issue%20on%20page%20%2F_modules/cofi/base_problem.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for cofi.base_problem</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.solvers</span> <span class="kn">import</span> <span class="n">solvers_table</span>
+
+
+<div class="viewcode-block" id="BaseProblem"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem">[docs]</a><span class="k">class</span> <span class="nc">BaseProblem</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Base class for a inversion problem setup.</span>
+
+<span class="sd">    An inversion problem can be defined from several tiers, depending on the</span>
+<span class="sd">    level of flexibility or control in ways you&#39;d like to evaluate a model, as</span>
+<span class="sd">    well as the solving approaches you&#39;d like to apply on the problem.</span>
+
+<span class="sd">    To define an inversion problem that is intended to be solved by optimisation,</span>
+<span class="sd">    the following combinations are to be supplied:</span>
+<span class="sd">    - objective + gradient (optional) + hessian (optional)</span>
+<span class="sd">    - data_misfit + regularisation</span>
+<span class="sd">    - data + forward + specified in-built data_misfit + regularisation</span>
+<span class="sd">    - etc.</span>
+
+<span class="sd">    To define an inversion problem that is intended to be solved by sampling,</span>
+<span class="sd">    one of the following combinations are to be supplied:</span>
+<span class="sd">    - prior + likelihood + proposal_dist (optional)</span>
+<span class="sd">    - posterior + proposal_dist (optional)</span>
+<span class="sd">    - etc. (WIP)</span>
+
+<span class="sd">    At any point of defining your inversion problem, the `BaseProblem().suggest_solvers()`</span>
+<span class="sd">    method can be used to get a list of solvers that can be applied on your problem</span>
+<span class="sd">    based on what have been supplied so far.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">all_components</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;objective&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;gradient&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hessian&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;hessian_times_vector&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;residual&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;jacobian&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;jacobian_times_vector&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data_misfit&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;regularisation&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;forward&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;initial_model&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;model_shape&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bounds&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;constraints&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseProblem.objective"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.objective">[docs]</a>    <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit_defined</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularisation_defined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularisation</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit_defined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`objective` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.gradient"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`gradient` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.hessian"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.hessian">[docs]</a>    <span class="k">def</span> <span class="nf">hessian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`hessian` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.hessian_times_vector"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.hessian_times_vector">[docs]</a>    <span class="k">def</span> <span class="nf">hessian_times_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hessian_defined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">@</span> <span class="n">vector</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`hessian_times_vector` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.residual"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.residual">[docs]</a>    <span class="k">def</span> <span class="nf">residual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_defined</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_defined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_y</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`residual` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.jacobian"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">jacobian</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`jacobian` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.jacobian_times_vector"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.jacobian_times_vector">[docs]</a>    <span class="k">def</span> <span class="nf">jacobian_times_vector</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">vector</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobian_defined</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">@</span> <span class="n">vector</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`jacobian_times_vector` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.data_misfit"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.data_misfit">[docs]</a>    <span class="k">def</span> <span class="nf">data_misfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`data_misfit` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.regularisation"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.regularisation">[docs]</a>    <span class="k">def</span> <span class="nf">regularisation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`regularisation` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.forward"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Number</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;`forward` is required in the solving approach but you haven&#39;t&quot;</span>
+            <span class="s2">&quot; implemented or added it to the problem setup&quot;</span>
+        <span class="p">)</span></div>
+
+    <span class="c1"># TO ADD a set method, remember to do the following:</span>
+    <span class="c1"># - def set_something(self, something)</span>
+    <span class="c1"># - def something(self), this is a property / function</span>
+    <span class="c1"># - def something_defined(self) -&gt; bool</span>
+    <span class="c1"># - add checking to self.defined_components</span>
+    <span class="c1"># - add tests in tests/test_base_problem.py (&quot;test_non_set&quot;, etc.)</span>
+
+<div class="viewcode-block" id="BaseProblem.set_objective"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_objective">[docs]</a>    <span class="k">def</span> <span class="nf">set_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Number</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">obj_func</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objective</span> <span class="o">=</span> <span class="n">obj_func</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">objective</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_gradient"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_gradient">[docs]</a>    <span class="k">def</span> <span class="nf">set_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradient</span> <span class="o">=</span> <span class="n">grad_func</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_hessian"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_hessian">[docs]</a>    <span class="k">def</span> <span class="nf">set_hessian</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">hess_func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hess_func</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hessian</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">hess_func</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hessian</span> <span class="o">=</span> <span class="n">hess_func</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_hessian_times_vector"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_hessian_times_vector">[docs]</a>    <span class="k">def</span> <span class="nf">set_hessian_times_vector</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">hess_vec_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hessian_times_vector</span> <span class="o">=</span> <span class="n">hess_vec_func</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_residual"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_residual">[docs]</a>    <span class="k">def</span> <span class="nf">set_residual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">residual</span> <span class="o">=</span> <span class="n">res_func</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_jacobian"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_jacobian">[docs]</a>    <span class="k">def</span> <span class="nf">set_jacobian</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">jac_func</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">jac_func</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">jac_func</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span> <span class="o">=</span> <span class="n">jac_func</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_jacobian_times_vector"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_jacobian_times_vector">[docs]</a>    <span class="k">def</span> <span class="nf">set_jacobian_times_vector</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">jac_vec_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">jacobian_times_vector</span> <span class="o">=</span> <span class="n">jac_vec_func</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_data_misfit"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_data_misfit">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_misfit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_misfit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Number</span><span class="p">]]):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_misfit</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># TODO - define a dict for available data_misfit methods</span>
+            <span class="k">if</span> <span class="n">data_misfit</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="s2">&quot;L2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;l2&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;L2 norm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;l2 norm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;MSE&quot;</span><span class="p">,</span>
+            <span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_misfit_L2</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># TODO - other options?</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;the data misfit method you&#39;ve specified isn&#39;t supported yet, please &quot;</span>
+                    <span class="s2">&quot;report an issue here: https://github.com/inlab-geo/cofi/issues if you &quot;</span>
+                    <span class="s2">&quot;find it valuable to support it from our side&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit</span> <span class="o">=</span> <span class="n">data_misfit</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_regularisation"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_regularisation">[docs]</a>    <span class="k">def</span> <span class="nf">set_regularisation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">regularisation</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Number</span><span class="p">]],</span>
+        <span class="n">factor</span><span class="p">:</span> <span class="n">Number</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">regularisation</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">_reg_dispatch_table</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="p">(</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span> <span class="s2">&quot;l0&quot;</span><span class="p">,</span> <span class="s2">&quot;L0 norm&quot;</span><span class="p">,</span> <span class="s2">&quot;l0 norm&quot;</span><span class="p">):</span> <span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;L1&quot;</span><span class="p">,</span> <span class="s2">&quot;l1&quot;</span><span class="p">,</span> <span class="s2">&quot;manhattan&quot;</span><span class="p">,</span> <span class="s2">&quot;taxicab&quot;</span><span class="p">,</span> <span class="s2">&quot;L1 norm&quot;</span><span class="p">,</span> <span class="s2">&quot;l1 norm&quot;</span><span class="p">):</span> <span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">),</span>
+                <span class="p">(</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="s2">&quot;l2&quot;</span><span class="p">,</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;L2 norm&quot;</span><span class="p">,</span> <span class="s2">&quot;l2 norm&quot;</span><span class="p">):</span> <span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">regularisation</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;L0&quot;</span><span class="p">,</span> <span class="s2">&quot;l0&quot;</span><span class="p">,</span> <span class="s2">&quot;L0 norm&quot;</span><span class="p">,</span> <span class="s2">&quot;l0 norm&quot;</span><span class="p">]:</span>
+                <span class="n">_reg</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">regularisation</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="s2">&quot;L1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;l1&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;manhattan&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;taxicab&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;L1 norm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;l1 norm&quot;</span><span class="p">,</span>
+            <span class="p">]:</span>
+                <span class="n">_reg</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">regularisation</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;L2&quot;</span><span class="p">,</span> <span class="s2">&quot;l2&quot;</span><span class="p">,</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span> <span class="s2">&quot;L2 norm&quot;</span><span class="p">,</span> <span class="s2">&quot;l2 norm&quot;</span><span class="p">]:</span>
+                <span class="n">_reg</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_reg_valid_strings</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="n">s</span> <span class="k">for</span> <span class="n">tpl</span> <span class="ow">in</span> <span class="n">_reg_dispatch_table</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">tpl</span>
+                <span class="p">}</span>
+                <span class="n">close_matches</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">get_close_matches</span><span class="p">(</span>
+                    <span class="n">regularisation</span><span class="p">,</span> <span class="n">_reg_valid_strings</span>
+                <span class="p">)</span>
+                <span class="n">_error_msg_suffix</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Did you mean &#39;</span><span class="si">{</span><span class="n">close_matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39;?&quot;</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">close_matches</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;the regularisation method you&#39;ve specified isn&#39;t supported yet, please &quot;</span>
+                    <span class="s2">&quot;report an issue here: https://github.com/inlab-geo/cofi/issues if you &quot;</span>
+                    <span class="s2">&quot;find it valuable to support it from our side&quot;</span> <span class="o">+</span> <span class="n">_error_msg_suffix</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">_reg</span> <span class="o">=</span> <span class="n">regularisation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regularisation</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">_reg</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">factor</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_forward"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_forward">[docs]</a>    <span class="k">def</span> <span class="nf">set_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forward</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">Union</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">Number</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward</span> <span class="o">=</span> <span class="n">forward</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_dataset"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">data_y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_x</span> <span class="o">=</span> <span class="n">data_x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_y</span> <span class="o">=</span> <span class="n">data_y</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_dataset_from_file"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_dataset_from_file">[docs]</a>    <span class="k">def</span> <span class="nf">set_dataset_from_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">obs_idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the dataset for this problem from a give file path. This function</span>
+<span class="sd">        uses :func:`numpy.loadtxt` to load dataset file.</span>
+
+<span class="sd">        :param file_path: a relative/absolute file path for the dataset</span>
+<span class="sd">        :type file_path: str</span>
+<span class="sd">        :param obs_idx: _description_, defaults to -1</span>
+<span class="sd">        :type obs_idx: int, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">delimiter</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># try to detect what delimiter is used</span>
+        <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;npy&quot;</span><span class="p">,</span> <span class="s2">&quot;npz&quot;</span><span class="p">)):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">&quot;pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;pkl&quot;</span><span class="p">)):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">first_line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                <span class="k">if</span> <span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">first_line</span><span class="p">:</span>
+                    <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_dataset</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">obs_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">data</span><span class="p">[:,</span> <span class="n">obs_idx</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_initial_model"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_initial_model">[docs]</a>    <span class="k">def</span> <span class="nf">set_initial_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">init_model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_model</span> <span class="o">=</span> <span class="n">init_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_shape</span> <span class="o">=</span> <span class="n">init_model</span><span class="o">.</span><span class="n">shape</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">init_model</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_model_shape"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_model_shape">[docs]</a>    <span class="k">def</span> <span class="nf">set_model_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_model_defined</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_shape</span> <span class="o">!=</span> <span class="n">model_shape</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_model</span><span class="p">,</span> <span class="n">model_shape</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;The model_shape you&#39;ve provided </span><span class="si">{</span><span class="n">model_shape</span><span class="si">}</span><span class="s2"> doesn&#39;t match the &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;initial_model you set which has the shape: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">initial_model</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_shape</span> <span class="o">=</span> <span class="n">model_shape</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_bounds"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">set_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bounds</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="n">Number</span><span class="p">]]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span> <span class="o">=</span> <span class="n">bounds</span></div>
+
+<div class="viewcode-block" id="BaseProblem.set_constraints"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_constraints">[docs]</a>    <span class="k">def</span> <span class="nf">set_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
+        <span class="c1"># TODO - what&#39;s the type of this? (ref: scipy has Constraint class)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="n">constraints</span></div>
+
+    <span class="k">def</span> <span class="nf">_defined_components</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">defined_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">set</span><span class="p">,</span> <span class="nb">set</span><span class="p">]:</span>
+        <span class="n">_to_check</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_components</span>
+        <span class="n">defined</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">func_name</span>
+            <span class="k">for</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">_to_check</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">_defined&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">defined_only</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">defined</span>
+
+        <span class="k">def</span> <span class="nf">_check_created</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">elem</span> <span class="o">==</span> <span class="s2">&quot;dataset&quot;</span>
+            <span class="p">):</span>  <span class="c1"># dataset won&#39;t be derived, it&#39;s always provided if exists</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="n">not_defined_by_set_methods</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">),</span> <span class="s2">&quot;__self__&quot;</span><span class="p">)</span>
+            <span class="n">in_base_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;BaseProblem&quot;</span>
+            <span class="n">in_sub_class_not_overridden</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">BaseProblem</span><span class="p">,</span> <span class="n">elem</span>
+            <span class="p">)</span>
+            <span class="n">not_overridden</span> <span class="o">=</span> <span class="n">in_base_class</span> <span class="ow">or</span> <span class="n">in_sub_class_not_overridden</span>
+            <span class="k">return</span> <span class="n">not_defined_by_set_methods</span> <span class="ow">and</span> <span class="n">not_overridden</span>
+
+        <span class="n">created_by_us</span> <span class="o">=</span> <span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">defined</span> <span class="k">if</span> <span class="n">_check_created</span><span class="p">(</span><span class="n">elem</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">defined</span> <span class="k">if</span> <span class="n">elem</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">created_by_us</span><span class="p">],</span> <span class="n">created_by_us</span>
+
+<div class="viewcode-block" id="BaseProblem.defined_components"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.defined_components">[docs]</a>    <span class="k">def</span> <span class="nf">defined_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defined_components</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="BaseProblem.suggest_solvers"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.suggest_solvers">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_solvers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_to_console</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="c1"># TODO - use self.defined_components() to suggest solvers</span>
+        <span class="n">to_suggest</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">all_components</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">defined_components</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">solving_method</span> <span class="ow">in</span> <span class="n">solvers_table</span><span class="p">:</span>
+            <span class="n">backend_tools</span> <span class="o">=</span> <span class="n">solvers_table</span><span class="p">[</span><span class="n">solving_method</span><span class="p">]</span>
+            <span class="n">to_suggest</span><span class="p">[</span><span class="n">solving_method</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">tool</span> <span class="ow">in</span> <span class="n">backend_tools</span><span class="p">:</span>
+                <span class="n">solver_class</span> <span class="o">=</span> <span class="n">backend_tools</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+                <span class="n">required</span> <span class="o">=</span> <span class="n">solver_class</span><span class="o">.</span><span class="n">required_in_problem</span>
+                <span class="k">if</span> <span class="n">required</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">all_components</span><span class="p">):</span>
+                    <span class="n">to_suggest</span><span class="p">[</span><span class="n">solving_method</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">print_to_console</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Based on what you&#39;ve provided so far, here are possible solvers:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">to_suggest</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">to_suggest</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_data_x&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_x</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+            <span class="s2">&quot;data has not been set, please use either `set_dataset()` or &quot;</span>
+            <span class="s2">&quot;`set_dataset_from_file()` to add dataset to the problem setup&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_data_y&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_y</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+            <span class="s2">&quot;data has not been set, please use either `set_dataset()` or &quot;</span>
+            <span class="s2">&quot;`set_dataset_from_file()` to add dataset to the problem setup&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">initial_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_initial_model&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initial_model</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+            <span class="s2">&quot;initial model has not been set, please use `set_initial_model()`&quot;</span>
+            <span class="s2">&quot; to add to the problem setup&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_model_shape&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_shape</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+            <span class="s2">&quot;model shape has not been set, please use either `set_initial_model()`&quot;</span>
+            <span class="s2">&quot; or `set_model_shape() to add to the problem setup&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_bounds&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bounds</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+            <span class="s2">&quot;bounds have not been set, please use `set_bounds()` to add to the &quot;</span>
+            <span class="s2">&quot;problem setup&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_constraints&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
+            <span class="s2">&quot;constraints have not been set, please use `set_constraints()` to add &quot;</span>
+            <span class="s2">&quot;to the problem setup&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">objective_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objective</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">gradient_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradient</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hessian_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hessian</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hessian_times_vector_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hessian_times_vector</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">residual_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">residual</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">jacobian_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jacobian</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">jacobian_times_vector_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">jacobian_times_vector</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">data_misfit_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_misfit</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">regularisation_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regularisation</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">forward_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_defined</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">forward</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dataset_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_x</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_y</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">initial_model_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">initial_model</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model_shape_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_shape</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bounds_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">constraints_defined</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraints</span>
+        <span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="BaseProblem.check_defined"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.check_defined">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">check_defined</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">args_num</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])]</span> <span class="o">*</span> <span class="n">args_num</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span><span class="p">:</span>  <span class="c1"># it&#39;s ok if there&#39;re errors caused by dummy input argument np.array([])</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_name&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="nd">@name</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">problem_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">problem_name</span>
+
+    <span class="k">def</span> <span class="nf">_data_misfit_L2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Number</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual_defined</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">residual</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">/</span> <span class="n">res</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;insufficient information provided to calculate mean squared error&quot;</span>
+            <span class="p">)</span>
+
+<div class="viewcode-block" id="BaseProblem.summary"><a class="viewcode-back" href="../../api/generated/cofi.BaseProblem.html#cofi.BaseProblem.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_lines</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="c1"># inspiration from keras: https://keras.io/examples/vision/mnist_convnet/</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Summary for inversion problem: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">sub_title1</span> <span class="o">=</span> <span class="s2">&quot;List of functions/properties set by you:&quot;</span>
+        <span class="n">sub_title2</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;List of functions/properties created based on what you have provided:&quot;</span>
+        <span class="p">)</span>
+        <span class="n">sub_title3</span> <span class="o">=</span> <span class="s2">&quot;List of functions/properties not set by you:&quot;</span>
+        <span class="n">display_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_title1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub_title2</span><span class="p">))</span>
+        <span class="n">double_line</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="n">display_width</span>
+        <span class="n">single_line</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="n">display_width</span>
+        <span class="n">set_by_user</span><span class="p">,</span> <span class="n">created_for_user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_defined_components</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">not_set</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">component</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_components</span>
+            <span class="k">if</span> <span class="n">component</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">set_by_user</span>
+        <span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">double_line</span><span class="p">)</span>
+        <span class="n">model_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_shape</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_shape_defined</span> <span class="k">else</span> <span class="s2">&quot;Unknown&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model shape: </span><span class="si">{</span><span class="n">model_shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">single_line</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sub_title1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">set_by_user</span> <span class="k">if</span> <span class="n">set_by_user</span> <span class="k">else</span> <span class="s2">&quot;-- none --&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">single_line</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sub_title2</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">created_for_user</span> <span class="k">if</span> <span class="n">created_for_user</span> <span class="k">else</span> <span class="s2">&quot;-- none --&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;objective&quot;</span> <span class="ow">in</span> <span class="n">created_for_user</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_misfit_defined</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularisation_defined</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;( Note that you did not set regularisation )&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">single_line</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sub_title3</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">not_set</span> <span class="k">if</span> <span class="n">not_set</span> <span class="k">else</span> <span class="s2">&quot;-- none --&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+      &copy; Copyright 2022, InLab.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -62,7 +62,14 @@ setup(
     ],
     extras_require={
         "petsc": ["petsc4py>=3.16.0"],
-        "doc": ["sphinx", "sphinx-book-theme", "sphinx-panels", "nbsphinx"],
+        "doc": [
+            "sphinx", 
+            "sphinx-book-theme", 
+            "sphinx-panels", 
+            "nbsphinx",
+            "sphinx-togglebutton",
+            "sphinx-autobuild"
+        ],
         "test": ["pytest", "matplotlib", "coverage[toml]"],
     },
 )

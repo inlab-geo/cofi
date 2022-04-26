@@ -1,0 +1,571 @@
+
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>cofi.inversion_options | CoFI dev</title>
+    
+
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.87249bd3f7b54630a2508c1b61607c7f.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="shortcut icon" href="../../_static/inlab_logo_60px.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/cofi-logo-removebg.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">CoFI <span class="project-version">dev</span></h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome to CoFI’s documentation!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Basic usage
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../installation.html">
+   Installation
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../notebooks/index.html">
+   Tutorials
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/1_basic_concepts.html">
+     1. CoFI Basic Concepts
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/2_cofi_example_linear_reg.html">
+     2. Linear regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/3_cofi_example_xrt.html">
+     3. X-ray tomography
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../notebooks/4_cofi_example_rfc.html">
+     4. Receiver function
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../getting-started.html">
+   Getting started
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../faq.html">
+   Frequently Asked Questions
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../api/index.html">
+   List of functions and classes (API)
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.BaseProblem.html">
+     cofi.BaseProblem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.InversionOptions.html">
+     cofi.InversionOptions
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.Inversion.html">
+     cofi.Inversion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.InversionResult.html">
+     cofi.InversionResult
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../../api/generated/cofi.solvers.BaseSolver.html">
+     cofi.solvers.BaseSolver
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Developer notes
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../contribute.html">
+   Contribute to CoFI
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/inlab-geo/cofi"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/inlab-geo/cofi/issues/new?title=Issue%20on%20page%20%2F_modules/cofi/inversion_options.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1></h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <h1>Source code for cofi.inversion_options</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">difflib</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Type</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">from</span> <span class="nn">.solvers</span> <span class="kn">import</span> <span class="n">solver_suggest_table</span><span class="p">,</span> <span class="n">solver_dispatch_table</span><span class="p">,</span> <span class="n">solver_methods</span>
+
+
+<div class="viewcode-block" id="InversionOptions"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions">[docs]</a><span class="k">class</span> <span class="nc">InversionOptions</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hyper_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">pass</span>
+
+<div class="viewcode-block" id="InversionOptions.set_params"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.set_params">[docs]</a>    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hyper_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InversionOptions.get_params"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.get_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">hyper_params</span></div>
+
+<div class="viewcode-block" id="InversionOptions.set_solving_method"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.set_solving_method">[docs]</a>    <span class="k">def</span> <span class="nf">set_solving_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unset_solving_method</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">solver_methods</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">close_matches</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">get_close_matches</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">solver_methods</span><span class="p">)</span>
+            <span class="n">_error_msg_suffix</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Did you mean &#39;</span><span class="si">{</span><span class="n">close_matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">?&#39;&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">close_matches</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;the solver method is invalid, please choose from </span><span class="si">{</span><span class="n">solver_methods</span><span class="si">}{</span><span class="n">_error_msg_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span></div>
+
+<div class="viewcode-block" id="InversionOptions.unset_solving_method"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.unset_solving_method">[docs]</a>    <span class="k">def</span> <span class="nf">unset_solving_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span></div>
+
+<div class="viewcode-block" id="InversionOptions.set_tool"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.set_tool">[docs]</a>    <span class="k">def</span> <span class="nf">set_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tool</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">tool</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unset_tool</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">Type</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">issubclass</span><span class="p">(</span><span class="n">tool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="s2">&quot;__call__&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tool</span><span class="o">.</span><span class="n">__abstractmethods__</span>
+            <span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">tool</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;the custom solver class you&#39;ve provided should implement __call__(self,) function&quot;</span>
+                    <span class="s2">&quot;read CoFI documentation &#39;Advanced Usage&#39; section for how to plug in your own solver&quot;</span>
+                <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">solver_dispatch_table</span><span class="p">:</span>
+                <span class="n">close_matches</span> <span class="o">=</span> <span class="n">difflib</span><span class="o">.</span><span class="n">get_close_matches</span><span class="p">(</span>
+                    <span class="n">tool</span><span class="p">,</span> <span class="n">solver_dispatch_table</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="p">)</span>
+                <span class="n">_error_msg_suffix</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Did you mean &#39;</span><span class="si">{</span><span class="n">close_matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">?&#39;&quot;</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">close_matches</span><span class="p">)</span>
+                    <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;the tool is invalid, please use `InversionOptions.suggest_tools()` to see options&quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_error_msg_suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="p">(</span>
+                <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">tool</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">solver_suggest_table</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">]</span>
+            <span class="p">):</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;the tool </span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2"> is valid but doesn&#39;t match the solving method you&#39;ve selected: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">tool</span></div>
+
+<div class="viewcode-block" id="InversionOptions.unset_tool"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.unset_tool">[docs]</a>    <span class="k">def</span> <span class="nf">unset_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool</span></div>
+
+<div class="viewcode-block" id="InversionOptions.get_tool"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.get_tool">[docs]</a>    <span class="k">def</span> <span class="nf">get_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_tool</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="InversionOptions.get_default_tool"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.get_default_tool">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_tool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">solver_suggest_table</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">solver_suggest_table</span><span class="p">[</span><span class="s2">&quot;optimisation&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="InversionOptions.suggest_solving_methods"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.suggest_solving_methods">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_solving_methods</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The following solving methods are supported:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">solver_methods</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Use `suggest_tools()` to see a full list of backend tools for each method&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="InversionOptions.suggest_tools"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.suggest_tools">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">):</span>
+            <span class="n">tools</span> <span class="o">=</span> <span class="n">solver_suggest_table</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">]</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Based on the solving method you&#39;ve set, the following tools are suggested:&quot;</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Use `InversionOptions.set_tool(tool_name)` to set a specific tool from above&quot;</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Use `InversionOptions.set_solving_method(method_name)` to change solving method&quot;</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Use `InversionOptions.unset_solving_method()` if you&#39;d like to see more options&quot;</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Check CoFI documentation &#39;Advanced Usage&#39; section for how to plug in your own solver&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Here&#39;s a complete list of inversion solvers supported by CoFI (grouped by methods):&quot;</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">solver_suggest_table</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="InversionOptions.suggest_solver_params"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.suggest_solver_params">[docs]</a>    <span class="k">def</span> <span class="nf">suggest_solver_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">tool</span><span class="p">,</span> <span class="n">dft_suffix</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool&quot;</span><span class="p">)</span>
+            <span class="k">else</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_default_tool</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; (default)&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">solver_dispatch_table</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Current backend tool </span><span class="si">{</span><span class="n">tool</span><span class="si">}{</span><span class="n">dft_suffix</span><span class="si">}</span><span class="s2"> has the following solver-specific parameters:&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Required parameters:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">required_in_options</span>
+            <span class="k">if</span> <span class="n">solver</span><span class="o">.</span><span class="n">required_in_options</span>
+            <span class="k">else</span> <span class="s2">&quot;-- nothing --&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Optional parameters &amp; default settings:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="n">solver</span><span class="o">.</span><span class="n">optional_in_options</span>
+            <span class="k">if</span> <span class="n">solver</span><span class="o">.</span><span class="n">optional_in_options</span>
+            <span class="k">else</span> <span class="s2">&quot;-- nothing --&quot;</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="InversionOptions.summary"><a class="viewcode-back" href="../../api/generated/cofi.InversionOptions.html#cofi.InversionOptions.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summary</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_lines</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="c1"># inspiration from keras: https://keras.io/examples/vision/mnist_convnet/</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Summary for inversion options&quot;</span>
+        <span class="n">display_width</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">double_line</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="n">display_width</span>
+        <span class="n">single_line</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="n">display_width</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">double_line</span><span class="p">)</span>
+        <span class="n">solving_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;None set&quot;</span>
+        <span class="n">tool</span><span class="p">,</span> <span class="n">dft_suffix</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool&quot;</span><span class="p">)</span>
+            <span class="k">else</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_default_tool</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; (by default)&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">solver</span> <span class="o">=</span> <span class="n">solver_dispatch_table</span><span class="p">[</span><span class="n">tool</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Solving method: </span><span class="si">{</span><span class="n">solving_method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use `suggest_solving_methods()` to check available solving methods.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">single_line</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Backend tool: `</span><span class="si">{</span><span class="n">tool</span><span class="si">}{</span><span class="n">dft_suffix</span><span class="si">}</span><span class="s2">` - </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">short_description</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># print(f&quot;Backend tool description: {solver.short_description}&quot;)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;References: </span><span class="si">{</span><span class="n">solver</span><span class="o">.</span><span class="n">documentation_links</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use `suggest_tools()` to check available backend tools.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">display_lines</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">single_line</span><span class="p">)</span>
+        <span class="n">params_suffix</span> <span class="o">=</span> <span class="s2">&quot;None set&quot;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hyper_params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Solver-specific parameters: </span><span class="si">{</span><span class="n">params_suffix</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hyper_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Use `suggest_solver_params()` to check required/optional solver-specific parameters.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span>
+        <span class="n">tool</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tool</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;tool&quot;</span><span class="p">)</span>
+            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;(default)&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_default_tool</span><span class="p">()</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">(method=</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">,tool=</span><span class="si">{</span><span class="n">tool</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+</pre></div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+      &copy; Copyright 2022, InLab.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

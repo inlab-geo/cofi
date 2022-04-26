@@ -33,3 +33,5 @@ dependencies:
     - sphinx-panels
     - cibuildwheel
     - nbsphinx
+    - sphinx-togglebutton
+    - sphinx-autobuild
