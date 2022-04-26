@@ -27,12 +27,12 @@ of defining inverse problems with examples included.
     :header: text-center text-large
     :card: border-1 m-1 text-center
 
-    **Getting started**
+    **Installation**
     ^^^^^^^^^^^^^^^^^^^
 
     New to CoFI?
 
-    .. link-button:: getting-started
+    .. link-button:: installation
         :type: ref
         :text: Start here
         :classes: btn-outline-primary btn-block stretched-link
@@ -82,8 +82,8 @@ Table of contents
     :maxdepth: 1
 
     installation.rst
-    .. notebooks/index.rst
-    getting-started.rst
+    tutorial.rst
+    cofi-examples/index.ipynb
     faq.rst
 
 .. toctree::

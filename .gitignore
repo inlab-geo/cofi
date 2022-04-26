@@ -11,8 +11,8 @@
 
 # Doc generated files #
 #######################
-doc/_build
-doc/api/generated
+docs/_build
+docs/api/generated
 
 # Python files #
 ################
