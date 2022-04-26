@@ -35,10 +35,10 @@ MANIFEST
 
 # pytest cache #
 ################
-.cache/*
-.pytest_cache/*
-*__pycache__/
-.ipynb_checkpoints/
+*.cache
+.pytest_cache
+*__pycache__
+.ipynb_checkpoints
 *.pyc
 
 # OS generated files #

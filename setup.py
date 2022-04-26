@@ -15,14 +15,14 @@ except ImportError:
 
 # get version number
 _ROOT = pathlib.Path(__file__).parent
-with open(str(_ROOT / "cofi" / "_version.py")) as f:
+with open(str(_ROOT / "src" / "cofi" / "_version.py")) as f:
     for line in f:
         if line.startswith("__version__ ="):
             _, _, version = line.partition("=")
             VERSION = version.strip(" \n'\"")
             break
     else:
-        raise RuntimeError("unable to read the version from ./_version.py")
+        raise RuntimeError("unable to read the version from src/cofi/_version.py")
 
 
 setup(
@@ -30,6 +30,7 @@ setup(
     version=VERSION,
     description="Common Framework for Inference",
     author="InLab",
+    package_dir={"": "src"},
     packages=[
         "cofi",
         "cofi.inv_problems",

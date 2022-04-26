@@ -57,4 +57,4 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ################################################################################
 # Objective Libraries
 ################################################################################
-add_subdirectory(cofi/inv_problems/lib_rfc)
+add_subdirectory(src/cofi/inv_problems/lib_rfc)

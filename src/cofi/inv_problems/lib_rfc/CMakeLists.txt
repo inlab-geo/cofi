@@ -14,4 +14,4 @@ add_custom_command(
     --opt='-O3'
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
-install(FILES ${generated_module_file_rfc} DESTINATION cofi/inv_problems)
+install(FILES ${generated_module_file_rfc} DESTINATION src/cofi/inv_problems)
