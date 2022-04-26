@@ -28,7 +28,7 @@ jobs:
         run: |
           $CONDA/bin/conda update conda
           $CONDA/bin/conda info
-          $CONDA/bin/conda env update --file environment_test.yml --name base
+          $CONDA/bin/conda env update --file envs/environment_test.yml --name base
           $CONDA/bin/pip install -e ".[all]"
       - name: Run tests and collect coverage
         run: |

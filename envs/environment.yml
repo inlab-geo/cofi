@@ -1,0 +1,12 @@
+# conda env create -f environment.yml
+# conda activate cofi_env
+# pip install .
+
+name: cofi_env
+dependencies:
+  - python=3.8
+  - numpy>=1.20.0
+  - scipy>=1.0.0
+  - matplotlib>=3.0.0
+  - scikit-build>=0.11.1
+  - conda-forge::gfortran

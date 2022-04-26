@@ -49,7 +49,9 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx_panels",
     "sphinx_togglebutton",
-    "nbsphinx",
+    # "nbsphinx",
+    "sphinx.ext.napoleon",
+    "myst_nb",
 ]
 
 templates_path = ["_templates"]

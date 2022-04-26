@@ -11,3 +11,4 @@ dependencies:
     - sphinx-panels==0.6.0
     - nbsphinx==0.8.8
     - sphinx-togglebutton==0.3.0
+    - myst-nb==0.13.2

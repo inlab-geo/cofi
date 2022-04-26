@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/style.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.87249bd3f7b54630a2508c1b61607c7f.css" />
@@ -43,8 +44,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <link rel="shortcut icon" href="../_static/inlab_logo_60px.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -205,6 +205,11 @@
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../changelog.html">
+   CHANGE LOG
+  </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
@@ -463,6 +468,13 @@ title="Print to PDF"
                 
   <section id="module-cofi">
 <span id="list-of-functions-and-classes-api"></span><span id="api"></span><h1>List of functions and classes (API)<a class="headerlink" href="#module-cofi" title="Permalink to this headline">#</a></h1>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>This package is still under initial development stage, so public APIs are
+not expected to be stable. Please stay updated and don’t hesitate to raise
+feedback or issues through <a class="reference external" href="https://github.com/inlab-geo/cofi/issues/new/choose">GitHub issues</a>
+or <a class="reference external" href="https://inlab-geo.slack.com">Slack workspace</a>.</p>
+</div>
 <section id="apis-for-basic-usage">
 <h2>APIs for Basic Usage<a class="headerlink" href="#apis-for-basic-usage" title="Permalink to this headline">#</a></h2>
 <p><cite>BaseProblem</cite> is the base class of all forward problems. It includes methods you
@@ -470,7 +482,7 @@ can use so as to define a forward problem.</p>
 <p><cite>InversionOptions</cite> is a holder for you to define how you’d like the inversion problem
 to be solved.</p>
 <p>With instances of <cite>BaseProblem</cite> and <cite>InversionOptions</cite> defined, they are passed InversionOptions
-an <cite>InversionRunner</cite> and an inversion run gives a result object of the type <cite>InversionResult</cite>.</p>
+an <cite>Inversion</cite> and an inversion run gives a result object of the type <cite>InversionResult</cite>.</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />
@@ -494,7 +506,9 @@ an <cite>InversionRunner</cite> and an inversion run gives a result object of th
 </section>
 <section id="apis-for-advanced-usage">
 <h2>APIs for Advanced Usage<a class="headerlink" href="#apis-for-advanced-usage" title="Permalink to this headline">#</a></h2>
-<p><cite>BaseSolver</cite> is</p>
+<p><cite>BaseSolver</cite> is the base class of all backend inversion tools. To plug in your own inversion
+tools, simply create a subclass of <cite>BaseSolver</cite> and implements <cite>__init__()</cite> and <cite>__call__()</cite>.
+Check the tutorials page (TODO) and reference page below for details.</p>
 <table class="autosummary longtable table autosummary">
 <colgroup>
 <col style="width: 10%" />

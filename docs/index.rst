@@ -18,20 +18,9 @@ inference expertise, this Python package provides an interface across a
 wide range of inference algorithms from different sources, as well as ways 
 of defining inverse problems with examples included.
 
-.. attention::
-
-    This package is still under initial development stage, so public APIs are 
-    not expected to be stable. Please stay updated and don't hesitate to raise
-    feedback or issues through `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_ 
-    or `Slack workspace <https://inlab-geo.slack.com>`_.
-
-
 .. seealso::
 
-    This site includes basic usage, tutorials & API documentation of CoFI (the
-    Python package). For more information on **InLab**, which is what this 
-    project is led by, 
-    please check out `the InLab website <http://www.inlab.edu.au/>`_.
+    This project is led by `the InLab <http://www.inlab.edu.au/>`_.
 
 
 .. panels::
@@ -50,18 +39,6 @@ of defining inverse problems with examples included.
 
     ---
 
-    **Need support?**
-    ^^^^^^^^^^^^^^
-
-    Ask in our Slack workspace
-
-    .. link-button:: https://inlab-geo.slack.com
-        :type: url
-        :text: Join the conversation
-        :classes: btn-outline-primary btn-block stretched-link
-
-    ---
-
     **Reference documentation**
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -70,6 +47,18 @@ of defining inverse problems with examples included.
     .. link-button:: api
         :type: ref
         :text: API reference
+        :classes: btn-outline-primary btn-block stretched-link
+
+    ---
+
+    **Need support?**
+    ^^^^^^^^^^^^^^
+
+    Ask in our Slack workspace
+
+    .. link-button:: https://inlab-geo.slack.com
+        :type: url
+        :text: Join the conversation
         :classes: btn-outline-primary btn-block stretched-link
 
     ---
@@ -93,7 +82,7 @@ Table of contents
     :maxdepth: 1
 
     installation.rst
-    notebooks/index.rst
+    .. notebooks/index.rst
     getting-started.rst
     faq.rst
 
@@ -102,55 +91,10 @@ Table of contents
     :maxdepth: 1
 
     api/index.rst
+    changelog.md
 
 .. toctree::
     :caption: Developer notes
     :maxdepth: 1
 
     contribute.rst
-
-.. Getting started
-.. ---------------
-
-.. Typical API calls and some examples are explained in the getting-started page:
-
-.. .. toctree::
-..     :maxdepth: 2
-
-..     getting-started
-
-
-
-.. API
-.. ---
-
-.. Want to find out how to use a problem type or inverse solver? Check our auto-generated
-.. API documentation:
-
-.. .. toctree::
-..     :maxdepth: 1
-..     :glob:
-
-..     api/*
-
-
-.. Contribute to CoFI
-.. ------------------
-
-.. Found bugs? Wanna improve something? See the contribute page:
-
-.. .. toctree::
-..     :maxdepth: 1
-    
-..     contribute
-
-
-.. FAQ
-.. ---
-
-.. Got a question?
-
-.. .. toctree::
-..     :maxdepth: 1
-
-..     faq

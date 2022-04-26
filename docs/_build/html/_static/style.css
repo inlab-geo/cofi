@@ -3,22 +3,22 @@
 
 /* ALL: text font size */
 p {
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 /* TOP LEFT: logo + project title */
 div.navbar-brand-box a.navbar-brand img {
-    max-height: 7vh !important;
+    max-height: 10vh !important;
 }
 span.project-version {
-    color: rgb(100, 155, 173);
+    color: rgb(111, 71, 49);
     font-size: 0.8em;
     font-weight: 600;
     margin-left: 3px;
 }
 
 /* TOP RIGHT: three little logos */
-.topbar .topbar-main button.topbarbtn {
+/* .topbar .topbar-main button.topbarbtn {
     font-size: 1.2em;
 }
 [aria-label] {
@@ -26,20 +26,21 @@ span.project-version {
 }
 div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
     font-size: .85em !important;
-}
+} */
 
 /* LEFT: side bar font size */
 .bd-sidenav a.reference.internal {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 /* HOME: panel button */
-main.bd-content #main-content a.btn:hover {
-    color: white;
-    background-color: lightblue;
+.btn-outline-primary:hover {
+    color: rgb(51, 125, 222);
+    background-color: #007bff4d;
 }
-main.bd-content #main-content a.btn {
-    border-color: lightblue;
+.btn-outline-primary {
+    color: rgb(51, 125, 222);
+    border-color: #007bff4d
 }
 .card-body {
     display: flex;
