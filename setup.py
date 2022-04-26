@@ -31,11 +31,6 @@ setup(
     description="Common Framework for Inference",
     author="InLab",
     package_dir={"": "src"},
-    packages=[
-        "cofi",
-        "cofi.inv_problems",
-        "cofi.solvers",
-    ],
     install_requires=[
         "numpy>=1.20",
         "scipy>=1.0.0",
