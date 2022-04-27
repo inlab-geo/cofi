@@ -52,6 +52,7 @@ extensions = [
     # "nbsphinx",
     "sphinx.ext.napoleon",
     "myst_nb",
+    "sphinx_gallery.gen_gallery",
 ]
 
 templates_path = ["_templates"]
@@ -102,6 +103,14 @@ html_theme_options = {
 
 html_static_path = ["_static"]
 html_css_files = ["style.css"]
+
+
+# -- Sphinx Gallery settings --------------------------------------------------
+sphinx_gallery_conf = {
+    "examples_dirs": "examples/scripts",
+    "gallery_dirs": "examples/generated",
+    "filename_pattern": ".",
+}
 
 
 # -- Cutomised variables ------------------------------------------------------

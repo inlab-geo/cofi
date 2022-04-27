@@ -1,0 +1,4 @@
+CoFI Example Gallery
+====================
+
+Below is a gallery of examples

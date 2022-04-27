@@ -35,3 +35,4 @@ dependencies:
     - nbsphinx
     - sphinx-togglebutton
     - sphinx-autobuild
+    - sphinx-gallery

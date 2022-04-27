@@ -12,3 +12,4 @@ dependencies:
     - nbsphinx==0.8.8
     - sphinx-togglebutton==0.3.0
     - myst-nb==0.13.2
+    - sphinx-gallery==0.10.1

@@ -83,6 +83,7 @@ Table of contents
 
     installation.rst
     tutorial.rst
+    examples/generated/index.rst
     cofi-examples/index.rst
     faq.rst
 
