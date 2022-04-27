@@ -78,12 +78,12 @@ Table of contents
 -----------------
 
 .. toctree::
-    :caption: Basic usage
+    :caption: Getting started
     :maxdepth: 1
 
     installation.rst
     tutorial.rst
-    cofi-examples/index.ipynb
+    cofi-examples/index.rst
     faq.rst
 
 .. toctree::
