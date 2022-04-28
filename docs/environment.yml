@@ -13,3 +13,4 @@ dependencies:
     - sphinx-togglebutton==0.3.0
     - myst-nb==0.13.2
     - sphinx-gallery==0.10.1
+    - pypandoc==1.7.5

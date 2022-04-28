@@ -107,9 +107,10 @@ html_css_files = ["style.css"]
 
 # -- Sphinx Gallery settings --------------------------------------------------
 sphinx_gallery_conf = {
-    "examples_dirs": "examples/scripts",
-    "gallery_dirs": "examples/generated",
+    "examples_dirs": "cofi-examples/scripts",
+    "gallery_dirs": "cofi-examples/generated",
     "filename_pattern": ".",
+    "pypandoc": True,
 }
 
 

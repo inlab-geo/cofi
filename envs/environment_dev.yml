@@ -36,3 +36,4 @@ dependencies:
     - sphinx-togglebutton
     - sphinx-autobuild
     - sphinx-gallery
+    - pypandoc
