@@ -1,0 +1,17 @@
+# conda env create -f environment_test.yml
+# conda activate cofi_test
+# pip install .
+
+name: cofi_test
+dependencies:
+  - python=3.8
+  - numpy>=1.22.2
+  - scipy>=1.7.3
+  - matplotlib>=3.5.0
+  - scikit-build>=0.11.1
+  - pytest>=6.2.5
+  - conda-forge::petsc4py>=3.16.1
+  - conda-forge::gfortran
+  - pip>=21.2.4
+  - pip:
+    - coverage[toml]>=6.2

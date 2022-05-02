@@ -13,7 +13,7 @@
 
 CoFI (Common Framework for Inference) is an open-source initiative for interfacing between generic inference algorithms and specific geoscience problems.
 
-With a mission to bridge the gap between the domain expertise and the inference expertise, this Python package provides an interface across a wide range of inference algorithms from different sources, as well as ways of defining inverse problems with examples included.
+With a mission to bridge the gap between the domain expertise and the inference expertise, this Python package provides an interface across a wide range of inference algorithms from different sources, as well as ways of defining inverse problems with examples included [here](https://github.com/inlab-geo/cofi-examples).
 
 > This project and [documentation](https://cofi.readthedocs.io/en/latest/) are under initial development stage. Please feel free to contact us for feedback or issues!
 
@@ -60,7 +60,7 @@ Run an inversion with these lines:
 from cofi import InversionOptions, Inversion
 
 inv_options = InversionOptions()
-inv_options.set_method("optimisation")
+inv_options.set_solving_method("optimisation")
 inv_options.set_iteration_limit(100)
 
 inv = Inversion(inv_problem, inv_options)
@@ -69,5 +69,9 @@ print(result.ok)
 print(result.model)
 ```
 
-And now we are done! Check out our [tutorial](https://cofi.readthedocs.io/en/latest/notebooks/index.html) pages for more examples and advanced usages.
+And now an inversion is completed! Check out our [tutorial](https://cofi.readthedocs.io/en/latest/notebooks/index.html) pages for more examples and advanced usages.
+
+## Contributing
+
+Interested in contributing? Please check out our [contributor's guide](https://cofi.readthedocs.io/en/latest/contribute.html).
 

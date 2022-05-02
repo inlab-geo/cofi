@@ -44,7 +44,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.pytest.ini_options]
-testpaths = ["cofi/tests", "cofi/solvers/tests"]
+testpaths = ["tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
 
 [tool.coverage.run]
