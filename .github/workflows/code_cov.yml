@@ -3,16 +3,16 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - 'cofi/**'
+      - 'src/cofi/**'
       - 'pyproject.toml'
-      - '!cofi/_version.py'
+      - '!src/cofi/_version.py'
   pull_request:
     types:
       - ready_for_review
     paths:
-      - 'cofi/**'
+      - 'src/cofi/**'
       - 'pyproject.toml'
-      - '!cofi/_version.py'
+      - '!src/cofi/_version.py'
 jobs:
   code_coverage:
     name: Run coverage on ubuntu-latest

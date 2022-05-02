@@ -12,7 +12,7 @@ on:
     types:
       - closed
     paths:
-      - "cofi/_version.py"
+      - "src/cofi/_version.py"
 
 jobs:
   if_merged:
