@@ -17,8 +17,9 @@ Writing & Submitting Patches
 
 Patches may include but not limited to:
 
-* Adding new forward examples (which tend to be common use cases)
-* Adding new inverse solver
+* Adding new forward examples to our example gallery, following instructions 
+  `here <[example gallery](https://cofi.readthedocs.io/en/latest/cofi-examples/index.html)>`_
+* Adding new inverse solver, following instructions documented `here <tutorial/Advanced usage>`_
 * Fixing bugs
 * Improving documentation
 * \...
