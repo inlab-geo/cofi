@@ -33,6 +33,7 @@ jobs:
       - name: Run tests and collect coverage
         run: |
           $CONDA/bin/coverage run -m pytest --disable-warnings
+          $CONDA/bin/coverage report
           $CONDA/bin/coverage xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2

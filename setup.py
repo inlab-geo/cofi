@@ -32,11 +32,8 @@ setup(
     author="InLab",
     packages=[
         "cofi",
-        "cofi.utils",
-        "cofi.cofi_objective",
-        "cofi.linear_reg",
-        "cofi.optimisers",
-        "cofi.samplers",
+        "cofi.inv_problems",
+        "cofi.solvers",
     ],
     install_requires=[
         "numpy>=1.22.2",
