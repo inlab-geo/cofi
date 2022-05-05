@@ -9,31 +9,111 @@ from .solvers import solvers_table
 
 
 class BaseProblem:
-    """Base class for an inversion problem setup.
+    r"""Base class for an inversion problem setup.
 
     An inversion problem can be defined from several tiers, depending on the
     level of flexibility or control in ways you'd like to evaluate a model, as
     well as the solving approaches you'd like to apply on the problem.
 
-    To define an inversion problem that is intended to be solved by optimisation,
+    To define an inversion problem that is intended to be solved by **optimisation**,
     the following combinations are to be supplied:
 
-    - objective + gradient (optional) + hessian (optional)
-    - data_misfit + regularisation (optional)
-    - data + forward + specified in-built data_misfit + regularisation
-    - etc.
+    .. figure:: ../../_static/BaseProblem_opt.svg
+       :align: center
 
-    To define an inversion problem that is intended to be solved by sampling (WIP),
+    To define an inversion problem that is intended to be solved by **sampling** (WIP),
     one of the following combinations are to be supplied:
 
-    - prior + likelihood + proposal_dist (optional)
-    - posterior + proposal_dist (optional)
-    - etc.
+    .. figure:: ../../_static/BaseProblem_spl.svg
+       :align: center
 
-    At any point of defining your inversion problem, the `BaseProblem().suggest_solvers()`
+    .. tip::
+
+        :ref:`Set Methods <set_methods>` gives a list of methods to attach information
+        about the problem.
+
+    Some blocks above may be deduced from other existing information. For instance, 
+    once you've defined your data, forward operator and how you'd like to calculate 
+    the data misfit, we are able to generate ``data_misfit`` and ``residual`` for you.
+    The ``summary()`` method prints what blocks you've defined, what are not yet defined, 
+    and what are generated automatically for you.
+
+    At any point of defining your inversion problem, the ``suggest_solvers()``
     method helps get a list of solvers that can be applied to your problem based on 
     what have been supplied so far.
+
+    .. tip::
+
+        :ref:`Helper Methods <helper_methods>` are there to help you illustrate what's in your
+        ``BaseProblem`` object.
+
+        Additionally, :ref:`Properties/Functaions <prop_func>` defined by you are all still
+        accessible for you to check.
+
+
+    .. _set_methods:
+
+    .. rubric:: Set Methods
+
+    Here are a series of ``set`` methods:
+
+    .. autosummary::
+        BaseProblem.set_objective
+        BaseProblem.set_gradient
+        BaseProblem.set_hessian
+        BaseProblem.set_hessian_times_vector
+        BaseProblem.set_residual
+        BaseProblem.set_jacobian
+        BaseProblem.set_jacobian_times_vector
+        BaseProblem.set_data_misfit
+        BaseProblem.set_regularisation
+        BaseProblem.set_forward
+        BaseProblem.set_dataset
+        BaseProblem.set_dataset_from_file
+        BaseProblem.set_initial_model
+        BaseProblem.set_model_shape
+        BaseProblem.set_bounds
+        BaseProblem.set_constraints
     
+    .. _helper_methods:
+
+    .. rubric:: Helper Methods
+
+    Here are helper methods that check what you've defined to the ``BaseProblem``:
+
+    .. autosummary::
+
+        BaseProblem.summary
+        BaseProblem.suggest_solvers
+        BaseProblem.defined_components
+
+    .. _prop_func:
+
+    .. rubric:: Properties/Functions of the Problem
+
+    In case you'd like to check, the properties/functions defined using the ``set``
+    methods above are attached directly to ``BaseProblem`` and can be used:
+    
+    .. autosummary::
+
+        BaseProblem.name
+        BaseProblem.objective
+        BaseProblem.gradient
+        BaseProblem.hessian
+        BaseProblem.hessian_times_vector
+        BaseProblem.residual
+        BaseProblem.jacobian
+        BaseProblem.jacobian_times_vector
+        BaseProblem.data_misfit
+        BaseProblem.regularisation
+        BaseProblem.forward
+        BaseProblem.data_x
+        BaseProblem.data_y
+        BaseProblem.initial_model
+        BaseProblem.model_shape
+        BaseProblem.bounds
+        BaseProblem.constraints
+
     """
 
     all_components = [
@@ -672,6 +752,36 @@ class BaseProblem:
 
     @property
     def name(self):
+        """Name of the current BaseProblem object, for display purposes, no actual
+        meaning
+
+        Returns
+        -------
+        str
+            a name you've set, for example:
+
+            .. code-block:: python
+               
+                >>> inv_problem = BaseProblem()
+                >>> inv_problem.name = "MySeismicProblem"
+                >>> inv_problem.summary()
+                Summary for inversion problem: MySeismicProblem
+                =====================================================================
+                Model shape: Unknown
+                ---------------------------------------------------------------------
+                List of functions/properties set by you:
+                -- none --
+                ---------------------------------------------------------------------
+                List of functions/properties created based on what you have provided:
+                -- none --
+                ---------------------------------------------------------------------
+                List of functions/properties not set by you:
+                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residua
+                l', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisati
+                on', 'forward', 'dataset', 'initial_model', 'model_shape', 'bounds', 
+                'constraints']
+        
+        """
         return self._name if hasattr(self, "_name") else self.__class__.__name__
 
     @name.setter
