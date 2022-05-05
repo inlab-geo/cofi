@@ -15,19 +15,28 @@ List of functions and classes (API)
 APIs for Basic Usage
 --------------------
 
-`BaseProblem` is the base class of all forward problems. It includes methods you
-can use so as to define a forward problem.
+.. figure:: ../_static/cofi_workflow_simplified.svg
+   :align: center
 
-`InversionOptions` is a holder for you to define how you'd like the inversion problem
-to be solved.
 
-With instances of `BaseProblem` and `InversionOptions` defined, they are passed InversionOptions
-an `Inversion` and an inversion run gives a result object of the type `InversionResult`.
+A typical inversion run in :code:`cofi` involves the following four objects:
 
+:BaseProblem: base class of all forward problems that includes methods you
+    can use to define a forward problem
+:InversionOptions: a holder for you to define how you'd like the inversion
+    problem to be solved
+:Inversion: takes in both of above objects and can be thought of as a running
+    engine
+:InversionResult: a return object by :code:`Inversion.run()` (you won't need to 
+    define this explicitly)
+
+The "object" here is simply a variable, but more flexible and powerful than an 
+integer or string, in the sense that they can have properties and methods attached
+to them. In the following pages we expand what are available for each of the class
+object we mention above, and how to use them.
 
 .. autosummary::
     :toctree: generated/
-    :caption: Basic usage
 
     cofi.BaseProblem
     cofi.InversionOptions
@@ -38,13 +47,11 @@ an `Inversion` and an inversion run gives a result object of the type `Inversion
 APIs for Advanced Usage
 -----------------------
 
-`BaseSolver` is the base class of all backend inversion tools. To plug in your own inversion
-tools, simply create a subclass of `BaseSolver` and implements `__init__()` and `__call__()`.
-Check the tutorials page (TODO) and reference page below for details.
+**BaseSolver** is the base class of all backend inversion tools. To plug in your own inversion
+tools, simply create a subclass of :code:`BaseSolver` and implements :code:`__init__()` and 
+:code:`__call__()`. Expand the details below for more concrete examples.
 
 .. autosummary::
     :toctree: generated/
-    :caption: Advanced usage
 
     cofi.solvers.BaseSolver
-    .. cofi.inv_problems.BaseForward
