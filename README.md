@@ -43,15 +43,11 @@ inv_problem = BaseProblem()
 inv_problem.set_objective(my_objective_func)
 ```
 
-We have a series of pre-defined problems and ways of setting up the problem. Feel free to check out
-our [getting-started](https://cofi.readthedocs.io/en/latest/getting-started.html) page on how to
-plug in your own inference problems (with different tiers of flexibility)
-
 Once a problem is defined, `cofi` can tell you what inference solvers you can use based on what level of
 information you've provided:
 
 ```python
-inv_problem.suggest_solvers()   # a list will be returned
+inv_problem.suggest_solvers()   # a list will be printed
 ```
 
 Run an inversion with these lines:
@@ -69,7 +65,8 @@ print(result.ok)
 print(result.model)
 ```
 
-And now an inversion is completed! Check out our [tutorial](https://cofi.readthedocs.io/en/latest/notebooks/index.html) pages for more examples and advanced usages.
+And now an inversion is completed! Check out our [example gallery](https://cofi.readthedocs.io/en/latest/cofi-examples/generated/index.html)
+and [tutorial](https://cofi.readthedocs.io/en/latest/tutorial.html) pages for more advanced usages.
 
 ## Contributing
 

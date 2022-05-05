@@ -47,3 +47,8 @@ div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
     flex-direction: column;
     justify-content: space-between;
 }
+
+/* API: class/method name */
+span.sig-name {
+    color: chocolate;
+}

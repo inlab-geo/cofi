@@ -9,7 +9,7 @@ from .solvers import solvers_table
 
 
 class BaseProblem:
-    """Base class for a inversion problem setup.
+    """Base class for an inversion problem setup.
 
     An inversion problem can be defined from several tiers, depending on the
     level of flexibility or control in ways you'd like to evaluate a model, as
@@ -17,20 +17,23 @@ class BaseProblem:
 
     To define an inversion problem that is intended to be solved by optimisation,
     the following combinations are to be supplied:
+
     - objective + gradient (optional) + hessian (optional)
-    - data_misfit + regularisation
+    - data_misfit + regularisation (optional)
     - data + forward + specified in-built data_misfit + regularisation
     - etc.
 
-    To define an inversion problem that is intended to be solved by sampling,
+    To define an inversion problem that is intended to be solved by sampling (WIP),
     one of the following combinations are to be supplied:
+
     - prior + likelihood + proposal_dist (optional)
     - posterior + proposal_dist (optional)
-    - etc. (WIP)
+    - etc.
 
     At any point of defining your inversion problem, the `BaseProblem().suggest_solvers()`
-    method can be used to get a list of solvers that can be applied on your problem
-    based on what have been supplied so far.
+    method helps get a list of solvers that can be applied to your problem based on 
+    what have been supplied so far.
+    
     """
 
     all_components = [
@@ -55,6 +58,23 @@ class BaseProblem:
         self.__dict__.update(kwargs)
 
     def objective(self, model: np.ndarray) -> Number:
+        """Method for computing the objective function given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Number
+            The objective function value for the given model
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         if self.data_misfit_defined and self.regularisation_defined:
             return self.data_misfit(model) + self.regularisation(model)
         elif self.data_misfit_defined:
@@ -65,18 +85,71 @@ class BaseProblem:
         )
 
     def gradient(self, model: np.ndarray) -> np.ndarray:
+        """Method for computing the gradient of objective function with respect to model, given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        np.ndarray
+            the gradient (first derivative) of objective function with repect to the model
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         raise NotImplementedError(
             "`gradient` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
     def hessian(self, model: np.ndarray) -> np.ndarray:
+        """Method for computing the Hessian of objective function with respect to model, given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        np.ndarray
+            the Hessian (second derivative) of objective function with respect to the model
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         raise NotImplementedError(
             "`hessian` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
     def hessian_times_vector(self, model: np.ndarray, vector: np.ndarray) -> np.ndarray:
+        """Method for computing the dot product of the Hessian and an arbitrary vector, given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+        vector : np.ndarray
+            an arbitrary vector
+
+        Returns
+        -------
+        np.ndarray
+            Hessian times an arbitrary vector
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         if self.hessian_defined:
             return self.hessian(model) @ vector
         raise NotImplementedError(
@@ -85,6 +158,23 @@ class BaseProblem:
         )
 
     def residual(self, model: np.ndarray) -> np.ndarray:
+        r"""Method for computing the residual vector given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        np.ndarray
+            the residual vector, :math:`\text{forward}(\text{model})-\text{observations}`
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         if self.forward_defined and self.dataset_defined:
             return self.forward(model) - self.data_y
         raise NotImplementedError(
@@ -93,6 +183,23 @@ class BaseProblem:
         )
 
     def jacobian(self, model: np.ndarray) -> np.ndarray:
+        r"""Method for computing the Jacobian of forward function with respect to model, given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        np.ndarray
+            the Jacobian matrix, :math:`\frac{\partial{\text{forward}(\text{model})}}{\partial\text{model}}`
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         raise NotImplementedError(
             "`jacobian` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -101,6 +208,25 @@ class BaseProblem:
     def jacobian_times_vector(
         self, model: np.ndarray, vector: np.ndarray
     ) -> np.ndarray:
+        """Method for computing the dot product of the Jacobian and an arbitrary vector, given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+        vector : np.ndarray
+            an arbitrary vector
+
+        Returns
+        -------
+        np.ndarray
+            the Jacobian matrix times the given vector
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         if self.jacobian_defined:
             return self.jacobian(model) @ vector
         raise NotImplementedError(
@@ -109,18 +235,69 @@ class BaseProblem:
         )
 
     def data_misfit(self, model: np.ndarray) -> Number:
+        """Method for computing the data misfit value given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Number
+            the data misfit evaluated based on how you've defined it
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         raise NotImplementedError(
             "`data_misfit` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
     def regularisation(self, model: np.ndarray) -> Number:
+        """Method for computing the regularisation value given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Number
+            the regularisation value evaluated based on how you've defined it
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         raise NotImplementedError(
             "`regularisation` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
     def forward(self, model: np.ndarray) -> Union[np.ndarray, Number]:
+        """Method to perform the forward operation given a model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Union[np.ndarray, Number]
+            the synthetics data
+
+        Raises
+        ------
+        NotImplementedError
+            when this method is not set and cannot be deduced
+        """
         raise NotImplementedError(
             "`forward` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -398,43 +575,43 @@ class BaseProblem:
 
     @property
     def objective_defined(self):
-        return self.check_defined(self.objective)
+        return self._check_defined(self.objective)
 
     @property
     def gradient_defined(self):
-        return self.check_defined(self.gradient)
+        return self._check_defined(self.gradient)
 
     @property
     def hessian_defined(self):
-        return self.check_defined(self.hessian)
+        return self._check_defined(self.hessian)
 
     @property
     def hessian_times_vector_defined(self):
-        return self.check_defined(self.hessian_times_vector, 2)
+        return self._check_defined(self.hessian_times_vector, 2)
 
     @property
     def residual_defined(self):
-        return self.check_defined(self.residual)
+        return self._check_defined(self.residual)
 
     @property
     def jacobian_defined(self):
-        return self.check_defined(self.jacobian)
+        return self._check_defined(self.jacobian)
 
     @property
     def jacobian_times_vector_defined(self):
-        return self.check_defined(self.jacobian_times_vector, 2)
+        return self._check_defined(self.jacobian_times_vector, 2)
 
     @property
     def data_misfit_defined(self):
-        return self.check_defined(self.data_misfit)
+        return self._check_defined(self.data_misfit)
 
     @property
     def regularisation_defined(self):
-        return self.check_defined(self.regularisation)
+        return self._check_defined(self.regularisation)
 
     @property
     def forward_defined(self):
-        return self.check_defined(self.forward)
+        return self._check_defined(self.forward)
 
     @property
     def dataset_defined(self):
@@ -483,7 +660,7 @@ class BaseProblem:
             return True
 
     @staticmethod
-    def check_defined(func, args_num=1):
+    def _check_defined(func, args_num=1):
         try:
             func(*[np.array([])] * args_num)
         except NotImplementedError:
