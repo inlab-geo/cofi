@@ -30,7 +30,6 @@ class BaseProblem:
     .. admonition:: Click here to expand a quick example of BaseProblem
        :class: dropdown, attention
 
-
         >>> from cofi import BaseProblem
         >>> import numpy as np
         >>> inv_problem = BaseProblem()
