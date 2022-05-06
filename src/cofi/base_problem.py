@@ -16,21 +16,53 @@ class BaseProblem:
     well as the solving approaches you'd like to apply on the problem.
 
     To define an inversion problem that is intended to be solved by **optimisation**,
-    the following combinations are to be supplied:
+    you may consider the following tiers:
 
     .. figure:: ../../_static/BaseProblem_opt.svg
        :align: center
 
     To define an inversion problem that is intended to be solved by **sampling** (WIP),
-    one of the following combinations are to be supplied:
+    here is a rough structure of how you can define it:
 
     .. figure:: ../../_static/BaseProblem_spl.svg
        :align: center
 
+    .. admonition:: Click here to expand a quick example of BaseProblem
+       :class: dropdown, attention
+
+        .. code-block:: pycon
+
+            >>> from cofi import BaseProblem
+            >>> import numpy as np
+            >>> inv_problem = BaseProblem()
+            >>> data_x = np.array([1, 2, 3, 4])
+            >>> data_y = np.array([3.2, 3.9, 5.1, 6.2])
+            >>> def my_forward(model):
+            ...   assert len(model) == 2
+            ...   return model[0] + model[1] * data_x
+            ... 
+            >>> inv_problem.set_dataset(data_x, data_y)
+            >>> inv_problem.set_forward(my_forward)
+            >>> inv_problem.set_data_misfit("L2")
+            >>> inv_problem.summary()
+            Summary for inversion problem: BaseProblem
+            =====================================================================
+            Model shape: Unknown
+            ---------------------------------------------------------------------
+            List of functions/properties set by you:
+            ['forward', 'dataset']
+            ---------------------------------------------------------------------
+            List of functions/properties created based on what you have provided:
+            ['objective', 'residual', 'data_misfit']
+            ( Note that you did not set regularisation )
+            ---------------------------------------------------------------------
+            List of functions/properties not set by you:
+            ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'initial_model', 'model_shape', 'bounds', 'constraints']
+
     .. tip::
 
-        :ref:`Set Methods <set_methods>` gives a list of methods to attach information
-        about the problem.
+        Check :ref:`Set Methods <set_methods>` to see a full list of methods to attach 
+        information about the problem.
 
     Some blocks above may be deduced from other existing information. For instance, 
     once you've defined your data, forward operator and how you'd like to calculate 
@@ -47,8 +79,8 @@ class BaseProblem:
         :ref:`Helper Methods <helper_methods>` are there to help you illustrate what's in your
         ``BaseProblem`` object.
 
-        Additionally, :ref:`Properties/Functaions <prop_func>` defined by you are all still
-        accessible for you to check.
+        Additionally, :ref:`Properties/Functaions <prop_func>` set by you are accessible 
+        through the ``BaseProblem`` object.
 
 
     .. _set_methods:
@@ -760,7 +792,7 @@ class BaseProblem:
         str
             a name you've set, for example:
 
-            .. code-block:: python
+            .. code-block:: pycon
                
                 >>> inv_problem = BaseProblem()
                 >>> inv_problem.name = "MySeismicProblem"
