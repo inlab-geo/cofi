@@ -80,7 +80,7 @@ class BaseProblem:
         ``BaseProblem`` object.
 
         Additionally, :ref:`Properties/Functaions <prop_func>` set by you are accessible 
-        through the ``BaseProblem`` object.
+        through the ``BaseProblem`` object directly.
 
 
     .. _set_methods:
@@ -124,7 +124,7 @@ class BaseProblem:
     .. rubric:: Properties/Functions of the Problem
 
     In case you'd like to check, the properties/functions defined using the ``set``
-    methods above are attached directly to ``BaseProblem`` and can be used:
+    methods above are attached directly to ``BaseProblem`` and can be accessed:
     
     .. autosummary::
 
@@ -541,13 +541,17 @@ class BaseProblem:
         self._data_y = data_y
 
     def set_dataset_from_file(self, file_path, obs_idx=-1):
-        """Set the dataset for this problem from a give file path. This function
-        uses :func:`numpy.loadtxt` to load dataset file.
+        """Set the dataset for this problem from a give file path. 
+        
+        This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read 
+        dataset file, depending on the file type.
 
-        :param file_path: a relative/absolute file path for the dataset
-        :type file_path: str
-        :param obs_idx: _description_, defaults to -1
-        :type obs_idx: int, optional
+        Parameters
+        ----------
+        file_path : str
+            a relative/absolute file path for the dataset
+        obs_idx : Union[int,list], optional
+            the index/indices of observations within the dataset, by default -1
         """
         delimiter = None  # try to detect what delimiter is used
         if file_path.endswith(("npy", "npz")):

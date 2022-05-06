@@ -52,3 +52,15 @@ div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
 span.sig-name {
     color: chocolate;
 }
+code.xref {
+    text-decoration: underline;
+}
+code.literal.docutils {
+    color: chocolate;
+}
+table.autosummary p {
+    font-size: 0.8rem;
+}
+table.autosummary span {
+    font-size: 1rem;
+}
