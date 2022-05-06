@@ -30,34 +30,33 @@ class BaseProblem:
     .. admonition:: Click here to expand a quick example of BaseProblem
        :class: dropdown, attention
 
-        .. code-block:: pycon
 
-            >>> from cofi import BaseProblem
-            >>> import numpy as np
-            >>> inv_problem = BaseProblem()
-            >>> data_x = np.array([1, 2, 3, 4])
-            >>> data_y = np.array([3.2, 3.9, 5.1, 6.2])
-            >>> def my_forward(model):
-            ...   assert len(model) == 2
-            ...   return model[0] + model[1] * data_x
-            ... 
-            >>> inv_problem.set_dataset(data_x, data_y)
-            >>> inv_problem.set_forward(my_forward)
-            >>> inv_problem.set_data_misfit("L2")
-            >>> inv_problem.summary()
-            Summary for inversion problem: BaseProblem
-            =====================================================================
-            Model shape: Unknown
-            ---------------------------------------------------------------------
-            List of functions/properties set by you:
-            ['forward', 'dataset']
-            ---------------------------------------------------------------------
-            List of functions/properties created based on what you have provided:
-            ['objective', 'residual', 'data_misfit']
-            ( Note that you did not set regularisation )
-            ---------------------------------------------------------------------
-            List of functions/properties not set by you:
-            ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'initial_model', 'model_shape', 'bounds', 'constraints']
+        >>> from cofi import BaseProblem
+        >>> import numpy as np
+        >>> inv_problem = BaseProblem()
+        >>> data_x = np.array([1, 2, 3, 4])
+        >>> data_y = np.array([3.2, 3.9, 5.1, 6.2])
+        >>> def my_forward(model):
+        ...   assert len(model) == 2
+        ...   return model[0] + model[1] * data_x
+        ... 
+        >>> inv_problem.set_dataset(data_x, data_y)
+        >>> inv_problem.set_forward(my_forward)
+        >>> inv_problem.set_data_misfit("L2")
+        >>> inv_problem.summary()
+        Summary for inversion problem: BaseProblem
+        =====================================================================
+        Model shape: Unknown
+        ---------------------------------------------------------------------
+        List of functions/properties set by you:
+        ['forward', 'dataset']
+        ---------------------------------------------------------------------
+        List of functions/properties created based on what you have provided:
+        ['objective', 'residual', 'data_misfit']
+        ( Note that you did not set regularisation )
+        ---------------------------------------------------------------------
+        List of functions/properties not set by you:
+        ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'initial_model', 'model_shape', 'bounds', 'constraints']
 
     .. tip::
 

@@ -8,25 +8,33 @@
 
 The file [environment.yml](environment.yml) specifies packages required for developing this documentation. 
 
-1. To create a new `conda` environment from the file:
+1. Clone `cofi` and update submodule (`cofi-examples`):
+   
+   ```console
+   git clone https://github.com/inlab-geo/cofi.git
+   cd cofi
+   git submodule update --init
+   ```
+
+2. To create a new `conda` environment from the file:
 
     ```console
     conda env create -f environment.yml
     ```
 
-2. To build your changes:
+3. To build your changes:
 
     ```console
-    cd <path-to-cofi>/docs
+    cd docs
     make html
     ```
 
     The above command cleans up previous build files (if exist), updates API reference list and builds webpage files.
 
-3. Open your browser and go to file://\<path-to-cofi\>/docs/_build/html/index.html.
-4. Redo step 2 after you've changed things in this "docs" folder.
-5. To (only) update API references, use `make update_api`.
-6. To (only) clean up built files, use `make clean`.
+4. Open your browser and go to file://\<path-to-cofi\>/docs/_build/html/index.html.
+5. Redo step 2 after you've changed things in this "docs" folder.
+6. To (only) update API references, use `make update_api`.
+7. To (only) clean up built files, use `make clean`.
 
 ## Structure of this documentation
 
