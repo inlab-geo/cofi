@@ -27,7 +27,7 @@ class BaseProblem:
     .. figure:: ../../_static/BaseProblem_spl.svg
        :align: center
 
-    .. admonition:: Click here to expand a quick example of BaseProblem
+    .. admonition:: One quick example of BaseProblem
        :class: dropdown, attention
 
         >>> from cofi import BaseProblem
@@ -80,6 +80,7 @@ class BaseProblem:
         Additionally, :ref:`Properties/Functaions <prop_func>` set by you are accessible 
         through the ``BaseProblem`` object directly.
 
+    `back to top <#top>`_
 
     .. _set_methods:
 
@@ -102,9 +103,11 @@ class BaseProblem:
         BaseProblem.set_dataset_from_file
         BaseProblem.set_initial_model
         BaseProblem.set_model_shape
-        BaseProblem.set_bounds
-        BaseProblem.set_constraints
+        .. BaseProblem.set_bounds
+        .. BaseProblem.set_constraints
     
+    `back to top <#top>`_
+
     .. _helper_methods:
 
     .. rubric:: Helper Methods
@@ -116,6 +119,8 @@ class BaseProblem:
         BaseProblem.summary
         BaseProblem.suggest_solvers
         BaseProblem.defined_components
+
+    `back to top <#top>`_
 
     .. _prop_func:
 
@@ -143,6 +148,8 @@ class BaseProblem:
         BaseProblem.model_shape
         BaseProblem.bounds
         BaseProblem.constraints
+
+    `back to top <#top>`_
 
     """
 
@@ -421,17 +428,43 @@ class BaseProblem:
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
 
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
+        """Sets the function to compute the objective function to minimise
+
+        Parameters
+        ----------
+        obj_func : Callable[[np.ndarray], Number]
+            the objective function that matches :func:`BaseProblem.objective` in 
+            signature
+        """
         if obj_func:
             self.objective = obj_func
         else:
             del self.objective
 
     def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
+        """Sets the function to compute the gradient of objective function w.r.t. the
+        model
+
+        Parameters
+        ----------
+        obj_func : Callable[[np.ndarray], Number]
+            the gradient function that matches :func:`BaseProblem.gradient` in 
+            signature
+        """
         self.gradient = grad_func
 
     def set_hessian(
         self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
     ):
+        """Sets the function to compute the Hessian of objective function w.r.t. the
+        model
+
+        Parameters
+        ----------
+        hess_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+            the Hessian function that matches :func:`BaseProblem.hessian` in
+            signature
+        """
         if isinstance(hess_func, np.ndarray):
             self.hessian = lambda _: hess_func
         else:
@@ -440,14 +473,40 @@ class BaseProblem:
     def set_hessian_times_vector(
         self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]
     ):
+        """Sets the function to compute the Hessian (of objective function) times
+        an arbitrary vector
+
+        Parameters
+        ----------
+        hess_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
+            the function that computes the product of Hessian and an arbitrary vector,
+            in the same signature as :func:`BaseProblem.hessian_times_vector`
+        """
         self.hessian_times_vector = hess_vec_func
 
     def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray]):
+        """Sets the function to compute the residual vector/matrix
+
+        Parameters
+        ----------
+        res_func : Callable[[np.ndarray], np.ndarray]
+            the residual function that matches :func:`BaseProblem.residual` in
+            signature
+        """
         self.residual = res_func
 
     def set_jacobian(
         self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
     ):
+        """Sets the function to compute the Jacobian matrix, namely first 
+        derivative of forward function with respect to the model
+
+        Parameters
+        ----------
+        jac_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+            the Jacobian function that matches :func:`BaseProblem.residual` in
+            signature
+        """
         if isinstance(jac_func, np.ndarray):
             self.jacobian = lambda _: jac_func
         else:
@@ -456,9 +515,45 @@ class BaseProblem:
     def set_jacobian_times_vector(
         self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]
     ):
+        """Sets the function to compute the Jacobian (of forward function) times
+        an arbitrary vector
+
+        Parameters
+        ----------
+        jac_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
+            the function that computes the product of Jacobian and an arbitrary vector,
+            in the same signature as :func:`BaseProblem.jacobian_times_vector`
+        """
         self.jacobian_times_vector = jac_vec_func
 
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
+        """Sets the function to compute the data misfit
+
+        You can either pass in a custom function or a short string that describes the 
+        data misfit function. These are a list of pre-built data misfit functions we
+        support:
+
+        - "L2"
+
+        If you choose one of the above, then you would also need to use 
+        :func:`BaseProblem.set_dataset` / :func:`BaseProblem.set_dataset_from_file`
+        and :func:`BaseProblem.set_forward` so that we can generate the data misfit 
+        function for you.
+
+        If the data misfit function you want isn't included above, then pass your own
+        function as the input argument.
+
+        Parameters
+        ----------
+        data_misfit : Union[str, Callable[[np.ndarray], Number]]
+            either a string from ["L2"], or a data misfit function that matches 
+            :func:`BaseProblem.data_misfit` in signature.
+
+        Raises
+        ------
+        ValueError
+            when you've passed in a string not in our supported data misfit list
+        """
         if isinstance(data_misfit, str):
             # TODO - define a dict for available data_misfit methods
             if data_misfit in [
@@ -485,6 +580,32 @@ class BaseProblem:
         regularisation: Union[str, Callable[[np.ndarray], Number]],
         factor: Number = 0.1,
     ):
+        r"""Sets the function to compute the regularisation
+
+        You can either pass in a custom function or a short string that describes the
+        regularisation function. These are a list of pre-built regularisation functions we
+        support:
+
+        - "L0"
+        - "L1"
+        - "L2"
+
+        Parameters
+        ----------
+        regularisation : Union[str, Callable[[np.ndarray], Number]]
+            either a string from pre-built functions above, or a regularisation function that
+            matches :func:`BaseProblem.regularisation` in signature.
+        factor : Number, optional
+            the regularisation factor that adjusts the ratio of the regularisation
+            term over the data misfit, by default 0.1. If ``regularisation`` and ``data_misfit`` 
+            are set but ``objective`` isn't, then we will generate ``objective`` function as
+            following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
+
+        Raises
+        ------
+        ValueError
+            when you've passed in a string not in our supported regularisation list
+        """
         if isinstance(regularisation, str):
             _reg_dispatch_table = {
                 ("L0", "l0", "L0 norm", "l0 norm"): (
@@ -532,14 +653,30 @@ class BaseProblem:
         self.regularisation = lambda m: _reg(m) * factor
 
     def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray, Number]]):
+        """Sets the function to perform the forward operation
+
+        Parameters
+        ----------
+        forward : Callable[[np.ndarray], Union[np.ndarray, Number]]
+            the forward function that matches :func:`BaseProblem.forward` in signature
+        """
         self.forward = forward
 
     def set_dataset(self, data_x: np.ndarray, data_y: np.ndarray):
+        """Sets the dataset
+
+        Parameters
+        ----------
+        data_x : np.ndarray
+            the features of data points
+        data_y : np.ndarray
+            the observations
+        """
         self._data_x = data_x
         self._data_y = data_y
 
     def set_dataset_from_file(self, file_path, obs_idx=-1):
-        """Set the dataset for this problem from a give file path. 
+        """Sets the dataset for this problem from a give file path. 
         
         This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read 
         dataset file, depending on the file type.
@@ -565,10 +702,33 @@ class BaseProblem:
         self.set_dataset(np.delete(data, obs_idx, 1), data[:, obs_idx])
 
     def set_initial_model(self, init_model: np.ndarray):
+        """Sets the starting point for the model
+
+        Once set, we will infer the property :func:`BaseProblem.model_shape` in
+        case this is required for some inference solvers
+
+        Parameters
+        ----------
+        init_model : np.ndarray
+            the initial model
+        """
         self._initial_model = init_model
         self._model_shape = init_model.shape if hasattr(init_model, "shape") else (1,)
 
     def set_model_shape(self, model_shape: Tuple):
+        """Sets the model shape explicitly
+
+        Parameters
+        ----------
+        model_shape : Tuple
+            a tuple that describes model shape
+
+        Raises
+        ------
+        ValueError
+            when you've defined an initial_model through :func:`BaseProblem.set_initial_model`
+            but their shapes don't match
+        """
         if self.initial_model_defined and self._model_shape != model_shape:
             try:
                 np.reshape(self.initial_model, model_shape)
@@ -580,9 +740,23 @@ class BaseProblem:
         self._model_shape = model_shape
 
     def set_bounds(self, bounds: Sequence[Tuple[Number, Number]]):
+        """TODO document me
+
+        Parameters
+        ----------
+        bounds : Sequence[Tuple[Number, Number]]
+            _description_
+        """
         self._bounds = bounds
 
     def set_constraints(self, constraints):
+        """TODO document me
+
+        Parameters
+        ----------
+        constraints : _type_
+            _description_
+        """
         # TODO - what's the type of this? (ref: scipy has Constraint class)
         self._constraints = constraints
 
@@ -613,10 +787,58 @@ class BaseProblem:
         return [elem for elem in defined if elem not in created_by_us], created_by_us
 
     def defined_components(self) -> set:
+        """Returns a set of components that are defined for the ``BaseProblem`` object.
+
+        These include both the ones you've set explicitly through the :ref:`Set Methods <set_methods>`
+        and the ones that are deduced from existing information.
+
+        Returns
+        -------
+        set
+            a set of strings describing what are defined
+        """
         return self._defined_components()
 
     def suggest_solvers(self, print_to_console=True) -> dict:
-        # TODO - use self.defined_components() to suggest solvers
+        r"""Prints / Returns the backend inversion tool that you can use, based on things
+        defined for this ``BaseProblem`` instance, grouped by solving method
+
+        Parameters
+        ----------
+        print_to_console : bool, optional
+            if set to ``True``, this method will both print and return the dictionary
+            of backend tools in a tree structure; if set to ``False``, then it will not
+            print to console and will only return the dictionary; by default ``True``
+
+        Returns
+        -------
+        dict
+            a tree structure of solving methods we provide, with the leaf nodes being a
+            list of backend inversion solver suggested based on what information you've
+            provided to this ``BaseProblem`` object
+
+        Examples
+        --------
+
+        .. admonition:: example usage for BaseProblem.suggest_solvers()
+            :class: dropdown, attention
+
+            >>> from cofi import BaseProblem
+            >>> import numpy as np
+            >>> inv_problem = BaseProblem()
+            >>> inv_problem.set_initial_model(np.array([1,2,3]))
+            >>> inv_problem.set_data_misfit("L2")
+            >>> inv_problem.suggest_solvers()
+            Based on what you've provided so far, here are possible solvers:
+            {
+                "optimisation": [
+                    "scipy.optimize.minimize"
+                ],
+                "linear least square": []
+            }
+            {'optimisation': ['scipy.optimize.minimize'], 'linear least square': []}
+
+        """
         to_suggest = dict()
         all_components = self.defined_components()
         for solving_method in solvers_table:
@@ -630,11 +852,18 @@ class BaseProblem:
         if print_to_console:
             print("Based on what you've provided so far, here are possible solvers:")
             print(json.dumps(to_suggest, indent=4))
-        else:
-            return to_suggest
+        return to_suggest
 
     @property
-    def data_x(self):
+    def data_x(self) -> np.ndarray:
+        """the features of data points, set by :func:`BaseProblem.set_dataset` or
+        :func:`BaseProblem.set_dataset_from_file`
+
+        Raises
+        ------
+        NameError
+            when it's not defined by methods above
+        """
         if hasattr(self, "_data_x"):
             return self._data_x
         raise NameError(
@@ -643,7 +872,15 @@ class BaseProblem:
         )
 
     @property
-    def data_y(self):
+    def data_y(self) -> np.ndarray:
+        """the observations, set by :func:`BaseProblem.set_dataset` or 
+        :func:`BaseProblem.set_dataset_from_file`
+
+        Raises
+        ------
+        NameError
+            when it's not defined by methods above
+        """
         if hasattr(self, "_data_y"):
             return self._data_y
         raise NameError(
@@ -652,7 +889,15 @@ class BaseProblem:
         )
 
     @property
-    def initial_model(self):
+    def initial_model(self) -> np.ndarray:
+        """the initial model, needed for some iterative optimisation tools that 
+        requires a starting point
+
+        Raises
+        ------
+        NameError
+            when it's not defined (by :func:`BaseProblem.set_initial_model`)
+        """
         if hasattr(self, "_initial_model"):
             return self._initial_model
         raise NameError(
@@ -661,7 +906,15 @@ class BaseProblem:
         )
 
     @property
-    def model_shape(self):
+    def model_shape(self) -> Union[Tuple, np.ndarray]:
+        """the model shape
+
+        Raises
+        ------
+        NameError
+            when it's not defined (by either :func:`BaseProblem.set_model_shape` or
+            :func:`BaseProblem.set_model_shape`)
+        """
         if hasattr(self, "_model_shape"):
             return self._model_shape
         raise NameError(
@@ -671,6 +924,13 @@ class BaseProblem:
 
     @property
     def bounds(self):
+        """TODO: document me!
+
+        Raises
+        ------
+        NameError
+            when it's not defined (by :func:`BaseProblem.set_bounds`)
+        """
         if hasattr(self, "_bounds"):
             return self._bounds
         raise NameError(
@@ -680,6 +940,13 @@ class BaseProblem:
 
     @property
     def constraints(self):
+        """TODO: document me!
+
+        Raises
+        ------
+        NameError
+            when it's not defined (by :func:`BaseProblem.set_constraints`)
+        """
         if hasattr(self, "_constraints"):
             return self._constraints
         raise NameError(
@@ -688,47 +955,70 @@ class BaseProblem:
         )
 
     @property
-    def objective_defined(self):
+    def objective_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.objective`` has been defined
+        """
         return self._check_defined(self.objective)
 
     @property
-    def gradient_defined(self):
+    def gradient_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.gradient`` has been defined
+        """
         return self._check_defined(self.gradient)
 
     @property
-    def hessian_defined(self):
+    def hessian_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.hessian`` has been defined
+        """
         return self._check_defined(self.hessian)
 
     @property
-    def hessian_times_vector_defined(self):
+    def hessian_times_vector_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.hessian_times_vector`` has been defined
+        """
         return self._check_defined(self.hessian_times_vector, 2)
 
     @property
-    def residual_defined(self):
+    def residual_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.residual`` has been defined
+        """
         return self._check_defined(self.residual)
 
     @property
-    def jacobian_defined(self):
+    def jacobian_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.jacobian`` has been defined
+        """
         return self._check_defined(self.jacobian)
 
     @property
-    def jacobian_times_vector_defined(self):
+    def jacobian_times_vector_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.jacobian_times_vector`` has been defined
+        """
         return self._check_defined(self.jacobian_times_vector, 2)
 
     @property
-    def data_misfit_defined(self):
+    def data_misfit_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.data_misfit`` has been defined
+        """
         return self._check_defined(self.data_misfit)
 
     @property
-    def regularisation_defined(self):
+    def regularisation_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.regularisation`` has been defined
+        """
         return self._check_defined(self.regularisation)
 
     @property
-    def forward_defined(self):
+    def forward_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.forward`` has been defined
+        """
         return self._check_defined(self.forward)
 
     @property
-    def dataset_defined(self):
+    def dataset_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.data_x`` and :func:``BaseProblem.data_y`` 
+        has been defined
+        """
         try:
             self.data_x
             self.data_y
@@ -738,7 +1028,9 @@ class BaseProblem:
             return True
 
     @property
-    def initial_model_defined(self):
+    def initial_model_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.initial_model`` has been defined
+        """
         try:
             self.initial_model
         except NameError:
@@ -747,7 +1039,9 @@ class BaseProblem:
             return True
 
     @property
-    def model_shape_defined(self):
+    def model_shape_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.model_shape`` has been defined
+        """
         try:
             self.model_shape
         except NameError:
@@ -756,7 +1050,9 @@ class BaseProblem:
             return True
 
     @property
-    def bounds_defined(self):
+    def bounds_defined(self) -> bool:
+        """indicates whether :func:``BaseProblem.bounds`` has been defined
+        """
         try:
             self.bounds
         except NameError:
@@ -765,7 +1061,9 @@ class BaseProblem:
             return True
 
     @property
-    def constraints_defined(self):
+    def constraints_defined(self) -> bool:
+        """indicates whether ``BaseProblem.constraints`` has been defined
+        """
         try:
             self.constraints
         except NameError:
@@ -785,36 +1083,14 @@ class BaseProblem:
             return True
 
     @property
-    def name(self):
-        """Name of the current BaseProblem object, for display purposes, no actual
+    def name(self) -> str:
+        r"""Name of the current BaseProblem object, for display purposes, no actual
         meaning
 
         Returns
         -------
         str
-            a name you've set, for example:
-
-            .. code-block:: pycon
-               
-                >>> inv_problem = BaseProblem()
-                >>> inv_problem.name = "MySeismicProblem"
-                >>> inv_problem.summary()
-                Summary for inversion problem: MySeismicProblem
-                =====================================================================
-                Model shape: Unknown
-                ---------------------------------------------------------------------
-                List of functions/properties set by you:
-                -- none --
-                ---------------------------------------------------------------------
-                List of functions/properties created based on what you have provided:
-                -- none --
-                ---------------------------------------------------------------------
-                List of functions/properties not set by you:
-                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residua
-                l', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisati
-                on', 'forward', 'dataset', 'initial_model', 'model_shape', 'bounds', 
-                'constraints']
-        
+            a name you've set
         """
         return self._name if hasattr(self, "_name") else self.__class__.__name__
 
@@ -832,6 +1108,36 @@ class BaseProblem:
             )
 
     def summary(self):
+        r"""helper method that prints a summary of current ``BaseProblem`` object to
+        console
+
+        Examples
+        --------
+
+        .. admonition:: examples usage for BaseProblem.summary()
+            :class: dropdown, attention
+
+            >>> from cofi import BaseProblem
+            >>> import numpy as np
+            >>> inv_problem = BaseProblem()
+            >>> inv_problem.set_initial_model(np.array([1,2,3]))
+            >>> inv_problem.set_data_misfit("L2")
+            >>> inv_problem.summary()
+            Summary for inversion problem: BaseProblem
+            =====================================================================
+            Model shape: (3,)
+            ---------------------------------------------------------------------
+            List of functions/properties set by you:
+            ['initial_model', 'model_shape']
+            ---------------------------------------------------------------------
+            List of functions/properties created based on what you have provided:
+            ['objective', 'data_misfit']
+            ( Note that you did not set regularisation )
+            ---------------------------------------------------------------------
+            List of functions/properties not set by you:
+            ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'dataset', 'bounds', 'constraints']
+        
+        """
         self._summary()
 
     def _summary(self, display_lines=True):
