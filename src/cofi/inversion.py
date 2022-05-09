@@ -6,20 +6,36 @@ from .solvers import solver_dispatch_table, BaseSolver
 
 
 class InversionResult:
+    """The result class of an inversion run.
+
+    You won't need to create an object of this class by yourself. See :func:`Inversion.run`
+    for how you will get such an instance.
+
+    Currently the only method for ``InversionResult`` is :func:`Inversion.summary()`. 
+    More may be developed in the future.
+    """
+    
+    #: bool: indicates status of the inversion run
+    success : bool
+    #: dict: raw output from backend solvers
+    res : dict
+
     def __init__(self, res: dict) -> None:
         self.__dict__.update(res)
         self.res = res
-        if not hasattr(self, "success"):
+        if "success" not in res:
             raise ValueError(
                 "inversion termination status not returned in result dictionary, "
                 "fix your solver to return properly. Check CoFI documentation "
-                "'Advanced Usage' section for how to plug in your own solver"
+                "'tutorial - Advanced Usage' section for how to plug in your own solver"
             )
         self.success_or_not = (
             "success" if hasattr(self, "success") and self.success else "failure"
         )
 
     def summary(self) -> None:
+        """Helper method that prints a summary of the inversion result to console
+        """
         self._summary()
 
     def _summary(self, display_lines=True) -> None:
