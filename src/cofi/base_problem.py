@@ -131,7 +131,6 @@ class BaseProblem:
     
     .. autosummary::
 
-        BaseProblem.name
         BaseProblem.objective
         BaseProblem.gradient
         BaseProblem.hessian
@@ -142,6 +141,7 @@ class BaseProblem:
         BaseProblem.data_misfit
         BaseProblem.regularisation
         BaseProblem.forward
+        BaseProblem.name
         BaseProblem.data_x
         BaseProblem.data_y
         BaseProblem.initial_model
@@ -175,7 +175,7 @@ class BaseProblem:
         self.__dict__.update(kwargs)
 
     def objective(self, model: np.ndarray) -> Number:
-        """Method for computing the objective function given a model.
+        """Method for computing the objective function given a model
 
         Parameters
         ----------
@@ -202,7 +202,7 @@ class BaseProblem:
         )
 
     def gradient(self, model: np.ndarray) -> np.ndarray:
-        """Method for computing the gradient of objective function with respect to model, given a model.
+        """Method for computing the gradient of objective function with respect to model, given a model
 
         Parameters
         ----------
@@ -225,7 +225,7 @@ class BaseProblem:
         )
 
     def hessian(self, model: np.ndarray) -> np.ndarray:
-        """Method for computing the Hessian of objective function with respect to model, given a model.
+        """Method for computing the Hessian of objective function with respect to model, given a model
 
         Parameters
         ----------
@@ -248,7 +248,7 @@ class BaseProblem:
         )
 
     def hessian_times_vector(self, model: np.ndarray, vector: np.ndarray) -> np.ndarray:
-        """Method for computing the dot product of the Hessian and an arbitrary vector, given a model.
+        """Method for computing the dot product of the Hessian and an arbitrary vector, given a model
 
         Parameters
         ----------
@@ -300,7 +300,7 @@ class BaseProblem:
         )
 
     def jacobian(self, model: np.ndarray) -> np.ndarray:
-        r"""Method for computing the Jacobian of forward function with respect to model, given a model.
+        r"""Method for computing the Jacobian of forward function with respect to model, given a model
 
         Parameters
         ----------
@@ -325,7 +325,7 @@ class BaseProblem:
     def jacobian_times_vector(
         self, model: np.ndarray, vector: np.ndarray
     ) -> np.ndarray:
-        """Method for computing the dot product of the Jacobian and an arbitrary vector, given a model.
+        """Method for computing the dot product of the Jacobian and an arbitrary vector, given a model
 
         Parameters
         ----------
@@ -352,7 +352,7 @@ class BaseProblem:
         )
 
     def data_misfit(self, model: np.ndarray) -> Number:
-        """Method for computing the data misfit value given a model.
+        """Method for computing the data misfit value given a model
 
         Parameters
         ----------
@@ -375,7 +375,7 @@ class BaseProblem:
         )
 
     def regularisation(self, model: np.ndarray) -> Number:
-        """Method for computing the regularisation value given a model.
+        """Method for computing the regularisation value given a model
 
         Parameters
         ----------
@@ -398,7 +398,7 @@ class BaseProblem:
         )
 
     def forward(self, model: np.ndarray) -> Union[np.ndarray, Number]:
-        """Method to perform the forward operation given a model.
+        """Method to perform the forward operation given a model
 
         Parameters
         ----------
@@ -442,7 +442,7 @@ class BaseProblem:
             del self.objective
 
     def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
-        """Sets the function to compute the gradient of objective function w.r.t. the
+        """Sets the function to compute the gradient of objective function w.r.t the
         model
 
         Parameters
@@ -456,7 +456,7 @@ class BaseProblem:
     def set_hessian(
         self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
     ):
-        """Sets the function to compute the Hessian of objective function w.r.t. the
+        """Sets the function to compute the Hessian of objective function w.r.t the
         model
 
         Parameters
@@ -676,7 +676,7 @@ class BaseProblem:
         self._data_y = data_y
 
     def set_dataset_from_file(self, file_path, obs_idx=-1):
-        """Sets the dataset for this problem from a give file path. 
+        """Sets the dataset for this problem from a give file path
         
         This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read 
         dataset file, depending on the file type.
@@ -787,7 +787,7 @@ class BaseProblem:
         return [elem for elem in defined if elem not in created_by_us], created_by_us
 
     def defined_components(self) -> set:
-        """Returns a set of components that are defined for the ``BaseProblem`` object.
+        """Returns a set of components that are defined for the ``BaseProblem`` object
 
         These include both the ones you've set explicitly through the :ref:`Set Methods <set_methods>`
         and the ones that are deduced from existing information.
@@ -823,20 +823,23 @@ class BaseProblem:
         .. admonition:: example usage for BaseProblem.suggest_solvers()
             :class: dropdown, attention
 
-            >>> from cofi import BaseProblem
-            >>> import numpy as np
-            >>> inv_problem = BaseProblem()
-            >>> inv_problem.set_initial_model(np.array([1,2,3]))
-            >>> inv_problem.set_data_misfit("L2")
-            >>> inv_problem.suggest_solvers()
-            Based on what you've provided so far, here are possible solvers:
-            {
-                "optimisation": [
-                    "scipy.optimize.minimize"
-                ],
-                "linear least square": []
-            }
-            {'optimisation': ['scipy.optimize.minimize'], 'linear least square': []}
+            .. code-block:: pycon
+                :emphasize-lines: 6
+
+                >>> from cofi import BaseProblem
+                >>> import numpy as np
+                >>> inv_problem = BaseProblem()
+                >>> inv_problem.set_initial_model(np.array([1,2,3]))
+                >>> inv_problem.set_data_misfit("L2")
+                >>> inv_problem.suggest_solvers()
+                Based on what you've provided so far, here are possible solvers:
+                {
+                    "optimisation": [
+                        "scipy.optimize.minimize"
+                    ],
+                    "linear least square": []
+                }
+                {'optimisation': ['scipy.optimize.minimize'], 'linear least square': []}
 
         """
         to_suggest = dict()
@@ -1062,7 +1065,7 @@ class BaseProblem:
 
     @property
     def constraints_defined(self) -> bool:
-        """indicates whether ``BaseProblem.constraints`` has been defined
+        """indicates whether :func:``BaseProblem.constraints`` has been defined
         """
         try:
             self.constraints
@@ -1108,7 +1111,7 @@ class BaseProblem:
             )
 
     def summary(self):
-        r"""helper method that prints a summary of current ``BaseProblem`` object to
+        r"""Helper method that prints a summary of current ``BaseProblem`` object to
         console
 
         Examples
@@ -1117,25 +1120,28 @@ class BaseProblem:
         .. admonition:: examples usage for BaseProblem.summary()
             :class: dropdown, attention
 
-            >>> from cofi import BaseProblem
-            >>> import numpy as np
-            >>> inv_problem = BaseProblem()
-            >>> inv_problem.set_initial_model(np.array([1,2,3]))
-            >>> inv_problem.set_data_misfit("L2")
-            >>> inv_problem.summary()
-            Summary for inversion problem: BaseProblem
-            =====================================================================
-            Model shape: (3,)
-            ---------------------------------------------------------------------
-            List of functions/properties set by you:
-            ['initial_model', 'model_shape']
-            ---------------------------------------------------------------------
-            List of functions/properties created based on what you have provided:
-            ['objective', 'data_misfit']
-            ( Note that you did not set regularisation )
-            ---------------------------------------------------------------------
-            List of functions/properties not set by you:
-            ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'dataset', 'bounds', 'constraints']
+            .. code-block:: pycon
+                :emphasize-lines: 6
+
+                >>> from cofi import BaseProblem
+                >>> import numpy as np
+                >>> inv_problem = BaseProblem()
+                >>> inv_problem.set_initial_model(np.array([1,2,3]))
+                >>> inv_problem.set_data_misfit("L2")
+                >>> inv_problem.summary()
+                Summary for inversion problem: BaseProblem
+                =====================================================================
+                Model shape: (3,)
+                ---------------------------------------------------------------------
+                List of functions/properties set by you:
+                ['initial_model', 'model_shape']
+                ---------------------------------------------------------------------
+                List of functions/properties created based on what you have provided:
+                ['objective', 'data_misfit']
+                ( Note that you did not set regularisation )
+                ---------------------------------------------------------------------
+                List of functions/properties not set by you:
+                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'dataset', 'bounds', 'constraints']
         
         """
         self._summary()
