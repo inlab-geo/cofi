@@ -8,6 +8,111 @@ from .solvers import solver_suggest_table, solver_dispatch_table, solver_methods
 
 
 class InversionOptions:
+    r"""Class for specification on how an inversion will run, including which backend
+    tool to use and solver-specific parameters.
+
+    .. tip::
+
+        A typical workflow of :code:`InversionOptions`:
+
+        Step 1 (optional): let the :ref:`Guidance Methods <guide>` to walk you through 
+        available solving methods in a hierarchical way.
+
+        Step 2: Use the :ref:`Set/Unset Backend Tools <set_unset_tools>` to fix your choice
+        on which backend tool to use.
+
+        Step 3: Set solver-specific parameters using the :ref:`Solver Params <set_params>`
+        related methods.
+
+
+    .. admonition:: Example usage of InversionOptions
+        :class: dropdown, attention
+
+        >>> from cofi import InversionOptions
+        >>> inv_options = InversionOptions()
+        >>> inv_options.get_default_tool()
+        'scipy.optimize.minimize'
+        >>> inv_options.suggest_tools()
+        Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+        {
+            "optimisation": [
+                "scipy.optimize.minimize",
+                "scipy.optimize.least_squares"
+            ],
+            "linear least square": [
+                "scipy.linalg.lstsq"
+            ]
+        }
+        >>> inv_options.set_tool("scipy.linalg.lstsq")
+        >>> inv_options.suggest_solver_params()
+        Current backend tool scipy.linalg.lstsq has the following solver-specific parameters:
+        Required parameters:
+        -- nothing --
+        Optional parameters & default settings:
+        {'cond': None, 'overwrite_a': False, 'overwrite_b': False, 'check_finite': True, 'lapack_driver': None}
+        >>> inv_options.summary()
+        Summary for inversion options
+        =============================
+        Solving method: None set
+        Use `suggest_solving_methods()` to check available solving methods.
+        -----------------------------
+        Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+        References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
+        Use `suggest_tools()` to check available backend tools.
+        -----------------------------
+        Solver-specific parameters: None set
+        Use `suggest_solver_params()` to check required/optional solver-specific parameters.
+
+    .. warning::
+        Methods that guide users through available **solvers tree** is still under consideration -
+        we are working on deciding how such APIs are named and used. Ideally, we have a 
+        tree in the backend, with the root level branching into ``sampling``, ``direct search`` 
+        and ``optimisation`` and further categorisations that lead to lists of backend tools
+        as the leaves.
+
+    .. _guide:
+
+    .. rubric:: Guidance Methods
+
+    Here are how you can walk through our solvers tree as a guidance. Note that this
+    step is optional, and you can always jump to :ref:`Set/Unset Backend Tools <set_unset_tools>`
+    directly.
+
+    .. autosummary::
+        InversionOptions.set_solving_method
+        InversionOptions.unset_solving_method
+
+    `back to top <#top>`_
+
+    .. _set_unset_tools:
+
+    .. rubric:: Set/Unset Backend Tools
+
+    To select/unselect a backend tool, use the following methods
+
+    .. autosummary::
+        InversionOptions.set_tool
+        InversionOptions.unset_tool
+        InversionOptions.get_tool
+        InversionOptions.get_default_tool
+        InversionOptions.suggest_tools
+
+    `back to top <#top>`_
+
+    .. _set_params:
+
+    .. rubric:: Solver Params
+
+    To set tool-specific parameters, use the following methods
+
+    .. autosummary::
+        InversionOptions.set_params
+        InversionOptions.get_params
+        InversionOptions.suggest_solver_params
+
+    `back to top <#top>`_
+    
+    """
     def __init__(self):
         self.hyper_params = {}
         pass

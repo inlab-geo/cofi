@@ -28,7 +28,7 @@
 {% endif %}
 {% endfor %}
 
-`back to top <#top>`_
+.. `back to top <#top>`_
 
 ----
 
