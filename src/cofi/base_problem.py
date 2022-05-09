@@ -430,6 +430,13 @@ class BaseProblem:
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
         """Sets the function to compute the objective function to minimise
 
+        Alternatively, objective function can be set implicitly (computed by us) if one of 
+        the following combinations is set:
+
+        - :func:`BaseProblem.set_data_misfit` + :func:`BaseProblem.set_regularisation`
+        - :func:`BaseProblem.set_data_misfit` (in this case, regularisation is default
+          to 0)
+
         Parameters
         ----------
         obj_func : Callable[[np.ndarray], Number]
@@ -476,6 +483,9 @@ class BaseProblem:
         """Sets the function to compute the Hessian (of objective function) times
         an arbitrary vector
 
+        Alternatively, hessian_times_vector function can be set implicitly (computed by us)
+        if :func:`set_hessian` is defined.
+
         Parameters
         ----------
         hess_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
@@ -486,6 +496,10 @@ class BaseProblem:
 
     def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray]):
         """Sets the function to compute the residual vector/matrix
+
+        Alternatively, residual function can be set implicitly (computed by us)
+        if both :func:`set_forward` and dataset (:func:`set_dataset` or 
+        :func:`set_dataset_from_file`) are defined.
 
         Parameters
         ----------
@@ -517,6 +531,9 @@ class BaseProblem:
     ):
         """Sets the function to compute the Jacobian (of forward function) times
         an arbitrary vector
+
+        Alternatively, jacobian_times_vector function can be set implicitly (computed by us)
+        if :func:`set_jacobian` is defined.
 
         Parameters
         ----------
