@@ -54,6 +54,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "myst_nb",
     "sphinx_gallery.gen_gallery",
+    "sphinxcontrib.mermaid",
 ]
 
 templates_path = ["_templates"]

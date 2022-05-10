@@ -1,5 +1,6 @@
+*********
 Tutorials
-==============
+*********
 
 This page contains explanations about concepts in CoFI and basic usage.
 
@@ -8,7 +9,7 @@ problem, as well as how to plug in your own solvers in the "advanced usage"
 section.
 
 Basic concepts
---------------
+==============
 
 In the workflow of :code:`cofi`, there are three main
 components: :code:`BaseProblem`, :code:`InversionOptions`, and :code:`Inversion`.
@@ -61,4 +62,9 @@ to choose from.
 
 
 Advanced usage
---------------
+==============
+
+Define your own solver
+----------------------
+
+

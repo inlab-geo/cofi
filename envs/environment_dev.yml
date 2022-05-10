@@ -37,3 +37,4 @@ dependencies:
     - sphinx-gallery
     - pypandoc
     - myst-nb
+    - sphinxcontrib-mermaid
