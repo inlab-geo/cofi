@@ -64,6 +64,13 @@ class BaseSolver(metaclass=ABCMeta):
         BaseSolver.short_description
         BaseSolver.documentation_links
 
+    All backend solvers in ``cofi`` also update the following field, and this will be
+    displayed via :func:`Inversion.summary`. It's not required but good to keep track
+    of this:
+
+    .. autosummary::
+        BaseSolver.components_used
+
     """
     documentation_links = list()
     short_description = str()
