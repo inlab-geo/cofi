@@ -47,6 +47,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
     "sphinx.ext.doctest",
+    "sphinx.ext.mathjax",
     "sphinx_panels",
     "sphinx_togglebutton",
     # "nbsphinx",
@@ -62,7 +63,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 source_suffix = ".rst"
 source_encoding = "utf-8"
 master_doc = "index"
-pygments_style = "xcode"        # https://pygments.org/styles/
+pygments_style = "trac"        # https://pygments.org/styles/
 add_function_parentheses = False
 
 # Configuration to include links to other project docs

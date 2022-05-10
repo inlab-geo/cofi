@@ -52,4 +52,4 @@ Install
 
   CoFI time!
   Check out our step-by-step `tutorials <tutorial.html>`_ or 
-  `examples <cofi-examples/index.html>`_ to get started.
+  `examples <cofi-examples/generated/index.html>`_ to get started.

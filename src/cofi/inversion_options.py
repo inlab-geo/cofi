@@ -8,17 +8,215 @@ from .solvers import solver_suggest_table, solver_dispatch_table, solver_methods
 
 
 class InversionOptions:
+    r"""Class for specification on how an inversion will run, including which backend
+    tool to use and solver-specific parameters.
+
+    .. tip::
+
+        A typical workflow of :code:`InversionOptions`:
+
+        Step 1 (optional): let the :ref:`Guidance Methods <guide>` to walk you through 
+        available solving methods in a hierarchical way.
+
+        Step 2: Use the :ref:`Set/Unset Backend Tools <set_unset_tools>` to fix your choice
+        on which backend tool to use.
+
+        Step 3: Set solver-specific parameters using the :ref:`Solver Params <set_params>`
+        related methods.
+
+
+    .. admonition:: Example usage of InversionOptions
+        :class: dropdown, attention
+
+        >>> from cofi import InversionOptions
+        >>> inv_options = InversionOptions()
+        >>> inv_options.get_default_tool()
+        'scipy.optimize.minimize'
+        >>> inv_options.suggest_tools()
+        Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+        {
+            "optimisation": [
+                "scipy.optimize.minimize",
+                "scipy.optimize.least_squares"
+            ],
+            "linear least square": [
+                "scipy.linalg.lstsq"
+            ]
+        }
+        >>> inv_options.set_tool("scipy.linalg.lstsq")
+        >>> inv_options.suggest_solver_params()
+        Current backend tool scipy.linalg.lstsq has the following solver-specific parameters:
+        Required parameters:
+        -- nothing --
+        Optional parameters & default settings:
+        {'cond': None, 'overwrite_a': False, 'overwrite_b': False, 'check_finite': True, 'lapack_driver': None}
+        >>> inv_options.summary()
+        Summary for inversion options
+        =============================
+        Solving method: None set
+        Use `suggest_solving_methods()` to check available solving methods.
+        -----------------------------
+        Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+        References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
+        Use `suggest_tools()` to check available backend tools.
+        -----------------------------
+        Solver-specific parameters: None set
+        Use `suggest_solver_params()` to check required/optional solver-specific parameters.
+
+    .. warning::
+        Methods that guide users through available **solvers tree** is still under consideration -
+        we are working on deciding how such APIs are named and used. Ideally, we have a 
+        tree in the backend, with the root level branching into ``sampling``, ``direct search`` 
+        and ``optimisation`` and further categorisations that lead to lists of backend tools
+        as the leaves.
+
+    .. _guide:
+
+    .. rubric:: Guidance Methods
+
+    Here are how you can walk through our solvers tree as a guidance. Note that this
+    step is optional, and you can always jump to :ref:`Set/Unset Backend Tools <set_unset_tools>`
+    directly.
+
+    .. autosummary::
+        InversionOptions.set_solving_method
+        InversionOptions.unset_solving_method
+
+    `back to top <#top>`_
+
+    .. _set_unset_tools:
+
+    .. rubric:: Set/Unset Backend Tools
+
+    To select/unselect a backend tool, use the following methods
+
+    .. autosummary::
+        InversionOptions.set_tool
+        InversionOptions.unset_tool
+        InversionOptions.get_tool
+        InversionOptions.get_default_tool
+        InversionOptions.suggest_tools
+
+    `back to top <#top>`_
+
+    .. _set_params:
+
+    .. rubric:: Solver Params
+
+    To set tool-specific parameters, use the following methods
+
+    .. autosummary::
+        InversionOptions.set_params
+        InversionOptions.get_params
+        InversionOptions.suggest_solver_params
+
+    `back to top <#top>`_
+    
+    """
     def __init__(self):
         self.hyper_params = {}
         pass
 
     def set_params(self, **kwargs):
+        r"""Sets solver-specific parameters
+
+        Use :func:`InversionOptions.suggest_solver_params` to get a list of parameters
+        required and optional.
+
+        To set the parameters, use argument keyword to specify directly which parameter
+        you refer to.
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+
+            .. code-block:: pycon
+                :emphasize-lines: 9
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.suggest_solver_params()
+                Current backend tool scipy.optimize.minimize (default) has the following solver-specific parameters:
+                Required parameters:
+                -- nothing --
+                Optional parameters & default settings:
+                {'method': None, 'tol': None, 'callback': None, 'options': None}
+                >>> inv_options.set_params(method="Nelder-Mead")
+
+        """
         self.hyper_params.update(kwargs)
 
-    def get_params(self) -> set:
+    def get_params(self) -> dict:
+        r"""Get solver-specific parameters defined so far
+
+        Returns
+        -------
+        dict
+            a Python dictionary that maps solver-specific parameter name to the value
+            you've set.
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+            
+            .. code-block:: pycon
+                :emphasize-lines: 4
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.set_params(method="Nelder-Mead")
+                >>> inv_options.get_params()
+                {'method': 'Nelder-Mead'}
+
+        """
         return self.hyper_params
 
     def set_solving_method(self, method: str):
+        r"""Sets the solving method
+
+        .. warning::
+            The current version is a flattened version of our solvers tree, we are going
+            to change this interface very soon.
+
+        Use :func:`InversionOptions.suggest_solving_methods` to get a list of solving 
+        methods to choose from.
+
+        Parameters
+        ----------
+        method : str
+            the string that represents a solving approach
+
+        Raises
+        ------
+        ValueError
+            when the solving method you attempt to set is invalid
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+
+            .. code-block:: pycon
+                :emphasize-lines: 3
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.set_solving_method("linear least square")
+                >>> inv_options.suggest_tools()
+                Based on the solving method you've set, the following tools are suggested:
+                ['scipy.linalg.lstsq']
+
+                Use `InversionOptions.set_tool(tool_name)` to set a specific tool from above
+                Use `InversionOptions.set_solving_method(method_name)` to change solving method
+                Use `InversionOptions.unset_solving_method()` if you'd like to see more options
+                Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver
+
+        """
         if method is None:
             self.unset_solving_method()
         elif method in solver_methods:
@@ -33,9 +231,89 @@ class InversionOptions:
             )
 
     def unset_solving_method(self):
+        """Unsets the chosen solving approach
+        """
         del self.method
 
     def set_tool(self, tool: Union[str, Type]):
+        r"""Sets the tool that will be the backend solver for your inversion problem
+
+        This can be:
+        
+        - a backend tool we support, use :func:`InversionOptions.suggest_tools` to get
+          a list of tools you can choose from
+        - or your own solver class, check `our tutorial - Advanced Usage <tutorial.html#advanced-usage>`_
+          for details about how to define and use your custom solver
+
+        Parameters
+        ----------
+        tool : Union[str, Type]
+            either the name of a backend tool or your custom :class:`solver.BaseSolver`
+            class
+
+        Raises
+        ------
+        ValueError
+            when the string you pass in isn't in our supported tools list, or when the solver
+            class you pass in doesn't implement the ``__call__(self,)`` method.
+
+        Examples
+        --------
+
+        .. admonition:: code example: set a supported tool
+            :class: dropdown, attention
+
+            .. code-block:: pycon
+                :emphasize-lines: 3
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.set_tool("scipy.linalg.lstsq")
+                >>> inv_options.summary()
+                Summary for inversion options
+                =============================
+                Solving method: None set
+                Use `suggest_solving_methods()` to check available solving methods.
+                -----------------------------
+                Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+                References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
+                Use `suggest_tools()` to check available backend tools.
+                -----------------------------
+                Solver-specific parameters: None set
+                Use `suggest_solver_params()` to check required/optional solver-specific parameters.
+
+
+        .. admonition:: code example: set your own solver
+            :class: dropdown, attention
+
+            .. code-block:: pycon
+                :emphasize-lines: 3-8, 11
+
+                >>> from cofi.solvers import BaseSolver
+                >>> from cofi import InversionOptions
+                >>> class MyDummySolver(BaseSolver):
+                ...   short_description = "My dummy solver that always return (1,2) as result"
+                ...   def __init__(self, inv_problem, inv_options):
+                ...     super().__init__(inv_problem, inv_options)
+                ...   def __call__(self):
+                ...     return {"model": np.array([1,2]), "success": True}
+                ... 
+                >>> inv_options = InversionOptions()
+                >>> inv_options.set_tool(MyDummySolver)
+                >>> inv_options.summary()
+                Summary for inversion options
+                =============================
+                Solving method: None set
+                Use `suggest_solving_methods()` to check available solving methods.
+                -----------------------------
+                Backend tool: `<class '__main__.MyDummySolver'>` - My dummy solver that always return (1,2) as result
+                References: []
+                Use `suggest_tools()` to check available backend tools.
+                -----------------------------
+                Solver-specific parameters: None set
+                Use `suggest_solver_params()` to check required/optional solver-specific parameters.
+
+        """
         if tool is None:
             self.unset_tool()
         elif isinstance(tool, Type):
@@ -46,8 +324,9 @@ class InversionOptions:
                 self.tool = tool
             else:
                 raise ValueError(
-                    "the custom solver class you've provided should implement __call__(self,) function"
-                    "read CoFI documentation 'Advanced Usage' section for how to plug in your own solver"
+                    "the custom solver class you've provided should implement __call__(self,) method"
+                    "read CoFI documentation 'tutorials - Advanced Usage' section for how to plug in"
+                    "your own solver"
                 )
         else:
             if tool not in solver_dispatch_table:
@@ -73,18 +352,55 @@ class InversionOptions:
             self.tool = tool
 
     def unset_tool(self):
+        """Unsets the chosen backend tool
+        """
         del self.tool
 
-    def get_tool(self):
+    def get_tool(self) -> Union[str, Type]:
+        """Get the backend tool chosen so far, or the default tool if not chosen
+
+        Returns
+        -------
+        Union[str, Type]
+            the name of the backend tool (if it's supported by us), or the class name
+            of your own solver
+        """
         return self.tool if hasattr(self, "tool") else self.get_default_tool()
 
-    def get_default_tool(self):
+    def get_default_tool(self) -> str:
+        """Get the default tool based on the chosen solving method
+
+        Returns
+        -------
+        str
+            the name of the default backend tool
+        """
         if hasattr(self, "method"):
             return solver_suggest_table[self.method][0]
         else:
             return solver_suggest_table["optimisation"][0]
 
     def suggest_solving_methods(self):
+        """Prints a list of solving methods to choose from
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+            
+            .. code-block:: pycon
+                :emphasize-lines: 3
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.suggest_solving_methods()
+                The following solving methods are supported:
+                {'optimisation', 'linear least square'}
+
+                Use `suggest_tools()` to see a full list of backend tools for each method
+
+        """
         print("The following solving methods are supported:")
         print(solver_methods)
         print(
@@ -92,6 +408,41 @@ class InversionOptions:
         )
 
     def suggest_tools(self):
+        """Prints a list of tools based on the solving method chosen
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+            
+            .. code-block:: pycon
+                :emphasize-lines: 3, 15
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.suggest_tools()
+                Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+                {
+                    "optimisation": [
+                        "scipy.optimize.minimize",
+                        "scipy.optimize.least_squares"
+                    ],
+                    "linear least square": [
+                        "scipy.linalg.lstsq"
+                    ]
+                }
+                >>> inv_options.set_solving_method("linear least square")
+                >>> inv_options.suggest_tools()
+                Based on the solving method you've set, the following tools are suggested:
+                ['scipy.linalg.lstsq']
+
+                Use `InversionOptions.set_tool(tool_name)` to set a specific tool from above
+                Use `InversionOptions.set_solving_method(method_name)` to change solving method
+                Use `InversionOptions.unset_solving_method()` if you'd like to see more options
+                Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver
+
+        """
         if hasattr(self, "method"):
             tools = solver_suggest_table[self.method]
             print(
@@ -117,6 +468,27 @@ class InversionOptions:
             print(json.dumps(solver_suggest_table, indent=4))
 
     def suggest_solver_params(self):
+        """Prints required and optional solver-specific parameters
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+
+            .. code-block:: pycon
+                :emphasize-lines: 3
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.suggest_solver_params()
+                Current backend tool scipy.optimize.minimize (default) has the following solver-specific parameters:
+                Required parameters:
+                -- nothing --
+                Optional parameters & default settings:
+                {'method': None, 'tol': None, 'callback': None, 'options': None}
+
+        """
         tool, dft_suffix = (
             (self.tool, "")
             if hasattr(self, "tool")
@@ -140,6 +512,34 @@ class InversionOptions:
         )
 
     def summary(self):
+        """Helper method that prints a summary of current ``InversionOptions`` object
+        to console
+
+        Examples
+        --------
+
+        .. admonition:: code example
+            :class: dropdown, attention
+
+            .. code-block:: pycon
+                :emphasize-lines: 3
+
+                >>> from cofi import InversionOptions
+                >>> inv_options = InversionOptions()
+                >>> inv_options.summary()
+                Summary for inversion options
+                =============================
+                Solving method: None set
+                Use `suggest_solving_methods()` to check available solving methods.
+                -----------------------------
+                Backend tool: `scipy.optimize.minimize (by default)` - SciPy's optimisers that minimises a scalar function with respect to one or more variables, check SciPy's documentation page for a list of methods
+                References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html']
+                Use `suggest_tools()` to check available backend tools.
+                -----------------------------
+                Solver-specific parameters: None set
+                Use `suggest_solver_params()` to check required/optional solver-specific parameters.
+                
+        """
         self._summary()
 
     def _summary(self, display_lines=True):
@@ -157,7 +557,7 @@ class InversionOptions:
             if hasattr(self, "tool")
             else (f"{self.get_default_tool()}", " (by default)")
         )
-        solver = solver_dispatch_table[tool]
+        solver = solver_dispatch_table[tool] if isinstance(tool, str) else tool
         print(f"Solving method: {solving_method}")
         print("Use `suggest_solving_methods()` to check available solving methods.")
         if display_lines:

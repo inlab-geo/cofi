@@ -1,25 +1,40 @@
 from typing import Type
-import json
 
 from . import BaseProblem, InversionOptions
 from .solvers import solver_dispatch_table, BaseSolver
 
 
 class InversionResult:
+    """The result class of an inversion run.
+
+    You won't need to create an object of this class by yourself. See :func:`Inversion.run`
+    for how you will get such an instance.
+
+    Currently the only method for ``InversionResult`` is :func:`InversionResult.summary()`. 
+    More may be developed in the future.
+    """
+    
+    #: bool: indicates status of the inversion run
+    success : bool
+    #: dict: raw output from backend solvers
+    res : dict
+
     def __init__(self, res: dict) -> None:
         self.__dict__.update(res)
         self.res = res
-        if not hasattr(self, "success"):
+        if "success" not in res:
             raise ValueError(
                 "inversion termination status not returned in result dictionary, "
                 "fix your solver to return properly. Check CoFI documentation "
-                "'Advanced Usage' section for how to plug in your own solver"
+                "'tutorial - Advanced Usage' section for how to plug in your own solver"
             )
         self.success_or_not = (
             "success" if hasattr(self, "success") and self.success else "failure"
         )
 
     def summary(self) -> None:
+        """Helper method that prints a summary of the inversion result to console
+        """
         self._summary()
 
     def _summary(self, display_lines=True) -> None:
@@ -42,6 +57,48 @@ class InversionResult:
 
 
 class Inversion:
+    r"""The class holder that take in both an inversion problem setup :class:`BaseProblem`
+    and inversion solver options :class:`InversionOptions`, and handles the running of an
+    inversion.
+
+    Recall that we have 4 main steps to define and run an inversion through ``cofi``:
+    
+    1. Define a :class:`BaseProblem` object
+    2. Define an :class:`InversionOptions` object
+    3. Pass both of the above objects into an :class:`Inversion`
+    4. Hit that :func:`Inversion.run` method and get the result :class:`InversionResult`
+
+    So let's think of ``Inversion`` as an engine that manages the input and output of an 
+    inversion run for you.
+
+    .. admonition:: Example usage of Inversion
+        :class: attention
+
+        >>> from cofi import BaseProblem, InversionOptions, Inversion
+        >>> inv_problem = BaseProblem()
+        >>> inv_problem.set_... # attach info about your problem
+        >>> inv_options = InversionOptions()
+        >>> inv_options.set_... # select backend tool and solver-specific parameters
+        >>> inv = Inversion(inv_problem, inv_options)
+        >>> inv_result = inv.run()
+
+        See our example gallery for more inversion runs.
+
+    .. admonition:: A future direction?
+        :class: seealso
+
+        We seperate out this "inversion", instead of passing a ``BaseProblem`` object
+        directly to a hypothetical ``InversionSolver`` concept. This is not only because
+        we want a cleaner workflow, but also because we imagine this ``Inversion``
+        object to have more capability::
+
+        >>> inv = Inversion(inv_problem, inv_options)
+        >>> inv_result = inv.run()
+        >>> inv.save("filename")
+        >>> inv = Inversion.load("filename")
+        >>> inv.analyse("filename")
+
+    """
     def __init__(self, inv_problem: BaseProblem, inv_options: InversionOptions) -> None:
         self.inv_problem = inv_problem
         self.inv_options = inv_options
@@ -49,6 +106,17 @@ class Inversion:
         self.inv_solve = self._dispatch_solver()(inv_problem, inv_options)
 
     def run(self) -> InversionResult:
+        """Starts the inversion and returns an :class:`InversionResult` object.
+        
+        The inversion will be entirely based on the setup defined in ``BaseProblem`` and 
+        ``InversionOptions`` objects.
+
+        Returns
+        -------
+        InversionResult
+            the result of inversion that has attributes ``model`` / ``models`` and ``success``
+            minimally. Check :class:`InversionResult` for details.
+        """
         res_dict = self.inv_solve()
         self.inv_result = InversionResult(res_dict)
         return self.inv_result
@@ -61,7 +129,18 @@ class Inversion:
         else:  # self-defined BaseSolver (note that a BaseSolver object is a callable)
             return self.inv_options.tool
 
-    def summary(self):  # TODO to test
+    def summary(self):
+        r"""Helper method that prints a summary of current ``Inversion`` object
+        to console
+
+        This is essentially a higher level method that calls the ``.summary()`` method
+        on all of the three objects:
+
+        - :class:`InversionResult` (if the inversion has finished)
+        - :class:`BaseProblem`
+        - :class:`InversionOptions`
+
+        """
         title = "Summary for Inversion"
         subtitle_result = "Completed with the following result:"
         subtitle_options = "With inversion solver defined as below:"
