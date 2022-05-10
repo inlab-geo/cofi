@@ -12,17 +12,22 @@
 
 ----
 
-.. {% for item in members %}
-.. {% if item in ['__call__'] %}
-.. .. automethod:: {{ objname }}.{{ item }}
-.. {% endif %}
-.. {% endfor %}
+{% for item in members %}
+{% if item in ['__call__'] %}
+.. automethod:: {{ objname }}.{{ item }}
+{% endif %}
+{% endfor %}
 
 .. `back to top <#top>`_
 
 .. ----
 
 {% for item in methods %}
+
+{% if "BaseSolver" in objname and item == '__init__' %}
+.. automethod:: {{ objname }}.{{ item }}
+{% endif %}
+
 {% if item != '__init__' %}
 .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
