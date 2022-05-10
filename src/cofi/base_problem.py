@@ -944,7 +944,7 @@ class BaseProblem:
 
     @property
     def bounds(self):
-        """TODO: document me!
+        r"""TODO: document me!
 
         Raises
         ------
@@ -960,7 +960,7 @@ class BaseProblem:
 
     @property
     def constraints(self):
-        """TODO: document me!
+        r"""TODO: document me!
 
         Raises
         ------
@@ -976,67 +976,67 @@ class BaseProblem:
 
     @property
     def objective_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.objective`` has been defined
+        r"""indicates whether :func:`BaseProblem.objective` has been defined
         """
         return self._check_defined(self.objective)
 
     @property
     def gradient_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.gradient`` has been defined
+        r"""indicates whether :func:`BaseProblem.gradient` has been defined
         """
         return self._check_defined(self.gradient)
 
     @property
     def hessian_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.hessian`` has been defined
+        r"""indicates whether :func:`BaseProblem.hessian` has been defined
         """
         return self._check_defined(self.hessian)
 
     @property
     def hessian_times_vector_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.hessian_times_vector`` has been defined
+        r"""indicates whether :func:`BaseProblem.hessian_times_vector` has been defined
         """
         return self._check_defined(self.hessian_times_vector, 2)
 
     @property
     def residual_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.residual`` has been defined
+        r"""indicates whether :func:`BaseProblem.residual` has been defined
         """
         return self._check_defined(self.residual)
 
     @property
     def jacobian_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.jacobian`` has been defined
+        r"""indicates whether :func:`BaseProblem.jacobian` has been defined
         """
         return self._check_defined(self.jacobian)
 
     @property
     def jacobian_times_vector_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.jacobian_times_vector`` has been defined
+        r"""indicates whether :func:`BaseProblem.jacobian_times_vector` has been defined
         """
         return self._check_defined(self.jacobian_times_vector, 2)
 
     @property
     def data_misfit_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.data_misfit`` has been defined
+        r"""indicates whether :func:`BaseProblem.data_misfit` has been defined
         """
         return self._check_defined(self.data_misfit)
 
     @property
     def regularisation_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.regularisation`` has been defined
+        r"""indicates whether :func:`BaseProblem.regularisation` has been defined
         """
         return self._check_defined(self.regularisation)
 
     @property
     def forward_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.forward`` has been defined
+        r"""indicates whether :func:`BaseProblem.forward` has been defined
         """
         return self._check_defined(self.forward)
 
     @property
     def dataset_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.data_x`` and :func:``BaseProblem.data_y`` 
+        r"""indicates whether :func:`BaseProblem.data_x` and :func:`BaseProblem.data_y` 
         has been defined
         """
         try:
@@ -1049,7 +1049,7 @@ class BaseProblem:
 
     @property
     def initial_model_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.initial_model`` has been defined
+        r"""indicates whether :func:`BaseProblem.initial_model` has been defined
         """
         try:
             self.initial_model
@@ -1060,7 +1060,7 @@ class BaseProblem:
 
     @property
     def model_shape_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.model_shape`` has been defined
+        r"""indicates whether :func:`BaseProblem.model_shape` has been defined
         """
         try:
             self.model_shape
@@ -1071,7 +1071,7 @@ class BaseProblem:
 
     @property
     def bounds_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.bounds`` has been defined
+        r"""indicates whether :func:`BaseProblem.bounds` has been defined
         """
         try:
             self.bounds
@@ -1082,7 +1082,7 @@ class BaseProblem:
 
     @property
     def constraints_defined(self) -> bool:
-        """indicates whether :func:``BaseProblem.constraints`` has been defined
+        r"""indicates whether :func:`BaseProblem.constraints` has been defined
         """
         try:
             self.constraints
@@ -1104,7 +1104,7 @@ class BaseProblem:
 
     @property
     def name(self) -> str:
-        r"""Name of the current BaseProblem object, for display purposes, no actual
+        """Name of the current BaseProblem object, for display purposes, no actual
         meaning
 
         Returns

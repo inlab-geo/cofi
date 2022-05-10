@@ -1,5 +1,4 @@
 from typing import Type
-import json
 
 from . import BaseProblem, InversionOptions
 from .solvers import solver_dispatch_table, BaseSolver
@@ -11,7 +10,7 @@ class InversionResult:
     You won't need to create an object of this class by yourself. See :func:`Inversion.run`
     for how you will get such an instance.
 
-    Currently the only method for ``InversionResult`` is :func:`Inversion.summary()`. 
+    Currently the only method for ``InversionResult`` is :func:`InversionResult.summary()`. 
     More may be developed in the future.
     """
     

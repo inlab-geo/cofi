@@ -16,7 +16,7 @@ class BaseSolver(metaclass=ABCMeta):
         :class: dropdown, attention
 
         .. code-block:: pycon
-            :emphasize-lines: 1-12, 16, 23-24
+            :emphasize-lines: 1-12, 17, 24-25
 
             >>> from cofi.solvers import BaseSolver
             >>> class MyDummySolver(BaseSolver):
@@ -48,13 +48,21 @@ class BaseSolver(metaclass=ABCMeta):
             Solver-specific parameters: None set
             Use `suggest_solver_params()` to check required/optional solver-specific parameters.
 
+    .. rubric:: Minimal implementation
+
     Define the following minimally:
 
     .. autosummary::
         BaseSolver.__init__
         BaseSolver.__call__
         
-    In addition (to let us to validate and display properly):
+    .. rubric:: Validation and displaying
+    
+    In addition, the following class variables help us validate and display properly.
+    Failure to include them won't cause an error, but may result in some information
+    mismatch in displaying methods like :func:`cofi.Inversion.summary`. We also wouldn't
+    do input validation, so you'll have to handle it yourself, or assume the users of
+    your program know exactly what to provide.
 
     .. autosummary::
         BaseSolver.required_in_problem
@@ -64,22 +72,76 @@ class BaseSolver(metaclass=ABCMeta):
         BaseSolver.short_description
         BaseSolver.documentation_links
 
+    .. rubric:: Make it more complete
+
     All backend solvers in ``cofi`` also update the following field, and this will be
-    displayed via :func:`Inversion.summary`. It's not required but good to keep track
+    displayed via :func:`cofi.Inversion.summary`. It's not required but good to keep track
     of this:
 
     .. autosummary::
         BaseSolver.components_used
 
+    `back to top <#top>`_
+
     """
+
+    #: list: references about the backend solver. It helps ensure the audience
+    #: understands what the backend solver does. The list can include the official 
+    #: documentation if the solver wraps an external library, or links to papers
+    #: and other online resources explaining the approach
+    #: 
+    #: For example, we use the following as the ``documentation_links`` for
+    #: solver wrapping :func:`scipy.linalg.lstsq`, so that users can see the details
+    #: of what's in the backend::
+    #:     documentation_links = [
+    #:         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html",
+    #:         "https://www.netlib.org/lapack/lug/node27.html",
+    #:     ]
     documentation_links = list()
+    #: str: a short introduction about the solver. This is for display purpose only
     short_description = str()
+
+    #: set: a set of strings describing what components defined in :class:`BaseProblem`
+    #: are used in this solving process. This is typically the intersection of three 
+    #: sets: :func:`cofi.BaseProblem.all_components`, :func:`BaseSolver.required_in_problem`
+    #: and keys of :func:`BaseSolver.optional_in_problem`.
     components_used = set()
+
+    #: set: a set of components required in :class:`BaseProblem` instance
+    #: 
+    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
+    #: input :class:`BaseProblem` instance
     required_in_problem = set()
+    #: dict: a dictionary of components that are optional in :class:`BaseProblem`
+    #: instance
+    #:
+    #: The keys stand for name of the components in ``BaseProblem``, and the values
+    #: refer the their default values.
+    #: 
+    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
+    #: input :class:`BaseProblem` instance
     optional_in_problem = dict()
+    #: set: a set of solver-specific options required in :class:`InversionOptions` 
+    #: instance
+    #: 
+    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
+    #: input :class:`InversionOptions` instance
     required_in_options = set()
+    #: dict: a dictioanry of solver-specific options that are optional in
+    #: :class:`InversionOptions` instance
+    #:
+    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
+    #: input :class:`InversionOptions` instance
     optional_in_options = dict()
+
+    #: cofi.BaseProblem: the inversion problem to be solved
+    #: 
+    #: This is the first argument in the constructor of :class:`BaseSolver`
     inv_problem = None
+
+    #: cofi.InversionOptions: the inversion settings
+    #:
+    #: This is the second argument in the constructor of :class:`BaseSolver`
     inv_options = None
 
     def __init__(self, inv_problem, inv_options):
@@ -120,7 +182,7 @@ class BaseSolver(metaclass=ABCMeta):
 
     @abstractmethod
     def __call__(self) -> dict:
-        """the method that calls your own inversion routines
+        """the method that calls the backend inversion routines
 
         This is an abstract method, meaning that you have to implement this on your
         own in the subclass, otherwise the definition of the subclass will cause an
