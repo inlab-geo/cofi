@@ -85,6 +85,11 @@ Fork and clone respository
      git clone https://github.com/YOUR_GITHUB_ACCOUNT/cofi.git
 
    replacing ``YOUR_GITHUB_ACCOUNT`` with your own account.
+5. If you are working on documentation, then remember to update the submodule linked to
+   `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_::
+
+      cd cofi
+      git submodule update --init
 
 
 .. _env_setup:
@@ -101,11 +106,15 @@ The environment setup is different depending on your purpose:
   try to prepare your environment to have dependencies listed in this 
   `environment_dev.yml <https://github.com/inlab-geo/cofi/blob/main/envs/environment_dev.yml>`_
   file. It's easy to set this up using ``conda`` under your local clone::
+
     conda env create -f envs/environment_dev.yml
 - If you'd like to :ref:`edit the documentation <doc>`, then get the dependencies listed in this
   `environment.yml <https://github.com/inlab-geo/cofi/blob/main/docs/environment.yml>`_
   file. Similarly, set up this with ``conda``::
+
     conda env create -f docs/environment.yml
+    conda activate readthedocs
+    pip install -e .
 
 
 Coding / editting
@@ -325,11 +334,14 @@ below:
    * - `Contribute to CoFI <contribute.html>`_
      - dos/contribute.rst
 
-To change the configuration of this documentation, go change the content in file 
+To change the **configuration** of this documentation, go change the content in file 
 ``docs/conf.py``.
 
-To adjust the styling of pages, modify things in ``docs/_static/style.css`` and 
+To adjust the **styling** of pages, modify things in ``docs/_static/style.css`` and 
 ``docs/_templates``.
+
+To **test** the changes, go to ``docs`` directory, run ``make html`` and open the file
+``docs/_build/html/index.html`` in your browser to see the changes.
 
 .. admonition:: reStructuredText
   :class: seealso
