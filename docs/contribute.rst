@@ -166,7 +166,7 @@ Coding in CoFI
 .. _new_forward:
 
 New forward example
-"""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^
 
 CoFI doesn't have any forward solvers in the package itself. Instead, we manage
 all of our forward code as a part of the example gallery maintained in the
@@ -325,6 +325,24 @@ below:
    * - `Contribute to CoFI <contribute.html>`_
      - dos/contribute.rst
 
+To change the configuration of this documentation, go change the content in file 
+``docs/conf.py``.
+
+To adjust the styling of pages, modify things in ``docs/_static/style.css`` and 
+``docs/_templates``.
+
+.. admonition:: reStructuredText
+  :class: seealso
+
+  All of the documentation (except for the ChangeLog part), including API references,
+  use the `reStructuredText <https://en.wikipedia.org/wiki/ReStructuredText>`_ format. 
+  This is a textual file format that tends to be more powerful compared to markdown.
+
+  For the purpose of CoFI documentation, a good resource for reStructuredText syntax is
+  the `sample project <https://sphinx-themes.org/sample-sites/sphinx-book-theme/>`_ (we
+  link to the Book theme, the one this documentation uses), with the 
+  `sources here <https://github.com/sphinx-themes/sphinx-themes.org/tree/master/sample-docs>`_ 
+  to refer to.
 
 .. ├── README.html
 .. ├── api
