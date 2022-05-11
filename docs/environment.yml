@@ -14,3 +14,5 @@ dependencies:
     - myst-nb==0.13.2
     - sphinx-gallery==0.10.1
     - pypandoc==1.7.5
+    - sphinxcontrib-mermaid==0.7.1
+    - sphinxemoji==0.2.0
