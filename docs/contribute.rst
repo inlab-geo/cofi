@@ -50,6 +50,8 @@ submitting stages:
       PREPARATION-->EDIT
       EDIT-->SUBMIT
 
+.. _fork_clone:
+
 Fork and clone respository
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -85,6 +87,8 @@ Fork and clone respository
    replacing ``YOUR_GITHUB_ACCOUNT`` with your own account.
 
 
+.. _env_setup:
+
 Environment setup
 ^^^^^^^^^^^^^^^^^
 
@@ -119,6 +123,8 @@ via `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_
 or `Slack <https://inlab-geo.slack.com>`_.
 
 
+.. _commit_push_pr:
+
 Commit, push and pull request
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -151,7 +157,7 @@ Now that you've finished the coding and editting work, look for the "Contribute"
 
 Once your pull request is submitted, we are able to see it and will work our best to 
 review and provide feedback as soon as we can. Thanks for all the efforts along the way
-of contributing!
+of contributing! |:tada:| |:tada:| |:tada:|
 
 
 Coding in CoFI
@@ -181,13 +187,41 @@ page for you to learn from.
 New inversion solver
 ^^^^^^^^^^^^^^^^^^^^
 
-If you'd like to link a forward problem defined with our API to your own solver,
-please follow the instructions in our `tutorials <tutorial.html>`_ and 
-`API reference - BaseSolver <api/generated/cofi.solvers.BaseSolver.html>`_.
+Thank you for your attempt in enriching ``cofi``'s library pool. 
 
-If you'd like to further share your inversion code and link that to `cofi`, first of
-all we'd like to thenk you for your attempt in enriching ``cofi``'s library pool. 
-Please follow along this section to set up the package and raise a pull request.
+To define and plug in your own solver backend, you minimally have to create a
+subclass of :class:`solvers.BaseSolver` and implement two methods: 
+``__init__`` and ``__call__``. Additionally, add the name and class reference to our
+solvers tree under ``src/cofi/solvers/__init__.py`` so that our dispatch routine can
+find the class from the name specified in an :class:`InversionOptions`instance.
+
+Documentation in
+`tutorials <tutorial.html>`_ and 
+`API reference - BaseSolver <api/generated/cofi.solvers.BaseSolver.html>`_ provides
+further details and examples.
+
+Follow the :ref:`environment setup section <env_setup>` to set up the package
+and :ref:`commit, push and pull request section <commit_push_pr>` to raise a pull 
+request.
+
+We would also appreciate it if you write tests that ensure a good coverage under the
+file path ``tests``.
+
+.. admonition:: Checklist
+  :class: tip, dropdown
+
+  1. Have you added a new file with a proper name under ``src/cofi/solvers/``?
+  2. Have you declared the solver class as a subclass of :class:`solvers.BaseSolver`?
+  3. Have you implemented ``__init__`` and ``__call__`` methods minimally? 
+  4. If you'd like us to do input validation, have you defined class variables
+     ``required_in_problems``, ``optional_in_problem``, ``required_in_options`` and
+     ``optional_in_options``?
+  5. If you'd like us to display the solver related information properly, have you 
+     defined class variables ``short_description`` and ``documentation_links``?
+  6. Have you imported and added the solver subclass name to ``src/cofi/solvers/__init__.py``?
+  7. Have you added solver name and class reference to the ``solvers_tree`` in file
+     ``src/cofi/solvers/__init__.py``?
+  8. Have you written tests for your new solver under ``tests/solvers``?
 
 
 .. _cofi_core:
@@ -195,21 +229,139 @@ Please follow along this section to set up the package and raise a pull request.
 Feature or bug fixes in ``cofi`` core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Here we provide a mapping table to the parts of code related to each existing feature.
+
+.. list-table:: Table: feature mapping to code file
+   :widths: 60 40
+   :header-rows: 1
+
+   * - Functionality
+     - Code file path
+   * - :class:`BaseProblem`
+     - src/cofi/base_problem.py
+   * - :class:`InversionOptions`
+     - src/cofi/inversion_options.py
+   * - :class:`Inversion`
+     - src/cofi/inversion.py
+   * - :class:`InversionResult`
+     - src/cofi/inversion.py
+   * - solvers tree
+     - src/cofi/solvers/__init__.py
+   * - solver dispatch function
+     - src/cofi/inversion.py
+   * - :class:`BaseSolver`
+     - src/cofi/solvers/base_solver.py
+   * - validation for :class:`BaseProblem` and :class:`InversionOptions` objects
+     - src/cofi/solvers/base_solver.py
+
+.. src/cofi
+.. ├── __init__.py
+.. ├── _version.py
+.. ├── base_problem.py
+.. ├── inversion.py
+.. ├── inversion_options.py
+.. └── solvers
+..     ├── __init__.py
+..     ├── base_solver.py
+..     ├── scipy_lstsq.py
+..     ├── scipy_opt_lstsq.py
+..     └── scipy_opt_min.py
+
+.. admonition:: Checklist on adding a new set method in ``BaseProblem``
+  :class: tip, dropdown
+
+  Except for tests, all changes should take place in ``src/cofi/base_problem.py``.
+
+  1. add method ``set_something(self, something)``
+  2. add property/method ``something(self)``
+  3. add method ``something_defined(self) -> bool``
+  4. add ``something`` to list ``BaseProblem.all_components``
+  5. write tests in ``tests/test_base_problem.py`` ("test_non_set", etc.)
+
 
 .. _doc:
 
 Documentation
 ^^^^^^^^^^^^^
 
+It's very easy to edit or write documentation for CoFI. Start by cloning our GitHub
+repository and setting up the environment, following instructions above - 
+:ref:`fork & clone <fork_clone>` and :ref:`environment setup <env_setup>`.
+Then head straight to the parts that you want to change, based on the mapping table
+below:
+
+.. list-table:: Table: documentation page mapping to file path
+   :widths: 40 60
+   :header-rows: 1
+
+   * - Documentation page
+     - File location
+   * - `Home <index.html>`_
+     - docs/index.rst
+   * - `Installation <installation.html>`_
+     - docs/installation.rst
+   * - `Tutorials <tutorial.html>`_
+     - docs/tutorial.rst
+   * - `Example gallery (front page) <cofi-examples/generated/index.html>`_
+     - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ scripts/README.rst
+   * - `Exmaple gallery (examples content) <cofi-examples/generated/index.html>`_
+     - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ notebooks/example.ipynb
+   * - `Frequently asked questions <faq.html>`_
+     - docs/faq.rst
+   * - `List of functions and classes (API) <api/index.html>`_
+     - docs/api/index.rst
+   * - `API reference for BaseProblem <api/generated/cofi.BaseProblem.html>`_
+     - src/cofi/base_problem.py
+   * - `API reference for InversionOptions <api/generated/cofi.InversionOptions.html>`_
+     - src/cofi/inversion_options.py
+   * - `API reference for Inversion <api/generated/cofi.Inversion.html>`_
+     - src/cofi/inversion.py
+   * - `API refernece for InversionResult <api/generated/cofi.InversionResult.html>`_
+     - src/cofi/inversion.py
+   * - `API reference for BaseSolver <api/generated/cofi.solvers.BaseSolver.html>`_
+     - src/cofi/solvers/base_solver.py
+   * - `Change Log <changelog.html>`_
+     - CHANGELOG.md
+   * - `Contribute to CoFI <contribute.html>`_
+     - dos/contribute.rst
 
 
-.. Patches may include but not limited to:
-
-.. * Adding new **forward example** to our example gallery, following instructions 
-..   `here <https://github.com/inlab-geo/cofi-examples#contribution>`_
-.. * Adding new **inversion solver**, following instructions in `our tutorial - Advanced Usage <tutorial.html#advanced-usage>`_
-.. * Fixing bugs
-.. * Improving documentation
-.. * \...
-
+.. ├── README.html
+.. ├── api
+.. │   ├── generated
+.. │   │   ├── cofi.BaseProblem.html
+.. │   │   ├── cofi.Inversion.html
+.. │   │   ├── cofi.InversionOptions.html
+.. │   │   ├── cofi.InversionResult.html
+.. │   │   └── cofi.solvers.BaseSolver.html
+.. │   └── index.html
+.. ├── changelog.html
+.. ├── cofi-examples
+.. │   ├── README.html
+.. │   ├── generated
+.. │   │   ├── gravity_density.html
+.. │   │   ├── index.html
+.. │   │   ├── linear_regression.html
+.. │   │   └── sg_execution_times.html
+.. │   ├── index.html
+.. │   ├── notebooks
+.. │   │   ├── gravity_density.html
+.. │   │   ├── gravity_density_lab.html
+.. │   │   ├── linear_regression.html
+.. │   │   └── linear_regression_lab.html
+.. │   └── scripts
+.. │       └── README.html
+.. ├── contribute.html
+.. ├── faq.html
+.. ├── genindex.html
+.. ├── index.html
+.. ├── installation.html
+.. ├── objects.inv
+.. ├── py-modindex.html
+.. ├── reports
+.. │   ├── gravity_density_lab.log
+.. │   └── linear_regression_lab.log
+.. ├── search.html
+.. ├── searchindex.js
+.. └── tutorial.html
 

@@ -38,3 +38,4 @@ dependencies:
     - pypandoc
     - myst-nb
     - sphinxcontrib-mermaid
+    - sphinxemoji
