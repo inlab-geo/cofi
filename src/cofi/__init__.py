@@ -2,7 +2,6 @@ from .base_problem import BaseProblem
 from .inversion_options import InversionOptions
 from .inversion import Inversion, InversionResult
 
-# from . import inv_problems
 from . import solvers
 
 

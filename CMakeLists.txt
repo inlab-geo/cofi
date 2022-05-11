@@ -51,10 +51,4 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 ################################################################################
 # Solver Libraries
 ################################################################################
-# add_subdirectory(cofi/linear_reg)
-
-
-################################################################################
-# Objective Libraries
-################################################################################
-add_subdirectory(src/cofi/inv_problems/lib_rfc)
+add_subdirectory(src/cofi/solvers/)
