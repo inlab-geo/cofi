@@ -1,10 +1,12 @@
-# rm -rf _skbuild; pip install -e .
-
+########################## LIBRARY IMPORT #############################################
+from io import StringIO
 import sys
+import os
 import pathlib
 
 try:
     from skbuild import setup
+    from skbuild.exceptions import SKBuildError
 except ImportError:
     print(
         "Please update pip, you need pip 10 or greater,\n"
@@ -13,7 +15,7 @@ except ImportError:
     )
     raise
 
-# get version number
+########################## VERSION ####################################################
 _ROOT = pathlib.Path(__file__).parent
 with open(str(_ROOT / "src" / "cofi" / "_version.py")) as f:
     for line in f:
@@ -25,51 +27,82 @@ with open(str(_ROOT / "src" / "cofi" / "_version.py")) as f:
         raise RuntimeError("unable to read the version from src/cofi/_version.py")
 
 
-# read the contents of the README file
+########################## LONG DESCRIPTION ###########################################
 from pathlib import Path
 this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text()
+LONG_DESCRIPTION = (this_directory / "README.md").read_text()
+CONTENT_TYPE = "text/markdown"
 
-setup(
-    name="cofi",
-    version=VERSION,
-    author="InLab",
-    description="Common Framework for Inference",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    license="MIT",
-    keywords=["inversion", "inference", "python package", "geoscience", "geophysics"],
-    classifiers=[
-        "Development Status :: 1 - Planning",
-        "Intended Audience :: Education",
-        "Intended Audience :: Science/Research",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: Implementation :: CPython",
-        "Programming Language :: C",
-        "Programming Language :: Fortran",
-        "Topic :: Scientific/Engineering :: Physics",
+########################## OTHER METADATA #############################################
+PACKAGE_NAME = "cofi"
+AUTHOR = "InLab"
+DESCRIPTION = "Common Framework for Inference"
+LICENSE = "MIT"
+KEYWORDS = ["inversion", "inference", "python package", "geoscience", "geophysics"]
+CLASSIFIERS = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: C",
+    "Programming Language :: Fortran",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+PACKAGE_DIR = {"": "src"}
+PYTHON_REQUIRES = ">=3.8"
+INSTALL_REQUIRES = [
+    "numpy>=1.20",
+    "scipy>=1.0.0",
+    "pyyaml>=6.0",
+]
+EXTRAS_REQUIRE = {
+    "petsc": ["petsc4py>=3.16.0"],
+    "doc": [
+        "sphinx", 
+        "sphinx-book-theme", 
+        "sphinx-panels", 
+        "nbsphinx",
+        "sphinx-togglebutton",
+        "sphinx-autobuild"
     ],
-    package_dir={"": "src"},
-    python_requires=">=3.8",
-    install_requires=[
-        "numpy>=1.20",
-        "scipy>=1.0.0",
-        "pyyaml>=6.0",
-    ],
-    extras_require={
-        "petsc": ["petsc4py>=3.16.0"],
-        "doc": [
-            "sphinx", 
-            "sphinx-book-theme", 
-            "sphinx-panels", 
-            "nbsphinx",
-            "sphinx-togglebutton",
-            "sphinx-autobuild"
-        ],
-        "test": ["pytest", "matplotlib", "coverage[toml]"],
-    },
-)
+    "test": ["pytest", "matplotlib", "coverage[toml]"],
+}
+
+
+########################## SETUP ######################################################
+class NullIO(StringIO):
+    def write(self, txt):
+       pass
+sys.stdout = NullIO()
+sys.tracebacklimit = 0
+
+try:
+    setup(
+        name=PACKAGE_NAME,
+        version=VERSION,
+        author=AUTHOR,
+        description=DESCRIPTION,
+        long_description=LONG_DESCRIPTION,
+        long_description_content_type=CONTENT_TYPE,
+        license=LICENSE,
+        keywords=KEYWORDS,
+        classifiers=CLASSIFIERS,
+        package_dir=PACKAGE_DIR,
+        python_requires=PYTHON_REQUIRES,
+        install_requires=INSTALL_REQUIRES,
+        extras_require=EXTRAS_REQUIRE,
+    )
+except SystemExit as e:
+    skbuild_error : SKBuildError = e.args[0]
+    error_message = skbuild_error.args[0]
+    error_message += "\n\nHint: search 'error' in current terminal session to find out the details. "
+    error_message += "Here are some possible reasons that cause failure in building `cofi`:"
+    error_message += "\n\t1. no Fortran compiler found -> install a Fortran compiler and ensure it's included in the path"
+    error_message += "\n"
+    skbuild_error.args = (error_message,)
+    sys.exit(skbuild_error)
