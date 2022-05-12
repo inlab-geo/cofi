@@ -108,6 +108,8 @@ The environment setup is different depending on your purpose:
   file. It's easy to set this up using ``conda`` under your local clone::
 
     conda env create -f envs/environment_dev.yml
+    conda activate cofi_dev
+    pip install -e .
 - If you'd like to :ref:`edit the documentation <doc>`, then get the dependencies listed in this
   `environment.yml <https://github.com/inlab-geo/cofi/blob/main/docs/environment.yml>`_
   file. Similarly, set up this with ``conda``::
@@ -237,6 +239,12 @@ file path ``tests``.
 
 Feature or bug fixes in ``cofi`` core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A simple how-to guide for developing ``cofi`` core:
+
+:To (re-)build: ``rm -rf _skbuild; pip uninstall cofi -y; pip install -e .``
+:To test: ``coverage run -m pytest; coverage report; coverage xml``
+:To auto-format: ``black .`` or ``black --check .`` to check without changing
 
 Here we provide a mapping table to the parts of code related to each existing feature.
 

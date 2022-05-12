@@ -48,7 +48,7 @@ testpaths = ["tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
 
 [tool.coverage.run]
-omit = ["*/lib*/*", "*/lib*", "cofi_toberemoved", "cofi/inv_problems"]
+omit = ["*/lib*/*", "*/lib*"]
 
 [tool.black]
 line-length = 88
@@ -65,7 +65,6 @@ exclude = '''
     | dist
     | _skbuild
   )/
-  | cofi_objective\/lib.*\.py 
   | tests
 )
 '''
