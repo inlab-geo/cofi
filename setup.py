@@ -103,6 +103,8 @@ except SystemExit as e:
     error_message += "\n\nHint: search 'error' in current terminal session to find out the details. "
     error_message += "Here are some possible reasons that cause failure in building `cofi`:"
     error_message += "\n\t1. no Fortran compiler found -> install a Fortran compiler and ensure it's included in the path"
-    error_message += "\n"
+    error_message += "\n\n"
+    error_message += "If the error is not due to above reasons, please feel free to lodge an issue " \
+                     "at https://github.com/inlab-geo/cofi/issues for help\n"
     skbuild_error.args = (error_message,)
     sys.exit(skbuild_error)
