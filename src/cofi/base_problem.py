@@ -38,7 +38,7 @@ class BaseProblem:
         >>> def my_forward(model):
         ...   assert len(model) == 2
         ...   return model[0] + model[1] * data_x
-        ... 
+        ...
         >>> inv_problem.set_dataset(data_x, data_y)
         >>> inv_problem.set_forward(my_forward)
         >>> inv_problem.set_data_misfit("L2")
@@ -59,17 +59,17 @@ class BaseProblem:
 
     .. tip::
 
-        Check :ref:`Set Methods <set_methods>` to see a full list of methods to attach 
+        Check :ref:`Set Methods <set_methods>` to see a full list of methods to attach
         information about the problem.
 
-    Some blocks above may be deduced from other existing information. For instance, 
-    once you've defined your data, forward operator and how you'd like to calculate 
+    Some blocks above may be deduced from other existing information. For instance,
+    once you've defined your data, forward operator and how you'd like to calculate
     the data misfit, we are able to generate ``data_misfit`` and ``residual`` for you.
-    The ``summary()`` method prints what blocks you've defined, what are not yet defined, 
+    The ``summary()`` method prints what blocks you've defined, what are not yet defined,
     and what are generated automatically for you.
 
     At any point of defining your inversion problem, the ``suggest_solvers()``
-    method helps get a list of solvers that can be applied to your problem based on 
+    method helps get a list of solvers that can be applied to your problem based on
     what have been supplied so far.
 
     .. tip::
@@ -77,7 +77,7 @@ class BaseProblem:
         :ref:`Helper Methods <helper_methods>` are there to help you illustrate what's in your
         ``BaseProblem`` object.
 
-        Additionally, :ref:`Properties/Functaions <prop_func>` set by you are accessible 
+        Additionally, :ref:`Properties/Functaions <prop_func>` set by you are accessible
         through the ``BaseProblem`` object directly.
 
     `back to top <#top>`_
@@ -105,7 +105,7 @@ class BaseProblem:
         BaseProblem.set_model_shape
         .. BaseProblem.set_bounds
         .. BaseProblem.set_constraints
-    
+
     `back to top <#top>`_
 
     .. _helper_methods:
@@ -128,7 +128,7 @@ class BaseProblem:
 
     In case you'd like to check, the properties/functions defined using the ``set``
     methods above are attached directly to ``BaseProblem`` and can be accessed:
-    
+
     .. autosummary::
 
         BaseProblem.objective
@@ -347,8 +347,8 @@ class BaseProblem:
         if self.jacobian_defined:
             return self.jacobian(model) @ vector
         raise NotImplementedError(
-            "`jacobian_times_vector` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
+            "`jacobian_times_vector` is required in the solving approach but you"
+            " haven't implemented or added it to the problem setup"
         )
 
     def data_misfit(self, model: np.ndarray) -> Number:
@@ -430,7 +430,7 @@ class BaseProblem:
     def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
         """Sets the function to compute the objective function to minimise
 
-        Alternatively, objective function can be set implicitly (computed by us) if one of 
+        Alternatively, objective function can be set implicitly (computed by us) if one of
         the following combinations is set:
 
         - :func:`BaseProblem.set_data_misfit` + :func:`BaseProblem.set_regularisation`
@@ -440,7 +440,7 @@ class BaseProblem:
         Parameters
         ----------
         obj_func : Callable[[np.ndarray], Number]
-            the objective function that matches :func:`BaseProblem.objective` in 
+            the objective function that matches :func:`BaseProblem.objective` in
             signature
         """
         if obj_func:
@@ -455,7 +455,7 @@ class BaseProblem:
         Parameters
         ----------
         obj_func : Callable[[np.ndarray], Number]
-            the gradient function that matches :func:`BaseProblem.gradient` in 
+            the gradient function that matches :func:`BaseProblem.gradient` in
             signature
         """
         self.gradient = grad_func
@@ -498,7 +498,7 @@ class BaseProblem:
         """Sets the function to compute the residual vector/matrix
 
         Alternatively, residual function can be set implicitly (computed by us)
-        if both :func:`set_forward` and dataset (:func:`set_dataset` or 
+        if both :func:`set_forward` and dataset (:func:`set_dataset` or
         :func:`set_dataset_from_file`) are defined.
 
         Parameters
@@ -512,7 +512,7 @@ class BaseProblem:
     def set_jacobian(
         self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
     ):
-        """Sets the function to compute the Jacobian matrix, namely first 
+        """Sets the function to compute the Jacobian matrix, namely first
         derivative of forward function with respect to the model
 
         Parameters
@@ -546,15 +546,15 @@ class BaseProblem:
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
         """Sets the function to compute the data misfit
 
-        You can either pass in a custom function or a short string that describes the 
+        You can either pass in a custom function or a short string that describes the
         data misfit function. These are a list of pre-built data misfit functions we
         support:
 
         - "L2"
 
-        If you choose one of the above, then you would also need to use 
+        If you choose one of the above, then you would also need to use
         :func:`BaseProblem.set_dataset` / :func:`BaseProblem.set_dataset_from_file`
-        and :func:`BaseProblem.set_forward` so that we can generate the data misfit 
+        and :func:`BaseProblem.set_forward` so that we can generate the data misfit
         function for you.
 
         If the data misfit function you want isn't included above, then pass your own
@@ -563,7 +563,7 @@ class BaseProblem:
         Parameters
         ----------
         data_misfit : Union[str, Callable[[np.ndarray], Number]]
-            either a string from ["L2"], or a data misfit function that matches 
+            either a string from ["L2"], or a data misfit function that matches
             :func:`BaseProblem.data_misfit` in signature.
 
         Raises
@@ -585,9 +585,10 @@ class BaseProblem:
                 self.data_misfit = self._data_misfit_L2
             else:  # TODO - other options?
                 raise ValueError(
-                    "the data misfit method you've specified isn't supported yet, please "
-                    "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
-                    "find it valuable to support it from our side"
+                    "the data misfit method you've specified isn't supported yet,"
+                    " please report an issue here:"
+                    " https://github.com/inlab-geo/cofi/issues if you find it valuable"
+                    " to support it from our side"
                 )
         else:
             self.data_misfit = data_misfit
@@ -600,7 +601,7 @@ class BaseProblem:
         r"""Sets the function to compute the regularisation
 
         You can either pass in a custom function or a string/number that describes the
-        order of the norm. We use :func:`numpy.linalg.norm` as our backend 
+        order of the norm. We use :func:`numpy.linalg.norm` as our backend
         implementation, so the order can be chosen from:
 
         { ``None``, ``"fro"``, ``"nuc"``, ``numpy.inf``, ``-numpy.inf`` } :math:`\cup\;\mathbb{R}^*`
@@ -612,7 +613,7 @@ class BaseProblem:
             matches :func:`BaseProblem.regularisation` in signature.
         factor : Number, optional
             the regularisation factor that adjusts the ratio of the regularisation
-            term over the data misfit, by default 0.1. If ``regularisation`` and ``data_misfit`` 
+            term over the data misfit, by default 0.1. If ``regularisation`` and ``data_misfit``
             are set but ``objective`` isn't, then we will generate ``objective`` function as
             following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
 
@@ -623,7 +624,7 @@ class BaseProblem:
 
         Examples
         --------
-        
+
         >>> from cofi import BaseProblem
         >>> inv_problem = BaseProblem()
         >>> inv_problem.set_regularisation(1)                      # example 1
@@ -639,23 +640,27 @@ class BaseProblem:
         >>> inv_problem.regularisation([1,1])
         0.7071067811865476
         """
-        if isinstance(regularisation, str) or isinstance(regularisation, Number) or not regularisation:
+        if (
+            isinstance(regularisation, str)
+            or isinstance(regularisation, Number)
+            or not regularisation
+        ):
             ord = regularisation
             if isinstance(ord, str):
                 if ord in ["inf", "-inf"]:
                     ord = float(ord)
                 elif ord not in ["fro", "nuc"]:
                     raise ValueError(
-                        "the regularisation order you've entered is invalid, please "
-                        "choose from the following:\n"
-                        "{None, 'fro', 'nuc', numpy.inf, -numpy.inf} or any positive number"
+                        "the regularisation order you've entered is invalid, please"
+                        " choose from the following:\n{None, 'fro', 'nuc', numpy.inf,"
+                        " -numpy.inf} or any positive number"
                     )
-            elif (isinstance(ord, Number)):
+            elif isinstance(ord, Number):
                 if ord < 0:
                     raise ValueError(
-                        "the regularisation order you've entered is invalid, please "
-                        "choose from the following:\n"
-                        "{None, 'fro', 'nuc', numpy.inf, -numpy.inf} or any positive number"
+                        "the regularisation order you've entered is invalid, please"
+                        " choose from the following:\n{None, 'fro', 'nuc', numpy.inf,"
+                        " -numpy.inf} or any positive number"
                     )
             _reg = lambda x: np.linalg.norm(x, ord=ord)
         else:
@@ -687,8 +692,8 @@ class BaseProblem:
 
     def set_dataset_from_file(self, file_path, obs_idx=-1):
         """Sets the dataset for this problem from a give file path
-        
-        This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read 
+
+        This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read
         dataset file, depending on the file type.
 
         Parameters
@@ -744,8 +749,9 @@ class BaseProblem:
                 np.reshape(self.initial_model, model_shape)
             except ValueError as e:
                 raise ValueError(
-                    f"The model_shape you've provided {model_shape} doesn't match the "
-                    f"initial_model you set which has the shape: {self.initial_model.shape}"
+                    f"The model_shape you've provided {model_shape} doesn't match the"
+                    " initial_model you set which has the shape:"
+                    f" {self.initial_model.shape}"
                 ) from e
         self._model_shape = model_shape
 
@@ -886,7 +892,7 @@ class BaseProblem:
 
     @property
     def data_y(self) -> np.ndarray:
-        """the observations, set by :func:`BaseProblem.set_dataset` or 
+        """the observations, set by :func:`BaseProblem.set_dataset` or
         :func:`BaseProblem.set_dataset_from_file`
 
         Raises
@@ -903,7 +909,7 @@ class BaseProblem:
 
     @property
     def initial_model(self) -> np.ndarray:
-        """the initial model, needed for some iterative optimisation tools that 
+        """the initial model, needed for some iterative optimisation tools that
         requires a starting point
 
         Raises
@@ -969,67 +975,57 @@ class BaseProblem:
 
     @property
     def objective_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.objective` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.objective` has been defined"""
         return self._check_defined(self.objective)
 
     @property
     def gradient_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.gradient` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.gradient` has been defined"""
         return self._check_defined(self.gradient)
 
     @property
     def hessian_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.hessian` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.hessian` has been defined"""
         return self._check_defined(self.hessian)
 
     @property
     def hessian_times_vector_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.hessian_times_vector` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.hessian_times_vector` has been defined"""
         return self._check_defined(self.hessian_times_vector, 2)
 
     @property
     def residual_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.residual` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.residual` has been defined"""
         return self._check_defined(self.residual)
 
     @property
     def jacobian_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.jacobian` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.jacobian` has been defined"""
         return self._check_defined(self.jacobian)
 
     @property
     def jacobian_times_vector_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.jacobian_times_vector` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.jacobian_times_vector` has been defined"""
         return self._check_defined(self.jacobian_times_vector, 2)
 
     @property
     def data_misfit_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data_misfit` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.data_misfit` has been defined"""
         return self._check_defined(self.data_misfit)
 
     @property
     def regularisation_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.regularisation` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.regularisation` has been defined"""
         return self._check_defined(self.regularisation)
 
     @property
     def forward_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.forward` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.forward` has been defined"""
         return self._check_defined(self.forward)
 
     @property
     def dataset_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data_x` and :func:`BaseProblem.data_y` 
+        r"""indicates whether :func:`BaseProblem.data_x` and :func:`BaseProblem.data_y`
         has been defined
         """
         try:
@@ -1042,8 +1038,7 @@ class BaseProblem:
 
     @property
     def initial_model_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.initial_model` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.initial_model` has been defined"""
         try:
             self.initial_model
         except NameError:
@@ -1053,8 +1048,7 @@ class BaseProblem:
 
     @property
     def model_shape_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.model_shape` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.model_shape` has been defined"""
         try:
             self.model_shape
         except NameError:
@@ -1064,8 +1058,7 @@ class BaseProblem:
 
     @property
     def bounds_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.bounds` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.bounds` has been defined"""
         try:
             self.bounds
         except NameError:
@@ -1075,8 +1068,7 @@ class BaseProblem:
 
     @property
     def constraints_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.constraints` has been defined
-        """
+        r"""indicates whether :func:`BaseProblem.constraints` has been defined"""
         try:
             self.constraints
         except NameError:
@@ -1152,7 +1144,7 @@ class BaseProblem:
                 ---------------------------------------------------------------------
                 List of functions/properties not set by you:
                 ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'dataset', 'bounds', 'constraints']
-        
+
         """
         self._summary()
 
@@ -1186,7 +1178,11 @@ class BaseProblem:
             print(single_line)
         print(sub_title2)
         print(created_for_user if created_for_user else "-- none --")
-        if "objective" in created_for_user and self.data_misfit_defined and not self.regularisation_defined:
+        if (
+            "objective" in created_for_user
+            and self.data_misfit_defined
+            and not self.regularisation_defined
+        ):
             print("( Note that you did not set regularisation )")
         if display_lines:
             print(single_line)
