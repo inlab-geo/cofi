@@ -1,7 +1,7 @@
 name: Upload to PyPI
 
 env:
-  NEED_WHEELS: false
+  need_wheels: ${{ false }}
 
 on:
   # workflow_dispatch:
@@ -55,7 +55,7 @@ jobs:
   ######################## BINARY DISTRIBUTION #########################
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
-    if: ${{ NEED_WHEELS }}
+    if: ${{ need_wheels }}
     needs: if_merged
     runs-on: ${{ matrix.os }}
     strategy:
