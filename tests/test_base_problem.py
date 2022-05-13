@@ -39,6 +39,10 @@ def test_non_set():
     with pytest.raises(NotImplementedError):
         inv_problem.objective(1)
     with pytest.raises(NotImplementedError):
+        inv_problem.set_objective(lambda x:x)
+        inv_problem.set_objective(None)
+        inv_problem.objective(1)
+    with pytest.raises(NotImplementedError):
         inv_problem.gradient(1)
     with pytest.raises(NotImplementedError):
         inv_problem.hessian(1)
@@ -224,11 +228,29 @@ def test_set_misfit_reg_L2(inv_problem_with_misfit):
         == 6.25779513 + np.sqrt(4 + 1 + 4) * 0.5
     )
 
+def test_set_misfit_reg_inf(inv_problem_with_misfit):
+    # inf norm
+    inv_problem_with_misfit.set_regularisation("inf", 0.5)
+    check_defined_misfit_reg(inv_problem_with_misfit)
+    true_model = np.array([2, 1, 1])
+    assert inv_problem_with_misfit.regularisation(true_model) == 1
+    worse_model = np.array([2, 1, 2])
+    assert inv_problem_with_misfit.regularisation(worse_model) == 1
+    # -inf norm
+    inv_problem_with_misfit.set_regularisation("-inf", 0.5)
+    check_defined_misfit_reg(inv_problem_with_misfit)
+    true_model = np.array([2, 1, 1])
+    assert inv_problem_with_misfit.regularisation(true_model) == 0.5
+    worse_model = np.array([2, 1, 2])
+    assert inv_problem_with_misfit.regularisation(worse_model) == 0.5
+    
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
     with pytest.raises(ValueError):
         inv_problem.set_regularisation("FOO")
+    with pytest.raises(ValueError):
+        inv_problem.set_regularisation(-1)
 
 
 ############### TEST set methods Tier 1 ###############################################
