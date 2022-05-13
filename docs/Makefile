@@ -23,6 +23,7 @@ clean:
 	rm -rf $(BUILDDIR)/doctrees
 	rm -rf $(BUILDDIR)/doctest
 	rm -rf $(APIDIR)/generated
+	rm -rf cofi-examples/generated
 
 update_api: clean
 	@echo
