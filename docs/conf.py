@@ -37,7 +37,7 @@ def setup(app):
 # -- Project information -----------------------------------------------------
 project = "CoFI"
 copyright = f"{datetime.date.today().year}, InLab"
-version = "dev" if "dev" in cofi.__version__ else cofi.__version__
+version = "dev" if "dev" in cofi.__version__ else f"v{cofi.__version__}"
 
 
 # -- General configuration ---------------------------------------------------
