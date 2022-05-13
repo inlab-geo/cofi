@@ -1,6 +1,5 @@
 import numpy as np
 import pytest
-from sqlalchemy import true
 
 from cofi import Inversion, BaseProblem, InversionOptions
 from cofi.solvers.base_solver import BaseSolver
@@ -52,7 +51,7 @@ def test_dispatch_custom_solver(polynomial_problem, capsys):
     inv_problem, inv_options = polynomial_problem
     class CustomSolver(BaseSolver):
         def __call__(self) -> dict:
-            return {"successful": true}
+            return {"successful": True}
     inv_options.set_tool(CustomSolver)
     runner = Inversion(inv_problem, inv_options)
     with pytest.raises(ValueError):
