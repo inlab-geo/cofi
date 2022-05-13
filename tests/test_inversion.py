@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from cofi import Inversion, BaseProblem, InversionOptions
+from cofi.solvers.base_solver import BaseSolver
 
 
 @pytest.fixture
@@ -13,7 +14,9 @@ def polynomial_problem():
     _y = _G @ _m_true
     inv_problem.set_dataset(_x, _y)
     inv_problem.set_jacobian(_G)
+    inv_problem.set_jacobian_times_vector(lambda m, x: _G @ x)
     inv_problem.set_hessian(_G.T @ _G)
+    inv_problem.set_hessian_times_vector(lambda m, x: _G.T @ _G @ x)
     inv_options = InversionOptions()
     inv_options.set_tool("scipy.linalg.lstsq")
     return inv_problem, inv_options
@@ -42,3 +45,14 @@ def test_runner_result_summary(polynomial_problem, capsys):
     runner.summary()
     console_output = capsys.readouterr()
     assert "SUCCESS" in console_output.out
+
+
+def test_dispatch_custom_solver(polynomial_problem, capsys):
+    inv_problem, inv_options = polynomial_problem
+    class CustomSolver(BaseSolver):
+        def __call__(self) -> dict:
+            return {"successful": True}
+    inv_options.set_tool(CustomSolver)
+    runner = Inversion(inv_problem, inv_options)
+    with pytest.raises(ValueError):
+        res = runner.run()

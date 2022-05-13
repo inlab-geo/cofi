@@ -31,7 +31,7 @@ class BaseSolver(metaclass=ABCMeta):
             ...   def __call__(self):
             ...     return {"model": np.array([1,2]), "success": True}
             ...
-            >>> 
+            >>>
             >>> from cofi import InversionOptions
             >>> inv_options = InversionOptions()
             >>> inv_options.set_tool(MyDummySolver)
@@ -55,9 +55,9 @@ class BaseSolver(metaclass=ABCMeta):
     .. autosummary::
         BaseSolver.__init__
         BaseSolver.__call__
-        
+
     .. rubric:: Validation and displaying
-    
+
     In addition, the following class variables help us validate and display properly.
     Failure to include them won't cause an error, but may result in some information
     mismatch in displaying methods like :func:`cofi.Inversion.summary`. We also wouldn't
@@ -86,10 +86,10 @@ class BaseSolver(metaclass=ABCMeta):
     """
 
     #: list: references about the backend solver. It helps ensure the audience
-    #: understands what the backend solver does. The list can include the official 
+    #: understands what the backend solver does. The list can include the official
     #: documentation if the solver wraps an external library, or links to papers
     #: and other online resources explaining the approach
-    #: 
+    #:
     #: For example, we use the following as the ``documentation_links`` for
     #: solver wrapping :func:`scipy.linalg.lstsq`, so that users can see the details
     #: of what's in the backend::
@@ -102,13 +102,13 @@ class BaseSolver(metaclass=ABCMeta):
     short_description = str()
 
     #: set: a set of strings describing what components defined in :class:`BaseProblem`
-    #: are used in this solving process. This is typically the intersection of three 
+    #: are used in this solving process. This is typically the intersection of three
     #: sets: :func:`cofi.BaseProblem.all_components`, :func:`BaseSolver.required_in_problem`
     #: and keys of :func:`BaseSolver.optional_in_problem`.
     components_used = set()
 
     #: set: a set of components required in :class:`BaseProblem` instance
-    #: 
+    #:
     #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
     #: input :class:`BaseProblem` instance
     required_in_problem = set()
@@ -117,13 +117,13 @@ class BaseSolver(metaclass=ABCMeta):
     #:
     #: The keys stand for name of the components in ``BaseProblem``, and the values
     #: refer the their default values.
-    #: 
+    #:
     #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
     #: input :class:`BaseProblem` instance
     optional_in_problem = dict()
-    #: set: a set of solver-specific options required in :class:`InversionOptions` 
+    #: set: a set of solver-specific options required in :class:`InversionOptions`
     #: instance
-    #: 
+    #:
     #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
     #: input :class:`InversionOptions` instance
     required_in_options = set()
@@ -135,7 +135,7 @@ class BaseSolver(metaclass=ABCMeta):
     optional_in_options = dict()
 
     #: cofi.BaseProblem: the inversion problem to be solved
-    #: 
+    #:
     #: This is the first argument in the constructor of :class:`BaseSolver`
     inv_problem = None
 
@@ -153,7 +153,7 @@ class BaseSolver(metaclass=ABCMeta):
             super().__init__(inv_problem, inv_options)
 
         What it does is (a) to attach the :class:`BaseProblem` and :class:`InversionOptions`
-        objects to ``self``, and (b) to validate them based on the information in 
+        objects to ``self``, and (b) to validate them based on the information in
         :func:`BaseSolver.required_in_problem`, :func:`BaseSolver.optional_in_problem`,
         :func:`BaseSolver.required_in_options`, and :func:`BaseSolver.optional_in_options`
         (which is why it's recommended to define the above four fields).
@@ -162,7 +162,7 @@ class BaseSolver(metaclass=ABCMeta):
         then you don't have to call the ``__init__`` method defined in this super class,
         and don't have to add things to the fields.
 
-        Solver-specific configurations are to be declared as a part of 
+        Solver-specific configurations are to be declared as a part of
         :class:`InversionOptions` object using :func:`InversionOptions.set_params`.
         You can then extract these in your own ``__init__`` method as needed. It's
         recommended to document solver-specific settings clearly in your docstrings.
@@ -206,7 +206,7 @@ class BaseSolver(metaclass=ABCMeta):
         else:
             raise ValueError(
                 f"you've chosen {self.__class__.__name__} to be your solving tool, but "
-                f"not enough information is provided in the BaseProblem object - "
+                "not enough information is provided in the BaseProblem object - "
                 f"required: {required}; provided: {defined}"
             )
 
@@ -221,7 +221,7 @@ class BaseSolver(metaclass=ABCMeta):
         else:
             raise ValueError(
                 f"you've chosen {self.__class__.__name__} to be your solving tool, but "
-                f"not enough information is provided in the InversionOptions object - "
+                "not enough information is provided in the InversionOptions object - "
                 f"required: {required}; provided: {defined}"
             )
 

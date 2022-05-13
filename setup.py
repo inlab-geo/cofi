@@ -54,7 +54,6 @@ CLASSIFIERS = [
     "Topic :: Scientific/Engineering :: Physics",
 ]
 PACKAGE_DIR = {"": "src"}
-PYTHON_REQUIRES = ">=3.8"
 INSTALL_REQUIRES = [
     "numpy>=1.20",
     "scipy>=1.0.0",
@@ -93,7 +92,7 @@ try:
         keywords=KEYWORDS,
         classifiers=CLASSIFIERS,
         package_dir=PACKAGE_DIR,
-        python_requires=PYTHON_REQUIRES,
+        python_requires=">=3.8",
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
     )

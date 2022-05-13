@@ -19,7 +19,9 @@ solvers_table = {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
     },
-    "linear least square": {"scipy.linalg.lstsq": ScipyLstSqSolver,},
+    "linear least square": {
+        "scipy.linalg.lstsq": ScipyLstSqSolver,
+    },
 }
 
 # solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}

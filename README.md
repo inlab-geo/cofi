@@ -72,3 +72,8 @@ and [tutorial](https://cofi.readthedocs.io/en/latest/tutorial.html) pages for mo
 
 Interested in contributing? Please check out our [contributor's guide](https://cofi.readthedocs.io/en/latest/contribute.html).
 
+
+## License
+
+This project is distributed under a 2-clause BSD license. A copy of this license is 
+provided with distributions of the software.
