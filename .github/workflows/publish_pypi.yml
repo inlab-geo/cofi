@@ -1,8 +1,5 @@
 name: Upload to PyPI
 
-env:
-  need_wheels: ${{ false }}
-
 on:
   # workflow_dispatch:
   #   inputs:
@@ -55,7 +52,6 @@ jobs:
   ######################## BINARY DISTRIBUTION #########################
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
-    if: ${{ env.need_wheels }}
     needs: if_merged
     runs-on: ${{ matrix.os }}
     strategy:
@@ -63,34 +59,37 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - name: Symlink gfortran for macOS
-        if: runner.os == 'macOS'
+      - name: Nothing
         run: |
-          # make sure gfortran is available
-          # https://github.com/actions/virtual-environments/issues/2524
-          # https://github.com/cbg-ethz/dce/blob/master/.github/workflows/pkgdown.yaml
-          sudo ln -s /usr/local/bin/gfortran-10 /usr/local/bin/gfortran
-          sudo mkdir /usr/local/gfortran
-          sudo ln -s /usr/local/Cellar/gcc@10/*/lib/gcc/10 /usr/local/gfortran/lib
-          gfortran --version
+          echo "no binary wheels needed"
 
-      - name: Checkout repo
-        uses: actions/checkout@v2
+      # - name: Symlink gfortran for macOS
+      #   if: runner.os == 'macOS'
+      #   run: |
+      #     # make sure gfortran is available
+      #     # https://github.com/actions/virtual-environments/issues/2524
+      #     # https://github.com/cbg-ethz/dce/blob/master/.github/workflows/pkgdown.yaml
+      #     sudo ln -s /usr/local/bin/gfortran-10 /usr/local/bin/gfortran
+      #     sudo mkdir /usr/local/gfortran
+      #     sudo ln -s /usr/local/Cellar/gcc@10/*/lib/gcc/10 /usr/local/gfortran/lib
+      #     gfortran --version
 
-      - name: Build wheels
-        uses: pypa/cibuildwheel@v2.3.1
-        env:
-          # CIBW_ARCHS_MACOS: x86_64 universal2
-          CIBW_SKIP: pp* *-win32 *-manylinux_i686 *-musllinux_*
-          CIBW_ARCHS_MACOS: x86_64 arm64
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
-          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: ""
+      # - name: Checkout repo
+      #   uses: actions/checkout@v2
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          path: wheelhouse/*.whl
+      # - name: Build wheels
+      #   uses: pypa/cibuildwheel@v2.3.1
+      #   env:
+      #     # CIBW_ARCHS_MACOS: x86_64 universal2
+      #     CIBW_SKIP: pp* *-win32 *-manylinux_i686 *-musllinux_*
+      #     CIBW_ARCHS_MACOS: x86_64 arm64
+      #     CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
+      #     CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: ""
+
+      # - name: Upload artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     path: wheelhouse/*.whl
 
   ######################## UPLOAD TO PYPI #########################
   publish_pypi:
