@@ -43,6 +43,9 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
+[project]
+requires-python = ">=3.8"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
