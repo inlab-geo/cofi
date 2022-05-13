@@ -4,6 +4,8 @@ import sys
 import os
 import pathlib
 
+from setuptools import find_packages
+
 try:
     from skbuild import setup
     from skbuild.exceptions import SKBuildError
@@ -54,7 +56,8 @@ CLASSIFIERS = [
     "Topic :: Scientific/Engineering :: Physics",
 ]
 PACKAGE_DIR = {"": "src"}
-PYTHON_REQUIRES = ">=3.7"
+PACKAGES = {"cofi", "cofi.solvers"}
+PYTHON_REQUIRES = ">=3.6"
 INSTALL_REQUIRES = [
     "numpy>=1.18",
     "scipy>=1.0.0",
@@ -92,6 +95,7 @@ try:
         keywords=KEYWORDS,
         classifiers=CLASSIFIERS,
         package_dir=PACKAGE_DIR,
+        packages=PACKAGES,
         python_requires=PYTHON_REQUIRES,
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
