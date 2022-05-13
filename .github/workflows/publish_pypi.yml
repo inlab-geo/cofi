@@ -100,7 +100,7 @@ jobs:
 
       - name: Extract Release Version
         id: release_version
-        working-directory: cofi
+        working-directory: src/cofi
         run: |
           set -e
           python -c "import _version as v; print(v.__version__)"
