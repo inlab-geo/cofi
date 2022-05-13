@@ -56,7 +56,7 @@ CLASSIFIERS = [
 PACKAGE_DIR = {"": "src"}
 PYTHON_REQUIRES = ">=3.7"
 INSTALL_REQUIRES = [
-    "numpy>=1.20",
+    "numpy>=1.18",
     "scipy>=1.0.0",
 ]
 EXTRAS_REQUIRE = {
