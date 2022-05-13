@@ -165,7 +165,7 @@ def test_set_misfit_reg(inv_problem_with_misfit):
 
 
 def test_set_misfit_reg_L0(inv_problem_with_misfit):
-    inv_problem_with_misfit.set_regularisation("L0", 0.5)
+    inv_problem_with_misfit.set_regularisation(0, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
@@ -184,7 +184,7 @@ def test_set_misfit_reg_L0(inv_problem_with_misfit):
 
 
 def test_set_misfit_reg_L1(inv_problem_with_misfit):
-    inv_problem_with_misfit.set_regularisation("L1", 0.5)
+    inv_problem_with_misfit.set_regularisation(1, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
@@ -203,7 +203,7 @@ def test_set_misfit_reg_L1(inv_problem_with_misfit):
 
 
 def test_set_misfit_reg_L2(inv_problem_with_misfit):
-    inv_problem_with_misfit.set_regularisation("L2", 0.5)
+    inv_problem_with_misfit.set_regularisation(2, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
@@ -229,8 +229,6 @@ def test_invalid_reg_options():
     inv_problem = BaseProblem()
     with pytest.raises(ValueError):
         inv_problem.set_regularisation("FOO")
-    with pytest.raises(ValueError, match=".*Did you mean 'L0 norm'?.*"):
-        inv_problem.set_regularisation("L0 nrom")
 
 
 ############### TEST set methods Tier 1 ###############################################
@@ -259,7 +257,7 @@ def check_defined_data_fwd_misfit_reg(inv_problem):
 
 
 def check_values_data_fwd_misfit_reg(inv_problem):
-    inv_problem.set_regularisation("L1", 0.5)
+    inv_problem.set_regularisation(1, 0.5)
     true_model = np.array([2, 1, 1])
     assert inv_problem.data_misfit(true_model) == 0
     assert inv_problem.regularisation(true_model) == 4 * 0.5
@@ -274,7 +272,7 @@ def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
     inv_problem, forward = inv_problem_with_data
     inv_problem.set_forward(forward)
     inv_problem.set_data_misfit("L2")
-    inv_problem.set_regularisation("L1")
+    inv_problem.set_regularisation(1)
     check_defined_data_fwd_misfit_reg(inv_problem)
     check_values_data_fwd_misfit_reg(inv_problem)
 

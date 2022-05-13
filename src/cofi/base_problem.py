@@ -599,13 +599,11 @@ class BaseProblem:
     ):
         r"""Sets the function to compute the regularisation
 
-        You can either pass in a custom function or a short string that describes the
-        regularisation function. These are a list of pre-built regularisation functions we
-        support:
+        You can either pass in a custom function or a string/number that describes the
+        order of the norm. We use :func:`numpy.linalg.norm` as our backend 
+        implementation, so the order can be chosen from:
 
-        - "L0"
-        - "L1"
-        - "L2"
+        { ``None``, ``"fro"``, ``"nuc"``, ``numpy.inf``, ``-numpy.inf`` } :math:`\cup\;\mathbb{R}^*`
 
         Parameters
         ----------
@@ -622,49 +620,44 @@ class BaseProblem:
         ------
         ValueError
             when you've passed in a string not in our supported regularisation list
+
+        Examples
+        --------
+        
+        >>> from cofi import BaseProblem
+        >>> inv_problem = BaseProblem()
+        >>> inv_problem.set_regularisation(1)                      # example 1
+        >>> inv_problem.regularisation([1,1])
+        0.2
+        >>> inv_problem.set_regularisation("inf")                  # example 2
+        >>> inv_problem.regularisation([1,1])
+        0.1
+        >>> inv_problem.set_regularisation(lambda x: sum(x))       # example 3
+        >>> inv_problem.regularisation([1,1])
+        0.2
+        >>> inv_problem.set_regularisation(2, 0.5)                 # example 4
+        >>> inv_problem.regularisation([1,1])
+        0.7071067811865476
         """
-        if isinstance(regularisation, str):
-            _reg_dispatch_table = {
-                ("L0", "l0", "L0 norm", "l0 norm"): (
-                    lambda x: np.linalg.norm(x, ord=0)
-                ),
-                ("L1", "l1", "manhattan", "taxicab", "L1 norm", "l1 norm"): (
-                    lambda x: np.linalg.norm(x, ord=1)
-                ),
-                ("L2", "l2", "euclidean", "L2 norm", "l2 norm"): (
-                    lambda x: np.linalg.norm(x, ord=1)
-                ),
-            }
-            if regularisation in ["L0", "l0", "L0 norm", "l0 norm"]:
-                _reg = lambda x: np.linalg.norm(x, ord=0)
-            elif regularisation in [
-                "L1",
-                "l1",
-                "manhattan",
-                "taxicab",
-                "L1 norm",
-                "l1 norm",
-            ]:
-                _reg = lambda x: np.linalg.norm(x, ord=1)
-            elif regularisation in ["L2", "l2", "euclidean", "L2 norm", "l2 norm"]:
-                _reg = lambda x: np.linalg.norm(x, ord=2)
-            else:
-                _reg_valid_strings = {
-                    s for tpl in _reg_dispatch_table.keys() for s in tpl
-                }
-                close_matches = difflib.get_close_matches(
-                    regularisation, _reg_valid_strings
-                )
-                _error_msg_suffix = (
-                    f"\n\nDid you mean '{close_matches[0]}'?"
-                    if len(close_matches)
-                    else ""
-                )
-                raise ValueError(
-                    "the regularisation method you've specified isn't supported yet, please "
-                    "report an issue here: https://github.com/inlab-geo/cofi/issues if you "
-                    "find it valuable to support it from our side" + _error_msg_suffix
-                )
+        if isinstance(regularisation, str) or isinstance(regularisation, Number) or not regularisation:
+            ord = regularisation
+            if isinstance(ord, str):
+                if ord in ["inf", "-inf"]:
+                    ord = float(ord)
+                elif ord not in ["fro", "nuc"]:
+                    raise ValueError(
+                        "the regularisation order you've entered is invalid, please "
+                        "choose from the following:\n"
+                        "{None, 'fro', 'nuc', numpy.inf, -numpy.inf} or any positive number"
+                    )
+            elif (isinstance(ord, Number)):
+                if ord < 0:
+                    raise ValueError(
+                        "the regularisation order you've entered is invalid, please "
+                        "choose from the following:\n"
+                        "{None, 'fro', 'nuc', numpy.inf, -numpy.inf} or any positive number"
+                    )
+            _reg = lambda x: np.linalg.norm(x, ord=ord)
         else:
             _reg = regularisation
         self.regularisation = lambda m: _reg(m) * factor
