@@ -55,7 +55,7 @@ jobs:
   ######################## BINARY DISTRIBUTION #########################
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
-    if: ${{ need_wheels }}
+    if: ${{ env.need_wheels }}
     needs: if_merged
     runs-on: ${{ matrix.os }}
     strategy:
