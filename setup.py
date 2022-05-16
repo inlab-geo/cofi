@@ -36,7 +36,7 @@ LONG_DESCRIPTION = (this_directory / "README.md").read_text()
 CONTENT_TYPE = "text/markdown"
 
 ########################## OTHER METADATA #############################################
-PACKAGE_NAME = "CoFI"
+PACKAGE_NAME = "cofi"
 AUTHOR = "InLab"
 DESCRIPTION = "Common Framework for Inference"
 KEYWORDS = ["inversion", "inference", "python package", "geoscience", "geophysics"]
