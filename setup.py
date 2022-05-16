@@ -4,6 +4,8 @@ import sys
 import os
 import pathlib
 
+from setuptools import find_packages
+
 try:
     from skbuild import setup
     from skbuild.exceptions import SKBuildError
@@ -34,10 +36,9 @@ LONG_DESCRIPTION = (this_directory / "README.md").read_text()
 CONTENT_TYPE = "text/markdown"
 
 ########################## OTHER METADATA #############################################
-PACKAGE_NAME = "cofi"
+PACKAGE_NAME = "CoFI"
 AUTHOR = "InLab"
 DESCRIPTION = "Common Framework for Inference"
-LICENSE = "MIT"
 KEYWORDS = ["inversion", "inference", "python package", "geoscience", "geophysics"]
 CLASSIFIERS = [
     "Development Status :: 1 - Planning",
@@ -52,9 +53,14 @@ CLASSIFIERS = [
     "Programming Language :: C",
     "Programming Language :: Fortran",
     "Topic :: Scientific/Engineering :: Physics",
+    "License :: OSI Approved :: BSD License",
 ]
 PACKAGE_DIR = {"": "src"}
-PYTHON_REQUIRES = ">=3.7"
+# PACKAGES = find_packages("src")
+PACKAGES = ["cofi"]
+CMAKE_INSTALL_DIR = "src/cofi"
+CMAKE_ARGS=['-DSKBUILD=ON']
+PYTHON_REQUIRES = ">=3.6"
 INSTALL_REQUIRES = [
     "numpy>=1.18",
     "scipy>=1.0.0",
@@ -88,10 +94,12 @@ try:
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
         long_description_content_type=CONTENT_TYPE,
-        license=LICENSE,
         keywords=KEYWORDS,
         classifiers=CLASSIFIERS,
         package_dir=PACKAGE_DIR,
+        packages=PACKAGES,
+        cmake_install_dir=CMAKE_INSTALL_DIR,
+        cmake_args=CMAKE_ARGS,
         python_requires=PYTHON_REQUIRES,
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
