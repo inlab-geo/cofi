@@ -43,10 +43,6 @@ requires = [
 ]
 build-backend = "setuptools.build_meta"
 
-[project]
-name = "cofi"
-requires-python = ">=3.6"
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 filterwarnings = "ignore:.*invalid escape sequence.*:DeprecationWarning"
