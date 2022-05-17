@@ -11,6 +11,7 @@ SOURCEDIR     = .
 BUILDDIR      = _build
 APIDIR        = api
 CODEDIR       = ../cofi/
+NOTEBOOKDIR   = cofi-examples
 
 
 all: html
@@ -23,6 +24,7 @@ clean:
 	rm -rf $(BUILDDIR)/doctrees
 	rm -rf $(BUILDDIR)/doctest
 	rm -rf $(APIDIR)/generated
+	rm -rf $(NOTEBOOKDIR)/generated
 
 update_api: clean
 	@echo
