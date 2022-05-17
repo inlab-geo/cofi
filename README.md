@@ -1,7 +1,6 @@
 # CoFI (Common Framework for Inference)
 
 [![PyPI version](https://img.shields.io/pypi/v/cofi)](https://pypi.org/project/cofi/)
-[![Python versions](https://img.shields.io/pypi/pyversions/cofi)](https://pypi.org/project/cofi/)
 [![build](https://github.com/inlab-geo/cofi/actions/workflows/build_wheels.yml/badge.svg?branch=main)](https://github.com/inlab-geo/cofi/actions/workflows/build_wheels.yml)
 [![Documentation Status](https://readthedocs.org/projects/cofi/badge/?version=latest)](https://cofi.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/inlab-geo/cofi/branch/main/graph/badge.svg?token=T8R9VKM4D7)](https://codecov.io/gh/inlab-geo/cofi)
@@ -13,7 +12,7 @@
 
 CoFI (Common Framework for Inference) is an open-source initiative for interfacing between generic inference algorithms and specific geoscience problems.
 
-With a mission to bridge the gap between the domain expertise and the inference expertise, this Python package provides an interface across a wide range of inference algorithms from different sources, as well as ways of defining inverse problems with examples included [here](https://github.com/inlab-geo/cofi-examples).
+With a mission to bridge the gap between the domain expertise and the inference expertise, this Python package provides an interface across a wide range of inference algorithms from different sources, as well as ways of defining inverse problems with ***examples*** included [here](https://github.com/inlab-geo/cofi-examples).
 
 > This project and [documentation](https://cofi.readthedocs.io/en/latest/) are under initial development stage. Please feel free to contact us for feedback or issues!
 
