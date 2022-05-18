@@ -10,8 +10,8 @@ dependencies:
   - matplotlib>=3.5.0
   - scikit-build>=0.11.1
   - pytest>=6.2.5
-  - conda-forge::petsc4py>=3.16.1
-  - conda-forge::gfortran
+  - conda-forge::petsc4py>=3.17.0
+  # - conda-forge::gfortran
   - pip>=21.2.4
   - pip:
     - coverage[toml]>=6.2

@@ -1,7 +1,6 @@
 ########################## LIBRARY IMPORT #############################################
 from io import StringIO
 import sys
-import os
 import pathlib
 
 try:
@@ -37,7 +36,6 @@ CONTENT_TYPE = "text/markdown"
 PACKAGE_NAME = "cofi"
 AUTHOR = "InLab"
 DESCRIPTION = "Common Framework for Inference"
-LICENSE = "MIT"
 KEYWORDS = ["inversion", "inference", "python package", "geoscience", "geophysics"]
 CLASSIFIERS = [
     "Development Status :: 1 - Planning",
@@ -45,6 +43,8 @@ CLASSIFIERS = [
     "Intended Audience :: Science/Research",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -52,12 +52,17 @@ CLASSIFIERS = [
     "Programming Language :: C",
     "Programming Language :: Fortran",
     "Topic :: Scientific/Engineering :: Physics",
+    "License :: OSI Approved :: BSD License",
 ]
 PACKAGE_DIR = {"": "src"}
+# PACKAGES = find_packages("src")
+PACKAGES = ["cofi"]
+CMAKE_INSTALL_DIR = "src/cofi"
+CMAKE_ARGS=['-DSKBUILD=ON']
+PYTHON_REQUIRES = ">=3.6"
 INSTALL_REQUIRES = [
-    "numpy>=1.20",
+    "numpy>=1.18",
     "scipy>=1.0.0",
-    "pyyaml>=6.0",
 ]
 EXTRAS_REQUIRE = {
     "petsc": ["petsc4py>=3.16.0"],
@@ -88,11 +93,13 @@ try:
         description=DESCRIPTION,
         long_description=LONG_DESCRIPTION,
         long_description_content_type=CONTENT_TYPE,
-        license=LICENSE,
         keywords=KEYWORDS,
         classifiers=CLASSIFIERS,
         package_dir=PACKAGE_DIR,
-        python_requires=">=3.8",
+        packages=PACKAGES,
+        cmake_install_dir=CMAKE_INSTALL_DIR,
+        cmake_args=CMAKE_ARGS,
+        python_requires=PYTHON_REQUIRES,
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
     )

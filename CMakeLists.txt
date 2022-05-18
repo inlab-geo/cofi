@@ -49,6 +49,6 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 
 ################################################################################
-# Solver Libraries
+# Package content; Solver Libraries
 ################################################################################
-add_subdirectory(src/cofi/solvers/)
+add_subdirectory(src/cofi/)

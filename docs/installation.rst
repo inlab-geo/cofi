@@ -5,11 +5,10 @@ Installation
 Pre-requisite
 -------------
 
-CoFI requires Python 3.8+, and the following dependencies:
+CoFI requires Python 3.6+, and the following dependencies:
 
-- numpy>=1.20
+- numpy>=1.18
 - scipy>=1.0.0
-- pyyaml>=6.0
 
 Install
 -------
