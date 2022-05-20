@@ -36,6 +36,7 @@ class BaseSolver(metaclass=ABCMeta):
             >>> inv_options = InversionOptions()
             >>> inv_options.set_tool(MyDummySolver)
             >>> inv_options.summary()
+            =============================
             Summary for inversion options
             =============================
             Solving method: None set

@@ -44,7 +44,7 @@ Install
 
     pip install -e .
 
-  for an edittable installation.
+  for an editable installation.
 
 
 .. hint::

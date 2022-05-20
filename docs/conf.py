@@ -17,7 +17,6 @@ import subprocess
 
 import cofi
 
-sys.path.insert(0, os.path.abspath("../cofi"))
 
 # -- Generate API references doc ---------------------------------------------
 def run_autogen(_):
@@ -36,7 +35,7 @@ def setup(app):
 
 # -- Project information -----------------------------------------------------
 project = "CoFI"
-copyright = f"{datetime.date.today().year}, InLab"
+copyright = f"{datetime.date.today().year}, InLab, CoFI development team"
 version = "dev" if "dev" in cofi.__version__ else f"v{cofi.__version__}"
 
 
@@ -113,7 +112,9 @@ sphinx_gallery_conf = {
     "examples_dirs": "cofi-examples/scripts",
     "gallery_dirs": "cofi-examples/generated",
     "filename_pattern": ".",
+    "ignore_pattern": "._lib.py",
     "pypandoc": True,
+    "download_all_examples": False,
 }
 
 

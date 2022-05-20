@@ -11,21 +11,29 @@ from .solvers import solvers_table
 class BaseProblem:
     r"""Base class for an inversion problem setup.
 
-    An inversion problem can be defined from several tiers, depending on the
-    level of flexibility or control in ways you'd like to evaluate a model, as
-    well as the solving approaches you'd like to apply on the problem.
+    An inversion problem can be defined in different ways, depending on the level of
+    flexibility or control in ways you'd like to evaluate a model, as well as the
+    solving approaches you'd like to apply on the problem.
 
-    To define an inversion problem that is intended to be solved by **optimisation**,
-    you may consider the following tiers:
+    To define an inversion problem that is intended to be solved by **parameter estimation**,
+    you may consider setting the following functions or properties: 
+    
+    - ``objective`` function, or 
+    - ``data_misfit`` function plus ``regularisation`` function
+    - ``data_misfit="L2"``, ``data`` and ``regularisation`` function
+    - In addition, it can sometimes be helpful (e.g. increase the speed of inversion)
+      to define more things in a ``BaseProblem`` object: ``gradient`` of objective 
+      function, ``residual`` vector, ``jacobian`` of forward function, etc.
 
-    .. figure:: ../../_static/BaseProblem_opt.svg
-       :align: center
+    To define an inversion problem that is intended to be solved by **ensemble methods**,
+    you may consider setting the following functions or properties:
 
-    To define an inversion problem that is intended to be solved by **sampling** (WIP),
-    here is a rough structure of how you can define it:
+    - ``log_posterier`` function, or
+    - ``log_likelihood`` and ``log_prior`` functions
 
-    .. figure:: ../../_static/BaseProblem_spl.svg
-       :align: center
+    .. TBD: we will also add support for ``bounds`` and ``constraints`` as a part of
+    .. ``BaseProblem`` definition.
+
 
     .. admonition:: One quick example of BaseProblem
        :class: dropdown, attention
@@ -1131,6 +1139,7 @@ class BaseProblem:
                 >>> inv_problem.set_initial_model(np.array([1,2,3]))
                 >>> inv_problem.set_data_misfit("L2")
                 >>> inv_problem.summary()
+                =====================================================================
                 Summary for inversion problem: BaseProblem
                 =====================================================================
                 Model shape: (3,)
@@ -1165,6 +1174,8 @@ class BaseProblem:
             for component in self.all_components
             if component not in set_by_user
         ]
+        if display_lines:
+            print(double_line)
         print(title)
         if display_lines:
             print(double_line)

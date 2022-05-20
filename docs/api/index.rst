@@ -15,8 +15,13 @@ List of functions and classes (API)
 APIs for Basic Usage
 --------------------
 
-.. figure:: ../_static/cofi_workflow_simplified.svg
-   :align: center
+.. mermaid::
+
+    %%{init: {'theme':'neutral'}}%%
+        flowchart TB
+        base_problem(BaseProblem object)-->inversion(Inversion object)
+        inversion_options(InversionOptions object)-->inversion(Inversion object)
+        inversion--".run()"-->inversion_result(InversionResult object)
 
 
 A typical inversion run in :code:`cofi` involves the following four objects:
@@ -27,7 +32,7 @@ A typical inversion run in :code:`cofi` involves the following four objects:
     problem to be solved
 :Inversion: takes in both of above objects and can be thought of as a running
     engine
-:InversionResult: a return object by :code:`Inversion.run()` (you won't need to 
+:InversionResult: an object returned by :code:`Inversion.run()` (you won't need to 
     define this explicitly)
 
 The "object" here is simply a variable, but more flexible and powerful than an 

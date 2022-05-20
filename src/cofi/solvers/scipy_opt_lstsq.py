@@ -14,7 +14,7 @@ class ScipyOptLstSqSolver(BaseSolver):
     ]
     short_description = (
         "SciPy's non-linear least squares solver with bounds on variables, "
-        "algorithms inlcude 'trf' (default), 'dogbox', and 'lm'"
+        "algorithms include 'trf' (default), 'dogbox', and 'lm'"
     )
 
     # get a list of arguments and defaults for scipy.minimize.least_squares
