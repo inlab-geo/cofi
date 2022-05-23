@@ -41,6 +41,8 @@ class InversionResult:
         display_width = len(title)
         double_line = "=" * display_width
         single_line = "-" * display_width
+        if display_lines:
+            print(double_line)
         print(title)
         if display_lines:
             print(double_line)
@@ -153,6 +155,7 @@ class Inversion:
         )
         double_line = "=" * display_width
         single_line = "-" * display_width
+        print(double_line)
         print(title)
         print(double_line)
         if hasattr(self, "inv_result"):

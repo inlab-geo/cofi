@@ -98,3 +98,4 @@ Table of contents
     :maxdepth: 1
 
     contribute.rst
+    license.rst

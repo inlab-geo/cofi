@@ -51,6 +51,7 @@ class InversionOptions:
         Optional parameters & default settings:
         {'cond': None, 'overwrite_a': False, 'overwrite_b': False, 'check_finite': True, 'lapack_driver': None}
         >>> inv_options.summary()
+        =============================
         Summary for inversion options
         =============================
         Solving method: None set
@@ -82,7 +83,7 @@ class InversionOptions:
         InversionOptions.set_solving_method
         InversionOptions.unset_solving_method
 
-    `back to top <#top>`_
+    :ref:`back to top <top_InversionOptions>`
 
     .. _set_unset_tools:
 
@@ -97,7 +98,7 @@ class InversionOptions:
         InversionOptions.get_default_tool
         InversionOptions.suggest_tools
 
-    `back to top <#top>`_
+    :ref:`back to top <top_InversionOptions>`
 
     .. _set_params:
 
@@ -110,7 +111,7 @@ class InversionOptions:
         InversionOptions.get_params
         InversionOptions.suggest_solver_params
 
-    `back to top <#top>`_
+    :ref:`back to top <top_InversionOptions>`
 
     """
 
@@ -271,6 +272,7 @@ class InversionOptions:
                 >>> inv_options = InversionOptions()
                 >>> inv_options.set_tool("scipy.linalg.lstsq")
                 >>> inv_options.summary()
+                =============================
                 Summary for inversion options
                 =============================
                 Solving method: None set
@@ -302,6 +304,7 @@ class InversionOptions:
                 >>> inv_options = InversionOptions()
                 >>> inv_options.set_tool(MyDummySolver)
                 >>> inv_options.summary()
+                =============================
                 Summary for inversion options
                 =============================
                 Solving method: None set
@@ -537,6 +540,7 @@ class InversionOptions:
                 >>> from cofi import InversionOptions
                 >>> inv_options = InversionOptions()
                 >>> inv_options.summary()
+                =============================
                 Summary for inversion options
                 =============================
                 Solving method: None set
@@ -558,6 +562,8 @@ class InversionOptions:
         display_width = len(title)
         double_line = "=" * display_width
         single_line = "-" * display_width
+        if display_lines:
+            print(double_line)
         print(title)
         if display_lines:
             print(double_line)

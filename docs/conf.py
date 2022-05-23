@@ -17,7 +17,6 @@ import subprocess
 
 import cofi
 
-sys.path.insert(0, os.path.abspath("../cofi"))
 
 # -- Generate API references doc ---------------------------------------------
 def run_autogen(_):
@@ -32,11 +31,12 @@ def run_autogen(_):
 
 def setup(app):
     app.connect("builder-inited", run_autogen)
+    app.registry.source_suffix.pop(".ipynb", None)      # Ignore .ipynb files
 
 
 # -- Project information -----------------------------------------------------
 project = "CoFI"
-copyright = f"{datetime.date.today().year}, InLab"
+copyright = f"{datetime.date.today().year}, InLab, CoFI development team"
 version = "dev" if "dev" in cofi.__version__ else f"v{cofi.__version__}"
 
 
@@ -60,7 +60,14 @@ extensions = [
 
 templates_path = ["_templates"]
 
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = [
+    "_build", 
+    "Thumbs.db",
+    ".DS_Store", 
+    "README.md",
+    "cofi-examples/*.md",
+    "cofi-examples/scripts/README.rst",
+]
 
 source_suffix = ".rst"
 source_encoding = "utf-8"
@@ -113,12 +120,13 @@ sphinx_gallery_conf = {
     "examples_dirs": "cofi-examples/scripts",
     "gallery_dirs": "cofi-examples/generated",
     "filename_pattern": ".",
+    "ignore_pattern": "._lib.py",
     "pypandoc": True,
+    "download_all_examples": False,
 }
 
 
 # -- Cutomised variables ------------------------------------------------------
 rst_epilog = """
 .. _repository: https://github.com/inlab-geo/cofi
-.. _Slack: inlab-geo.slack.com
 """
