@@ -31,6 +31,7 @@ def run_autogen(_):
 
 def setup(app):
     app.connect("builder-inited", run_autogen)
+    app.registry.source_suffix.pop(".ipynb", None)      # Ignore .ipynb files
 
 
 # -- Project information -----------------------------------------------------
@@ -59,7 +60,14 @@ extensions = [
 
 templates_path = ["_templates"]
 
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = [
+    "_build", 
+    "Thumbs.db",
+    ".DS_Store", 
+    "README.md",
+    "cofi-examples/*.md",
+    "cofi-examples/scripts/README.rst",
+]
 
 source_suffix = ".rst"
 source_encoding = "utf-8"
@@ -121,5 +129,4 @@ sphinx_gallery_conf = {
 # -- Cutomised variables ------------------------------------------------------
 rst_epilog = """
 .. _repository: https://github.com/inlab-geo/cofi
-.. _Slack: inlab-geo.slack.com
 """
