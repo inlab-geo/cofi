@@ -25,6 +25,7 @@ dependencies:
   - pybind11
   - scikit-build
   - pytest
+  - emcee
   - pip
   - pip:
     - coverage[toml]

@@ -3,6 +3,7 @@ from .base_solver import BaseSolver
 from .scipy_opt_min import ScipyOptMinSolver
 from .scipy_opt_lstsq import ScipyOptLstSqSolver
 from .scipy_lstsq import ScipyLstSqSolver
+from .emcee import EmceeSolver
 
 
 __all__ = [
@@ -10,6 +11,7 @@ __all__ = [
     "ScipyOptMinSolver",
     "ScipyOptLstSqSolver",
     "ScipyLstSqSolver",
+    "EmceeSolver",
 ]
 
 
@@ -22,6 +24,9 @@ solvers_table = {
     "linear least square": {
         "scipy.linalg.lstsq": ScipyLstSqSolver,
     },
+    "sampling": {
+        "emcee": EmceeSolver
+    }
 }
 
 # solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}

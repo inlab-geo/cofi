@@ -34,7 +34,7 @@ CONTENT_TYPE = "text/markdown"
 
 ########################## OTHER METADATA #############################################
 PACKAGE_NAME = "cofi"
-AUTHOR = "InLab"
+AUTHOR = "InLab, CoFI development team"
 DESCRIPTION = "Common Framework for Inference"
 KEYWORDS = ["inversion", "inference", "python package", "geoscience", "geophysics"]
 CLASSIFIERS = [
@@ -63,6 +63,7 @@ PYTHON_REQUIRES = ">=3.6"
 INSTALL_REQUIRES = [
     "numpy>=1.18",
     "scipy>=1.0.0",
+    "emcee>=3.1.0",
 ]
 EXTRAS_REQUIRE = {
     "petsc": ["petsc4py>=3.16.0"],
