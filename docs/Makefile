@@ -39,6 +39,13 @@ html: clean
 	$(SPHINXBUILD) -d $(BUILDDIR)/doctrees -b html . $(BUILDDIR)/html
 	@echo
 
+# pdf: clean
+# 	@echo
+# 	@echo "Building PDF files..."
+# 	@echo
+# 	$(SPHINXBUILD) -d $(BUILDDIR)/doctrees -b latexpdf . $(BUILDDIR)/pdf
+# 	@echo
+
 linkcheck: update_api
 	@echo
 	@echo "Checking links..."
@@ -53,13 +60,12 @@ doctest:
 
 
 # Put it first so that "make" without argument is like "make help".
-# help:
-# 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-# .PHONY: help Makefile
+.PHONY: help Makefile
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
-# %: Makefile
-# 	$(MAKE) update_api
-# 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+%: Makefile
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

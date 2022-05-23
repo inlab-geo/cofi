@@ -20,12 +20,13 @@ class BaseProblem:
     
     - ``objective`` function, or 
     - ``data_misfit`` function plus ``regularisation`` function
-    - ``data_misfit="L2"``, ``data`` and ``regularisation`` function
+    - ``data_misfit="L2"``, ``data``, ``forward`` and ``regularisation`` function
     - In addition, it can sometimes be helpful (e.g. increase the speed of inversion)
       to define more things in a ``BaseProblem`` object: ``gradient`` of objective 
       function, ``residual`` vector, ``jacobian`` of forward function, etc.
 
-    To define an inversion problem that is intended to be solved by **ensemble methods**,
+    To define an inversion problem that is intended to be solved by **ensemble methods**
+    (work in progress),
     you may consider setting the following functions or properties:
 
     - ``log_posterier`` function, or
@@ -33,6 +34,35 @@ class BaseProblem:
 
     .. TBD: we will also add support for ``bounds`` and ``constraints`` as a part of
     .. ``BaseProblem`` definition.
+
+    Here is a complete list of how we would deduce from existing information about the
+    ``BaseProblem`` object you've defined:
+
+    .. list-table:: Table: user defined -> we generate for you
+        :widths: 35 35 30
+        :header-rows: 1
+
+        * - what you define
+          - what we generate for you
+          - examples
+        * - ``data_misfit``
+          - ``objective`` (assuming there's no regularisation)
+          - (work in progress)
+        * - ``data_misfit``, ``regularisation``
+          - ``objective``
+          - `linear regression (optimiser) <https://github.com/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression_optimiser_minimise.py>`_
+        * - ``forward``, ``data``
+          - ``residual``
+          - (work in progress)
+        * - ``hessian``
+          - ``hessian_times_vector``
+          - (work in progress)
+        * - ``jacobian``
+          - ``jacobian_times_vector``
+          - `linear regression (linear system solver) <https://github.com/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression_linear_system_solver.py>`_
+        * - ``log_prior``, ``log_likelihood``
+          - ``log_posterior``
+          - (work in progress)
 
 
     .. admonition:: One quick example of BaseProblem
