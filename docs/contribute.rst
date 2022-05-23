@@ -204,7 +204,7 @@ To define and plug in your own solver backend, you minimally have to create a
 subclass of :class:`solvers.BaseSolver` and implement two methods: 
 ``__init__`` and ``__call__``. Additionally, add the name and class reference to our
 solvers tree under ``src/cofi/solvers/__init__.py`` so that our dispatch routine can
-find the class from the name specified in an :class:`InversionOptions`instance.
+find the class from the name specified in an :class:`InversionOptions` instance.
 
 Documentation in
 `tutorials <tutorial.html>`_ and 

@@ -83,7 +83,7 @@ class InversionOptions:
         InversionOptions.set_solving_method
         InversionOptions.unset_solving_method
 
-    `back to top <#top>`_
+    :ref:`back to top <top_InversionOptions>`
 
     .. _set_unset_tools:
 
@@ -98,7 +98,7 @@ class InversionOptions:
         InversionOptions.get_default_tool
         InversionOptions.suggest_tools
 
-    `back to top <#top>`_
+    :ref:`back to top <top_InversionOptions>`
 
     .. _set_params:
 
@@ -111,7 +111,7 @@ class InversionOptions:
         InversionOptions.get_params
         InversionOptions.suggest_solver_params
 
-    `back to top <#top>`_
+    :ref:`back to top <top_InversionOptions>`
 
     """
 

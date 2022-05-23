@@ -118,7 +118,7 @@ class BaseProblem:
         Additionally, :ref:`Properties/Functaions <prop_func>` set by you are accessible
         through the ``BaseProblem`` object directly.
 
-    `back to top <#top>`_
+    :ref:`back to top <top_BaseProblem>`
 
     .. _set_methods:
 
@@ -144,7 +144,7 @@ class BaseProblem:
         .. BaseProblem.set_bounds
         .. BaseProblem.set_constraints
 
-    `back to top <#top>`_
+    :ref:`back to top <top_BaseProblem>`
 
     .. _helper_methods:
 
@@ -158,7 +158,7 @@ class BaseProblem:
         BaseProblem.suggest_solvers
         BaseProblem.defined_components
 
-    `back to top <#top>`_
+    :ref:`back to top <top_BaseProblem>`
 
     .. _prop_func:
 
@@ -187,7 +187,7 @@ class BaseProblem:
         BaseProblem.bounds
         BaseProblem.constraints
 
-    `back to top <#top>`_
+    :ref:`back to top <top_BaseProblem>`
 
     """
 

@@ -82,7 +82,7 @@ class BaseSolver(metaclass=ABCMeta):
     .. autosummary::
         BaseSolver.components_used
 
-    `back to top <#top>`_
+    :ref:`back to top <top_BaseSolver>`
 
     """
 
@@ -94,6 +94,7 @@ class BaseSolver(metaclass=ABCMeta):
     #: For example, we use the following as the ``documentation_links`` for
     #: solver wrapping :func:`scipy.linalg.lstsq`, so that users can see the details
     #: of what's in the backend::
+    #:
     #:     documentation_links = [
     #:         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html",
     #:         "https://www.netlib.org/lapack/lug/node27.html",

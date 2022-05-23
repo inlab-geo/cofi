@@ -52,8 +52,8 @@ So a common workflow includes 4 steps:
 2. define :code:`InversionOptions`. Some useful methods include:
 
 - :code:`set_solving_method()` and :code:`suggest_tools()`. Once you've set a solving method (from "least squares"
-and "optimisation", more will be supported), you can use :code:`suggest_tools()` to see a list of backend tools
-to choose from.
+  and "optimisation", more will be supported), you can use :code:`suggest_tools()` to see a list of backend tools
+  to choose from.
       
 .. admonition:: Ways to select inversion tools
   :class: attention
