@@ -62,9 +62,10 @@ def test_validate():
     _log_prosterior = lambda m: log_posterior(m, _y, _Cdinv, _prior_args_gauss)
     inv_options = InversionOptions()
     inv_options.set_tool("emcee")
-    with pytest.raises(ValueError, match=r".*not enough information.*"):
+    with pytest.raises(ValueError, match=r".*not enough information.*BaseProblem.*"):
         emcee_solver = EmceeSolver(inv_problem, inv_options)
     inv_problem.log_posterior = log_posterior
     inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
-    emcee_solver = EmceeSolver(inv_problem, inv_options)
+    with pytest.raises(ValueError, match=r".*not enough info.*InversionOptions.*"):
+        emcee_solver = EmceeSolver(inv_problem, inv_options)
 

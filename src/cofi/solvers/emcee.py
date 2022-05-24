@@ -17,9 +17,9 @@ class EmceeSolver(BaseSolver):
 
     _emcee_EnsembleSampler_args = dict(inspect.signature(EnsembleSampler).parameters)
     _emcee_EnsembleSampler_sample_args = dict(inspect.signature(EnsembleSampler.sample).parameters)
-    required_in_problem = ["log_posterior", "initial_model"]
+    required_in_problem = {"log_posterior", "initial_model"}
     optional_in_problem = dict()
-    required_in_options = ["nwalkers", "ndim", "nsteps"]
+    required_in_options = {"nwalkers", "ndim", "nsteps"}
     optional_in_options = {
         k: v.default
         for k, v in _emcee_EnsembleSampler_args.items()

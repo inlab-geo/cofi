@@ -39,10 +39,6 @@ def test_non_set():
     with pytest.raises(NotImplementedError):
         inv_problem.objective(1)
     with pytest.raises(NotImplementedError):
-        inv_problem.set_objective(lambda x:x)
-        inv_problem.set_objective(None)
-        inv_problem.objective(1)
-    with pytest.raises(NotImplementedError):
         inv_problem.gradient(1)
     with pytest.raises(NotImplementedError):
         inv_problem.hessian(1)
@@ -72,6 +68,12 @@ def test_non_set():
         inv_problem.bounds
     with pytest.raises(NameError):
         inv_problem.constraints
+    with pytest.raises(NotImplementedError):
+        inv_problem.log_posterior(1)
+    with pytest.raises(NotImplementedError):
+        inv_problem.log_prior(1)
+    with pytest.raises(NotImplementedError):
+        inv_problem.log_likelihood(1)
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -87,6 +89,9 @@ def test_non_set():
     assert not inv_problem.model_shape_defined
     assert not inv_problem.bounds_defined
     assert not inv_problem.constraints_defined
+    assert not inv_problem.log_posterior_defined
+    assert not inv_problem.log_prior_defined
+    assert not inv_problem.log_likelihood_defined
     assert len(inv_problem.defined_components()) == 0
     inv_problem.summary()
 
@@ -306,6 +311,24 @@ def test_invalid_misfit_options():
     inv_problem.set_data_misfit("mse")
     with pytest.raises(ValueError):
         inv_problem.data_misfit(np.array([1, 2, 3]))
+
+
+############### TEST set methods for sampling #########################################
+_dummy_dist = lambda m: -np.inf if (m[0]<0 or m[0]>1) else 0
+def test_prior_likelihood():
+    inv_problem = BaseProblem()
+    inv_problem.set_log_prior(_dummy_dist)
+    inv_problem.set_log_likelihood(_dummy_dist)
+    assert inv_problem.log_prior_defined
+    assert inv_problem.log_likelihood_defined
+    assert inv_problem.log_posterior_defined
+
+def test_posterior():
+    inv_problem = BaseProblem()
+    inv_problem.set_log_posterior(_dummy_dist)
+    assert not inv_problem.log_prior_defined
+    assert not inv_problem.log_likelihood_defined
+    assert inv_problem.log_posterior_defined
 
 
 ############### TEST properties #######################################################

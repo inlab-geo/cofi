@@ -128,6 +128,9 @@ class BaseProblem:
 
     .. autosummary::
         BaseProblem.set_objective
+        BaseProblem.set_log_posterior
+        BaseProblem.set_log_likelihood
+        BaseProblem.set_log_prior
         BaseProblem.set_gradient
         BaseProblem.set_hessian
         BaseProblem.set_hessian_times_vector
@@ -170,6 +173,9 @@ class BaseProblem:
     .. autosummary::
 
         BaseProblem.objective
+        BaseProblem.log_posterior
+        BaseProblem.log_likelihood
+        BaseProblem.log_prior
         BaseProblem.gradient
         BaseProblem.hessian
         BaseProblem.hessian_times_vector
@@ -193,6 +199,9 @@ class BaseProblem:
 
     all_components = [
         "objective",
+        "log_posterior",
+        "log_likelihood",
+        "log_prior",
         "gradient",
         "hessian",
         "hessian_times_vector",
@@ -236,6 +245,68 @@ class BaseProblem:
             return self.data_misfit(model)
         raise NotImplementedError(
             "`objective` is required in the solving approach but you haven't"
+            " implemented or added it to the problem setup"
+        )
+
+    def log_posterior(self, model: np.ndarray) -> Number:
+        """Method for computing the log of posterior probability density given a model
+
+        This is typically the sum of log prior and log likelihood.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Number
+            the posterior probability density value
+        """
+        if self.log_likelihood_defined and self.log_prior_defined:
+            return self.log_likelihood(model) + self.log_prior(model)
+        raise NotImplementedError(
+            "`log_posterior` is required in the solving approach but you haven't"
+            " implemented or added it to the problem setup"
+        )
+
+    def log_prior(self, model: np.ndarray) -> Number:
+        """Method for computing the log of prior probability density given a model
+
+        This reflects your prior belief about the model distribution.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Number
+            the prior probability density value
+        """
+        raise NotImplementedError(
+            "`log_prior` is required in the solving approach but you haven't"
+            " implemented or added it to the problem setup"
+        )
+
+    def log_likelihood(self, model: np.ndarray) -> Number:
+        """Method for computing the log of likelihood probability density given a model
+
+        This reflects the probability distribution of the observations given the model.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Number
+            the likelihood probability density value
+        """
+        raise NotImplementedError(
+            "`log_likelihood` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
         )
 
@@ -481,10 +552,43 @@ class BaseProblem:
             the objective function that matches :func:`BaseProblem.objective` in
             signature
         """
-        if obj_func:
-            self.objective = obj_func
-        else:
-            del self.objective
+        self.objective = obj_func
+
+    def set_log_posterior(self, log_posterior_func: Callable[[np.ndarray], Number]):
+        """Sets the function to compute the log of posterior probability density
+
+        Alternatively, log_posterior function can be set implicitly (computed by us) if
+        :func:`set_log_prior` and :func:`set_log_likelihood` are defined.
+
+        Parameters
+        ----------
+        log_posterior_func : Callable[[np.ndarray], Number]
+            the log_posterior function that matches :func:`BaseProblem.log_posterior`
+            in signature
+        """
+        self.log_posterior = log_posterior_func
+
+    def set_log_prior(self, log_prior_func: Callable[[np.ndarray], Number]):
+        """Sets the function to compute the log of prior probability density
+
+        Parameters
+        ----------
+        log_prior_func : Callable[[np.ndarray], Number]
+            the log_prior function that matches :func:`BaseProblem.log_prior`
+            in signature
+        """
+        self.log_prior = log_prior_func
+
+    def set_log_likelihood(self, log_likelihood_func: Callable[[np.ndarray], Number]):
+        """Sets the function to compute the log of likelihood probability density
+
+        Parameters
+        ----------
+        log_likelihood_func : Callable[[np.ndarray], Number]
+            the log_likelihood function that matches :func:`BaseProblem.log_likelihood`
+            in signature
+        """
+        self.log_likelihood = log_likelihood_func
 
     def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
         """Sets the function to compute the gradient of objective function w.r.t the
@@ -1015,6 +1119,21 @@ class BaseProblem:
     def objective_defined(self) -> bool:
         r"""indicates whether :func:`BaseProblem.objective` has been defined"""
         return self._check_defined(self.objective)
+
+    @property
+    def log_posterior_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.log_posterior` has been defined"""
+        return self._check_defined(self.log_posterior)
+
+    @property
+    def log_prior_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.log_prior` has been defined"""
+        return self._check_defined(self.log_prior)
+
+    @property
+    def log_likelihood_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.log_likelihood` has been defined"""
+        return self._check_defined(self.log_likelihood)
 
     @property
     def gradient_defined(self) -> bool:
