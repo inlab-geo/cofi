@@ -77,7 +77,7 @@ class BaseProblem:
         ...   assert len(model) == 2
         ...   return model[0] + model[1] * data_x
         ...
-        >>> inv_problem.set_dataset(data_x, data_y)
+        >>> inv_problem.set_data(data_y)
         >>> inv_problem.set_forward(my_forward)
         >>> inv_problem.set_data_misfit("L2")
         >>> inv_problem.summary()
@@ -86,7 +86,7 @@ class BaseProblem:
         Model shape: Unknown
         ---------------------------------------------------------------------
         List of functions/properties set by you:
-        ['forward', 'dataset']
+        ['forward', 'data']
         ---------------------------------------------------------------------
         List of functions/properties created based on what you have provided:
         ['objective', 'residual', 'data_misfit']
@@ -140,8 +140,8 @@ class BaseProblem:
         BaseProblem.set_data_misfit
         BaseProblem.set_regularisation
         BaseProblem.set_forward
-        BaseProblem.set_dataset
-        BaseProblem.set_dataset_from_file
+        BaseProblem.set_data
+        BaseProblem.set_data_from_file
         BaseProblem.set_initial_model
         BaseProblem.set_model_shape
         .. BaseProblem.set_bounds
@@ -186,8 +186,7 @@ class BaseProblem:
         BaseProblem.regularisation
         BaseProblem.forward
         BaseProblem.name
-        BaseProblem.data_x
-        BaseProblem.data_y
+        BaseProblem.data
         BaseProblem.initial_model
         BaseProblem.model_shape
         BaseProblem.bounds
@@ -211,7 +210,7 @@ class BaseProblem:
         "data_misfit",
         "regularisation",
         "forward",
-        "dataset",
+        "data",
         "initial_model",
         "model_shape",
         "bounds",
@@ -401,8 +400,8 @@ class BaseProblem:
         NotImplementedError
             when this method is not set and cannot be deduced
         """
-        if self.forward_defined and self.dataset_defined:
-            return self.forward(model) - self.data_y
+        if self.forward_defined and self.data_defined:
+            return self.forward(model) - self.data
         raise NotImplementedError(
             "`residual` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -640,8 +639,8 @@ class BaseProblem:
         """Sets the function to compute the residual vector/matrix
 
         Alternatively, residual function can be set implicitly (computed by us)
-        if both :func:`set_forward` and dataset (:func:`set_dataset` or
-        :func:`set_dataset_from_file`) are defined.
+        if both :func:`set_forward` and data (:func:`set_data` or
+        :func:`set_data_from_file`) are defined.
 
         Parameters
         ----------
@@ -695,7 +694,7 @@ class BaseProblem:
         - "L2"
 
         If you choose one of the above, then you would also need to use
-        :func:`BaseProblem.set_dataset` / :func:`BaseProblem.set_dataset_from_file`
+        :func:`BaseProblem.set_data` / :func:`BaseProblem.set_data_from_file`
         and :func:`BaseProblem.set_forward` so that we can generate the data misfit
         function for you.
 
@@ -819,31 +818,28 @@ class BaseProblem:
         """
         self.forward = forward
 
-    def set_dataset(self, data_x: np.ndarray, data_y: np.ndarray):
-        """Sets the dataset
+    def set_data(self, data_obs: np.ndarray):
+        """Sets the data
 
         Parameters
         ----------
-        data_x : np.ndarray
-            the features of data points
-        data_y : np.ndarray
+        data_obs : np.ndarray
             the observations
         """
-        self._data_x = data_x
-        self._data_y = data_y
+        self._data = data_obs
 
-    def set_dataset_from_file(self, file_path, obs_idx=-1):
-        """Sets the dataset for this problem from a give file path
+    def set_data_from_file(self, file_path, obs_idx=-1):
+        """Sets the data for this problem from a give file path
 
         This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read
-        dataset file, depending on the file type.
+        data file, depending on the file type.
 
         Parameters
         ----------
         file_path : str
-            a relative/absolute file path for the dataset
+            a relative/absolute file path for the data
         obs_idx : Union[int,list], optional
-            the index/indices of observations within the dataset, by default -1
+            the index/indices of observations within the data file, by default -1
         """
         delimiter = None  # try to detect what delimiter is used
         if file_path.endswith(("npy", "npz")):
@@ -856,7 +852,7 @@ class BaseProblem:
                 if "," in first_line:
                     delimiter = ","
             data = np.loadtxt(file_path, delimiter=delimiter)
-        self.set_dataset(np.delete(data, obs_idx, 1), data[:, obs_idx])
+        self.set_data(data[:, obs_idx])
 
     def set_initial_model(self, init_model: np.ndarray):
         """Sets the starting point for the model
@@ -930,8 +926,8 @@ class BaseProblem:
 
         def _check_created(elem):
             if (
-                elem == "dataset"
-            ):  # dataset won't be derived, it's always provided if exists
+                elem == "data"
+            ):  # data won't be derived, it's always provided if exists
                 return False
             not_defined_by_set_methods = hasattr(getattr(self, elem), "__self__")
             in_base_class = self.__class__.__name__ == "BaseProblem"
@@ -1016,37 +1012,20 @@ class BaseProblem:
         return to_suggest
 
     @property
-    def data_x(self) -> np.ndarray:
-        """the features of data points, set by :func:`BaseProblem.set_dataset` or
-        :func:`BaseProblem.set_dataset_from_file`
+    def data(self) -> np.ndarray:
+        """the observations, set by :func:`BaseProblem.set_data` or
+        :func:`BaseProblem.set_data_from_file`
 
         Raises
         ------
         NameError
             when it's not defined by methods above
         """
-        if hasattr(self, "_data_x"):
-            return self._data_x
+        if hasattr(self, "_data"):
+            return self._data
         raise NameError(
-            "data has not been set, please use either `set_dataset()` or "
-            "`set_dataset_from_file()` to add dataset to the problem setup"
-        )
-
-    @property
-    def data_y(self) -> np.ndarray:
-        """the observations, set by :func:`BaseProblem.set_dataset` or
-        :func:`BaseProblem.set_dataset_from_file`
-
-        Raises
-        ------
-        NameError
-            when it's not defined by methods above
-        """
-        if hasattr(self, "_data_y"):
-            return self._data_y
-        raise NameError(
-            "data has not been set, please use either `set_dataset()` or "
-            "`set_dataset_from_file()` to add dataset to the problem setup"
+            "data has not been set, please use either `set_data()` or "
+            "`set_data_from_file()` to add data to the problem setup"
         )
 
     @property
@@ -1181,13 +1160,11 @@ class BaseProblem:
         return self._check_defined(self.forward)
 
     @property
-    def dataset_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data_x` and :func:`BaseProblem.data_y`
-        has been defined
+    def data_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.data` has been defined
         """
         try:
-            self.data_x
-            self.data_y
+            self.data
         except NameError:
             return False
         else:
@@ -1301,7 +1278,7 @@ class BaseProblem:
                 ( Note that you did not set regularisation )
                 ---------------------------------------------------------------------
                 List of functions/properties not set by you:
-                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'dataset', 'bounds', 'constraints']
+                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'data', 'bounds', 'constraints']
 
         """
         self._summary()

@@ -25,12 +25,12 @@ def data_path(request):
     return data_path
 
 
-def test_set_dataset_from_file(data_path):
+def test_set_data_from_file(data_path):
     inv_problem = BaseProblem()
     if "idx" in data_path:
-        inv_problem.set_dataset_from_file(data_path, 0)
+        inv_problem.set_data_from_file(data_path, 0)
     else:
-        inv_problem.set_dataset_from_file(data_path)
+        inv_problem.set_data_from_file(data_path)
 
 
 ############### TEST empty problem ####################################################
@@ -57,9 +57,7 @@ def test_non_set():
     with pytest.raises(NotImplementedError):
         inv_problem.forward(1)
     with pytest.raises(NameError):
-        inv_problem.data_x
-    with pytest.raises(NameError):
-        inv_problem.data_y
+        inv_problem.data
     with pytest.raises(NameError):
         inv_problem.initial_model
     with pytest.raises(NameError):
@@ -84,7 +82,7 @@ def test_non_set():
     assert not inv_problem.data_misfit_defined
     assert not inv_problem.regularisation_defined
     assert not inv_problem.forward_defined
-    assert not inv_problem.dataset_defined
+    assert not inv_problem.data_defined
     assert not inv_problem.initial_model_defined
     assert not inv_problem.model_shape_defined
     assert not inv_problem.bounds_defined
@@ -99,7 +97,7 @@ def test_non_set():
 def test_x_set():
     inv_problem = BaseProblem()
     inv_problem._data_x = np.array([1, 2, 3])
-    assert not inv_problem.dataset_defined
+    assert not inv_problem.data_defined
 
 
 ############### TEST set methods Tier 3 ###############################################
@@ -120,7 +118,7 @@ def test_set_obj():
     assert not inv_problem.data_misfit_defined
     assert not inv_problem.regularisation_defined
     assert not inv_problem.forward_defined
-    assert not inv_problem.dataset_defined
+    assert not inv_problem.data_defined
     assert len(inv_problem.defined_components()) == 1
     assert inv_problem.objective(np.array([2, 1, 1])) == 0
     assert pytest.approx(inv_problem.objective(np.array([2, 1, 2]))) == 6.25779513
@@ -148,7 +146,7 @@ def check_defined_misfit_reg(inv_problem):
     assert not inv_problem.hessian_defined
     assert not inv_problem.residual_defined
     assert not inv_problem.jacobian_defined
-    assert not inv_problem.dataset_defined
+    assert not inv_problem.data_defined
     assert not inv_problem.forward_defined
     assert len(inv_problem.defined_components()) == 3
 
@@ -264,14 +262,14 @@ def inv_problem_with_data():
     inv_problem = BaseProblem()
     _x = np.array([1, 2, 3, 4, 5])
     _y = np.vectorize(lambda x_i: 2 + x_i + x_i ** 2)(_x)
-    inv_problem.set_dataset(_x, _y)
+    inv_problem.set_data(_y)
     forward = lambda m: np.polynomial.Polynomial(m)(_x)
     return inv_problem, forward
 
 
 def check_defined_data_fwd_misfit_reg(inv_problem):
     inv_problem.summary()
-    assert inv_problem.dataset_defined
+    assert inv_problem.data_defined
     assert inv_problem.forward_defined
     assert inv_problem.data_misfit_defined
     assert inv_problem.residual_defined
@@ -366,7 +364,7 @@ def test_suggest_solvers(capsys):
     assert "scipy.linalg.lstsq" not in console_output
     # 2
     inv_problem.set_jacobian(np.array([1]))
-    inv_problem.set_dataset(1, 2)
+    inv_problem.set_data(2)
     inv_problem.suggest_solvers()
     console_output = capsys.readouterr().out
     assert "scipy.linalg.lstsq" in console_output
@@ -375,6 +373,6 @@ def test_suggest_solvers(capsys):
 def test_suggest_solvers_return():
     inv_problem = BaseProblem()
     inv_problem.set_jacobian(np.array([1]))
-    inv_problem.set_dataset(1, 2)
+    inv_problem.set_data(2)
     suggested = inv_problem.suggest_solvers(print_to_console=False)
     assert "scipy.linalg.lstsq" in suggested["linear least square"]
