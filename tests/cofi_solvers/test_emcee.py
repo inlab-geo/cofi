@@ -1,9 +1,8 @@
-from emcee import EnsembleSampler
 import numpy as np
 import pytest
 
 from cofi.solvers import EmceeSolver
-from cofi import BaseProblem, InversionOptions
+from cofi import BaseProblem, InversionOptions, Inversion
 
 
 ############### Problem setup #########################################################
@@ -77,7 +76,7 @@ def test_run_with_posterior():
     # set up options
     inv_options = InversionOptions()
     inv_options.set_tool("emcee")
-    inv_options.set_params(nwalkers=32, nsteps=5000)
+    inv_options.set_params(nwalkers=32, nsteps=500)
     # define solver
     emcee_solver = EmceeSolver(inv_problem, inv_options)
     res = emcee_solver()
@@ -91,7 +90,20 @@ def test_run_with_prior_likelihood():
     # set up options
     inv_options = InversionOptions()
     inv_options.set_tool("emcee")
-    inv_options.set_params(nwalkers=32, nsteps=5000)
+    inv_options.set_params(nwalkers=32, nsteps=500)
     # define solver
     emcee_solver = EmceeSolver(inv_problem, inv_options)
     res = emcee_solver()
+
+def test_with_inversion():
+    # set up problem
+    inv_problem = BaseProblem()
+    inv_problem.log_posterior = log_posterior
+    inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
+    # set up options
+    inv_options = InversionOptions()
+    inv_options.set_tool("emcee")
+    inv_options.set_params(nwalkers=32, nsteps=500)
+    # define inversion
+    inv = Inversion(inv_problem, inv_options)
+    res = inv.run()

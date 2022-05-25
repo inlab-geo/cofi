@@ -11,7 +11,7 @@ class EmceeSolver(BaseSolver):
         "https://emcee.readthedocs.io/en/stable/user/sampler/#emcee.EnsembleSampler.sample",
     ]
     short_description = (
-        "emcee, an MIT licensed pure-Python implementation of Goodman & Weare’s Affine "
+        "an MIT licensed pure-Python implementation of Goodman & Weare’s Affine "
         "Invariant Markov chain Monte Carlo (MCMC) Ensemble sampler"
     )
 
@@ -83,8 +83,8 @@ class EmceeSolver(BaseSolver):
             progress_kwargs=self._progress_kwargs,
         )
         result = {
+            "success": True,
             "sampler": self.sampler,
-            "last_state": res_state
         }
         # result["acceptance_fraction"] = self.sampler.acceptance_fraction  # property
         # result["random_state"] = self.sampler.random_state                # property
@@ -93,4 +93,3 @@ class EmceeSolver(BaseSolver):
         # result["get_chain"] = self.sampler.get_chain                      # func
         # result["get_log_prob"] = self.sampler.get_log_prob                # func
         return result
-

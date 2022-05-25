@@ -57,6 +57,11 @@ class InversionResult:
         return f"{self.__class__.__name__}({self.success_or_not})"
 
 
+class SamplingResult(InversionResult):
+    def __init__(self, res: dict) -> None:
+        super().__init__(res)
+
+
 class Inversion:
     r"""The class holder that take in both an inversion problem setup :class:`BaseProblem`
     and inversion solver options :class:`InversionOptions`, and handles the running of an
@@ -120,7 +125,10 @@ class Inversion:
             minimally. Check :class:`InversionResult` for details.
         """
         res_dict = self.inv_solve()
-        self.inv_result = InversionResult(res_dict)
+        if "sampler" in res_dict:
+            self.inv_result = SamplingResult(res_dict)
+        else:
+            self.inv_result = InversionResult(res_dict)
         return self.inv_result
 
     def _dispatch_solver(self) -> Type[BaseSolver]:
