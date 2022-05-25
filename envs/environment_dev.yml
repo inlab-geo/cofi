@@ -39,3 +39,4 @@ dependencies:
     - myst-nb
     - sphinxcontrib-mermaid
     - sphinxemoji
+    - pytest-xdist
