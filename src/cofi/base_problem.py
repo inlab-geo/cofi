@@ -220,7 +220,7 @@ class BaseProblem:
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
 
-    def objective(self, model: np.ndarray) -> Number:
+    def objective(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the objective function given a model
 
         Parameters
@@ -247,7 +247,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def log_posterior(self, model: np.ndarray) -> Number:
+    def log_posterior(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the log of posterior probability density given a model
 
         This is typically the sum of log prior and log likelihood.
@@ -269,7 +269,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def log_prior(self, model: np.ndarray) -> Number:
+    def log_prior(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the log of prior probability density given a model
 
         This reflects your prior belief about the model distribution.
@@ -289,7 +289,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def log_likelihood(self, model: np.ndarray) -> Number:
+    def log_likelihood(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the log of likelihood probability density given a model
 
         This reflects the probability distribution of the observations given the model.
@@ -309,7 +309,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def gradient(self, model: np.ndarray) -> np.ndarray:
+    def gradient(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         """Method for computing the gradient of objective function with respect to model, given a model
 
         Parameters
@@ -332,7 +332,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def hessian(self, model: np.ndarray) -> np.ndarray:
+    def hessian(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         """Method for computing the Hessian of objective function with respect to model, given a model
 
         Parameters
@@ -355,7 +355,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def hessian_times_vector(self, model: np.ndarray, vector: np.ndarray) -> np.ndarray:
+    def hessian_times_vector(self, model: np.ndarray, vector: np.ndarray, *args, **kwargs) -> np.ndarray:
         """Method for computing the dot product of the Hessian and an arbitrary vector, given a model
 
         Parameters
@@ -382,7 +382,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def residual(self, model: np.ndarray) -> np.ndarray:
+    def residual(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         r"""Method for computing the residual vector given a model.
 
         Parameters
@@ -407,7 +407,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def jacobian(self, model: np.ndarray) -> np.ndarray:
+    def jacobian(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         r"""Method for computing the Jacobian of forward function with respect to model, given a model
 
         Parameters
@@ -431,7 +431,7 @@ class BaseProblem:
         )
 
     def jacobian_times_vector(
-        self, model: np.ndarray, vector: np.ndarray
+        self, model: np.ndarray, vector: np.ndarray, *args, **kwargs
     ) -> np.ndarray:
         """Method for computing the dot product of the Jacobian and an arbitrary vector, given a model
 
@@ -459,7 +459,7 @@ class BaseProblem:
             " haven't implemented or added it to the problem setup"
         )
 
-    def data_misfit(self, model: np.ndarray) -> Number:
+    def data_misfit(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the data misfit value given a model
 
         Parameters
@@ -482,7 +482,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def regularisation(self, model: np.ndarray) -> Number:
+    def regularisation(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the regularisation value given a model
 
         Parameters
@@ -505,7 +505,7 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def forward(self, model: np.ndarray) -> Union[np.ndarray, Number]:
+    def forward(self, model: np.ndarray, *args, **kwargs) -> Union[np.ndarray, Number]:
         """Method to perform the forward operation given a model
 
         Parameters
@@ -535,7 +535,7 @@ class BaseProblem:
     # - add checking to self.defined_components
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
 
-    def set_objective(self, obj_func: Callable[[np.ndarray], Number]):
+    def set_objective(self, obj_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the objective function to minimise
 
         Alternatively, objective function can be set implicitly (computed by us) if one of
@@ -550,10 +550,14 @@ class BaseProblem:
         obj_func : Callable[[np.ndarray], Number]
             the objective function that matches :func:`BaseProblem.objective` in
             signature
+        args : list, optional
+            extra list of positional arguments for the objective function
+        kwargs : dict, optional
+            extra dict of keyword arguments for the objective function
         """
-        self.objective = obj_func
+        self.objective = _FunctionWrapper("objective", obj_func, args, kwargs)
 
-    def set_log_posterior(self, log_posterior_func: Callable[[np.ndarray], Number]):
+    def set_log_posterior(self, log_posterior_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the log of posterior probability density
 
         Alternatively, log_posterior function can be set implicitly (computed by us) if
@@ -564,10 +568,15 @@ class BaseProblem:
         log_posterior_func : Callable[[np.ndarray], Number]
             the log_posterior function that matches :func:`BaseProblem.log_posterior`
             in signature
-        """
-        self.log_posterior = log_posterior_func
+        args : list, optional
+            extra list of positional arguments for log_posterior function
+        kwargs : dict, optional
+            extra dict of keyword arguments for log_posterior function
 
-    def set_log_prior(self, log_prior_func: Callable[[np.ndarray], Number]):
+        """
+        self.log_posterior = _FunctionWrapper("log_posterior", log_posterior_func, args, kwargs)
+
+    def set_log_prior(self, log_prior_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the log of prior probability density
 
         Parameters
@@ -575,10 +584,14 @@ class BaseProblem:
         log_prior_func : Callable[[np.ndarray], Number]
             the log_prior function that matches :func:`BaseProblem.log_prior`
             in signature
+        args : list, optional
+            extra list of positional arguments for log_prior function
+        kwargs : dict, optional
+            extra dict of keyword arguments for log_prior function
         """
-        self.log_prior = log_prior_func
+        self.log_prior =  _FunctionWrapper("log_prior", log_prior_func, args, kwargs)
 
-    def set_log_likelihood(self, log_likelihood_func: Callable[[np.ndarray], Number]):
+    def set_log_likelihood(self, log_likelihood_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the log of likelihood probability density
 
         Parameters
@@ -586,10 +599,14 @@ class BaseProblem:
         log_likelihood_func : Callable[[np.ndarray], Number]
             the log_likelihood function that matches :func:`BaseProblem.log_likelihood`
             in signature
+        args : list, optional
+            extra list of positional arguments for log_likelihood function
+        kwargs : dict, optional
+            extra dict of keyword arguments for log_likelihood function
         """
-        self.log_likelihood = log_likelihood_func
+        self.log_likelihood = _FunctionWrapper("log_likelihood", log_likelihood_func, args, kwargs)
 
-    def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray]):
+    def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray], args=list(), kwargs=dict()):
         """Sets the function to compute the gradient of objective function w.r.t the
         model
 
@@ -598,11 +615,15 @@ class BaseProblem:
         obj_func : Callable[[np.ndarray], Number]
             the gradient function that matches :func:`BaseProblem.gradient` in
             signature
+        args : list, optional
+            extra list of positional arguments for gradient function
+        kwargs : dict, optional
+            extra dict of keyword arguments for gradient function
         """
-        self.gradient = grad_func
+        self.gradient = _FunctionWrapper("gradient", grad_func, args, kwargs)
 
     def set_hessian(
-        self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+        self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray], args=list(), kwargs=dict()
     ):
         """Sets the function to compute the Hessian of objective function w.r.t the
         model
@@ -612,14 +633,18 @@ class BaseProblem:
         hess_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
             the Hessian function that matches :func:`BaseProblem.hessian` in
             signature
+        args : list, optional
+            extra list of positional arguments for hessian function
+        kwargs : dict, optional
+            extra dict of keyword arguments for hessian function
         """
         if isinstance(hess_func, np.ndarray):
             self.hessian = lambda _: hess_func
         else:
-            self.hessian = hess_func
+            self.hessian = _FunctionWrapper("hessian", hess_func, args, kwargs)
 
     def set_hessian_times_vector(
-        self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]
+        self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray], args=list(), kwargs=dict()
     ):
         """Sets the function to compute the Hessian (of objective function) times
         an arbitrary vector
@@ -632,10 +657,14 @@ class BaseProblem:
         hess_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
             the function that computes the product of Hessian and an arbitrary vector,
             in the same signature as :func:`BaseProblem.hessian_times_vector`
+        args : list, optional
+            extra list of positional arguments for hessian_times_vector function
+        kwargs : dict, optional
+            extra dict of keyword arguments for hessian_times_vector function
         """
-        self.hessian_times_vector = hess_vec_func
+        self.hessian_times_vector = _FunctionWrapper("hessian_times_vector", hess_vec_func, args, kwargs)
 
-    def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray]):
+    def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray], args=list(), kwargs=dict()):
         """Sets the function to compute the residual vector/matrix
 
         Alternatively, residual function can be set implicitly (computed by us)
@@ -647,11 +676,15 @@ class BaseProblem:
         res_func : Callable[[np.ndarray], np.ndarray]
             the residual function that matches :func:`BaseProblem.residual` in
             signature
+        args : list, optional
+            extra list of positional arguments for residual function
+        kwargs : dict, optional
+            extra dict of keyword arguments for residual function
         """
-        self.residual = res_func
+        self.residual = _FunctionWrapper("residual", res_func, args, kwargs)
 
     def set_jacobian(
-        self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+        self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray], args=list(), kwargs=dict()
     ):
         """Sets the function to compute the Jacobian matrix, namely first
         derivative of forward function with respect to the model
@@ -661,14 +694,18 @@ class BaseProblem:
         jac_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
             the Jacobian function that matches :func:`BaseProblem.residual` in
             signature
+        args : list, optional
+            extra list of positional arguments for jacobian function
+        kwargs : dict, optional
+            extra dict of keyword arguments for jacobian function
         """
         if isinstance(jac_func, np.ndarray):
             self.jacobian = lambda _: jac_func
         else:
-            self.jacobian = jac_func
+            self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
 
     def set_jacobian_times_vector(
-        self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray]
+        self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray], args=list(), kwargs=dict()
     ):
         """Sets the function to compute the Jacobian (of forward function) times
         an arbitrary vector
@@ -681,10 +718,14 @@ class BaseProblem:
         jac_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
             the function that computes the product of Jacobian and an arbitrary vector,
             in the same signature as :func:`BaseProblem.jacobian_times_vector`
+        args : list, optional
+            extra list of positional arguments for jacobian_times_vector function
+        kwargs : dict, optional
+            extra dict of keyword arguments for jacobian_times_vector function
         """
-        self.jacobian_times_vector = jac_vec_func
+        self.jacobian_times_vector = _FunctionWrapper("jacobian_times_vector", jac_vec_func, args, kwargs)
 
-    def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]]):
+    def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]], args=list(), kwargs=dict()):
         """Sets the function to compute the data misfit
 
         You can either pass in a custom function or a short string that describes the
@@ -706,6 +747,10 @@ class BaseProblem:
         data_misfit : Union[str, Callable[[np.ndarray], Number]]
             either a string from ["L2"], or a data misfit function that matches
             :func:`BaseProblem.data_misfit` in signature.
+        args : list, optional
+            extra list of positional arguments for data_misfit function
+        kwargs : dict, optional
+            extra dict of keyword arguments for data_misfit function
 
         Raises
         ------
@@ -732,12 +777,14 @@ class BaseProblem:
                     " to support it from our side"
                 )
         else:
-            self.data_misfit = data_misfit
+            self.data_misfit = _FunctionWrapper("data_misfit", data_misfit, args, kwargs)
 
     def set_regularisation(
         self,
         regularisation: Union[str, Callable[[np.ndarray], Number]],
-        factor: Number = 0.1,
+        factor: Number = 0.1, 
+        args=list(),
+        kwargs=dict()
     ):
         r"""Sets the function to compute the regularisation
 
@@ -757,6 +804,10 @@ class BaseProblem:
             term over the data misfit, by default 0.1. If ``regularisation`` and ``data_misfit``
             are set but ``objective`` isn't, then we will generate ``objective`` function as
             following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
+        args : list, optional
+            extra list of positional arguments for regularisation function
+        kwargs : dict, optional
+            extra dict of keyword arguments for regularisation function
 
         Raises
         ------
@@ -805,21 +856,25 @@ class BaseProblem:
                     )
             _reg = lambda x: np.linalg.norm(x, ord=ord)
         else:
-            _reg = regularisation
+            _reg = _FunctionWrapper("regularisation", regularisation, args, kwargs)
         self.regularisation = lambda m: _reg(m) * factor
 
-    def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray, Number]]):
+    def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray, Number]], args=list(), kwargs=dict()):
         """Sets the function to perform the forward operation
 
         Parameters
         ----------
         forward : Callable[[np.ndarray], Union[np.ndarray, Number]]
             the forward function that matches :func:`BaseProblem.forward` in signature
+        args : list, optional
+            extra list of positional arguments for forward function
+        kwargs : dict, optional
+            extra dict of keyword arguments for forward function
         """
-        self.forward = forward
+        self.forward = _FunctionWrapper("forward", forward, args, kwargs)
 
     def set_data(self, data_obs: np.ndarray):
-        """Sets the data
+        """Sets the data observations
 
         Parameters
         ----------
@@ -1328,3 +1383,24 @@ class BaseProblem:
 
     def __repr__(self) -> str:
         return f"{self.name}"
+
+
+class _FunctionWrapper(object):
+    def __init__(self, name, func, args, kwargs):
+        self.name = name
+        self.func = func
+        self.args = args
+        self.kwargs = kwargs
+
+    def __call__(self, x):
+        try:
+            return self.func(x, *self.args, **self.kwargs)
+        except:
+            import traceback
+            print(f"cofi: Exception while calling your {self.name} function:")
+            print("  params:", x)
+            print("  args:", self.args)
+            print("  kwargs:", self.kwargs)
+            print("  exception:")
+            traceback.print_exc()
+            raise

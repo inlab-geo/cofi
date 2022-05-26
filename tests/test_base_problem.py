@@ -376,3 +376,14 @@ def test_suggest_solvers_return():
     inv_problem.set_data(2)
     suggested = inv_problem.suggest_solvers(print_to_console=False)
     assert "scipy.linalg.lstsq" in suggested["linear least square"]
+
+
+############### TEST function wrapper #################################################
+def test_wrapping_objective():
+    inv_problem = BaseProblem()
+    # 1
+    inv_problem.set_objective(lambda a,b,c: a+b+c, args=[1], kwargs={"c":2})
+    assert inv_problem.objective(1) == 4
+    # 2
+    inv_problem.set_forward(lambda a,b,c=3,d=2: a+b+c+d, args=[3,2], kwargs={"d":1})
+    assert inv_problem.forward(1) == 7
