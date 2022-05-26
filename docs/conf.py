@@ -92,7 +92,8 @@ panels_css_variables = {
 # -- Options for HTML output -------------------------------------------------
 html_title = f'{project} <span class="project-version">{version}</span>'
 html_short_title = project
-html_logo = "_static/cofi-logo-removebg.png"
+# html_logo = "_static/cofi-logo-removebg.png"
+html_logo = "_static/latte_art-removebg.png"
 html_favicon = "_static/inlab_logo_60px.png"
 
 html_theme = "sphinx_book_theme"

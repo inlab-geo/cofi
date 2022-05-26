@@ -36,11 +36,13 @@ div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
 /* HOME: panel button */
 .btn-outline-primary:hover {
     color: rgb(51, 125, 222);
-    background-color: #007bff4d;
+    background-color: #ccdde2;
+    border-color: #ccdde2
 }
 .btn-outline-primary {
-    color: rgb(51, 125, 222);
-    border-color: #007bff4d
+    /* color: rgb(51, 125, 222); */
+    /* color: #99582a; */
+    border-color: #ccdde2;
 }
 .card-body {
     display: flex;
@@ -50,13 +52,13 @@ div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
 
 /* API: class/method name */
 span.sig-name {
-    color: chocolate;
+    color: #99582a;
 }
 code.xref {
     text-decoration: underline;
 }
 code.literal.docutils {
-    color: chocolate;
+    color: #99582a;
 }
 table.autosummary p {
     font-size: 0.8rem;
