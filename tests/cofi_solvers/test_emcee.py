@@ -84,8 +84,8 @@ def test_run_with_posterior():
 def test_run_with_prior_likelihood():
     # set up problem
     inv_problem = BaseProblem()
-    inv_problem.log_prior = log_prior_uniform
-    inv_problem.log_likelihood = log_likelihood
+    inv_problem.set_log_prior(log_prior_uniform)
+    inv_problem.set_log_likelihood(log_likelihood)
     inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
     # set up options
     inv_options = InversionOptions()

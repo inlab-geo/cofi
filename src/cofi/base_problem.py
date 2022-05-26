@@ -238,10 +238,10 @@ class BaseProblem:
         NotImplementedError
             when this method is not set and cannot be deduced
         """
-        if self.data_misfit_defined and self.regularisation_defined:
-            return self.data_misfit(model) + self.regularisation(model)
-        elif self.data_misfit_defined:
-            return self.data_misfit(model)
+        # if self.data_misfit_defined and self.regularisation_defined:
+        #     return self.data_misfit(model) + self.regularisation(model)
+        # elif self.data_misfit_defined:
+        #     return self.data_misfit(model)
         raise NotImplementedError(
             "`objective` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -262,8 +262,8 @@ class BaseProblem:
         Number
             the posterior probability density value
         """
-        if self.log_likelihood_defined and self.log_prior_defined:
-            return self.log_likelihood(model) + self.log_prior(model)
+        # if self.log_likelihood_defined and self.log_prior_defined:
+        #     return self.log_likelihood(model) + self.log_prior(model)
         raise NotImplementedError(
             "`log_posterior` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -375,8 +375,8 @@ class BaseProblem:
         NotImplementedError
             when this method is not set and cannot be deduced
         """
-        if self.hessian_defined:
-            return self.hessian(model) @ vector
+        # if self.hessian_defined:
+        #     return self.hessian(model) @ vector
         raise NotImplementedError(
             "`hessian_times_vector` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -400,8 +400,8 @@ class BaseProblem:
         NotImplementedError
             when this method is not set and cannot be deduced
         """
-        if self.forward_defined and self.data_defined:
-            return self.forward(model) - self.data
+        # if self.forward_defined and self.data_defined:
+        #     return self.forward(model) - self.data
         raise NotImplementedError(
             "`residual` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
@@ -452,8 +452,8 @@ class BaseProblem:
         NotImplementedError
             when this method is not set and cannot be deduced
         """
-        if self.jacobian_defined:
-            return self.jacobian(model) @ vector
+        # if self.jacobian_defined:
+        #     return self.jacobian(model) @ vector
         raise NotImplementedError(
             "`jacobian_times_vector` is required in the solving approach but you"
             " haven't implemented or added it to the problem setup"
@@ -556,6 +556,7 @@ class BaseProblem:
             extra dict of keyword arguments for the objective function
         """
         self.objective = _FunctionWrapper("objective", obj_func, args, kwargs)
+        self._update_autogen("objective")
 
     def set_log_posterior(self, log_posterior_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the log of posterior probability density
@@ -575,6 +576,7 @@ class BaseProblem:
 
         """
         self.log_posterior = _FunctionWrapper("log_posterior", log_posterior_func, args, kwargs)
+        self._update_autogen("log_posterior")
 
     def set_log_prior(self, log_prior_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the log of prior probability density
@@ -590,6 +592,7 @@ class BaseProblem:
             extra dict of keyword arguments for log_prior function
         """
         self.log_prior =  _FunctionWrapper("log_prior", log_prior_func, args, kwargs)
+        self._update_autogen("log_prior")
 
     def set_log_likelihood(self, log_likelihood_func: Callable[[np.ndarray], Number], args=list(), kwargs=dict()):
         """Sets the function to compute the log of likelihood probability density
@@ -605,6 +608,7 @@ class BaseProblem:
             extra dict of keyword arguments for log_likelihood function
         """
         self.log_likelihood = _FunctionWrapper("log_likelihood", log_likelihood_func, args, kwargs)
+        self._update_autogen("log_likelihood")
 
     def set_gradient(self, grad_func: Callable[[np.ndarray], np.ndarray], args=list(), kwargs=dict()):
         """Sets the function to compute the gradient of objective function w.r.t the
@@ -621,6 +625,7 @@ class BaseProblem:
             extra dict of keyword arguments for gradient function
         """
         self.gradient = _FunctionWrapper("gradient", grad_func, args, kwargs)
+        self._update_autogen("gradient")
 
     def set_hessian(
         self, hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray], args=list(), kwargs=dict()
@@ -642,6 +647,7 @@ class BaseProblem:
             self.hessian = lambda _: hess_func
         else:
             self.hessian = _FunctionWrapper("hessian", hess_func, args, kwargs)
+        self._update_autogen("hessian")
 
     def set_hessian_times_vector(
         self, hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray], args=list(), kwargs=dict()
@@ -663,6 +669,7 @@ class BaseProblem:
             extra dict of keyword arguments for hessian_times_vector function
         """
         self.hessian_times_vector = _FunctionWrapper("hessian_times_vector", hess_vec_func, args, kwargs)
+        self._update_autogen("hessian_times_vector")
 
     def set_residual(self, res_func: Callable[[np.ndarray], np.ndarray], args=list(), kwargs=dict()):
         """Sets the function to compute the residual vector/matrix
@@ -682,6 +689,7 @@ class BaseProblem:
             extra dict of keyword arguments for residual function
         """
         self.residual = _FunctionWrapper("residual", res_func, args, kwargs)
+        self._update_autogen("residual")
 
     def set_jacobian(
         self, jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray], args=list(), kwargs=dict()
@@ -703,6 +711,7 @@ class BaseProblem:
             self.jacobian = lambda _: jac_func
         else:
             self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
+        self._update_autogen("jacobian")
 
     def set_jacobian_times_vector(
         self, jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray], args=list(), kwargs=dict()
@@ -724,6 +733,7 @@ class BaseProblem:
             extra dict of keyword arguments for jacobian_times_vector function
         """
         self.jacobian_times_vector = _FunctionWrapper("jacobian_times_vector", jac_vec_func, args, kwargs)
+        self._update_autogen("jacobian_times_vector")
 
     def set_data_misfit(self, data_misfit: Union[str, Callable[[np.ndarray], Number]], args=list(), kwargs=dict()):
         """Sets the function to compute the data misfit
@@ -778,6 +788,7 @@ class BaseProblem:
                 )
         else:
             self.data_misfit = _FunctionWrapper("data_misfit", data_misfit, args, kwargs)
+        self._update_autogen("data_misfit")
 
     def set_regularisation(
         self,
@@ -858,6 +869,7 @@ class BaseProblem:
         else:
             _reg = _FunctionWrapper("regularisation", regularisation, args, kwargs)
         self.regularisation = lambda m: _reg(m) * factor
+        self._update_autogen("regularisation")
 
     def set_forward(self, forward: Callable[[np.ndarray], Union[np.ndarray, Number]], args=list(), kwargs=dict()):
         """Sets the function to perform the forward operation
@@ -872,6 +884,7 @@ class BaseProblem:
             extra dict of keyword arguments for forward function
         """
         self.forward = _FunctionWrapper("forward", forward, args, kwargs)
+        self._update_autogen("forward")
 
     def set_data(self, data_obs: np.ndarray):
         """Sets the data observations
@@ -882,6 +895,7 @@ class BaseProblem:
             the observations
         """
         self._data = data_obs
+        self._update_autogen("data")
 
     def set_data_from_file(self, file_path, obs_idx=-1):
         """Sets the data for this problem from a give file path
@@ -908,6 +922,7 @@ class BaseProblem:
                     delimiter = ","
             data = np.loadtxt(file_path, delimiter=delimiter)
         self.set_data(data[:, obs_idx])
+        self._update_autogen("data")
 
     def set_initial_model(self, init_model: np.ndarray):
         """Sets the starting point for the model
@@ -979,20 +994,11 @@ class BaseProblem:
         if defined_only:
             return defined
 
-        def _check_created(elem):
-            if (
-                elem == "data"
-            ):  # data won't be derived, it's always provided if exists
-                return False
-            not_defined_by_set_methods = hasattr(getattr(self, elem), "__self__")
-            in_base_class = self.__class__.__name__ == "BaseProblem"
-            in_sub_class_not_overridden = getattr(self.__class__, elem) == getattr(
-                BaseProblem, elem
-            )
-            not_overridden = in_base_class or in_sub_class_not_overridden
-            return not_defined_by_set_methods and not_overridden
+        def _check_autogen(elem):
+            _elem = getattr(self, elem)
+            return isinstance(_elem, _FunctionWrapper) and _elem.autogen
 
-        created_by_us = [elem for elem in defined if _check_created(elem)]
+        created_by_us = [elem for elem in defined if _check_autogen(elem)]
         return [elem for elem in defined if elem not in created_by_us], created_by_us
 
     def defined_components(self) -> set:
@@ -1267,6 +1273,8 @@ class BaseProblem:
 
     @staticmethod
     def _check_defined(func, args_num=1):
+        if isinstance(func, _FunctionWrapper):
+            return True
         try:
             func(*[np.array([])] * args_num)
         except NotImplementedError:
@@ -1275,6 +1283,49 @@ class BaseProblem:
             return True
         else:
             return True
+
+    # autogen_table: (tuple of defined things) -> 
+    #       (name of deduced item, func that generates the item func)
+    # note: the number of (tuple of defined things) and (name of deduced item) 
+    #       should match
+    autogen_table = {
+        ("data_misfit", "regularisation",): (
+            "objective",
+            lambda dm_func, reg_func: (lambda m: dm_func(m) + reg_func(m))
+        ),
+        ("data_misfit",): (
+            "objective",
+            lambda dm_func: (lambda m: dm_func(m))
+        ),
+        ("log_likelihood", "log_prior",): (
+            "log_posterior",
+            lambda loglike, logprior: (lambda m: loglike(m) + logprior(m))
+        ),
+        ("hessian",): (
+            "hessian_times_vector",
+            lambda hess_func: (lambda m, vector: hess_func(m) @ vector)
+        ),
+        ("forward", "data",): (
+            "residual",
+            lambda fwd, data: (lambda m: fwd(m) - data)
+        ),
+        ("jacobian",): (
+            "jacobian_times_vector",
+            lambda jac_func: (lambda m, vector: jac_func(m) @ vector)
+        ),
+    }
+
+    def _update_autogen(self, updated_item):
+        update_dict = {k:v for k,v in self.autogen_table.items() if updated_item in k}
+        for need_defined, (to_update, how) in update_dict.items():
+            if getattr(self, f"{to_update}_defined"):
+                to_update_existing = getattr(self, to_update)
+                if isinstance(to_update_existing, _FunctionWrapper) and not to_update_existing.autogen:
+                    continue        # already defined by user, don't overwrite
+            if all((getattr(self, f"{nm}_defined") for nm in need_defined)):   # can update
+                defined_items = (getattr(self, nm) for nm in need_defined)
+                new_func = _FunctionWrapper(to_update, how(*defined_items), autogen=True)
+                setattr(self, to_update, new_func)
 
     @property
     def name(self) -> str:
@@ -1385,12 +1436,13 @@ class BaseProblem:
         return f"{self.name}"
 
 
-class _FunctionWrapper(object):
-    def __init__(self, name, func, args, kwargs):
+class _FunctionWrapper:
+    def __init__(self, name, func, args=list(), kwargs=dict(), autogen=False):
         self.name = name
         self.func = func
         self.args = args
         self.kwargs = kwargs
+        self.autogen = autogen
 
     def __call__(self, x):
         try:

@@ -387,3 +387,16 @@ def test_wrapping_objective():
     # 2
     inv_problem.set_forward(lambda a,b,c=3,d=2: a+b+c+d, args=[3,2], kwargs={"d":1})
     assert inv_problem.forward(1) == 7
+
+def test_not_overwriting_by_autogen():
+    inv_problem = BaseProblem()
+    # 1
+    inv_problem.set_log_likelihood(lambda _: 1)
+    inv_problem.set_log_prior(lambda _: 2)
+    assert inv_problem.log_posterior_defined
+    assert inv_problem.log_posterior(1) == 3
+    # 2
+    inv_problem.set_log_posterior(lambda _: 4)
+    assert inv_problem.log_posterior(1) == 4
+    inv_problem.set_log_prior(lambda _: 5)
+    assert inv_problem.log_posterior(1) == 4
