@@ -1317,7 +1317,7 @@ class BaseProblem:
             func(*[np.array([])] * args_num)
         except NotImplementedError:
             return False
-        except:  # it's ok if there're errors caused by dummy input argument np.array([])
+        except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
             return True
         else:
             return True
@@ -1488,7 +1488,7 @@ class _FunctionWrapper:
     def __call__(self, model):
         try:
             return self.func(model, *self.args, **self.kwargs)
-        except:
+        except Exception as exception:
             import traceback
 
             print(f"cofi: Exception while calling your {self.name} function:")
@@ -1497,4 +1497,4 @@ class _FunctionWrapper:
             print("  kwargs:", self.kwargs)
             print("  exception:")
             traceback.print_exc()
-            raise
+            raise exception
