@@ -49,6 +49,10 @@ def _log_posterior(model, data_observed, Cdinv):
     return lp + _log_likelihood(model, data_observed, Cdinv)
 log_posterior = lambda m: _log_posterior(m, _y, _Cdinv)
 
+nwalkers = 32
+ndim = 4
+nsteps = 500
+walkers_start = np.array([0.,0.,0.,0.]) + 1e-4 * np.random.randn(nwalkers, ndim)
 
 ############### Begin testing #########################################################
 def test_validate():
@@ -60,11 +64,11 @@ def test_validate():
         emcee_solver = EmceeSolver(inv_problem, inv_options)
     # 2
     inv_problem.log_posterior = log_posterior
-    inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
+    inv_problem.set_walkers_starting_pos(walkers_start)
     with pytest.raises(ValueError, match=r".*not enough info.*InversionOptions.*"):
         emcee_solver = EmceeSolver(inv_problem, inv_options)
     # 3
-    inv_options.set_params(nwalkers=32, nsteps=5000)
+    inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
     emcee_solver = EmceeSolver(inv_problem, inv_options)
     assert emcee_solver._ndim == 4
 
@@ -72,11 +76,11 @@ def test_run_with_posterior():
     # set up problem
     inv_problem = BaseProblem()
     inv_problem.log_posterior = log_posterior
-    inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
+    inv_problem.set_walkers_starting_pos(walkers_start)
     # set up options
     inv_options = InversionOptions()
     inv_options.set_tool("emcee")
-    inv_options.set_params(nwalkers=32, nsteps=500)
+    inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
     # define solver
     emcee_solver = EmceeSolver(inv_problem, inv_options)
     res = emcee_solver()
@@ -86,11 +90,11 @@ def test_run_with_prior_likelihood():
     inv_problem = BaseProblem()
     inv_problem.set_log_prior(log_prior_uniform)
     inv_problem.set_log_likelihood(log_likelihood)
-    inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
+    inv_problem.set_walkers_starting_pos(walkers_start)
     # set up options
     inv_options = InversionOptions()
     inv_options.set_tool("emcee")
-    inv_options.set_params(nwalkers=32, nsteps=500)
+    inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
     # define solver
     emcee_solver = EmceeSolver(inv_problem, inv_options)
     res = emcee_solver()
@@ -99,11 +103,24 @@ def test_with_inversion():
     # set up problem
     inv_problem = BaseProblem()
     inv_problem.log_posterior = log_posterior
-    inv_problem.set_initial_model(np.array([0.,0.,0.,0.]))
+    inv_problem.set_walkers_starting_pos(walkers_start)
     # set up options
     inv_options = InversionOptions()
     inv_options.set_tool("emcee")
-    inv_options.set_params(nwalkers=32, nsteps=500)
+    inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
     # define inversion
     inv = Inversion(inv_problem, inv_options)
     res = inv.run()
+
+def test_no_initial_state():
+    # set up problem
+    inv_problem = BaseProblem()
+    inv_problem.set_log_posterior(log_posterior)
+    inv_problem.set_model_shape(ndim)
+    # set up options
+    inv_options = InversionOptions()
+    inv_options.set_tool("emcee")
+    inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
+    # define inversion
+    with pytest.raises(ValueError):
+        inv = Inversion(inv_problem, inv_options)

@@ -72,6 +72,8 @@ def test_non_set():
         inv_problem.log_prior(1)
     with pytest.raises(NotImplementedError):
         inv_problem.log_likelihood(1)
+    with pytest.raises(NameError):
+        inv_problem.walkers_starting_pos
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -90,6 +92,7 @@ def test_non_set():
     assert not inv_problem.log_posterior_defined
     assert not inv_problem.log_prior_defined
     assert not inv_problem.log_likelihood_defined
+    assert not inv_problem.walkers_starting_pos_defined
     assert len(inv_problem.defined_components()) == 0
     inv_problem.summary()
 

@@ -145,6 +145,7 @@ class BaseProblem:
         BaseProblem.set_data_from_file
         BaseProblem.set_initial_model
         BaseProblem.set_model_shape
+        BaseProblem.set_walkers_starting_pos
         .. BaseProblem.set_bounds
         .. BaseProblem.set_constraints
 
@@ -214,6 +215,7 @@ class BaseProblem:
         "data",
         "initial_model",
         "model_shape",
+        "walkers_starting_pos",
         "bounds",
         "constraints",
     ]
@@ -1002,6 +1004,23 @@ class BaseProblem:
                 ) from err
         self._model_shape = model_shape
 
+    def set_walkers_starting_pos(self, starting_pos: np.ndarray):
+        r"""Sets the starting positions for each walker in sampling methods
+
+        This initialisation is optional. If not set, we rely on the default behaviour
+        of the backend sampling tools.
+
+        Parameters
+        ----------
+        starting_pos : np.ndarray
+            starting positions, with the shape ``(nwalkers, ndims)``, where 
+            ``nwalkers`` is the number of walkers you plan to use for the sampler, and
+            ``ndims`` is the dimension of your model parameters (for fixed dimension 
+            samplers)
+        """
+        self._walkers_starting_pos = starting_pos
+        self._model_shape = (starting_pos.shape[1],)
+
     def set_bounds(self, bounds: Sequence[Tuple[Number, Number]]):
         """TODO document me
 
@@ -1152,14 +1171,29 @@ class BaseProblem:
         Raises
         ------
         NameError
-            when it's not defined (by either :func:`BaseProblem.set_model_shape` or
-            :func:`BaseProblem.set_model_shape`)
+            when it's not defined (by either :func:`BaseProblem.set_model_shape`,
+            :func:`BaseProblem.set_model_shape`, or
+            :func:`BaseProblem.set_walkers_starting_point`)
         """
         if hasattr(self, "_model_shape"):
             return self._model_shape
         raise NameError(
             "model shape has not been set, please use either `set_initial_model()`"
             " or `set_model_shape() to add to the problem setup"
+        )
+
+    @property
+    def walkers_starting_pos(self) -> np.ndarray:
+        """the starting positions for each walker
+
+        NameError
+            when it's not defined (by :func:`BaseProblem.set_walkers_starting_pos`)
+        """
+        if hasattr(self, "_walkers_starting_pos"):
+            return self._walkers_starting_pos
+        raise NameError(
+            "walkers' starting positions have not been set, please use "
+            "`set_walkers_starting_pos()` to add to the problem set up"
         )
 
     @property
@@ -1284,6 +1318,16 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.model_shape` has been defined"""
         try:
             self.model_shape
+        except NameError:
+            return False
+        else:
+            return True
+
+    @property
+    def walkers_starting_pos_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.walkers_starting_pos` has been defined"""
+        try:
+            self.walkers_starting_pos
         except NameError:
             return False
         else:

@@ -19,7 +19,7 @@ class EmceeSolver(BaseSolver):
     _emcee_EnsembleSampler_sample_args = dict(
         inspect.signature(EnsembleSampler.sample).parameters
     )
-    required_in_problem = {"log_posterior", "initial_model", "model_shape"}
+    required_in_problem = {"log_posterior", "model_shape", "walkers_starting_pos"}
     optional_in_problem = dict()
     required_in_options = {"nwalkers", "nsteps"}
     optional_in_options = {
@@ -66,10 +66,7 @@ class EmceeSolver(BaseSolver):
         self.components_used = list(self.required_in_problem)
         self._log_prob_fn = inv_problem.log_posterior
         self._ndim = np.prod(inv_problem.model_shape)
-        self._initial_state = inv_problem.initial_model + 1e-4 * np.random.randn(
-            self._nwalkers, self._ndim
-        )
-        # TODO is the above a good choice? (generate starting points for users)
+        self._initial_state = inv_problem.walkers_starting_pos
 
     def __call__(self) -> dict:
         self.sampler.reset()
