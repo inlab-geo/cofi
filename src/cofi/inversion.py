@@ -61,6 +61,9 @@ class SamplingResult(InversionResult):
     def __init__(self, res: dict) -> None:
         super().__init__(res)
 
+    def to_arviz(self):
+        raise NotImplementedError
+
 
 class Inversion:
     r"""The class holder that take in both an inversion problem setup :class:`BaseProblem`
@@ -111,6 +114,7 @@ class Inversion:
         self.inv_options = inv_options
         # dispatch inversion_solver from self.inv_options, validation is done by solver
         self.inv_solve = self._dispatch_solver()(inv_problem, inv_options)
+        self.inv_result = None
 
     def run(self) -> InversionResult:
         """Starts the inversion and returns an :class:`InversionResult` object.
@@ -136,8 +140,8 @@ class Inversion:
         # look up solver_dispatch_table to return constructor for a BaseSolver subclass
         if isinstance(tool, str):
             return solver_dispatch_table[tool]
-        else:  # self-defined BaseSolver (note that a BaseSolver object is a callable)
-            return self.inv_options.tool
+        # self-defined BaseSolver (note that a BaseSolver object is a callable)
+        return self.inv_options.tool
 
     def summary(self):
         r"""Helper method that prints a summary of current ``Inversion`` object
@@ -166,7 +170,7 @@ class Inversion:
         print(double_line)
         print(title)
         print(double_line)
-        if hasattr(self, "inv_result"):
+        if self.inv_result:
             print(f"{subtitle_result}\n")
             self.inv_result._summary(False)
             print(single_line)
@@ -178,6 +182,6 @@ class Inversion:
         print(single_line)
         print(f"{subtitle_problem}\n")
         self.inv_problem._summary(False)
-        if hasattr(self, "inv_result"):
+        if self.inv_result:
             print("List of functions/properties got used by the backend tool:")
             print(self.inv_solve.components_used)

@@ -18,5 +18,5 @@ __all__ = [
     "InversionOptions",  # public API, basic usage
     "Inversion",  # public API, basic usage
     "InversionResult",  # public API, for advanced usage (own solver)
-    "SamplingResult",   # public API, for advanced usage (own solver)
+    "SamplingResult",  # public API, for advanced usage (own solver)
 ]

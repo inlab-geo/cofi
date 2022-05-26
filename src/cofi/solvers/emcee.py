@@ -16,7 +16,9 @@ class EmceeSolver(BaseSolver):
     )
 
     _emcee_EnsembleSampler_args = dict(inspect.signature(EnsembleSampler).parameters)
-    _emcee_EnsembleSampler_sample_args = dict(inspect.signature(EnsembleSampler.sample).parameters)
+    _emcee_EnsembleSampler_sample_args = dict(
+        inspect.signature(EnsembleSampler.sample).parameters
+    )
     required_in_problem = {"log_posterior", "initial_model", "model_shape"}
     optional_in_problem = dict()
     required_in_options = {"nwalkers", "nsteps"}
@@ -25,11 +27,13 @@ class EmceeSolver(BaseSolver):
         for k, v in _emcee_EnsembleSampler_args.items()
         if k not in {"nwalkers", "ndim", "log_prob_fn", "self"}
     }
-    optional_in_options.update({
-        k: v.default
-        for k, v in _emcee_EnsembleSampler_sample_args.items()
-        if k not in {"initial_state", "iterations"}
-    })
+    optional_in_options.update(
+        {
+            k: v.default
+            for k, v in _emcee_EnsembleSampler_sample_args.items()
+            if k not in {"initial_state", "iterations"}
+        }
+    )
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -62,15 +66,16 @@ class EmceeSolver(BaseSolver):
         self.components_used = list(self.required_in_problem)
         self._log_prob_fn = inv_problem.log_posterior
         self._ndim = np.prod(inv_problem.model_shape)
-        self._initial_state = inv_problem.initial_model + \
-            1e-4 * np.random.randn(self._nwalkers, self._ndim)
+        self._initial_state = inv_problem.initial_model + 1e-4 * np.random.randn(
+            self._nwalkers, self._ndim
+        )
         # TODO is the above a good choice? (generate starting points for users)
 
     def __call__(self) -> dict:
         self.sampler.reset()
-        res_state = self.sampler.run_mcmc(
+        self.sampler.run_mcmc(
             initial_state=self._initial_state,
-            nsteps = self._nsteps,
+            nsteps=self._nsteps,
             log_prob0=self._log_prob0,
             rstate0=self._rstate0,
             blobs0=self._blobs0,
@@ -86,10 +91,4 @@ class EmceeSolver(BaseSolver):
             "success": True,
             "sampler": self.sampler,
         }
-        # result["acceptance_fraction"] = self.sampler.acceptance_fraction  # property
-        # result["random_state"] = self.sampler.random_state                # property
-        # result["get_autocorr_time"] = self.sampler.get_autocorr_time      # func
-        # result["get_blobs"] = self.sampler.get_blobs                      # func
-        # result["get_chain"] = self.sampler.get_chain                      # func
-        # result["get_log_prob"] = self.sampler.get_log_prob                # func
         return result

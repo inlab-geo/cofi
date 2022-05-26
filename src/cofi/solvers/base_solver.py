@@ -42,7 +42,8 @@ class BaseSolver(metaclass=ABCMeta):
             Solving method: None set
             Use `suggest_solving_methods()` to check available solving methods.
             -----------------------------
-            Backend tool: `<class '__main__.MyDummySolver'>` - My dummy solver that always return (1,2) as result
+            Backend tool: `<class '__main__.MyDummySolver'>` - My dummy solver that
+            always return (1,2) as result
             References: ['https://cofi.readthedocs.io/en/latest/api/generated/cofi.solvers.BaseSolver.html']
             Use `suggest_tools()` to check available backend tools.
             -----------------------------
@@ -205,12 +206,11 @@ class BaseSolver(metaclass=ABCMeta):
         required = self.required_in_problem
         if all({component in defined for component in required}):
             return True
-        else:
-            raise ValueError(
-                f"you've chosen {self.__class__.__name__} to be your solving tool, but "
-                "not enough information is provided in the BaseProblem object - "
-                f"required: {required}; provided: {defined}"
-            )
+        raise ValueError(
+            f"you've chosen {self.__class__.__name__} to be your solving tool, but "
+            "not enough information is provided in the BaseProblem object - "
+            f"required: {required}; provided: {defined}"
+        )
 
     def _validate_inv_options(self):
         # check whether inv_options matches current solver (correctness of dispatch) from callee
@@ -220,22 +220,21 @@ class BaseSolver(metaclass=ABCMeta):
         required = self.required_in_options
         if all({option in defined for option in required}):
             return True
-        else:
-            raise ValueError(
-                f"you've chosen {self.__class__.__name__} to be your solving tool, but "
-                "not enough information is provided in the InversionOptions object - "
-                f"required: {required}; provided: {defined}"
-            )
+        raise ValueError(
+            f"you've chosen {self.__class__.__name__} to be your solving tool, but "
+            "not enough information is provided in the InversionOptions object - "
+            f"required: {required}; provided: {defined}"
+        )
 
     def _assign_options(self):
         params = self.inv_options.get_params()
         for opt in self.required_in_options:
             setattr(self, f"_{opt}", params[opt])
-        for opt in self.optional_in_options:
+        for opt, val in self.optional_in_options.items():
             setattr(
                 self,
                 f"_{opt}",
-                params[opt] if opt in params else self.optional_in_options[opt],
+                params[opt] if opt in params else val,
             )
 
     def __repr__(self) -> str:
