@@ -5,14 +5,16 @@
 name: cofi_test
 dependencies:
   - python=3.8
-  - numpy>=1.22.2
-  - scipy>=1.7.3
+  # - numpy>=1.22.2
+  # - scipy>=1.7.3
   - matplotlib>=3.5.0
-  - arviz>=0.9.0
+  # - arviz>=0.9.0
   - scikit-build>=0.11.1
   - pytest>=6.2.5
   - conda-forge::petsc4py>=3.17.0
   # - conda-forge::gfortran
   - pip>=21.2.4
   - pip:
+    - scipy>=1.7.3
+    - arviz>=0.9.0
     - coverage[toml]>=6.2
