@@ -26,6 +26,7 @@ dependencies:
   - scikit-build
   - pytest
   - emcee
+  - arviz
   - pip
   - pip:
     - coverage[toml]
