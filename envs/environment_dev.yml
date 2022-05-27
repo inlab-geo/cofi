@@ -40,3 +40,4 @@ dependencies:
     - sphinxcontrib-mermaid
     - sphinxemoji
     - pytest-xdist
+    - sphinx-copybutton

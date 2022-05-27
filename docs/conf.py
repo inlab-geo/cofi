@@ -50,6 +50,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx_panels",
     "sphinx_togglebutton",
+    "sphinx_copybutton",
     # "nbsphinx",
     "sphinx.ext.napoleon",
     "myst_nb",
@@ -87,6 +88,9 @@ panels_add_bootstrap_css = False
 panels_css_variables = {
     "tabs-color-label-inactive": "hsla(231, 99%, 66%, 0.5)",
 }
+
+# settings for the sphinx-copybutton extension
+copybutton_prompt_text = ">>> "
 
 
 # -- Options for HTML output -------------------------------------------------
