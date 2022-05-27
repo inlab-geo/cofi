@@ -64,6 +64,7 @@ INSTALL_REQUIRES = [
     "numpy>=1.18",
     "scipy>=1.0.0",
     "emcee>=3.1.0",
+    "arviz>=0.9.0",
 ]
 EXTRAS_REQUIRE = {
     "petsc": ["petsc4py>=3.16.0"],

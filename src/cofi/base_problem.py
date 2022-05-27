@@ -998,7 +998,7 @@ class BaseProblem:
                 np.reshape(self.initial_model, model_shape)
             except ValueError as err:
                 raise ValueError(
-                    f"The model_shape you've provided {model_shape} doesn't match the"
+                    f"the model_shape you've provided {model_shape} doesn't match the"
                     " initial_model you set which has the shape:"
                     f" {self.initial_model.shape}"
                 ) from err

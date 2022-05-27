@@ -1,5 +1,8 @@
 from typing import Type
 
+import emcee
+import arviz
+
 from . import BaseProblem, InversionOptions
 from .solvers import solver_dispatch_table, BaseSolver
 
@@ -60,9 +63,30 @@ class InversionResult:
 class SamplingResult(InversionResult):
     def __init__(self, res: dict) -> None:
         super().__init__(res)
+        if "sampler" not in res:
+            raise ValueError(
+                "sampler not found in class SamplingResult, very likely to be a bug on"
+                " our (CoFI) side. Please file an issue at "
+                "https://github.com/inlab-geo/cofi/issues, thanks!"
+            )
 
     def to_arviz(self):
-        raise NotImplementedError
+        sampler = self.sampler
+        if sampler is None:
+            raise ValueError(
+                "sampling result is None, please double check that your solver returns"
+                " correctly if you are using your own solver; otherwise please file an"
+                " issue at https://github.com/inlab-geo/cofi/issues, thanks!"
+            )
+        if isinstance(sampler, emcee.EnsembleSampler):
+            self.arviz_inference_data = arviz.from_emcee(sampler)
+            return self.arviz_inference_data
+        else:
+            raise NotImplementedError(
+                f"sampling result of type {sampler.__class__.__name__} not supported"
+                " yet, please file an issue at https://github.com/inlab-geo/cofi/issues"
+                ", thanks!"
+            )
 
 
 class Inversion:
