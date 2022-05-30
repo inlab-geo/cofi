@@ -25,7 +25,7 @@ class EmceeSolver(BaseSolver):
     optional_in_options = {
         k: v.default
         for k, v in _emcee_EnsembleSampler_args.items()
-        if k not in {"nwalkers", "ndim", "log_prob_fn", "self"}
+        if k not in {"nwalkers", "ndim", "log_prob_fn", "self", "args", "kwargs"}
     }
     optional_in_options.update(
         {
@@ -45,8 +45,8 @@ class EmceeSolver(BaseSolver):
             log_prob_fn=self._log_prob_fn,
             pool=self._pool,
             moves=self._moves,
-            args=self._args,
-            kwargs=self._kwargs,
+            args=None,          # already handled by BaseProblem
+            kwargs=None,        # already handled by BaseProblem
             backend=self._backend,
             vectorize=self._vectorize,
             blobs_dtype=self._blobs_dtype,
@@ -64,7 +64,13 @@ class EmceeSolver(BaseSolver):
         # assign components in problem to args
         inv_problem = self.inv_problem
         self.components_used = list(self.required_in_problem)
-        self._log_prob_fn = inv_problem.log_posterior
+        self._blobs_dtype = None
+        if inv_problem.log_posterior_with_blobs_defined:
+            self._log_prob_fn = inv_problem.log_posterior_with_blobs
+            # if inv_problem.blobs_dtype_defined:
+            #     self._blobs_dtype = inv_problem._blobs_dtype
+        else:
+            self._log_prob_fn = inv_problem.log_posterior
         self._ndim = np.prod(inv_problem.model_shape)
         self._initial_state = inv_problem.walkers_starting_pos
 
@@ -87,5 +93,6 @@ class EmceeSolver(BaseSolver):
         result = {
             "success": True,
             "sampler": self.sampler,
+            "blobs_dtype": self._blobs_dtype
         }
         return result

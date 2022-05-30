@@ -79,7 +79,15 @@ class SamplingResult(InversionResult):
                 " issue at https://github.com/inlab-geo/cofi/issues, thanks!"
             )
         if isinstance(sampler, emcee.EnsembleSampler):
-            self.arviz_inference_data = arviz.from_emcee(sampler)
+            if hasattr(self, "blobs_dtype") and self.blobs_dtype:
+                names, groups = zip(*self.blobs_dtype)
+                self.arviz_inference_data = arviz.from_emcee(
+                    sampler,
+                    blob_names=names,
+                    blob_groups=groups,
+                )
+            else:
+                self.arviz_inference_data = arviz.from_emcee(sampler)
             return self.arviz_inference_data
         else:
             raise NotImplementedError(

@@ -130,6 +130,8 @@ class BaseProblem:
     .. autosummary::
         BaseProblem.set_objective
         BaseProblem.set_log_posterior
+        BaseProblem.set_log_posterior_with_blobs
+        BaseProblem.set_blobs_dtype
         BaseProblem.set_log_likelihood
         BaseProblem.set_log_prior
         BaseProblem.set_gradient
@@ -176,6 +178,7 @@ class BaseProblem:
 
         BaseProblem.objective
         BaseProblem.log_posterior
+        BaseProblem.log_posterior_with_blobs
         BaseProblem.log_likelihood
         BaseProblem.log_prior
         BaseProblem.gradient
@@ -191,6 +194,8 @@ class BaseProblem:
         BaseProblem.data
         BaseProblem.initial_model
         BaseProblem.model_shape
+        BaseProblem.walkers_starting_pos,
+        BaseProblem.blobs_dtype,
         BaseProblem.bounds
         BaseProblem.constraints
 
@@ -201,6 +206,7 @@ class BaseProblem:
     all_components = [
         "objective",
         "log_posterior",
+        "log_posterior_with_blobs",
         "log_likelihood",
         "log_prior",
         "gradient",
@@ -216,6 +222,7 @@ class BaseProblem:
         "initial_model",
         "model_shape",
         "walkers_starting_pos",
+        "blobs_dtype",
         "bounds",
         "constraints",
     ]
@@ -264,6 +271,30 @@ class BaseProblem:
         raise NotImplementedError(
             "`log_posterior` is required in the solving approach but you haven't"
             " implemented or added it to the problem setup"
+        )
+
+    def log_posterior_with_blobs(self, model: np.ndarray, *args, **kwargs) -> Tuple[Number]:
+        """Method for computing the log of posterior probability density and related 
+        information given a model
+
+        The "related information" can be defined by you 
+        (via :func:`BaseProblem.set_log_posterior_with_blobs`), but they will only be 
+        stored properly when you perform sampling with ``emcee``.
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        Tuple[Number]
+            the posterior probability density value, and other information you've set to
+            return together with the former
+        """
+        raise NotImplementedError(
+            "`log_posterior_with_blobs` is required in the solving approach but you "
+            "haven't implemented or added it to the problem setup"
         )
 
     def log_prior(self, model: np.ndarray, *args, **kwargs) -> Number:
@@ -526,12 +557,14 @@ class BaseProblem:
     # - def something(self), this is a property / function
     # - def something_defined(self) -> bool
     # - add checking to self.defined_components
+    # - add `set_something` and `something` to documentation list on top of this file
+    # - check if there's anything to add to autogen_table
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
 
     def set_objective(
         self, obj_func: Callable[[np.ndarray], Number], args=None, kwargs=None
     ):
-        """Sets the function to compute the objective function to minimise
+        r"""Sets the function to compute the objective function to minimise
 
         Alternatively, objective function can be set implicitly (computed by us) if one of
         the following combinations is set:
@@ -559,7 +592,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the log of posterior probability density
+        r"""Sets the function to compute the log of posterior probability density
 
         Alternatively, log_posterior function can be set implicitly (computed by us) if
         :func:`set_log_prior` and :func:`set_log_likelihood` are defined.
@@ -580,10 +613,73 @@ class BaseProblem:
         )
         self._update_autogen("log_posterior")
 
+    def set_log_posterior_with_blobs(
+        self,
+        log_posterior_blobs_func: Callable[[np.ndarray], Tuple[Number]],
+        blobs_dtype=None,
+        args=None,
+        kwargs=None,
+    ):
+        r"""Sets the function that computes the log of posterior prabability density 
+        and returns extra information along with log posterior
+
+        The extra blobs returned will only get used when you are using ``emcee`` to 
+        sample the posterior distribution. Check 
+        `this emcee documentation page <https://emcee.readthedocs.io/en/stable/user/blobs/>`_
+        to understand what blobs are.
+
+        If you use other backend samplers, you can still set ``log_posterior`` using 
+        this function, and we will generate :func:`BaseProblem.log_posterior` to return
+        only the first output from :func:`BaseProblem.log_posterior_with_blobs`.
+
+        This method is also generated automatically by us if you've defined both
+        :func:`BaseProblem.log_prior` and :func:`BaseProblem.log_likelihood`. In that 
+        case, the ``blobs_dtype`` is set to be 
+        ``[("log_likelihood", float), ("log_prior", float)]``.
+
+        Parameters
+        ----------
+        log_posterior_blobs_func : Callable[[np.ndarray], Tuple[Number]
+            the log_posterior_with_blobs function that matches 
+            :func:`BaseProblem.log_posterior_blobs_func` in signature
+        blobs_dtype : list, optional
+            a list of tuples that specify the names and type of the blobs, e.g. 
+            ``[("log_likelihood", float), ("log_prior", float)]``. If not set, the 
+            blobs will still be recorded during sampling in the order they are 
+            returned from :func:`BaseProblem.log_posterior_blobs_func`
+        args : list, optional
+            extra list of positional arguments for log_posterior function
+        kwargs : dict, optional
+            extra dict of keyword arguments for log_posterior function
+        """
+        self.log_posterior_with_blobs = _FunctionWrapper(
+            "log_posterior_with_blobs", log_posterior_blobs_func, args, kwargs
+        )
+        self._update_autogen("log_posterior_with_blobs")
+        if blobs_dtype:
+            self._blobs_dtype = blobs_dtype
+    
+    def set_blobs_dtype(self, blobs_dtype: list):
+        r"""Sets the name and type for the extra information you'd like to calculate on
+        each sampling step
+
+        This only gets used when you are using ``emcee`` to sample the posterior 
+        distribution. Check `this emcee documentation page <https://emcee.readthedocs.io/en/stable/user/blobs/>`_
+        to understand what blobs are.
+
+        Parameters
+        ----------
+        blobs_dtype : list
+            a list of tuples that specify the names and type of the blobs, e.g. 
+            ``[("log_likelihood", float), ("log_prior", float)]``
+        """
+        self._blobs_dtype = blobs_dtype
+        self._update_autogen("blobs_dtype")
+
     def set_log_prior(
         self, log_prior_func: Callable[[np.ndarray], Number], args=None, kwargs=None
     ):
-        """Sets the function to compute the log of prior probability density
+        r"""Sets the function to compute the log of prior probability density
 
         Parameters
         ----------
@@ -604,7 +700,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the log of likelihood probability density
+        r"""Sets the function to compute the log of likelihood probability density
 
         Parameters
         ----------
@@ -624,7 +720,7 @@ class BaseProblem:
     def set_gradient(
         self, grad_func: Callable[[np.ndarray], np.ndarray], args=None, kwargs=None
     ):
-        """Sets the function to compute the gradient of objective function w.r.t the
+        r"""Sets the function to compute the gradient of objective function w.r.t the
         model
 
         Parameters
@@ -646,7 +742,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the Hessian of objective function w.r.t the
+        r"""Sets the function to compute the Hessian of objective function w.r.t the
         model
 
         Parameters
@@ -671,7 +767,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the Hessian (of objective function) times
+        r"""Sets the function to compute the Hessian (of objective function) times
         an arbitrary vector
 
         Alternatively, hessian_times_vector function can be set implicitly (computed by us)
@@ -695,7 +791,7 @@ class BaseProblem:
     def set_residual(
         self, res_func: Callable[[np.ndarray], np.ndarray], args=None, kwargs=None
     ):
-        """Sets the function to compute the residual vector/matrix
+        r"""Sets the function to compute the residual vector/matrix
 
         Alternatively, residual function can be set implicitly (computed by us)
         if both :func:`set_forward` and data (:func:`set_data` or
@@ -720,7 +816,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the Jacobian matrix, namely first
+        r"""Sets the function to compute the Jacobian matrix, namely first
         derivative of forward function with respect to the model
 
         Parameters
@@ -745,7 +841,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the Jacobian (of forward function) times
+        r"""Sets the function to compute the Jacobian (of forward function) times
         an arbitrary vector
 
         Alternatively, jacobian_times_vector function can be set implicitly (computed by us)
@@ -772,7 +868,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to compute the data misfit
+        r"""Sets the function to compute the data misfit
 
         You can either pass in a custom function or a short string that describes the
         data misfit function. These are a list of pre-built data misfit functions we
@@ -913,7 +1009,7 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        """Sets the function to perform the forward operation
+        r"""Sets the function to perform the forward operation
 
         Parameters
         ----------
@@ -939,7 +1035,7 @@ class BaseProblem:
         self._update_autogen("data")
 
     def set_data_from_file(self, file_path, obs_idx=-1):
-        """Sets the data for this problem from a give file path
+        r"""Sets the data for this problem from a give file path
 
         This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read
         data file, depending on the file type.
@@ -966,7 +1062,7 @@ class BaseProblem:
         self._update_autogen("data")
 
     def set_initial_model(self, init_model: np.ndarray):
-        """Sets the starting point for the model
+        r"""Sets the starting point for the model
 
         Once set, we will infer the property :func:`BaseProblem.model_shape` in
         case this is required for some inference solvers
@@ -980,7 +1076,7 @@ class BaseProblem:
         self._model_shape = init_model.shape if hasattr(init_model, "shape") else (1,)
 
     def set_model_shape(self, model_shape: Tuple):
-        """Sets the model shape explicitly
+        r"""Sets the model shape explicitly
 
         Parameters
         ----------
@@ -1060,7 +1156,7 @@ class BaseProblem:
         return [elem for elem in defined if elem not in created_by_us], created_by_us
 
     def defined_components(self) -> set:
-        """Returns a set of components that are defined for the ``BaseProblem`` object
+        r"""Returns a set of components that are defined for the ``BaseProblem`` object
 
         These include both the ones you've set explicitly through the :ref:`Set Methods <set_methods>`
         and the ones that are deduced from existing information.
@@ -1132,7 +1228,7 @@ class BaseProblem:
 
     @property
     def data(self) -> np.ndarray:
-        """the observations, set by :func:`BaseProblem.set_data` or
+        r"""the observations, set by :func:`BaseProblem.set_data` or
         :func:`BaseProblem.set_data_from_file`
 
         Raises
@@ -1149,7 +1245,7 @@ class BaseProblem:
 
     @property
     def initial_model(self) -> np.ndarray:
-        """the initial model, needed for some iterative optimisation tools that
+        r"""the initial model, needed for some iterative optimisation tools that
         requires a starting point
 
         Raises
@@ -1166,7 +1262,7 @@ class BaseProblem:
 
     @property
     def model_shape(self) -> Union[Tuple, np.ndarray]:
-        """the model shape
+        r"""the model shape
 
         Raises
         ------
@@ -1184,8 +1280,10 @@ class BaseProblem:
 
     @property
     def walkers_starting_pos(self) -> np.ndarray:
-        """the starting positions for each walker
+        r"""the starting positions for each walker
 
+        Raises
+        ------
         NameError
             when it's not defined (by :func:`BaseProblem.set_walkers_starting_pos`)
         """
@@ -1194,6 +1292,25 @@ class BaseProblem:
         raise NameError(
             "walkers' starting positions have not been set, please use "
             "`set_walkers_starting_pos()` to add to the problem set up"
+        )
+
+    @property
+    def blobs_dtype(self) -> list:
+        r"""the name and type for the blobs that 
+        :func:`BaseProblem.log_posterior_with_blobs` will return
+        
+        Raises
+        ------
+        NameError
+            when it's not defined (by either :func:`BaseProblem.set_blobs_dtype`
+            or :func:`BaseProblem.set_log_posterior_with_blobs`)
+        """
+        if hasattr(self, "_blobs_dtype"):
+            return self._blobs_dtype
+        raise NameError(
+            "blobs name and type have not been set, please use either "
+            "`set_blobs_dtype()` or `set_log_posterior_with_blobs()` to add to the "
+            "problem setup"
         )
 
     @property
@@ -1237,6 +1354,13 @@ class BaseProblem:
     def log_posterior_defined(self) -> bool:
         r"""indicates whether :func:`BaseProblem.log_posterior` has been defined"""
         return self._check_defined(self.log_posterior)
+
+    @property
+    def log_posterior_with_blobs_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.log_posterior_with_blobs` has been 
+        defined
+        """
+        return self._check_defined(self.log_posterior_with_blobs)
 
     @property
     def log_prior_defined(self) -> bool:
@@ -1334,6 +1458,16 @@ class BaseProblem:
             return True
 
     @property
+    def blobs_dtype_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.blobs_dtype` has been defined"""
+        try:
+            self.blobs_dtype
+        except NameError:
+            return False
+        else:
+            return True
+
+    @property
     def bounds_defined(self) -> bool:
         r"""indicates whether :func:`BaseProblem.bounds` has been defined"""
         try:
@@ -1380,6 +1514,16 @@ class BaseProblem:
             "log_posterior",
             lambda loglike, logprior: (lambda m: loglike(m) + logprior(m)),
         ),
+        ("log_likelihood", "log_prior",): (
+            "log_posterior_with_blobs",
+            lambda loglike, logprior: (
+                lambda m: (loglike(m)+logprior(m), loglike(m), logprior(m))
+            ),
+        ),
+        ("log_posterior_with_blobs",): (
+            "log_posterior",
+            lambda log_pos_blobs: (lambda m: log_pos_blobs(m)[0])
+        ),
         ("hessian",): (
             "hessian_times_vector",
             lambda hess_func: (lambda m, vector: hess_func(m) @ vector),
@@ -1412,6 +1556,9 @@ class BaseProblem:
                     to_update, how(*defined_items), autogen=True
                 )
                 setattr(self, to_update, new_func)
+                if to_update == "log_posterior_with_blobs":
+                    self.set_blobs_dtype([("log_likelihood", float), ("log_prior", float)])
+                self._update_autogen(to_update)
 
     @property
     def name(self) -> str:
