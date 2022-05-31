@@ -322,6 +322,8 @@ def test_invalid_misfit_options():
 
 ############### TEST set methods for sampling #########################################
 _dummy_dist = lambda m: -np.inf if (m[0]<0 or m[0]>1) else 0
+_dummy_dist_with_blobs = lambda m: (_dummy_dist(m), m, 2*m)
+_blobs_dtype = [("model", float), ("model_doubled", float)]
 def test_prior_likelihood():
     inv_problem = BaseProblem()
     inv_problem.set_log_prior(_dummy_dist)
@@ -336,6 +338,15 @@ def test_posterior():
     assert not inv_problem.log_prior_defined
     assert not inv_problem.log_likelihood_defined
     assert inv_problem.log_posterior_defined
+
+def test_posterior_with_blobs():
+    inv_problem = BaseProblem()
+    inv_problem.set_log_posterior_with_blobs(_dummy_dist_with_blobs, _blobs_dtype)
+    assert not inv_problem.log_prior_defined
+    assert not inv_problem.log_likelihood_defined
+    assert inv_problem.log_posterior_defined
+    assert inv_problem.log_posterior_with_blobs_defined
+    assert inv_problem.blobs_dtype_defined
 
 
 ############### TEST properties #######################################################
