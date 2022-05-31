@@ -36,12 +36,25 @@ def test_to_arviz():
     res = SamplingResult({"success": True, "sampler": np.array([1])})
     with pytest.raises(NotImplementedError):
         inf_data = res.to_arviz()
-    # 3 - correct sampler
-    def log_prob(model):
+    # 3 - correct sampler (posterior)
+    def dummy_pdf(model):
         if model < 0 or model > 1:
             return -np.inf
         return 0.0 # model lies within bounds -> return log(1)
+    log_prob = dummy_pdf
     sampler = emcee.EnsembleSampler(2,1,log_prob)
     sampler.run_mcmc(np.array([[0.1],[0.3]]), 100)
     res = SamplingResult({"success": True, "sampler": sampler})
-    inf_data = res.to_arviz()
+    idata = res.to_arviz()
+    # 4 - correct sampler (prior + likelihood)
+    def log_prob(model):
+        pdf = dummy_pdf(model)
+        return pdf+pdf, pdf, pdf
+    sampler = emcee.EnsembleSampler(2,1,log_prob)
+    sampler.run_mcmc(np.array([[0.1],[0.3]]), 100)
+    res = SamplingResult({"success": True, "sampler": sampler, "blob_names": ["ll","lp"]})
+    with pytest.warns(UserWarning, match=".*group is not defined.*"):
+        idata = res.to_arviz()
+    # 5 - correct sampler (prior + likelihood + blob_groups)
+    idata = res.to_arviz(blob_groups=["log_likelihood", "prior"])
+

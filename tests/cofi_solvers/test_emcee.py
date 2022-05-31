@@ -99,7 +99,21 @@ def test_run_with_prior_likelihood():
     emcee_solver = EmceeSolver(inv_problem, inv_options)
     res = emcee_solver()
 
-def test_with_inversion():
+def test_with_inversion_prior_likelihood():
+    # set up problem
+    inv_problem = BaseProblem()
+    inv_problem.set_log_prior(log_prior_uniform)
+    inv_problem.set_log_likelihood(log_likelihood)
+    inv_problem.set_walkers_starting_pos(walkers_start)
+    # set up options
+    inv_options = InversionOptions()
+    inv_options.set_tool("emcee")
+    inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
+    # define inversion
+    inv = Inversion(inv_problem, inv_options)
+    res = inv.run()
+
+def test_with_inversion_posterior():
     # set up problem
     inv_problem = BaseProblem()
     inv_problem.log_posterior = log_posterior

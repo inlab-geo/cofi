@@ -70,7 +70,7 @@ class SamplingResult(InversionResult):
                 "https://github.com/inlab-geo/cofi/issues, thanks!"
             )
 
-    def to_arviz(self):
+    def to_arviz(self, **kwargs):
         sampler = self.sampler
         if sampler is None:
             raise ValueError(
@@ -79,15 +79,25 @@ class SamplingResult(InversionResult):
                 " issue at https://github.com/inlab-geo/cofi/issues, thanks!"
             )
         if isinstance(sampler, emcee.EnsembleSampler):
-            if hasattr(self, "blobs_dtype") and self.blobs_dtype:
-                names, groups = zip(*self.blobs_dtype)
-                self.arviz_inference_data = arviz.from_emcee(
-                    sampler,
-                    blob_names=names,
-                    blob_groups=groups,
-                )
+            if hasattr(self, "blob_names") and self.blob_names and "blob_names" not in kwargs:
+                if "blob_groups" in kwargs:
+                    self.arviz_inference_data = arviz.from_emcee(
+                        sampler,
+                        blob_names=self.blob_names,
+                        **kwargs,
+                    )
+                else:
+                    blobs_groups = [
+                        ("prior" if name == "log_prior" else name) for name in self.blob_names
+                    ]       # "log_prior" isn't in arviz's supported groups, use "prior"
+                    self.arviz_inference_data = arviz.from_emcee(
+                        sampler,
+                        blob_names=self.blob_names,
+                        blob_groups=blobs_groups,
+                        **kwargs,
+                    )
             else:
-                self.arviz_inference_data = arviz.from_emcee(sampler)
+                self.arviz_inference_data = arviz.from_emcee(sampler, **kwargs)
             return self.arviz_inference_data
         else:
             raise NotImplementedError(

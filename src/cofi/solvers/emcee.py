@@ -65,10 +65,14 @@ class EmceeSolver(BaseSolver):
         inv_problem = self.inv_problem
         self.components_used = list(self.required_in_problem)
         self._blobs_dtype = None
+        self._blob_names = None
         if inv_problem.log_posterior_with_blobs_defined:
             self._log_prob_fn = inv_problem.log_posterior_with_blobs
-            # if inv_problem.blobs_dtype_defined:
-            #     self._blobs_dtype = inv_problem._blobs_dtype
+            if inv_problem.blobs_dtype_defined:
+                self._blob_names = [name for (name, _) in inv_problem.blobs_dtype]
+                # uncomment below once this has been fixed:
+                # issue: https://github.com/arviz-devs/arviz/issues/2036
+                # self._blobs_dtype = inv_problem._blobs_dtype
         else:
             self._log_prob_fn = inv_problem.log_posterior
         self._ndim = np.prod(inv_problem.model_shape)
@@ -93,6 +97,6 @@ class EmceeSolver(BaseSolver):
         result = {
             "success": True,
             "sampler": self.sampler,
-            "blobs_dtype": self._blobs_dtype
+            "blob_names": self._blob_names
         }
         return result
