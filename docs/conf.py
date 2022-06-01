@@ -79,7 +79,8 @@ add_function_parentheses = False
 # Configuration to include links to other project docs
 intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
-    "numpy": ("https://numpy.org/doc/stable/",None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "arviz": ("https://python.arviz.org/en/latest/", None),
 }
 
 # Disable including boostrap CSS for sphinx_panels since it's already included

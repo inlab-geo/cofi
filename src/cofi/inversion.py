@@ -8,13 +8,16 @@ from .solvers import solver_dispatch_table, BaseSolver
 
 
 class InversionResult:
-    """The result class of an inversion run.
+    r"""The result class of an inversion run.
 
     You won't need to create an object of this class by yourself. See :func:`Inversion.run`
     for how you will get such an instance.
 
-    Currently the only method for ``InversionResult`` is :func:`InversionResult.summary()`.
-    More may be developed in the future.
+    .. seealso::
+
+        When using sampling methods, you get a :class:`SamplingResult` object, with 
+        additional analysis methods attached.
+
     """
 
     #: bool: indicates status of the inversion run
@@ -61,6 +64,14 @@ class InversionResult:
 
 
 class SamplingResult(InversionResult):
+    """the result class of an inversion run, when the inversion is sampling-based
+
+    This is a subclass of :class:`InversionResult`, so has the full functionality of 
+    it. Additionally, you can convert a :class:`SamplingResult` object into an 
+    :class:`arviz.InferenceData` object so that various plotting functionalities are
+    available from arviz.
+
+    """
     def __init__(self, res: dict) -> None:
         super().__init__(res)
         if "sampler" not in res:
@@ -71,6 +82,24 @@ class SamplingResult(InversionResult):
             )
 
     def to_arviz(self, **kwargs):
+        """convert sampler result into an :class:`arviz.InferenceData` object
+
+        Note that this method takes in keyword arguments that matches the 
+        ``arviz.from_<library>`` function. If your results are sampled from emcee,
+        then you can pass in any keyword arguments as described in 
+        :func:`arviz.from_emcee`.
+
+        Returns
+        -------
+        arviz.InferenceData
+            an :class:`arviz.InferenceData` object converted from your sampler
+
+        Raises
+        ------
+        NotImplementedError
+            when sampling result of current type (``type(SamplingResult.sampler)``))
+            cannot be converted into an :class:`arviz.InferenceData`
+        """
         sampler = self.sampler
         if sampler is None:
             raise ValueError(
