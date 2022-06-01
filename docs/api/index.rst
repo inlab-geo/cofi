@@ -42,6 +42,7 @@ object we mention above, and how to use them.
 
 .. autosummary::
     :toctree: generated/
+    :nosignatures:
 
     cofi.BaseProblem
     cofi.InversionOptions

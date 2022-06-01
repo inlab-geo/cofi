@@ -15,3 +15,4 @@ dependencies:
     - pypandoc==1.7.5
     - sphinxcontrib-mermaid==0.7.1
     - sphinxemoji==0.2.0
+    - sphinx-copybutton==0.5.0

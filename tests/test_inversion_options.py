@@ -54,8 +54,7 @@ def test_set_unset_tool(capsys):
         inv_options.set_tool("scipy.linalg.lstsq")
     # 2 - unset
     inv_options.unset_tool()
-    with pytest.raises(AttributeError):
-        inv_options.tool
+    assert inv_options.tool is None
     # 3 - default without solving_method
     inv_options.unset_solving_method()
     assert inv_options.get_default_tool() == "scipy.optimize.minimize"
@@ -72,8 +71,7 @@ def test_set_unset_tool(capsys):
     # 5 - set None
     inv_options.set_tool(inv_options.get_default_tool())
     inv_options.set_tool(None)
-    with pytest.raises(AttributeError):
-        inv_options.tool
+    assert inv_options.tool is None
     # 6 - self-defined tool
     class MyOwnSolver(BaseSolver):
         def __init__(self, inv_problem, inv_options): pass

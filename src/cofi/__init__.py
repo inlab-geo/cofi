@@ -1,8 +1,6 @@
 from .base_problem import BaseProblem
 from .inversion_options import InversionOptions
-from .inversion import Inversion, InversionResult
-
-from . import solvers
+from .inversion import Inversion, InversionResult, SamplingResult
 
 
 try:
@@ -18,4 +16,5 @@ __all__ = [
     "InversionOptions",  # public API, basic usage
     "Inversion",  # public API, basic usage
     "InversionResult",  # public API, for advanced usage (own solver)
+    "SamplingResult",  # public API, for advanced usage (own solver)
 ]

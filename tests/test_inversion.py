@@ -12,7 +12,7 @@ def polynomial_problem():
     _G = np.array([_x ** i for i in range(3)]).T
     _m_true = np.array([2, 1, 1])
     _y = _G @ _m_true
-    inv_problem.set_dataset(_x, _y)
+    inv_problem.set_data(_y)
     inv_problem.set_jacobian(_G)
     inv_problem.set_jacobian_times_vector(lambda m, x: _G @ x)
     inv_problem.set_hessian(_G.T @ _G)

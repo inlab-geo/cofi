@@ -1,17 +1,23 @@
 from typing import Type
 
+import emcee
+import arviz
+
 from . import BaseProblem, InversionOptions
 from .solvers import solver_dispatch_table, BaseSolver
 
 
 class InversionResult:
-    """The result class of an inversion run.
+    r"""The result class of an inversion run.
 
     You won't need to create an object of this class by yourself. See :func:`Inversion.run`
     for how you will get such an instance.
 
-    Currently the only method for ``InversionResult`` is :func:`InversionResult.summary()`.
-    More may be developed in the future.
+    .. seealso::
+
+        When using sampling methods, you get a :class:`SamplingResult` object, with 
+        additional analysis methods attached.
+
     """
 
     #: bool: indicates status of the inversion run
@@ -55,6 +61,79 @@ class InversionResult:
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.success_or_not})"
+
+
+class SamplingResult(InversionResult):
+    """the result class of an inversion run, when the inversion is sampling-based
+
+    This is a subclass of :class:`InversionResult`, so has the full functionality of 
+    it. Additionally, you can convert a :class:`SamplingResult` object into an 
+    :class:`arviz.InferenceData` object so that various plotting functionalities are
+    available from arviz.
+
+    """
+    def __init__(self, res: dict) -> None:
+        super().__init__(res)
+        if "sampler" not in res:
+            raise ValueError(
+                "sampler not found in class SamplingResult, very likely to be a bug on"
+                " our (CoFI) side. Please file an issue at "
+                "https://github.com/inlab-geo/cofi/issues, thanks!"
+            )
+
+    def to_arviz(self, **kwargs):
+        """convert sampler result into an :class:`arviz.InferenceData` object
+
+        Note that this method takes in keyword arguments that matches the 
+        ``arviz.from_<library>`` function. If your results are sampled from emcee,
+        then you can pass in any keyword arguments as described in 
+        :func:`arviz.from_emcee`.
+
+        Returns
+        -------
+        arviz.InferenceData
+            an :class:`arviz.InferenceData` object converted from your sampler
+
+        Raises
+        ------
+        NotImplementedError
+            when sampling result of current type (``type(SamplingResult.sampler)``))
+            cannot be converted into an :class:`arviz.InferenceData`
+        """
+        sampler = self.sampler
+        if sampler is None:
+            raise ValueError(
+                "sampling result is None, please double check that your solver returns"
+                " correctly if you are using your own solver; otherwise please file an"
+                " issue at https://github.com/inlab-geo/cofi/issues, thanks!"
+            )
+        if isinstance(sampler, emcee.EnsembleSampler):
+            if hasattr(self, "blob_names") and self.blob_names and "blob_names" not in kwargs:
+                if "blob_groups" in kwargs:
+                    self.arviz_inference_data = arviz.from_emcee(
+                        sampler,
+                        blob_names=self.blob_names,
+                        **kwargs,
+                    )
+                else:
+                    blobs_groups = [
+                        ("prior" if name == "log_prior" else name) for name in self.blob_names
+                    ]       # "log_prior" isn't in arviz's supported groups, use "prior"
+                    self.arviz_inference_data = arviz.from_emcee(
+                        sampler,
+                        blob_names=self.blob_names,
+                        blob_groups=blobs_groups,
+                        **kwargs,
+                    )
+            else:
+                self.arviz_inference_data = arviz.from_emcee(sampler, **kwargs)
+            return self.arviz_inference_data
+        else:
+            raise NotImplementedError(
+                f"sampling result of type {sampler.__class__.__name__} not supported"
+                " yet, please file an issue at https://github.com/inlab-geo/cofi/issues"
+                ", thanks!"
+            )
 
 
 class Inversion:
@@ -106,6 +185,7 @@ class Inversion:
         self.inv_options = inv_options
         # dispatch inversion_solver from self.inv_options, validation is done by solver
         self.inv_solve = self._dispatch_solver()(inv_problem, inv_options)
+        self.inv_result = None
 
     def run(self) -> InversionResult:
         """Starts the inversion and returns an :class:`InversionResult` object.
@@ -120,7 +200,10 @@ class Inversion:
             minimally. Check :class:`InversionResult` for details.
         """
         res_dict = self.inv_solve()
-        self.inv_result = InversionResult(res_dict)
+        if "sampler" in res_dict:
+            self.inv_result = SamplingResult(res_dict)
+        else:
+            self.inv_result = InversionResult(res_dict)
         return self.inv_result
 
     def _dispatch_solver(self) -> Type[BaseSolver]:
@@ -128,8 +211,8 @@ class Inversion:
         # look up solver_dispatch_table to return constructor for a BaseSolver subclass
         if isinstance(tool, str):
             return solver_dispatch_table[tool]
-        else:  # self-defined BaseSolver (note that a BaseSolver object is a callable)
-            return self.inv_options.tool
+        # self-defined BaseSolver (note that a BaseSolver object is a callable)
+        return self.inv_options.tool
 
     def summary(self):
         r"""Helper method that prints a summary of current ``Inversion`` object
@@ -158,7 +241,7 @@ class Inversion:
         print(double_line)
         print(title)
         print(double_line)
-        if hasattr(self, "inv_result"):
+        if self.inv_result:
             print(f"{subtitle_result}\n")
             self.inv_result._summary(False)
             print(single_line)
@@ -170,6 +253,6 @@ class Inversion:
         print(single_line)
         print(f"{subtitle_problem}\n")
         self.inv_problem._summary(False)
-        if hasattr(self, "inv_result"):
+        if self.inv_result:
             print("List of functions/properties got used by the backend tool:")
             print(self.inv_solve.components_used)

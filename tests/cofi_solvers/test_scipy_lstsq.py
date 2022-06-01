@@ -10,7 +10,7 @@ def test_validate_jac():
     inv_problem = BaseProblem()
     inv_problem.set_jacobian(lambda x: np.array([1, 2, 3]))
     inv_problem.set_hessian(lambda x: x)
-    inv_problem.set_dataset(np.array([1]), np.array([2]))
+    inv_problem.set_data(np.array([2]))
     inv_options = InversionOptions()
     inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
     # 2
@@ -31,7 +31,7 @@ def test_run():
     M = x[:, np.newaxis] ** [0, 2]
     inv_problem = BaseProblem()
     inv_problem.set_jacobian(M)
-    inv_problem.set_dataset(x, y)
+    inv_problem.set_data(y)
     inv_options = InversionOptions()
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()

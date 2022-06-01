@@ -57,8 +57,11 @@ class InversionOptions:
         Solving method: None set
         Use `suggest_solving_methods()` to check available solving methods.
         -----------------------------
-        Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
-        References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
+        Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's
+        linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as
+        backend driver
+        References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html',
+        'https://www.netlib.org/lapack/lug/node27.html']
         Use `suggest_tools()` to check available backend tools.
         -----------------------------
         Solver-specific parameters: None set
@@ -117,7 +120,8 @@ class InversionOptions:
 
     def __init__(self):
         self.hyper_params = {}
-        pass
+        self.tool = None
+        self.method = None
 
     def set_params(self, **kwargs):
         r"""Sets solver-specific parameters
@@ -235,7 +239,7 @@ class InversionOptions:
 
     def unset_solving_method(self):
         """Unsets the chosen solving approach"""
-        del self.method
+        self.method = None
 
     def set_tool(self, tool: Union[str, Type]):
         r"""Sets the tool that will be the backend solver for your inversion problem
@@ -347,10 +351,7 @@ class InversionOptions:
                     " `InversionOptions.suggest_tools()` to see"
                     f" options{_error_msg_suffix}"
                 )
-            elif (
-                hasattr(self, "method")
-                and tool not in solver_suggest_table[self.method]
-            ):
+            if self.method and tool not in solver_suggest_table[self.method]:
                 warnings.warn(
                     f"the tool {tool} is valid but doesn't match the solving method"
                     f" you've selected: {self.method}"
@@ -359,7 +360,7 @@ class InversionOptions:
 
     def unset_tool(self):
         """Unsets the chosen backend tool"""
-        del self.tool
+        self.tool = None
 
     def get_tool(self) -> Union[str, Type]:
         """Get the backend tool chosen so far, or the default tool if not chosen
@@ -370,7 +371,7 @@ class InversionOptions:
             the name of the backend tool (if it's supported by us), or the class name
             of your own solver
         """
-        return self.tool if hasattr(self, "tool") else self.get_default_tool()
+        return self.tool if self.tool else self.get_default_tool()
 
     def get_default_tool(self) -> str:
         """Get the default tool based on the chosen solving method
@@ -380,10 +381,9 @@ class InversionOptions:
         str
             the name of the default backend tool
         """
-        if hasattr(self, "method"):
+        if self.method:
             return solver_suggest_table[self.method][0]
-        else:
-            return solver_suggest_table["optimisation"][0]
+        return solver_suggest_table["optimisation"][0]
 
     def suggest_solving_methods(self):
         """Prints a list of solving methods to choose from
@@ -449,7 +449,7 @@ class InversionOptions:
                 Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver
 
         """
-        if hasattr(self, "method"):
+        if self.method:
             tools = solver_suggest_table[self.method]
             print(
                 "Based on the solving method you've set, the following tools are"
@@ -503,7 +503,7 @@ class InversionOptions:
         """
         tool, dft_suffix = (
             (self.tool, "")
-            if hasattr(self, "tool")
+            if self.tool
             else (f"{self.get_default_tool()}", " (default)")
         )
         solver = solver_dispatch_table[tool]
@@ -567,10 +567,10 @@ class InversionOptions:
         print(title)
         if display_lines:
             print(double_line)
-        solving_method = self.method if hasattr(self, "method") else "None set"
+        solving_method = self.method if self.method else "None set"
         tool, dft_suffix = (
             (self.tool, "")
-            if hasattr(self, "tool")
+            if self.tool
             else (f"{self.get_default_tool()}", " (by default)")
         )
         solver = solver_dispatch_table[tool] if isinstance(tool, str) else tool
@@ -586,8 +586,8 @@ class InversionOptions:
             print(single_line)
         params_suffix = "None set" if len(self.hyper_params) == 0 else ""
         print(f"Solver-specific parameters: {params_suffix}")
-        for k, v in self.hyper_params.items():
-            print(f"{k} = {v}")
+        for key, val in self.hyper_params.items():
+            print(f"{key} = {val}")
         print(
             "Use `suggest_solver_params()` to check required/optional solver-specific"
             " parameters."
@@ -595,10 +595,8 @@ class InversionOptions:
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
-        method = f"'{self.method}'" if hasattr(self, "method") else "unknown"
+        method = f"'{self.method}'" if self.method else "unknown"
         tool = (
-            f"'{self.tool}'"
-            if hasattr(self, "tool")
-            else f"(default)'{self.get_default_tool()}'"
+            f"'{self.tool}'" if self.tool else f"(default)'{self.get_default_tool()}'"
         )
         return f"{class_name}(method={method},tool={tool})"

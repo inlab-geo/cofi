@@ -17,7 +17,7 @@ class ScipyLstSqSolver(BaseSolver):
 
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     components_used: list = []
-    required_in_problem: set = {"jacobian", "dataset"}
+    required_in_problem: set = {"jacobian", "data"}
     optional_in_problem: dict = {}
     required_in_options: set = {}
     optional_in_options: dict = {
@@ -39,16 +39,16 @@ class ScipyLstSqSolver(BaseSolver):
             else:
                 jac_arg = np.ndarray([])
             self._a = inv_problem.jacobian(jac_arg)
-        except:
+        except Exception as exception:
             raise ValueError(
                 "jacobian function isn't set properly for least squares solver, "
                 "this should return a matrix unrelated to model vector"
-            )
-        self._b = inv_problem.data_y
+            ) from exception
+        self._b = inv_problem.data
         self._assign_options()
 
     def __call__(self) -> dict:
-        p, res, rnk, s = lstsq(
+        res_p, residual, rank, singular_vals = lstsq(
             a=self._a,
             b=self._b,
             cond=self._cond,
@@ -59,8 +59,8 @@ class ScipyLstSqSolver(BaseSolver):
         )
         return {
             "success": True,
-            "model": p,
-            "sum of squared residuals": res,
-            "effective rank": rnk,
-            "singular values": s,
+            "model": res_p,
+            "sum of squared residuals": residual,
+            "effective rank": rank,
+            "singular values": singular_vals,
         }

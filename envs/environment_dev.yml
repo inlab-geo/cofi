@@ -25,6 +25,8 @@ dependencies:
   - pybind11
   - scikit-build
   - pytest
+  - emcee
+  - arviz
   - pip
   - pip:
     - coverage[toml]
@@ -38,3 +40,5 @@ dependencies:
     - myst-nb
     - sphinxcontrib-mermaid
     - sphinxemoji
+    - pytest-xdist
+    - sphinx-copybutton

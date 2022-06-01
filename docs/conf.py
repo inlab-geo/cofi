@@ -50,6 +50,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx_panels",
     "sphinx_togglebutton",
+    "sphinx_copybutton",
     # "nbsphinx",
     "sphinx.ext.napoleon",
     "myst_nb",
@@ -78,7 +79,8 @@ add_function_parentheses = False
 # Configuration to include links to other project docs
 intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
-    "numpy": ("https://numpy.org/doc/stable/",None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "arviz": ("https://python.arviz.org/en/latest/", None),
 }
 
 # Disable including boostrap CSS for sphinx_panels since it's already included
@@ -88,11 +90,15 @@ panels_css_variables = {
     "tabs-color-label-inactive": "hsla(231, 99%, 66%, 0.5)",
 }
 
+# settings for the sphinx-copybutton extension
+copybutton_prompt_text = ">>> "
+
 
 # -- Options for HTML output -------------------------------------------------
 html_title = f'{project} <span class="project-version">{version}</span>'
 html_short_title = project
-html_logo = "_static/cofi-logo-removebg.png"
+# html_logo = "_static/cofi-logo-removebg.png"
+html_logo = "_static/latte_art-removebg.png"
 html_favicon = "_static/inlab_logo_60px.png"
 
 html_theme = "sphinx_book_theme"
