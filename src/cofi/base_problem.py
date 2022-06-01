@@ -194,8 +194,8 @@ class BaseProblem:
         BaseProblem.data
         BaseProblem.initial_model
         BaseProblem.model_shape
-        BaseProblem.walkers_starting_pos,
-        BaseProblem.blobs_dtype,
+        BaseProblem.walkers_starting_pos
+        BaseProblem.blobs_dtype
         BaseProblem.bounds
         BaseProblem.constraints
 
@@ -1269,7 +1269,7 @@ class BaseProblem:
         NameError
             when it's not defined (by either :func:`BaseProblem.set_model_shape`,
             :func:`BaseProblem.set_model_shape`, or
-            :func:`BaseProblem.set_walkers_starting_point`)
+            :func:`BaseProblem.set_walkers_starting_pos`)
         """
         if hasattr(self, "_model_shape"):
             return self._model_shape
