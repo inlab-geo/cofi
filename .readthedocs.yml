@@ -9,6 +9,8 @@ build:
   os: ubuntu-20.04
   tools:
     python: "miniconda3-4.7"
+  apt_packages:
+    - librsvg2-bin
 
 formats:
   - pdf
