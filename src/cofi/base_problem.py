@@ -995,12 +995,12 @@ class BaseProblem:
                         " choose from the following:\n{None, 'fro', 'nuc', numpy.inf,"
                         " -numpy.inf} or any positive number"
                     )
-            _reg = _FunctionWrapper(
-                "regularisation", lambda x: np.linalg.norm(x, ord=order)
-            )
+            _reg = lambda x: np.linalg.norm(x, ord=order)
         else:
-            _reg = _FunctionWrapper("regularisation", regularisation, args, kwargs)
-        self.regularisation = lambda m: _reg(m) * lamda
+            _reg = regularisation
+        self.regularisation = _FunctionWrapper(
+            "regularisation", lambda *a,**ka: _reg(*a,**ka) * lamda, args, kwargs
+        )
         self._update_autogen("regularisation")
 
     def set_forward(

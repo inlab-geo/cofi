@@ -56,6 +56,7 @@ extensions = [
     "myst_nb",
     "sphinx_gallery.gen_gallery",
     "sphinxcontrib.mermaid",
+    "sphinxcontrib.rsvgconverter",
     "sphinxemoji.sphinxemoji",
 ]
 

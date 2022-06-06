@@ -33,6 +33,12 @@ div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
     font-size: 0.8rem;
 }
 
+/* HOME: inference tree */
+div.mermaid:not[data-processed] {
+    opacity: 0;
+}
+
+
 /* HOME: panel button */
 .btn-outline-primary:hover {
     color: rgb(51, 125, 222);
