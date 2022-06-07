@@ -82,7 +82,7 @@ This project is led by `the InLab <http://www.inlab.edu.au/>`_.
     **Installation**
     ^^^^^^^^^^^^^^^^^^^
 
-    New to CoFI?
+    🐣 New to CoFI?
 
     .. link-button:: installation
         :type: ref
@@ -94,7 +94,7 @@ This project is led by `the InLab <http://www.inlab.edu.au/>`_.
     **Reference documentation**
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    A list of our functions and classes
+    📑 A list of our functions and classes
 
     .. link-button:: api
         :type: ref
@@ -106,7 +106,7 @@ This project is led by `the InLab <http://www.inlab.edu.au/>`_.
     **Need support?**
     ^^^^^^^^^^^^^^
 
-    Ask in our Slack workspace
+    ❓ Ask in our Slack workspace
 
     .. link-button:: https://inlab-geo.slack.com
         :type: url
@@ -118,7 +118,7 @@ This project is led by `the InLab <http://www.inlab.edu.au/>`_.
     **Contribute to CoFI**
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    Features or bug fixes are always welcomed!
+    🛠 Any forms of contribution are welcomed
 
     .. link-button:: contribute
         :type: ref
@@ -130,7 +130,7 @@ Table of contents
 -----------------
 
 .. toctree::
-    :caption: Getting started
+    :caption: Guides
     :maxdepth: 1
 
     introduction.rst
@@ -147,8 +147,9 @@ Table of contents
     changelog.md
 
 .. toctree::
-    :caption: Developer notes
+    :caption: Development
     :maxdepth: 1
 
     contribute.rst
+    roadmap.md
     license.rst

@@ -138,6 +138,15 @@ sphinx_gallery_conf = {
     "download_all_examples": False,
 }
 
+# -- myst-nb settings ---------------------------------------------------------
+myst_enable_extensions = [
+    "amsmath",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "html_image",
+]
+
 
 # -- Cutomised variables ------------------------------------------------------
 rst_epilog = """
