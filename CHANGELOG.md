@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev4 (07/06/2022)
+
+- bugs fix in `EmceeSolver` and result summary
+
+## v0.1.2.dev3 (06/06/2022)
+
+- bug fixed in `BaseProblem.set_regularisation`
+
 ## v0.1.2.dev2 (03/06/2022)
 
 - Added `emcee` as new solver, with the following new APIs
