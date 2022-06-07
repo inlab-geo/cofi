@@ -31,7 +31,7 @@ class EmceeSolver(BaseSolver):
         {
             k: v.default
             for k, v in _emcee_EnsembleSampler_sample_args.items()
-            if k not in {"initial_state", "iterations"}
+            if k not in {"initial_state", "iterations", "self"}
         }
     )
 

@@ -57,7 +57,10 @@ class InversionResult:
             print(single_line)
         for key, val in self.res.items():
             if key != "success":
-                print(f"{key}: {val}")
+                if key == "sampler":
+                    print(f"{key}: <{val.__module__}.{val.__class__.__name__} object>")
+                else:
+                    print(f"{key}: {val}")
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.success_or_not})"
