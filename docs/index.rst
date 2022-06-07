@@ -133,8 +133,9 @@ Table of contents
     :caption: Getting started
     :maxdepth: 1
 
+    introduction.rst
     installation.rst
-    tutorial.rst
+    tutorials/index.rst
     cofi-examples/generated/index.rst
     faq.rst
 

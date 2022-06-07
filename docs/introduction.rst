@@ -1,12 +1,8 @@
-*********
-Tutorials
-*********
+*************
+Intro to CoFI
+*************
 
 This page contains explanation about concepts in CoFI and the basic usage.
-
-Furthermore, we provide guidance over how to define a more general and flexible
-problem, as well as how to plug in your own solvers in the
-:ref:`Advanced usage <advanced_usage>` section.
 
 
 Basic concepts
@@ -69,14 +65,3 @@ So a common workflow includes 4 steps:
     result = inv.run()
    
 4. analyse the result, workflow and redo your experiments with different :code:`InversionOptions`
-
-
-.. _advanced_usage:
-
-Advanced usage
-==============
-
-Define your own solver
-----------------------
-
-

@@ -31,7 +31,7 @@ def run_autogen(_):
 
 def setup(app):
     app.connect("builder-inited", run_autogen)
-    app.registry.source_suffix.pop(".ipynb", None)      # Ignore .ipynb files
+    # app.registry.source_suffix.pop(".ipynb", None)      # Ignore .ipynb files
 
 
 # -- Project information -----------------------------------------------------
@@ -69,6 +69,12 @@ exclude_patterns = [
     "README.md",
     "cofi-examples/*.md",
     "cofi-examples/scripts/README.rst",
+    "cofi-examples/utils",
+    "cofi-examples/notebooks",
+    "cofi-examples/index.ipynb",
+    "cofi-examples/generated/*.md5",
+    "cofi-examples/generated/*.ipynb",
+    "cofi-examples/generated/*.py",
 ]
 
 source_suffix = ".rst"
