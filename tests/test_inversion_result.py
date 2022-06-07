@@ -27,6 +27,13 @@ def test_success_status():
     res = InversionResult({"success": 0})
     assert res.success_or_not == "failure"
 
+def test_summary(capsys):
+    res = SamplingResult({"success": True, "sampler": emcee.EnsembleSampler(32,4,lambda x:x)})
+    res.summary()
+    console_output = capsys.readouterr().out
+    assert "0x" not in console_output
+    assert "emcee.ensemble.EnsembleSampler" in console_output
+
 def test_to_arviz():
     # 1 - None sampler
     res = SamplingResult({"success": True, "sampler": None})
