@@ -145,6 +145,7 @@ class BaseProblem:
         BaseProblem.set_forward
         BaseProblem.set_data
         BaseProblem.set_data_covariance
+        BaseProblem.set_data_covariance_inv
         BaseProblem.set_data_from_file
         BaseProblem.set_initial_model
         BaseProblem.set_model_shape
@@ -194,6 +195,7 @@ class BaseProblem:
         BaseProblem.name
         BaseProblem.data
         BaseProblem.data_covariance
+        BaseProblem.data_covariance_inv
         BaseProblem.initial_model
         BaseProblem.model_shape
         BaseProblem.walkers_starting_pos
@@ -222,6 +224,7 @@ class BaseProblem:
         "forward",
         "data",
         "data_covariance",
+        "data_covariance_inv",
         "initial_model",
         "model_shape",
         "walkers_starting_pos",
@@ -1026,7 +1029,7 @@ class BaseProblem:
         self.forward = _FunctionWrapper("forward", forward, args, kwargs)
         self._update_autogen("forward")
 
-    def set_data(self, data_obs: np.ndarray, data_cov: np.ndarray = None):
+    def set_data(self, data_obs: np.ndarray, data_cov: np.ndarray = None, data_cov_inv: np.ndarray = None):
         """Sets the data observations and optionally data covariance matrix
 
         Parameters
@@ -1041,6 +1044,8 @@ class BaseProblem:
         self._update_autogen("data")
         if data_cov is not None:
             self.set_data_covariance(data_cov)
+        if data_cov_inv is not None:
+            self.set_data_covariance_inv(data_cov_inv)
 
     def set_data_covariance(self, data_cov: np.ndarray):
         """Sets the data covariance matrix to help estimate uncertainty
@@ -1053,6 +1058,18 @@ class BaseProblem:
         """
         self._data_covariance = data_cov
         self._update_autogen("data_covariance")
+
+    def set_data_covariance_inv(self, data_cov_inv: np.ndarray):
+        """Sets the data covariance matrix to help estimate uncertainty
+
+        Parameters
+        ----------
+        data_cov : np.ndarray
+            the data covariance matrix, with dimension (N,N) where N is the number 
+            of data points
+        """
+        self._data_covariance_inv = data_cov_inv
+        self._update_autogen("data_covariance_inv")
 
     def set_data_from_file(self, file_path, obs_idx=-1, data_cov: np.ndarray=None):
         r"""Sets the data for this problem from a give file path
@@ -1284,6 +1301,24 @@ class BaseProblem:
         )
 
     @property
+    def data_covariance_inv(self) -> np.ndarray:
+        """the data covariance matrix, set by :func:`BaseProblem.set_data_covariance_inv`,
+        :func:`BaseProblem.set_data` or :func:`BaseProblem.set_data_from_file`.
+
+        Raises
+        ------
+        NameError
+            when it's not defined by methods above
+        """
+        if hasattr(self, "_data_covariance_inv"):
+            return self._data_covariance_inv
+        raise NameError(
+            "data covariance inv has not been set, please use either "
+            "`set_data_covariance_inv()`, `set_data()`, or `set_data_from_file()` to add "
+            "data covariance to the problem setup"
+        )
+
+    @property
     def initial_model(self) -> np.ndarray:
         r"""the initial model, needed for some iterative optimisation tools that
         requires a starting point
@@ -1472,6 +1507,16 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.data_covariance` has been defined"""
         try:
             self.data_covariance
+        except NameError:
+            return False
+        else:
+            return True
+
+    @property
+    def data_covariance_inv_defined(self) -> bool:
+        r"""indicates whether :func:`BaseProblem.data_covariance_inv` has been defined"""
+        try:
+            self.data_covariance_inv
         except NameError:
             return False
         else:
