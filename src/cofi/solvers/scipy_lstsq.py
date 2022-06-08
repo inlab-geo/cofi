@@ -18,11 +18,12 @@ class ScipyLstSqSolver(BaseSolver):
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     components_used: list = []
     required_in_problem: set = {"jacobian", "data"}
-    optional_in_problem: dict = {}
+    optional_in_problem: dict = {"data_covariance_inv": None, "data_covariance": None}
     required_in_options: set = {}
     optional_in_options: dict = {
         k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
     }
+    optional_in_options["with_uncertainty_if_possible"] = True
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -30,6 +31,8 @@ class ScipyLstSqSolver(BaseSolver):
         self._assign_args()
 
     def _assign_args(self):
+        self._assign_options()
+        
         inv_problem = self.inv_problem
         try:  # to get jacobian matrix (presumably jacobian is a constant)
             if inv_problem.initial_model_defined:
@@ -45,7 +48,21 @@ class ScipyLstSqSolver(BaseSolver):
                 "this should return a matrix unrelated to model vector"
             ) from exception
         self._b = inv_problem.data
-        self._assign_options()
+
+        # taking uncertainty into account, if possible
+        self._with_uncertainty = self._with_uncertainty_if_possible and \
+            (inv_problem.data_covariance_defined or inv_problem.data_covariance_inv_defined)
+        if self._with_uncertainty:
+            if not inv_problem.data_covariance_inv_defined:
+                data_cov_inv = np.linalg.inv(inv_problem.data_covariance)
+            else:
+                data_cov_inv = inv_problem.data_covariance_inv
+            jac = self._a
+            d_obs = self._b
+            gt_cdinv = jac.T @ data_cov_inv
+            self._a = gt_cdinv @ jac
+            self._b = gt_cdinv @ d_obs
+
 
     def __call__(self) -> dict:
         res_p, residual, rank, singular_vals = lstsq(
@@ -57,10 +74,13 @@ class ScipyLstSqSolver(BaseSolver):
             check_finite=self._check_finite,
             lapack_driver=self._lapack_driver,
         )
-        return {
-            "success": True,
-            "model": res_p,
-            "sum of squared residuals": residual,
-            "effective rank": rank,
-            "singular values": singular_vals,
-        }
+        res = {
+                "success": True,
+                "model": res_p,
+                "sum of squared residuals": residual,
+                "effective rank": rank,
+                "singular values": singular_vals,
+            }
+        if self._with_uncertainty:
+            res["model covariance"] = np.linalg.inv(self._a)
+        return res

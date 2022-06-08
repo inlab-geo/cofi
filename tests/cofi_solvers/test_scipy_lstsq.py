@@ -36,3 +36,27 @@ def test_run():
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
+
+
+def test_uncertainty():
+    x = np.array([1, 2.5, 3.5, 4, 5, 7, 8.5])
+    y = np.array([0.3, 1.1, 1.5, 2.0, 3.2, 6.6, 8.6])
+    M = x[:, np.newaxis] ** [0, 2]
+    Cdinv = np.diag(np.ones((7,)))
+    inv_problem = BaseProblem()
+    inv_problem.set_jacobian(M)
+    inv_problem.set_data(y)
+    # 1
+    inv_problem.set_data_covariance(Cdinv)
+    inv_options = InversionOptions()
+    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    res = solver()
+    assert res["success"]
+    assert "model covariance" in res
+    # 2
+    inv_problem.set_data_covariance_inv(Cdinv)
+    inv_options = InversionOptions()
+    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    res = solver()
+    assert res["success"]
+    assert "model covariance" in res
