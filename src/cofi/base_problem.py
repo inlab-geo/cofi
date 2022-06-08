@@ -61,7 +61,7 @@ class BaseProblem:
           - `linear regression (linear system solver) <https://github.com/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression_linear_system_solver.py>`_
         * - ``log_prior``, ``log_likelihood``
           - ``log_posterior``
-          - (work in progress)
+          - `linear regression (sampler) <https://github.com/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression_emcee_sampler.py>`_
 
 
     .. admonition:: One quick example of BaseProblem
