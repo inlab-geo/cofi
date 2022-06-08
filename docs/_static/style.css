@@ -34,7 +34,7 @@ div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
 }
 
 /* HOME: inference tree */
-div.mermaid:not[data-processed] {
+div.mermaid:not([data-processed]) {
     opacity: 0;
 }
 div.mermaid {
