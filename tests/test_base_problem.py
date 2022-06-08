@@ -59,6 +59,8 @@ def test_non_set():
     with pytest.raises(NameError):
         inv_problem.data
     with pytest.raises(NameError):
+        inv_problem.data_covariance
+    with pytest.raises(NameError):
         inv_problem.initial_model
     with pytest.raises(NameError):
         inv_problem.model_shape
@@ -89,6 +91,7 @@ def test_non_set():
     assert not inv_problem.regularisation_defined
     assert not inv_problem.forward_defined
     assert not inv_problem.data_defined
+    assert not inv_problem.data_covariance_defined
     assert not inv_problem.initial_model_defined
     assert not inv_problem.model_shape_defined
     assert not inv_problem.bounds_defined
@@ -365,6 +368,15 @@ def test_check_defined():
         inv_problem.set_model_shape((2, 1))
     inv_problem.set_model_shape((3, 1))
 
+
+def test_set_data():
+    inv_problem = BaseProblem()
+    inv_problem.set_data(np.ones((2,1)), np.zeros((2,2)))
+    assert inv_problem.data_defined
+    assert inv_problem.data_covariance_defined
+    inv_problem.set_data_covariance(np.ones((2,2)))
+    assert inv_problem.data_covariance_defined
+    assert inv_problem.data_covariance[0,0] == 1
 
 ############### TEST suggest_solvers ##################################################
 def test_suggest_solvers(capsys):
