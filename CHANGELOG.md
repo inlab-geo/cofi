@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev5 (09/06/2022)
+
+- `BaseProblem.set_data_covariance` and more general linear system solver
+
 ## v0.1.2.dev4 (07/06/2022)
 
 - bugs fix in `EmceeSolver` and result summary
