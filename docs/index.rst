@@ -13,7 +13,7 @@ CoFI (**Co**\ mmon **F**\ ramework for **I**\ nference) is an open-source
 initiative for interfacing between generic inference algorithms and specific 
 geoscience problems.
 
-This project is led by `the InLab <http://www.inlab.edu.au/>`_.
+This project is led by `InLab <http://www.inlab.edu.au/>`_.
 
 .. With a mission to bridge the gap between the domain expertise and the 
 .. inference expertise, this Python package provides an interface across a 
@@ -40,7 +40,7 @@ This project is led by `the InLab <http://www.inlab.edu.au/>`_.
         ng_solverlist(Nested grids <br> ...):::cls_solvers;
         bs(Bayesian Sampling):::cls_ensemble_methods;
         mcmc(McMC samplers):::cls_ensemble_methods;
-        mcmc_solverlist(emcee <br> pyMC4 <br> ...):::cls_solvers;
+        mcmc_solverlist(emcee <br> pyMC <br> ...):::cls_solvers;
         rjmcmc(Reversible jump McMC):::cls_ensemble_methods;
         rjmcmc_solverlist(RJ-mcmc):::cls_solvers;
 
