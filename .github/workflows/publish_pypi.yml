@@ -14,17 +14,17 @@ on:
       - "src/cofi/_version.py"
 
 jobs:
-  if_merged:
-    if: ${{ (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || (github.event_name == 'workflow_dispatch') }}
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
-        echo The PR was merged
+  # if_merged:
+  #   if: ${{ (github.event_name == 'pull_request' && github.event.pull_request.merged == true) || (github.event_name == 'workflow_dispatch') }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - run: |
+  #       echo The PR was merged
 
   ######################## SOURCE DISTRIBUTION #########################
   build_sdist:
     name: Build source distribution
-    needs: if_merged
+    # needs: if_merged
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -51,7 +51,7 @@ jobs:
   ######################## BINARY DISTRIBUTION #########################
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
-    needs: if_merged
+    # needs: if_merged
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
