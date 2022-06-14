@@ -231,7 +231,6 @@ class BaseSolver(metaclass=ABCMeta):
         for opt in self.required_in_options:
             setattr(self, f"_{opt}", params[opt])
         for opt, val in self.optional_in_options.items():
-            print(opt)
             setattr(
                 self,
                 f"_{opt}",
