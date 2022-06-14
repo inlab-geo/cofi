@@ -10,7 +10,8 @@
 [![Slack](https://img.shields.io/badge/Slack-inlab-4A154B?logo=slack&style=flat-square&color=cdb4db)](https://inlab-geo.slack.com)
 <!-- [![Wheels](https://img.shields.io/pypi/wheel/cofi)](https://pypi.org/project/cofi/) -->
 
-graph TD
+```mermaid
+graph TD;
 
     cofi(CoFI - Common Framework for Inference):::cls_cofi;
     parameter_estimation(Parameter estimation):::cls_parameter_estimation;
@@ -52,11 +53,11 @@ graph TD
     bs --> rjmcmc;
     rjmcmc -.- rjmcmc_solverlist;
 
-    classDef cls_cofi fill:#f0ead2, stroke-width:0;
-    classDef cls_parameter_estimation fill:#e1eff6, stroke-width:0;
-    classDef cls_ensemble_methods fill:#e9edc9, stroke-width:0;
-    classDef cls_solvers fill:#eae4e9, stroke-width:0;
-
+classDef cls_cofi fill:#f0ead2, stroke-width:0;
+classDef cls_parameter_estimation fill:#e1eff6, stroke-width:0;
+classDef cls_ensemble_methods fill:#e9edc9, stroke-width:0;
+classDef cls_solvers fill:#eae4e9, stroke-width:0;
+```
 
 # Introduction
 
