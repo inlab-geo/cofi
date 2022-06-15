@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev6 (15/06/2022)
+
+- bug fix in `BaseSolver._assign_options`
+- `BaseProblem.model_covariance_inv` and `BaseProblem.model_covariance`
+
 ## v0.1.2.dev5 (09/06/2022)
 
 - `BaseProblem.set_data_covariance` and more general linear system solver

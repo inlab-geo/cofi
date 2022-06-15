@@ -196,6 +196,8 @@ class BaseProblem:
         BaseProblem.data
         BaseProblem.data_covariance
         BaseProblem.data_covariance_inv
+        BaseProblem.model_covariance
+        BaseProblem.model_covariance_inv
         BaseProblem.initial_model
         BaseProblem.model_shape
         BaseProblem.walkers_starting_pos
@@ -1678,6 +1680,16 @@ class BaseProblem:
         raise ValueError(
             "insufficient information provided to calculate mean squared error"
         )
+
+    # ---------- Extra inforamtion inferred, not generally used by solvers -----------
+    def model_covariance(self, model: np.ndarray):
+        C_minv = self.model_covariance_inv(model)
+        return np.linalg.inv(C_minv)
+
+    def model_covariance_inv(self, model: np.ndarray):
+        G = self.jacobian(model)
+        C_dinv = self.data_covariance_inv
+        return G.T @ C_dinv @ G
 
     def summary(self):
         r"""Helper method that prints a summary of current ``BaseProblem`` object to
