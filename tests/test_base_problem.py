@@ -436,3 +436,15 @@ def test_not_overwriting_by_autogen():
     assert inv_problem.log_posterior(1) == 4
     inv_problem.set_log_prior(lambda _: 5)
     assert inv_problem.log_posterior(1) == 4
+
+
+############### TEST model covariance #################################################
+def test_model_cov():
+    inv_problem = BaseProblem()
+    sigma = 1.0
+    Cdinv = np.eye(100)/(sigma**2)
+    inv_problem.set_data_covariance_inv(Cdinv)
+    with pytest.raises(NotImplementedError, match=r".*`jacobian` is required.*"):
+        inv_problem.model_covariance_inv(None)
+    inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
+    inv_problem.model_covariance(None)

@@ -1669,6 +1669,7 @@ class BaseProblem:
     # ---------- Extra inforamtion inferred, not generally used by solvers -----------
     def model_covariance(self, model: np.ndarray):
         C_minv = self.model_covariance_inv(model)
+        print(C_minv)
         return np.linalg.inv(C_minv)
 
     def model_covariance_inv(self, model: np.ndarray):
