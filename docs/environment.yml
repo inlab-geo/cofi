@@ -4,6 +4,7 @@ dependencies:
   - conda-forge::gfortran=11.2.0
   # - scipy>=1.7.0
   - matplotlib>=3.5.0
+  - pygimli>=1.2
   - pip
   - pip:
     - scipy>=1.7.3
