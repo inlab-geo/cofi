@@ -45,8 +45,8 @@ class EmceeSolver(BaseSolver):
             log_prob_fn=self._log_prob_fn,
             pool=self._pool,
             moves=self._moves,
-            args=None,          # already handled by BaseProblem
-            kwargs=None,        # already handled by BaseProblem
+            args=None,  # already handled by BaseProblem
+            kwargs=None,  # already handled by BaseProblem
             backend=self._backend,
             vectorize=self._vectorize,
             blobs_dtype=self._blobs_dtype,
@@ -97,6 +97,6 @@ class EmceeSolver(BaseSolver):
         result = {
             "success": True,
             "sampler": self.sampler,
-            "blob_names": self._blob_names
+            "blob_names": self._blob_names,
         }
         return result

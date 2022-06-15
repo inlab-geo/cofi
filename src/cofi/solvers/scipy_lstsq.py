@@ -32,7 +32,7 @@ class ScipyLstSqSolver(BaseSolver):
 
     def _assign_args(self):
         self._assign_options()
-        
+
         inv_problem = self.inv_problem
         try:  # to get jacobian matrix (presumably jacobian is a constant)
             if inv_problem.initial_model_defined:
@@ -50,8 +50,10 @@ class ScipyLstSqSolver(BaseSolver):
         self._b = inv_problem.data
 
         # taking uncertainty into account, if possible
-        self._with_uncertainty = self._with_uncertainty_if_possible and \
-            (inv_problem.data_covariance_defined or inv_problem.data_covariance_inv_defined)
+        self._with_uncertainty = self._with_uncertainty_if_possible and (
+            inv_problem.data_covariance_defined
+            or inv_problem.data_covariance_inv_defined
+        )
         if self._with_uncertainty:
             if not inv_problem.data_covariance_inv_defined:
                 data_cov_inv = np.linalg.inv(inv_problem.data_covariance)
@@ -62,7 +64,6 @@ class ScipyLstSqSolver(BaseSolver):
             gt_cdinv = jac.T @ data_cov_inv
             self._a = gt_cdinv @ jac
             self._b = gt_cdinv @ d_obs
-
 
     def __call__(self) -> dict:
         res_p, residual, rank, singular_vals = lstsq(
@@ -75,12 +76,12 @@ class ScipyLstSqSolver(BaseSolver):
             lapack_driver=self._lapack_driver,
         )
         res = {
-                "success": True,
-                "model": res_p,
-                "sum of squared residuals": residual,
-                "effective rank": rank,
-                "singular values": singular_vals,
-            }
+            "success": True,
+            "model": res_p,
+            "sum of squared residuals": residual,
+            "effective rank": rank,
+            "singular values": singular_vals,
+        }
         if self._with_uncertainty:
             res["model covariance"] = np.linalg.inv(self._a)
         return res

@@ -196,6 +196,8 @@ class BaseProblem:
         BaseProblem.data
         BaseProblem.data_covariance
         BaseProblem.data_covariance_inv
+        BaseProblem.model_covariance
+        BaseProblem.model_covariance_inv
         BaseProblem.initial_model
         BaseProblem.model_shape
         BaseProblem.walkers_starting_pos
@@ -279,12 +281,14 @@ class BaseProblem:
             " implemented or added it to the problem setup"
         )
 
-    def log_posterior_with_blobs(self, model: np.ndarray, *args, **kwargs) -> Tuple[Number]:
-        """Method for computing the log of posterior probability density and related 
+    def log_posterior_with_blobs(
+        self, model: np.ndarray, *args, **kwargs
+    ) -> Tuple[Number]:
+        """Method for computing the log of posterior probability density and related
         information given a model
 
-        The "related information" can be defined by you 
-        (via :func:`BaseProblem.set_log_posterior_with_blobs`), but they will only be 
+        The "related information" can be defined by you
+        (via :func:`BaseProblem.set_log_posterior_with_blobs`), but they will only be
         stored properly when you perform sampling with ``emcee``.
 
         Parameters
@@ -626,32 +630,32 @@ class BaseProblem:
         args=None,
         kwargs=None,
     ):
-        r"""Sets the function that computes the log of posterior prabability density 
+        r"""Sets the function that computes the log of posterior prabability density
         and returns extra information along with log posterior
 
-        The extra blobs returned will only get used when you are using ``emcee`` to 
-        sample the posterior distribution. Check 
+        The extra blobs returned will only get used when you are using ``emcee`` to
+        sample the posterior distribution. Check
         `this emcee documentation page <https://emcee.readthedocs.io/en/stable/user/blobs/>`_
         to understand what blobs are.
 
-        If you use other backend samplers, you can still set ``log_posterior`` using 
+        If you use other backend samplers, you can still set ``log_posterior`` using
         this function, and we will generate :func:`BaseProblem.log_posterior` to return
         only the first output from :func:`BaseProblem.log_posterior_with_blobs`.
 
         This method is also generated automatically by us if you've defined both
-        :func:`BaseProblem.log_prior` and :func:`BaseProblem.log_likelihood`. In that 
-        case, the ``blobs_dtype`` is set to be 
+        :func:`BaseProblem.log_prior` and :func:`BaseProblem.log_likelihood`. In that
+        case, the ``blobs_dtype`` is set to be
         ``[("log_likelihood", float), ("log_prior", float)]``.
 
         Parameters
         ----------
         log_posterior_blobs_func : Callable[[np.ndarray], Tuple[Number]
-            the log_posterior_with_blobs function that matches 
+            the log_posterior_with_blobs function that matches
             :func:`BaseProblem.log_posterior_blobs_func` in signature
         blobs_dtype : list, optional
-            a list of tuples that specify the names and type of the blobs, e.g. 
-            ``[("log_likelihood", float), ("log_prior", float)]``. If not set, the 
-            blobs will still be recorded during sampling in the order they are 
+            a list of tuples that specify the names and type of the blobs, e.g.
+            ``[("log_likelihood", float), ("log_prior", float)]``. If not set, the
+            blobs will still be recorded during sampling in the order they are
             returned from :func:`BaseProblem.log_posterior_blobs_func`
         args : list, optional
             extra list of positional arguments for log_posterior function
@@ -664,19 +668,19 @@ class BaseProblem:
         self._update_autogen("log_posterior_with_blobs")
         if blobs_dtype:
             self._blobs_dtype = blobs_dtype
-    
+
     def set_blobs_dtype(self, blobs_dtype: list):
         r"""Sets the name and type for the extra information you'd like to calculate on
         each sampling step
 
-        This only gets used when you are using ``emcee`` to sample the posterior 
+        This only gets used when you are using ``emcee`` to sample the posterior
         distribution. Check `this emcee documentation page <https://emcee.readthedocs.io/en/stable/user/blobs/>`_
         to understand what blobs are.
 
         Parameters
         ----------
         blobs_dtype : list
-            a list of tuples that specify the names and type of the blobs, e.g. 
+            a list of tuples that specify the names and type of the blobs, e.g.
             ``[("log_likelihood", float), ("log_prior", float)]``
         """
         self._blobs_dtype = blobs_dtype
@@ -1005,7 +1009,7 @@ class BaseProblem:
         else:
             _reg = regularisation
         self.regularisation = _FunctionWrapper(
-            "regularisation", lambda *a,**ka: _reg(*a,**ka) * lamda, args, kwargs
+            "regularisation", lambda *a, **ka: _reg(*a, **ka) * lamda, args, kwargs
         )
         self._update_autogen("regularisation")
 
@@ -1029,7 +1033,12 @@ class BaseProblem:
         self.forward = _FunctionWrapper("forward", forward, args, kwargs)
         self._update_autogen("forward")
 
-    def set_data(self, data_obs: np.ndarray, data_cov: np.ndarray = None, data_cov_inv: np.ndarray = None):
+    def set_data(
+        self,
+        data_obs: np.ndarray,
+        data_cov: np.ndarray = None,
+        data_cov_inv: np.ndarray = None,
+    ):
         """Sets the data observations and optionally data covariance matrix
 
         Parameters
@@ -1053,7 +1062,7 @@ class BaseProblem:
         Parameters
         ----------
         data_cov : np.ndarray
-            the data covariance matrix, with dimension (N,N) where N is the number 
+            the data covariance matrix, with dimension (N,N) where N is the number
             of data points
         """
         self._data_covariance = data_cov
@@ -1065,13 +1074,13 @@ class BaseProblem:
         Parameters
         ----------
         data_cov : np.ndarray
-            the data covariance matrix, with dimension (N,N) where N is the number 
+            the data covariance matrix, with dimension (N,N) where N is the number
             of data points
         """
         self._data_covariance_inv = data_cov_inv
         self._update_autogen("data_covariance_inv")
 
-    def set_data_from_file(self, file_path, obs_idx=-1, data_cov: np.ndarray=None):
+    def set_data_from_file(self, file_path, obs_idx=-1, data_cov: np.ndarray = None):
         r"""Sets the data for this problem from a give file path
 
         This function uses :func:`numpy.loadtxt` or :func:`numpy.load` to read
@@ -1148,9 +1157,9 @@ class BaseProblem:
         Parameters
         ----------
         starting_pos : np.ndarray
-            starting positions, with the shape ``(nwalkers, ndims)``, where 
+            starting positions, with the shape ``(nwalkers, ndims)``, where
             ``nwalkers`` is the number of walkers you plan to use for the sampler, and
-            ``ndims`` is the dimension of your model parameters (for fixed dimension 
+            ``ndims`` is the dimension of your model parameters (for fixed dimension
             samplers)
         """
         self._walkers_starting_pos = starting_pos
@@ -1295,9 +1304,9 @@ class BaseProblem:
         if hasattr(self, "_data_covariance"):
             return self._data_covariance
         raise NameError(
-            "data covariance has not been set, please use either `set_data_covariance()`"
-            ", `set_data()`, or `set_data_from_file()` to add data covariance to the"
-            " problem setup"
+            "data covariance has not been set, please use either"
+            " `set_data_covariance()`, `set_data()`, or `set_data_from_file()` to add"
+            " data covariance to the problem setup"
         )
 
     @property
@@ -1313,9 +1322,9 @@ class BaseProblem:
         if hasattr(self, "_data_covariance_inv"):
             return self._data_covariance_inv
         raise NameError(
-            "data covariance inv has not been set, please use either "
-            "`set_data_covariance_inv()`, `set_data()`, or `set_data_from_file()` to add "
-            "data covariance to the problem setup"
+            "data covariance inv has not been set, please use either"
+            " `set_data_covariance_inv()`, `set_data()`, or `set_data_from_file()` to"
+            " add data covariance to the problem setup"
         )
 
     @property
@@ -1371,9 +1380,9 @@ class BaseProblem:
 
     @property
     def blobs_dtype(self) -> list:
-        r"""the name and type for the blobs that 
+        r"""the name and type for the blobs that
         :func:`BaseProblem.log_posterior_with_blobs` will return
-        
+
         Raises
         ------
         NameError
@@ -1432,7 +1441,7 @@ class BaseProblem:
 
     @property
     def log_posterior_with_blobs_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.log_posterior_with_blobs` has been 
+        r"""indicates whether :func:`BaseProblem.log_posterior_with_blobs` has been
         defined
         """
         return self._check_defined(self.log_posterior_with_blobs)
@@ -1612,12 +1621,12 @@ class BaseProblem:
         ("log_likelihood", "log_prior",): (
             "log_posterior_with_blobs",
             lambda loglike, logprior: (
-                lambda m: (loglike(m)+logprior(m), loglike(m), logprior(m))
+                lambda m: (loglike(m) + logprior(m), loglike(m), logprior(m))
             ),
         ),
         ("log_posterior_with_blobs",): (
             "log_posterior",
-            lambda log_pos_blobs: (lambda m: log_pos_blobs(m)[0])
+            lambda log_pos_blobs: (lambda m: log_pos_blobs(m)[0]),
         ),
         ("hessian",): (
             "hessian_times_vector",
@@ -1652,9 +1661,23 @@ class BaseProblem:
                 )
                 setattr(self, to_update, new_func)
                 if to_update == "log_posterior_with_blobs":
-                    self.set_blobs_dtype([("log_likelihood", float), ("log_prior", float)])
+                    self.set_blobs_dtype(
+                        [("log_likelihood", float), ("log_prior", float)]
+                    )
                 self._update_autogen(to_update)
 
+    # ---------- Extra inforamtion inferred, not generally used by solvers -----------
+    def model_covariance(self, model: np.ndarray):
+        C_minv = self.model_covariance_inv(model)
+        print(C_minv)
+        return np.linalg.inv(C_minv)
+
+    def model_covariance_inv(self, model: np.ndarray):
+        G = self.jacobian(model)
+        C_dinv = self.data_covariance_inv
+        return G.T @ C_dinv @ G
+
+    # ---------- Display related ------------------------------------------------------
     @property
     def name(self) -> str:
         """Name of the current BaseProblem object, for display purposes, no actual
