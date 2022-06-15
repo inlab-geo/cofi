@@ -4,10 +4,10 @@ dependencies:
   # - conda-forge::gfortran=11.2.0
   # - scipy>=1.7.0
   - matplotlib>=3.5.0
-  - gimli::pygimli>=1.2
+  - gimli::pygimli
   - pip
   - pip:
-    - scipy>=1.7.3
+    - scipy>=1.0.0
     - sphinx-book-theme==0.3.2
     - sphinx-panels==0.6.0
     - nbsphinx==0.8.8
@@ -19,4 +19,3 @@ dependencies:
     - sphinxemoji==0.2.0
     - sphinx-copybutton==0.5.0
     - sphinxcontrib-svg2pdfconverter==1.2.0
-    - watermark==2.3.1
