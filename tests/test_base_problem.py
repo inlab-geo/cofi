@@ -437,6 +437,12 @@ def test_not_overwriting_by_autogen():
     inv_problem.set_log_prior(lambda _: 5)
     assert inv_problem.log_posterior(1) == 4
 
+def test_set_reg_with_args():
+    inv_problem = BaseProblem()
+    from scipy.sparse import csr_matrix
+    A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
+    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, lamda=2, args=(A))
+    inv_problem.regularisation(np.array([1,2,3]))
 
 ############### TEST model covariance #################################################
 def test_model_cov():

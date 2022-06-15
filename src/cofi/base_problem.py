@@ -1007,9 +1007,9 @@ class BaseProblem:
                     )
             _reg = lambda x: np.linalg.norm(x, ord=order)
         else:
-            _reg = regularisation
+            _reg = _FunctionWrapper("regularisation_none_lamda", regularisation, args, kwargs)
         self.regularisation = _FunctionWrapper(
-            "regularisation", lambda *a, **ka: _reg(*a, **ka) * lamda, args, kwargs
+            "regularisation", lambda model: (_reg(model) * lamda),
         )
         self._update_autogen("regularisation")
 
