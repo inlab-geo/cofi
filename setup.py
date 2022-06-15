@@ -38,7 +38,7 @@ AUTHOR = "InLab, CoFI development team"
 DESCRIPTION = "Common Framework for Inference"
 KEYWORDS = ["inversion", "inference", "python package", "geoscience", "geophysics"]
 CLASSIFIERS = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 2 - Pre-Alpha",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
     "Programming Language :: Python",
