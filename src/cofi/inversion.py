@@ -15,7 +15,7 @@ class InversionResult:
 
     .. seealso::
 
-        When using sampling methods, you get a :class:`SamplingResult` object, with 
+        When using sampling methods, you get a :class:`SamplingResult` object, with
         additional analysis methods attached.
 
     """
@@ -69,12 +69,13 @@ class InversionResult:
 class SamplingResult(InversionResult):
     """the result class of an inversion run, when the inversion is sampling-based
 
-    This is a subclass of :class:`InversionResult`, so has the full functionality of 
-    it. Additionally, you can convert a :class:`SamplingResult` object into an 
+    This is a subclass of :class:`InversionResult`, so has the full functionality of
+    it. Additionally, you can convert a :class:`SamplingResult` object into an
     :class:`arviz.InferenceData` object so that various plotting functionalities are
     available from arviz.
 
     """
+
     def __init__(self, res: dict) -> None:
         super().__init__(res)
         if "sampler" not in res:
@@ -87,9 +88,9 @@ class SamplingResult(InversionResult):
     def to_arviz(self, **kwargs):
         """convert sampler result into an :class:`arviz.InferenceData` object
 
-        Note that this method takes in keyword arguments that matches the 
+        Note that this method takes in keyword arguments that matches the
         ``arviz.from_<library>`` function. If your results are sampled from emcee,
-        then you can pass in any keyword arguments as described in 
+        then you can pass in any keyword arguments as described in
         :func:`arviz.from_emcee`.
 
         Returns
@@ -111,7 +112,11 @@ class SamplingResult(InversionResult):
                 " issue at https://github.com/inlab-geo/cofi/issues, thanks!"
             )
         if isinstance(sampler, emcee.EnsembleSampler):
-            if hasattr(self, "blob_names") and self.blob_names and "blob_names" not in kwargs:
+            if (
+                hasattr(self, "blob_names")
+                and self.blob_names
+                and "blob_names" not in kwargs
+            ):
                 if "blob_groups" in kwargs:
                     self.arviz_inference_data = arviz.from_emcee(
                         sampler,
@@ -120,8 +125,9 @@ class SamplingResult(InversionResult):
                     )
                 else:
                     blobs_groups = [
-                        ("prior" if name == "log_prior" else name) for name in self.blob_names
-                    ]       # "log_prior" isn't in arviz's supported groups, use "prior"
+                        ("prior" if name == "log_prior" else name)
+                        for name in self.blob_names
+                    ]  # "log_prior" isn't in arviz's supported groups, use "prior"
                     self.arviz_inference_data = arviz.from_emcee(
                         sampler,
                         blob_names=self.blob_names,
