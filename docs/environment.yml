@@ -3,11 +3,11 @@ dependencies:
   - python=3.8
   # - conda-forge::gfortran=11.2.0
   # - scipy>=1.7.0
-  - matplotlib
+  # - matplotlib
   - gimli::pygimli
   - pip
   - pip:
-    - scipy
+    # - scipy
     - sphinx-book-theme==0.3.2
     - sphinx-panels==0.6.0
     - nbsphinx==0.8.8
