@@ -441,7 +441,7 @@ def test_set_reg_with_args():
     inv_problem = BaseProblem()
     from scipy.sparse import csr_matrix
     A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
-    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, lamda=2, args=(A))
+    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, lamda=2, args=[A])
     inv_problem.regularisation(np.array([1,2,3]))
 
 ############### TEST model covariance #################################################
