@@ -57,7 +57,7 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "sphinxcontrib.mermaid",
     # "sphinxcontrib.rsvgconverter",
-    "sphinxemoji.sphinxemoji",
+    # "sphinxemoji.sphinxemoji",
 ]
 
 templates_path = ["_templates"]
