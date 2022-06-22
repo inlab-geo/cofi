@@ -56,8 +56,8 @@ extensions = [
     "myst_nb",
     "sphinx_gallery.gen_gallery",
     "sphinxcontrib.mermaid",
-    "sphinxcontrib.rsvgconverter",
-    "sphinxemoji.sphinxemoji",
+    # "sphinxcontrib.rsvgconverter",
+    # "sphinxemoji.sphinxemoji",
 ]
 
 templates_path = ["_templates"]

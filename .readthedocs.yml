@@ -5,15 +5,17 @@
 # Required
 version: 2
 
+# build:
+#   os: ubuntu-20.04
+#   tools:
+#     python: "miniconda3-4.7"
 build:
-  os: ubuntu-20.04
+  os: "ubuntu-20.04"
   tools:
-    python: "miniconda3-4.7"
-  apt_packages:
-    - librsvg2-bin
+    python: "mambaforge-4.10"
 
-formats:
-  - pdf
+# formats:
+#   - pdf
 
 conda:
   environment: docs/environment.yml

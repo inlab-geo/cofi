@@ -1,22 +1,21 @@
 name: readthedocs
 dependencies:
   - python=3.8
-  - conda-forge::gfortran=11.2.0
+  # - conda-forge::gfortran=11.2.0
   # - scipy>=1.7.0
-  - matplotlib>=3.5.0
-  - gimli::pygimli>=1.2
+  # - matplotlib
+  - gimli::pygimli
   - pip
   - pip:
-    - scipy>=1.7.3
+    # - scipy
     - sphinx-book-theme==0.3.2
     - sphinx-panels==0.6.0
-    - nbsphinx==0.8.8
     - sphinx-togglebutton==0.3.1
+    # - nbsphinx==0.8.8
     - myst-nb==0.14.0
     - sphinx-gallery==0.10.1
     - pypandoc==1.7.5
     - sphinxcontrib-mermaid==0.7.1
-    - sphinxemoji==0.2.0
+    # - sphinxemoji==0.2.0
     - sphinx-copybutton==0.5.0
-    - sphinxcontrib-svg2pdfconverter==1.2.0
-    - watermark==2.3.1
+    # - sphinxcontrib-svg2pdfconverter==1.2.0
