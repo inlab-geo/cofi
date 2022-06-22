@@ -68,13 +68,13 @@ exclude_patterns = [
     ".DS_Store", 
     "README.md",
     "cofi-examples/*.md",
-    "cofi-examples/scripts/README.rst",
+    "cofi-examples/_sphinx_gallery/scripts/README.rst",
     "cofi-examples/utils",
     "cofi-examples/notebooks",
     "cofi-examples/index.ipynb",
-    "cofi-examples/generated/*.md5",
-    "cofi-examples/generated/*.ipynb",
-    "cofi-examples/generated/*.py",
+    "cofi-examples/_sphinx_gallery/generated/*.md5",
+    "cofi-examples/_sphinx_gallery/generated/*.ipynb",
+    "cofi-examples/_sphinx_gallery/generated/*.py",
 ]
 
 source_suffix = ".rst"
@@ -137,8 +137,8 @@ html_context = {
 
 # -- Sphinx Gallery settings --------------------------------------------------
 sphinx_gallery_conf = {
-    "examples_dirs": "cofi-examples/scripts",
-    "gallery_dirs": "cofi-examples/generated",
+    "examples_dirs": "cofi-examples/_sphinx_gallery/scripts",
+    "gallery_dirs": "cofi-examples/_sphinx_gallery/generated",
     "filename_pattern": ".",
     "ignore_pattern": "._lib.py",
     "pypandoc": True,

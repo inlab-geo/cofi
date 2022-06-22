@@ -136,7 +136,7 @@ Table of contents
     introduction.rst
     installation.rst
     tutorials/index.rst
-    cofi-examples/generated/index.rst
+    cofi-examples/_sphinx_gallery/generated/index.rst
     faq.rst
 
 .. toctree::

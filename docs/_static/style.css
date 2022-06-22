@@ -82,8 +82,11 @@ table.autosummary span {
     font-size: 1rem;
 }
 
-/* Sphinx gallery download button disabled */
+/* Sphinx gallery */
 div.sphx-glr-download {
     height: 0px;
     visibility: hidden;
+}
+.sphx-glr-thumbcontainer {
+    margin: auto;
 }

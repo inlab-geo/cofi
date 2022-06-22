@@ -69,7 +69,7 @@ print(result.success)
 print(result.model)
 ```
 
-And now an inversion is completed! Check out our [example gallery](https://cofi.readthedocs.io/en/latest/cofi-examples/generated/index.html)
+And now an inversion is completed! Check out our [example gallery](https://cofi.readthedocs.io/en/latest/cofi-examples/_sphinx_gallery/generated/index.html)
 and [tutorial](https://cofi.readthedocs.io/en/latest/tutorial.html) pages for more 
 real-world or advanced use cases.
 
