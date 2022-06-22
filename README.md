@@ -1,6 +1,6 @@
 
 
-# <img src="docs/_static/latte_art_cropped.png" width="5%" padding="0" margin="0"/> CoFI (Common Framework for Inference)
+# <img src="https://raw.githubusercontent.com/inlab-geo/cofi/main/docs/_static/latte_art_cropped.png" width="5%" padding="0" margin="0"/> CoFI (Common Framework for Inference)
 
 
 [![PyPI version](https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=bde0fe)](https://pypi.org/project/cofi/)

@@ -2,6 +2,10 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev7 (15/06/2022)
+
+- bug fix in `BaseSolver.model_covariance`
+
 ## v0.1.2.dev6 (15/06/2022)
 
 - bug fix in `BaseSolver._assign_options`
