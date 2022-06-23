@@ -67,14 +67,16 @@ exclude_patterns = [
     "Thumbs.db",
     ".DS_Store", 
     "README.md",
-    "cofi-examples/*.md",
-    "cofi-examples/_sphinx_gallery/scripts/README.rst",
-    "cofi-examples/utils",
     "cofi-examples/notebooks",
     "cofi-examples/index.ipynb",
-    "cofi-examples/_sphinx_gallery/generated/*.md5",
-    "cofi-examples/_sphinx_gallery/generated/*.ipynb",
-    "cofi-examples/_sphinx_gallery/generated/*.py",
+    "cofi-examples/*.md",
+    "cofi-examples/utils/run_notebooks",
+    "cofi-examples/utils/validation",
+    "cofi-examples/utils/generate_example",
+    "cofi-examples/utils/sphinx_gallery/scripts/README.rst",
+    "cofi-examples/utils/sphinx_gallery/generated/*.md5",
+    "cofi-examples/utils/sphinx_gallery/generated/*.ipynb",
+    "cofi-examples/utils/sphinx_gallery/generated/*.py",
 ]
 
 source_suffix = ".rst"
@@ -137,8 +139,8 @@ html_context = {
 
 # -- Sphinx Gallery settings --------------------------------------------------
 sphinx_gallery_conf = {
-    "examples_dirs": "cofi-examples/_sphinx_gallery/scripts",
-    "gallery_dirs": "cofi-examples/_sphinx_gallery/generated",
+    "examples_dirs": "cofi-examples/utils/sphinx_gallery/scripts",
+    "gallery_dirs": "cofi-examples/utils/sphinx_gallery/generated",
     "filename_pattern": ".",
     "ignore_pattern": "._lib.py",
     "pypandoc": True,
