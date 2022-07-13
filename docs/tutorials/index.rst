@@ -11,7 +11,7 @@ Here are step-by-step guides that cover most of the functionalities and use case
     walk you through the workflow and more advanced usages step by step.
 
     For the time being, we refer the audience to example gallery - 
-    `polynomial linear regression <../cofi-examples/generated/linear_regression.html>`_ for
+    `polynomial linear regression <../cofi-examples/utils/sphinx_gallery/generated/linear_regression.html>`_ for
     guidance about using CoFI.
 
 

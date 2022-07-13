@@ -81,3 +81,9 @@ table.autosummary p {
 table.autosummary span {
     font-size: 1rem;
 }
+
+/* Sphinx gallery */
+div.sphx-glr-download {
+    height: 0px;
+    visibility: hidden;
+}

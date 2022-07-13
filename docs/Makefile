@@ -11,7 +11,7 @@ SOURCEDIR     = .
 BUILDDIR      = _build
 APIDIR        = api
 CODEDIR       = ../cofi/
-NOTEBOOKDIR   = cofi-examples
+NOTEBOOKDIR   = cofi-examples/utils/sphinx_gallery
 
 
 all: html
@@ -24,7 +24,7 @@ clean:
 	rm -rf $(BUILDDIR)/doctrees
 	rm -rf $(BUILDDIR)/doctest
 	rm -rf $(APIDIR)/generated
-	rm -rf $(NOTEBOOKDIR)/generated
+    # rm -rf $(NOTEBOOKDIR)/generated
 
 update_api: clean
 	@echo

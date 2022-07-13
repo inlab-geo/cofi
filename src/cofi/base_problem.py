@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Callable, Union, Tuple, Sequence
+from typing import Any, Callable, Dict, Union, Tuple, Sequence
 import json
 
 import numpy as np
@@ -572,7 +572,7 @@ class BaseProblem:
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
 
     def set_objective(
-        self, obj_func: Callable[[np.ndarray], Number], args=None, kwargs=None
+        self, obj_func: Callable[[np.ndarray], Number], args: list = None, kwargs: dict = None
     ):
         r"""Sets the function to compute the objective function to minimise
 
@@ -599,8 +599,8 @@ class BaseProblem:
     def set_log_posterior(
         self,
         log_posterior_func: Callable[[np.ndarray], Number],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the log of posterior probability density
 
@@ -627,8 +627,8 @@ class BaseProblem:
         self,
         log_posterior_blobs_func: Callable[[np.ndarray], Tuple[Number]],
         blobs_dtype=None,
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function that computes the log of posterior prabability density
         and returns extra information along with log posterior
@@ -687,7 +687,7 @@ class BaseProblem:
         self._update_autogen("blobs_dtype")
 
     def set_log_prior(
-        self, log_prior_func: Callable[[np.ndarray], Number], args=None, kwargs=None
+        self, log_prior_func: Callable[[np.ndarray], Number], args: list = None, kwargs: dict = None
     ):
         r"""Sets the function to compute the log of prior probability density
 
@@ -707,8 +707,8 @@ class BaseProblem:
     def set_log_likelihood(
         self,
         log_likelihood_func: Callable[[np.ndarray], Number],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the log of likelihood probability density
 
@@ -728,7 +728,7 @@ class BaseProblem:
         self._update_autogen("log_likelihood")
 
     def set_gradient(
-        self, grad_func: Callable[[np.ndarray], np.ndarray], args=None, kwargs=None
+        self, grad_func: Callable[[np.ndarray], np.ndarray], args: list = None, kwargs: dict = None
     ):
         r"""Sets the function to compute the gradient of objective function w.r.t the
         model
@@ -749,8 +749,8 @@ class BaseProblem:
     def set_hessian(
         self,
         hess_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the Hessian of objective function w.r.t the
         model
@@ -759,14 +759,14 @@ class BaseProblem:
         ----------
         hess_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
             the Hessian function that matches :func:`BaseProblem.hessian` in
-            signature
+            signature. Alternatively, provide a matrix if the Hessian is a constant.
         args : list, optional
             extra list of positional arguments for hessian function
         kwargs : dict, optional
             extra dict of keyword arguments for hessian function
         """
         if isinstance(hess_func, np.ndarray):
-            self.hessian = lambda _: hess_func
+            self.hessian = _FunctionWrapper("hessian", lambda _: hess_func)
         else:
             self.hessian = _FunctionWrapper("hessian", hess_func, args, kwargs)
         self._update_autogen("hessian")
@@ -774,8 +774,8 @@ class BaseProblem:
     def set_hessian_times_vector(
         self,
         hess_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the Hessian (of objective function) times
         an arbitrary vector
@@ -799,7 +799,7 @@ class BaseProblem:
         self._update_autogen("hessian_times_vector")
 
     def set_residual(
-        self, res_func: Callable[[np.ndarray], np.ndarray], args=None, kwargs=None
+        self, res_func: Callable[[np.ndarray], np.ndarray], args: list = None, kwargs: dict = None
     ):
         r"""Sets the function to compute the residual vector/matrix
 
@@ -823,8 +823,8 @@ class BaseProblem:
     def set_jacobian(
         self,
         jac_func: Union[Callable[[np.ndarray], np.ndarray], np.ndarray],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the Jacobian matrix, namely first
         derivative of forward function with respect to the model
@@ -833,14 +833,14 @@ class BaseProblem:
         ----------
         jac_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
             the Jacobian function that matches :func:`BaseProblem.residual` in
-            signature
+            signature. Alternatively, provide a matrix if the Jacobian is a constant.
         args : list, optional
             extra list of positional arguments for jacobian function
         kwargs : dict, optional
             extra dict of keyword arguments for jacobian function
         """
         if isinstance(jac_func, np.ndarray):
-            self.jacobian = lambda _: jac_func
+            self.jacobian = _FunctionWrapper("jacobian", lambda _: jac_func)
         else:
             self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
         self._update_autogen("jacobian")
@@ -848,8 +848,8 @@ class BaseProblem:
     def set_jacobian_times_vector(
         self,
         jac_vec_func: Callable[[np.ndarray, np.ndarray], np.ndarray],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the Jacobian (of forward function) times
         an arbitrary vector
@@ -875,8 +875,8 @@ class BaseProblem:
     def set_data_misfit(
         self,
         data_misfit: Union[str, Callable[[np.ndarray], Number]],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the data misfit
 
@@ -938,8 +938,8 @@ class BaseProblem:
         self,
         regularisation: Union[str, Callable[[np.ndarray], Number]],
         lamda: Number = 1,
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the regularisation
 
@@ -1007,17 +1007,17 @@ class BaseProblem:
                     )
             _reg = lambda x: np.linalg.norm(x, ord=order)
         else:
-            _reg = regularisation
+            _reg = _FunctionWrapper("regularisation_none_lamda", regularisation, args, kwargs)
         self.regularisation = _FunctionWrapper(
-            "regularisation", lambda *a, **ka: _reg(*a, **ka) * lamda, args, kwargs
+            "regularisation", lambda model: (_reg(model) * lamda),
         )
         self._update_autogen("regularisation")
 
     def set_forward(
         self,
         forward: Callable[[np.ndarray], Union[np.ndarray, Number]],
-        args=None,
-        kwargs=None,
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to perform the forward operation
 
@@ -1601,8 +1601,6 @@ class BaseProblem:
             return False
         except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
             return True
-        else:
-            return True
 
     # autogen_table: (tuple of defined things) ->
     #       (name of deduced item, func that generates the item func)
@@ -1786,22 +1784,22 @@ class BaseProblem:
 
 
 class _FunctionWrapper:
-    def __init__(self, name, func, args=None, kwargs=None, autogen=False):
+    def __init__(self, name, func, args: list = None, kwargs: dict = None, autogen=False):
         self.name = name
         self.func = func
         self.args = list() if args is None else args
         self.kwargs = dict() if kwargs is None else kwargs
         self.autogen = autogen
 
-    def __call__(self, model):
+    def __call__(self, model, *extra_args):
         try:
-            return self.func(model, *self.args, **self.kwargs)
+            return self.func(model, *extra_args, *self.args, **self.kwargs)
         except Exception as exception:
             import traceback
 
             print(f"cofi: Exception while calling your {self.name} function:")
-            print("  params:", model)
-            print("  args:", self.args)
+            print("  params:", model, *extra_args)
+            print("  args:", self.args, len(self.args))
             print("  kwargs:", self.kwargs)
             print("  exception:")
             traceback.print_exc()

@@ -437,6 +437,12 @@ def test_not_overwriting_by_autogen():
     inv_problem.set_log_prior(lambda _: 5)
     assert inv_problem.log_posterior(1) == 4
 
+def test_set_reg_with_args():
+    inv_problem = BaseProblem()
+    from scipy.sparse import csr_matrix
+    A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
+    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, lamda=2, args=[A])
+    inv_problem.regularisation(np.array([1,2,3]))
 
 ############### TEST model covariance #################################################
 def test_model_cov():
@@ -448,3 +454,16 @@ def test_model_cov():
         inv_problem.model_covariance_inv(None)
     inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
     inv_problem.model_covariance(None)
+
+############### TEST jac/hess times vector (auto generated) ###########################
+def test_hess_times_vector():
+    inv_problem = BaseProblem()
+    # 1
+    _hess = np.array([[1,0],[0,2]])
+    inv_problem.set_hessian(_hess)
+    _test_res = inv_problem.hessian_times_vector(0, np.array([1,1]))
+    assert np.array_equal(_test_res, np.array([1,2]))
+    # 2
+    inv_problem.set_hessian(lambda _: _hess)
+    _test_res = inv_problem.hessian_times_vector(0, np.array([1,1]))
+    assert np.array_equal(_test_res, np.array([1,2]))

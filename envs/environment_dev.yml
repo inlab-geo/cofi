@@ -10,6 +10,8 @@
 name: cofi_dev
 channels: 
   - conda-forge
+  - defaults
+  - gimli
 dependencies:
   - numpy>=1.20
   - scipy>=1.0.0
@@ -27,6 +29,7 @@ dependencies:
   - pytest
   - emcee
   - arviz
+  - pygimli
   - pip
   - pip:
     - coverage[toml]
@@ -43,3 +46,4 @@ dependencies:
     - pytest-xdist
     - sphinx-copybutton
     - watermark
+    - sphinxcontrib-svg2pdfconverter==1.2.0
