@@ -454,3 +454,16 @@ def test_model_cov():
         inv_problem.model_covariance_inv(None)
     inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
     inv_problem.model_covariance(None)
+
+############### TEST jac/hess times vector (auto generated) ###########################
+def test_hess_times_vector():
+    inv_problem = BaseProblem()
+    # 1
+    _hess = np.array([[1,0],[0,2]])
+    inv_problem.set_hessian(_hess)
+    _test_res = inv_problem.hessian_times_vector(0, np.array([1,1]))
+    assert np.array_equal(_test_res, np.array([1,2]))
+    # 2
+    inv_problem.set_hessian(lambda _: _hess)
+    _test_res = inv_problem.hessian_times_vector(0, np.array([1,1]))
+    assert np.array_equal(_test_res, np.array([1,2]))

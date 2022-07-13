@@ -759,14 +759,14 @@ class BaseProblem:
         ----------
         hess_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
             the Hessian function that matches :func:`BaseProblem.hessian` in
-            signature
+            signature. Alternatively, provide a matrix if the Hessian is a constant.
         args : list, optional
             extra list of positional arguments for hessian function
         kwargs : dict, optional
             extra dict of keyword arguments for hessian function
         """
         if isinstance(hess_func, np.ndarray):
-            self.hessian = lambda _: hess_func
+            self.hessian = _FunctionWrapper("hessian", lambda _: hess_func)
         else:
             self.hessian = _FunctionWrapper("hessian", hess_func, args, kwargs)
         self._update_autogen("hessian")
@@ -833,14 +833,14 @@ class BaseProblem:
         ----------
         jac_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
             the Jacobian function that matches :func:`BaseProblem.residual` in
-            signature
+            signature. Alternatively, provide a matrix if the Jacobian is a constant.
         args : list, optional
             extra list of positional arguments for jacobian function
         kwargs : dict, optional
             extra dict of keyword arguments for jacobian function
         """
         if isinstance(jac_func, np.ndarray):
-            self.jacobian = lambda _: jac_func
+            self.jacobian = _FunctionWrapper("jacobian", lambda _: jac_func)
         else:
             self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
         self._update_autogen("jacobian")
@@ -1793,14 +1793,14 @@ class _FunctionWrapper:
         self.kwargs = dict() if kwargs is None else kwargs
         self.autogen = autogen
 
-    def __call__(self, model):
+    def __call__(self, model, *extra_args):
         try:
-            return self.func(model, *self.args, **self.kwargs)
+            return self.func(model, *extra_args, *self.args, **self.kwargs)
         except Exception as exception:
             import traceback
 
             print(f"cofi: Exception while calling your {self.name} function:")
-            print("  params:", model)
+            print("  params:", model, *extra_args)
             print("  args:", self.args, len(self.args))
             print("  kwargs:", self.kwargs)
             print("  exception:")
