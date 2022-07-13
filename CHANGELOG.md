@@ -2,6 +2,11 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev8 (13/07/2022)
+
+- bug fix in `_FunctionWrapper`, for functions with extra arguments like
+  `BaseProblem.hessian_times_vector(m, v)` and `BaseProblem.jacobian_times_vector(m, v)`
+
 ## v0.1.2.dev7 (15/06/2022)
 
 - bug fix in `BaseSolver.model_covariance`
