@@ -1601,8 +1601,6 @@ class BaseProblem:
             return False
         except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
             return True
-        else:
-            return True
 
     # autogen_table: (tuple of defined things) ->
     #       (name of deduced item, func that generates the item func)
