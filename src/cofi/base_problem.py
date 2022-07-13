@@ -1628,7 +1628,7 @@ class BaseProblem:
         ),
         ("hessian",): (
             "hessian_times_vector",
-            lambda hess_func: (lambda m, vector: hess_func(m) @ vector),
+            lambda hess_func: (lambda m, vector: np.asarray(hess_func(m)) @ vector),
         ),
         (
             "forward",
@@ -1636,7 +1636,7 @@ class BaseProblem:
         ): ("residual", lambda fwd, data: (lambda m: fwd(m) - data)),
         ("jacobian",): (
             "jacobian_times_vector",
-            lambda jac_func: (lambda m, vector: jac_func(m) @ vector),
+            lambda jac_func: (lambda m, vector: np.asarray(jac_func(m)) @ vector),
         ),
     }
 
