@@ -26,7 +26,6 @@ jobs:
           python-version: 3.9
       - name: Set up environment
         run: |
-          $CONDA/bin/conda update conda
           $CONDA/bin/conda install mamba -n base -c conda-forge
           $CONDA/bin/mamba info
           $CONDA/bin/mamba env update --file envs/environment_test.yml --name base
