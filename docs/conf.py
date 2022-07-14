@@ -70,6 +70,7 @@ exclude_patterns = [
     "cofi-examples/notebooks",
     "cofi-examples/index.ipynb",
     "cofi-examples/*.md",
+    "cofi-examples/utils/README.md",
     "cofi-examples/utils/run_notebooks",
     "cofi-examples/utils/validation",
     "cofi-examples/utils/generate_example",
