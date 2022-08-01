@@ -1603,46 +1603,82 @@ class BaseProblem:
             return True
 
     # autogen_table: (tuple of defined things) ->
-    #       (name of deduced item, func that generates the item func)
-    # note: the number of (tuple of defined things) and (name of deduced item)
-    #       should match
-    autogen_table = {
-        ("data_misfit", "regularisation",): (
-            "objective",
-            lambda dm_func, reg_func: (lambda m: dm_func(m) + reg_func(m)),
-        ),
-        ("data_misfit",): ("objective", lambda dm_func: (lambda m: dm_func(m))),
-        ("log_likelihood", "log_prior",): (
-            "log_posterior",
-            lambda loglike, logprior: (lambda m: loglike(m) + logprior(m)),
-        ),
-        ("log_likelihood", "log_prior",): (
-            "log_posterior_with_blobs",
-            lambda loglike, logprior: (
-                lambda m: (loglike(m) + logprior(m), loglike(m), logprior(m))
-            ),
-        ),
-        ("log_posterior_with_blobs",): (
-            "log_posterior",
-            lambda log_pos_blobs: (lambda m: log_pos_blobs(m)[0]),
-        ),
-        ("hessian",): (
-            "hessian_times_vector",
-            lambda hess_func: (lambda m, vector: np.asarray(hess_func(m)) @ vector),
-        ),
-        (
-            "forward",
-            "data",
-        ): ("residual", lambda fwd, data: (lambda m: fwd(m) - data)),
-        ("jacobian",): (
-            "jacobian_times_vector",
-            lambda jac_func: (lambda m, vector: np.asarray(jac_func(m)) @ vector),
-        ),
-    }
+    #       (name of deduced item, reference to new function to generate)
+    @property
+    def autogen_table(self):
+        return {
+            ("data_misfit", "regularisation",): ("objective", self._objective_from_dm_reg),
+            ("data_misfit",): ("objective", self._objective_from_dm),
+            ("log_likelihood", "log_prior",): ("log_posterior_with_blobs", self._log_posterior_with_blobs_from_ll_lp),
+            ("log_posterior_with_blobs",): ("log_posterior", self._log_posterior_from_lp_with_blobs),
+            ("hessian",): ("hessian_times_vector", self._hessian_times_vector_from_hess),
+            ("forward", "data",): ("residual", self._residual_from_fwd_dt),
+            ("jacobian",): ("jacobian_times_vector", self._jacobian_times_vector_from_jcb),
+        }
+
+    @staticmethod
+    def __exception_in_autogen_func(exception):       # utils
+        print(
+            "cofi: Exception when calling auto generated function, check exception "
+            "details from message below. If not sure, please report this issue at "
+            "https://github.com/inlab-geo/cofi/issues"
+        )
+        raise exception
+
+    @staticmethod
+    def _objective_from_dm_reg(model, data_misfit, regularisation):
+        try:
+            return data_misfit(model) + regularisation(model)
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
+
+    @staticmethod
+    def _objective_from_dm(model, data_misfit):
+        try:
+            return data_misfit(model)
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
+
+    @staticmethod
+    def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
+        try:
+            ll = log_likelihood(model)
+            lp = log_prior(model)
+            return ll + lp, ll, lp
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
+
+    @staticmethod
+    def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
+        try:
+            return log_posterior_with_blobs(model)[0]
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
+    
+    @staticmethod
+    def _hessian_times_vector_from_hess(model, vector, hessian):
+        try:
+            return np.asarray(hessian(model) @ vector)
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
+    
+    @staticmethod
+    def _residual_from_fwd_dt(model, forward, data):
+        try:
+            return forward(model) - data
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
+    
+    @staticmethod
+    def _jacobian_times_vector_from_jcb(model, vector, jacobian):
+        try:
+            return np.asarray(jacobian(model) @ vector)
+        except Exception as exception:
+            BaseProblem.__exception_in_autogen_func(exception)
 
     def _update_autogen(self, updated_item):
         update_dict = {k: v for k, v in self.autogen_table.items() if updated_item in k}
-        for need_defined, (to_update, how) in update_dict.items():
+        for need_defined, (to_update, new_func) in update_dict.items():
             if getattr(self, f"{to_update}_defined"):
                 to_update_existing = getattr(self, to_update)
                 if (
@@ -1653,10 +1689,8 @@ class BaseProblem:
             if all(
                 (getattr(self, f"{nm}_defined") for nm in need_defined)
             ):  # can update
-                defined_items = (getattr(self, nm) for nm in need_defined)
-                new_func = _FunctionWrapper(
-                    to_update, how(*defined_items), autogen=True
-                )
+                defined_items = list((getattr(self, nm) for nm in need_defined))
+                new_func = _FunctionWrapper(to_update, new_func, args=defined_items, autogen=True)
                 setattr(self, to_update, new_func)
                 if to_update == "log_posterior_with_blobs":
                     self.set_blobs_dtype(
