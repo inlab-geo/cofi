@@ -2,18 +2,28 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev9 (NOT YET RELEASED)
+
+### CoFI Core
+
+- Fixed potential problem in auto generated "times vector" functions when 
+  input matrix might be of type `numpy.matrix`
+- Enabled possibility for parallelism with emcee, by making user defined 
+  functions pickleable
+
+
 ## v0.1.2.dev8 (13/07/2022)
 
-- bug fix in `_FunctionWrapper`, for functions with extra arguments like
+- Bug fix in `_FunctionWrapper`, for functions with extra arguments like
   `BaseProblem.hessian_times_vector(m, v)` and `BaseProblem.jacobian_times_vector(m, v)`
 
 ## v0.1.2.dev7 (15/06/2022)
 
-- bug fix in `BaseSolver.model_covariance`
+- Bug fix in `BaseSolver.model_covariance`
 
 ## v0.1.2.dev6 (15/06/2022)
 
-- bug fix in `BaseSolver._assign_options`
+- Bug fix in `BaseSolver._assign_options`
 - `BaseProblem.model_covariance_inv` and `BaseProblem.model_covariance`
 
 ## v0.1.2.dev5 (09/06/2022)
@@ -22,11 +32,11 @@
 
 ## v0.1.2.dev4 (07/06/2022)
 
-- bugs fix in `EmceeSolver` and result summary
+- Bugs fix in `EmceeSolver` and result summary
 
 ## v0.1.2.dev3 (06/06/2022)
 
-- bug fixed in `BaseProblem.set_regularisation`
+- Bug fixed in `BaseProblem.set_regularisation`
 
 ## v0.1.2.dev2 (03/06/2022)
 

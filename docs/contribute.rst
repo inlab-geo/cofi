@@ -18,7 +18,7 @@ Code contribution
 Thanks for making ``cofi`` better through coding! You don't have to know all the details
 in order to contribute. If you feel confused and are unsure where to start, don't
 hesitate to contact us via `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_
-or `Slack <https://inlab-geo.slack.com>`_.
+or `Slack`_.
 
 General Workflow
 ----------------
@@ -131,7 +131,7 @@ We have some guidance on the following scenarios:
 
 Again, don't hesitate to ask us whenever you feel confused. Contact us
 via `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_
-or `Slack <https://inlab-geo.slack.com>`_.
+or `Slack`_.
 
 
 .. _commit_push_pr:

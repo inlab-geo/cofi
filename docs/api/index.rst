@@ -10,7 +10,7 @@ List of functions and classes (API)
     This package is still under initial development stage, so public APIs are 
     not expected to be stable. Please stay updated and don't hesitate to raise
     feedback or issues through `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_ 
-    or `Slack workspace <https://inlab-geo.slack.com>`_.
+    or `Slack`_ workspace.
 
 APIs for Basic Usage
 --------------------
