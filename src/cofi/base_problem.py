@@ -5,6 +5,7 @@ import json
 import numpy as np
 
 from .solvers import solvers_table
+from .exceptions import InvalidOptionError
 
 
 class BaseProblem:
@@ -922,11 +923,16 @@ class BaseProblem:
             ]:
                 self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_l2)
             else:
-                raise ValueError(
-                    "the data misfit method you've specified isn't supported yet,"
-                    " please report an issue here:"
-                    " https://github.com/inlab-geo/cofi/issues if you find it valuable"
-                    " to support it from our side"
+                # raise ValueError(
+                #     "the data misfit method you've specified isn't supported yet,"
+                #     " please report an issue here:"
+                #     " https://github.com/inlab-geo/cofi/issues if you find it valuable"
+                #     " to support it from our side"
+                # )
+                raise InvalidOptionError(
+                    name="data misfit", 
+                    invalid_option=data_misfit, 
+                    valid_options=["L2"]
                 )
         else:
             self.data_misfit = _FunctionWrapper(
