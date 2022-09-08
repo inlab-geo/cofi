@@ -382,6 +382,7 @@ def test_set_data():
     assert inv_problem.data_covariance_defined
     assert inv_problem.data_covariance[0,0] == 1
 
+
 ############### TEST suggest_solvers ##################################################
 def test_suggest_solvers(capsys):
     inv_problem = BaseProblem()
@@ -444,6 +445,7 @@ def test_set_reg_with_args():
     inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, lamda=2, args=[A])
     inv_problem.regularisation(np.array([1,2,3]))
 
+
 ############### TEST model covariance #################################################
 def test_model_cov():
     inv_problem = BaseProblem()
@@ -454,6 +456,7 @@ def test_model_cov():
         inv_problem.model_covariance_inv(None)
     inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
     inv_problem.model_covariance(None)
+
 
 ############### TEST jac/hess times vector (auto generated) ###########################
 def test_hess_times_vector():
@@ -467,3 +470,8 @@ def test_hess_times_vector():
     inv_problem.set_hessian(lambda _: _hess)
     _test_res = inv_problem.hessian_times_vector(0, np.array([1,1]))
     assert np.array_equal(_test_res, np.array([1,2]))
+
+
+############### TEST auto generated methods ###########################################
+
+

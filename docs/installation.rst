@@ -72,7 +72,7 @@ It's optional, but recommended to use a virtual environment.
 
     rm -rf <path-to-new-env>/cofi_env
 
-.. tabbed:: conda
+.. tabbed:: conda / mamba
 
   To create:
 

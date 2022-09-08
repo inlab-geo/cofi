@@ -47,4 +47,4 @@ This documentation follows the guide [here](https://www.writethedocs.org/guide/w
 5. how to get support
 6. information for people who want to contribute back
 7. installation instructions
-8. license
+8. licence

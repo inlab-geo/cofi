@@ -1,7 +1,7 @@
 ########################## LIBRARY IMPORT #############################################
 from io import StringIO
 import sys
-import pathlib
+from pathlib import Path
 
 try:
     from skbuild import setup
@@ -15,7 +15,7 @@ except ImportError:
     raise
 
 ########################## VERSION ####################################################
-_ROOT = pathlib.Path(__file__).parent
+_ROOT = Path(__file__).resolve().parent
 with open(str(_ROOT / "src" / "cofi" / "_version.py")) as f:
     for line in f:
         if line.startswith("__version__ ="):
@@ -28,8 +28,7 @@ with open(str(_ROOT / "src" / "cofi" / "_version.py")) as f:
 
 ########################## LONG DESCRIPTION ###########################################
 from pathlib import Path
-this_directory = Path(__file__).parent
-LONG_DESCRIPTION = (this_directory / "README.md").read_text()
+LONG_DESCRIPTION = (_ROOT / "README.md").read_text()
 CONTENT_TYPE = "text/markdown"
 
 ########################## OTHER METADATA #############################################
