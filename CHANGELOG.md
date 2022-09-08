@@ -2,7 +2,9 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.2.dev9 (03/08/2022)
+## v0.1.2.dev9 (NOT YET RELEASED)
+
+### CoFI Core
 
 - Fixed potential problem in auto generated "times vector" functions when 
   input matrix might be of type `numpy.matrix`
