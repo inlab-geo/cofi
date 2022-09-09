@@ -109,3 +109,28 @@ class InsufficientInfoError(CofiError, RuntimeError):
         msg = f"insufficient information supplied to calculate {self._needed_for}, " \
               f"needs: {self._needs}"
         return self._form_str(super_msg, msg)
+
+
+class NotDefinedError(CofiError, NotImplementedError):
+    r"""Raised when a certain property or function is not set to a :class:BaseProblem
+    instance but attempts are made to use it (e.g. in a solving approach)
+    
+    This is a subclass of :exc:`CofiError` and :exc:`NotImplementedError`.
+    
+    Parameters
+    ----------
+    *args : Any
+        passed on directly to :exc:`NotImplementedError`
+    needs : list or str 
+        a list of information required to perform the operation, or a string describing
+        them
+    """ 
+    def __init__(self, *args, needs: Union[List, str]): 
+        super().__init__(*args)
+        self._needs = needs
+    
+    def __str__(self) -> str:
+        super_msg = super().__str__()
+        msg = f"`{self._needs}` is required in the solving approach but you haven't " \
+              "implemented or added it to the problem setup" 
+        return self._form_str(super_msg, msg)

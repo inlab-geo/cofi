@@ -4,8 +4,12 @@ import pytest
 import numpy as np
 
 from cofi import BaseProblem
-from cofi.exceptions import DimensionMismatchError, InsufficientInfoError, InvalidOptionError
-
+from cofi.exceptions import (
+    DimensionMismatchError, 
+    InsufficientInfoError, 
+    InvalidOptionError, 
+    NotDefinedError
+)
 
 ############### TEST data loader ######################################################
 data_files_to_test = [
@@ -37,51 +41,51 @@ def test_set_data_from_file(data_path):
 ############### TEST empty problem ####################################################
 def test_non_set():
     inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.objective(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.gradient(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.hessian(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.hessian_times_vector(1, 2)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.residual(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.jacobian(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.jacobian_times_vector(1, 2)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data_misfit(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.regularisation(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.forward(1)
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data_covariance
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data_covariance_inv
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.initial_model
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.model_shape
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.bounds
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.constraints
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_posterior(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_prior(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_likelihood(1)
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.walkers_starting_pos
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_posterior_with_blobs(1)
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.blobs_dtype
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
@@ -453,7 +457,7 @@ def test_model_cov():
     sigma = 1.0
     Cdinv = np.eye(100)/(sigma**2)
     inv_problem.set_data_covariance_inv(Cdinv)
-    with pytest.raises(NotImplementedError, match=r".*`jacobian` is required.*"):
+    with pytest.raises(NotDefinedError, match=r".*`jacobian` is required.*"):
         inv_problem.model_covariance_inv(None)
     inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
     inv_problem.model_covariance(None)

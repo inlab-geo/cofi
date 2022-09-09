@@ -5,7 +5,12 @@ import json
 import numpy as np
 
 from .solvers import solvers_table
-from .exceptions import DimensionMismatchError, InsufficientInfoError, InvalidOptionError
+from .exceptions import (
+    DimensionMismatchError, 
+    InsufficientInfoError, 
+    InvalidOptionError, 
+    NotDefinedError
+)
 
 
 class BaseProblem:
@@ -254,13 +259,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information
         """
-        raise NotImplementedError(
-            "`objective` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="objective")
 
     def log_posterior(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the log of posterior probability density given a model
@@ -276,11 +278,13 @@ class BaseProblem:
         -------
         Number
             the posterior probability density value
+
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set and cannot be generated from known information
         """
-        raise NotImplementedError(
-            "`log_posterior` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="log_posterior")
 
     def log_posterior_with_blobs(
         self, model: np.ndarray, *args, **kwargs
@@ -302,11 +306,13 @@ class BaseProblem:
         Tuple[Number]
             the posterior probability density value, and other information you've set to
             return together with the former
+        
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set and cannot be generated from known information
         """
-        raise NotImplementedError(
-            "`log_posterior_with_blobs` is required in the solving approach but you "
-            "haven't implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="log_posterior_with_blobs")
 
     def log_prior(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the log of prior probability density given a model
@@ -322,11 +328,13 @@ class BaseProblem:
         -------
         Number
             the prior probability density value
+        
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set and cannot be generated from known information
         """
-        raise NotImplementedError(
-            "`log_prior` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="log_prior")
 
     def log_likelihood(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the log of likelihood probability density given a model
@@ -342,11 +350,13 @@ class BaseProblem:
         -------
         Number
             the likelihood probability density value
+        
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`log_likelihood` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="log_likelihood")
 
     def gradient(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         """Method for computing the gradient of objective function with respect to model, given a model
@@ -363,13 +373,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`gradient` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="gradient")
 
     def hessian(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         """Method for computing the Hessian of objective function with respect to model, given a model
@@ -386,13 +393,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`hessian` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="hessian")
 
     def hessian_times_vector(
         self, model: np.ndarray, vector: np.ndarray, *args, **kwargs
@@ -413,13 +417,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`hessian_times_vector` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="hessian_times_vector")
 
     def residual(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         r"""Method for computing the residual vector given a model.
@@ -436,36 +437,30 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`residual` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="residual")
 
     def jacobian(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
-        r"""Method for computing the Jacobian of forward function with respect to model, given a model
+        r"""method for computing the jacobian of forward function with respect to model, given a model
 
-        Parameters
+        parameters
         ----------
         model : np.ndarray
             a model to evaluate
 
-        Returns
+        returns
         -------
         np.ndarray
-            the Jacobian matrix, :math:`\frac{\partial{\text{forward}(\text{model})}}{\partial\text{model}}`
+            the jacobian matrix, :math:`\frac{\partial{\text{forward}(\text{model})}}{\partial\text{model}}`
 
-        Raises
+        raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`jacobian` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="jacobian")
 
     def jacobian_times_vector(
         self, model: np.ndarray, vector: np.ndarray, *args, **kwargs
@@ -486,13 +481,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`jacobian_times_vector` is required in the solving approach but you"
-            " haven't implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="jacobian_times_vector")
 
     def data_misfit(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the data misfit value given a model
@@ -509,13 +501,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`data_misfit` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="data_misfit")
 
     def regularisation(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the regularisation value given a model
@@ -532,13 +521,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`regularisation` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="regularisation")
 
     def forward(self, model: np.ndarray, *args, **kwargs) -> Union[np.ndarray, Number]:
         """Method to perform the forward operation given a model
@@ -555,13 +541,10 @@ class BaseProblem:
 
         Raises
         ------
-        NotImplementedError
-            when this method is not set and cannot be deduced
+        NotDefinedError
+            when this method is not set and cannot be generated from known information 
         """
-        raise NotImplementedError(
-            "`forward` is required in the solving approach but you haven't"
-            " implemented or added it to the problem setup"
-        )
+        raise NotDefinedError(needs="forward")
 
     # TO ADD a set method, remember to do the following:
     # - def set_something(self, something)
@@ -1273,15 +1256,12 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined by methods above
+        NotDefinedError
+            when this property has not been defined by methods above
         """
         if hasattr(self, "_data"):
             return self._data
-        raise NameError(
-            "data has not been set, please use either `set_data()` or "
-            "`set_data_from_file()` to add data to the problem setup"
-        )
+        raise NotDefinedError(needs="data")
 
     @property
     def data_covariance(self) -> np.ndarray:
@@ -1290,16 +1270,12 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined by methods above
+        NotDefinedError
+            when this property has not been defined by methods above
         """
         if hasattr(self, "_data_covariance"):
             return self._data_covariance
-        raise NameError(
-            "data covariance has not been set, please use either"
-            " `set_data_covariance()`, `set_data()`, or `set_data_from_file()` to add"
-            " data covariance to the problem setup"
-        )
+        raise NotDefinedError(needs="data covariance matrix")
 
     @property
     def data_covariance_inv(self) -> np.ndarray:
@@ -1308,16 +1284,12 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined by methods above
+        NotDefinedError
+            when this property has not been defined by methods above
         """
         if hasattr(self, "_data_covariance_inv"):
             return self._data_covariance_inv
-        raise NameError(
-            "data covariance inv has not been set, please use either"
-            " `set_data_covariance_inv()`, `set_data()`, or `set_data_from_file()` to"
-            " add data covariance to the problem setup"
-        )
+        raise NotDefinedError(needs="inverse data covariance matrix")
 
     @property
     def initial_model(self) -> np.ndarray:
@@ -1326,15 +1298,13 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined (by :func:`BaseProblem.set_initial_model`)
+        NotDefinedError
+            when this property has not been defined (by 
+            :func:`BaseProblem.set_initial_model`)
         """
         if hasattr(self, "_initial_model"):
             return self._initial_model
-        raise NameError(
-            "initial model has not been set, please use `set_initial_model()`"
-            " to add to the problem setup"
-        )
+        raise NotDefinedError(needs="initial_model")
 
     @property
     def model_shape(self) -> Union[Tuple, np.ndarray]:
@@ -1342,17 +1312,15 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined (by either :func:`BaseProblem.set_model_shape`,
+        NotDefinedError
+            when this property has not been defined (by either 
+            :func:`BaseProblem.set_model_shape`,
             :func:`BaseProblem.set_model_shape`, or
             :func:`BaseProblem.set_walkers_starting_pos`)
         """
         if hasattr(self, "_model_shape"):
             return self._model_shape
-        raise NameError(
-            "model shape has not been set, please use either `set_initial_model()`"
-            " or `set_model_shape() to add to the problem setup"
-        )
+        raise NotDefinedError(needs="model_shape")
 
     @property
     def walkers_starting_pos(self) -> np.ndarray:
@@ -1360,15 +1328,13 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined (by :func:`BaseProblem.set_walkers_starting_pos`)
+        NotDefinedError
+            when this property has not been defined (by 
+            :func:`BaseProblem.set_walkers_starting_pos`)
         """
         if hasattr(self, "_walkers_starting_pos"):
             return self._walkers_starting_pos
-        raise NameError(
-            "walkers' starting positions have not been set, please use "
-            "`set_walkers_starting_pos()` to add to the problem set up"
-        )
+        raise NotDefinedError(needs="walkers' starting positions")
 
     @property
     def blobs_dtype(self) -> list:
@@ -1377,17 +1343,14 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined (by either :func:`BaseProblem.set_blobs_dtype`
-            or :func:`BaseProblem.set_log_posterior_with_blobs`)
+        NotDefinedError
+            when this property has not been defined (by either 
+            :func:`BaseProblem.set_blobs_dtype` or 
+            :func:`BaseProblem.set_log_posterior_with_blobs`)
         """
         if hasattr(self, "_blobs_dtype"):
             return self._blobs_dtype
-        raise NameError(
-            "blobs name and type have not been set, please use either "
-            "`set_blobs_dtype()` or `set_log_posterior_with_blobs()` to add to the "
-            "problem setup"
-        )
+        raise NotDefinedError(needs="blobs name and type")
 
     @property
     def bounds(self):
@@ -1395,15 +1358,13 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined (by :func:`BaseProblem.set_bounds`)
+        NotDefinedError
+            when this property has not been defined (by 
+            :func:`BaseProblem.set_bounds`)
         """
         if hasattr(self, "_bounds"):
             return self._bounds
-        raise NameError(
-            "bounds have not been set, please use `set_bounds()` to add to the "
-            "problem setup"
-        )
+        raise NotDefinedError(needs="bounds")
 
     @property
     def constraints(self):
@@ -1411,15 +1372,13 @@ class BaseProblem:
 
         Raises
         ------
-        NameError
-            when it's not defined (by :func:`BaseProblem.set_constraints`)
+        NotDefinedError
+            when this property has not been defined (by 
+            :func:`BaseProblem.set_constraints`)
         """
         if hasattr(self, "_constraints"):
             return self._constraints
-        raise NameError(
-            "constraints have not been set, please use `set_constraints()` to add "
-            "to the problem setup"
-        )
+        raise NotDefinedError(needs="constraints")
 
     @property
     def objective_defined(self) -> bool:
@@ -1498,7 +1457,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.data` has been defined"""
         try:
             self.data
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1508,7 +1467,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.data_covariance` has been defined"""
         try:
             self.data_covariance
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1518,7 +1477,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.data_covariance_inv` has been defined"""
         try:
             self.data_covariance_inv
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1528,7 +1487,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.initial_model` has been defined"""
         try:
             self.initial_model
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1538,7 +1497,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.model_shape` has been defined"""
         try:
             self.model_shape
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1548,7 +1507,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.walkers_starting_pos` has been defined"""
         try:
             self.walkers_starting_pos
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1558,7 +1517,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.blobs_dtype` has been defined"""
         try:
             self.blobs_dtype
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1568,7 +1527,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.bounds` has been defined"""
         try:
             self.bounds
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1578,7 +1537,7 @@ class BaseProblem:
         r"""indicates whether :func:`BaseProblem.constraints` has been defined"""
         try:
             self.constraints
-        except NameError:
+        except NotDefinedError:
             return False
         else:
             return True
@@ -1589,7 +1548,7 @@ class BaseProblem:
             return True
         try:
             func(*[np.array([])] * args_num)
-        except NotImplementedError:
+        except NotDefinedError:
             return False
         except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
             return True
