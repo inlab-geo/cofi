@@ -5,7 +5,7 @@ import json
 import numpy as np
 
 from .solvers import solvers_table
-from .exceptions import InvalidOptionError
+from .exceptions import DimensionMismatchError, InsufficientInfoError, InvalidOptionError
 
 
 class BaseProblem:
@@ -907,7 +907,7 @@ class BaseProblem:
 
         Raises
         ------
-        ValueError
+        InvalidOptionError
             when you've passed in a string not in our supported data misfit list
         """
         if isinstance(data_misfit, str):
@@ -918,17 +918,9 @@ class BaseProblem:
                 "euclidean",
                 "L2 norm",
                 "l2 norm",
-                "mse",
-                "MSE",
             ]:
                 self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_l2)
             else:
-                # raise ValueError(
-                #     "the data misfit method you've specified isn't supported yet,"
-                #     " please report an issue here:"
-                #     " https://github.com/inlab-geo/cofi/issues if you find it valuable"
-                #     " to support it from our side"
-                # )
                 raise InvalidOptionError(
                     name="data misfit", 
                     invalid_option=data_misfit, 
@@ -972,7 +964,7 @@ class BaseProblem:
 
         Raises
         ------
-        ValueError
+        InvalidOptionError
             when you've passed in a string not in our supported regularisation list
 
         Examples
@@ -995,22 +987,15 @@ class BaseProblem:
         """
         if isinstance(regularisation, (Number, str)) or not regularisation:
             order = regularisation
-            if isinstance(order, str):
-                if order in ["inf", "-inf"]:
-                    order = float(order)
-                elif order not in ["fro", "nuc"]:
-                    raise ValueError(
-                        "the regularisation order you've entered is invalid, please"
-                        " choose from the following:\n{None, 'fro', 'nuc', numpy.inf,"
-                        " -numpy.inf} or any positive number"
-                    )
-            elif isinstance(order, Number):
-                if order < 0:
-                    raise ValueError(
-                        "the regularisation order you've entered is invalid, please"
-                        " choose from the following:\n{None, 'fro', 'nuc', numpy.inf,"
-                        " -numpy.inf} or any positive number"
-                    )
+            if isinstance(order, str) and order not in ["fro", "nuc", "inf", "-inf"] \
+                or isinstance(order, Number) and order < 0:
+                raise InvalidOptionError(
+                    name="regularisation order", 
+                    invalid_option=order, 
+                    valid_options="[None, 'fro', 'nuc', numpy.inf, -numpy.inf] or any positive number"
+                )
+            elif isinstance(order, str) and order in ["inf", "-inf"]:
+                order = float(order)
             _reg = lambda x: np.linalg.norm(x, ord=order)
         else:
             _reg = _FunctionWrapper("regularisation_none_lamda", regularisation, args, kwargs)
@@ -1139,18 +1124,19 @@ class BaseProblem:
 
         Raises
         ------
-        ValueError
+        DimensionMismatchError 
             when you've defined an initial_model through :func:`BaseProblem.set_initial_model`
             but their shapes don't match
         """
         if self.initial_model_defined and self._model_shape != model_shape:
             try:
                 np.reshape(self.initial_model, model_shape)
-            except ValueError as err:
-                raise ValueError(
-                    f"the model_shape you've provided {model_shape} doesn't match the"
-                    " initial_model you set which has the shape:"
-                    f" {self.initial_model.shape}"
+            except ValueError as err: 
+                raise DimensionMismatchError(
+                    entered_dimenion=model_shape, 
+                    entered_name="model shape", 
+                    expected_dimension=self.initial_model.shape, 
+                    expected_source="initial model"
                 ) from err
         self._model_shape = model_shape
 
@@ -1735,9 +1721,7 @@ class BaseProblem:
         if self.residual_defined:
             res = self.residual(model)
             return np.linalg.norm(res) / res.shape[0]
-        raise ValueError(
-            "insufficient information provided to calculate mean squared error"
-        )
+        raise InsufficientInfoError(needs="residual", needed_for="L2 data misfit")
 
     def summary(self):
         r"""Helper method that prints a summary of current ``BaseProblem`` object to

@@ -4,6 +4,7 @@ import pytest
 import numpy as np
 
 from cofi import BaseProblem
+from cofi.exceptions import InsufficientInfoError
 
 
 ############### TEST data loader ######################################################
@@ -321,8 +322,8 @@ def test_invalid_misfit_options():
     inv_problem = BaseProblem()
     with pytest.raises(ValueError):
         inv_problem.set_data_misfit("FOO")
-    inv_problem.set_data_misfit("mse")
-    with pytest.raises(ValueError):
+    inv_problem.set_data_misfit("L2")
+    with pytest.raises(InsufficientInfoError):
         inv_problem.data_misfit(np.array([1, 2, 3]))
 
 
