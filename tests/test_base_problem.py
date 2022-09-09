@@ -4,7 +4,7 @@ import pytest
 import numpy as np
 
 from cofi import BaseProblem
-from cofi.exceptions import InsufficientInfoError
+from cofi.exceptions import DimensionMismatchError, InsufficientInfoError, InvalidOptionError
 
 
 ############### TEST data loader ######################################################
@@ -266,9 +266,9 @@ def test_set_misfit_reg_inf(inv_problem_with_misfit):
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidOptionError):
         inv_problem.set_regularisation("FOO")
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidOptionError):
         inv_problem.set_regularisation(-1)
 
 
@@ -320,7 +320,7 @@ def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
 
 def test_invalid_misfit_options():
     inv_problem = BaseProblem()
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidOptionError):
         inv_problem.set_data_misfit("FOO")
     inv_problem.set_data_misfit("L2")
     with pytest.raises(InsufficientInfoError):
@@ -368,7 +368,7 @@ def test_check_defined():
     assert inv_problem.initial_model_defined
     assert inv_problem.model_shape_defined
     assert inv_problem.model_shape == (3,)
-    with pytest.raises(ValueError):
+    with pytest.raises(DimensionMismatchError):
         inv_problem.set_model_shape((2, 1))
     inv_problem.set_model_shape((3, 1))
 
