@@ -536,7 +536,7 @@ class BaseProblem:
 
         Returns
         -------
-        Union[np.ndarray, Number]
+        np.ndarray or Number
             the synthetics data
 
         Raises
@@ -741,7 +741,7 @@ class BaseProblem:
 
         Parameters
         ----------
-        hess_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+        hess_func : (function - np.ndarray -> np.ndarray) or np.ndarray
             the Hessian function that matches :func:`BaseProblem.hessian` in
             signature. Alternatively, provide a matrix if the Hessian is a constant.
         args : list, optional
@@ -815,7 +815,7 @@ class BaseProblem:
 
         Parameters
         ----------
-        jac_func : Union[Callable[[np.ndarray], np.ndarray], np.ndarray]
+        jac_func : (function - np.ndarray -> np.ndarray) or np.ndarray
             the Jacobian function that matches :func:`BaseProblem.residual` in
             signature. Alternatively, provide a matrix if the Jacobian is a constant.
         args : list, optional
@@ -880,7 +880,7 @@ class BaseProblem:
 
         Parameters
         ----------
-        data_misfit : Union[str, Callable[[np.ndarray], Number]]
+        data_misfit : str or (function - np.ndarray -> Number)
             either a string from ["L2"], or a data misfit function that matches
             :func:`BaseProblem.data_misfit` in signature.
         args : list, optional
@@ -919,6 +919,7 @@ class BaseProblem:
         self,
         regularisation: Union[str, Callable[[np.ndarray], Number]],
         lamda: Number = 1,
+        regularisation_matrix: np.ndarray = None,
         args: list = None,
         kwargs: dict = None,
     ):
@@ -932,7 +933,7 @@ class BaseProblem:
 
         Parameters
         ----------
-        regularisation : Union[str, Callable[[np.ndarray], Number]]
+        regularisation : str or (function - np.ndarray -> Number)
             either a string from pre-built functions above, or a regularisation function that
             matches :func:`BaseProblem.regularisation` in signature.
         lamda : Number, optional
@@ -940,6 +941,17 @@ class BaseProblem:
             term over the data misfit, by default 1. If ``regularisation`` and ``data_misfit``
             are set but ``objective`` isn't, then we will generate ``objective`` function as
             following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
+        regularisation_matrix : np.ndarray or (function - np.ndarray -> np.ndarray)
+            a matrix of shape ``(model_size, model_size)``, or a function that takes in
+            a model and calculates the (weighting) matrix. 
+            
+            - If this is None,
+              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(model)`
+            - If this is set to be a matrix (np.ndarray, or other array like types),
+              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}\cdot model)`
+            - If this is set to be a function that returns a matrix,
+              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}(model)\cdot model)` 
+        
         args : list, optional
             extra list of positional arguments for regularisation function
         kwargs : dict, optional
@@ -953,21 +965,47 @@ class BaseProblem:
         Examples
         --------
 
+        We demonstrate with a few examples on a ``BaseProblem`` instance.
+
         >>> from cofi import BaseProblem
         >>> inv_problem = BaseProblem()
-        >>> inv_problem.set_regularisation(1)                      # example 1
+
+        1. Example with an L1 norm
+
+        >>> inv_problem.set_regularisation(1)
         >>> inv_problem.regularisation([1,1])
         2
-        >>> inv_problem.set_regularisation("inf")                  # example 2
+
+        2. Example with an inf norm
+
+        >>> inv_problem.set_regularisation("inf")
         >>> inv_problem.regularisation([1,1])
         1
-        >>> inv_problem.set_regularisation(lambda x: sum(x))       # example 3
+
+        3. Example with a custom regularisation function
+
+        >>> inv_problem.set_regularisation(lambda x: sum(x))
         >>> inv_problem.regularisation([1,1])
         2
-        >>> inv_problem.set_regularisation(2, 0.5)                 # example 4
+        
+        4. Example with an L2 norm and regularisation factor of 0.5 (by default 1)
+
+        >>> inv_problem.set_regularisation(2, 0.5)
         >>> inv_problem.regularisation([1,1])
         0.7071067811865476
+
+        5. Example with a regularisation matrix
+        
+        >>> inv_problem.set_regularisation(2, 0.5, np.array([[2,0], [0,1]]))
+        >>> inv_problem.regularisation([1,1])
+        1.118033988749895
         """
+        # preprocess regularisation_matrix
+        if np.ndim(regularisation_matrix) != 0:     # convert to a function
+            self._regularisation_matrix = lambda _ : regularisation_matrix
+        else:       # self._regularisation_matrix should be a function anyway
+            self._regularisation_matrix = regularisation_matrix
+        # preprocess regularisation function without lambda
         if isinstance(regularisation, (Number, str)) or not regularisation:
             order = regularisation
             if isinstance(order, str) and order not in ["fro", "nuc", "inf", "-inf"] \
@@ -982,9 +1020,17 @@ class BaseProblem:
             _reg = lambda x: np.linalg.norm(x, ord=order)
         else:
             _reg = _FunctionWrapper("regularisation_none_lamda", regularisation, args, kwargs)
-        self.regularisation = _FunctionWrapper(
-            "regularisation", lambda model: (_reg(model) * lamda),
-        )
+        # wrapper function that calculates: lambda * raw regularisation value
+        if self._regularisation_matrix is None:
+            self.regularisation = _FunctionWrapper(
+                "regularisation", _regularisation_with_lamda, args=[_reg, lamda])
+        else:
+            self.regularisation = _FunctionWrapper(
+                "regularisation",
+                _regularisation_with_lamda_n_matrix,
+                args = [_reg, lamda, self._regularisation_matrix]
+            )
+        # update some autogenerated functions (as usual)
         self._update_autogen("regularisation")
 
     def set_forward(
@@ -997,7 +1043,7 @@ class BaseProblem:
 
         Parameters
         ----------
-        forward : Callable[[np.ndarray], Union[np.ndarray, Number]]
+        forward : function - np.ndarray -> (np.ndarray or Number)
             the forward function that matches :func:`BaseProblem.forward` in signature
         args : list, optional
             extra list of positional arguments for forward function
@@ -1064,7 +1110,7 @@ class BaseProblem:
         ----------
         file_path : str
             a relative/absolute file path for the data
-        obs_idx : Union[int,list], optional
+        obs_idx : int or list, optional
             the index/indices of observations within the data file, by default -1
         data_cov : np.ndarray, optional
             the data covariance matrix that helps estimate uncertainty, with dimension
@@ -1558,74 +1604,14 @@ class BaseProblem:
     @property
     def autogen_table(self):
         return {
-            ("data_misfit", "regularisation",): ("objective", self._objective_from_dm_reg),
-            ("data_misfit",): ("objective", self._objective_from_dm),
-            ("log_likelihood", "log_prior",): ("log_posterior_with_blobs", self._log_posterior_with_blobs_from_ll_lp),
-            ("log_posterior_with_blobs",): ("log_posterior", self._log_posterior_from_lp_with_blobs),
-            ("hessian",): ("hessian_times_vector", self._hessian_times_vector_from_hess),
-            ("forward", "data",): ("residual", self._residual_from_fwd_dt),
-            ("jacobian",): ("jacobian_times_vector", self._jacobian_times_vector_from_jcb),
+            ("data_misfit", "regularisation",): ("objective", _objective_from_dm_reg),
+            ("data_misfit",): ("objective", _objective_from_dm),
+            ("log_likelihood", "log_prior",): ("log_posterior_with_blobs", _log_posterior_with_blobs_from_ll_lp),
+            ("log_posterior_with_blobs",): ("log_posterior", _log_posterior_from_lp_with_blobs),
+            ("hessian",): ("hessian_times_vector", _hessian_times_vector_from_hess),
+            ("forward", "data",): ("residual", _residual_from_fwd_dt),
+            ("jacobian",): ("jacobian_times_vector", _jacobian_times_vector_from_jcb),
         }
-
-    @staticmethod
-    def __exception_in_autogen_func(exception):       # utils
-        print(
-            "cofi: Exception when calling auto generated function, check exception "
-            "details from message below. If not sure, please report this issue at "
-            "https://github.com/inlab-geo/cofi/issues"
-        )
-        raise exception
-
-    @staticmethod
-    def _objective_from_dm_reg(model, data_misfit, regularisation):
-        try:
-            return data_misfit(model) + regularisation(model)
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
-
-    @staticmethod
-    def _objective_from_dm(model, data_misfit):
-        try:
-            return data_misfit(model)
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
-
-    @staticmethod
-    def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
-        try:
-            ll = log_likelihood(model)
-            lp = log_prior(model)
-            return ll + lp, ll, lp
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
-
-    @staticmethod
-    def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
-        try:
-            return log_posterior_with_blobs(model)[0]
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
-    
-    @staticmethod
-    def _hessian_times_vector_from_hess(model, vector, hessian):
-        try:
-            return np.asarray(hessian(model) @ vector)
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
-    
-    @staticmethod
-    def _residual_from_fwd_dt(model, forward, data):
-        try:
-            return forward(model) - data
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
-    
-    @staticmethod
-    def _jacobian_times_vector_from_jcb(model, vector, jacobian):
-        try:
-            return np.asarray(jacobian(model) @ vector)
-        except Exception as exception:
-            BaseProblem.__exception_in_autogen_func(exception)
 
     def _update_autogen(self, updated_item):
         update_dict = {k: v for k, v in self.autogen_table.items() if updated_item in k}
@@ -1764,8 +1750,70 @@ class BaseProblem:
 
     def __repr__(self) -> str:
         return f"{self.name}"
+# ---------- End of BaseProblem class -------------------------------------------------
 
 
+# ---------- Auto generated functions -------------------------------------------------
+def __exception_in_autogen_func(exception):       # utils
+    print(
+        "cofi: Exception when calling auto generated function, check exception "
+        "details from message below. If not sure, please report this issue at "
+        "https://github.com/inlab-geo/cofi/issues"
+    )
+    raise exception
+
+def _objective_from_dm_reg(model, data_misfit, regularisation):
+    try:
+        return data_misfit(model) + regularisation(model)
+    except Exception as exception:
+        __exception_in_autogen_func(exception)
+
+def _objective_from_dm(model, data_misfit):
+    try:
+        return data_misfit(model)
+    except Exception as exception:
+        __exception_in_autogen_func(exception)
+
+def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
+    try:
+        ll = log_likelihood(model)
+        lp = log_prior(model)
+        return ll + lp, ll, lp
+    except Exception as exception:
+        __exception_in_autogen_func(exception)
+
+def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
+    try:
+        return log_posterior_with_blobs(model)[0]
+    except Exception as exception:
+        __exception_in_autogen_func(exception)
+
+def _hessian_times_vector_from_hess(model, vector, hessian):
+    try:
+        return np.asarray(hessian(model) @ vector)
+    except Exception as exception:
+       __exception_in_autogen_func(exception)
+
+def _residual_from_fwd_dt(model, forward, data):
+    try:
+        return forward(model) - data
+    except Exception as exception:
+        __exception_in_autogen_func(exception)
+
+def _jacobian_times_vector_from_jcb(model, vector, jacobian):
+    try:
+        return np.asarray(jacobian(model) @ vector)
+    except Exception as exception:
+        __exception_in_autogen_func(exception)
+
+def _regularisation_with_lamda(model, reg_func, lamda):
+    return lamda * reg_func(model)
+
+def _regularisation_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func):
+    return lamda * reg_func(reg_matrix_func(model) @ model)
+
+
+# ---------- function wrapper to help make things pickleable --------------------------
 class _FunctionWrapper:
     def __init__(self, name, func, args: list = None, kwargs: dict = None, autogen=False):
         self.name = name
