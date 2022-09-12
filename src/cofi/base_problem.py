@@ -7,9 +7,9 @@ import numpy as np
 from .solvers import solvers_table
 from .exceptions import (
     DimensionMismatchError, 
-    InsufficientInfoError, 
-    InvalidOptionError, 
-    NotDefinedError
+    InvalidOptionError,
+    InvocationError, 
+    NotDefinedError,
 )
 
 
@@ -928,7 +928,7 @@ class BaseProblem:
                 "L2 norm",
                 "l2 norm",
             ]:
-                self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_l2)
+                self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_l2, autogen=True)
             else:
                 raise InvalidOptionError(
                     name="data misfit", 
@@ -1629,8 +1629,8 @@ class BaseProblem:
     @property
     def autogen_table(self):
         return {
-            ("data_misfit", "regularisation",): ("objective", _objective_from_dm_reg),
             ("data_misfit",): ("objective", _objective_from_dm),
+            ("data_misfit", "regularisation",): ("objective", _objective_from_dm_reg),
             ("log_likelihood", "log_prior",): ("log_posterior_with_blobs", _log_posterior_with_blobs_from_ll_lp),
             ("log_posterior_with_blobs",): ("log_posterior", _log_posterior_from_lp_with_blobs),
             ("hessian",): ("hessian_times_vector", _hessian_times_vector_from_hess),
@@ -1688,10 +1688,14 @@ class BaseProblem:
         self._name = problem_name
 
     def _data_misfit_l2(self, model: np.ndarray) -> Number:
-        if self.residual_defined:
+        try:
             res = self.residual(model)
             return np.linalg.norm(res) / res.shape[0]
-        raise InsufficientInfoError(needs="residual", needed_for="L2 data misfit")
+        except Exception as exception:
+            raise InvocationError(
+                func_name="data misfit", 
+                autogen=True
+            ) from exception
 
     def summary(self):
         r"""Helper method that prints a summary of current ``BaseProblem`` object to
@@ -1779,25 +1783,23 @@ class BaseProblem:
 
 
 # ---------- Auto generated functions -------------------------------------------------
-def __exception_in_autogen_func(exception):       # utils
-    print(
-        "cofi: Exception when calling auto generated function, check exception "
-        "details from message below. If not sure, please report this issue at "
-        "https://github.com/inlab-geo/cofi/issues"
-    )
-    raise exception
-
 def _objective_from_dm_reg(model, data_misfit, regularisation):
     try:
         return data_misfit(model) + regularisation(model)
     except Exception as exception:
-        __exception_in_autogen_func(exception)
+        raise InvocationError(
+            func_name="objective function from data misfit and regularisation",
+            autogen=True
+        ) from exception 
 
 def _objective_from_dm(model, data_misfit):
     try:
         return data_misfit(model)
     except Exception as exception:
-        __exception_in_autogen_func(exception)
+        raise InvocationError(
+            func_name="objective function from data misfit",
+            autogen=True
+        ) from exception 
 
 def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
     try:
@@ -1805,31 +1807,46 @@ def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
         lp = log_prior(model)
         return ll + lp, ll, lp
     except Exception as exception:
-        __exception_in_autogen_func(exception)
+        raise InvocationError(
+            func_name="log posterior function from log likelihood and log prior",
+            autogen=True
+        ) from exception 
 
 def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
     try:
         return log_posterior_with_blobs(model)[0]
     except Exception as exception:
-        __exception_in_autogen_func(exception)
+        raise InvocationError(
+            func_name="log posterior function from log likelihood and log prior",
+            autogen=True
+        ) from exception 
 
 def _hessian_times_vector_from_hess(model, vector, hessian):
     try:
         return np.asarray(hessian(model) @ vector)
     except Exception as exception:
-       __exception_in_autogen_func(exception)
+       raise InvocationError(
+            func_name="hessian_times_vector function from given hessian function",
+            autogen=True
+        ) from exception 
 
 def _residual_from_fwd_dt(model, forward, data):
     try:
         return forward(model) - data
     except Exception as exception:
-        __exception_in_autogen_func(exception)
+        raise InvocationError(
+            func_name="residual function from forward and data provided",
+            autogen=True
+        ) from exception 
 
 def _jacobian_times_vector_from_jcb(model, vector, jacobian):
     try:
         return np.asarray(jacobian(model) @ vector)
     except Exception as exception:
-        __exception_in_autogen_func(exception)
+        raise InvocationError(
+            func_name="jacobian_times_vector from given jacobian function",
+            autogen=True
+        ) from exception 
 
 def _regularisation_with_lamda(model, reg_func, lamda):
     return lamda * reg_func(model)
@@ -1841,6 +1858,12 @@ def _regularisation_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func)
 # ---------- function wrapper to help make things pickleable --------------------------
 class _FunctionWrapper:
     def __init__(self, name, func, args: list = None, kwargs: dict = None, autogen=False):
+        if not callable(func):
+            raise InvalidOptionError(
+                name=f"{name} function", 
+                invalid_option="not-callable input", 
+                valid_options="functions that are callable"
+            )
         self.name = name
         self.func = func
         self.args = list() if args is None else args
@@ -1851,12 +1874,18 @@ class _FunctionWrapper:
         try:
             return self.func(model, *extra_args, *self.args, **self.kwargs)
         except Exception as exception:
-            import traceback
+            if self.autogen:
+                raise exception
+            else:
+                raise InvocationError(
+                    func_name=self.name, autogen=self.autogen
+                ) from exception
 
-            print(f"cofi: Exception while calling your {self.name} function:")
-            print("  params:", model, *extra_args)
-            print("  args:", self.args, len(self.args))
-            print("  kwargs:", self.kwargs)
-            print("  exception:")
-            traceback.print_exc()
-            raise exception
+            # import traceback
+            # print(f"cofi: Exception while calling your {self.name} function:")
+            # print("  params:", model, *extra_args)
+            # print("  args:", self.args, len(self.args))
+            # print("  kwargs:", self.kwargs)
+            # print("  exception:")
+            # traceback.print_exc()
+            # raise exception

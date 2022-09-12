@@ -6,8 +6,8 @@ import numpy as np
 from cofi import BaseProblem
 from cofi.exceptions import (
     DimensionMismatchError, 
-    InsufficientInfoError, 
-    InvalidOptionError, 
+    InvalidOptionError,
+    InvocationError, 
     NotDefinedError
 )
 
@@ -335,7 +335,7 @@ def test_invalid_misfit_options():
     with pytest.raises(InvalidOptionError):
         inv_problem.set_data_misfit("FOO")
     inv_problem.set_data_misfit("L2")
-    with pytest.raises(InsufficientInfoError):
+    with pytest.raises(InvocationError):
         inv_problem.data_misfit(np.array([1, 2, 3]))
 
 
@@ -457,6 +457,10 @@ def test_set_reg_with_args():
     inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, 2, args=[A])
     inv_problem.regularisation(np.array([1,2,3]))
 
+def test_invalid_func():
+    inv_problem = BaseProblem()
+    with pytest.raises(InvalidOptionError):
+        inv_problem.set_forward(1)
 
 ############### TEST regularisation (matrix, factor) ##################################
 def test_set_reg_with_matrix():
@@ -481,7 +485,6 @@ def test_set_reg_with_matrix_func():
     inv_problem = BaseProblem()
     inv_problem.set_regularisation(2, 0.5, lambda _: np.array([[2,0], [0,1]]))
     assert inv_problem.regularisation(np.array([1,1])) == 1.118033988749895
-
 
 
 ############### TEST model covariance #################################################
@@ -511,5 +514,52 @@ def test_hess_times_vector():
 
 
 ############### TEST auto generated methods ###########################################
+def test_obj_from_dm_reg():
+    inv_problem = BaseProblem()
+    # test valid
+    inv_problem.set_data_misfit(lambda x: x**2)
+    inv_problem.set_regularisation(lambda x: x)
+    assert inv_problem.objective(1) == 2
+    # test invalid
+    inv_problem.set_data_misfit(lambda x: x[2])
+    with pytest.raises(InvocationError):
+        inv_problem.objective(1)
 
+def test_obj_from_dm():
+    inv_problem = BaseProblem()
+    # test invalid
+    inv_problem.set_data_misfit(lambda x: x[2])
+    with pytest.raises(InvocationError):
+        inv_problem.objective(1)
 
+def test_lp_from_ll_lp():
+    inv_problem = BaseProblem()
+    # test valid
+    inv_problem.set_log_likelihood(lambda x: x**2)
+    inv_problem.set_log_prior(lambda x: x)
+    assert inv_problem.log_posterior(1) == 2
+    # test invalid
+    inv_problem.set_log_likelihood(lambda x: x[2])
+    with pytest.raises(InvocationError):
+        inv_problem.log_posterior(1)
+
+def test_hessp_from_hess():
+    inv_problem = BaseProblem()
+    # test invalid
+    inv_problem.set_hessian(np.array([1,2]))
+    with pytest.raises(InvocationError):
+        inv_problem.hessian_times_vector(0, np.array([1,2,3]))
+
+def test_jacp_from_jac():
+    inv_problem = BaseProblem()
+    # test invalid
+    inv_problem.set_jacobian(np.array([1,2]))
+    with pytest.raises(InvocationError):
+        inv_problem.jacobian_times_vector(0, np.array([1,2,3]))
+
+def test_res_from_fwd_dt():
+    inv_problem = BaseProblem()
+    inv_problem.set_forward(lambda x: x**2)
+    inv_problem.set_data(np.array([1,4,9]))
+    with pytest.raises(InvocationError):
+        inv_problem.residual(np.array([1,2]))

@@ -39,8 +39,8 @@ class InvalidOptionError(CofiError, ValueError):
         super_msg = super().__str__()
         msg = f"the {self._name} you've entered ('{self._invalid_option}') is " \
               f"invalid, please choose from the following: {self._valid_options}.\n\n" \
-              f"If you find it valuable to have '{self._invalid_option}' in CoFI, "\
-              f"please create an issue here: {GITHUB_ISSUE}"
+              f"If you find it valuable to have '{self._invalid_option}' for "\
+              f"{self._name} in CoFI, please create an issue here: {GITHUB_ISSUE}"
         return self._form_str(super_msg, msg) 
 
 
@@ -84,31 +84,31 @@ class DimensionMismatchError(CofiError, ValueError):
         return self._form_str(super_msg, msg) 
 
 
-class InsufficientInfoError(CofiError, RuntimeError):
-    r"""Raised when insufficient information is supplied to perform operations at hand
+# class InsufficientInfoError(CofiError, RuntimeError):
+#     r"""Raised when insufficient information is supplied to perform operations at hand
     
-    This is a subclass of :exc:`CofiError` and :exc:`RuntimeError`.
+#     This is a subclass of :exc:`CofiError` and :exc:`RuntimeError`.
 
-    Parameters
-    ----------
-    *args : Any
-        passed on directly to :exc:`RuntimeError`
-    needs : list or str 
-        a list of information required to perform the operation, or a string describing
-        them
-    needed_for : str
-        name of the operation to perform or the item to calculate 
-    """ 
-    def __init__(self, *args, needs: Union[List, str], needed_for: str):
-        super().__init__(*args)
-        self._needs = needs
-        self._needed_for = needed_for
+#     Parameters
+#     ----------
+#     *args : Any
+#         passed on directly to :exc:`RuntimeError`
+#     needs : list or str 
+#         a list of information required to perform the operation, or a string describing
+#         them
+#     needed_for : str
+#         name of the operation to perform or the item to calculate 
+#     """ 
+#     def __init__(self, *args, needs: Union[List, str], needed_for: str):
+#         super().__init__(*args)
+#         self._needs = needs
+#         self._needed_for = needed_for
     
-    def __str__(self) -> str:
-        super_msg = super().__str__()
-        msg = f"insufficient information supplied to calculate {self._needed_for}, " \
-              f"needs: {self._needs}"
-        return self._form_str(super_msg, msg)
+#     def __str__(self) -> str:
+#         super_msg = super().__str__()
+#         msg = f"insufficient information supplied to calculate {self._needed_for}, " \
+#               f"needs: {self._needs}"
+#         return self._form_str(super_msg, msg)
 
 
 class NotDefinedError(CofiError, NotImplementedError):
@@ -133,4 +133,33 @@ class NotDefinedError(CofiError, NotImplementedError):
         super_msg = super().__str__()
         msg = f"`{self._needs}` is required in the solving approach but you haven't " \
               "implemented or added it to the problem setup" 
+        return self._form_str(super_msg, msg)
+
+class InvocationError(CofiError, RuntimeError):
+    r"""Raised when there's an error happening during excecution of a function
+    
+    This is a subclass of :exc:`CofiError` and :exc:`RuntimeError`.
+
+    One should raise this error by ``raise InvocationError(func_name=a, autogen=b) from exception``,
+    where ``exception`` is the original exception caught
+    
+    Parameters
+    ----------
+    *args : Any
+        passed on directly to :exc:`RuntimeError`
+    func_name : str
+        name of the function that runs into error
+    autogen : bool
+        whether this function is automatically generated or defined by users
+    """
+    def __init__(self, *args, func_name: str, autogen: bool):
+        super().__init__(*args)
+        self._func_name = func_name
+        self._func_name_prefix = "auto-generated" if autogen else "your"
+    
+    def __str__(self) -> str:
+        super_msg = super().__str__()
+        msg = f"exception while calling {self._func_name_prefix} {self._func_name}. " \
+              f"Check exception details from message above. If not sure, " \
+              f"please report this issue at {GITHUB_ISSUE}"
         return self._form_str(super_msg, msg)
