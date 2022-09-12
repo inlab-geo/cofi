@@ -148,6 +148,7 @@ class BaseProblem:
         BaseProblem.set_jacobian_times_vector
         BaseProblem.set_data_misfit
         BaseProblem.set_regularisation
+        BaseProblem.set_regularisation_matrix
         BaseProblem.set_forward
         BaseProblem.set_data
         BaseProblem.set_data_covariance
@@ -197,6 +198,8 @@ class BaseProblem:
         BaseProblem.jacobian_times_vector
         BaseProblem.data_misfit
         BaseProblem.regularisation
+        BaseProblem.regularisation_matrix
+        BaseProblem.regularisation_factor
         BaseProblem.forward
         BaseProblem.name
         BaseProblem.data
@@ -229,6 +232,8 @@ class BaseProblem:
         "jacobian_times_vector",
         "data_misfit",
         "regularisation",
+        "regularisation_matrix",
+        "regularisation_factor",
         "forward",
         "data",
         "data_covariance",
@@ -293,7 +298,7 @@ class BaseProblem:
         information given a model
 
         The "related information" can be defined by you
-        (via :func:`BaseProblem.set_log_posterior_with_blobs`), but they will only be
+        (via :meth:`set_log_posterior_with_blobs`), but they will only be
         stored properly when you perform sampling with ``emcee``.
 
         Parameters
@@ -526,6 +531,27 @@ class BaseProblem:
         """
         raise NotDefinedError(needs="regularisation")
 
+    def regularisation_matrix(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
+        """Method for computing the regularisation weighting matrix
+        
+        Parameters
+        ----------
+        model : np.ndarray
+            a model that helps calculate regularisation matrix. In most cases this is
+            not needed, but you have the flexibility to set this as a function
+
+        Returns
+        -------
+        np.ndarray
+            the regularisation matrix of dimension ``(model_size, model_size)``
+
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set
+        """
+        raise NotDefinedError(needs="regularisation_matrix")
+
     def forward(self, model: np.ndarray, *args, **kwargs) -> Union[np.ndarray, Number]:
         """Method to perform the forward operation given a model
 
@@ -550,7 +576,7 @@ class BaseProblem:
     # - def set_something(self, something)
     # - def something(self), this is a property / function
     # - def something_defined(self) -> bool
-    # - add checking to self.defined_components
+    # - add checking to self.dall_components
     # - add `set_something` and `something` to documentation list on top of this file
     # - check if there's anything to add to autogen_table
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
@@ -563,14 +589,14 @@ class BaseProblem:
         Alternatively, objective function can be set implicitly (computed by us) if one of
         the following combinations is set:
 
-        - :func:`BaseProblem.set_data_misfit` + :func:`BaseProblem.set_regularisation`
-        - :func:`BaseProblem.set_data_misfit` (in this case, regularisation is default
+        - :meth:`set_data_misfit` + :meth:`set_regularisation`
+        - :meth:`set_data_misfit` (in this case, regularisation is default
           to 0)
 
         Parameters
         ----------
         obj_func : Callable[[np.ndarray], Number]
-            the objective function that matches :func:`BaseProblem.objective` in
+            the objective function that matches :meth:`objective` in
             signature
         args : list, optional
             extra list of positional arguments for the objective function
@@ -594,7 +620,7 @@ class BaseProblem:
         Parameters
         ----------
         log_posterior_func : Callable[[np.ndarray], Number]
-            the log_posterior function that matches :func:`BaseProblem.log_posterior`
+            the log_posterior function that matches :meth:`log_posterior`
             in signature
         args : list, optional
             extra list of positional arguments for log_posterior function
@@ -623,11 +649,11 @@ class BaseProblem:
         to understand what blobs are.
 
         If you use other backend samplers, you can still set ``log_posterior`` using
-        this function, and we will generate :func:`BaseProblem.log_posterior` to return
-        only the first output from :func:`BaseProblem.log_posterior_with_blobs`.
+        this function, and we will generate :meth:`log_posterior` to return
+        only the first output from :meth:`log_posterior_with_blobs`.
 
         This method is also generated automatically by us if you've defined both
-        :func:`BaseProblem.log_prior` and :func:`BaseProblem.log_likelihood`. In that
+        :meth:`log_prior` and :meth:`log_likelihood`. In that
         case, the ``blobs_dtype`` is set to be
         ``[("log_likelihood", float), ("log_prior", float)]``.
 
@@ -635,12 +661,12 @@ class BaseProblem:
         ----------
         log_posterior_blobs_func : Callable[[np.ndarray], Tuple[Number]
             the log_posterior_with_blobs function that matches
-            :func:`BaseProblem.log_posterior_blobs_func` in signature
+            :meth:`log_posterior_blobs_func` in signature
         blobs_dtype : list, optional
             a list of tuples that specify the names and type of the blobs, e.g.
             ``[("log_likelihood", float), ("log_prior", float)]``. If not set, the
             blobs will still be recorded during sampling in the order they are
-            returned from :func:`BaseProblem.log_posterior_blobs_func`
+            returned from :meth:`log_posterior_blobs_func`
         args : list, optional
             extra list of positional arguments for log_posterior function
         kwargs : dict, optional
@@ -678,7 +704,7 @@ class BaseProblem:
         Parameters
         ----------
         log_prior_func : Callable[[np.ndarray], Number]
-            the log_prior function that matches :func:`BaseProblem.log_prior`
+            the log_prior function that matches :meth:`log_prior`
             in signature
         args : list, optional
             extra list of positional arguments for log_prior function
@@ -699,7 +725,7 @@ class BaseProblem:
         Parameters
         ----------
         log_likelihood_func : Callable[[np.ndarray], Number]
-            the log_likelihood function that matches :func:`BaseProblem.log_likelihood`
+            the log_likelihood function that matches :meth:`log_likelihood`
             in signature
         args : list, optional
             extra list of positional arguments for log_likelihood function
@@ -720,7 +746,7 @@ class BaseProblem:
         Parameters
         ----------
         obj_func : Callable[[np.ndarray], Number]
-            the gradient function that matches :func:`BaseProblem.gradient` in
+            the gradient function that matches :meth:`gradient` in
             signature
         args : list, optional
             extra list of positional arguments for gradient function
@@ -742,7 +768,7 @@ class BaseProblem:
         Parameters
         ----------
         hess_func : (function - np.ndarray -> np.ndarray) or np.ndarray
-            the Hessian function that matches :func:`BaseProblem.hessian` in
+            the Hessian function that matches :meth:`hessian` in
             signature. Alternatively, provide a matrix if the Hessian is a constant.
         args : list, optional
             extra list of positional arguments for hessian function
@@ -771,7 +797,7 @@ class BaseProblem:
         ----------
         hess_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
             the function that computes the product of Hessian and an arbitrary vector,
-            in the same signature as :func:`BaseProblem.hessian_times_vector`
+            in the same signature as :meth:`hessian_times_vector`
         args : list, optional
             extra list of positional arguments for hessian_times_vector function
         kwargs : dict, optional
@@ -794,7 +820,7 @@ class BaseProblem:
         Parameters
         ----------
         res_func : Callable[[np.ndarray], np.ndarray]
-            the residual function that matches :func:`BaseProblem.residual` in
+            the residual function that matches :meth:`residual` in
             signature
         args : list, optional
             extra list of positional arguments for residual function
@@ -816,7 +842,7 @@ class BaseProblem:
         Parameters
         ----------
         jac_func : (function - np.ndarray -> np.ndarray) or np.ndarray
-            the Jacobian function that matches :func:`BaseProblem.residual` in
+            the Jacobian function that matches :meth:`residual` in
             signature. Alternatively, provide a matrix if the Jacobian is a constant.
         args : list, optional
             extra list of positional arguments for jacobian function
@@ -845,7 +871,7 @@ class BaseProblem:
         ----------
         jac_vec_func : Callable[[np.ndarray, np.ndarray], np.ndarray]
             the function that computes the product of Jacobian and an arbitrary vector,
-            in the same signature as :func:`BaseProblem.jacobian_times_vector`
+            in the same signature as :meth:`jacobian_times_vector`
         args : list, optional
             extra list of positional arguments for jacobian_times_vector function
         kwargs : dict, optional
@@ -871,8 +897,8 @@ class BaseProblem:
         - "L2"
 
         If you choose one of the above, then you would also need to use
-        :func:`BaseProblem.set_data` / :func:`BaseProblem.set_data_from_file`
-        and :func:`BaseProblem.set_forward` so that we can generate the data misfit
+        :meth:`set_data` / :meth:`set_data_from_file`
+        and :meth:`set_forward` so that we can generate the data misfit
         function for you.
 
         If the data misfit function you want isn't included above, then pass your own
@@ -882,7 +908,7 @@ class BaseProblem:
         ----------
         data_misfit : str or (function - np.ndarray -> Number)
             either a string from ["L2"], or a data misfit function that matches
-            :func:`BaseProblem.data_misfit` in signature.
+            :meth:`data_misfit` in signature.
         args : list, optional
             extra list of positional arguments for data_misfit function
         kwargs : dict, optional
@@ -918,8 +944,8 @@ class BaseProblem:
     def set_regularisation(
         self,
         regularisation: Union[str, Callable[[np.ndarray], Number]],
-        lamda: Number = 1,
-        regularisation_matrix: np.ndarray = None,
+        regularisation_factor: Number = 1,
+        regularisation_matrix: Union[np.ndarray, Callable[[np.ndarray], np.ndarray]] = None,
         args: list = None,
         kwargs: dict = None,
     ):
@@ -935,9 +961,9 @@ class BaseProblem:
         ----------
         regularisation : str or (function - np.ndarray -> Number)
             either a string from pre-built functions above, or a regularisation function that
-            matches :func:`BaseProblem.regularisation` in signature.
-        lamda : Number, optional
-            the regularisation factor that adjusts the ratio of the regularisation
+            matches :meth:`regularisation` in signature.
+        regularisation_factor : Number, optional
+            the regularisation factor (lamda) that adjusts the ratio of the regularisation
             term over the data misfit, by default 1. If ``regularisation`` and ``data_misfit``
             are set but ``objective`` isn't, then we will generate ``objective`` function as
             following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
@@ -995,16 +1021,24 @@ class BaseProblem:
         0.7071067811865476
 
         5. Example with a regularisation matrix
-        
+
         >>> inv_problem.set_regularisation(2, 0.5, np.array([[2,0], [0,1]]))
         >>> inv_problem.regularisation([1,1])
         1.118033988749895
         """
         # preprocess regularisation_matrix
-        if np.ndim(regularisation_matrix) != 0:     # convert to a function
-            self._regularisation_matrix = lambda _ : regularisation_matrix
-        else:       # self._regularisation_matrix should be a function anyway
-            self._regularisation_matrix = regularisation_matrix
+        if np.ndim(regularisation_matrix) != 0:
+            self.regularisation_matrix = _FunctionWrapper(
+                "regularisation_matrix", 
+                lambda _: regularisation_matrix
+            )
+        elif callable(regularisation_matrix):
+            self.regularisation_matrix = _FunctionWrapper(
+                "regularisation_matrix", 
+                regularisation_matrix
+            )
+        else:
+            self.regularisation_matrix = None
         # preprocess regularisation function without lambda
         if isinstance(regularisation, (Number, str)) or not regularisation:
             order = regularisation
@@ -1017,18 +1051,19 @@ class BaseProblem:
                 )
             elif isinstance(order, str) and order in ["inf", "-inf"]:
                 order = float(order)
-            _reg = lambda x: np.linalg.norm(x, ord=order)
+            _reg = _FunctionWrapper("regularisation_none_lamda", np.linalg.norm, args=[order])
         else:
             _reg = _FunctionWrapper("regularisation_none_lamda", regularisation, args, kwargs)
         # wrapper function that calculates: lambda * raw regularisation value
-        if self._regularisation_matrix is None:
+        self._regularisation_factor = regularisation_factor
+        if self.regularisation_matrix is None:
             self.regularisation = _FunctionWrapper(
-                "regularisation", _regularisation_with_lamda, args=[_reg, lamda])
+                "regularisation", _regularisation_with_lamda, args=[_reg, regularisation_factor])
         else:
             self.regularisation = _FunctionWrapper(
                 "regularisation",
                 _regularisation_with_lamda_n_matrix,
-                args = [_reg, lamda, self._regularisation_matrix]
+                args = [_reg, regularisation_factor, self.regularisation_matrix]
             )
         # update some autogenerated functions (as usual)
         self._update_autogen("regularisation")
@@ -1044,7 +1079,7 @@ class BaseProblem:
         Parameters
         ----------
         forward : function - np.ndarray -> (np.ndarray or Number)
-            the forward function that matches :func:`BaseProblem.forward` in signature
+            the forward function that matches :meth:`forward` in signature
         args : list, optional
             extra list of positional arguments for forward function
         kwargs : dict, optional
@@ -1132,7 +1167,7 @@ class BaseProblem:
     def set_initial_model(self, init_model: np.ndarray):
         r"""Sets the starting point for the model
 
-        Once set, we will infer the property :func:`BaseProblem.model_shape` in
+        Once set, we will infer the property :meth:`model_shape` in
         case this is required for some inference solvers
 
         Parameters
@@ -1154,7 +1189,7 @@ class BaseProblem:
         Raises
         ------
         DimensionMismatchError 
-            when you've defined an initial_model through :func:`BaseProblem.set_initial_model`
+            when you've defined an initial_model through :meth:`set_initial_model`
             but their shapes don't match
         """
         if self.initial_model_defined and self._model_shape != model_shape:
@@ -1297,8 +1332,8 @@ class BaseProblem:
 
     @property
     def data(self) -> np.ndarray:
-        r"""the observations, set by :func:`BaseProblem.set_data` or
-        :func:`BaseProblem.set_data_from_file`
+        r"""the observations, set by :meth:`set_data` or
+        :meth:`set_data_from_file`
 
         Raises
         ------
@@ -1311,8 +1346,8 @@ class BaseProblem:
 
     @property
     def data_covariance(self) -> np.ndarray:
-        """the data covariance matrix, set by :func:`BaseProblem.set_data_covariance`,
-        :func:`BaseProblem.set_data` or :func:`BaseProblem.set_data_from_file`.
+        """the data covariance matrix, set by :meth:`set_data_covariance`,
+        :meth:`set_data` or :meth:`set_data_from_file`.
 
         Raises
         ------
@@ -1325,8 +1360,8 @@ class BaseProblem:
 
     @property
     def data_covariance_inv(self) -> np.ndarray:
-        """the data covariance matrix, set by :func:`BaseProblem.set_data_covariance_inv`,
-        :func:`BaseProblem.set_data` or :func:`BaseProblem.set_data_from_file`.
+        """the data covariance matrix, set by :meth:`set_data_covariance_inv`,
+        :meth:`set_data` or :meth:`set_data_from_file`.
 
         Raises
         ------
@@ -1346,7 +1381,7 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by 
-            :func:`BaseProblem.set_initial_model`)
+            :meth:`set_initial_model`)
         """
         if hasattr(self, "_initial_model"):
             return self._initial_model
@@ -1360,9 +1395,9 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by either 
-            :func:`BaseProblem.set_model_shape`,
-            :func:`BaseProblem.set_model_shape`, or
-            :func:`BaseProblem.set_walkers_starting_pos`)
+            :meth:`set_model_shape`,
+            :meth:`set_model_shape`, or
+            :meth:`set_walkers_starting_pos`)
         """
         if hasattr(self, "_model_shape"):
             return self._model_shape
@@ -1376,7 +1411,7 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by 
-            :func:`BaseProblem.set_walkers_starting_pos`)
+            :meth:`set_walkers_starting_pos`)
         """
         if hasattr(self, "_walkers_starting_pos"):
             return self._walkers_starting_pos
@@ -1385,18 +1420,33 @@ class BaseProblem:
     @property
     def blobs_dtype(self) -> list:
         r"""the name and type for the blobs that
-        :func:`BaseProblem.log_posterior_with_blobs` will return
+        :meth:`log_posterior_with_blobs` will return
 
         Raises
         ------
         NotDefinedError
             when this property has not been defined (by either 
-            :func:`BaseProblem.set_blobs_dtype` or 
-            :func:`BaseProblem.set_log_posterior_with_blobs`)
+            :meth:`set_blobs_dtype` or 
+            :meth:`set_log_posterior_with_blobs`)
         """
         if hasattr(self, "_blobs_dtype"):
             return self._blobs_dtype
         raise NotDefinedError(needs="blobs name and type")
+    
+    @property
+    def regularisation_factor(self) -> Number:
+        r"""regularisation factor (lambda) that adjusts weights of the regularisation
+        term
+        
+        Raises
+        ------
+        NotDefinedError
+            when this property has not been defined (by
+            :meth:`set_regularisation`
+        """
+        if hasattr(self, "_regularisation_factor"):
+            return self._regularisation_factor
+        raise NotDefinedError(needs="regularisation_factor (lamda)")
 
     @property
     def bounds(self):
@@ -1406,7 +1456,7 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by 
-            :func:`BaseProblem.set_bounds`)
+            :meth:`set_bounds`)
         """
         if hasattr(self, "_bounds"):
             return self._bounds
@@ -1420,7 +1470,7 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by 
-            :func:`BaseProblem.set_constraints`)
+            :meth:`set_constraints`)
         """
         if hasattr(self, "_constraints"):
             return self._constraints
@@ -1428,165 +1478,132 @@ class BaseProblem:
 
     @property
     def objective_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.objective` has been defined"""
+        r"""indicates whether :meth:`objective` has been defined"""
         return self._check_defined(self.objective)
 
     @property
     def log_posterior_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.log_posterior` has been defined"""
+        r"""indicates whether :meth:`log_posterior` has been defined"""
         return self._check_defined(self.log_posterior)
 
     @property
     def log_posterior_with_blobs_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.log_posterior_with_blobs` has been
+        r"""indicates whether :meth:`log_posterior_with_blobs` has been
         defined
         """
         return self._check_defined(self.log_posterior_with_blobs)
 
     @property
     def log_prior_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.log_prior` has been defined"""
+        r"""indicates whether :meth:`log_prior` has been defined"""
         return self._check_defined(self.log_prior)
 
     @property
     def log_likelihood_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.log_likelihood` has been defined"""
+        r"""indicates whether :meth:`log_likelihood` has been defined"""
         return self._check_defined(self.log_likelihood)
 
     @property
     def gradient_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.gradient` has been defined"""
+        r"""indicates whether :meth:`gradient` has been defined"""
         return self._check_defined(self.gradient)
 
     @property
     def hessian_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.hessian` has been defined"""
+        r"""indicates whether :meth:`hessian` has been defined"""
         return self._check_defined(self.hessian)
 
     @property
     def hessian_times_vector_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.hessian_times_vector` has been defined"""
+        r"""indicates whether :meth:`hessian_times_vector` has been defined"""
         return self._check_defined(self.hessian_times_vector, 2)
 
     @property
     def residual_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.residual` has been defined"""
+        r"""indicates whether :meth:`residual` has been defined"""
         return self._check_defined(self.residual)
 
     @property
     def jacobian_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.jacobian` has been defined"""
+        r"""indicates whether :meth:`jacobian` has been defined"""
         return self._check_defined(self.jacobian)
 
     @property
     def jacobian_times_vector_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.jacobian_times_vector` has been defined"""
+        r"""indicates whether :meth:`jacobian_times_vector` has been defined"""
         return self._check_defined(self.jacobian_times_vector, 2)
 
     @property
     def data_misfit_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data_misfit` has been defined"""
+        r"""indicates whether :meth:`data_misfit` has been defined"""
         return self._check_defined(self.data_misfit)
 
     @property
     def regularisation_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.regularisation` has been defined"""
+        r"""indicates whether :meth:`regularisation` has been defined"""
         return self._check_defined(self.regularisation)
+    
+    @property
+    def regularisation_matrix_defined(self) -> bool:
+        r"""indicates whether :meth:`regularisation_matrix` has been defined"""
+        defined = self._check_defined(self.regularisation_matrix)
+        return defined and self.regularisation_matrix is not None
 
     @property
     def forward_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.forward` has been defined"""
+        r"""indicates whether :meth:`forward` has been defined"""
         return self._check_defined(self.forward)
 
     @property
     def data_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data` has been defined"""
-        try:
-            self.data
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`data` has been defined"""
+        return self._check_property_defined("data")
 
     @property
     def data_covariance_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data_covariance` has been defined"""
-        try:
-            self.data_covariance
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`data_covariance` has been defined"""
+        return self._check_property_defined("data_covariance")
 
     @property
     def data_covariance_inv_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.data_covariance_inv` has been defined"""
-        try:
-            self.data_covariance_inv
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`data_covariance_inv` has been defined""" 
+        return self._check_property_defined("data_covariance_inv")
+    
 
     @property
     def initial_model_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.initial_model` has been defined"""
-        try:
-            self.initial_model
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`initial_model` has been defined"""
+        return self._check_property_defined("initial_model")
 
     @property
     def model_shape_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.model_shape` has been defined"""
-        try:
-            self.model_shape
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`model_shape` has been defined"""
+        return self._check_property_defined("model_shape")
 
     @property
     def walkers_starting_pos_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.walkers_starting_pos` has been defined"""
-        try:
-            self.walkers_starting_pos
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`walkers_starting_pos` has been defined"""
+        return self._check_property_defined("walkers_starting_pos")
 
     @property
     def blobs_dtype_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.blobs_dtype` has been defined"""
-        try:
-            self.blobs_dtype
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`blobs_dtype` has been defined"""
+        return self._check_property_defined("blobs_dtype")
+
+    @property
+    def regularisation_factor_defined(self) -> bool:
+        r"""indicates whether :meth:`regularisation_factor` has been defined"""
+        return self._check_property_defined("regularisation_factor")
 
     @property
     def bounds_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.bounds` has been defined"""
-        try:
-            self.bounds
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`bounds` has been defined"""
+        return self._check_property_defined("bounds")
 
     @property
     def constraints_defined(self) -> bool:
-        r"""indicates whether :func:`BaseProblem.constraints` has been defined"""
-        try:
-            self.constraints
-        except NotDefinedError:
-            return False
-        else:
-            return True
+        r"""indicates whether :meth:`constraints` has been defined"""
+        return self._check_property_defined("constraints")
 
     @staticmethod
     def _check_defined(func, args_num=1):
@@ -1597,6 +1614,14 @@ class BaseProblem:
         except NotDefinedError:
             return False
         except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
+            return True
+    
+    def _check_property_defined(self, prop):
+        try:
+            getattr(self, prop)
+        except NotDefinedError:
+            return False
+        else:
             return True
 
     # autogen_table: (tuple of defined things) ->
