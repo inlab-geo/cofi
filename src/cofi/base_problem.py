@@ -1,10 +1,9 @@
 from numbers import Number
-from typing import Any, Callable, Dict, Union, Tuple, Sequence
+from typing import Callable, Union, Tuple, Sequence
 import json
 
 import numpy as np
 
-from .solvers import solvers_table
 from .exceptions import (
     DimensionMismatchError, 
     InvalidOptionError,
@@ -1317,6 +1316,7 @@ class BaseProblem:
         """
         to_suggest = dict()
         all_components = self.defined_components()
+        from .solvers import solvers_table
         for solving_method in solvers_table:
             backend_tools = solvers_table[solving_method]
             to_suggest[solving_method] = []

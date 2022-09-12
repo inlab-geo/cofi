@@ -1,8 +1,5 @@
 from typing import Type
 
-import emcee
-import arviz
-
 from . import BaseProblem, InversionOptions
 from .solvers import solver_dispatch_table, BaseSolver
 
@@ -104,6 +101,9 @@ class SamplingResult(InversionResult):
             when sampling result of current type (``type(SamplingResult.sampler)``))
             cannot be converted into an :class:`arviz.InferenceData`
         """
+        import arviz
+        import emcee
+
         sampler = self.sampler
         if sampler is None:
             raise ValueError(
