@@ -10,6 +10,14 @@
   input matrix might be of type `numpy.matrix`
 - Enabled possibility for parallelism with emcee, by making user defined 
   functions pickleable
+- [#53](https://github.com/inlab-geo/cofi/issues/53) Add set_regularisation(reg, reg_matrix, lamda)
+- [#57](https://github.com/inlab-geo/cofi/issues/57) Create our own exception class
+- [#59](https://github.com/inlab-geo/cofi/issues/59) Optimise import cofi by not importing cofi.solvers
+- [#61](https://github.com/inlab-geo/cofi/issues/61) Remove lambda function from BaseProblem to avoid error in multiprocessing
+
+### CoFI Solvers
+
+- [#55](https://github.com/inlab-geo/cofi/issues/55) Linear solvers with Tikhonov regularisations
 
 
 ## v0.1.2.dev8 (13/07/2022)
