@@ -775,7 +775,7 @@ class BaseProblem:
             extra dict of keyword arguments for hessian function
         """
         if isinstance(hess_func, np.ndarray):
-            self.hessian = _FunctionWrapper("hessian", lambda _: hess_func)
+            self.hessian = _FunctionWrapper("hessian", _matrix_to_func, args=[hess_func])
         else:
             self.hessian = _FunctionWrapper("hessian", hess_func, args, kwargs)
         self._update_autogen("hessian")
@@ -849,7 +849,7 @@ class BaseProblem:
             extra dict of keyword arguments for jacobian function
         """
         if isinstance(jac_func, np.ndarray):
-            self.jacobian = _FunctionWrapper("jacobian", lambda _: jac_func)
+            self.jacobian = _FunctionWrapper("jacobian", _matrix_to_func, args=[jac_func])
         else:
             self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
         self._update_autogen("jacobian")
@@ -1029,7 +1029,7 @@ class BaseProblem:
         if np.ndim(regularisation_matrix) != 0:
             self.regularisation_matrix = _FunctionWrapper(
                 "regularisation_matrix", 
-                lambda _: regularisation_matrix
+                _matrix_to_func, args=[regularisation_matrix]
             )
         elif callable(regularisation_matrix):
             self.regularisation_matrix = _FunctionWrapper(
@@ -1854,6 +1854,8 @@ def _regularisation_with_lamda(model, reg_func, lamda):
 def _regularisation_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func):
     return lamda * reg_func(reg_matrix_func(model) @ model)
 
+def _matrix_to_func(_, matrix):
+    return matrix
 
 # ---------- function wrapper to help make things pickleable --------------------------
 class _FunctionWrapper:
