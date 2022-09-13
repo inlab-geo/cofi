@@ -1340,7 +1340,7 @@ class BaseProblem:
         NotDefinedError
             when this property has not been defined by methods above
         """
-        if hasattr(self, "_data"):
+        if hasattr(self, "_data") and self._data is not None:
             return self._data
         raise NotDefinedError(needs="data")
 
@@ -1354,7 +1354,7 @@ class BaseProblem:
         NotDefinedError
             when this property has not been defined by methods above
         """
-        if hasattr(self, "_data_covariance"):
+        if hasattr(self, "_data_covariance") and self._data_covariance is not None:
             return self._data_covariance
         raise NotDefinedError(needs="data covariance matrix")
 
@@ -1368,7 +1368,8 @@ class BaseProblem:
         NotDefinedError
             when this property has not been defined by methods above
         """
-        if hasattr(self, "_data_covariance_inv"):
+        if hasattr(self, "_data_covariance_inv") and \
+            self._data_covariance_inv is not None:
             return self._data_covariance_inv
         raise NotDefinedError(needs="inverse data covariance matrix")
 
@@ -1383,7 +1384,7 @@ class BaseProblem:
             when this property has not been defined (by 
             :meth:`set_initial_model`)
         """
-        if hasattr(self, "_initial_model"):
+        if hasattr(self, "_initial_model") and self._initial_model is not None:
             return self._initial_model
         raise NotDefinedError(needs="initial_model")
 
@@ -1399,7 +1400,7 @@ class BaseProblem:
             :meth:`set_model_shape`, or
             :meth:`set_walkers_starting_pos`)
         """
-        if hasattr(self, "_model_shape"):
+        if hasattr(self, "_model_shape") and self._model_shape is not None:
             return self._model_shape
         raise NotDefinedError(needs="model_shape")
 
@@ -1413,7 +1414,8 @@ class BaseProblem:
             when this property has not been defined (by 
             :meth:`set_walkers_starting_pos`)
         """
-        if hasattr(self, "_walkers_starting_pos"):
+        if hasattr(self, "_walkers_starting_pos") and \
+            self._walkers_starting_pos is not None:
             return self._walkers_starting_pos
         raise NotDefinedError(needs="walkers' starting positions")
 
@@ -1429,7 +1431,7 @@ class BaseProblem:
             :meth:`set_blobs_dtype` or 
             :meth:`set_log_posterior_with_blobs`)
         """
-        if hasattr(self, "_blobs_dtype"):
+        if hasattr(self, "_blobs_dtype") and self._blobs_dtype is not None:
             return self._blobs_dtype
         raise NotDefinedError(needs="blobs name and type")
     
@@ -1444,7 +1446,8 @@ class BaseProblem:
             when this property has not been defined (by
             :meth:`set_regularisation`
         """
-        if hasattr(self, "_regularisation_factor"):
+        if hasattr(self, "_regularisation_factor") and \
+            self._regularisation_factor is not None:
             return self._regularisation_factor
         raise NotDefinedError(needs="regularisation_factor (lamda)")
 
@@ -1458,7 +1461,7 @@ class BaseProblem:
             when this property has not been defined (by 
             :meth:`set_bounds`)
         """
-        if hasattr(self, "_bounds"):
+        if hasattr(self, "_bounds") and self._bounds is not None:
             return self._bounds
         raise NotDefinedError(needs="bounds")
 
@@ -1472,7 +1475,7 @@ class BaseProblem:
             when this property has not been defined (by 
             :meth:`set_constraints`)
         """
-        if hasattr(self, "_constraints"):
+        if hasattr(self, "_constraints") and self._constraints is not None:
             return self._constraints
         raise NotDefinedError(needs="constraints")
 
@@ -1546,8 +1549,7 @@ class BaseProblem:
     @property
     def regularisation_matrix_defined(self) -> bool:
         r"""indicates whether :meth:`regularisation_matrix` has been defined"""
-        defined = self._check_defined(self.regularisation_matrix)
-        return defined and self.regularisation_matrix is not None
+        return self._check_defined(self.regularisation_matrix)
 
     @property
     def forward_defined(self) -> bool:
@@ -1607,6 +1609,8 @@ class BaseProblem:
 
     @staticmethod
     def _check_defined(func, args_num=1):
+        if func is None:
+            return False
         if isinstance(func, _FunctionWrapper):
             return True
         try:
