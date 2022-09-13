@@ -170,6 +170,7 @@ def check_defined_misfit_reg(inv_problem):
     assert inv_problem.regularisation_factor_defined
     assert inv_problem.objective_defined
     assert not inv_problem.gradient_defined
+    assert not inv_problem.regularisation_matrix_defined
     assert not inv_problem.hessian_defined
     assert not inv_problem.residual_defined
     assert not inv_problem.jacobian_defined
