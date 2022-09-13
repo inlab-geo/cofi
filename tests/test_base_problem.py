@@ -4,7 +4,12 @@ import pytest
 import numpy as np
 
 from cofi import BaseProblem
-
+from cofi.exceptions import (
+    DimensionMismatchError, 
+    InvalidOptionError,
+    InvocationError, 
+    NotDefinedError
+)
 
 ############### TEST data loader ######################################################
 data_files_to_test = [
@@ -36,52 +41,56 @@ def test_set_data_from_file(data_path):
 ############### TEST empty problem ####################################################
 def test_non_set():
     inv_problem = BaseProblem()
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.objective(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.gradient(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.hessian(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.hessian_times_vector(1, 2)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.residual(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.jacobian(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.jacobian_times_vector(1, 2)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data_misfit(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.regularisation(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
+        inv_problem.regularisation_matrix(1)
+    with pytest.raises(NotDefinedError):
         inv_problem.forward(1)
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data_covariance
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.data_covariance_inv
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.initial_model
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.model_shape
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.bounds
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.constraints
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_posterior(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_prior(1)
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_likelihood(1)
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.walkers_starting_pos
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(NotDefinedError):
         inv_problem.log_posterior_with_blobs(1)
-    with pytest.raises(NameError):
+    with pytest.raises(NotDefinedError):
         inv_problem.blobs_dtype
+    with pytest.raises(NotDefinedError):
+        inv_problem.regularisation_factor
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -91,6 +100,7 @@ def test_non_set():
     assert not inv_problem.jacobian_times_vector_defined
     assert not inv_problem.data_misfit_defined
     assert not inv_problem.regularisation_defined
+    assert not inv_problem.regularisation_matrix_defined
     assert not inv_problem.forward_defined
     assert not inv_problem.data_defined
     assert not inv_problem.data_covariance_defined
@@ -105,6 +115,7 @@ def test_non_set():
     assert not inv_problem.walkers_starting_pos_defined
     assert not inv_problem.log_posterior_with_blobs_defined
     assert not inv_problem.blobs_dtype_defined
+    assert not inv_problem.regularisation_factor_defined
     assert len(inv_problem.defined_components()) == 0
     inv_problem.summary()
 
@@ -156,6 +167,7 @@ def check_defined_misfit_reg(inv_problem):
     inv_problem.summary()
     assert inv_problem.data_misfit_defined
     assert inv_problem.regularisation_defined
+    assert inv_problem.regularisation_factor_defined
     assert inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -163,7 +175,7 @@ def check_defined_misfit_reg(inv_problem):
     assert not inv_problem.jacobian_defined
     assert not inv_problem.data_defined
     assert not inv_problem.forward_defined
-    assert len(inv_problem.defined_components()) == 3
+    assert len(inv_problem.defined_components()) == 4
 
 
 def test_set_misfit_reg(inv_problem_with_misfit):
@@ -265,9 +277,9 @@ def test_set_misfit_reg_inf(inv_problem_with_misfit):
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidOptionError, match=r".*the regularisation order you've entered.*"):
         inv_problem.set_regularisation("FOO")
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidOptionError, match=r".*is invalid, please choose from the following:.*"):
         inv_problem.set_regularisation(-1)
 
 
@@ -289,11 +301,12 @@ def check_defined_data_fwd_misfit_reg(inv_problem):
     assert inv_problem.data_misfit_defined
     assert inv_problem.residual_defined
     assert inv_problem.regularisation_defined
+    assert inv_problem.regularisation_factor_defined
     assert inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
     assert not inv_problem.jacobian_defined
-    assert len(inv_problem.defined_components()) == 6
+    assert len(inv_problem.defined_components()) == 7
 
 
 def check_values_data_fwd_misfit_reg(inv_problem):
@@ -319,10 +332,10 @@ def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
 
 def test_invalid_misfit_options():
     inv_problem = BaseProblem()
-    with pytest.raises(ValueError):
+    with pytest.raises(InvalidOptionError):
         inv_problem.set_data_misfit("FOO")
-    inv_problem.set_data_misfit("mse")
-    with pytest.raises(ValueError):
+    inv_problem.set_data_misfit("L2")
+    with pytest.raises(InvocationError):
         inv_problem.data_misfit(np.array([1, 2, 3]))
 
 
@@ -367,10 +380,9 @@ def test_check_defined():
     assert inv_problem.initial_model_defined
     assert inv_problem.model_shape_defined
     assert inv_problem.model_shape == (3,)
-    with pytest.raises(ValueError):
+    with pytest.raises(DimensionMismatchError, match=r".*the model shape you've provided.*"):
         inv_problem.set_model_shape((2, 1))
     inv_problem.set_model_shape((3, 1))
-
 
 def test_set_data():
     inv_problem = BaseProblem()
@@ -442,8 +454,37 @@ def test_set_reg_with_args():
     inv_problem = BaseProblem()
     from scipy.sparse import csr_matrix
     A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
-    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, lamda=2, args=[A])
+    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, 2, args=[A])
     inv_problem.regularisation(np.array([1,2,3]))
+
+def test_invalid_func():
+    inv_problem = BaseProblem()
+    with pytest.raises(InvalidOptionError):
+        inv_problem.set_forward(1)
+
+############### TEST regularisation (matrix, factor) ##################################
+def test_set_reg_with_matrix():
+    inv_problem = BaseProblem()
+    # test zero info
+    assert not inv_problem.regularisation_defined
+    assert not inv_problem.regularisation_factor_defined
+    assert not inv_problem.regularisation_matrix_defined
+    # test set
+    inv_problem.set_regularisation(2, 0.5, np.array([[2,0],[0,1]]))
+    assert inv_problem.regularisation_defined
+    assert inv_problem.regularisation_factor_defined
+    assert inv_problem.regularisation_matrix_defined
+    assert inv_problem.regularisation(np.array([1,1])) == 1.118033988749895
+    # test unset
+    inv_problem.set_regularisation(2)
+    assert inv_problem.regularisation_defined
+    assert inv_problem.regularisation_factor == 1
+    assert not inv_problem.regularisation_matrix_defined
+
+def test_set_reg_with_matrix_func():
+    inv_problem = BaseProblem()
+    inv_problem.set_regularisation(2, 0.5, lambda _: np.array([[2,0], [0,1]]))
+    assert inv_problem.regularisation(np.array([1,1])) == 1.118033988749895
 
 
 ############### TEST model covariance #################################################
@@ -452,7 +493,7 @@ def test_model_cov():
     sigma = 1.0
     Cdinv = np.eye(100)/(sigma**2)
     inv_problem.set_data_covariance_inv(Cdinv)
-    with pytest.raises(NotImplementedError, match=r".*`jacobian` is required.*"):
+    with pytest.raises(NotDefinedError, match=r".*`jacobian` is required.*"):
         inv_problem.model_covariance_inv(None)
     inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
     inv_problem.model_covariance(None)
@@ -473,5 +514,52 @@ def test_hess_times_vector():
 
 
 ############### TEST auto generated methods ###########################################
+def test_obj_from_dm_reg():
+    inv_problem = BaseProblem()
+    # test valid
+    inv_problem.set_data_misfit(lambda x: x**2)
+    inv_problem.set_regularisation(lambda x: x)
+    assert inv_problem.objective(1) == 2
+    # test invalid
+    inv_problem.set_data_misfit(lambda x: x[2])
+    with pytest.raises(InvocationError, match=r".*exception while calling auto-generated objective.*"):
+        inv_problem.objective(1)
 
+def test_obj_from_dm():
+    inv_problem = BaseProblem()
+    # test invalid
+    inv_problem.set_data_misfit(lambda x: x[2])
+    with pytest.raises(InvocationError):
+        inv_problem.objective(1)
 
+def test_lp_from_ll_lp():
+    inv_problem = BaseProblem()
+    # test valid
+    inv_problem.set_log_likelihood(lambda x: x**2)
+    inv_problem.set_log_prior(lambda x: x)
+    assert inv_problem.log_posterior(1) == 2
+    # test invalid
+    inv_problem.set_log_likelihood(lambda x: x[2])
+    with pytest.raises(InvocationError):
+        inv_problem.log_posterior(1)
+
+def test_hessp_from_hess():
+    inv_problem = BaseProblem()
+    # test invalid
+    inv_problem.set_hessian(np.array([1,2]))
+    with pytest.raises(InvocationError):
+        inv_problem.hessian_times_vector(0, np.array([1,2,3]))
+
+def test_jacp_from_jac():
+    inv_problem = BaseProblem()
+    # test invalid
+    inv_problem.set_jacobian(np.array([1,2]))
+    with pytest.raises(InvocationError):
+        inv_problem.jacobian_times_vector(0, np.array([1,2,3]))
+
+def test_res_from_fwd_dt():
+    inv_problem = BaseProblem()
+    inv_problem.set_forward(lambda x: x**2)
+    inv_problem.set_data(np.array([1,4,9]))
+    with pytest.raises(InvocationError):
+        inv_problem.residual(np.array([1,2]))

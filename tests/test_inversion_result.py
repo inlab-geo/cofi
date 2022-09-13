@@ -64,4 +64,3 @@ def test_to_arviz():
         idata = res.to_arviz()
     # 5 - correct sampler (prior + likelihood + blob_groups)
     idata = res.to_arviz(blob_groups=["log_likelihood", "prior"])
-
