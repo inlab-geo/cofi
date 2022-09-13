@@ -277,9 +277,9 @@ def test_set_misfit_reg_inf(inv_problem_with_misfit):
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
-    with pytest.raises(InvalidOptionError):
+    with pytest.raises(InvalidOptionError, match=r".*the regularisation order you've entered.*"):
         inv_problem.set_regularisation("FOO")
-    with pytest.raises(InvalidOptionError):
+    with pytest.raises(InvalidOptionError, match=r".*is invalid, please choose from the following:.*"):
         inv_problem.set_regularisation(-1)
 
 
@@ -380,7 +380,7 @@ def test_check_defined():
     assert inv_problem.initial_model_defined
     assert inv_problem.model_shape_defined
     assert inv_problem.model_shape == (3,)
-    with pytest.raises(DimensionMismatchError):
+    with pytest.raises(DimensionMismatchError, match=r".*the model shape you've provided.*"):
         inv_problem.set_model_shape((2, 1))
     inv_problem.set_model_shape((3, 1))
 
@@ -522,7 +522,7 @@ def test_obj_from_dm_reg():
     assert inv_problem.objective(1) == 2
     # test invalid
     inv_problem.set_data_misfit(lambda x: x[2])
-    with pytest.raises(InvocationError):
+    with pytest.raises(InvocationError, match=r".*exception while calling auto-generated objective.*"):
         inv_problem.objective(1)
 
 def test_obj_from_dm():

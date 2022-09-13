@@ -7,10 +7,7 @@ GITHUB_ISSUE = "https://github.com/inlab-geo/cofi/issues"
 class CofiError(Exception):
     """Base class for all CoFI errors"""
     def _form_str(self, super_msg, msg):
-        if super_msg:
-            return msg + "\n\n" + super_msg
-        else:
-            return msg 
+        return f"{msg}\n\n{super_msg}" if super_msg else msg
 
 
 class InvalidOptionError(CofiError, ValueError):
@@ -82,33 +79,6 @@ class DimensionMismatchError(CofiError, ValueError):
               f" doesn't match and cannot be reshaped into the dimension you've set" \
               f" for {self._expected_source} which is {self._expected_dimension}" 
         return self._form_str(super_msg, msg) 
-
-
-# class InsufficientInfoError(CofiError, RuntimeError):
-#     r"""Raised when insufficient information is supplied to perform operations at hand
-    
-#     This is a subclass of :exc:`CofiError` and :exc:`RuntimeError`.
-
-#     Parameters
-#     ----------
-#     *args : Any
-#         passed on directly to :exc:`RuntimeError`
-#     needs : list or str 
-#         a list of information required to perform the operation, or a string describing
-#         them
-#     needed_for : str
-#         name of the operation to perform or the item to calculate 
-#     """ 
-#     def __init__(self, *args, needs: Union[List, str], needed_for: str):
-#         super().__init__(*args)
-#         self._needs = needs
-#         self._needed_for = needed_for
-    
-#     def __str__(self) -> str:
-#         super_msg = super().__str__()
-#         msg = f"insufficient information supplied to calculate {self._needed_for}, " \
-#               f"needs: {self._needs}"
-#         return self._form_str(super_msg, msg)
 
 
 class NotDefinedError(CofiError, NotImplementedError):
