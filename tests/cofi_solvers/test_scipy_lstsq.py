@@ -8,7 +8,7 @@ from cofi import BaseProblem, InversionOptions
 def test_validate_jac():
     # 1
     inv_problem = BaseProblem()
-    inv_problem.set_jacobian(lambda x: np.array([1, 2, 3]))
+    inv_problem.set_jacobian(lambda x: np.array([[1, 2, 3]]))
     inv_problem.set_hessian(lambda x: x)
     inv_problem.set_data(np.array([2]))
     inv_options = InversionOptions()
@@ -24,39 +24,63 @@ def test_validate_jac():
     with pytest.raises(ValueError, match=".*isn't set properly.*"):
         inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
 
-
 def test_run():
     x = np.array([1, 2.5, 3.5, 4, 5, 7, 8.5])
-    y = np.array([0.3, 1.1, 1.5, 2.0, 3.2, 6.6, 8.6])
-    M = x[:, np.newaxis] ** [0, 2]
+    y = np.array([0.8, 2.6, 3.5, 4.1, 4.8, 6.6, 8.6])
+    G = x[:, np.newaxis] ** np.arange(2)
     inv_problem = BaseProblem()
-    inv_problem.set_jacobian(M)
+    inv_problem.set_jacobian(G)
     inv_problem.set_data(y)
     inv_options = InversionOptions()
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
-
+    assert res["model"][0] == pytest.approx(0, abs=0.1)
+    assert res["model"][1] == pytest.approx(1, abs=0.1)
 
 def test_uncertainty():
     x = np.array([1, 2.5, 3.5, 4, 5, 7, 8.5])
-    y = np.array([0.3, 1.1, 1.5, 2.0, 3.2, 6.6, 8.6])
-    M = x[:, np.newaxis] ** [0, 2]
-    Cdinv = np.diag(np.ones((7,)))
+    y = np.array([0.8, 2.6, 3.5, 4.1, 4.8, 6.6, 8.6])
+    G = x[:, np.newaxis] ** np.arange(2)
+    Cdinv = np.diag(np.array([5, 10, 100, 10, 5, 2.5, 10]))
     inv_problem = BaseProblem()
-    inv_problem.set_jacobian(M)
+    inv_problem.set_jacobian(G)
     inv_problem.set_data(y)
     # 1
-    inv_problem.set_data_covariance(Cdinv)
-    inv_options = InversionOptions()
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
-    res = solver()
-    assert res["success"]
-    assert "model covariance" in res
-    # 2
     inv_problem.set_data_covariance_inv(Cdinv)
     inv_options = InversionOptions()
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert "model covariance" in res
+    assert res["model"][0] == pytest.approx(0, abs=0.05)
+    assert res["model"][1] == pytest.approx(1, abs=0.05)
+    # 2
+    inv_problem.set_data_covariance(np.linalg.inv(Cdinv))
+    inv_options = InversionOptions()
+    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    res = solver()
+    assert res["success"]
+    assert "model covariance" in res
+    assert res["model"][0] == pytest.approx(0, abs=0.05)
+    assert res["model"][1] == pytest.approx(1, abs=0.05)
+
+def test_tikhonov():
+    x = np.array([1, 2.5, 3.5, 4, 5, 7, 8.5])
+    y = np.array([0.8, 2.6, 3.5, 4.1, 4.8, 6.6, 8.6])
+    G = x[:, np.newaxis] ** np.arange(2)
+    Cdinv = np.diag(np.array([5, 10, 100, 10, 5, 2.5, 10]))
+    lamda = 1
+    L = np.eye(2)
+    inv_problem = BaseProblem()
+    inv_problem.set_jacobian(G)
+    inv_problem.set_data(y)
+    inv_problem.set_data_covariance_inv(Cdinv)
+    inv_problem.set_regularisation(2, lamda, L)
+    inv_options = InversionOptions()
+    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    res = solver()
+    assert res["success"]
+    assert "model covariance" in res
+    assert res["model"][0] == pytest.approx(0, abs=0.02)
+    assert res["model"][1] == pytest.approx(1, abs=0.02)
