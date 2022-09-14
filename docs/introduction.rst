@@ -5,7 +5,7 @@ Intro to CoFI
 With a mission to bridge the gap between the domain expertise and the 
 inference expertise, ``cofi`` provides an interface across a 
 wide range of inference algorithms from different sources, underpinned by a rich set 
-of domain relevant `examples <cofi-examples/utils/sphinx_gallery/generated/index.html>`_.
+of domain relevant `examples <cofi-examples/tools/sphinx_gallery/generated/index.html>`_.
 
 This page contains explanation about the basic concepts of this package.
 
@@ -60,5 +60,5 @@ So a common workflow includes 4 steps:
   Congrats! You are on board. Click `here <installation.html>`_ if you haven't 
   installed CoFI locally yet. Otherwise, continue with 
   `tutorials <tutorials/index.html>`_ for a step-by-step guide, or 
-  `example gallery <cofi-examples/utils/sphinx_gallery/generated/index.html>` if you are eager to learn
+  `example gallery <cofi-examples/tools/sphinx_gallery/generated/index.html>` if you are eager to learn
   through examples.

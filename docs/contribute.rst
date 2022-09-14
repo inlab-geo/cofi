@@ -57,7 +57,7 @@ Fork and clone respository
 
 1. Navigate to the GitHub repository (`cofi <https://github.com/inlab-geo/cofi>`_,
    or `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ if you'd like to
-   add or edit things in the `example gallery <cofi-examples/utils/sphinx_gallery/generated/index.html>`_)
+   add or edit things in the `example gallery <cofi-examples/tools/sphinx_gallery/generated/index.html>`_)
 2. Click the "Fork" button on top right of the page (followed by a confirmation page
    with a "Create fork" button)
 3. Now you'll be redirected to your fork of ``cofi``, which is like a branch out in 
@@ -189,7 +189,7 @@ how to contribute to the example repository.
 
 Our `tutorials <tutorial.html>`_ page is a good place to start learning about how to
 plug in an inversion problem in ``cofi``. Furthermore, there are examples with increasing 
-complexity presented in the `example gallery <cofi-examples/utils/sphinx_gallery/generated/index.html>`_ 
+complexity presented in the `example gallery <cofi-examples/tools/sphinx_gallery/generated/index.html>`_ 
 page for you to learn from.
 
 
@@ -319,9 +319,9 @@ below:
      - docs/installation.rst
    * - `Tutorials <tutorial.html>`_
      - docs/tutorial.rst
-   * - `Example gallery (front page) <cofi-examples/utils/sphinx_gallery/generated/index.html>`_
+   * - `Example gallery (front page) <cofi-examples/tools/sphinx_gallery/generated/index.html>`_
      - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ scripts/README.rst
-   * - `Exmaple gallery (examples content) <cofi-examples/utils/sphinx_gallery/generated/index.html>`_
+   * - `Exmaple gallery (examples content) <cofi-examples/tools/sphinx_gallery/generated/index.html>`_
      - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ notebooks/example.ipynb
    * - `Frequently asked questions <faq.html>`_
      - docs/faq.rst

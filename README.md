@@ -64,7 +64,7 @@ print(result.success)
 print(result.model)
 ```
 
-And now an inversion is completed! Check out our [example gallery](https://cofi.readthedocs.io/en/latest/cofi-examples/utils/sphinx_gallery/generated/index.html)
+And now an inversion is completed! Check out our [example gallery](https://cofi.readthedocs.io/en/latest/cofi-examples/tools/sphinx_gallery/generated/index.html)
 and [tutorial](https://cofi.readthedocs.io/en/latest/tutorial.html) pages for more 
 real-world or advanced use cases.
 

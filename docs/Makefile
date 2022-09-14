@@ -11,7 +11,7 @@ SOURCEDIR     = .
 BUILDDIR      = _build
 APIDIR        = api
 CODEDIR       = ../cofi/
-NOTEBOOKDIR   = cofi-examples/utils/sphinx_gallery
+NOTEBOOKDIR   = cofi-examples/tools/sphinx_gallery
 
 
 all: html
