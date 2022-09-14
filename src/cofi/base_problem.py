@@ -147,7 +147,6 @@ class BaseProblem:
         BaseProblem.set_jacobian_times_vector
         BaseProblem.set_data_misfit
         BaseProblem.set_regularisation
-        BaseProblem.set_regularisation_matrix
         BaseProblem.set_forward
         BaseProblem.set_data
         BaseProblem.set_data_covariance
