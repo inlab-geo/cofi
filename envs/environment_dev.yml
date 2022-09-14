@@ -47,3 +47,4 @@ dependencies:
     - sphinx-copybutton
     - watermark
     - sphinxcontrib-svg2pdfconverter==1.2.0
+    - papermill
