@@ -51,6 +51,7 @@ class ScipyLstSqSolver(BaseSolver):
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self.components_used = list(self.required_in_problem)
+        # TODO update optional options
         self._assign_args()
 
     def _assign_args(self):
