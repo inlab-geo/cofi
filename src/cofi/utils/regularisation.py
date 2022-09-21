@@ -92,18 +92,26 @@ class QuadraticReg(BaseRegularisation):
         self, 
         factor: Number, 
         model_size: Union[Number, np.ndarray], 
-        reg_type: Union[RegularisationType, str, None]="damping",
+        reg_type: Union[RegularisationType, str]="damping",
         ref_model: np.ndarray=None,
         byo_matrix: np.ndarray=None,
     ):
         super().__init__()
-        self._factor = factor
+        self._factor = self._validate_factor(factor)
         self._model_size = model_size
         self._reg_type = self._validate_reg_type(reg_type)
         self._ref_model = ref_model
         self._byo_matrix = byo_matrix
         self._generate_matrix()
     
+    @staticmethod
+    def _validate_factor(factor):
+        if not isinstance(factor, Number):
+            raise ValueError("the regularisation factor must be a number")
+        elif factor < 0:
+            raise ValueError("the regularisation factor must be non-negative")
+        return factor
+
     @staticmethod
     def _validate_reg_type(reg_type):
         if reg_type is None or isinstance(reg_type, RegularisationType):
@@ -122,9 +130,30 @@ class QuadraticReg(BaseRegularisation):
             self._D = np.identity(self._model_size)
         elif self._reg_type == RegularisationType.flattening or \
             self._reg_type == RegularisationType.smoothing:
-            raise NotImplementedError
+            if len(self._model_size) == 2:
+                raise NotImplementedError   # TODO
+            else:
+                raise NotImplementedError(
+                    "only 2D derivative operators implemented"
+                )
         elif self._reg_type is None:
-            self._D = self._byo_matrix or np.identity(self._model_size)
+            if self._byo_matrix is None:
+                self._D = np.identity(self._model_size)
+            else:
+                self._D = self._byo_matrix
+            if len(self._D.shape) != 2:
+                raise ValueError(
+                    "the bring-your-own regularisation matrix must be 2-dimensional"
+                )
+            elif self._D.shape[1] != self._model_size:
+                raise ValueError(
+                    "the bring-your-own regularisation matrix must be in shape (_, M) "
+                    "where M is the model size"
+                )
+
+    @property
+    def matrix(self):
+        return self._D
 
     def reg(self, model: np.ndarray) -> Number:
         if self._reg_type == RegularisationType.damping:

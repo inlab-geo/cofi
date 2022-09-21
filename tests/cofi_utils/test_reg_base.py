@@ -15,8 +15,11 @@ def test_reg_type():
     assert f == r
     assert s.value == 2
 
-# def test_reg_type_invalid():
-#     with pytest.raises
+def test_reg_type_invalid():
+    with pytest.raises(ValueError):
+        RegularisationType(3)
+    with pytest.raises(ValueError):
+        RegularisationType(-1)
 
 def test_base_reg():
     class subclass_reg(BaseRegularisation):
