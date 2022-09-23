@@ -78,17 +78,17 @@ def test_flattening_invalid():
 def test_smoothing():
     reg = QuadraticReg(factor=1, model_size=(4,4), reg_type="smoothing")
     # 1
-    assert reg(np.zeros((4,4))) == 0
+    assert pytest.approx(reg(np.zeros((4,4)))) == 0
     # 2
     assert pytest.approx(reg(np.ones((4,4)))) == 0
     # 3
     reg_val1 = reg(np.array([[1,2,3,4],[1,2,3,4],[1,2,3,4],[2,3,4,5]]))
     reg_val2 = reg(np.array([1,2,3,4,1,2,3,4,1,2,3,4,2,3,4,5]))
-    assert reg_val1 == reg_val2
+    assert pytest.approx(reg_val1) == reg_val2
     # 4
     test_model = np.array([[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,2]])
     reg_val = reg(test_model)
-    assert reg_val == 12
+    assert pytest.approx(reg_val) == 12
     reg_grad = reg.gradient(test_model)
     assert reg_grad.shape == (16,)
     reg_hess = reg.hessian(test_model)
