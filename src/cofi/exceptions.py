@@ -62,22 +62,23 @@ class DimensionMismatchError(CofiError, ValueError):
     def __init__(
         self, 
         *args, 
-        entered_dimenion: Tuple, 
+        entered_dimension: Tuple, 
         entered_name: str, 
         expected_dimension: Tuple, 
         expected_source: str,
     ) -> None:
         super().__init__(*args)
-        self._entered_dimension = entered_dimenion
+        self._entered_dimension = entered_dimension
         self._entered_name = entered_name 
         self._expected_dimension = expected_dimension
         self._expected_source = expected_source
 
     def __str__(self) -> str:
         super_msg = super().__str__()
-        msg = f"the {self._entered_name} you've provided {self._entered_dimension}" \
-              f" doesn't match and cannot be reshaped into the dimension you've set" \
-              f" for {self._expected_source} which is {self._expected_dimension}" 
+        msg = f"the {self._entered_name} you've provided (shape: " \
+              f"{self._entered_dimension}) doesn't match and cannot be reshaped " \
+              f"into the dimension you've set for {self._expected_source} which is " \
+              f"{self._expected_dimension}" 
         return self._form_str(super_msg, msg) 
 
 
