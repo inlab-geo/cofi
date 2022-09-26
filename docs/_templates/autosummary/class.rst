@@ -10,35 +10,33 @@
 
     .. rubric:: Reference Details
 
-.. ----
 
 {% for item in members %}
 {% if item in ['__call__'] %}
-.. automethod:: {{ objname }}.{{ item }}
+    .. automethod:: {{ objname }}.{{ item }}
+{% endif %}
+{% if "BaseRegularisation" in objname and item == '__add__' %}
+    .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
 {% endfor %}
 
-.. :ref:`back to top <top_{{objname}}>`
 
-.. ----
 
 {% for item in methods %}
 
 {% if "BaseSolver" in objname and item == '__init__' %}
-.. automethod:: {{ objname }}.{{ item }}
+    .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
 
 {% if item != '__init__' %}
-.. automethod:: {{ objname }}.{{ item }}
+    .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
 {% endfor %}
 
-.. :ref:`back to top <top_{{objname}}>`
 
-----
 
 {% for item in attributes %}
-.. autoattribute:: {{ objname }}.{{ item }}
+    .. autoattribute:: {{ objname }}.{{ item }}
 {% endfor %}
 
 :ref:`back to top <top_{{objname}}>`
@@ -51,7 +49,7 @@
 
     .. rubric:: Reference Details
 
-.. automethod:: cofi.SamplingResult.to_arviz
+    .. automethod:: cofi.SamplingResult.to_arviz
 
 :ref:`back to top <top_{{objname}}>`
 {% endif %}
