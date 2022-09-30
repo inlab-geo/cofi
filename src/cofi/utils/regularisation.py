@@ -190,9 +190,14 @@ class QuadraticReg(BaseRegularisation):
         - :attr:`matrix` is :math:`D`
         - where 
             
-          - :math:`D` matrix helps calculate the first order derivative of :math:`m` and looks like
+          - :math:`D` matrix helps calculate the first order derivative of :math:`m`. 
+            For 1D problems, it looks like
             
             :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
+
+            While for higher dimension problems, by default it's a flattened version of 
+            an N-D array. The actual ordering of model parameters in higher dimensions
+            is controlled by :class:`findiff.operators.FinDiff`.
 
     - If ``reg_type == "smoothing"``, then
 
@@ -206,9 +211,14 @@ class QuadraticReg(BaseRegularisation):
         - :attr:`matrix` is :math:`D`
         - where 
             
-          - :math:`D` matrix helps calculate the second order derivatives of :math:`m` and looks like
+          - :math:`D` matrix helps calculate the second order derivatives of :math:`m`.
+            For 1D problems, it looks like
             
             :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
+
+            While for higher dimension problems, by default it's a flattened version of 
+            an N-D array. The actual ordering of model parameters in higher dimensions
+            is controlled by :class:`findiff.operators.FinDiff`.
 
     - If ``reg_type == None``, then we assume you want to use the argument 
       ``byo_matrix``,

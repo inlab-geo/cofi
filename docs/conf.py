@@ -91,6 +91,7 @@ intersphinx_mapping = {
     "scipy": ("https://docs.scipy.org/doc/scipy/", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "arviz": ("https://python.arviz.org/en/latest/", None),
+    "findiff": ("https://findiff.readthedocs.io/en/latest/", None),
 }
 
 # Disable including boostrap CSS for sphinx_panels since it's already included
