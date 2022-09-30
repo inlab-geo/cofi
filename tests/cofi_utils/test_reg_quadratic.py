@@ -15,25 +15,25 @@ def test_damping():
     reg_val = reg(np.array([1,2,3]))
     assert reg_val == 14
     grad = reg.gradient(np.array([1,2,3]))
-    assert grad[0] == 1
-    assert grad[1] == 2
-    assert grad[2] == 3
+    assert grad[0] == 2
+    assert grad[1] == 4
+    assert grad[2] == 6
     hess = reg.hessian(np.array([1,2,3]))
-    assert hess[0,0] == 1
-    assert hess[1,1] == 1
-    assert hess[2,2] == 1
+    assert hess[0,0] == 2
+    assert hess[1,1] == 2
+    assert hess[2,2] == 2
     # ref model
     reg = QuadraticReg(1, 3, ref_model=np.array([1,1,1]))
     reg_val = reg(np.array([1,2,3]))
     assert reg_val == 5
     grad = reg.gradient(np.array([1,2,3]))
     assert grad[0] == 0
-    assert grad[1] == 1
-    assert grad[2] == 2
+    assert grad[1] == 2
+    assert grad[2] == 4
     hess = reg.hessian(np.array([1,2,3]))
-    assert hess[0,0] == 1
-    assert hess[1,1] == 1
-    assert hess[2,2] == 1
+    assert hess[0,0] == 2
+    assert hess[1,1] == 2
+    assert hess[2,2] == 2
 
 def test_damping_invalid():
     with pytest.raises(ValueError): QuadraticReg(1, 10, "dampingnf")

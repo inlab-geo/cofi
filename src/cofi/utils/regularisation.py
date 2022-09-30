@@ -163,60 +163,68 @@ class QuadraticReg(BaseRegularisation):
     
     - If ``reg_type == "damping"``, then
 
-      - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||m-m_0||_2^2`
-      - :meth:`gradient` produces
-        :math:`\frac{\partial\text{reg}}{\partial m}=\text{factor}\times(m-m_0)`
-      - :meth:`hessian` produces
-        :math:`\frac{\partial^2\text{reg}}{\partial m}=\text{factor}\times I`
-      - :attr:`matrix` is the identity matrix of size :math:`(M,M)`
-      - where
+      .. toggle::
 
-        - :math:`m_0` is a reference model that you can specify in ``ref_model`` argument 
-          (default to zero)
-        - :math:`M` is the number of model parameters
+        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||m-m_0||_2^2`
+        - :meth:`gradient` produces
+          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times(m-m_0)`
+        - :meth:`hessian` produces
+          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times I`
+        - :attr:`matrix` is the identity matrix of size :math:`(M,M)`
+        - where
+
+          - :math:`m_0` is a reference model that you can specify in ``ref_model`` argument 
+            (default to zero)
+          - :math:`M` is the number of model parameters
 
     - If ``reg_type == "roughening"`` (or equivalently ``"flattening"``),
       then 
+    
+      .. toggle::
 
-      - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
-      - :meth:`gradient` produces
-        :math:`\frac{\partial\text{reg}}{\partial m}=\text{factor}\times D^TDm`
-      - :meth:`hessian` produces
-        :math:`\frac{\partial^2\text{reg}}{\partial m}=\text{factor}\times D^TD`
-      - :attr:`matrix` is :math:`D`
-      - where 
-        
-        - :math:`D` matrix helps calculate the first order derivative of :math:`m` and looks like
-          
-          :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
+        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
+        - :meth:`gradient` produces
+          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times D^TDm`
+        - :meth:`hessian` produces
+          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times D^TD`
+        - :attr:`matrix` is :math:`D`
+        - where 
+            
+          - :math:`D` matrix helps calculate the first order derivative of :math:`m` and looks like
+            
+            :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
 
     - If ``reg_type == "smoothing"``, then
 
-      - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
-      - :meth:`gradient` produces
-        :math:`\frac{\partial\text{reg}}{\partial m}=\text{factor}\times D^TDm`
-      - :meth:`hessian` produces
-        :math:`\frac{\partial^2\text{reg}}{\partial m}=\text{factor}\times D^TD`
-      - :attr:`matrix` is :math:`D`
-      - where 
-        
-        - :math:`D` matrix helps calculate the second order derivatives of :math:`m` and looks like
-          
-          :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
+      .. toggle::
+
+        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
+        - :meth:`gradient` produces
+          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times D^TDm`
+        - :meth:`hessian` produces
+          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times D^TD`
+        - :attr:`matrix` is :math:`D`
+        - where 
+            
+          - :math:`D` matrix helps calculate the second order derivatives of :math:`m` and looks like
+            
+            :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
 
     - If ``reg_type == None``, then we assume you want to use the argument 
       ``byo_matrix``,
+
+      .. toggle::
       
-      - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
-      - :meth:`gradient` produces
-        :math:`\frac{\partial\text{reg}}{\partial m}=\text{factor}\times D^TDm`
-      - :meth:`hessian` produces
-        :math:`\frac{\partial^2\text{reg}}{\partial m}=\text{factor}\times D^TD`
-      - :attr:`matrix` is :math:`D`
-      - where 
-        
-        - :math:`D` matrix is ``byo_matrix`` from the arguments (or identity matrix 
-          if ``byo_matrix is None``)
+        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
+        - :meth:`gradient` produces
+          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times D^TDm`
+        - :meth:`hessian` produces
+          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times D^TD`
+        - :attr:`matrix` is :math:`D`
+        - where 
+            
+          - :math:`D` matrix is ``byo_matrix`` from the arguments (or identity matrix 
+            if ``byo_matrix is None``)
 
     Parameters
     ----------
@@ -236,7 +244,8 @@ class QuadraticReg(BaseRegularisation):
     Raises
     ------
     ValueError
-        when ...
+        when input arguments don't conform to the standards described above. Check 
+        error message for details.
 
     Examples
     --------
@@ -318,16 +327,16 @@ class QuadraticReg(BaseRegularisation):
         flat_m = self._validate_model(model)
         if self._reg_type == "damping":
             if self._ref_model is None:
-                return self._factor * flat_m
-            return self._factor * (flat_m - self._ref_model)
+                return 2 * self._factor * flat_m
+            return 2 * self._factor * (flat_m - self._ref_model)
         else:
-            return self._factor * self.matrix.T @ self.matrix @ flat_m
+            return 2 * self._factor * self.matrix.T @ self.matrix @ flat_m
     
     def hessian(self, model: np.ndarray) -> np.ndarray:
         if self._reg_type == "damping":
-            return self._factor * np.eye(self._model_size)
+            return 2 * self._factor * np.eye(self._model_size)
         else:
-            return self._factor * self.matrix.T @ self.matrix
+            return 2 * self._factor * self.matrix.T @ self.matrix
 
     @staticmethod
     def _validate_factor(factor):
