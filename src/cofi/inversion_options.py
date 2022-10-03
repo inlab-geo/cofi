@@ -39,8 +39,11 @@ class InversionOptions:
                 "scipy.optimize.minimize",
                 "scipy.optimize.least_squares"
             ],
-            "linear least square": [
+            "matrix-based solvers": [
                 "scipy.linalg.lstsq"
+            ],
+            "sampling": [
+                "emcee"
             ]
         }
         >>> inv_options.set_tool("scipy.linalg.lstsq")
@@ -212,7 +215,7 @@ class InversionOptions:
 
                 >>> from cofi import InversionOptions
                 >>> inv_options = InversionOptions()
-                >>> inv_options.set_solving_method("linear least square")
+                >>> inv_options.set_solving_method("matrix-based solvers")
                 >>> inv_options.suggest_tools()
                 Based on the solving method you've set, the following tools are suggested:
                 ['scipy.linalg.lstsq']
@@ -401,7 +404,7 @@ class InversionOptions:
                 >>> inv_options = InversionOptions()
                 >>> inv_options.suggest_solving_methods()
                 The following solving methods are supported:
-                {'optimization', 'linear least square'}
+                {'optimization', 'matrix-based solvers'}
 
                 Use `suggest_tools()` to see a full list of backend tools for each method
 
@@ -434,11 +437,11 @@ class InversionOptions:
                         "scipy.optimize.minimize",
                         "scipy.optimize.least_squares"
                     ],
-                    "linear least square": [
+                    "matrix-based solvers": [
                         "scipy.linalg.lstsq"
                     ]
                 }
-                >>> inv_options.set_solving_method("linear least square")
+                >>> inv_options.set_solving_method("matrix-based solvers")
                 >>> inv_options.suggest_tools()
                 Based on the solving method you've set, the following tools are suggested:
                 ['scipy.linalg.lstsq']
