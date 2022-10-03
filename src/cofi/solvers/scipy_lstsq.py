@@ -1,4 +1,5 @@
 import inspect
+from re import L
 import numpy as np
 from scipy.linalg import lstsq
 
@@ -40,7 +41,11 @@ class ScipyLstSqSolver(BaseSolver):
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     components_used: list = []
     required_in_problem: set = {"jacobian", "data"}
-    optional_in_problem: dict = {"data_covariance_inv": None, "data_covariance": None, "regularisation_matrix": None}
+    optional_in_problem: dict = {
+        "data_covariance_inv": None,
+        "data_covariance": None,
+        "regularisation_matrix": None,
+    }
     required_in_options: set = {}
     optional_in_options: dict = {
         k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
@@ -88,7 +93,15 @@ class ScipyLstSqSolver(BaseSolver):
             else:
                 self._Cd_inv = inv_problem.data_covariance_inv
                 self.components_used.append("data_covariance_inv")
-            _gt_cdinv = self._G.T @ self._Cd_inv
+            # check diagonal (for potential shortcut in computation)
+            diag_elem = np.diag(self._Cd_inv).copy()
+            np.fill_diagonal(self._Cd_inv, 0)
+            is_diagonal = (self._Cd_inv == 0).all()
+            np.fill_diagonal(self._Cd_inv, diag_elem)
+            if is_diagonal:
+                _gt_cdinv = self._G.T * diag_elem
+            else:
+                _gt_cdinv = self._G.T @ self._Cd_inv
             self._a = _gt_cdinv @ self._G
             self._b = _gt_cdinv @ self._d
         else:
@@ -104,7 +117,8 @@ class ScipyLstSqSolver(BaseSolver):
             self._lamda = inv_problem.regularisation_factor
             if inv_problem.regularisation_matrix_defined:
                 try:
-                    self._L = inv_problem.regularisation_matrix(dummy_model)
+                    _L = inv_problem.regularisation_matrix(dummy_model)
+                    self._LtL = _L.T @ L
                     self.components_used.append("regularisation_matrix")
                 except Exception as exception:
                     raise ValueError(
@@ -113,8 +127,8 @@ class ScipyLstSqSolver(BaseSolver):
                         "model vector"
                     ) from exception
             else:
-                self._L = np.identity(self._G.shape[1])
-            self._a += self._lamda * self._L.T @ self._L
+                self._LtL = np.identity(self._G.shape[1])
+            self._a += self._lamda * self._LtL
 
     def __call__(self) -> dict:
         res_p, residual, rank, singular_vals = lstsq(

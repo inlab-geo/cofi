@@ -1657,7 +1657,7 @@ class BaseProblem:
             func(*[np.array([])] * args_num)
         except NotDefinedError:
             return False
-        except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
+        except Exception:  # ok if there're errors caused by dummy input
             return True
 
     def _check_property_defined(self, prop):
