@@ -1,12 +1,12 @@
 import pytest
 import numpy as np
 
-from cofi.utils import BaseRegularisation, QuadraticReg
+from cofi.utils import BaseRegularization, QuadraticReg
 from cofi.exceptions import DimensionMismatchError
 
 
 def test_base_reg():
-    class subclass_reg(BaseRegularisation):
+    class subclass_reg(BaseRegularization):
         def __init__(self):
             super().__init__()
         @property

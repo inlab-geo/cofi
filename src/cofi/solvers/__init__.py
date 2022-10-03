@@ -17,11 +17,11 @@ __all__ = [
 
 # solvers table grouped by method: {inv_options.method -> {inv_options.tool -> BaseSolver}}
 solvers_table = {
-    "optimisation": {
+    "optimization": {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
     },
-    "linear least square": {
+    "matrix-based solvers": {
         "scipy.linalg.lstsq": ScipyLstSqSolver,
     },
     "sampling": {"emcee": EmceeSolver},
@@ -29,7 +29,7 @@ solvers_table = {
 
 # solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}
 # NOTE: the default backend solver is from this table, set the first one manually when necessary
-# e.g. {'optimisation': ['scipy.optimize.minimize'], 'linear least square': ['scipy.linalg.lstsq']}
+# e.g. {'optimization': ['scipy.optimize.minimize'], 'matrix-based solvers': ['scipy.linalg.lstsq']}
 solver_suggest_table = {k: list(val.keys()) for k, val in solvers_table.items()}
 
 # solvers dispatch table grouped by tool: {inv_options.tool -> BaseSolver}
@@ -42,5 +42,5 @@ solver_dispatch_table = {
 }
 
 # all solving methods: {inv_options.method}
-# e.g. {'optimisation', 'linear least square'}
+# e.g. {'optimization', 'matrix-based solvers'}
 solver_methods = set(solvers_table.keys())
