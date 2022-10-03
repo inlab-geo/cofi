@@ -237,7 +237,7 @@ def test_set_misfit_reg_L1(inv_problem_with_misfit):
     )
 
 
-def test_set_misfit_reg_L2(inv_problem_with_misfit):
+def test_set_misfit_reg_l2(inv_problem_with_misfit):
     inv_problem_with_misfit.set_regularisation(2, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
@@ -316,26 +316,44 @@ def check_values_data_fwd_misfit_reg(inv_problem):
     assert inv_problem.data_misfit(true_model) == 0
     assert inv_problem.regularisation(true_model) == 4 * 0.5
     assert inv_problem.objective(true_model) == 4 * 0.5
-    worse_model = np.array([2, 1, 2])
-    assert pytest.approx(inv_problem.data_misfit(worse_model)) == 6.25779513
-    assert inv_problem.regularisation(worse_model) == 5 * 0.5
-    assert pytest.approx(inv_problem.objective(worse_model)) == 6.25779513 + 5 * 0.5
+    worse_model = np.array([1, 1, 1])
+    assert pytest.approx(inv_problem.data_misfit(worse_model)) == 5
+    assert inv_problem.regularisation(worse_model) == 3 * 0.5
+    assert pytest.approx(inv_problem.objective(worse_model)) == 5 + 3 * 0.5
 
 
 def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
     inv_problem, forward = inv_problem_with_data
     inv_problem.set_forward(forward)
-    inv_problem.set_data_misfit("L2")
+    inv_problem.set_data_misfit("squared error")
     inv_problem.set_regularisation(1)
     check_defined_data_fwd_misfit_reg(inv_problem)
     check_values_data_fwd_misfit_reg(inv_problem)
+
+def test_set_data_cov_fwd_mistift_inbuilt(inv_problem_with_data):
+    inv_problem, forward = inv_problem_with_data
+    inv_problem.set_forward(forward)
+    inv_problem.set_data_misfit("squared error")
+    inv_problem.set_regularisation(1)
+    # 1
+    inv_problem.set_data_covariance(np.diag(np.array([1,2,1,2,1])))
+    assert inv_problem.data_misfit(np.array([2,1,1])) == 0
+    assert inv_problem.data_misfit(np.array([1,1,1])) == 3.5 
+    # 2
+    Cd_inv = np.diag(np.array([1,0.5,1,0.5,1]))
+    inv_problem.set_data_covariance_inv(Cd_inv)
+    assert inv_problem.data_misfit(np.array([1,1,1])) == 3.5 
+    # 3
+    Cd_inv[0,3] = 1
+    inv_problem.set_data_covariance_inv(Cd_inv)
+    assert inv_problem.data_misfit(np.array([1,1,1])) == 5 
 
 
 def test_invalid_misfit_options():
     inv_problem = BaseProblem()
     with pytest.raises(InvalidOptionError):
         inv_problem.set_data_misfit("FOO")
-    inv_problem.set_data_misfit("L2")
+    inv_problem.set_data_misfit("squared error")
     with pytest.raises(InvocationError):
         inv_problem.data_misfit(np.array([1, 2, 3]))
 

@@ -889,23 +889,30 @@ class BaseProblem:
         r"""Sets the function to compute the data misfit
 
         You can either pass in a custom function or a short string that describes the
-        data misfit function. These are a list of pre-built data misfit functions we
-        support:
+        data misfit function (e.g. ``"squared error"``)
 
-        - "L2"
+        If you choose ``data_misfit="squared error"``, and:
 
-        If you choose one of the above, then you would also need to use
-        :meth:`set_data` / :meth:`set_data_from_file`
-        and :meth:`set_forward` so that we can generate the data misfit
-        function for you.
+        - If you have :meth:`residual` defined, or :meth:`data` and :meth:`forward`
+          defined, then :math:`\text{data_misfit}=\text{residual}^T \text{residual}`
 
-        If the data misfit function you want isn't included above, then pass your own
-        function as the input argument.
+          - where :math:`\text{residual}=\text{forward}(\text{model})-\text{observations}`
+
+        - If you **additionally** have :meth:`data_covariance_inv` defined, then
+          :math:`\text{data_misfit}=\text{residual}^TC_d^{-1}\text{residual}`
+        
+          - where :math:`C_d^{-1}=\text{data_covariance_inv}`
+        
+        - Otherwise you might face an error when actually calling the 
+          :meth:`data_misfit` method.
+
+        Alternatively, pass in your own data misfit function (or objective function 
+        directly through :meth:`set_objective`).
 
         Parameters
         ----------
         data_misfit : str or (function - np.ndarray -> Number)
-            either a string from ["L2"], or a data misfit function that matches
+            either ``"squared error"``, or a data misfit function that matches
             :meth:`data_misfit` in signature.
         args : list, optional
             extra list of positional arguments for data_misfit function
@@ -920,13 +927,11 @@ class BaseProblem:
         if isinstance(data_misfit, str):
             # if we have more options later, handle in same way as set_regularisation
             if data_misfit in [
-                "L2",
-                "l2",
-                "euclidean",
-                "L2 norm",
-                "l2 norm",
+                "least squares",
+                "least square",
+                "squared error",
             ]:
-                self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_l2, autogen=True)
+                self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_squared_error, autogen=True)
             else:
                 raise InvalidOptionError(
                     name="data misfit", 
@@ -1569,7 +1574,6 @@ class BaseProblem:
     def data_covariance_inv_defined(self) -> bool:
         r"""indicates whether :meth:`data_covariance_inv` has been defined""" 
         return self._check_property_defined("data_covariance_inv")
-    
 
     @property
     def initial_model_defined(self) -> bool:
@@ -1690,10 +1694,20 @@ class BaseProblem:
     def name(self, problem_name):
         self._name = problem_name
 
-    def _data_misfit_l2(self, model: np.ndarray) -> Number:
+    def _data_misfit_squared_error(self, model: np.ndarray) -> Number:
         try:
             res = self.residual(model)
-            return np.linalg.norm(res) / res.shape[0]
+            if self.data_covariance_inv_defined:
+                if _is_diag(self.data_covariance_inv):
+                    weighted_res = np.diag(self.data_covariance_inv) * res
+                    return np.sum(np.square(weighted_res))
+                else:
+                    return res.T @ self.data_covariance_inv @ res
+            elif self.data_covariance_defined and _is_diag(self.data_covariance):
+                weighted_res = res / np.diag(self.data_covariance)
+                return np.sum(np.square(weighted_res))
+            else:
+                return np.sum(np.square(res))
         except Exception as exception:
             raise InvocationError(
                 func_name="data misfit", 
@@ -1859,6 +1873,13 @@ def _regularisation_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func)
 
 def _matrix_to_func(_, matrix):
     return matrix
+
+def _is_diag(matrix):
+    diag_elem = np.diag(matrix).copy()
+    np.fill_diagonal(matrix,0)
+    out = (matrix==0).all()
+    np.fill_diagonal(matrix,diag_elem)
+    return out
 
 # ---------- function wrapper to help make things pickleable --------------------------
 class _FunctionWrapper:
