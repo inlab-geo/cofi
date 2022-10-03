@@ -2,6 +2,7 @@
 from io import StringIO
 import sys
 from pathlib import Path
+from setuptools import find_namespace_packages
 
 try:
     from skbuild import setup
@@ -54,8 +55,7 @@ CLASSIFIERS = [
     "License :: OSI Approved :: BSD License",
 ]
 PACKAGE_DIR = {"": "src"}
-# PACKAGES = find_packages("src")
-PACKAGES = ["cofi"]
+PACKAGES = find_namespace_packages(where='src')
 CMAKE_INSTALL_DIR = "src/cofi"
 CMAKE_ARGS=['-DSKBUILD=ON']
 PYTHON_REQUIRES = ">=3.6"
@@ -64,6 +64,7 @@ INSTALL_REQUIRES = [
     "scipy>=1.0.0",
     "emcee>=3.1.0",
     "arviz>=0.9.0",
+    "findiff>=0.7.0",
 ]
 EXTRAS_REQUIRE = {
     "petsc": ["petsc4py>=3.16.0"],

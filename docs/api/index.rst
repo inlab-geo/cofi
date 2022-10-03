@@ -61,3 +61,15 @@ tools, simply create a subclass of :code:`BaseSolver` and implements :code:`__in
     :toctree: generated/
 
     cofi.solvers.BaseSolver
+
+
+CoFI Utils
+----------
+
+Module :mod:`cofi.utils` contains a set of helper classes and routines to enable
+easier problem definitions.
+
+.. autosummary::
+    :toctree: generated/
+
+    cofi.utils

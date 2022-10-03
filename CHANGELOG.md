@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev10 (NOT YET RELEASED)
+
+### CoFI Utils
+
+- [#65](https://github.com/inlab-geo/cofi/issues/54) Utility functions using findiff to generate the difference matrices
+
+
 ## v0.1.2.dev9 (13/09/2022)
 
 ### CoFI Core

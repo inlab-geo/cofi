@@ -11,6 +11,7 @@ CoFI requires Python 3.6+, and the following dependencies:
 - scipy>=1.0.0
 - emcee>=3.1.0
 - arviz>=0.9.0
+- findiff>=0.7.0
 
 
 Virtual environment setup

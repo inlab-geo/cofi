@@ -1195,7 +1195,7 @@ class BaseProblem:
                 np.reshape(self.initial_model, model_shape)
             except ValueError as err: 
                 raise DimensionMismatchError(
-                    entered_dimenion=model_shape, 
+                    entered_dimension=model_shape, 
                     entered_name="model shape", 
                     expected_dimension=self.initial_model.shape, 
                     expected_source="initial model"
