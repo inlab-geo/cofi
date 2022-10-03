@@ -58,9 +58,9 @@ def test_non_set():
     with pytest.raises(NotDefinedError):
         inv_problem.data_misfit(1)
     with pytest.raises(NotDefinedError):
-        inv_problem.regularisation(1)
+        inv_problem.regularization(1)
     with pytest.raises(NotDefinedError):
-        inv_problem.regularisation_matrix(1)
+        inv_problem.regularization_matrix(1)
     with pytest.raises(NotDefinedError):
         inv_problem.forward(1)
     with pytest.raises(NotDefinedError):
@@ -90,7 +90,7 @@ def test_non_set():
     with pytest.raises(NotDefinedError):
         inv_problem.blobs_dtype
     with pytest.raises(NotDefinedError):
-        inv_problem.regularisation_factor
+        inv_problem.regularization_factor
     assert not inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -99,8 +99,8 @@ def test_non_set():
     assert not inv_problem.jacobian_defined
     assert not inv_problem.jacobian_times_vector_defined
     assert not inv_problem.data_misfit_defined
-    assert not inv_problem.regularisation_defined
-    assert not inv_problem.regularisation_matrix_defined
+    assert not inv_problem.regularization_defined
+    assert not inv_problem.regularization_matrix_defined
     assert not inv_problem.forward_defined
     assert not inv_problem.data_defined
     assert not inv_problem.data_covariance_defined
@@ -115,7 +115,7 @@ def test_non_set():
     assert not inv_problem.walkers_starting_pos_defined
     assert not inv_problem.log_posterior_with_blobs_defined
     assert not inv_problem.blobs_dtype_defined
-    assert not inv_problem.regularisation_factor_defined
+    assert not inv_problem.regularization_factor_defined
     assert len(inv_problem.defined_components()) == 0
     inv_problem.summary()
 
@@ -135,14 +135,14 @@ def test_set_obj():
     _y_true = np.vectorize(_forward_true)(_x)
     inv_problem.set_objective(
         lambda m: np.linalg.norm(_y_true - _forward(m, _x)) / _x.shape[0]
-    )  # mse
+    )  # se
     assert inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
     assert not inv_problem.residual_defined
     assert not inv_problem.jacobian_defined
     assert not inv_problem.data_misfit_defined
-    assert not inv_problem.regularisation_defined
+    assert not inv_problem.regularization_defined
     assert not inv_problem.forward_defined
     assert not inv_problem.data_defined
     assert len(inv_problem.defined_components()) == 1
@@ -166,11 +166,11 @@ def inv_problem_with_misfit():
 def check_defined_misfit_reg(inv_problem):
     inv_problem.summary()
     assert inv_problem.data_misfit_defined
-    assert inv_problem.regularisation_defined
-    assert inv_problem.regularisation_factor_defined
+    assert inv_problem.regularization_defined
+    assert inv_problem.regularization_factor_defined
     assert inv_problem.objective_defined
     assert not inv_problem.gradient_defined
-    assert not inv_problem.regularisation_matrix_defined
+    assert not inv_problem.regularization_matrix_defined
     assert not inv_problem.hessian_defined
     assert not inv_problem.residual_defined
     assert not inv_problem.jacobian_defined
@@ -181,18 +181,18 @@ def check_defined_misfit_reg(inv_problem):
 
 def test_set_misfit_reg(inv_problem_with_misfit):
     inv_problem_with_misfit.summary()
-    inv_problem_with_misfit.set_regularisation(lambda m: m.T @ m, 0.5)
+    inv_problem_with_misfit.set_regularization(lambda m: m.T @ m, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
-    assert inv_problem_with_misfit.regularisation(true_model) == (4 + 1 + 1) * 0.5
+    assert inv_problem_with_misfit.regularization(true_model) == (4 + 1 + 1) * 0.5
     assert inv_problem_with_misfit.objective(true_model) == (4 + 1 + 1) * 0.5
     worse_model = np.array([2, 1, 2])
     assert (
         pytest.approx(inv_problem_with_misfit.data_misfit(np.array([2, 1, 2])))
         == 6.25779513
     )
-    assert inv_problem_with_misfit.regularisation(worse_model) == (4 + 1 + 4) * 0.5
+    assert inv_problem_with_misfit.regularization(worse_model) == (4 + 1 + 4) * 0.5
     assert (
         pytest.approx(inv_problem_with_misfit.objective(np.array([2, 1, 2])))
         == 6.25779513 + (4 + 1 + 4) * 0.5
@@ -200,18 +200,18 @@ def test_set_misfit_reg(inv_problem_with_misfit):
 
 
 def test_set_misfit_reg_L0(inv_problem_with_misfit):
-    inv_problem_with_misfit.set_regularisation(0, 0.5)
+    inv_problem_with_misfit.set_regularization(0, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
-    assert inv_problem_with_misfit.regularisation(true_model) == 3 * 0.5
+    assert inv_problem_with_misfit.regularization(true_model) == 3 * 0.5
     assert inv_problem_with_misfit.objective(true_model) == 3 * 0.5
     worse_model = np.array([2, 1, 2])
     assert (
         pytest.approx(inv_problem_with_misfit.data_misfit(np.array([2, 1, 2])))
         == 6.25779513
     )
-    assert inv_problem_with_misfit.regularisation(worse_model) == 3 * 0.5
+    assert inv_problem_with_misfit.regularization(worse_model) == 3 * 0.5
     assert (
         pytest.approx(inv_problem_with_misfit.objective(np.array([2, 1, 2])))
         == 6.25779513 + 3 * 0.5
@@ -219,18 +219,18 @@ def test_set_misfit_reg_L0(inv_problem_with_misfit):
 
 
 def test_set_misfit_reg_L1(inv_problem_with_misfit):
-    inv_problem_with_misfit.set_regularisation(1, 0.5)
+    inv_problem_with_misfit.set_regularization(1, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
-    assert inv_problem_with_misfit.regularisation(true_model) == 4 * 0.5
+    assert inv_problem_with_misfit.regularization(true_model) == 4 * 0.5
     assert inv_problem_with_misfit.objective(true_model) == 4 * 0.5
     worse_model = np.array([2, 1, 2])
     assert (
         pytest.approx(inv_problem_with_misfit.data_misfit(np.array([2, 1, 2])))
         == 6.25779513
     )
-    assert inv_problem_with_misfit.regularisation(worse_model) == 5 * 0.5
+    assert inv_problem_with_misfit.regularization(worse_model) == 5 * 0.5
     assert (
         pytest.approx(inv_problem_with_misfit.objective(np.array([2, 1, 2])))
         == 6.25779513 + 5 * 0.5
@@ -238,12 +238,12 @@ def test_set_misfit_reg_L1(inv_problem_with_misfit):
 
 
 def test_set_misfit_reg_l2(inv_problem_with_misfit):
-    inv_problem_with_misfit.set_regularisation(2, 0.5)
+    inv_problem_with_misfit.set_regularization(2, 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
     assert inv_problem_with_misfit.data_misfit(true_model) == 0
     assert (
-        inv_problem_with_misfit.regularisation(true_model) == np.sqrt(4 + 1 + 1) * 0.5
+        inv_problem_with_misfit.regularization(true_model) == np.sqrt(4 + 1 + 1) * 0.5
     )
     assert inv_problem_with_misfit.objective(true_model) == np.sqrt(4 + 1 + 1) * 0.5
     worse_model = np.array([2, 1, 2])
@@ -252,7 +252,7 @@ def test_set_misfit_reg_l2(inv_problem_with_misfit):
         == 6.25779513
     )
     assert (
-        inv_problem_with_misfit.regularisation(worse_model) == np.sqrt(4 + 1 + 4) * 0.5
+        inv_problem_with_misfit.regularization(worse_model) == np.sqrt(4 + 1 + 4) * 0.5
     )
     assert (
         pytest.approx(inv_problem_with_misfit.objective(np.array([2, 1, 2])))
@@ -261,27 +261,27 @@ def test_set_misfit_reg_l2(inv_problem_with_misfit):
 
 def test_set_misfit_reg_inf(inv_problem_with_misfit):
     # inf norm
-    inv_problem_with_misfit.set_regularisation("inf", 0.5)
+    inv_problem_with_misfit.set_regularization("inf", 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
-    assert inv_problem_with_misfit.regularisation(true_model) == 1
+    assert inv_problem_with_misfit.regularization(true_model) == 1
     worse_model = np.array([2, 1, 2])
-    assert inv_problem_with_misfit.regularisation(worse_model) == 1
+    assert inv_problem_with_misfit.regularization(worse_model) == 1
     # -inf norm
-    inv_problem_with_misfit.set_regularisation("-inf", 0.5)
+    inv_problem_with_misfit.set_regularization("-inf", 0.5)
     check_defined_misfit_reg(inv_problem_with_misfit)
     true_model = np.array([2, 1, 1])
-    assert inv_problem_with_misfit.regularisation(true_model) == 0.5
+    assert inv_problem_with_misfit.regularization(true_model) == 0.5
     worse_model = np.array([2, 1, 2])
-    assert inv_problem_with_misfit.regularisation(worse_model) == 0.5
+    assert inv_problem_with_misfit.regularization(worse_model) == 0.5
     
 
 def test_invalid_reg_options():
     inv_problem = BaseProblem()
-    with pytest.raises(InvalidOptionError, match=r".*the regularisation order you've entered.*"):
-        inv_problem.set_regularisation("FOO")
+    with pytest.raises(InvalidOptionError, match=r".*the regularization order you've entered.*"):
+        inv_problem.set_regularization("FOO")
     with pytest.raises(InvalidOptionError, match=r".*is invalid, please choose from the following:.*"):
-        inv_problem.set_regularisation(-1)
+        inv_problem.set_regularization(-1)
 
 
 ############### TEST set methods Tier 1 ###############################################
@@ -301,8 +301,8 @@ def check_defined_data_fwd_misfit_reg(inv_problem):
     assert inv_problem.forward_defined
     assert inv_problem.data_misfit_defined
     assert inv_problem.residual_defined
-    assert inv_problem.regularisation_defined
-    assert inv_problem.regularisation_factor_defined
+    assert inv_problem.regularization_defined
+    assert inv_problem.regularization_factor_defined
     assert inv_problem.objective_defined
     assert not inv_problem.gradient_defined
     assert not inv_problem.hessian_defined
@@ -311,14 +311,14 @@ def check_defined_data_fwd_misfit_reg(inv_problem):
 
 
 def check_values_data_fwd_misfit_reg(inv_problem):
-    inv_problem.set_regularisation(1, 0.5)
+    inv_problem.set_regularization(1, 0.5)
     true_model = np.array([2, 1, 1])
     assert inv_problem.data_misfit(true_model) == 0
-    assert inv_problem.regularisation(true_model) == 4 * 0.5
+    assert inv_problem.regularization(true_model) == 4 * 0.5
     assert inv_problem.objective(true_model) == 4 * 0.5
     worse_model = np.array([1, 1, 1])
     assert pytest.approx(inv_problem.data_misfit(worse_model)) == 5
-    assert inv_problem.regularisation(worse_model) == 3 * 0.5
+    assert inv_problem.regularization(worse_model) == 3 * 0.5
     assert pytest.approx(inv_problem.objective(worse_model)) == 5 + 3 * 0.5
 
 
@@ -326,7 +326,7 @@ def test_set_data_fwd_misfit_inbuilt_reg_inbuilt(inv_problem_with_data):
     inv_problem, forward = inv_problem_with_data
     inv_problem.set_forward(forward)
     inv_problem.set_data_misfit("squared error")
-    inv_problem.set_regularisation(1)
+    inv_problem.set_regularization(1)
     check_defined_data_fwd_misfit_reg(inv_problem)
     check_values_data_fwd_misfit_reg(inv_problem)
 
@@ -334,7 +334,7 @@ def test_set_data_cov_fwd_mistift_inbuilt(inv_problem_with_data):
     inv_problem, forward = inv_problem_with_data
     inv_problem.set_forward(forward)
     inv_problem.set_data_misfit("squared error")
-    inv_problem.set_regularisation(1)
+    inv_problem.set_regularization(1)
     # 1
     inv_problem.set_data_covariance(np.diag(np.array([1,2,1,2,1])))
     assert inv_problem.data_misfit(np.array([2,1,1])) == 0
@@ -473,37 +473,37 @@ def test_set_reg_with_args():
     inv_problem = BaseProblem()
     from scipy.sparse import csr_matrix
     A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
-    inv_problem.set_regularisation(lambda m, A: A @ m.T @ m, 2, args=[A])
-    inv_problem.regularisation(np.array([1,2,3]))
+    inv_problem.set_regularization(lambda m, A: A @ m.T @ m, 2, args=[A])
+    inv_problem.regularization(np.array([1,2,3]))
 
 def test_invalid_func():
     inv_problem = BaseProblem()
     with pytest.raises(InvalidOptionError):
         inv_problem.set_forward(1)
 
-############### TEST regularisation (matrix, factor) ##################################
+############### TEST regularization (matrix, factor) ##################################
 def test_set_reg_with_matrix():
     inv_problem = BaseProblem()
     # test zero info
-    assert not inv_problem.regularisation_defined
-    assert not inv_problem.regularisation_factor_defined
-    assert not inv_problem.regularisation_matrix_defined
+    assert not inv_problem.regularization_defined
+    assert not inv_problem.regularization_factor_defined
+    assert not inv_problem.regularization_matrix_defined
     # test set
-    inv_problem.set_regularisation(2, 0.5, np.array([[2,0],[0,1]]))
-    assert inv_problem.regularisation_defined
-    assert inv_problem.regularisation_factor_defined
-    assert inv_problem.regularisation_matrix_defined
-    assert inv_problem.regularisation(np.array([1,1])) == 1.118033988749895
+    inv_problem.set_regularization(2, 0.5, np.array([[2,0],[0,1]]))
+    assert inv_problem.regularization_defined
+    assert inv_problem.regularization_factor_defined
+    assert inv_problem.regularization_matrix_defined
+    assert inv_problem.regularization(np.array([1,1])) == 1.118033988749895
     # test unset
-    inv_problem.set_regularisation(2)
-    assert inv_problem.regularisation_defined
-    assert inv_problem.regularisation_factor == 1
-    assert not inv_problem.regularisation_matrix_defined
+    inv_problem.set_regularization(2)
+    assert inv_problem.regularization_defined
+    assert inv_problem.regularization_factor == 1
+    assert not inv_problem.regularization_matrix_defined
 
 def test_set_reg_with_matrix_func():
     inv_problem = BaseProblem()
-    inv_problem.set_regularisation(2, 0.5, lambda _: np.array([[2,0], [0,1]]))
-    assert inv_problem.regularisation(np.array([1,1])) == 1.118033988749895
+    inv_problem.set_regularization(2, 0.5, lambda _: np.array([[2,0], [0,1]]))
+    assert inv_problem.regularization(np.array([1,1])) == 1.118033988749895
 
 
 ############### TEST model covariance #################################################
@@ -537,7 +537,7 @@ def test_obj_from_dm_reg():
     inv_problem = BaseProblem()
     # test valid
     inv_problem.set_data_misfit(lambda x: x**2)
-    inv_problem.set_regularisation(lambda x: x)
+    inv_problem.set_regularization(lambda x: x)
     assert inv_problem.objective(1) == 2
     # test invalid
     inv_problem.set_data_misfit(lambda x: x[2])

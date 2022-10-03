@@ -1,13 +1,13 @@
-"""Utility classes and functions (e.g. to generate regularisation terms and more)
+"""Utility classes and functions (e.g. to generate regularization terms and more)
 """
 
-from .regularisation import (
-    BaseRegularisation,
+from .regularization import (
+    BaseRegularization,
     QuadraticReg,
 )
 
 
 __all__ = [
-    "BaseRegularisation",
+    "BaseRegularization",
     "QuadraticReg",
 ]

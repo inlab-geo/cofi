@@ -14,7 +14,7 @@ components: :code:`BaseProblem`, :code:`InversionOptions`, and :code:`Inversion`
 
 - :code:`BaseProblem` defines three things: 1) the forward problem; 2) model parameter 
   space (the unknowns); and 3) options specific to type of inverse problem you are 
-  trying to solve, such as the definition of an objective function for optimisation.
+  trying to solve, such as the definition of an objective function for optimization.
 - :code:`InversionOptions` describes details about how one wants to run the inversion, including the
   inversion approach, backend tool and solver-specific parameters.
 - :code:`Inversion` can be seen as an inversion engine that takes in the above two as information,
@@ -36,7 +36,7 @@ So a common workflow includes 4 steps:
    `Some useful methods <api/generated/cofi.InversionOptions.html>`_ include:
 
 - :code:`set_solving_method()` and :code:`suggest_tools()`. Once you've set a solving method (from "least squares"
-  and "optimisation", more will be supported), you can use :code:`suggest_tools()` to see a list of backend tools
+  and "optimization", more will be supported), you can use :code:`suggest_tools()` to see a list of backend tools
   to choose from.
       
 .. admonition:: Ways to suggest inversion tools

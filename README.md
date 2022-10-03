@@ -55,7 +55,7 @@ Run an inversion with these lines:
 from cofi import InversionOptions, Inversion
 
 inv_options = InversionOptions()
-inv_options.set_solving_method("optimisation")
+inv_options.set_solving_method("optimization")
 inv_options.set_params(options={"maxiter":100})
 
 inv = Inversion(inv_problem, inv_options)

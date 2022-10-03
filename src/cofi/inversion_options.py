@@ -35,7 +35,7 @@ class InversionOptions:
         >>> inv_options.suggest_tools()
         Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
         {
-            "optimisation": [
+            "optimization": [
                 "scipy.optimize.minimize",
                 "scipy.optimize.least_squares"
             ],
@@ -71,7 +71,7 @@ class InversionOptions:
         Methods that guide users through available **solvers tree** is still under consideration -
         we are working on deciding how such APIs are named and used. Ideally, we have a
         tree in the backend, with the root level branching into ``sampling``, ``direct search``
-        and ``optimisation`` and further categorisations that lead to lists of backend tools
+        and ``optimization`` and further categorisations that lead to lists of backend tools
         as the leaves.
 
     .. _guide:
@@ -383,7 +383,7 @@ class InversionOptions:
         """
         if self.method:
             return solver_suggest_table[self.method][0]
-        return solver_suggest_table["optimisation"][0]
+        return solver_suggest_table["optimization"][0]
 
     def suggest_solving_methods(self):
         """Prints a list of solving methods to choose from
@@ -401,7 +401,7 @@ class InversionOptions:
                 >>> inv_options = InversionOptions()
                 >>> inv_options.suggest_solving_methods()
                 The following solving methods are supported:
-                {'optimisation', 'linear least square'}
+                {'optimization', 'linear least square'}
 
                 Use `suggest_tools()` to see a full list of backend tools for each method
 
@@ -430,7 +430,7 @@ class InversionOptions:
                 >>> inv_options.suggest_tools()
                 Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
                 {
-                    "optimisation": [
+                    "optimization": [
                         "scipy.optimize.minimize",
                         "scipy.optimize.least_squares"
                     ],
@@ -546,7 +546,7 @@ class InversionOptions:
                 Solving method: None set
                 Use `suggest_solving_methods()` to check available solving methods.
                 -----------------------------
-                Backend tool: `scipy.optimize.minimize (by default)` - SciPy's optimisers that minimises a scalar function with respect to one or more variables, check SciPy's documentation page for a list of methods
+                Backend tool: `scipy.optimize.minimize (by default)` - SciPy's optimizers that minimizes a scalar function with respect to one or more variables, check SciPy's documentation page for a list of methods
                 References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html']
                 Use `suggest_tools()` to check available backend tools.
                 -----------------------------

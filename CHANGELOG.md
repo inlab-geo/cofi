@@ -19,7 +19,7 @@
   functions pickleable
 - [#53](https://github.com/inlab-geo/cofi/issues/53) Add set_regularisation(reg, reg_matrix, lamda)
 - [#57](https://github.com/inlab-geo/cofi/issues/57) Create our own exception class
-- [#59](https://github.com/inlab-geo/cofi/issues/59) Optimise import cofi by not importing cofi.solvers
+- [#59](https://github.com/inlab-geo/cofi/issues/59) Optimize import cofi by not importing cofi.solvers
 - [#61](https://github.com/inlab-geo/cofi/issues/61) Remove lambda function from BaseProblem to avoid error in multiprocessing
 
 ### CoFI Solvers

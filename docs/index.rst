@@ -30,7 +30,7 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         non_linear(Non linear):::cls_parameter_estimation;
         linear_system_solvers(Linear system solvers):::cls_parameter_estimation;
         linear_solverlist(scipy.linalg.lstsq <br> ...):::cls_solvers;
-        optimisation(Optimisation):::cls_parameter_estimation;
+        optimization(Optimization):::cls_parameter_estimation;
         opt_solverlist(scipy.minimize <br> PETSc <br> Rapid Optimization Library<br>...):::cls_solvers;
         ensemble_methods(Ensemble methods):::cls_ensemble_methods;
         direct_search(Direct Search):::cls_ensemble_methods;
@@ -49,8 +49,8 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         linear --> linear_system_solvers;
         linear_system_solvers -.- linear_solverlist;
         parameter_estimation --> non_linear;
-        non_linear --> optimisation;
-        optimisation -.- opt_solverlist;
+        non_linear --> optimization;
+        optimization -.- opt_solverlist;
 
         cofi --> ensemble_methods;
         ensemble_methods --> direct_search;

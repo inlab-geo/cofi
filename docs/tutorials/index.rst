@@ -19,7 +19,7 @@ Here are step-by-step guides that cover most of the functionalities and use case
     :caption: Basic usage
     :maxdepth: 1
 
-    1_basic_example_optimiser
+    1_basic_example_optimizer
     2_basic_example_linear_lsq
     3_basic_example_sampler
     4_realworld_example

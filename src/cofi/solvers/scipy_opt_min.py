@@ -31,7 +31,7 @@ class ScipyOptMinSolver(BaseSolver):
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"
     ]
     short_description = (
-        "SciPy's optimisers that minimises a scalar function with respect to "
+        "SciPy's optimizers that minimizes a scalar function with respect to "
         "one or more variables, check SciPy's documentation page for a list of methods"
     )
 

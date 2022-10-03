@@ -23,8 +23,8 @@ class BaseProblem:
     you may consider setting the following functions or properties:
 
     - ``objective`` function, or
-    - ``data_misfit`` function plus ``regularisation`` function
-    - ``data_misfit="L2"``, ``data``, ``forward`` and ``regularisation`` function
+    - ``data_misfit`` function plus ``regularization`` function
+    - ``data_misfit="L2"``, ``data``, ``forward`` and ``regularization`` function
     - In addition, it can sometimes be helpful (e.g. increase the speed of inversion)
       to define more things in a ``BaseProblem`` object: ``gradient`` of objective
       function, ``residual`` vector, ``jacobian`` of forward function, etc.
@@ -50,11 +50,11 @@ class BaseProblem:
           - what we generate for you
           - examples
         * - ``data_misfit``
-          - ``objective`` (assuming there's no regularisation)
+          - ``objective`` (assuming there's no regularization)
           - (work in progress)
-        * - ``data_misfit``, ``regularisation``
+        * - ``data_misfit``, ``regularization``
           - ``objective``
-          - `linear regression (optimiser) <https://github.com/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression_optimiser_minimise.py>`_
+          - `linear regression (optimizer) <https://github.com/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression_optimizer_minimize.py>`_
         * - ``forward``, ``data``
           - ``residual``
           - (work in progress)
@@ -94,11 +94,11 @@ class BaseProblem:
         ---------------------------------------------------------------------
         List of functions/properties created based on what you have provided:
         ['objective', 'residual', 'data_misfit']
-        ( Note that you did not set regularisation )
+        ( Note that you did not set regularization )
         ---------------------------------------------------------------------
         List of functions/properties not set by you:
         ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual',
-        'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation',
+        'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization',
         'initial_model', 'model_shape', 'bounds', 'constraints']
 
     .. tip::
@@ -146,7 +146,7 @@ class BaseProblem:
         BaseProblem.set_jacobian
         BaseProblem.set_jacobian_times_vector
         BaseProblem.set_data_misfit
-        BaseProblem.set_regularisation
+        BaseProblem.set_regularization
         BaseProblem.set_forward
         BaseProblem.set_data
         BaseProblem.set_data_covariance
@@ -195,9 +195,9 @@ class BaseProblem:
         BaseProblem.jacobian
         BaseProblem.jacobian_times_vector
         BaseProblem.data_misfit
-        BaseProblem.regularisation
-        BaseProblem.regularisation_matrix
-        BaseProblem.regularisation_factor
+        BaseProblem.regularization
+        BaseProblem.regularization_matrix
+        BaseProblem.regularization_factor
         BaseProblem.forward
         BaseProblem.name
         BaseProblem.data
@@ -229,9 +229,9 @@ class BaseProblem:
         "jacobian",
         "jacobian_times_vector",
         "data_misfit",
-        "regularisation",
-        "regularisation_matrix",
-        "regularisation_factor",
+        "regularization",
+        "regularization_matrix",
+        "regularization_factor",
         "forward",
         "data",
         "data_covariance",
@@ -509,8 +509,8 @@ class BaseProblem:
         """
         raise NotDefinedError(needs="data_misfit")
 
-    def regularisation(self, model: np.ndarray, *args, **kwargs) -> Number:
-        """Method for computing the regularisation value given a model
+    def regularization(self, model: np.ndarray, *args, **kwargs) -> Number:
+        """Method for computing the regularization value given a model
 
         Parameters
         ----------
@@ -520,35 +520,35 @@ class BaseProblem:
         Returns
         -------
         Number
-            the regularisation value evaluated based on how you've defined it
+            the regularization value evaluated based on how you've defined it
 
         Raises
         ------
         NotDefinedError
             when this method is not set and cannot be generated from known information
         """
-        raise NotDefinedError(needs="regularisation")
+        raise NotDefinedError(needs="regularization")
 
-    def regularisation_matrix(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
-        """Method for computing the regularisation weighting matrix
+    def regularization_matrix(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
+        """Method for computing the regularization weighting matrix
 
         Parameters
         ----------
         model : np.ndarray
-            a model that helps calculate regularisation matrix. In most cases this is
+            a model that helps calculate regularization matrix. In most cases this is
             not needed, but you have the flexibility to set this as a function
 
         Returns
         -------
         np.ndarray
-            the regularisation matrix of dimension ``(model_size, model_size)``
+            the regularization matrix of dimension ``(model_size, model_size)``
 
         Raises
         ------
         NotDefinedError
             when this method is not set
         """
-        raise NotDefinedError(needs="regularisation_matrix")
+        raise NotDefinedError(needs="regularization_matrix")
 
     def forward(self, model: np.ndarray, *args, **kwargs) -> Union[np.ndarray, Number]:
         """Method to perform the forward operation given a model
@@ -585,13 +585,13 @@ class BaseProblem:
         args: list = None,
         kwargs: dict = None,
     ):
-        r"""Sets the function to compute the objective function to minimise
+        r"""Sets the function to compute the objective function to minimize
 
         Alternatively, objective function can be set implicitly (computed by us) if one of
         the following combinations is set:
 
-        - :meth:`set_data_misfit` + :meth:`set_regularisation`
-        - :meth:`set_data_misfit` (in this case, regularisation is default
+        - :meth:`set_data_misfit` + :meth:`set_regularization`
+        - :meth:`set_data_misfit` (in this case, regularization is default
           to 0)
 
         Parameters
@@ -941,7 +941,7 @@ class BaseProblem:
             when you've passed in a string not in our supported data misfit list
         """
         if isinstance(data_misfit, str):
-            # if we have more options later, handle in same way as set_regularisation
+            # if we have more options later, handle in same way as set_regularization
             if data_misfit in [
                 "least squares",
                 "least square",
@@ -960,17 +960,17 @@ class BaseProblem:
             )
         self._update_autogen("data_misfit")
 
-    def set_regularisation(
+    def set_regularization(
         self,
-        regularisation: Union[str, Callable[[np.ndarray], Number]],
-        regularisation_factor: Number = 1,
-        regularisation_matrix: Union[
+        regularization: Union[str, Callable[[np.ndarray], Number]],
+        regularization_factor: Number = 1,
+        regularization_matrix: Union[
             np.ndarray, Callable[[np.ndarray], np.ndarray]
         ] = None,
         args: list = None,
         kwargs: dict = None,
     ):
-        r"""Sets the function to compute the regularisation
+        r"""Sets the function to compute the regularization
 
         You can either pass in a custom function or a string/number that describes the
         order of the norm. We use :func:`numpy.linalg.norm` as our backend
@@ -980,34 +980,34 @@ class BaseProblem:
 
         Parameters
         ----------
-        regularisation : str or (function - np.ndarray -> Number)
-            either a string from pre-built functions above, or a regularisation function that
-            matches :meth:`regularisation` in signature.
-        regularisation_factor : Number, optional
-            the regularisation factor (lamda) that adjusts the ratio of the regularisation
-            term over the data misfit, by default 1. If ``regularisation`` and ``data_misfit``
+        regularization : str or (function - np.ndarray -> Number)
+            either a string from pre-built functions above, or a regularization function that
+            matches :meth:`regularization` in signature.
+        regularization_factor : Number, optional
+            the regularization factor (lamda) that adjusts the ratio of the regularization
+            term over the data misfit, by default 1. If ``regularization`` and ``data_misfit``
             are set but ``objective`` isn't, then we will generate ``objective`` function as
-            following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
-        regularisation_matrix : np.ndarray or (function - np.ndarray -> np.ndarray)
+            following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularization}(model)`
+        regularization_matrix : np.ndarray or (function - np.ndarray -> np.ndarray)
             a matrix of shape ``(model_size, model_size)``, or a function that takes in
             a model and calculates the (weighting) matrix.
 
             - If this is None,
-              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(model)`
+              :math:`\text{regularization}(model)=\lambda\times\text{regularization}(model)`
             - If this is set to be a matrix (np.ndarray, or other array like types),
-              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}\cdot model)`
+              :math:`\text{regularization}(model)=\lambda\times\text{regularization}(\text{regularization_matrix}\cdot model)`
             - If this is set to be a function that returns a matrix,
-              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}(model)\cdot model)`
+              :math:`\text{regularization}(model)=\lambda\times\text{regularization}(\text{regularization_matrix}(model)\cdot model)`
 
         args : list, optional
-            extra list of positional arguments for regularisation function
+            extra list of positional arguments for regularization function
         kwargs : dict, optional
-            extra dict of keyword arguments for regularisation function
+            extra dict of keyword arguments for regularization function
 
         Raises
         ------
         InvalidOptionError
-            when you've passed in a string not in our supported regularisation list
+            when you've passed in a string not in our supported regularization list
 
         Examples
         --------
@@ -1019,48 +1019,48 @@ class BaseProblem:
 
         1. Example with an L1 norm
 
-        >>> inv_problem.set_regularisation(1)
-        >>> inv_problem.regularisation([1,1])
+        >>> inv_problem.set_regularization(1)
+        >>> inv_problem.regularization([1,1])
         2
 
         2. Example with an inf norm
 
-        >>> inv_problem.set_regularisation("inf")
-        >>> inv_problem.regularisation([1,1])
+        >>> inv_problem.set_regularization("inf")
+        >>> inv_problem.regularization([1,1])
         1
 
-        3. Example with a custom regularisation function
+        3. Example with a custom regularization function
 
-        >>> inv_problem.set_regularisation(lambda x: sum(x))
-        >>> inv_problem.regularisation([1,1])
+        >>> inv_problem.set_regularization(lambda x: sum(x))
+        >>> inv_problem.regularization([1,1])
         2
 
-        4. Example with an L2 norm and regularisation factor of 0.5 (by default 1)
+        4. Example with an L2 norm and regularization factor of 0.5 (by default 1)
 
-        >>> inv_problem.set_regularisation(2, 0.5)
-        >>> inv_problem.regularisation([1,1])
+        >>> inv_problem.set_regularization(2, 0.5)
+        >>> inv_problem.regularization([1,1])
         0.7071067811865476
 
-        5. Example with a regularisation matrix
+        5. Example with a regularization matrix
 
-        >>> inv_problem.set_regularisation(2, 0.5, np.array([[2,0], [0,1]]))
-        >>> inv_problem.regularisation([1,1])
+        >>> inv_problem.set_regularization(2, 0.5, np.array([[2,0], [0,1]]))
+        >>> inv_problem.regularization([1,1])
         1.118033988749895
         """
-        # preprocess regularisation_matrix
-        if np.ndim(regularisation_matrix) != 0:
-            self.regularisation_matrix = _FunctionWrapper(
-                "regularisation_matrix", _matrix_to_func, args=[regularisation_matrix]
+        # preprocess regularization_matrix
+        if np.ndim(regularization_matrix) != 0:
+            self.regularization_matrix = _FunctionWrapper(
+                "regularization_matrix", _matrix_to_func, args=[regularization_matrix]
             )
-        elif callable(regularisation_matrix):
-            self.regularisation_matrix = _FunctionWrapper(
-                "regularisation_matrix", regularisation_matrix
+        elif callable(regularization_matrix):
+            self.regularization_matrix = _FunctionWrapper(
+                "regularization_matrix", regularization_matrix
             )
         else:
-            self.regularisation_matrix = None
-        # preprocess regularisation function without lambda
-        if isinstance(regularisation, (Number, str)) or not regularisation:
-            order = regularisation
+            self.regularization_matrix = None
+        # preprocess regularization function without lambda
+        if isinstance(regularization, (Number, str)) or not regularization:
+            order = regularization
             if (
                 isinstance(order, str)
                 and order not in ["fro", "nuc", "inf", "-inf"]
@@ -1068,7 +1068,7 @@ class BaseProblem:
                 and order < 0
             ):
                 raise InvalidOptionError(
-                    name="regularisation order",
+                    name="regularization order",
                     invalid_option=order,
                     valid_options=(
                         "[None, 'fro', 'nuc', numpy.inf, -numpy.inf] or any positive"
@@ -1078,28 +1078,28 @@ class BaseProblem:
             elif isinstance(order, str) and order in ["inf", "-inf"]:
                 order = float(order)
             _reg = _FunctionWrapper(
-                "regularisation_none_lamda", np.linalg.norm, args=[order]
+                "regularization_none_lamda", np.linalg.norm, args=[order]
             )
         else:
             _reg = _FunctionWrapper(
-                "regularisation_none_lamda", regularisation, args, kwargs
+                "regularization_none_lamda", regularization, args, kwargs
             )
-        # wrapper function that calculates: lambda * raw regularisation value
-        self._regularisation_factor = regularisation_factor
-        if self.regularisation_matrix is None:
-            self.regularisation = _FunctionWrapper(
-                "regularisation",
-                _regularisation_with_lamda,
-                args=[_reg, regularisation_factor],
+        # wrapper function that calculates: lambda * raw regularization value
+        self._regularization_factor = regularization_factor
+        if self.regularization_matrix is None:
+            self.regularization = _FunctionWrapper(
+                "regularization",
+                _regularization_with_lamda,
+                args=[_reg, regularization_factor],
             )
         else:
-            self.regularisation = _FunctionWrapper(
-                "regularisation",
-                _regularisation_with_lamda_n_matrix,
-                args=[_reg, regularisation_factor, self.regularisation_matrix],
+            self.regularization = _FunctionWrapper(
+                "regularization",
+                _regularization_with_lamda_n_matrix,
+                args=[_reg, regularization_factor, self.regularization_matrix],
             )
         # update some autogenerated functions (as usual)
-        self._update_autogen("regularisation")
+        self._update_autogen("regularization")
 
     def set_forward(
         self,
@@ -1340,12 +1340,12 @@ class BaseProblem:
                 >>> inv_problem.suggest_solvers()
                 Based on what you've provided so far, here are possible solvers:
                 {
-                    "optimisation": [
+                    "optimization": [
                         "scipy.optimize.minimize"
                     ],
                     "linear least square": []
                 }
-                {'optimisation': ['scipy.optimize.minimize'], 'linear least square': []}
+                {'optimization': ['scipy.optimize.minimize'], 'linear least square': []}
 
         """
         to_suggest = dict()
@@ -1412,7 +1412,7 @@ class BaseProblem:
 
     @property
     def initial_model(self) -> np.ndarray:
-        r"""the initial model, needed for some iterative optimisation tools that
+        r"""the initial model, needed for some iterative optimization tools that
         requires a starting point
 
         Raises
@@ -1475,22 +1475,22 @@ class BaseProblem:
         raise NotDefinedError(needs="blobs name and type")
 
     @property
-    def regularisation_factor(self) -> Number:
-        r"""regularisation factor (lambda) that adjusts weights of the regularisation
+    def regularization_factor(self) -> Number:
+        r"""regularization factor (lambda) that adjusts weights of the regularization
         term
 
         Raises
         ------
         NotDefinedError
             when this property has not been defined (by
-            :meth:`set_regularisation`
+            :meth:`set_regularization`
         """
         if (
-            hasattr(self, "_regularisation_factor")
-            and self._regularisation_factor is not None
+            hasattr(self, "_regularization_factor")
+            and self._regularization_factor is not None
         ):
-            return self._regularisation_factor
-        raise NotDefinedError(needs="regularisation_factor (lamda)")
+            return self._regularization_factor
+        raise NotDefinedError(needs="regularization_factor (lamda)")
 
     @property
     def bounds(self):
@@ -1583,14 +1583,14 @@ class BaseProblem:
         return self._check_defined(self.data_misfit)
 
     @property
-    def regularisation_defined(self) -> bool:
-        r"""indicates whether :meth:`regularisation` has been defined"""
-        return self._check_defined(self.regularisation)
+    def regularization_defined(self) -> bool:
+        r"""indicates whether :meth:`regularization` has been defined"""
+        return self._check_defined(self.regularization)
 
     @property
-    def regularisation_matrix_defined(self) -> bool:
-        r"""indicates whether :meth:`regularisation_matrix` has been defined"""
-        return self._check_defined(self.regularisation_matrix)
+    def regularization_matrix_defined(self) -> bool:
+        r"""indicates whether :meth:`regularization_matrix` has been defined"""
+        return self._check_defined(self.regularization_matrix)
 
     @property
     def forward_defined(self) -> bool:
@@ -1633,9 +1633,9 @@ class BaseProblem:
         return self._check_property_defined("blobs_dtype")
 
     @property
-    def regularisation_factor_defined(self) -> bool:
-        r"""indicates whether :meth:`regularisation_factor` has been defined"""
-        return self._check_property_defined("regularisation_factor")
+    def regularization_factor_defined(self) -> bool:
+        r"""indicates whether :meth:`regularization_factor` has been defined"""
+        return self._check_property_defined("regularization_factor")
 
     @property
     def bounds_defined(self) -> bool:
@@ -1676,7 +1676,7 @@ class BaseProblem:
             ("data_misfit",): ("objective", _objective_from_dm),
             (
                 "data_misfit",
-                "regularisation",
+                "regularization",
             ): ("objective", _objective_from_dm_reg),
             (
                 "log_likelihood",
@@ -1791,10 +1791,10 @@ class BaseProblem:
                 ---------------------------------------------------------------------
                 List of functions/properties created based on what you have provided:
                 ['objective', 'data_misfit']
-                ( Note that you did not set regularisation )
+                ( Note that you did not set regularization )
                 ---------------------------------------------------------------------
                 List of functions/properties not set by you:
-                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularisation', 'forward', 'data', 'bounds', 'constraints']
+                ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'forward', 'data', 'bounds', 'constraints']
 
         """
         self._summary()
@@ -1834,9 +1834,9 @@ class BaseProblem:
         if (
             "objective" in created_for_user
             and self.data_misfit_defined
-            and not self.regularisation_defined
+            and not self.regularization_defined
         ):
-            print("( Note that you did not set regularisation )")
+            print("( Note that you did not set regularization )")
         if display_lines:
             print(single_line)
         print(sub_title3)
@@ -1850,12 +1850,12 @@ class BaseProblem:
 
 
 # ---------- Auto generated functions -------------------------------------------------
-def _objective_from_dm_reg(model, data_misfit, regularisation):
+def _objective_from_dm_reg(model, data_misfit, regularization):
     try:
-        return data_misfit(model) + regularisation(model)
+        return data_misfit(model) + regularization(model)
     except Exception as exception:
         raise InvocationError(
-            func_name="objective function from data misfit and regularisation",
+            func_name="objective function from data misfit and regularization",
             autogen=True,
         ) from exception
 
@@ -1919,11 +1919,11 @@ def _jacobian_times_vector_from_jcb(model, vector, jacobian):
         ) from exception
 
 
-def _regularisation_with_lamda(model, reg_func, lamda):
+def _regularization_with_lamda(model, reg_func, lamda):
     return lamda * reg_func(model)
 
 
-def _regularisation_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func):
+def _regularization_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func):
     return lamda * reg_func(reg_matrix_func(model) @ model)
 
 
