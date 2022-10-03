@@ -2,11 +2,20 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.2.dev10 (NOT YET RELEASED)
+## v0.1.2.dev10 (03/10/2022)
+
+### CoFI Core
+
+- [#56](https://github.com/inlab-geo/cofi/issues/56) Modify BaseProblem.data_misfit to include data covariance matrix
+- [#70](https://github.com/inlab-geo/cofi/issues/70) Words renaming optimise -> optimize, etc.
 
 ### CoFI Utils
 
-- [#65](https://github.com/inlab-geo/cofi/issues/54) Utility functions using findiff to generate the difference matrices
+- [#54](https://github.com/inlab-geo/cofi/issues/54) Utility functions using findiff to generate the difference matrices
+
+### CoFI Solvers
+
+- [#68](https://github.com/inlab-geo/cofi/issues/#68) Optimise special cases in linear system solver
 
 
 ## v0.1.2.dev9 (13/09/2022)
