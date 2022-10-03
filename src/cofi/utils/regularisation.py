@@ -103,8 +103,8 @@ class BaseRegularisation(metaclass=ABCMeta):
             a regularisation term ``resRegularisation`` such that:
             
             - :math:`\text{resRegularisation.reg}(m)=\text{self.reg}(m)+\text{other_reg.reg}(m)`
-            - :math:`\text{resRegularisation.gradient}(m)=\text{self.reg}(m)+\text{other_reg.gradient}(m)`
-            - :math:`\text{resRegularisation.hessian}(m)=\text{self.reg}(m)+\text{other_reg.hessian}(m)`
+            - :math:`\text{resRegularisation.gradient}(m)=\text{self.gradient}(m)+\text{other_reg.gradient}(m)`
+            - :math:`\text{resRegularisation.hessian}(m)=\text{self.hessian}(m)+\text{other_reg.hessian}(m)`
 
         Raises
         ------
@@ -192,8 +192,10 @@ class QuadraticReg(BaseRegularisation):
             
           - :math:`D` matrix helps calculate the first order derivative of :math:`m`. 
             For 1D problems, it looks like
+
+            :math:`\begin{pmatrix}-1.5&2&-0.5&&&\\-0.5&&0.5&&&&&\\&-0.5&&0.5&&&&\\&&...&&...&&&\\&&&-0.5&&0.5&&\\&&&&-0.5&&0.5&\\&&&&&0.5&-2&1.5\end{pmatrix}`
             
-            :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
+            .. :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
 
             While for higher dimension problems, by default it's a flattened version of 
             an N-D array. The actual ordering of model parameters in higher dimensions
@@ -213,8 +215,10 @@ class QuadraticReg(BaseRegularisation):
             
           - :math:`D` matrix helps calculate the second order derivatives of :math:`m`.
             For 1D problems, it looks like
+
+            :math:`\begin{pmatrix}2&-5&4&-1&&&\\1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\\&&&-1&4&-5&2\end{pmatrix}`
             
-            :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
+            .. :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
 
             While for higher dimension problems, by default it's a flattened version of 
             an N-D array. The actual ordering of model parameters in higher dimensions
@@ -374,7 +378,16 @@ class QuadraticReg(BaseRegularisation):
                 )
             self._D = np.identity(self._model_size)
         elif self._reg_type in REG_TYPES:       # 1st/2nd order Tikhonov
-            if np.size(self._model_size) == 2 and np.ndim(self._model_size) == 1:
+            if np.size(self._model_size) == 1:
+                order = REG_TYPES[self._reg_type]
+                if self._model_size < order+2:
+                    raise ValueError(
+                        f"the model_size needs to be at least >={order+2} "
+                        f"for regularisation type '{self._reg_type}'"
+                    )
+                d_dx = findiff.FinDiff(0, 1, order)
+                self._D = d_dx.matrix((self._model_size,)).toarray()
+            elif np.size(self._model_size) == 2 and np.ndim(self._model_size) == 1:
                 nx = self._model_size[0]
                 ny = self._model_size[1]
                 order = REG_TYPES[self._reg_type]
@@ -383,10 +396,10 @@ class QuadraticReg(BaseRegularisation):
                         f"the model_size needs to be at least (>={order+2}, >={order+2}) "
                         f"for regularisation type '{self._reg_type}'"
                     )
-                d_dx2 = findiff.FinDiff(0, 1, order)            # x direction
-                d_dy2 = findiff.FinDiff(1, 1, order)            # y direction
-                matx = d_dx2.matrix((nx, ny))                   # scipy sparse matrix
-                maty = d_dy2.matrix((nx, ny))                   # scipy sparse matrix
+                d_dx = findiff.FinDiff(0, 1, order)            # x direction
+                d_dy = findiff.FinDiff(1, 1, order)            # y direction
+                matx = d_dx.matrix((nx, ny))                   # scipy sparse matrix
+                maty = d_dy.matrix((nx, ny))                   # scipy sparse matrix
                 self._D = np.vstack((matx.toarray(), maty.toarray()))   # combine above
             else:
                 raise NotImplementedError(

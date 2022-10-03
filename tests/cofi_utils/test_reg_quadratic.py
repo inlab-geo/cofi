@@ -64,16 +64,20 @@ def test_flattening():
     assert reg_grad.shape == (9,)
     reg_hess = reg.hessian(test_model)
     assert reg_hess.shape == (9,9)
+    # 5 - test matrix
+    reg = QuadraticReg(1, 3, reg_type="flattening")
+    assert np.allclose(reg.matrix, np.array([[-1.5, 2, -0.5], [-0.5, 0, 0.5], [0.5, -2, 1.5]]))
 
 def test_flattening_invalid():
     # 1
     with pytest.raises(NotImplementedError, match=r".*only 2D derivative.*"): 
-        QuadraticReg(1, 1, reg_type="flattening")
-    with pytest.raises(NotImplementedError, match=r".*only 2D derivative.*"): 
-        QuadraticReg(1, 1, reg_type="roughening")
+        QuadraticReg(factor=1, model_size=(1,2,3), reg_type="roughening")
     # 2
     with pytest.raises(ValueError, match=r".*at least \(>=3, >=3\).*'roughening'.*"):
         QuadraticReg(factor=1, model_size=(2,3), reg_type="roughening")
+    # 3
+    with pytest.raises(ValueError, match=r".*at least >=3 for.*flattening.*"): 
+        QuadraticReg(factor=1, model_size=2, reg_type="flattening")
 
 def test_smoothing():
     reg = QuadraticReg(factor=1, model_size=(4,4), reg_type="smoothing")
@@ -93,17 +97,23 @@ def test_smoothing():
     assert reg_grad.shape == (16,)
     reg_hess = reg.hessian(test_model)
     assert reg_hess.shape == (16,16)
+    # 5 - test matrix
+    reg = QuadraticReg(1, 4, reg_type="smoothing")
+    assert np.allclose(reg.matrix, np.array([[2.0,-5,4,-1],[1,-2,1,0],[0,1,-2,1],[-1,4,-5,2]]))
 
 def test_smoothing_invalid():
     # 1
     with pytest.raises(NotImplementedError, match=r".*only 2D derivative.*"): 
-        QuadraticReg(1, 1, reg_type="smoothing")
+        QuadraticReg(1, (1,2,3), reg_type="smoothing")
     # 2
     with pytest.raises(ValueError, match=r".*at least \(>=4, >=4\).*'smoothing'.*"):
         QuadraticReg(factor=1, model_size=(2,3), reg_type="smoothing")
     # 3
     reg = QuadraticReg(factor=1, model_size=(4,4), reg_type="smoothing")
     with pytest.raises(ValueError): reg(np.zeros((3,3)))
+    # 4
+    with pytest.raises(ValueError, match=r".*at least >=4 for.*smoothing.*"): 
+        QuadraticReg(factor=1, model_size=3, reg_type="smoothing")
 
 def test_byo():
     # 1
