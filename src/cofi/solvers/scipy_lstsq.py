@@ -14,7 +14,7 @@ class ScipyLstSqSolver(BaseSolver):
        :math:`m=(G^TG)^{-1}G^Td`
     2. with uncertainty, :math:`m=(G^TC_d^{-1}G)^{-1}G^TC_d^{-1}d`
     3. with Tikhonov regularisation, :math:`m=(G^TG+\lambda L^TL)^{-1}G^Td`
-    4. with both uncertainty and regularisation, 
+    4. with both uncertainty and regularisation,
        :math:`m=(G^TC_d^{-1}G+\lambda L^TL)^{-1}G^TC_d^{-1}d`
 
     where:
@@ -24,7 +24,7 @@ class ScipyLstSqSolver(BaseSolver):
     - :math:`d` refers to the data vector
     - :math:`\lambda` refers to the regularisation factor that adjusts the ratio of
       data misfit and regularisation term
-    - :math:`L` refers to the regularisation matrix, and is usually chosen to be 
+    - :math:`L` refers to the regularisation matrix, and is usually chosen to be
       damping (zeroth order Tikhonov), roughening (first order Tikhonov), or smoothing
       (second order Tikhonov).
     """
@@ -40,7 +40,7 @@ class ScipyLstSqSolver(BaseSolver):
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     components_used: list = []
     required_in_problem: set = {"jacobian", "data"}
-    optional_in_problem: dict = {"data_covariance_inv": None, "data_covariance": None}
+    optional_in_problem: dict = {"data_covariance_inv": None, "data_covariance": None, "regularisation_matrix": None}
     required_in_options: set = {}
     optional_in_options: dict = {
         k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
@@ -51,7 +51,6 @@ class ScipyLstSqSolver(BaseSolver):
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self.components_used = list(self.required_in_problem)
-        # TODO update optional options
         self._assign_args()
 
     def _assign_args(self):
@@ -85,8 +84,10 @@ class ScipyLstSqSolver(BaseSolver):
         if self._with_uncertainty:
             if not inv_problem.data_covariance_inv_defined:
                 self._Cd_inv = np.linalg.inv(inv_problem.data_covariance)
+                self.components_used.append("data_covariance")
             else:
                 self._Cd_inv = inv_problem.data_covariance_inv
+                self.components_used.append("data_covariance_inv")
             _gt_cdinv = self._G.T @ self._Cd_inv
             self._a = _gt_cdinv @ self._G
             self._b = _gt_cdinv @ self._d
@@ -95,14 +96,16 @@ class ScipyLstSqSolver(BaseSolver):
             self._b = self._G.T @ self._d
 
         # check whether to take regularisation into account
-        self._with_tikhonov = self._with_tikhonov_if_possible and \
-            inv_problem.regularisation_defined
+        self._with_tikhonov = (
+            self._with_tikhonov_if_possible and inv_problem.regularisation_defined
+        )
         # get lamda and L matrix if needed
         if self._with_tikhonov:
             self._lamda = inv_problem.regularisation_factor
             if inv_problem.regularisation_matrix_defined:
                 try:
                     self._L = inv_problem.regularisation_matrix(dummy_model)
+                    self.components_used.append("regularisation_matrix")
                 except Exception as exception:
                     raise ValueError(
                         "regularisation matrix function isn't set properly for least "

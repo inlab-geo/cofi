@@ -5,9 +5,9 @@ import json
 import numpy as np
 
 from .exceptions import (
-    DimensionMismatchError, 
+    DimensionMismatchError,
     InvalidOptionError,
-    InvocationError, 
+    InvocationError,
     NotDefinedError,
 )
 
@@ -309,7 +309,7 @@ class BaseProblem:
         Tuple[Number]
             the posterior probability density value, and other information you've set to
             return together with the former
-        
+
         Raises
         ------
         NotDefinedError
@@ -331,7 +331,7 @@ class BaseProblem:
         -------
         Number
             the prior probability density value
-        
+
         Raises
         ------
         NotDefinedError
@@ -353,11 +353,11 @@ class BaseProblem:
         -------
         Number
             the likelihood probability density value
-        
+
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="log_likelihood")
 
@@ -377,7 +377,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="gradient")
 
@@ -397,7 +397,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="hessian")
 
@@ -421,7 +421,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="hessian_times_vector")
 
@@ -441,7 +441,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="residual")
 
@@ -461,7 +461,7 @@ class BaseProblem:
         raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="jacobian")
 
@@ -485,7 +485,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="jacobian_times_vector")
 
@@ -505,7 +505,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="data_misfit")
 
@@ -525,13 +525,13 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="regularisation")
 
     def regularisation_matrix(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
         """Method for computing the regularisation weighting matrix
-        
+
         Parameters
         ----------
         model : np.ndarray
@@ -566,7 +566,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this method is not set and cannot be generated from known information 
+            when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="forward")
 
@@ -580,7 +580,10 @@ class BaseProblem:
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
 
     def set_objective(
-        self, obj_func: Callable[[np.ndarray], Number], args: list = None, kwargs: dict = None
+        self,
+        obj_func: Callable[[np.ndarray], Number],
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the objective function to minimise
 
@@ -695,7 +698,10 @@ class BaseProblem:
         self._update_autogen("blobs_dtype")
 
     def set_log_prior(
-        self, log_prior_func: Callable[[np.ndarray], Number], args: list = None, kwargs: dict = None
+        self,
+        log_prior_func: Callable[[np.ndarray], Number],
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the log of prior probability density
 
@@ -736,7 +742,10 @@ class BaseProblem:
         self._update_autogen("log_likelihood")
 
     def set_gradient(
-        self, grad_func: Callable[[np.ndarray], np.ndarray], args: list = None, kwargs: dict = None
+        self,
+        grad_func: Callable[[np.ndarray], np.ndarray],
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the gradient of objective function w.r.t the
         model
@@ -774,7 +783,9 @@ class BaseProblem:
             extra dict of keyword arguments for hessian function
         """
         if isinstance(hess_func, np.ndarray):
-            self.hessian = _FunctionWrapper("hessian", _matrix_to_func, args=[hess_func])
+            self.hessian = _FunctionWrapper(
+                "hessian", _matrix_to_func, args=[hess_func]
+            )
         else:
             self.hessian = _FunctionWrapper("hessian", hess_func, args, kwargs)
         self._update_autogen("hessian")
@@ -807,7 +818,10 @@ class BaseProblem:
         self._update_autogen("hessian_times_vector")
 
     def set_residual(
-        self, res_func: Callable[[np.ndarray], np.ndarray], args: list = None, kwargs: dict = None
+        self,
+        res_func: Callable[[np.ndarray], np.ndarray],
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the residual vector/matrix
 
@@ -848,7 +862,9 @@ class BaseProblem:
             extra dict of keyword arguments for jacobian function
         """
         if isinstance(jac_func, np.ndarray):
-            self.jacobian = _FunctionWrapper("jacobian", _matrix_to_func, args=[jac_func])
+            self.jacobian = _FunctionWrapper(
+                "jacobian", _matrix_to_func, args=[jac_func]
+            )
         else:
             self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
         self._update_autogen("jacobian")
@@ -900,13 +916,13 @@ class BaseProblem:
 
         - If you **additionally** have :meth:`data_covariance_inv` defined, then
           :math:`\text{data_misfit}=\text{residual}^TC_d^{-1}\text{residual}`
-        
+
           - where :math:`C_d^{-1}=\text{data_covariance_inv}`
-        
-        - Otherwise you might face an error when actually calling the 
+
+        - Otherwise you might face an error when actually calling the
           :meth:`data_misfit` method.
 
-        Alternatively, pass in your own data misfit function (or objective function 
+        Alternatively, pass in your own data misfit function (or objective function
         directly through :meth:`set_objective`).
 
         Parameters
@@ -931,12 +947,12 @@ class BaseProblem:
                 "least square",
                 "squared error",
             ]:
-                self.data_misfit = _FunctionWrapper("data_misfit", self._data_misfit_squared_error, autogen=True)
+                self.data_misfit = _FunctionWrapper(
+                    "data_misfit", self._data_misfit_squared_error, autogen=True
+                )
             else:
                 raise InvalidOptionError(
-                    name="data misfit", 
-                    invalid_option=data_misfit, 
-                    valid_options=["L2"]
+                    name="data misfit", invalid_option=data_misfit, valid_options=["L2"]
                 )
         else:
             self.data_misfit = _FunctionWrapper(
@@ -948,7 +964,9 @@ class BaseProblem:
         self,
         regularisation: Union[str, Callable[[np.ndarray], Number]],
         regularisation_factor: Number = 1,
-        regularisation_matrix: Union[np.ndarray, Callable[[np.ndarray], np.ndarray]] = None,
+        regularisation_matrix: Union[
+            np.ndarray, Callable[[np.ndarray], np.ndarray]
+        ] = None,
         args: list = None,
         kwargs: dict = None,
     ):
@@ -972,15 +990,15 @@ class BaseProblem:
             following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularisation}(model)`
         regularisation_matrix : np.ndarray or (function - np.ndarray -> np.ndarray)
             a matrix of shape ``(model_size, model_size)``, or a function that takes in
-            a model and calculates the (weighting) matrix. 
-            
+            a model and calculates the (weighting) matrix.
+
             - If this is None,
               :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(model)`
             - If this is set to be a matrix (np.ndarray, or other array like types),
               :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}\cdot model)`
             - If this is set to be a function that returns a matrix,
-              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}(model)\cdot model)` 
-        
+              :math:`\text{regularisation}(model)=\lambda\times\text{regularisation}(\text{regularisation_matrix}(model)\cdot model)`
+
         args : list, optional
             extra list of positional arguments for regularisation function
         kwargs : dict, optional
@@ -1016,7 +1034,7 @@ class BaseProblem:
         >>> inv_problem.set_regularisation(lambda x: sum(x))
         >>> inv_problem.regularisation([1,1])
         2
-        
+
         4. Example with an L2 norm and regularisation factor of 0.5 (by default 1)
 
         >>> inv_problem.set_regularisation(2, 0.5)
@@ -1032,41 +1050,53 @@ class BaseProblem:
         # preprocess regularisation_matrix
         if np.ndim(regularisation_matrix) != 0:
             self.regularisation_matrix = _FunctionWrapper(
-                "regularisation_matrix", 
-                _matrix_to_func, args=[regularisation_matrix]
+                "regularisation_matrix", _matrix_to_func, args=[regularisation_matrix]
             )
         elif callable(regularisation_matrix):
             self.regularisation_matrix = _FunctionWrapper(
-                "regularisation_matrix", 
-                regularisation_matrix
+                "regularisation_matrix", regularisation_matrix
             )
         else:
             self.regularisation_matrix = None
         # preprocess regularisation function without lambda
         if isinstance(regularisation, (Number, str)) or not regularisation:
             order = regularisation
-            if isinstance(order, str) and order not in ["fro", "nuc", "inf", "-inf"] \
-                or isinstance(order, Number) and order < 0:
+            if (
+                isinstance(order, str)
+                and order not in ["fro", "nuc", "inf", "-inf"]
+                or isinstance(order, Number)
+                and order < 0
+            ):
                 raise InvalidOptionError(
-                    name="regularisation order", 
-                    invalid_option=order, 
-                    valid_options="[None, 'fro', 'nuc', numpy.inf, -numpy.inf] or any positive number"
+                    name="regularisation order",
+                    invalid_option=order,
+                    valid_options=(
+                        "[None, 'fro', 'nuc', numpy.inf, -numpy.inf] or any positive"
+                        " number"
+                    ),
                 )
             elif isinstance(order, str) and order in ["inf", "-inf"]:
                 order = float(order)
-            _reg = _FunctionWrapper("regularisation_none_lamda", np.linalg.norm, args=[order])
+            _reg = _FunctionWrapper(
+                "regularisation_none_lamda", np.linalg.norm, args=[order]
+            )
         else:
-            _reg = _FunctionWrapper("regularisation_none_lamda", regularisation, args, kwargs)
+            _reg = _FunctionWrapper(
+                "regularisation_none_lamda", regularisation, args, kwargs
+            )
         # wrapper function that calculates: lambda * raw regularisation value
         self._regularisation_factor = regularisation_factor
         if self.regularisation_matrix is None:
             self.regularisation = _FunctionWrapper(
-                "regularisation", _regularisation_with_lamda, args=[_reg, regularisation_factor])
+                "regularisation",
+                _regularisation_with_lamda,
+                args=[_reg, regularisation_factor],
+            )
         else:
             self.regularisation = _FunctionWrapper(
                 "regularisation",
                 _regularisation_with_lamda_n_matrix,
-                args = [_reg, regularisation_factor, self.regularisation_matrix]
+                args=[_reg, regularisation_factor, self.regularisation_matrix],
             )
         # update some autogenerated functions (as usual)
         self._update_autogen("regularisation")
@@ -1191,19 +1221,19 @@ class BaseProblem:
 
         Raises
         ------
-        DimensionMismatchError 
+        DimensionMismatchError
             when you've defined an initial_model through :meth:`set_initial_model`
             but their shapes don't match
         """
         if self.initial_model_defined and self._model_shape != model_shape:
             try:
                 np.reshape(self.initial_model, model_shape)
-            except ValueError as err: 
+            except ValueError as err:
                 raise DimensionMismatchError(
-                    entered_dimension=model_shape, 
-                    entered_name="model shape", 
-                    expected_dimension=self.initial_model.shape, 
-                    expected_source="initial model"
+                    entered_dimension=model_shape,
+                    entered_name="model shape",
+                    expected_dimension=self.initial_model.shape,
+                    expected_source="initial model",
                 ) from err
         self._model_shape = model_shape
 
@@ -1321,6 +1351,7 @@ class BaseProblem:
         to_suggest = dict()
         all_components = self.defined_components()
         from .solvers import solvers_table
+
         for solving_method in solvers_table:
             backend_tools = solvers_table[solving_method]
             to_suggest[solving_method] = []
@@ -1372,8 +1403,10 @@ class BaseProblem:
         NotDefinedError
             when this property has not been defined by methods above
         """
-        if hasattr(self, "_data_covariance_inv") and \
-            self._data_covariance_inv is not None:
+        if (
+            hasattr(self, "_data_covariance_inv")
+            and self._data_covariance_inv is not None
+        ):
             return self._data_covariance_inv
         raise NotDefinedError(needs="inverse data covariance matrix")
 
@@ -1385,7 +1418,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this property has not been defined (by 
+            when this property has not been defined (by
             :meth:`set_initial_model`)
         """
         if hasattr(self, "_initial_model") and self._initial_model is not None:
@@ -1399,7 +1432,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this property has not been defined (by either 
+            when this property has not been defined (by either
             :meth:`set_model_shape`,
             :meth:`set_model_shape`, or
             :meth:`set_walkers_starting_pos`)
@@ -1415,11 +1448,13 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this property has not been defined (by 
+            when this property has not been defined (by
             :meth:`set_walkers_starting_pos`)
         """
-        if hasattr(self, "_walkers_starting_pos") and \
-            self._walkers_starting_pos is not None:
+        if (
+            hasattr(self, "_walkers_starting_pos")
+            and self._walkers_starting_pos is not None
+        ):
             return self._walkers_starting_pos
         raise NotDefinedError(needs="walkers' starting positions")
 
@@ -1431,27 +1466,29 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this property has not been defined (by either 
-            :meth:`set_blobs_dtype` or 
+            when this property has not been defined (by either
+            :meth:`set_blobs_dtype` or
             :meth:`set_log_posterior_with_blobs`)
         """
         if hasattr(self, "_blobs_dtype") and self._blobs_dtype is not None:
             return self._blobs_dtype
         raise NotDefinedError(needs="blobs name and type")
-    
+
     @property
     def regularisation_factor(self) -> Number:
         r"""regularisation factor (lambda) that adjusts weights of the regularisation
         term
-        
+
         Raises
         ------
         NotDefinedError
             when this property has not been defined (by
             :meth:`set_regularisation`
         """
-        if hasattr(self, "_regularisation_factor") and \
-            self._regularisation_factor is not None:
+        if (
+            hasattr(self, "_regularisation_factor")
+            and self._regularisation_factor is not None
+        ):
             return self._regularisation_factor
         raise NotDefinedError(needs="regularisation_factor (lamda)")
 
@@ -1462,7 +1499,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this property has not been defined (by 
+            when this property has not been defined (by
             :meth:`set_bounds`)
         """
         if hasattr(self, "_bounds") and self._bounds is not None:
@@ -1476,7 +1513,7 @@ class BaseProblem:
         Raises
         ------
         NotDefinedError
-            when this property has not been defined (by 
+            when this property has not been defined (by
             :meth:`set_constraints`)
         """
         if hasattr(self, "_constraints") and self._constraints is not None:
@@ -1549,7 +1586,7 @@ class BaseProblem:
     def regularisation_defined(self) -> bool:
         r"""indicates whether :meth:`regularisation` has been defined"""
         return self._check_defined(self.regularisation)
-    
+
     @property
     def regularisation_matrix_defined(self) -> bool:
         r"""indicates whether :meth:`regularisation_matrix` has been defined"""
@@ -1572,7 +1609,7 @@ class BaseProblem:
 
     @property
     def data_covariance_inv_defined(self) -> bool:
-        r"""indicates whether :meth:`data_covariance_inv` has been defined""" 
+        r"""indicates whether :meth:`data_covariance_inv` has been defined"""
         return self._check_property_defined("data_covariance_inv")
 
     @property
@@ -1622,7 +1659,7 @@ class BaseProblem:
             return False
         except Exception:  # it's ok if there're errors caused by dummy input argument np.array([])
             return True
-    
+
     def _check_property_defined(self, prop):
         try:
             getattr(self, prop)
@@ -1637,11 +1674,23 @@ class BaseProblem:
     def autogen_table(self):
         return {
             ("data_misfit",): ("objective", _objective_from_dm),
-            ("data_misfit", "regularisation",): ("objective", _objective_from_dm_reg),
-            ("log_likelihood", "log_prior",): ("log_posterior_with_blobs", _log_posterior_with_blobs_from_ll_lp),
-            ("log_posterior_with_blobs",): ("log_posterior", _log_posterior_from_lp_with_blobs),
+            (
+                "data_misfit",
+                "regularisation",
+            ): ("objective", _objective_from_dm_reg),
+            (
+                "log_likelihood",
+                "log_prior",
+            ): ("log_posterior_with_blobs", _log_posterior_with_blobs_from_ll_lp),
+            ("log_posterior_with_blobs",): (
+                "log_posterior",
+                _log_posterior_from_lp_with_blobs,
+            ),
             ("hessian",): ("hessian_times_vector", _hessian_times_vector_from_hess),
-            ("forward", "data",): ("residual", _residual_from_fwd_dt),
+            (
+                "forward",
+                "data",
+            ): ("residual", _residual_from_fwd_dt),
             ("jacobian",): ("jacobian_times_vector", _jacobian_times_vector_from_jcb),
         }
 
@@ -1659,7 +1708,9 @@ class BaseProblem:
                 (getattr(self, f"{nm}_defined") for nm in need_defined)
             ):  # can update
                 defined_items = list((getattr(self, nm) for nm in need_defined))
-                new_func = _FunctionWrapper(to_update, new_func, args=defined_items, autogen=True)
+                new_func = _FunctionWrapper(
+                    to_update, new_func, args=defined_items, autogen=True
+                )
                 setattr(self, to_update, new_func)
                 if to_update == "log_posterior_with_blobs":
                     self.set_blobs_dtype(
@@ -1709,10 +1760,7 @@ class BaseProblem:
             else:
                 return np.sum(np.square(res))
         except Exception as exception:
-            raise InvocationError(
-                func_name="data misfit", 
-                autogen=True
-            ) from exception
+            raise InvocationError(func_name="data misfit", autogen=True) from exception
 
     def summary(self):
         r"""Helper method that prints a summary of current ``BaseProblem`` object to
@@ -1796,6 +1844,8 @@ class BaseProblem:
 
     def __repr__(self) -> str:
         return f"{self.name}"
+
+
 # ---------- End of BaseProblem class -------------------------------------------------
 
 
@@ -1806,17 +1856,18 @@ def _objective_from_dm_reg(model, data_misfit, regularisation):
     except Exception as exception:
         raise InvocationError(
             func_name="objective function from data misfit and regularisation",
-            autogen=True
-        ) from exception 
+            autogen=True,
+        ) from exception
+
 
 def _objective_from_dm(model, data_misfit):
     try:
         return data_misfit(model)
     except Exception as exception:
         raise InvocationError(
-            func_name="objective function from data misfit",
-            autogen=True
-        ) from exception 
+            func_name="objective function from data misfit", autogen=True
+        ) from exception
+
 
 def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
     try:
@@ -1826,8 +1877,9 @@ def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
     except Exception as exception:
         raise InvocationError(
             func_name="log posterior function from log likelihood and log prior",
-            autogen=True
-        ) from exception 
+            autogen=True,
+        ) from exception
+
 
 def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
     try:
@@ -1835,60 +1887,68 @@ def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
     except Exception as exception:
         raise InvocationError(
             func_name="log posterior function from log likelihood and log prior",
-            autogen=True
-        ) from exception 
+            autogen=True,
+        ) from exception
+
 
 def _hessian_times_vector_from_hess(model, vector, hessian):
     try:
         return np.asarray(hessian(model) @ vector)
     except Exception as exception:
-       raise InvocationError(
+        raise InvocationError(
             func_name="hessian_times_vector function from given hessian function",
-            autogen=True
-        ) from exception 
+            autogen=True,
+        ) from exception
+
 
 def _residual_from_fwd_dt(model, forward, data):
     try:
         return forward(model) - data
     except Exception as exception:
         raise InvocationError(
-            func_name="residual function from forward and data provided",
-            autogen=True
-        ) from exception 
+            func_name="residual function from forward and data provided", autogen=True
+        ) from exception
+
 
 def _jacobian_times_vector_from_jcb(model, vector, jacobian):
     try:
         return np.asarray(jacobian(model) @ vector)
     except Exception as exception:
         raise InvocationError(
-            func_name="jacobian_times_vector from given jacobian function",
-            autogen=True
-        ) from exception 
+            func_name="jacobian_times_vector from given jacobian function", autogen=True
+        ) from exception
+
 
 def _regularisation_with_lamda(model, reg_func, lamda):
     return lamda * reg_func(model)
 
+
 def _regularisation_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func):
     return lamda * reg_func(reg_matrix_func(model) @ model)
+
 
 def _matrix_to_func(_, matrix):
     return matrix
 
+
 def _is_diag(matrix):
     diag_elem = np.diag(matrix).copy()
-    np.fill_diagonal(matrix,0)
-    out = (matrix==0).all()
-    np.fill_diagonal(matrix,diag_elem)
+    np.fill_diagonal(matrix, 0)
+    out = (matrix == 0).all()
+    np.fill_diagonal(matrix, diag_elem)
     return out
+
 
 # ---------- function wrapper to help make things pickleable --------------------------
 class _FunctionWrapper:
-    def __init__(self, name, func, args: list = None, kwargs: dict = None, autogen=False):
+    def __init__(
+        self, name, func, args: list = None, kwargs: dict = None, autogen=False
+    ):
         if not callable(func):
             raise InvalidOptionError(
-                name=f"{name} function", 
-                invalid_option="not-callable input", 
-                valid_options="functions that are callable"
+                name=f"{name} function",
+                invalid_option="not-callable input",
+                valid_options="functions that are callable",
             )
         self.name = name
         self.func = func
