@@ -2,6 +2,8 @@ from .base_problem import BaseProblem
 from .inversion_options import InversionOptions
 from .inversion import Inversion, InversionResult, SamplingResult
 
+from . import utils
+from . import solvers
 
 try:
     from . import _version

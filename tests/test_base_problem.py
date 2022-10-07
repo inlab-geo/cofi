@@ -443,7 +443,7 @@ def test_suggest_solvers_return():
     inv_problem.set_jacobian(np.array([1]))
     inv_problem.set_data(2)
     suggested = inv_problem.suggest_solvers(print_to_console=False)
-    assert "scipy.linalg.lstsq" in suggested["matrix-based solvers"]
+    assert "scipy.linalg.lstsq" in suggested["matrix solvers"]
 
 
 ############### TEST function wrapper #################################################

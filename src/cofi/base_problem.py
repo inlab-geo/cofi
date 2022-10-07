@@ -1343,9 +1343,9 @@ class BaseProblem:
                     "optimization": [
                         "scipy.optimize.minimize"
                     ],
-                    "matrix-based solvers": []
+                    "matrix solvers": []
                 }
-                {'optimization': ['scipy.optimize.minimize'], 'matrix-based solvers': []}
+                {'optimization': ['scipy.optimize.minimize'], 'matrix solvers': []}
 
         """
         to_suggest = dict()
