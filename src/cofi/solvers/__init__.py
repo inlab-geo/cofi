@@ -4,6 +4,7 @@ from .scipy_opt_min import ScipyOptMinSolver
 from .scipy_opt_lstsq import ScipyOptLstSqSolver
 from .scipy_lstsq import ScipyLstSqSolver
 from .emcee import EmceeSolver
+from .cofi_simple_newton import CoFISimpleNewtonSolver
 
 
 __all__ = [
@@ -12,6 +13,7 @@ __all__ = [
     "ScipyOptLstSqSolver",
     "ScipyLstSqSolver",
     "EmceeSolver",
+    "CoFISimpleNewtonSolver",
 ]
 
 
@@ -23,6 +25,7 @@ solvers_table = {
     },
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSqSolver,
+        "cofi.simple_newton": CoFISimpleNewtonSolver,
     },
     "sampling": {"emcee": EmceeSolver},
 }

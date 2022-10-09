@@ -952,7 +952,9 @@ class BaseProblem:
                 )
             else:
                 raise InvalidOptionError(
-                    name="data misfit", invalid_option=data_misfit, valid_options=["least squares"]
+                    name="data misfit",
+                    invalid_option=data_misfit,
+                    valid_options=["least squares"],
                 )
         else:
             self.data_misfit = _FunctionWrapper(
