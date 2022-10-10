@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev12 (10/10/2022)
+
+### CoFI Solvers
+
+- `cofi.simple_newton`
+  - hide options of line search (until line search is implemented)
+  - prevent `initial_model` from being modified inplace
+
 ## v0.1.2.dev11 (10/10/2022)
 
 ### CoFI Core
