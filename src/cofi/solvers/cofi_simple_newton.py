@@ -17,7 +17,7 @@ class CoFISimpleNewtonSolver(BaseSolver):
     required_in_options = {"max_iterations"}
     optional_in_options = {
         "step_length": 1,
-        "enable_line_search": False,
+        # "enable_line_search": False,
         "verbose": True,
     }
 
@@ -37,7 +37,7 @@ class CoFISimpleNewtonSolver(BaseSolver):
             grad = self.inv_problem.gradient(m)
             hess = np.atleast_2d((self.inv_problem.hessian(m)))
             step = -np.linalg.inv(hess).dot(grad)
-            m += self._step_length * step
+            m = m + self._step_length * step
         return {
             "model": m,
             "num_iterations": i,
