@@ -17,6 +17,7 @@ def test_run():
     solver = CoFISimpleNewtonSolver(inv_problem, inv_options)
     res = solver()
     assert np.array_equal(res["model"], np.array([[3.]]))
+    assert inv_problem.initial_model == 30
 
 def test_inv_run():
     inv = Inversion(inv_problem, inv_options)
@@ -24,3 +25,11 @@ def test_inv_run():
     res.summary()
     assert res.success
     assert np.array_equal(res.model, np.array([[3.]]))
+    assert inv_problem.initial_model == 30
+
+def test_not_inplace():
+    inv_problem.set_initial_model(np.array([[30.]]))
+    solver = CoFISimpleNewtonSolver(inv_problem, inv_options)
+    res = solver()
+    assert np.array_equal(res["model"], np.array([[3.]]))
+    assert np.array_equal(inv_problem.initial_model, np.array([[30.]]))
