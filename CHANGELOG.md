@@ -2,6 +2,21 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev11 (10/10/2022)
+
+### CoFI Core
+
+- Minor fix (removing debug prints)
+- [#72](https://github.com/inlab-geo/cofi/issues/72) `set_data_misfit` error message fix
+
+### CoFI Utils
+
+- Add `util` to `cofi` namespace by importing it
+
+### CoFI Solvers
+
+- `matrix-based solvers` -> `matrix solvers`
+
 ## v0.1.2.dev10 (03/10/2022)
 
 ### CoFI Core

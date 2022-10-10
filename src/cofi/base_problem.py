@@ -952,7 +952,9 @@ class BaseProblem:
                 )
             else:
                 raise InvalidOptionError(
-                    name="data misfit", invalid_option=data_misfit, valid_options=["L2"]
+                    name="data misfit",
+                    invalid_option=data_misfit,
+                    valid_options=["least squares"],
                 )
         else:
             self.data_misfit = _FunctionWrapper(
@@ -1343,9 +1345,9 @@ class BaseProblem:
                     "optimization": [
                         "scipy.optimize.minimize"
                     ],
-                    "matrix-based solvers": []
+                    "matrix solvers": []
                 }
-                {'optimization': ['scipy.optimize.minimize'], 'matrix-based solvers': []}
+                {'optimization': ['scipy.optimize.minimize'], 'matrix solvers': []}
 
         """
         to_suggest = dict()

@@ -98,10 +98,8 @@ class ScipyLstSqSolver(BaseSolver):
             is_diagonal = (self._Cd_inv == 0).all()
             np.fill_diagonal(self._Cd_inv, diag_elem)
             if is_diagonal:
-                print("is diagonal")
                 _gt_cdinv = self._G.T * diag_elem
             else:
-                print("not diagonal")
                 _gt_cdinv = self._G.T @ self._Cd_inv
             self._a = _gt_cdinv @ self._G
             self._b = _gt_cdinv @ self._d

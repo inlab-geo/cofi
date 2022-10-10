@@ -21,7 +21,7 @@ def test_set_unset_solving_method(capsys):
     with pytest.raises(ValueError, match=".*Did you mean 'optimization'?.*"):
         inv_options.set_solving_method("optimizations")
     # 2
-    inv_options.set_solving_method("matrix-based solvers")
+    inv_options.set_solving_method("matrix solvers")
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
     assert "optimization" not in console_output.out
@@ -33,7 +33,7 @@ def test_set_unset_solving_method(capsys):
     assert "optimization" in console_output.out
     assert "scipy.linalg.lstsq" in console_output.out
     # 4
-    inv_options.set_solving_method("matrix-based solvers")
+    inv_options.set_solving_method("matrix solvers")
     inv_options.set_solving_method(None)
     inv_options.suggest_tools()
     console_output = capsys.readouterr()
