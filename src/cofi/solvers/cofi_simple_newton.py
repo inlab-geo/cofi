@@ -41,6 +41,6 @@ class CoFISimpleNewtonSolver(BaseSolver):
         return {
             "model": m,
             "num_iterations": i,
-            "objective func": self.inv_problem.objective(m),
+            "objective_val": self.inv_problem.objective(m),
             "success": True,
         }
