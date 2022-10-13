@@ -41,6 +41,7 @@ version = "dev" if "dev" in cofi.__version__ else f"v{cofi.__version__}"
 
 
 # -- General configuration ---------------------------------------------------
+sys.path.append(os.path.abspath("./_ext"))
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
@@ -51,13 +52,11 @@ extensions = [
     "sphinx_panels",
     "sphinx_togglebutton",
     "sphinx_copybutton",
-    # "nbsphinx",
     "sphinx.ext.napoleon",
     "myst_nb",
-    "sphinx_gallery.gen_gallery",
     "sphinxcontrib.mermaid",
-    # "sphinxcontrib.rsvgconverter",
-    # "sphinxemoji.sphinxemoji",
+    "gen_gallery_scripts",              # our own extension
+    "sphinx_gallery.gen_gallery",
 ]
 
 templates_path = ["_templates"]
@@ -67,17 +66,11 @@ exclude_patterns = [
     "Thumbs.db",
     ".DS_Store", 
     "README.md",
-    "cofi-examples/notebooks",
-    "cofi-examples/index.ipynb",
-    "cofi-examples/*.md",
-    "cofi-examples/tools/README.md",
-    "cofi-examples/tools/run_notebooks",
-    "cofi-examples/tools/validation",
-    "cofi-examples/tools/generate_example",
-    "cofi-examples/tools/sphinx_gallery/scripts/README.rst",
-    "cofi-examples/tools/sphinx_gallery/generated/*.md5",
-    "cofi-examples/tools/sphinx_gallery/generated/*.ipynb",
-    "cofi-examples/tools/sphinx_gallery/generated/*.py",
+    "cofi-examples/**",
+    "examples/scripts/README.rst",
+    "examples/generated/*.md5",
+    "examples/generated/*.py",
+    "examples/generated/*.ipynb",
 ]
 
 source_suffix = ".rst"
@@ -141,8 +134,8 @@ html_context = {
 
 # -- Sphinx Gallery settings --------------------------------------------------
 sphinx_gallery_conf = {
-    "examples_dirs": "cofi-examples/tools/sphinx_gallery/scripts",
-    "gallery_dirs": "cofi-examples/tools/sphinx_gallery/generated",
+    "examples_dirs": "examples/scripts",
+    "gallery_dirs": "examples/generated",
     "filename_pattern": ".",
     "ignore_pattern": "._lib.py",
     "pypandoc": True,
