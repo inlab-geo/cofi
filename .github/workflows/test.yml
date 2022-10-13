@@ -8,8 +8,6 @@ on:
       - 'src/cofi/**'
       - 'pyproject.toml'
   pull_request:
-    types:
-      - ready_for_review
     paths:
       - 'src/cofi/**'
       - 'pyproject.toml'
