@@ -214,7 +214,7 @@ pp.552-560
     # Set regularization; reg is a function that takes the model as input
     grav_problem.set_regularization(reg_l1, epsilon, args=[W])
 
-    # Use default L2 misfit
+    # Use default squared error misfit
     grav_problem.set_data_misfit("squared error")
     grav_problem.set_initial_model(Starting_model3)
 
@@ -460,7 +460,7 @@ Let’s see the density image from a vertical plane:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7ff4a6cd2f20>
+    <matplotlib.colorbar.Colorbar object at 0x7f7952050970>
 
 
 
@@ -491,7 +491,7 @@ From a different angle:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7ff4a6e3b520>
+    <matplotlib.colorbar.Colorbar object at 0x7f7951f8e6b0>
 
 
 
@@ -534,7 +534,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.463 seconds)
+   **Total running time of the script:** ( 0 minutes  19.617 seconds)
 
 
 .. _sphx_glr_download_examples_generated_gravity_density.py:

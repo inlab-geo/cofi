@@ -239,7 +239,7 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7efb79f50460>
+    <matplotlib.legend.Legend object at 0x7f7951ff1d20>
 
 
 
@@ -714,7 +714,7 @@ any).
     List of functions/properties not set by you:
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
     List of functions/properties got used by the backend tool:
-    ['jacobian', 'data']
+    ['data', 'jacobian']
 
 
 
@@ -759,7 +759,7 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7efb79ded360>
+    <matplotlib.legend.Legend object at 0x7f79521c4fa0>
 
 
 
@@ -964,7 +964,7 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7efb79e57880>
+    <matplotlib.legend.Legend object at 0x7f7945acfd60>
 
 
 
@@ -1380,15 +1380,17 @@ Let’s make one of the most useful plots you can make with your MCMC
 results: a corner plot.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 848-855
+.. GENERATED FROM PYTHON SOURCE LINES 848-857
 
 .. code-block:: default
 
 
+    _, axes = plt.subplots(4, 4, figsize=(14,10))
     az.plot_pair(
         az_idata.sel(draw=slice(300,None)), 
         marginals=True, 
-        reference_values=dict(zip([f"var_{i}" for i in range(4)], _m_true.tolist()))
+        reference_values=dict(zip([f"var_{i}" for i in range(4)], _m_true.tolist())),
+        ax = axes
     );
 
 
@@ -1417,7 +1419,7 @@ results: a corner plot.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 860-877
+.. GENERATED FROM PYTHON SOURCE LINES 862-879
 
 The corner plot shows all the one and two dimensional projections of the
 posterior probability distributions of your parameters. This is useful
@@ -1437,7 +1439,7 @@ Now lets plot the a sub-sample of 100 the predicted curves from this
 posterior ensemble and compare to the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 877-897
+.. GENERATED FROM PYTHON SOURCE LINES 879-899
 
 .. code-block:: default
 
@@ -1475,11 +1477,11 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7efb7a7ad0f0>
+    <matplotlib.legend.Legend object at 0x7f7951f8ec50>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 902-908
+.. GENERATED FROM PYTHON SOURCE LINES 904-910
 
 Uncertainty estimates
 '''''''''''''''''''''
@@ -1488,7 +1490,7 @@ We can now calculate some formal uncertainties based on the 16th, 50th,
 and 84th percentiles of the samples in the marginalized distributions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 908-919
+.. GENERATED FROM PYTHON SOURCE LINES 910-921
 
 .. code-block:: default
 
@@ -1519,7 +1521,7 @@ and 84th percentiles of the samples in the marginalized distributions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 924-934
+.. GENERATED FROM PYTHON SOURCE LINES 926-936
 
 The first number here is the median value of each model coefficient in
 the posterior ensemble, while the upper and lower numbers correspond to
@@ -1532,7 +1534,7 @@ We can also calculate the posterior model covariance matrix and compare
 to that estimated by least squares.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 934-946
+.. GENERATED FROM PYTHON SOURCE LINES 936-948
 
 .. code-block:: default
 
@@ -1577,7 +1579,7 @@ to that estimated by least squares.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 948-954
+.. GENERATED FROM PYTHON SOURCE LINES 950-956
 
 .. code-block:: default
 
@@ -1605,7 +1607,7 @@ to that estimated by least squares.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 959-964
+.. GENERATED FROM PYTHON SOURCE LINES 961-966
 
 --------------
 
@@ -1613,7 +1615,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 964-970
+.. GENERATED FROM PYTHON SOURCE LINES 966-972
 
 .. code-block:: default
 
@@ -1644,7 +1646,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.023 seconds)
+   **Total running time of the script:** ( 0 minutes  7.183 seconds)
 
 
 .. _sphx_glr_download_examples_generated_linear_regression.py:

@@ -846,10 +846,12 @@ print(f"autocorrelation time: {tau}")
 # results: a corner plot.
 # 
 
+_, axes = plt.subplots(4, 4, figsize=(14,10))
 az.plot_pair(
     az_idata.sel(draw=slice(300,None)), 
     marginals=True, 
-    reference_values=dict(zip([f"var_{i}" for i in range(4)], _m_true.tolist()))
+    reference_values=dict(zip([f"var_{i}" for i in range(4)], _m_true.tolist())),
+    ax = axes
 );
 
 ######################################################################

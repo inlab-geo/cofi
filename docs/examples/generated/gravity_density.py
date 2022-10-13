@@ -174,7 +174,7 @@ grav_problem.set_jacobian(Jz)
 # Set regularization; reg is a function that takes the model as input
 grav_problem.set_regularization(reg_l1, epsilon, args=[W])
 
-# Use default L2 misfit
+# Use default squared error misfit
 grav_problem.set_data_misfit("squared error")
 grav_problem.set_initial_model(Starting_model3)
 
