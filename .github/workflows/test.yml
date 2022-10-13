@@ -1,0 +1,37 @@
+name: Run all tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+    paths:
+      - 'src/cofi/**'
+      - 'pyproject.toml'
+  pull_request:
+    types:
+      - ready_for_review
+    paths:
+      - 'src/cofi/**'
+      - 'pyproject.toml'
+
+jobs:
+  test-cofi:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+    steps:
+      - uses: actions/checkout@v2
+      # Setup
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          pip install -r envs/requirements_test.yml
+          pip install .
+      # Run tests
+      - name: Pytest tests
+        run: |
+          pytest tests/

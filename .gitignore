@@ -17,7 +17,7 @@ docs/api/generated
 # Python files #
 ################
 # setup.py working directory
-_skbuild
+build
 # setup.py dist directory
 dist
 # Egg metadata

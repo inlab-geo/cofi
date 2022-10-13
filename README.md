@@ -4,7 +4,6 @@
 
 
 [![PyPI version](https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=bde0fe)](https://pypi.org/project/cofi/)
-[![build](https://img.shields.io/github/workflow/status/inlab-geo/cofi/Build?logo=githubactions&style=flat-square&color=ccd5ae)](https://github.com/inlab-geo/cofi/actions/workflows/build_wheels.yml)
 [![Documentation Status](https://img.shields.io/readthedocs/cofi?logo=readthedocs&style=flat-square&color=faedcd)](https://cofi.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://img.shields.io/codecov/c/github/inlab-geo/cofi?logo=pytest&style=flat-square&token=T8R9VKM4D7&color=f7d6e0)](https://codecov.io/gh/inlab-geo/cofi)
 [![Slack](https://img.shields.io/badge/Slack-inlab-4A154B?logo=slack&style=flat-square&color=cdb4db)](https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg)
