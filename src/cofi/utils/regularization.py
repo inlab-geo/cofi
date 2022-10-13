@@ -26,19 +26,19 @@ class BaseRegularization(metaclass=ABCMeta):
     include the following:
 
     .. autosummary::
-        Baseregularization.model_size
-        Baseregularization.reg
-        Baseregularization.gradient
-        Baseregularization.hessian
-        Baseregularization.__call__
+        BaseRegularization.model_size
+        BaseRegularization.reg
+        BaseRegularization.gradient
+        BaseRegularization.hessian
+        BaseRegularization.__call__
 
     .. rubric:: Adding two terms
 
-    Two instances of ``Baseregularization`` can also be added together using the ``+``
+    Two instances of ``BaseRegularization`` can also be added together using the ``+``
     operator:
 
     .. autosummary::
-        Baseregularization.__add__
+        BaseRegularization.__add__
 
     """
 
@@ -94,13 +94,13 @@ class BaseRegularization(metaclass=ABCMeta):
 
         Parameters
         ----------
-        other_reg : Baseregularization
+        other_reg : BaseRegularization
             the second argument of "+" operator; must also be a
-            :class:`Baseregularization` instance
+            :class:`BaseRegularization` instance
 
         Returns
         -------
-        Baseregularization
+        BaseRegularization
             a regularization term ``resRegularization`` such that:
 
             - :math:`\text{resRegularization.reg}(m)=\text{self.reg}(m)+\text{other_reg.reg}(m)`

@@ -1,7 +1,9 @@
-name: Workflow for Codecov CoFI
+name: Update test coverage
+
 on:
   workflow_dispatch:
   push:
+    branches: main
     paths:
       - 'src/cofi/**'
       - 'pyproject.toml'
@@ -13,8 +15,10 @@ on:
       - 'src/cofi/**'
       - 'pyproject.toml'
       - '!src/cofi/_version.py'
+
 jobs:
   code_coverage:
+    if: github.repository_owner == 'inlab-geo'
     name: Run coverage on ubuntu-latest
     runs-on: ubuntu-latest
     steps:
@@ -24,16 +28,14 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Set up environment
+      - name: Install dependencies
         run: |
-          $CONDA/bin/conda install mamba -n base -c conda-forge
-          $CONDA/bin/mamba info
-          $CONDA/bin/mamba env update --file envs/environment_test.yml --name base
-          $CONDA/bin/pip install -e ".[all]"
+          pip install -r envs/requirements_test.yml
+          pip install .
       - name: Run tests and collect coverage
         run: |
-          $CONDA/bin/coverage run -m pytest --disable-warnings
-          $CONDA/bin/coverage report
-          $CONDA/bin/coverage xml
+          coverage run -m pytest --disable-warnings
+          coverage report
+          coverage xml
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
