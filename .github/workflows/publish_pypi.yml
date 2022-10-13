@@ -8,15 +8,15 @@ on:
       - "src/cofi/_version.py"
 
 jobs:
-  ######################## SOURCE DIST ##################################
-  build_sdist:
+  publish_pypi:
     if: github.repository_owner == 'inlab-geo'
-    name: Build source distribution
+    name: Upload source distribution and wheels to PyPI
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      
+
       - name: Install Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -24,42 +24,7 @@ jobs:
 
       - name: Build and check sdist
         run: |
-          $CONDA/bin/python setup.py sdist
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          path: dist/*.tar.gz
-
-  ######################## UPLOAD TO PYPI ###############################
-  publish_pypi:
-    name: Upload source distribution and wheels to PyPI
-    needs: build_sdist
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Extract Release Version
-        id: release_version
-        working-directory: src/cofi
-        run: |
-          set -e
-          python -c "import _version as v; print(v.__version__)"
-          echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
-
-      - name: Create release tag
-        uses: rickstaa/action-create-tag@v1.3.0
-        with:
-          tag: "v${{ steps.release_version.outputs.version }}"
-          force_push_tag: true
-
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: artifact
-          path: dist
+          $CONDA/bin/python setup.py sdist 
 
       - name: Publish package to TestPyPI
         uses: pypa/gh-action-pypi-publish@v1.4.1
@@ -75,3 +40,17 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
           verbose: true
+      
+      - name: Extract Release Version
+        id: release_version
+        working-directory: src/cofi
+        run: |
+          set -e
+          python -c "import _version as v; print(v.__version__)"
+          echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
+
+      - name: Create release tag
+        uses: rickstaa/action-create-tag@v1.3.0
+        with:
+          tag: "v${{ steps.release_version.outputs.version }}"
+          force_push_tag: true
