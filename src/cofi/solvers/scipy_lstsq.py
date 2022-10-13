@@ -142,10 +142,10 @@ class ScipyLstSqSolver(BaseSolver):
         res = {
             "success": True,
             "model": res_p,
-            "sum of squared residuals": residual,
-            "effective rank": rank,
-            "singular values": singular_vals,
+            "sum_of_squared_residuals": residual,
+            "effective_rank": rank,
+            "singular_values": singular_vals,
         }
         if self._with_uncertainty:
-            res["model covariance"] = np.linalg.inv(self._a)
+            res["model_covariance"] = np.linalg.inv(self._a)
         return res

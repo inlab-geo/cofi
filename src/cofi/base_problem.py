@@ -1895,7 +1895,7 @@ def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
 
 def _hessian_times_vector_from_hess(model, vector, hessian):
     try:
-        return np.asarray(hessian(model) @ vector)
+        return np.squeeze(np.asarray(hessian(model) @ vector))
     except Exception as exception:
         raise InvocationError(
             func_name="hessian_times_vector function from given hessian function",
@@ -1914,7 +1914,7 @@ def _residual_from_fwd_dt(model, forward, data):
 
 def _jacobian_times_vector_from_jcb(model, vector, jacobian):
     try:
-        return np.asarray(jacobian(model) @ vector)
+        return np.squeeze(np.asarray(jacobian(model) @ vector))
     except Exception as exception:
         raise InvocationError(
             func_name="jacobian_times_vector from given jacobian function", autogen=True

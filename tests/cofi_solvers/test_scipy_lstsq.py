@@ -54,7 +54,7 @@ def test_uncertainty_cov(problem_setup):
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
-    assert "model covariance" in res
+    assert "model_covariance" in res
     assert res["model"][0] == pytest.approx(0, abs=0.05)
     assert res["model"][1] == pytest.approx(1, abs=0.05)
 
@@ -66,7 +66,7 @@ def test_uncertainty_cov_inv(problem_setup):
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
-    assert "model covariance" in res
+    assert "model_covariance" in res
     assert res["model"][0] == pytest.approx(0, abs=0.05)
     assert res["model"][1] == pytest.approx(1, abs=0.05)
     # 3
@@ -85,7 +85,7 @@ def test_tikhonov(problem_setup):
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
-    assert "model covariance" in res
+    assert "model_covariance" in res
     assert res["model"][0] == pytest.approx(0, abs=0.02)
     assert res["model"][1] == pytest.approx(1, abs=0.02)
     # 2
@@ -94,7 +94,7 @@ def test_tikhonov(problem_setup):
     solver = ScipyLstSqSolver(inv_problem, inv_options)
     res = solver()
     assert res["success"]
-    assert "model covariance" in res
+    assert "model_covariance" in res
     assert res["model"][0] == pytest.approx(0, abs=0.02)
     assert res["model"][1] == pytest.approx(1, abs=0.02)
     # 3
