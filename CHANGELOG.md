@@ -2,6 +2,19 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev13 (13/10/2022)
+
+### CoFI Core
+
+- Fix `BaseProblem.hessian_times_vector` and `BaseProblem.jacobian_times_vector` that
+  are generated from provided hessian / jacobian functions, by squeezing the results
+  to ensure 1D dimensions
+
+### CoFI Solvers
+
+- Fix `InversionResult` keys to include underscores (so that attributes can be accessed
+  easily)
+
 ## v0.1.2.dev12 (10/10/2022)
 
 ### CoFI Solvers
