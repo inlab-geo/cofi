@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev14 (NOT YET RELEASED)
+
+### CoFI Core
+
+- Made CoFI pure Python, requires >=3.7
+
 ## v0.1.2.dev13 (13/10/2022)
 
 ### CoFI Core
