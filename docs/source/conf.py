@@ -25,7 +25,7 @@ def run_autogen(_):
         # If we are, assemble the path manually
         cmd_path = os.path.abspath(os.path.join(sys.prefix, "bin", cmd_path))
     subprocess.check_call(
-        [cmd_path, "-i", "-t", "_templates", "-o", "api/generated", "api/index.rst"]
+        [cmd_path, "-i", "-t", "source/_templates", "-o", "source/api/generated", "source/api/index.rst"]
     )
 
 

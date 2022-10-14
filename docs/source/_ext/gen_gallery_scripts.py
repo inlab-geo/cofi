@@ -17,12 +17,12 @@ import json
 
 
 current_dir = Path(__file__).resolve().parent
-docs_dir = current_dir.parent
-cofi_examples_dir = docs_dir / "cofi-examples"
+docs_src = current_dir.parent
+cofi_examples_dir = docs_src / "cofi-examples"
 NOTEBOOKS = "notebooks"
 NOTEBOOKS_DIR = str(cofi_examples_dir / NOTEBOOKS)
 EXAMPLES = "examples"
-SCRIPTS_DIR = str(docs_dir / EXAMPLES / "scripts")
+SCRIPTS_DIR = str(docs_src / EXAMPLES / "scripts")
 
 BADGE_BEGIN = "<!--<badge>-->"
 BADGE_END = "<!--</badge>-->"

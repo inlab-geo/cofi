@@ -2,12 +2,12 @@
 
     <div class="api-module">
 
-``{{ fullname }}``
-{% for i in range(fullname|length + 15) %}-{% endfor %}
+.. currentmodule:: {{ module }}
 
-.. raw:: html
 
-    <hr>
+{{ fullname | underline }}
+
+
 
 .. automodule:: {{ fullname }}
 
