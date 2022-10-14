@@ -136,4 +136,4 @@ Install
 
   CoFI time!
   Check out our step-by-step `tutorials <tutorials/index.html>`_ or 
-  `examples <cofi-examples/tools/sphinx_gallery/generated/index.html>`_ to get started.
+  `examples <examples/generated/index.html>`_ to get started.
