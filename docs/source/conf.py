@@ -18,22 +18,6 @@ import subprocess
 import cofi
 
 
-# -- Generate API references doc ---------------------------------------------
-def run_autogen(_):
-    cmd_path = "sphinx-autogen"
-    if hasattr(sys, "real_prefix"):  # Check to see if we are in a virtualenv
-        # If we are, assemble the path manually
-        cmd_path = os.path.abspath(os.path.join(sys.prefix, "bin", cmd_path))
-    subprocess.check_call(
-        [cmd_path, "-i", "-t", "source/_templates", "-o", "source/api/generated", "source/api/index.rst"]
-    )
-
-
-def setup(app):
-    app.connect("builder-inited", run_autogen)
-    # app.registry.source_suffix.pop(".ipynb", None)      # Ignore .ipynb files
-
-
 # -- Project information -----------------------------------------------------
 project = "CoFI"
 copyright = f"{datetime.date.today().year}, InLab, CoFI development team"
@@ -55,6 +39,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "myst_nb",
     "sphinxcontrib.mermaid",
+    "run_sphinx_autogen",               # our own extension
     "gen_gallery_scripts",              # our own extension
     "sphinx_gallery.gen_gallery",
 ]
