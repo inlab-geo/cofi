@@ -1,0 +1,763 @@
+.. _top_BaseProblem:
+.. role:: hidden
+    :class: hidden-section
+.. currentmodule:: cofi
+
+
+cofi.BaseProblem
+================
+
+.. autoclass:: BaseProblem
+
+    .. rubric:: Reference Details
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .. automethod:: BaseProblem.data_misfit
+
+
+
+
+
+
+    .. automethod:: BaseProblem.defined_components
+
+
+
+
+
+
+    .. automethod:: BaseProblem.forward
+
+
+
+
+
+
+    .. automethod:: BaseProblem.gradient
+
+
+
+
+
+
+    .. automethod:: BaseProblem.hessian
+
+
+
+
+
+
+    .. automethod:: BaseProblem.hessian_times_vector
+
+
+
+
+
+
+    .. automethod:: BaseProblem.jacobian
+
+
+
+
+
+
+    .. automethod:: BaseProblem.jacobian_times_vector
+
+
+
+
+
+
+    .. automethod:: BaseProblem.log_likelihood
+
+
+
+
+
+
+    .. automethod:: BaseProblem.log_posterior
+
+
+
+
+
+
+    .. automethod:: BaseProblem.log_posterior_with_blobs
+
+
+
+
+
+
+    .. automethod:: BaseProblem.log_prior
+
+
+
+
+
+
+    .. automethod:: BaseProblem.model_covariance
+
+
+
+
+
+
+    .. automethod:: BaseProblem.model_covariance_inv
+
+
+
+
+
+
+    .. automethod:: BaseProblem.objective
+
+
+
+
+
+
+    .. automethod:: BaseProblem.regularization
+
+
+
+
+
+
+    .. automethod:: BaseProblem.regularization_matrix
+
+
+
+
+
+
+    .. automethod:: BaseProblem.residual
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_blobs_dtype
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_bounds
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_constraints
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_data
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_data_covariance
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_data_covariance_inv
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_data_from_file
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_data_misfit
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_forward
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_gradient
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_hessian
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_hessian_times_vector
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_initial_model
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_jacobian
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_jacobian_times_vector
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_log_likelihood
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_log_posterior
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_log_posterior_with_blobs
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_log_prior
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_model_shape
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_objective
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_regularization
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_residual
+
+
+
+
+
+
+    .. automethod:: BaseProblem.set_walkers_starting_pos
+
+
+
+
+
+
+    .. automethod:: BaseProblem.suggest_solvers
+
+
+
+
+
+
+    .. automethod:: BaseProblem.summary
+
+
+
+
+
+
+    .. autoattribute:: BaseProblem.all_components
+
+    .. autoattribute:: BaseProblem.autogen_table
+
+    .. autoattribute:: BaseProblem.blobs_dtype
+
+    .. autoattribute:: BaseProblem.blobs_dtype_defined
+
+    .. autoattribute:: BaseProblem.bounds
+
+    .. autoattribute:: BaseProblem.bounds_defined
+
+    .. autoattribute:: BaseProblem.constraints
+
+    .. autoattribute:: BaseProblem.constraints_defined
+
+    .. autoattribute:: BaseProblem.data
+
+    .. autoattribute:: BaseProblem.data_covariance
+
+    .. autoattribute:: BaseProblem.data_covariance_defined
+
+    .. autoattribute:: BaseProblem.data_covariance_inv
+
+    .. autoattribute:: BaseProblem.data_covariance_inv_defined
+
+    .. autoattribute:: BaseProblem.data_defined
+
+    .. autoattribute:: BaseProblem.data_misfit_defined
+
+    .. autoattribute:: BaseProblem.forward_defined
+
+    .. autoattribute:: BaseProblem.gradient_defined
+
+    .. autoattribute:: BaseProblem.hessian_defined
+
+    .. autoattribute:: BaseProblem.hessian_times_vector_defined
+
+    .. autoattribute:: BaseProblem.initial_model
+
+    .. autoattribute:: BaseProblem.initial_model_defined
+
+    .. autoattribute:: BaseProblem.jacobian_defined
+
+    .. autoattribute:: BaseProblem.jacobian_times_vector_defined
+
+    .. autoattribute:: BaseProblem.log_likelihood_defined
+
+    .. autoattribute:: BaseProblem.log_posterior_defined
+
+    .. autoattribute:: BaseProblem.log_posterior_with_blobs_defined
+
+    .. autoattribute:: BaseProblem.log_prior_defined
+
+    .. autoattribute:: BaseProblem.model_shape
+
+    .. autoattribute:: BaseProblem.model_shape_defined
+
+    .. autoattribute:: BaseProblem.name
+
+    .. autoattribute:: BaseProblem.objective_defined
+
+    .. autoattribute:: BaseProblem.regularization_defined
+
+    .. autoattribute:: BaseProblem.regularization_factor
+
+    .. autoattribute:: BaseProblem.regularization_factor_defined
+
+    .. autoattribute:: BaseProblem.regularization_matrix_defined
+
+    .. autoattribute:: BaseProblem.residual_defined
+
+    .. autoattribute:: BaseProblem.walkers_starting_pos
+
+    .. autoattribute:: BaseProblem.walkers_starting_pos_defined
+
+
+:ref:`back to top <top_BaseProblem>`
+
+
+
+
+
+
+.. autogenerated from _templates/autosummary/class.rst
