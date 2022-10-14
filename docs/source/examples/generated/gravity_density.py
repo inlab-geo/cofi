@@ -46,6 +46,12 @@ Gravity Density Model
 ######################################################################
 #
 
+# !git clone https://github.com/inlab-geo/cofi-examples.git
+# %cd cofi-examples/notebooks/gravity
+
+######################################################################
+#
+
 import numpy as np
 import matplotlib.pyplot as plt
 

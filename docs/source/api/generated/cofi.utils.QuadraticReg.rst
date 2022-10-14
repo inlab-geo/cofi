@@ -20,6 +20,9 @@ cofi.utils.QuadraticReg
 
 
 
+
+
+
     .. automethod:: QuadraticReg.__call__
 
 

@@ -72,7 +72,22 @@ written in inversion-test-problems
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-58
+.. GENERATED FROM PYTHON SOURCE LINES 48-52
+
+.. code-block:: default
+
+
+    # !git clone https://github.com/inlab-geo/cofi-examples.git
+    # %cd cofi-examples/notebooks/gravity
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 54-64
 
 .. code-block:: default
 
@@ -93,7 +108,7 @@ written in inversion-test-problems
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-138
+.. GENERATED FROM PYTHON SOURCE LINES 69-144
 
 --------------
 
@@ -171,7 +186,7 @@ pp.552-560
    above described approach by Plouff et al., 1976.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-188
+.. GENERATED FROM PYTHON SOURCE LINES 144-194
 
 .. code-block:: default
 
@@ -250,7 +265,7 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-198
+.. GENERATED FROM PYTHON SOURCE LINES 199-204
 
 --------------
 
@@ -258,7 +273,7 @@ pp.552-560
 -----------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 198-204
+.. GENERATED FROM PYTHON SOURCE LINES 204-210
 
 .. code-block:: default
 
@@ -292,7 +307,7 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-214
+.. GENERATED FROM PYTHON SOURCE LINES 215-220
 
 --------------
 
@@ -300,7 +315,7 @@ pp.552-560
 ----------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-218
+.. GENERATED FROM PYTHON SOURCE LINES 220-224
 
 .. code-block:: default
 
@@ -315,7 +330,7 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-224
+.. GENERATED FROM PYTHON SOURCE LINES 226-230
 
 .. code-block:: default
 
@@ -431,12 +446,12 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 229-231
+.. GENERATED FROM PYTHON SOURCE LINES 235-237
 
 Let’s see the density image from a vertical plane:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-237
+.. GENERATED FROM PYTHON SOURCE LINES 237-243
 
 .. code-block:: default
 
@@ -460,16 +475,16 @@ Let’s see the density image from a vertical plane:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f7952050970>
+    <matplotlib.colorbar.Colorbar object at 0x7fe11d600a60>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 242-244
+.. GENERATED FROM PYTHON SOURCE LINES 248-250
 
 From a different angle:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 244-248
+.. GENERATED FROM PYTHON SOURCE LINES 250-254
 
 .. code-block:: default
 
@@ -491,11 +506,11 @@ From a different angle:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f7951f8e6b0>
+    <matplotlib.colorbar.Colorbar object at 0x7fe11d50a3b0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 253-258
+.. GENERATED FROM PYTHON SOURCE LINES 259-264
 
 --------------
 
@@ -503,7 +518,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 258-264
+.. GENERATED FROM PYTHON SOURCE LINES 264-270
 
 .. code-block:: default
 
@@ -534,7 +549,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.617 seconds)
+   **Total running time of the script:** ( 0 minutes  19.864 seconds)
 
 
 .. _sphx_glr_download_examples_generated_gravity_density.py:
