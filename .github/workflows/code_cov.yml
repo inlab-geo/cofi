@@ -30,7 +30,7 @@ jobs:
           python-version: 3.9
       - name: Install dependencies
         run: |
-          pip install -r envs/requirements_test.yml
+          pip install -r envs/requirements_test.txt
           pip install .
       - name: Run tests and collect coverage
         run: |
