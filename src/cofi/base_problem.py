@@ -1795,7 +1795,8 @@ class BaseProblem:
                 ['objective', 'data_misfit']
                 ( Note that you did not set regularization )
                 ---------------------------------------------------------------------
-                List of functions/properties not set by you:
+                List of functions/properties not set by you: 
+                (not all of these may be relevant to your inversion workflow)
                 ['objective', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'forward', 'data', 'bounds', 'constraints']
 
         """
@@ -1842,6 +1843,7 @@ class BaseProblem:
         if display_lines:
             print(single_line)
         print(sub_title3)
+        print("( not all of these may be relevant to your inversion workflow )")
         print(not_set if not_set else "-- none --")
 
     def __repr__(self) -> str:

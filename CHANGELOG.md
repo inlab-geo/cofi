@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev15 (14/10/2022)
+
+### CoFI Core
+
+- Further explanation in `BaseProblem.summary()`
+
 ## v0.1.2.dev14 (14/10/2022)
 
 ### CoFI Core
