@@ -7,4 +7,4 @@
 # supported platforms, publish the packages on PyPI, create a Git tag
 # pointing to the commit.
 
-__version__ = "0.1.2.dev14"
+__version__ = "0.1.2.dev15"
