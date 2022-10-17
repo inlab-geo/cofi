@@ -54,7 +54,6 @@ class ScipyOptMinSolver(BaseSolver):
             "hessian_times_vector",
             "bounds",
             "constraints",
-            "args",
         }
     }
     required_in_options = {}
@@ -76,7 +75,6 @@ class ScipyOptMinSolver(BaseSolver):
         self._x0 = inv_problem.initial_model
         # optional_in_problem
         _optional_in_problem_map = {
-            "args": "args",
             "gradient": "jac",
             "hessian": "hess",
             "hessian_times_vector": "hessp",
@@ -86,65 +84,27 @@ class ScipyOptMinSolver(BaseSolver):
         defined_in_problem = self.inv_problem.defined_components()
         for component in _optional_in_problem_map:
             if component in defined_in_problem:
-                setattr(
-                    self,
-                    f"_{_optional_in_problem_map[component]}",
-                    getattr(self.inv_problem, component),
-                )
+                self._params[_optional_in_problem_map[component]] = \
+                    getattr(self.inv_problem, component)
                 self.components_used.append(component)
             else:  # default
-                setattr(
-                    self,
-                    f"_{_optional_in_problem_map[component]}",
-                    self.optional_in_problem[component],
-                )
-        self._args = (
-            inv_problem.args
-            if hasattr(inv_problem, "args")
-            else self.optional_in_problem["args"]
-        )
-        self._jac = (
-            inv_problem.gradient
-            if inv_problem.gradient_defined
-            else self.optional_in_problem["gradient"]
-        )
-        self._hess = (
-            inv_problem.hessian
-            if inv_problem.hessian_defined
-            else self.optional_in_problem["hessian"]
-        )
-        self._hessp = (
-            inv_problem.hessian_times_vector
-            if inv_problem.hessian_times_vector_defined
-            else self.optional_in_problem["hessian_times_vector"]
-        )
-        self._bounds = (
-            inv_problem.bounds
-            if inv_problem.bounds_defined
-            else self.optional_in_problem["bounds"]
-        )
-        self._constraints = (
-            inv_problem.constraints
-            if inv_problem.constraints_defined
-            else self.optional_in_problem["constraints"]
-        )
-        # required_in_options, optional_in_options
-        self._assign_options()
+                self._params[_optional_in_problem_map[component]] = \
+                    self.optional_in_problem[component]
 
     def __call__(self) -> dict:
         opt_result = minimize(
             fun=self._fun,
             x0=self._x0,
-            args=self._args,
-            method=self._method,
-            jac=self._jac,
-            hess=self._hess,
-            hessp=self._hessp,
-            bounds=self._bounds,
-            constraints=self._constraints,
-            tol=self._tol,
-            callback=self._callback,
-            options=self._options,
+            args=(),                # handled by cofi.BaseProblem
+            method=self._params["method"],
+            jac=self._params["jac"],
+            hess=self._params["hess"],
+            hessp=self._params["hessp"],
+            bounds=self._params["bounds"],
+            constraints=self._params["constraints"],
+            tol=self._params["tol"],
+            callback=self._params["callback"],
+            options=self._params["options"],
         )
         result = dict(opt_result.items())
         result["model"] = result.pop("x")

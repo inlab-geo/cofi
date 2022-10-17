@@ -26,7 +26,7 @@ class ScipyOptLstSqSolver(BaseSolver):
     optional_in_problem = {
         k: v.default
         for k, v in _scipy_ls_args.items()
-        if k in {"jacobian", "bounds", "x_scale", "loss", "f_scale", "args", "kwargs"}
+        if k in {"jacobian", "bounds"}
     }
     required_in_options = {}
     optional_in_options = {
@@ -38,6 +38,9 @@ class ScipyOptLstSqSolver(BaseSolver):
             "ftol",
             "xtol",
             "gtol",
+            "x_scale",
+            "f_scale",
+            "loss",
             "diff_step",
             "tr_solver",
             "tr_options",
@@ -73,8 +76,6 @@ class ScipyOptLstSqSolver(BaseSolver):
                     f"_{component}" if component != "jacobian" else "_jac",
                     self.optional_in_problem[component],
                 )
-        # required_in_options, optional_in_options
-        self._assign_options()
 
     def __call__(self) -> dict:
         opt_result = least_squares(
@@ -82,21 +83,21 @@ class ScipyOptLstSqSolver(BaseSolver):
             x0=self._x0,
             jac=self._jac,
             bounds=self._bounds,
-            method=self._method,
-            ftol=self._ftol,
-            xtol=self._xtol,
-            gtol=self._gtol,
-            x_scale=self._x_scale,
-            loss=self._loss,
-            f_scale=self._f_scale,
-            diff_step=self._diff_step,
-            tr_solver=self._tr_solver,
-            tr_options=self._tr_options,
-            jac_sparsity=self._jac_sparsity,
-            max_nfev=self._max_nfev,
-            verbose=self._verbose,
-            args=self._args,
-            kwargs=self._kwargs,
+            method=self._params["method"],
+            ftol=self._params["ftol"],
+            xtol=self._params["xtol"],
+            gtol=self._params["gtol"],
+            x_scale=self._params["x_scale"],
+            loss=self._params["loss"],
+            f_scale=self._params["f_scale"],
+            diff_step=self._params["diff_step"],
+            tr_solver=self._params["tr_solver"],
+            tr_options=self._params["tr_options"],
+            jac_sparsity=self._params["jac_sparsity"],
+            max_nfev=self._params["max_nfev"],
+            verbose=self._params["verbose"],
+            args=(),          # handled by cofi.BaseProblem
+            kwargs={},        # handled by cofi.BaseProblem
         )
         result = dict(opt_result.items())
         result["model"] = result.pop("x")

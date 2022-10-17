@@ -182,6 +182,7 @@ class BaseSolver(metaclass=ABCMeta):
         self.inv_options = inv_options
         self._validate_inv_problem()
         self._validate_inv_options()
+        self._assign_options()          # this assigns options to self._params
 
     @abstractmethod
     def __call__(self) -> dict:
@@ -228,14 +229,11 @@ class BaseSolver(metaclass=ABCMeta):
 
     def _assign_options(self):
         params = self.inv_options.get_params()
+        self._params = dict()
         for opt in self.required_in_options:
-            setattr(self, f"_{opt}", params[opt])
+            self._params[opt] = params[opt]
         for opt, val in self.optional_in_options.items():
-            setattr(
-                self,
-                f"_{opt}",
-                params[opt] if opt in params else val,
-            )
+            self._params[opt] = params.get(opt, val)
 
     def __repr__(self) -> str:
         return self.__class__.__name__
