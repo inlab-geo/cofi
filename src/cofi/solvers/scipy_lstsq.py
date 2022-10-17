@@ -58,7 +58,6 @@ class ScipyLstSqSolver(BaseSolver):
         self._assign_args()
 
     def _assign_args(self):
-        self._assign_options()
         inv_problem = self.inv_problem
 
         # get jacobian matrix (presumably jacobian is a constant)
@@ -80,12 +79,14 @@ class ScipyLstSqSolver(BaseSolver):
         self._d = inv_problem.data
 
         # check whether to take uncertainty into account
-        self._with_uncertainty = self._with_uncertainty_if_possible and (
+        self._params["with_uncertainty"] = self._params[
+            "with_uncertainty_if_possible"
+        ] and (
             inv_problem.data_covariance_defined
             or inv_problem.data_covariance_inv_defined
         )
         # get Cd_inv if needed
-        if self._with_uncertainty:
+        if self._params["with_uncertainty"]:
             if not inv_problem.data_covariance_inv_defined:
                 self._Cd_inv = np.linalg.inv(inv_problem.data_covariance)
                 self.components_used.append("data_covariance")
@@ -108,11 +109,12 @@ class ScipyLstSqSolver(BaseSolver):
             self._b = self._G.T @ self._d
 
         # check whether to take regularization into account
-        self._with_tikhonov = (
-            self._with_tikhonov_if_possible and inv_problem.regularization_defined
+        self._params["with_tikhonov"] = (
+            self._params["with_tikhonov_if_possible"]
+            and inv_problem.regularization_defined
         )
         # get lamda and L matrix if needed
-        if self._with_tikhonov:
+        if self._params["with_tikhonov"]:
             self._lamda = inv_problem.regularization_factor
             if inv_problem.regularization_matrix_defined:
                 try:
@@ -133,11 +135,11 @@ class ScipyLstSqSolver(BaseSolver):
         res_p, residual, rank, singular_vals = lstsq(
             a=self._a,
             b=self._b,
-            cond=self._cond,
-            overwrite_a=self._overwrite_a,
-            overwrite_b=self._overwrite_b,
-            check_finite=self._check_finite,
-            lapack_driver=self._lapack_driver,
+            cond=self._params["cond"],
+            overwrite_a=self._params["overwrite_a"],
+            overwrite_b=self._params["overwrite_b"],
+            check_finite=self._params["check_finite"],
+            lapack_driver=self._params["lapack_driver"],
         )
         res = {
             "success": True,
@@ -146,6 +148,6 @@ class ScipyLstSqSolver(BaseSolver):
             "effective_rank": rank,
             "singular_values": singular_vals,
         }
-        if self._with_uncertainty:
+        if self._params["with_uncertainty"]:
             res["model_covariance"] = np.linalg.inv(self._a)
         return res
