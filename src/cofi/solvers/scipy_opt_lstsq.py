@@ -24,9 +24,7 @@ class ScipyOptLstSqSolver(BaseSolver):
     _scipy_ls_args["jacobian"] = _scipy_ls_args.pop("jac")
     required_in_problem = {"residual", "initial_model"}
     optional_in_problem = {
-        k: v.default
-        for k, v in _scipy_ls_args.items()
-        if k in {"jacobian", "bounds"}
+        k: v.default for k, v in _scipy_ls_args.items() if k in {"jacobian", "bounds"}
     }
     required_in_options = {}
     optional_in_options = {
@@ -96,8 +94,8 @@ class ScipyOptLstSqSolver(BaseSolver):
             jac_sparsity=self._params["jac_sparsity"],
             max_nfev=self._params["max_nfev"],
             verbose=self._params["verbose"],
-            args=(),          # handled by cofi.BaseProblem
-            kwargs={},        # handled by cofi.BaseProblem
+            args=(),  # handled by cofi.BaseProblem
+            kwargs={},  # handled by cofi.BaseProblem
         )
         result = dict(opt_result.items())
         result["model"] = result.pop("x")

@@ -67,7 +67,9 @@ class EmceeSolver(BaseSolver):
         if inv_problem.log_posterior_with_blobs_defined:
             self._params["log_prob_fn"] = inv_problem.log_posterior_with_blobs
             if inv_problem.blobs_dtype_defined:
-                self._params["blob_names"] = [name for (name, _) in inv_problem.blobs_dtype]
+                self._params["blob_names"] = [
+                    name for (name, _) in inv_problem.blobs_dtype
+                ]
                 # uncomment below once this has been fixed:
                 # issue: https://github.com/arviz-devs/arviz/issues/2036
                 # self._blobs_dtype = inv_problem._blobs_dtype

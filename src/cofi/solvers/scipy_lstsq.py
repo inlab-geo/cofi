@@ -79,7 +79,9 @@ class ScipyLstSqSolver(BaseSolver):
         self._d = inv_problem.data
 
         # check whether to take uncertainty into account
-        self._params["with_uncertainty"] = self._params["with_uncertainty_if_possible"] and (
+        self._params["with_uncertainty"] = self._params[
+            "with_uncertainty_if_possible"
+        ] and (
             inv_problem.data_covariance_defined
             or inv_problem.data_covariance_inv_defined
         )
@@ -108,7 +110,8 @@ class ScipyLstSqSolver(BaseSolver):
 
         # check whether to take regularization into account
         self._params["with_tikhonov"] = (
-            self._params["with_tikhonov_if_possible"] and inv_problem.regularization_defined
+            self._params["with_tikhonov_if_possible"]
+            and inv_problem.regularization_defined
         )
         # get lamda and L matrix if needed
         if self._params["with_tikhonov"]:

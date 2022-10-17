@@ -182,7 +182,7 @@ class BaseSolver(metaclass=ABCMeta):
         self.inv_options = inv_options
         self._validate_inv_problem()
         self._validate_inv_options()
-        self._assign_options()          # this assigns options to self._params
+        self._assign_options()  # this assigns options to self._params
 
     @abstractmethod
     def __call__(self) -> dict:

@@ -84,18 +84,20 @@ class ScipyOptMinSolver(BaseSolver):
         defined_in_problem = self.inv_problem.defined_components()
         for component in _optional_in_problem_map:
             if component in defined_in_problem:
-                self._params[_optional_in_problem_map[component]] = \
-                    getattr(self.inv_problem, component)
+                self._params[_optional_in_problem_map[component]] = getattr(
+                    self.inv_problem, component
+                )
                 self.components_used.append(component)
             else:  # default
-                self._params[_optional_in_problem_map[component]] = \
-                    self.optional_in_problem[component]
+                self._params[
+                    _optional_in_problem_map[component]
+                ] = self.optional_in_problem[component]
 
     def __call__(self) -> dict:
         opt_result = minimize(
             fun=self._fun,
             x0=self._x0,
-            args=(),                # handled by cofi.BaseProblem
+            args=(),  # handled by cofi.BaseProblem
             method=self._params["method"],
             jac=self._params["jac"],
             hess=self._params["hess"],
