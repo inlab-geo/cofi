@@ -8,7 +8,7 @@ from . import BaseSolver
 #         super().__init__()
 #         self.weights = torch.nn.Parameter(x0)
 #         self.forward_func = forward_func
-    
+
 #     def forward(self, x):
 #         try:
 #             return self.forward_func(x)
@@ -32,9 +32,7 @@ class PyTorchOptim(BaseSolver):
     documentation_links = [
         "https://pytorch.org/docs/stable/optim.html#algorithms",
     ]
-    short_description = (
-        "PyTorch Optimizers under module `pytorch.optim`"
-    )
+    short_description = "PyTorch Optimizers under module `pytorch.optim`"
 
     required_in_problem = {"objective", "gradient", "initial_model"}
     optional_in_problem = dict()
@@ -72,14 +70,18 @@ class PyTorchOptim(BaseSolver):
         # save problem info for later use
         self._obj = self.inv_problem.objective
         self._grad = self.inv_problem.gradient
-        self._m = torch.tensor(self.inv_problem.initial_model, dtype=float, requires_grad=True)
+        self._m = torch.tensor(
+            self.inv_problem.initial_model, dtype=float, requires_grad=True
+        )
 
         # instantiate torch optimizer
-        self.torch_optimizer = getattr(torch.optim, self._algorithm)([self._m], lr=self.inv_options.hyper_params["lr"])
+        self.torch_optimizer = getattr(torch.optim, self._algorithm)(
+            [self._m], lr=self.inv_options.hyper_params["lr"]
+        )
 
         # instantiate torch misfit function
         self.torch_objective = Objective.apply
-    
+
     def __call__(self) -> dict:
         for i in range(self._num_iterations):
             self.torch_optimizer.zero_grad()
@@ -88,4 +90,7 @@ class PyTorchOptim(BaseSolver):
             self.torch_optimizer.step()
             if self._verbose:
                 print(f"Iteration #{i}, objective value: {obj}")
-        return {"model": self._m.detach().numpy(), "objective_value": obj.detach().numpy()}
+        return {
+            "model": self._m.detach().numpy(),
+            "objective_value": obj.detach().numpy(),
+        }
