@@ -5,6 +5,7 @@ from .scipy_opt_lstsq import ScipyOptLstSqSolver
 from .scipy_lstsq import ScipyLstSqSolver
 from .emcee import EmceeSolver
 from .cofi_simple_newton import CoFISimpleNewtonSolver
+from .pytorch_optim import PyTorchOptim
 
 
 __all__ = [
@@ -14,6 +15,7 @@ __all__ = [
     "ScipyLstSqSolver",
     "EmceeSolver",
     "CoFISimpleNewtonSolver",
+    "PyTorchOptim",
 ]
 
 
@@ -22,6 +24,7 @@ solvers_table = {
     "optimization": {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
+        "pytorch": PyTorchOptim,
     },
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSqSolver,
