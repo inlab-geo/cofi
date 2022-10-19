@@ -26,19 +26,29 @@ class CoFISimpleNewtonSolver(BaseSolver):
 
     def __call__(self) -> dict:
         m = self.inv_problem.initial_model
+        n_obj_evaluations = 0
+        n_grad_evaluations = 0
+        n_hess_evaluations = 0
         for i in range(self._params["max_iterations"]):
             if self._params["verbose"]:
                 print(
                     f"Iteration #{i}, objective function value:"
                     f" {self.inv_problem.objective(m)}"
                 )
+                n_obj_evaluations += 1
             grad = self.inv_problem.gradient(m)
+            n_grad_evaluations += 1
             hess = np.atleast_2d((self.inv_problem.hessian(m)))
+            n_hess_evaluations += 1
             step = -np.linalg.inv(hess).dot(grad)
+            step = np.squeeze(np.asarray(step))
             m = m + self._params["step_length"] * step
         return {
             "model": m,
             "num_iterations": i,
             "objective_val": self.inv_problem.objective(m),
             "success": True,
+            "n_obj_evaluations": n_obj_evaluations,
+            "n_grad_evaluations": n_grad_evaluations,
+            "n_hess_evaluations": n_hess_evaluations,
         }
