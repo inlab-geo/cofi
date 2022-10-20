@@ -2,6 +2,22 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev17 (19/10/2022)
+
+### CoFI Solvers
+
+- Simple newton
+  - Fix dimension issue
+  - return number of function evaluations
+
+
+## v0.1.2.dev16 (18/10/2022)
+
+### CoFI Core
+
+- [#63](https://github.com/inlab-geo/cofi/issues/63) Minor restructure of `BaseSolver._assign_options()`
+- Wording change in `BaseProblem.summary()`
+
 ## v0.1.2.dev15 (14/10/2022)
 
 ### CoFI Core

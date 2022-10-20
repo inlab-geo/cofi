@@ -70,7 +70,7 @@ def test_validate():
     # 3
     inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps)
     emcee_solver = EmceeSolver(inv_problem, inv_options)
-    assert emcee_solver._ndim == 4
+    assert emcee_solver._params["ndim"] == 4
 
 def test_run_with_posterior():
     # set up problem
