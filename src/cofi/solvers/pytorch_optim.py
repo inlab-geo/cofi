@@ -31,9 +31,9 @@ class PyTorchOptim(BaseSolver):
     short_description = "PyTorch Optimizers under module `pytorch.optim`"
 
     required_in_problem = {"objective", "gradient", "initial_model"}
-    optional_in_problem = dict()  # TODO
+    optional_in_problem = dict()
     required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {"verbose": True, "lr": 0.01}  # TODO
+    optional_in_options = {"verbose": True, "algorithm_params": dict()}  # TODO
 
     available_algs = [
         "Adadelta",
@@ -57,36 +57,64 @@ class PyTorchOptim(BaseSolver):
         self._assign_options()
         self._validate_algorithm()
 
+        # save options (not "verbose") into self._params["algorithm_params"]
+        for param in self.inv_options.hyper_params:
+            if param != "verbose" and param not in self.required_in_options:
+                self._params["algorithm_params"][param] = \
+                    self.inv_options.hyper_params[param]
+
         # save problem info for later use
         self._obj = self.inv_problem.objective
         self._grad = self.inv_problem.gradient
-        self._m = torch.tensor(
-            self.inv_problem.initial_model, dtype=float, requires_grad=True
-        )
+        try:
+            self._m = torch.tensor(
+                self.inv_problem.initial_model, dtype=float, requires_grad=True
+            )
+        except Exception as e:
+            raise RuntimeError(
+                f"error in converting the initial_model into PyTorch Tensor"
+            )
 
         # instantiate torch optimizer
-        self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
-            [self._m],
-            lr=self._params["lr"],
-            # TODO (the rest parameters)
-        )
+        try:
+            self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
+                [self._m],
+                **self._params["algorithm_params"],
+            )
+        except Exception as e:
+            raise RuntimeError(
+                f"error in creating PyTorch Optimizer {self._params['algorithm']}"
+            ) from e
 
         # instantiate torch misfit function
-        self.torch_objective = CofiObjective.apply
+        try:
+            self.torch_objective = CofiObjective.apply
+        except Exception as e:
+            raise RuntimeError(
+                f"error in creating PyTorch custom Loss Function"
+            ) from e
 
     def __call__(self) -> dict:
         losses = []
         for i in range(self._params["num_iterations"]):
-            self.torch_optimizer.zero_grad()
-            obj = self.torch_objective(self._m, self._obj, self._grad)
-            obj.backward()
-            self.torch_optimizer.step()
-            losses.append(obj)
+            def closure():
+                self.torch_optimizer.zero_grad()
+                self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
+                self._last_loss.backward()
+                return self._last_loss
+            self.torch_optimizer.step(closure)
+
+
+            # self.torch_optimizer.zero_grad()
+            # obj = self.torch_objective(self._m, self._obj, self._grad)
+            # obj.backward()
+            # self.torch_optimizer.step()
+            losses.append(self._last_loss)
             if self._params["verbose"]:
-                print(f"Iteration #{i}, objective value: {obj}")
+                print(f"Iteration #{i}, objective value: {self._last_loss}")
         return {
             "model": self._m.detach().numpy(),
-            "objective_value": obj.detach().numpy(),
+            "objective_value": self._last_loss.detach().numpy(),
             "losses": losses,
         }
 

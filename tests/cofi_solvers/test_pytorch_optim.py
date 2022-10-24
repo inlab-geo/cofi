@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from cofi.solvers import PyTorchOptim
-from cofi import BaseProblem, InversionOptions, Inversion
+from cofi import BaseProblem, InversionOptions
 
 
 def test_invalid_algorithm():
@@ -21,11 +21,30 @@ def test_run_simple_obj():
     inv_problem.set_initial_model(30)
     inv_problem.set_gradient(lambda x: 2*x - 6)
     inv_problem.set_hessian(lambda x: 2)
-    inv_options = InversionOptions()
-    inv_options.set_params(algorithm="SGD", lr=0.2, num_iterations=10)
-    solver = PyTorchOptim(inv_problem, inv_options)
-    res = solver()
-    assert pytest.approx(res["model"], abs=1) == 3
+    learning_rates = [1000, 10, 1, 1, 1, 2, 0.1, 1, 2, 0.1, 10, 10, 0.1]
+    for i, alg in enumerate(PyTorchOptim.available_algs):
+        print(alg)
+        if alg == "SparseAdam":
+            continue
+        inv_options = InversionOptions()
+        if alg == "RAdam":
+            inv_options.set_params(
+                algorithm=alg,
+                verbose=False,
+                lr=learning_rates[i],
+                num_iterations=400
+            )
+        else:
+            inv_options.set_params(
+                algorithm=alg, 
+                verbose=False, 
+                lr=learning_rates[i], 
+                num_iterations=100
+            )
+        solver = PyTorchOptim(inv_problem, inv_options)
+        res = solver()
+        print(res["model"])
+        assert pytest.approx(res["model"], abs=1) == 3
 
 def test_run_lin_regression():
     # problem setup code
