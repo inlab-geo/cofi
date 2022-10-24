@@ -9,12 +9,12 @@ class CofiObjective(torch.autograd.Function):
     def forward(ctx, m, my_objective, my_gradient):
         # calculate and save gradient value
         grad = my_gradient(m)
-        if not torch.is_tensor(grad):       # converting type only when not tensor
+        if not torch.is_tensor(grad):  # converting type only when not tensor
             grad = torch.tensor(grad)
         ctx.save_for_backward(grad)
         # calculate and return objective value
         obj_val = my_objective(m)
-        if not torch.is_tensor(obj_val):    # converting type only when not tensor
+        if not torch.is_tensor(obj_val):  # converting type only when not tensor
             obj_val = torch.tensor(obj_val, requires_grad=True)
         return obj_val
 
@@ -31,9 +31,9 @@ class PyTorchOptim(BaseSolver):
     short_description = "PyTorch Optimizers under module `pytorch.optim`"
 
     required_in_problem = {"objective", "gradient", "initial_model"}
-    optional_in_problem = dict()                            # TODO
+    optional_in_problem = dict()  # TODO
     required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {"verbose": True, "lr":0.01}                 # TODO
+    optional_in_options = {"verbose": True, "lr": 0.01}  # TODO
 
     available_algs = [
         "Adadelta",
@@ -73,8 +73,8 @@ class PyTorchOptim(BaseSolver):
 
         # instantiate torch optimizer
         self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
-            [self._m], 
-            lr = self._params["lr"],
+            [self._m],
+            lr=self._params["lr"],
             # TODO (the rest parameters)
         )
 
