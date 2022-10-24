@@ -57,13 +57,6 @@ class PyTorchOptim(BaseSolver):
         self._assign_options()
         self._validate_algorithm()
 
-        # validate algorithm and instantiate optimizer
-        if self._params["algorithm"] not in self.available_algs:
-            raise ValueError(
-                f"You've chosen an invalid algorithm {self._algorithm}. "
-                f"Please choose from: {self.available_algs}."
-            )
-
         # save problem info for later use
         self._obj = self.inv_problem.objective
         self._grad = self.inv_problem.gradient
