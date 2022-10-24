@@ -3,28 +3,24 @@ import torch
 from . import BaseSolver
 
 
-# class ForwardOperator(torch.nn.Module):
-#     def __init__(self, x0, forward_func):
-#         super().__init__()
-#         self.weights = torch.nn.Parameter(x0)
-#         self.forward_func = forward_func
-
-#     def forward(self, x):
-#         try:
-#             return self.forward_func(x)
-#         except:
-#             return self.forward_func(x.numpy())
-
-
-class Objective(torch.autograd.Function):
+class CofiObjective(torch.autograd.Function):
+    # https://pytorch.org/docs/stable/generated/torch.autograd.Function.backward.html
     @staticmethod
     def forward(ctx, m, my_objective, my_gradient):
-        ctx.save_for_backward(m, my_gradient(m))
-        return my_objective(m)
+        # calculate and save gradient value
+        grad = my_gradient(m)
+        if not torch.is_tensor(grad):       # converting type only when not tensor
+            grad = torch.tensor(grad)
+        ctx.save_for_backward(grad)
+        # calculate and return objective value
+        obj_val = my_objective(m)
+        if not torch.is_tensor(obj_val):    # converting type only when not tensor
+            obj_val = torch.tensor(obj_val, requires_grad=True)
+        return obj_val
 
     @staticmethod
-    def backward(ctx, grad_output):
-        _, grad = ctx.saved_tensors
+    def backward(ctx, _):
+        grad = ctx.saved_tensors[0]
         return grad, None, None
 
 
@@ -35,9 +31,9 @@ class PyTorchOptim(BaseSolver):
     short_description = "PyTorch Optimizers under module `pytorch.optim`"
 
     required_in_problem = {"objective", "gradient", "initial_model"}
-    optional_in_problem = dict()
+    optional_in_problem = dict()                            # TODO
     required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {"verbose": True}
+    optional_in_options = {"verbose": True, "lr":0.01}                 # TODO
 
     available_algs = [
         "Adadelta",
@@ -59,9 +55,10 @@ class PyTorchOptim(BaseSolver):
         super().__init__(inv_problem, inv_options)
         self.components_used = list(self.required_in_problem)
         self._assign_options()
+        self._validate_algorithm()
 
         # validate algorithm and instantiate optimizer
-        if self._algorithm not in self.available_algs:
+        if self._params["algorithm"] not in self.available_algs:
             raise ValueError(
                 f"You've chosen an invalid algorithm {self._algorithm}. "
                 f"Please choose from: {self.available_algs}."
@@ -75,22 +72,34 @@ class PyTorchOptim(BaseSolver):
         )
 
         # instantiate torch optimizer
-        self.torch_optimizer = getattr(torch.optim, self._algorithm)(
-            [self._m], lr=self.inv_options.hyper_params["lr"]
+        self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
+            [self._m], 
+            lr = self._params["lr"],
+            # TODO (the rest parameters)
         )
 
         # instantiate torch misfit function
-        self.torch_objective = Objective.apply
+        self.torch_objective = CofiObjective.apply
 
     def __call__(self) -> dict:
-        for i in range(self._num_iterations):
+        losses = []
+        for i in range(self._params["num_iterations"]):
             self.torch_optimizer.zero_grad()
             obj = self.torch_objective(self._m, self._obj, self._grad)
             obj.backward()
             self.torch_optimizer.step()
-            if self._verbose:
+            losses.append(obj)
+            if self._params["verbose"]:
                 print(f"Iteration #{i}, objective value: {obj}")
         return {
             "model": self._m.detach().numpy(),
             "objective_value": obj.detach().numpy(),
+            "losses": losses,
         }
+
+    def _validate_algorithm(self):
+        if self._params["algorithm"] not in self.available_algs:
+            raise ValueError(
+                f"the algorithm you've chosen ({self._params['algorithm']}) "
+                f"is invalid. Please choose from the following: {self.available_algs}"
+            )
