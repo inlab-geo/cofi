@@ -60,8 +60,9 @@ class PyTorchOptim(BaseSolver):
         # save options (not "verbose") into self._params["algorithm_params"]
         for param in self.inv_options.hyper_params:
             if param != "verbose" and param not in self.required_in_options:
-                self._params["algorithm_params"][param] = \
-                    self.inv_options.hyper_params[param]
+                self._params["algorithm_params"][param] = self.inv_options.hyper_params[
+                    param
+                ]
 
         # save problem info for later use
         self._obj = self.inv_problem.objective
@@ -90,20 +91,19 @@ class PyTorchOptim(BaseSolver):
         try:
             self.torch_objective = CofiObjective.apply
         except Exception as e:
-            raise RuntimeError(
-                f"error in creating PyTorch custom Loss Function"
-            ) from e
+            raise RuntimeError(f"error in creating PyTorch custom Loss Function") from e
 
     def __call__(self) -> dict:
         losses = []
         for i in range(self._params["num_iterations"]):
+
             def closure():
                 self.torch_optimizer.zero_grad()
                 self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
                 self._last_loss.backward()
                 return self._last_loss
-            self.torch_optimizer.step(closure)
 
+            self.torch_optimizer.step(closure)
 
             # self.torch_optimizer.zero_grad()
             # obj = self.torch_objective(self._m, self._obj, self._grad)
