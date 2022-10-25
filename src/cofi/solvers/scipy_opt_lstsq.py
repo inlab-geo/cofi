@@ -79,7 +79,7 @@ class ScipyOptLstSqSolver(BaseSolver):
         opt_result = self._wrap_error_handler(
             least_squares,
             args=[],
-            kwargs= {
+            kwargs={
                 "fun": self._fun,
                 "x0": self._x0,
                 "jac": self._jac,
