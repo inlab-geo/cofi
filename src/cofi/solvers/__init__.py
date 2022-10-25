@@ -24,7 +24,7 @@ solvers_table = {
     "optimization": {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
-        "pytorch": PyTorchOptim,
+        "torch.optim": PyTorchOptim,
     },
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSqSolver,
