@@ -127,6 +127,7 @@ class PyTorchOptim(BaseSolver):
             "model": self._m.detach().numpy(),
             "objective_value": self._last_loss.detach().numpy(),
             "losses": losses,
+            "success": True,
         }
 
     def _validate_algorithm(self):
