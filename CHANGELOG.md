@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev18 (25/10/2022)
+
+### CoFI Solvers
+
+- Adding PyTorch.optim algorithms
+
+
 ## v0.1.2.dev17 (19/10/2022)
 
 ### CoFI Solvers
