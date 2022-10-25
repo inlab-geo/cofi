@@ -39,23 +39,29 @@ class EmceeSolver(BaseSolver):
         super().__init__(inv_problem, inv_options)
         self.components_used = list(self.required_in_problem)
         self._assign_args()
-        self.sampler = EnsembleSampler(
-            nwalkers=self._params["nwalkers"],
-            ndim=self._params["ndim"],
-            log_prob_fn=self._params["log_prob_fn"],
-            pool=self._params["pool"],
-            moves=self._params["moves"],
-            args=None,  # already handled by BaseProblem
-            kwargs=None,  # already handled by BaseProblem
-            backend=self._params["backend"],
-            vectorize=self._params["vectorize"],
-            blobs_dtype=self._params["blobs_dtype"],
-            parameter_names=self._params["parameter_names"],
-            a=self._params["a"],
-            postargs=self._params["postargs"],
-            threads=self._params["threads"],
-            live_dangerously=self._params["live_dangerously"],
-            runtime_sortingfn=self._params["runtime_sortingfn"],
+        self.sampler = self._wrap_error_handler(
+            EnsembleSampler,
+            args=[],
+            kwargs={
+                "nwalkers": self._params["nwalkers"],
+                "ndim": self._params["ndim"],
+                "log_prob_fn": self._params["log_prob_fn"],
+                "pool": self._params["pool"],
+                "moves": self._params["moves"],
+                "args": None,  # already handled by BaseProblem
+                "kwargs": None,  # already handled by BaseProblem
+                "backend": self._params["backend"],
+                "vectorize": self._params["vectorize"],
+                "blobs_dtype": self._params["blobs_dtype"],
+                "parameter_names": self._params["parameter_names"],
+                "a": self._params["a"],
+                "postargs": self._params["postargs"],
+                "threads": self._params["threads"],
+                "live_dangerously": self._params["live_dangerously"],
+                "runtime_sortingfn": self._params["runtime_sortingfn"],
+            },
+            when="in creating emcee.EnsembleSampler object",
+            context="before sampling",
         )
 
     def _assign_args(self):
@@ -80,19 +86,25 @@ class EmceeSolver(BaseSolver):
 
     def __call__(self) -> dict:
         self.sampler.reset()
-        self.sampler.run_mcmc(
-            initial_state=self._params["initial_state"],
-            nsteps=self._params["nsteps"],
-            log_prob0=self._params["log_prob0"],
-            rstate0=self._params["rstate0"],
-            blobs0=self._params["blobs0"],
-            tune=self._params["tune"],
-            skip_initial_state_check=self._params["skip_initial_state_check"],
-            thin_by=self._params["thin_by"],
-            thin=self._params["thin"],
-            store=self._params["store"],
-            progress=self._params["progress"],
-            progress_kwargs=self._params["progress_kwargs"],
+        self._wrap_error_handler(
+            self.sampler.run_mcmc,
+            args=[],
+            kwargs={
+                "initial_state": self._params["initial_state"],
+                "nsteps": self._params["nsteps"],
+                "log_prob0": self._params["log_prob0"],
+                "rstate0": self._params["rstate0"],
+                "blobs0": self._params["blobs0"],
+                "tune": self._params["tune"],
+                "skip_initial_state_check": self._params["skip_initial_state_check"],
+                "thin_by": self._params["thin_by"],
+                "thin": self._params["thin"],
+                "store": self._params["store"],
+                "progress": self._params["progress"],
+                "progress_kwargs": self._params["progress_kwargs"],
+            },
+            when="when running sampling",
+            context="in the process of sampling",
         )
         result = {
             "success": True,

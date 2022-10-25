@@ -36,8 +36,6 @@ class ScipyOptMinSolver(BaseSolver):
     )
 
     # get a list of arguments and defaults for scipy.optimize.minimize
-    # TODO arguments not supported by BaseProblem due to myself not sure how this can be
-    #    handled for other backend solvers: `args`
     _scipy_minimize_args = dict(inspect.signature(minimize).parameters)
     _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")
     _scipy_minimize_args["hessian"] = _scipy_minimize_args.pop("hess")
@@ -94,19 +92,25 @@ class ScipyOptMinSolver(BaseSolver):
                 ] = self.optional_in_problem[component]
 
     def __call__(self) -> dict:
-        opt_result = minimize(
-            fun=self._fun,
-            x0=self._x0,
-            args=(),  # handled by cofi.BaseProblem
-            method=self._params["method"],
-            jac=self._params["jac"],
-            hess=self._params["hess"],
-            hessp=self._params["hessp"],
-            bounds=self._params["bounds"],
-            constraints=self._params["constraints"],
-            tol=self._params["tol"],
-            callback=self._params["callback"],
-            options=self._params["options"],
+        opt_result = self._wrap_error_handler(
+            minimize,
+            args=[],
+            kwargs={
+                "fun": self._fun,
+                "x0": self._x0,
+                "args": (),  # handled by cofi.BaseProblem
+                "method": self._params["method"],
+                "jac": self._params["jac"],
+                "hess": self._params["hess"],
+                "hessp": self._params["hessp"],
+                "bounds": self._params["bounds"],
+                "constraints": self._params["constraints"],
+                "tol": self._params["tol"],
+                "callback": self._params["callback"],
+                "options": self._params["options"],
+            },
+            when="when solving the optimization problem",
+            context="calling `scipy.optimize.minimize`",
         )
         result = dict(opt_result.items())
         result["model"] = result.pop("x")

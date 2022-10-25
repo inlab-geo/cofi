@@ -132,14 +132,20 @@ class ScipyLstSqSolver(BaseSolver):
             self._a += self._lamda * self._LtL
 
     def __call__(self) -> dict:
-        res_p, residual, rank, singular_vals = lstsq(
-            a=self._a,
-            b=self._b,
-            cond=self._params["cond"],
-            overwrite_a=self._params["overwrite_a"],
-            overwrite_b=self._params["overwrite_b"],
-            check_finite=self._params["check_finite"],
-            lapack_driver=self._params["lapack_driver"],
+        res_p, residual, rank, singular_vals = self._wrap_error_handler(
+            lstsq,
+            args=[],
+            kwargs={
+                "a": self._a,
+                "b": self._b,
+                "cond": self._params["cond"],
+                "overwrite_a": self._params["overwrite_a"],
+                "overwrite_b": self._params["overwrite_b"],
+                "check_finite": self._params["check_finite"],
+                "lapack_driver": self._params["lapack_driver"],
+            },
+            when="when solving the linear system equation",
+            context="in the process of solving",
         )
         res = {
             "success": True,
@@ -149,5 +155,11 @@ class ScipyLstSqSolver(BaseSolver):
             "singular_values": singular_vals,
         }
         if self._params["with_uncertainty"]:
-            res["model_covariance"] = np.linalg.inv(self._a)
+            res["model_covariance"] = self._wrap_error_handler(
+                np.linalg.inv,
+                args=[self._a],
+                kwargs=dict(),
+                when="when calculating the model covariance estimation",
+                context="after the solving process",
+            )
         return res
