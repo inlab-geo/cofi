@@ -67,51 +67,56 @@ class PyTorchOptim(BaseSolver):
         # save problem info for later use
         self._obj = self.inv_problem.objective
         self._grad = self.inv_problem.gradient
-        try:
-            self._m = torch.tensor(
-                self.inv_problem.initial_model, dtype=float, requires_grad=True
-            )
-        except Exception as e:
-            raise RuntimeError(
-                f"error in converting the initial_model into PyTorch Tensor"
+        if torch.is_tensor(self.inv_problem.initial_model):
+            self._m = self.inv_problem.initial_model.double().clone().detach().requires_grad_(True)
+        else:
+            self._m = self._wrap_error_handler(
+                torch.tensor,
+                args=[self.inv_problem.initial_model],
+                kwargs={"dtype": float, "requires_grad": True},
+                when="in converting initial_model into PyTorch Tensor",
+                context="before solving the optimization problem",
             )
 
         # instantiate torch optimizer
-        try:
-            self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
-                [self._m],
-                **self._params["algorithm_params"],
-            )
-        except Exception as e:
-            raise RuntimeError(
-                f"error in creating PyTorch Optimizer {self._params['algorithm']}"
-            ) from e
+        self.torch_optimizer = self._wrap_error_handler(
+            getattr(torch.optim, self._params["algorithm"]),
+            args=[[self._m]],
+            kwargs=self._params["algorithm_params"],
+            when=f"in creating PyTorch Optimizer '{self._params['algorithm']}'",
+            context="before solving the optimization problem",
+        )
 
         # instantiate torch misfit function
-        try:
-            self.torch_objective = CofiObjective.apply
-        except Exception as e:
-            raise RuntimeError(f"error in creating PyTorch custom Loss Function") from e
+        self.torch_objective = self._wrap_error_handler(
+            getattr,
+            args=[CofiObjective, "apply"],
+            kwargs=dict(),
+            when="in creating PyTorch custom Loss Function",
+            context="before solving the optimization problem",
+        )
+    
+    def _one_iteration(self, i, losses):
+        def closure():
+            self.torch_optimizer.zero_grad()
+            self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
+            self._last_loss.backward()
+            return self._last_loss
+        self.torch_optimizer.step(closure)
+        losses.append(self._last_loss)
+        if self._params["verbose"]:
+            print(f"Iteration #{i}, objective value: {self._last_loss}")
 
     def __call__(self) -> dict:
         losses = []
         for i in range(self._params["num_iterations"]):
-
-            def closure():
-                self.torch_optimizer.zero_grad()
-                self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
-                self._last_loss.backward()
-                return self._last_loss
-
-            self.torch_optimizer.step(closure)
-
-            # self.torch_optimizer.zero_grad()
-            # obj = self.torch_objective(self._m, self._obj, self._grad)
-            # obj.backward()
-            # self.torch_optimizer.step()
-            losses.append(self._last_loss)
-            if self._params["verbose"]:
-                print(f"Iteration #{i}, objective value: {self._last_loss}")
+            self._wrap_error_handler(
+                self._one_iteration,
+                args=[i, losses],
+                kwargs=dict(),
+                when="performing optimization stepping",
+                context="in the process of solving",
+            )
         return {
             "model": self._m.detach().numpy(),
             "objective_value": self._last_loss.detach().numpy(),

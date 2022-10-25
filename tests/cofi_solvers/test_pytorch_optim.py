@@ -5,15 +5,34 @@ from cofi.solvers import PyTorchOptim
 from cofi import BaseProblem, InversionOptions
 
 
+inv_problem1 = BaseProblem()
+inv_problem1.set_objective(lambda: 3)
+inv_problem1.set_gradient(lambda: 3)
+inv_problem1.set_initial_model(1)
+inv_options1 = InversionOptions()
+inv_options1.set_params(algorithm="Adam", num_iterations=10)
+
 def test_invalid_algorithm():
-    inv_problem = BaseProblem()
-    inv_problem.set_objective(lambda: 3)
-    inv_problem.set_gradient(lambda: 3)
-    inv_problem.set_initial_model(1)
-    inv_options = InversionOptions()
-    inv_options.set_params(algorithm="Adamm", num_iterations=1)
+    inv_options1.set_params(algorithm="Adamm")
     with pytest.raises(ValueError, match=r".*algorithm.*is invalid.*"):
-        solver = PyTorchOptim(inv_problem, inv_options)
+        PyTorchOptim(inv_problem1, inv_options1)
+    inv_options1.set_params(algorithm="Adam")
+
+def test_torch_init_tensor_nativetype():
+    import torch
+    inv_problem1.set_initial_model(torch.tensor(1))
+    PyTorchOptim(inv_problem1, inv_options1)
+
+def test_torch_init_tensor_error():
+    inv_problem1.set_initial_model([[1,2],[3]])
+    with pytest.raises(RuntimeError, match=r".*error ocurred in converting.*"):
+        PyTorchOptim(inv_problem1, inv_options1)
+    inv_problem1.set_initial_model(1)
+
+def test_torch_optimizer_error():
+    inv_options1.set_params(algorithm="SGD")
+    with pytest.raises(RuntimeError, match=r".*creating PyTorch Optimizer 'SGD'.*"):
+        PyTorchOptim(inv_problem1, inv_options1)
 
 def test_run_simple_obj():
     inv_problem = BaseProblem()

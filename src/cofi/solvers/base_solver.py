@@ -235,5 +235,15 @@ class BaseSolver(metaclass=ABCMeta):
         for opt, val in self.optional_in_options.items():
             self._params[opt] = params.get(opt, val)
 
+    @staticmethod
+    def _wrap_error_handler(func, args, kwargs, when, context):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            raise RuntimeError(
+                f"error ocurred {when} ({context}). Check exception details from "
+                "message above."
+            ) from e
+
     def __repr__(self) -> str:
         return self.__class__.__name__
