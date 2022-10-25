@@ -68,7 +68,12 @@ class PyTorchOptim(BaseSolver):
         self._obj = self.inv_problem.objective
         self._grad = self.inv_problem.gradient
         if torch.is_tensor(self.inv_problem.initial_model):
-            self._m = self.inv_problem.initial_model.double().clone().detach().requires_grad_(True)
+            self._m = (
+                self.inv_problem.initial_model.double()
+                .clone()
+                .detach()
+                .requires_grad_(True)
+            )
         else:
             self._m = self._wrap_error_handler(
                 torch.tensor,
@@ -95,13 +100,14 @@ class PyTorchOptim(BaseSolver):
             when="in creating PyTorch custom Loss Function",
             context="before solving the optimization problem",
         )
-    
+
     def _one_iteration(self, i, losses):
         def closure():
             self.torch_optimizer.zero_grad()
             self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
             self._last_loss.backward()
             return self._last_loss
+
         self.torch_optimizer.step(closure)
         losses.append(self._last_loss)
         if self._params["verbose"]:
