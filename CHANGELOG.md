@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev20 (25/10/2022)
+
+### CoFI Solvers
+
+- Internal bug fix in PyTorch optimizers: adding "success" key in returned dictionary
+
 ## v0.1.2.dev19 (25/10/2022)
 
 ### CoFI Solvers

@@ -88,4 +88,4 @@ def test_run_lin_regression():
     solver = PyTorchOptim(inv_problem, inv_options)
     res = solver()
     for i in range(nparams):
-        assert pytest.approx(res["model"][i], abs=1) == _m_true[i]
+        assert pytest.approx(res["model"][i], abs=2) == _m_true[i]
