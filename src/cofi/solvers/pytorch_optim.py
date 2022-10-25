@@ -120,7 +120,7 @@ class PyTorchOptim(BaseSolver):
                 self._one_iteration,
                 args=[i, losses],
                 kwargs=dict(),
-                when="performing optimization stepping",
+                when="when performing optimization stepping",
                 context="in the process of solving",
             )
         return {
