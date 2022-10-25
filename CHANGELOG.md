@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev19 (25/10/2022)
+
+### CoFI Solvers
+
+- In solvers table: `pytorch` -> `torch.optim`
+
 ## v0.1.2.dev18 (25/10/2022)
 
 ### CoFI Solvers
