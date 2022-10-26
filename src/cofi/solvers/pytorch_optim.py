@@ -143,10 +143,12 @@ class PyTorchOptim(BaseSolver):
                 when="when performing optimization stepping",
                 context="in the process of solving",
             )
+        # handle losses tensor
+        losses_out = torch.stack(losses)
         return {
             "model": self._m.detach().numpy(),
             "objective_value": self._last_loss.detach().numpy(),
-            "losses": losses,
+            "losses": losses_out,
             "n_obj_evaluations": self._nb_evaluations,
             "n_grad_evaluations": self._nb_evaluations,
             "success": True,

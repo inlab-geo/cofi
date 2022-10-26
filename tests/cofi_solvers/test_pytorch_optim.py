@@ -100,6 +100,8 @@ def test_callback_nb_evaluations():
     res = solver()
     assert res["n_obj_evaluations"] > 100
     assert res["n_grad_evaluations"] > 100
+    # check losses type
+    assert "torch.Tensor" in str(type(res["losses"]))
 
 def test_run_lin_regression():
     # problem setup code
