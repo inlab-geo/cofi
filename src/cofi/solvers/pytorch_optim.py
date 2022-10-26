@@ -33,7 +33,7 @@ class PyTorchOptim(BaseSolver):
     required_in_problem = {"objective", "gradient", "initial_model"}
     optional_in_problem = dict()
     required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {"verbose": True, "algorithm_params": dict()}  # TODO
+    optional_in_options = {"verbose": True, "callback": None, "algorithm_params": dict()}
 
     available_algs = [
         "Adadelta",
@@ -59,7 +59,9 @@ class PyTorchOptim(BaseSolver):
 
         # save options (not "verbose") into self._params["algorithm_params"]
         for param in self.inv_options.hyper_params:
-            if param != "verbose" and param not in self.required_in_options:
+            if param != "verbose" and \
+                param != "callback" and \
+                    param not in self.required_in_options:
                 self._params["algorithm_params"][param] = self.inv_options.hyper_params[
                     param
                 ]
@@ -110,6 +112,14 @@ class PyTorchOptim(BaseSolver):
 
         self.torch_optimizer.step(closure)
         losses.append(self._last_loss)
+        if self._params["callback"] is not None:
+            self._wrap_error_handler(
+                self._params["callback"],
+                args=[self._m],
+                kwargs=dict(),
+                when="when running your callback function",
+                context="in the process of solving",
+            )
         if self._params["verbose"]:
             print(f"Iteration #{i}, objective value: {self._last_loss}")
 
