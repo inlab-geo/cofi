@@ -33,7 +33,11 @@ class PyTorchOptim(BaseSolver):
     required_in_problem = {"objective", "gradient", "initial_model"}
     optional_in_problem = dict()
     required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {"verbose": True, "callback": None, "algorithm_params": dict()}
+    optional_in_options = {
+        "verbose": True,
+        "callback": None,
+        "algorithm_params": dict(),
+    }
 
     available_algs = [
         "Adadelta",
@@ -59,9 +63,11 @@ class PyTorchOptim(BaseSolver):
 
         # save options (not "verbose") into self._params["algorithm_params"]
         for param in self.inv_options.hyper_params:
-            if param != "verbose" and \
-                param != "callback" and \
-                    param not in self.required_in_options:
+            if (
+                param != "verbose"
+                and param != "callback"
+                and param not in self.required_in_options
+            ):
                 self._params["algorithm_params"][param] = self.inv_options.hyper_params[
                     param
                 ]
@@ -103,11 +109,15 @@ class PyTorchOptim(BaseSolver):
             context="before solving the optimization problem",
         )
 
+        # initialize function evaluation counter
+        self._nb_evaluations = 0
+
     def _one_iteration(self, i, losses):
         def closure():
             self.torch_optimizer.zero_grad()
             self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
             self._last_loss.backward()
+            self._nb_evaluations += 1
             return self._last_loss
 
         self.torch_optimizer.step(closure)
@@ -137,6 +147,8 @@ class PyTorchOptim(BaseSolver):
             "model": self._m.detach().numpy(),
             "objective_value": self._last_loss.detach().numpy(),
             "losses": losses,
+            "n_obj_evaluations": self._nb_evaluations,
+            "n_grad_evaluations": self._nb_evaluations,
             "success": True,
         }
 
