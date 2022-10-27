@@ -108,7 +108,13 @@ def model_vec(rhomap, fmesh):
 
 ## Note: all functions below assume the model in log space!
 
+def _ensure_numpy(model):
+    if "torch.Tensor" in str(type(model)):
+        model = model.cpu().detach().numpy()
+    return model
+
 def get_response(model, forward_operator):
+    model = _ensure_numpy(model)
     return np.log(np.array(forward_operator.response(np.exp(model))))
 
 def get_residual(model, log_data, forward_operator):
@@ -118,6 +124,7 @@ def get_residual(model, log_data, forward_operator):
 
 def get_jacobian(model, forward_operator):
     response = get_response(model, forward_operator)
+    model = _ensure_numpy(model)
     forward_operator.createJacobian(np.exp(model))
     J = np.array(forward_operator.jacobian())
     jac = J / np.exp(response[:, np.newaxis]) * np.exp(model)[np.newaxis, :]
@@ -126,6 +133,7 @@ def get_jacobian(model, forward_operator):
 def get_jac_residual(model, log_data, forward_operator):
     response = get_response(model, forward_operator)
     residual = log_data - response
+    model = _ensure_numpy(model)
     forward_operator.createJacobian(np.exp(model))
     J = np.array(forward_operator.jacobian())
     jac = J / np.exp(response[:, np.newaxis]) * np.exp(model)[np.newaxis, :]

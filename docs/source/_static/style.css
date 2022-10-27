@@ -48,13 +48,13 @@ div.mermaid:hover {
 /* HOME: panel button */
 .btn-outline-primary:hover {
     color: rgb(51, 125, 222);
-    background-color: #ccdde2;
-    border-color: #ccdde2
+    background-color: #d6eadf;
+    border-color: #d6eadf
 }
 .btn-outline-primary {
     /* color: rgb(51, 125, 222); */
     /* color: #99582a; */
-    border-color: #ccdde2;
+    border-color: #d6eadf;
 }
 .card-body {
     display: flex;
@@ -62,7 +62,7 @@ div.mermaid:hover {
     justify-content: space-between;
 }
 .card:hover {
-    border: 1px solid rgb(51, 125, 222);
+    border: 1px solid #649a69;
 }
 
 /* API: class/method name */

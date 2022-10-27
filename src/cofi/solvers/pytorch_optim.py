@@ -33,7 +33,11 @@ class PyTorchOptim(BaseSolver):
     required_in_problem = {"objective", "gradient", "initial_model"}
     optional_in_problem = dict()
     required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {"verbose": True, "algorithm_params": dict()}  # TODO
+    optional_in_options = {
+        "verbose": True,
+        "callback": None,
+        "algorithm_params": dict(),
+    }
 
     available_algs = [
         "Adadelta",
@@ -59,7 +63,11 @@ class PyTorchOptim(BaseSolver):
 
         # save options (not "verbose") into self._params["algorithm_params"]
         for param in self.inv_options.hyper_params:
-            if param != "verbose" and param not in self.required_in_options:
+            if (
+                param != "verbose"
+                and param != "callback"
+                and param not in self.required_in_options
+            ):
                 self._params["algorithm_params"][param] = self.inv_options.hyper_params[
                     param
                 ]
@@ -101,15 +109,27 @@ class PyTorchOptim(BaseSolver):
             context="before solving the optimization problem",
         )
 
+        # initialize function evaluation counter
+        self._nb_evaluations = 0
+
     def _one_iteration(self, i, losses):
         def closure():
             self.torch_optimizer.zero_grad()
             self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
             self._last_loss.backward()
+            self._nb_evaluations += 1
             return self._last_loss
 
         self.torch_optimizer.step(closure)
         losses.append(self._last_loss)
+        if self._params["callback"] is not None:
+            self._wrap_error_handler(
+                self._params["callback"],
+                args=[self._m],
+                kwargs=dict(),
+                when="when running your callback function",
+                context="in the process of solving",
+            )
         if self._params["verbose"]:
             print(f"Iteration #{i}, objective value: {self._last_loss}")
 
@@ -123,10 +143,14 @@ class PyTorchOptim(BaseSolver):
                 when="when performing optimization stepping",
                 context="in the process of solving",
             )
+        # handle losses tensor
+        losses_out = torch.stack(losses)
         return {
             "model": self._m.detach().numpy(),
             "objective_value": self._last_loss.detach().numpy(),
-            "losses": losses,
+            "losses": losses_out,
+            "n_obj_evaluations": self._nb_evaluations,
+            "n_grad_evaluations": self._nb_evaluations,
             "success": True,
         }
 

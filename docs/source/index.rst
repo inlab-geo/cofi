@@ -31,7 +31,7 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         linear_system_solvers(Linear system solvers):::cls_parameter_estimation;
         linear_solverlist(scipy.linalg.lstsq <br> ...):::cls_solvers;
         optimization(Optimization):::cls_parameter_estimation;
-        opt_solverlist(scipy.minimize <br> PETSc <br> Rapid Optimization Library<br>...):::cls_solvers;
+        opt_solverlist(scipy.optimize.minimize <br> torch.optim <br> PETSc <br>...):::cls_solvers;
         ensemble_methods(Ensemble methods):::cls_ensemble_methods;
         direct_search(Direct Search):::cls_ensemble_methods;
         amc(Monte Carlo):::cls_ensemble_methods;
@@ -64,10 +64,10 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         bs --> rjmcmc;
         rjmcmc -.- rjmcmc_solverlist;
 
-    classDef cls_cofi fill:#f0ead2, stroke-width:0;
-    classDef cls_parameter_estimation fill:#e1eff6, stroke-width:0;
-    classDef cls_ensemble_methods fill:#e9edc9, stroke-width:0;
-    classDef cls_solvers fill:#eae4e9, stroke-width:0;
+    classDef cls_cofi fill: #d4a373, stroke-width:0;
+    classDef cls_parameter_estimation fill: #ccd5ae, stroke-width:0;
+    classDef cls_ensemble_methods fill: #e9edc9, stroke-width:0;
+    classDef cls_solvers fill: #faedcd, stroke-width:0;
 
 
 .. .. seealso::

@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev21 (27/10/2022)
+
+### CoFI Solvers
+
+- torch.optim
+  - return number of function evaluations
+  - accept callback function
+  - return better losses list
+  - add this to docs tree
+
 ## v0.1.2.dev20 (25/10/2022)
 
 ### CoFI Solvers

@@ -65,6 +65,44 @@ def test_run_simple_obj():
         print(res["model"])
         assert pytest.approx(res["model"], abs=1) == 3
 
+def test_callback_nb_evaluations():
+    inv_problem = BaseProblem()
+    inv_problem.set_objective(lambda x: (x-3)**2)
+    inv_problem.set_initial_model(30)
+    inv_problem.set_gradient(lambda x: 2*x - 6)
+    inv_problem.set_hessian(lambda x: 2)
+    inv_options = InversionOptions()
+    callback_x = []
+    inv_options.set_params(
+        algorithm="Adam", 
+        verbose=False, 
+        lr=0.1, 
+        num_iterations=100,
+        callback=lambda x: callback_x.append(x)
+    )
+    solver = PyTorchOptim(inv_problem, inv_options)
+    res = solver()
+    # test callback
+    assert len(callback_x) == 100
+    assert "torch.Tensor" in str(type(callback_x[-1]))
+    # test function evaluations counter
+    assert res["n_obj_evaluations"] == 100
+    assert res["n_grad_evaluations"] == 100
+    # test function evaluations counter (for closure)
+    inv_options.set_params(
+        algorithm="LBFGS", 
+        verbose=False, 
+        lr=0.1, 
+        num_iterations=100,
+        callback=lambda x: callback_x.append(x)
+    )
+    solver = PyTorchOptim(inv_problem, inv_options)
+    res = solver()
+    assert res["n_obj_evaluations"] > 100
+    assert res["n_grad_evaluations"] > 100
+    # check losses type
+    assert "torch.Tensor" in str(type(res["losses"]))
+
 def test_run_lin_regression():
     # problem setup code
     nparams = 4
