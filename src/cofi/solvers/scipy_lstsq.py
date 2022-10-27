@@ -2,7 +2,7 @@ import inspect
 import numpy as np
 from scipy.linalg import lstsq
 
-from . import BaseSolver
+from . import BaseSolver, error_handler
 
 
 class ScipyLstSqSolver(BaseSolver):
@@ -132,21 +132,7 @@ class ScipyLstSqSolver(BaseSolver):
             self._a += self._lamda * self._LtL
 
     def __call__(self) -> dict:
-        res_p, residual, rank, singular_vals = self._wrap_error_handler(
-            lstsq,
-            args=[],
-            kwargs={
-                "a": self._a,
-                "b": self._b,
-                "cond": self._params["cond"],
-                "overwrite_a": self._params["overwrite_a"],
-                "overwrite_b": self._params["overwrite_b"],
-                "check_finite": self._params["check_finite"],
-                "lapack_driver": self._params["lapack_driver"],
-            },
-            when="when solving the linear system equation",
-            context="in the process of solving",
-        )
+        res_p, residual, rank, singular_vals = self._call_lstsq()
         res = {
             "success": True,
             "model": res_p,
@@ -155,11 +141,27 @@ class ScipyLstSqSolver(BaseSolver):
             "singular_values": singular_vals,
         }
         if self._params["with_uncertainty"]:
-            res["model_covariance"] = self._wrap_error_handler(
-                np.linalg.inv,
-                args=[self._a],
-                kwargs=dict(),
-                when="when calculating the model covariance estimation",
-                context="after the solving process",
-            )
+            res["model_covariance"] = self._calculate_model_covariance()
         return res
+
+    @error_handler(
+        when="when solving the linear system equation",
+        context="in the process of solving",
+    )
+    def _call_lstsq(self):
+        return lstsq(
+            a=self._a,
+            b=self._b,
+            cond=self._params["cond"],
+            overwrite_a=self._params["overwrite_a"],
+            overwrite_b=self._params["overwrite_b"],
+            check_finite=self._params["check_finite"],
+            lapack_driver=self._params["lapack_driver"],
+        )
+    
+    @error_handler(
+        when="when calculating the model covariance estimation",
+        context="after the solving process",
+    )
+    def _calculate_model_covariance(self):
+        return np.linalg.inv(self._a)

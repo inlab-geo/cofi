@@ -1,4 +1,4 @@
-from .base_solver import BaseSolver
+from .base_solver import BaseSolver, error_handler
 
 from .scipy_opt_min import ScipyOptMinSolver
 from .scipy_opt_lstsq import ScipyOptLstSqSolver
