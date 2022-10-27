@@ -145,6 +145,7 @@ def get_data_misfit(model, log_data, forward_operator, data_cov_inv=None):
     return np.abs(residual.T @ data_cov_inv @ residual)
 
 def get_regularization(model, Wm, lamda):
+    model = _ensure_numpy(model)
     model = np.exp(model)
     return lamda * (Wm @ model).T @ (Wm @ model)
 

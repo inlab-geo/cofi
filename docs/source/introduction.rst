@@ -12,48 +12,44 @@ This page contains explanation about the basic concepts of this package.
 In the workflow of :code:`cofi`, there are three main
 components: :code:`BaseProblem`, :code:`InversionOptions`, and :code:`Inversion`.
 
-- :code:`BaseProblem` defines three things: 1) the forward problem; 2) model parameter 
-  space (the unknowns); and 3) options specific to type of inverse problem you are 
-  trying to solve, such as the definition of an objective function for optimization.
-- :code:`InversionOptions` describes details about how one wants to run the inversion, including the
-  inversion approach, backend tool and solver-specific parameters.
+- :code:`BaseProblem` defines the inverse problem including any user supplied quantities such as data
+  vector, number of model parameters and measure of fit between model predictions and data.
+
+  .. code::
+
+    inv_problem = BaseProblem()
+    inv_problem.set_objective(some_function_here)     # if needed
+    inv_problem.set_jacobian(some_function_here)      # if needed
+    inv_problem.set_initial_model(a_starting_point)   # if needed
+    # more could be set here
+    # choose depending on the problem and how you want to solve it
+
+- :code:`InversionOptions` describes details about how one wants to run the inversion, including the backend
+  tool and solver-specific parameters. It is based on the concept of a method and tool.
+
+  .. code::
+
+    inv_options = InversionOptions()
+    inv_options.suggest_solving_methods()
+    inv_options.set_solving_method("matrix solvers")
+    inv_options.suggest_tools()
+    inv_options.set_tool("scipy.linalg.lstsq")
+    inv_options.summary()
+
 - :code:`Inversion` can be seen as an inversion engine that takes in the above two as information,
   and will produce an :code:`InversionResult` upon running.
-  
-For each of the above components, there's a :code:`summary()` method to check the current status.
-  
-So a common workflow includes 4 steps:
 
-1. we begin by defining the :class:`BaseProblem`. This can be done through a series of set functions
-
-.. code::
-
-  inv_problem = BaseProblem()
-  inv_problem.set_objective(some_function_here)
-  inv_problem.set_initial_model(a_starting_point)
-
-2. define :class:`InversionOptions`. 
-   `Some useful methods <api/generated/cofi.InversionOptions.html>`_ include:
-
-- :code:`set_solving_method()` and :code:`suggest_tools()`. Once you've set a solving method (from "least squares"
-  and "optimization", more will be supported), you can use :code:`suggest_tools()` to see a list of backend tools
-  to choose from.
-      
-.. admonition:: Ways to suggest inversion tools
-  :class: seealso
-
-  We are working on enabling different ways to select the backend tool for different
-  classes of audience, as discussed in the `roadmap <roadmap.html#suggesting-system>`_.
-
-1. start an :class:`Inversion`. This step is common:
-
-   .. code::
-
+  .. code::
+    
     inv = Inversion(inv_problem, inv_options)
     result = inv.run()
-   
-2. analyse the result, workflow and redo your experiments with different instances of
-   :class:`InversionOptions`.
+
+Internally CoFI decides the nature of the problem from the quantities set by the user and performs
+internal checks to ensure it has all that it needs to solve a problem.
+
+For each of the above components, there's an associated :code:`summary()` method to check the 
+current status.
+
 
 .. hint::
 
