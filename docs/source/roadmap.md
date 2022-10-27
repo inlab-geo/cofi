@@ -17,9 +17,6 @@ This is another prioritised task to be done. Here's a list of examples we'd like
 within the next few months:
 
 - Shaw problem
-- Earthquake location 
-- X-ray tomography
-- Seismic wave travel time tomography
 - Receiver function
 - Forward simulation with PyGIMLI (2D ERT, 2D DCIP, etc.)
 - Forward simulation with SimPEG (gravity, electromagnetics, etc.)
