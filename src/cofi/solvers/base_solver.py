@@ -241,6 +241,7 @@ class BaseSolver(metaclass=ABCMeta):
 
 def error_handler(when, context):
     """Error handler for running solvers"""
+
     def wrap_error_handler(func):
         def wrapped_func(*args, **kwargs):
             try:
@@ -250,5 +251,7 @@ def error_handler(when, context):
                     f"error ocurred {when} ({context}). Check exception details from "
                     "message above."
                 ) from e
+
         return wrapped_func
+
     return wrap_error_handler

@@ -158,7 +158,7 @@ class ScipyLstSqSolver(BaseSolver):
             check_finite=self._params["check_finite"],
             lapack_driver=self._params["lapack_driver"],
         )
-    
+
     @error_handler(
         when="when calculating the model covariance estimation",
         context="after the solving process",

@@ -104,7 +104,7 @@ class PyTorchOptim(BaseSolver):
                 f"the algorithm you've chosen ({self._params['algorithm']}) "
                 f"is invalid. Please choose from the following: {self.available_algs}"
             )
-    
+
     @error_handler(
         when="in converting initial_model into PyTorch Tensor with requires_grad=True",
         context="before solving the optimization problem",
@@ -119,11 +119,9 @@ class PyTorchOptim(BaseSolver):
             )
         else:
             self._m = torch.tensor(
-                self.inv_problem.initial_model,
-                dtype=float,
-                requires_grad=True
+                self.inv_problem.initial_model, dtype=float, requires_grad=True
             )
-    
+
     @error_handler(
         when=f"in creating PyTorch Optimizer",
         context="before solving the optimization problem",
@@ -133,14 +131,14 @@ class PyTorchOptim(BaseSolver):
             [self._m],
             **self._params["algorithm_params"],
         )
-    
+
     @error_handler(
         when="in creating PyTorch custom Loss Function",
         context="before solving the optimization problem",
     )
     def _initialize_torch_objective(self):
         self.torch_objective = CofiObjective.apply
-    
+
     @error_handler(
         when="when performing optimization stepping",
         context="in the process of solving",
@@ -159,7 +157,7 @@ class PyTorchOptim(BaseSolver):
             self._run_callback()
         if self._params["verbose"]:
             print(f"Iteration #{i}, objective value: {self._last_loss}")
-    
+
     @error_handler(
         when="when running your callback function",
         context="in the process of solving",

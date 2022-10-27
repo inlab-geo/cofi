@@ -49,7 +49,7 @@ class EmceeSolver(BaseSolver):
             "blob_names": self._params["blob_names"],
         }
         return result
-    
+
     def _assign_args(self):
         # assign components in problem to args
         inv_problem = self.inv_problem
