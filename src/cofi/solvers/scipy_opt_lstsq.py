@@ -1,7 +1,7 @@
 import inspect
 from scipy.optimize import least_squares
 
-from . import BaseSolver
+from . import BaseSolver, error_handler
 
 
 # Official documentation for scipy.optimize.least_squares
@@ -76,33 +76,34 @@ class ScipyOptLstSqSolver(BaseSolver):
                 )
 
     def __call__(self) -> dict:
-        opt_result = self._wrap_error_handler(
-            least_squares,
-            args=[],
-            kwargs={
-                "fun": self._fun,
-                "x0": self._x0,
-                "jac": self._jac,
-                "bounds": self._bounds,
-                "method": self._params["method"],
-                "ftol": self._params["ftol"],
-                "xtol": self._params["xtol"],
-                "gtol": self._params["gtol"],
-                "x_scale": self._params["x_scale"],
-                "loss": self._params["loss"],
-                "f_scale": self._params["f_scale"],
-                "diff_step": self._params["diff_step"],
-                "tr_solver": self._params["tr_solver"],
-                "tr_options": self._params["tr_options"],
-                "jac_sparsity": self._params["jac_sparsity"],
-                "max_nfev": self._params["max_nfev"],
-                "verbose": self._params["verbose"],
-                "args": (),  # handled by cofi.BaseProblem
-                "kwargs": {},  # handled by cofi.BaseProblem
-            },
-            when="when solving the least_squares optimization problem",
-            context="calling `scipy.optimize.least_squares`",
-        )
+        opt_result = self._call_np_least_squares()
         result = dict(opt_result.items())
         result["model"] = result.pop("x")
         return result
+
+    @error_handler(
+        when="when solving the least_squares optimization problem",
+        context="calling `scipy.optimize.least_squares`",
+    )
+    def _call_np_least_squares(self):
+        return least_squares(
+            fun=self._fun,
+            x0=self._x0,
+            jac=self._jac,
+            bounds=self._bounds,
+            method=self._params["method"],
+            ftol=self._params["ftol"],
+            xtol=self._params["xtol"],
+            gtol=self._params["gtol"],
+            x_scale=self._params["x_scale"],
+            loss=self._params["loss"],
+            f_scale=self._params["f_scale"],
+            diff_step=self._params["diff_step"],
+            tr_solver=self._params["tr_solver"],
+            tr_options=self._params["tr_options"],
+            jac_sparsity=self._params["jac_sparsity"],
+            max_nfev=self._params["max_nfev"],
+            verbose=self._params["verbose"],
+            args=(),  # handled by cofi.BaseProblem
+            kwargs={},  # handled by cofi.BaseProblem
+        )

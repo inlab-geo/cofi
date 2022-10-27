@@ -31,7 +31,7 @@ def test_torch_init_tensor_error():
 
 def test_torch_optimizer_error():
     inv_options1.set_params(algorithm="SGD")
-    with pytest.raises(RuntimeError, match=r".*creating PyTorch Optimizer 'SGD'.*"):
+    with pytest.raises(RuntimeError, match=r".*error ocurred in creating*"):
         PyTorchOptim(inv_problem1, inv_options1)
 
 def test_run_simple_obj():

@@ -1,6 +1,6 @@
 import torch
 
-from . import BaseSolver
+from . import BaseSolver, error_handler
 
 
 class CofiObjective(torch.autograd.Function):
@@ -75,75 +75,19 @@ class PyTorchOptim(BaseSolver):
         # save problem info for later use
         self._obj = self.inv_problem.objective
         self._grad = self.inv_problem.gradient
-        if torch.is_tensor(self.inv_problem.initial_model):
-            self._m = (
-                self.inv_problem.initial_model.double()
-                .clone()
-                .detach()
-                .requires_grad_(True)
-            )
-        else:
-            self._m = self._wrap_error_handler(
-                torch.tensor,
-                args=[self.inv_problem.initial_model],
-                kwargs={"dtype": float, "requires_grad": True},
-                when="in converting initial_model into PyTorch Tensor",
-                context="before solving the optimization problem",
-            )
 
-        # instantiate torch optimizer
-        self.torch_optimizer = self._wrap_error_handler(
-            getattr(torch.optim, self._params["algorithm"]),
-            args=[[self._m]],
-            kwargs=self._params["algorithm_params"],
-            when=f"in creating PyTorch Optimizer '{self._params['algorithm']}'",
-            context="before solving the optimization problem",
-        )
-
-        # instantiate torch misfit function
-        self.torch_objective = self._wrap_error_handler(
-            getattr,
-            args=[CofiObjective, "apply"],
-            kwargs=dict(),
-            when="in creating PyTorch custom Loss Function",
-            context="before solving the optimization problem",
-        )
+        # initialize torch stuff
+        self._initialize_torch_tensor()
+        self._initialize_torch_optimizer()
+        self._initialize_torch_objective()
 
         # initialize function evaluation counter
         self._nb_evaluations = 0
 
-    def _one_iteration(self, i, losses):
-        def closure():
-            self.torch_optimizer.zero_grad()
-            self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
-            self._last_loss.backward()
-            self._nb_evaluations += 1
-            return self._last_loss
-
-        self.torch_optimizer.step(closure)
-        losses.append(self._last_loss)
-        if self._params["callback"] is not None:
-            self._wrap_error_handler(
-                self._params["callback"],
-                args=[self._m],
-                kwargs=dict(),
-                when="when running your callback function",
-                context="in the process of solving",
-            )
-        if self._params["verbose"]:
-            print(f"Iteration #{i}, objective value: {self._last_loss}")
-
     def __call__(self) -> dict:
         losses = []
         for i in range(self._params["num_iterations"]):
-            self._wrap_error_handler(
-                self._one_iteration,
-                args=[i, losses],
-                kwargs=dict(),
-                when="when performing optimization stepping",
-                context="in the process of solving",
-            )
-        # handle losses tensor
+            self._one_iteration(i, losses)
         losses_out = torch.stack(losses)
         return {
             "model": self._m.detach().numpy(),
@@ -160,3 +104,63 @@ class PyTorchOptim(BaseSolver):
                 f"the algorithm you've chosen ({self._params['algorithm']}) "
                 f"is invalid. Please choose from the following: {self.available_algs}"
             )
+
+    @error_handler(
+        when="in converting initial_model into PyTorch Tensor with requires_grad=True",
+        context="before solving the optimization problem",
+    )
+    def _initialize_torch_tensor(self):
+        if torch.is_tensor(self.inv_problem.initial_model):
+            self._m = (
+                self.inv_problem.initial_model.double()
+                .clone()
+                .detach()
+                .requires_grad_(True)
+            )
+        else:
+            self._m = torch.tensor(
+                self.inv_problem.initial_model, dtype=float, requires_grad=True
+            )
+
+    @error_handler(
+        when=f"in creating PyTorch Optimizer",
+        context="before solving the optimization problem",
+    )
+    def _initialize_torch_optimizer(self):
+        self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
+            [self._m],
+            **self._params["algorithm_params"],
+        )
+
+    @error_handler(
+        when="in creating PyTorch custom Loss Function",
+        context="before solving the optimization problem",
+    )
+    def _initialize_torch_objective(self):
+        self.torch_objective = CofiObjective.apply
+
+    @error_handler(
+        when="when performing optimization stepping",
+        context="in the process of solving",
+    )
+    def _one_iteration(self, i, losses):
+        def closure():
+            self.torch_optimizer.zero_grad()
+            self._last_loss = self.torch_objective(self._m, self._obj, self._grad)
+            self._last_loss.backward()
+            self._nb_evaluations += 1
+            return self._last_loss
+
+        self.torch_optimizer.step(closure)
+        losses.append(self._last_loss)
+        if self._params["callback"] is not None:
+            self._run_callback()
+        if self._params["verbose"]:
+            print(f"Iteration #{i}, objective value: {self._last_loss}")
+
+    @error_handler(
+        when="when running your callback function",
+        context="in the process of solving",
+    )
+    def _run_callback(self):
+        self._params["callback"](self._m)

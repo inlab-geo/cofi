@@ -1,6 +1,8 @@
 import inspect
 from scipy.optimize import minimize
 
+from cofi.solvers.base_solver import error_handler
+
 from . import BaseSolver
 
 
@@ -92,26 +94,27 @@ class ScipyOptMinSolver(BaseSolver):
                 ] = self.optional_in_problem[component]
 
     def __call__(self) -> dict:
-        opt_result = self._wrap_error_handler(
-            minimize,
-            args=[],
-            kwargs={
-                "fun": self._fun,
-                "x0": self._x0,
-                "args": (),  # handled by cofi.BaseProblem
-                "method": self._params["method"],
-                "jac": self._params["jac"],
-                "hess": self._params["hess"],
-                "hessp": self._params["hessp"],
-                "bounds": self._params["bounds"],
-                "constraints": self._params["constraints"],
-                "tol": self._params["tol"],
-                "callback": self._params["callback"],
-                "options": self._params["options"],
-            },
-            when="when solving the optimization problem",
-            context="calling `scipy.optimize.minimize`",
-        )
+        opt_result = self._call_np_minimize()
         result = dict(opt_result.items())
         result["model"] = result.pop("x")
         return result
+
+    @error_handler(
+        when="when solving the optimization problem",
+        context="calling `scipy.optimize.minimize`",
+    )
+    def _call_np_minimize(self):
+        return minimize(
+            fun=self._fun,
+            x0=self._x0,
+            args=(),  # handled by cofi.BaseProblem
+            method=self._params["method"],
+            jac=self._params["jac"],
+            hess=self._params["hess"],
+            hessp=self._params["hessp"],
+            bounds=self._params["bounds"],
+            constraints=self._params["constraints"],
+            tol=self._params["tol"],
+            callback=self._params["callback"],
+            options=self._params["options"],
+        )
