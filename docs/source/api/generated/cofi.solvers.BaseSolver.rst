@@ -144,6 +144,9 @@ cofi.solvers.BaseSolver
 
 
 
+
+
+
     .. automethod:: BaseSolver.__init__
 
 
