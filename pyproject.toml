@@ -37,8 +37,6 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: C",
-    "Programming Language :: Fortran",
     "Topic :: Scientific/Engineering :: Physics",
     "License :: OSI Approved :: BSD License",
 ]
