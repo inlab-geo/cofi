@@ -67,6 +67,7 @@ class ScipyOptLstSqSolver(BaseSolver):
     )
     def _call_np_least_squares(self):
         from scipy.optimize import least_squares
+
         return least_squares(
             fun=self._fun,
             x0=self._x0,
@@ -99,6 +100,7 @@ def _init_class_methods():
     """
     import inspect
     from scipy.optimize import least_squares
+
     _scipy_ls_args = dict(inspect.signature(least_squares).parameters)
     _scipy_ls_args["jacobian"] = _scipy_ls_args.pop("jac")
     required_in_problem = {"residual", "initial_model"}
@@ -126,4 +128,9 @@ def _init_class_methods():
             "verbose",
         }
     }
-    return required_in_problem, optional_in_problem, required_in_options, optional_in_options
+    return (
+        required_in_problem,
+        optional_in_problem,
+        required_in_options,
+        optional_in_options,
+    )

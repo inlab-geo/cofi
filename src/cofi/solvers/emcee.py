@@ -28,7 +28,7 @@ class EmceeSolver(BaseSolver):
 
     @classmethod
     def optional_in_options(cls) -> dict:
-        return  _init_class_methods()[3]
+        return _init_class_methods()[3]
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -71,6 +71,7 @@ class EmceeSolver(BaseSolver):
     )
     def _initialize_sampler(self):
         from emcee import EnsembleSampler
+
         self.sampler = EnsembleSampler(
             nwalkers=self._params["nwalkers"],
             ndim=self._params["ndim"],
@@ -116,6 +117,7 @@ class EmceeSolver(BaseSolver):
 def _init_class_methods():
     import inspect
     from emcee import EnsembleSampler
+
     _emcee_EnsembleSampler_args = dict(inspect.signature(EnsembleSampler).parameters)
     _emcee_EnsembleSampler_sample_args = dict(
         inspect.signature(EnsembleSampler.sample).parameters
@@ -135,4 +137,9 @@ def _init_class_methods():
             if k not in {"initial_state", "iterations", "self"}
         }
     )
-    return required_in_problem, optional_in_problem, required_in_options, optional_in_options
+    return (
+        required_in_problem,
+        optional_in_problem,
+        required_in_options,
+        optional_in_options,
+    )

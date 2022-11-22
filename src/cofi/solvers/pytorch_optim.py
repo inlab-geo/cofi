@@ -21,7 +21,7 @@ class PyTorchOptim(BaseSolver):
 
     @classmethod
     def optional_in_options(cls) -> dict:
-        return  {
+        return {
             "verbose": True,
             "callback": None,
             "algorithm_params": dict(),
@@ -74,6 +74,7 @@ class PyTorchOptim(BaseSolver):
 
     def __call__(self) -> dict:
         import torch
+
         losses = []
         for i in range(self._params["num_iterations"]):
             self._one_iteration(i, losses)
@@ -100,6 +101,7 @@ class PyTorchOptim(BaseSolver):
     )
     def _initialize_torch_tensor(self):
         import torch
+
         if torch.is_tensor(self.inv_problem.initial_model):
             self._m = (
                 self.inv_problem.initial_model.double()
@@ -118,6 +120,7 @@ class PyTorchOptim(BaseSolver):
     )
     def _initialize_torch_optimizer(self):
         import torch
+
         self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
             [self._m],
             **self._params["algorithm_params"],
@@ -159,6 +162,7 @@ class PyTorchOptim(BaseSolver):
 
 def _CoFIObjective():
     import torch
+
     class CoFIObjective(torch.autograd.Function):
         # https://pytorch.org/docs/stable/generated/torch.autograd.Function.backward.html
         @staticmethod
@@ -178,4 +182,5 @@ def _CoFIObjective():
         def backward(ctx, _):
             grad = ctx.saved_tensors[0]
             return grad, None, None
+
     return CoFIObjective

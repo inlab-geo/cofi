@@ -51,7 +51,7 @@ class ScipyLstSqSolver(BaseSolver):
     @classmethod
     def optional_in_options(cls) -> dict:
         return _init_class_methods()[3]
- 
+
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self._components_used = list(self.required_in_problem())
@@ -150,6 +150,7 @@ class ScipyLstSqSolver(BaseSolver):
     )
     def _call_lstsq(self):
         from scipy.linalg import lstsq
+
         return lstsq(
             a=self._a,
             b=self._b,
@@ -172,6 +173,7 @@ class ScipyLstSqSolver(BaseSolver):
 def _init_class_methods():
     import inspect
     from scipy.linalg import lstsq
+
     _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
     required_in_problem: set = {"jacobian", "data"}
     optional_in_problem: dict = {
@@ -185,4 +187,9 @@ def _init_class_methods():
     }
     optional_in_options["with_uncertainty_if_possible"] = True
     optional_in_options["with_tikhonov_if_possible"] = True
-    return required_in_problem, optional_in_problem, required_in_options, optional_in_options
+    return (
+        required_in_problem,
+        optional_in_problem,
+        required_in_options,
+        optional_in_options,
+    )

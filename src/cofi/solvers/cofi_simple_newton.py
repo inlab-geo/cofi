@@ -26,7 +26,7 @@ class CoFISimpleNewtonSolver(BaseSolver):
 
     @classmethod
     def optional_in_options(cls) -> dict:
-        return  {
+        return {
             "step_length": 1,
             "verbose": True,
         }

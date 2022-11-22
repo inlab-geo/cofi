@@ -146,7 +146,7 @@ class BaseSolver(metaclass=ABCMeta):
     @abstractmethod
     def required_in_problem(cls) -> set:
         r"""a set of components required in :class:`BaseProblem` instance
-        
+
         This is a standard part for a subclass of :class:`BaseSolver` and helps
         validate input :class:`BaseProblem` instance
         """
@@ -169,7 +169,7 @@ class BaseSolver(metaclass=ABCMeta):
         """a set of solver-specific options required in :class:`InversionOptions`
         instance
 
-        This is a standard part for a subclass of :class:`BaseSolver` and helps 
+        This is a standard part for a subclass of :class:`BaseSolver` and helps
         validate input :class:`InversionOptions` instance
         """
         raise NotImplementedError
@@ -180,7 +180,7 @@ class BaseSolver(metaclass=ABCMeta):
         """dict: a dictioanry of solver-specific options that are optional in
         :class:`InversionOptions` instance
 
-        This is a standard part for a subclass of :class:`BaseSolver` and helps 
+        This is a standard part for a subclass of :class:`BaseSolver` and helps
         validate input :class:`InversionOptions` instance
         """
         raise NotImplementedError
@@ -206,8 +206,8 @@ class BaseSolver(metaclass=ABCMeta):
     def components_used(self) -> set:
         r"""a set of strings describing what components defined in :class:`BaseProblem`
         are used in this solving process. This is typically the intersection of three
-        sets: :func:`cofi.BaseProblem.all_components`, 
-        :func:`BaseSolver.required_in_problem` and keys of 
+        sets: :func:`cofi.BaseProblem.all_components`,
+        :func:`BaseSolver.required_in_problem` and keys of
         :func:`BaseSolver.optional_in_problem`
         """
         return self._components_used
@@ -219,7 +219,7 @@ class BaseSolver(metaclass=ABCMeta):
         This is the first argument in the constructor of :class:`BaseSolver`
         """
         return self._inv_problem
-    
+
     @property
     def inv_options(self):
         r"""the inveersion settings

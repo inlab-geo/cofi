@@ -92,6 +92,7 @@ class ScipyOptMinSolver(BaseSolver):
     )
     def _call_np_minimize(self):
         from scipy.optimize import minimize
+
         return minimize(
             fun=self._fun,
             x0=self._x0,
@@ -110,10 +111,10 @@ class ScipyOptMinSolver(BaseSolver):
 
 @functools.cache
 def _init_class_methods():
-    """get a list of arguments and defaults for scipy.minimize.minimize
-    """
+    """get a list of arguments and defaults for scipy.minimize.minimize"""
     import inspect
     from scipy.optimize import minimize
+
     _scipy_minimize_args = dict(inspect.signature(minimize).parameters)
     _scipy_minimize_args["gradient"] = _scipy_minimize_args.pop("jac")
     _scipy_minimize_args["hessian"] = _scipy_minimize_args.pop("hess")
@@ -138,4 +139,9 @@ def _init_class_methods():
         for k, v in _scipy_minimize_args.items()
         if k in {"method", "tol", "callback", "options"}
     }
-    return required_in_problem, optional_in_problem, required_in_options, optional_in_options
+    return (
+        required_in_problem,
+        optional_in_problem,
+        required_in_options,
+        optional_in_options,
+    )

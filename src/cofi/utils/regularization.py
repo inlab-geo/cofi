@@ -379,6 +379,7 @@ class QuadraticReg(BaseRegularization):
 
     def _generate_matrix(self):
         import findiff
+
         if self._reg_type == "damping":
             if not isinstance(self._model_size, Number):
                 raise ValueError("model_size must be a number when damping is selected")
