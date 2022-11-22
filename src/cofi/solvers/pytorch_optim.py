@@ -1,3 +1,5 @@
+import functools
+
 from . import BaseSolver, error_handler
 
 
@@ -27,21 +29,13 @@ class PyTorchOptim(BaseSolver):
             "algorithm_params": dict(),
         }
 
-    available_algs = [
-        "Adadelta",
-        "Adagrad",
-        "Adam",
-        "AdamW",
-        "SparseAdam",
-        "Adamax",
-        "ASGD",
-        "LBFGS",
-        "NAdam",
-        "RAdam",
-        "RMSprop",
-        "Rprop",
-        "SGD",
-    ]
+    @classmethod
+    @functools.cache
+    def available_algorithms(cls) -> list:
+        import torch
+        optim_dir = dir(torch.optim)
+        algs = [name for name in optim_dir if name[0].isupper() and name != "Optimizer"]
+        return algs
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -88,10 +82,11 @@ class PyTorchOptim(BaseSolver):
         }
 
     def _validate_algorithm(self):
-        if self._params["algorithm"] not in self.available_algs:
+        if self._params["algorithm"] not in self.available_algorithms():
             raise ValueError(
                 f"the algorithm you've chosen ({self._params['algorithm']}) "
-                f"is invalid. Please choose from the following: {self.available_algs}"
+                f"is invalid. Please choose from the following: "
+                f"{self.available_algorithms()}"
             )
 
     @error_handler(
