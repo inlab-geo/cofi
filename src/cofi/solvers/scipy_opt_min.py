@@ -109,7 +109,7 @@ class ScipyOptMinSolver(BaseSolver):
         )
 
 
-@functools.cache
+@functools.lru_cache
 def _init_class_methods():
     """get a list of arguments and defaults for scipy.minimize.minimize"""
     import inspect
