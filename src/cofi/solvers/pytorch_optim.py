@@ -33,6 +33,7 @@ class PyTorchOptim(BaseSolver):
     @functools.cache
     def available_algorithms(cls) -> list:
         import torch
+
         optim_dir = dir(torch.optim)
         algs = [name for name in optim_dir if name[0].isupper() and name != "Optimizer"]
         return algs
@@ -85,7 +86,7 @@ class PyTorchOptim(BaseSolver):
         if self._params["algorithm"] not in self.available_algorithms():
             raise ValueError(
                 f"the algorithm you've chosen ({self._params['algorithm']}) "
-                f"is invalid. Please choose from the following: "
+                "is invalid. Please choose from the following: "
                 f"{self.available_algorithms()}"
             )
 
