@@ -516,14 +516,14 @@ class InversionOptions:
         )
         print("Required parameters:")
         print(
-            solver.required_in_options
-            if solver.required_in_options
+            solver.required_in_options()
+            if solver.required_in_options()
             else "-- nothing --"
         )
         print("Optional parameters & default settings:")
         print(
-            solver.optional_in_options
-            if solver.optional_in_options
+            solver.optional_in_options()
+            if solver.optional_in_options()
             else "-- nothing --"
         )
 

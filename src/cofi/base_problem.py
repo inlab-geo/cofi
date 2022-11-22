@@ -112,7 +112,7 @@ class BaseProblem:
     The ``summary()`` method prints what blocks you've defined, what are not yet defined,
     and what are generated automatically for you.
 
-    At any point of defining your inversion problem, the ``suggest_solvers()``
+    At any point of defining your inversion problem, the ``suggest_tools()``
     method helps get a list of solvers that can be applied to your problem based on
     what have been supplied so far.
 
@@ -169,7 +169,7 @@ class BaseProblem:
     .. autosummary::
 
         BaseProblem.summary
-        BaseProblem.suggest_solvers
+        BaseProblem.suggest_tools
         BaseProblem.defined_components
 
     :ref:`back to top <top_BaseProblem>`
@@ -1307,8 +1307,8 @@ class BaseProblem:
         """
         return self._defined_components()
 
-    def suggest_solvers(self, print_to_console=True) -> dict:
-        r"""Prints / Returns the backend inversion tool that you can use, based on things
+    def suggest_tools(self, print_to_console=True) -> dict:
+        r"""Prints / Returns the backend inversion tools that you can use, based on things
         defined for this ``BaseProblem`` instance, grouped by solving method
 
         Parameters
@@ -1322,13 +1322,13 @@ class BaseProblem:
         -------
         dict
             a tree structure of solving methods we provide, with the leaf nodes being a
-            list of backend inversion solver suggested based on what information you've
+            list of backend inversion tools suggested based on what information you've
             provided to this ``BaseProblem`` object
 
         Examples
         --------
 
-        .. admonition:: example usage for BaseProblem.suggest_solvers()
+        .. admonition:: example usage for BaseProblem.suggest_tools()
             :class: dropdown, attention
 
             .. code-block:: pycon
@@ -1338,16 +1338,16 @@ class BaseProblem:
                 >>> import numpy as np
                 >>> inv_problem = BaseProblem()
                 >>> inv_problem.set_initial_model(np.array([1,2,3]))
-                >>> inv_problem.set_data_misfit("L2")
-                >>> inv_problem.suggest_solvers()
+                >>> inv_problem.set_data_misfit("least squares")
+                >>> inv_problem.suggest_tools()
                 Based on what you've provided so far, here are possible solvers:
                 {
                     "optimization": [
                         "scipy.optimize.minimize"
                     ],
-                    "matrix solvers": []
+                    "matrix solvers": [],
+                    "sampling": []
                 }
-                {'optimization': ['scipy.optimize.minimize'], 'matrix solvers': []}
 
         """
         to_suggest = dict()
@@ -1359,7 +1359,7 @@ class BaseProblem:
             to_suggest[solving_method] = []
             for tool in backend_tools:
                 solver_class = backend_tools[tool]
-                required = solver_class.required_in_problem
+                required = solver_class.required_in_problem()
                 if required.issubset(all_components):
                     to_suggest[solving_method].append(tool)
         if print_to_console:

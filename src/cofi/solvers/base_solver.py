@@ -104,49 +104,6 @@ class BaseSolver(metaclass=ABCMeta):
     #: str: a short introduction about the solver. This is for display purpose only
     short_description = str()
 
-    #: set: a set of strings describing what components defined in :class:`BaseProblem`
-    #: are used in this solving process. This is typically the intersection of three
-    #: sets: :func:`cofi.BaseProblem.all_components`, :func:`BaseSolver.required_in_problem`
-    #: and keys of :func:`BaseSolver.optional_in_problem`.
-    components_used = set()
-
-    #: set: a set of components required in :class:`BaseProblem` instance
-    #:
-    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
-    #: input :class:`BaseProblem` instance
-    required_in_problem = set()
-    #: dict: a dictionary of components that are optional in :class:`BaseProblem`
-    #: instance
-    #:
-    #: The keys stand for name of the components in ``BaseProblem``, and the values
-    #: refer the their default values.
-    #:
-    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
-    #: input :class:`BaseProblem` instance
-    optional_in_problem = dict()
-    #: set: a set of solver-specific options required in :class:`InversionOptions`
-    #: instance
-    #:
-    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
-    #: input :class:`InversionOptions` instance
-    required_in_options = set()
-    #: dict: a dictioanry of solver-specific options that are optional in
-    #: :class:`InversionOptions` instance
-    #:
-    #: This is a standard part for a subclass of :class:`BaseSolver` and helps validate
-    #: input :class:`InversionOptions` instance
-    optional_in_options = dict()
-
-    #: cofi.BaseProblem: the inversion problem to be solved
-    #:
-    #: This is the first argument in the constructor of :class:`BaseSolver`
-    inv_problem = None
-
-    #: cofi.InversionOptions: the inversion settings
-    #:
-    #: This is the second argument in the constructor of :class:`BaseSolver`
-    inv_options = None
-
     def __init__(self, inv_problem, inv_options):
         """initialisation routine for the solver instance
 
@@ -178,11 +135,55 @@ class BaseSolver(metaclass=ABCMeta):
             an object that defines how to run the inversion
 
         """
-        self.inv_problem = inv_problem
-        self.inv_options = inv_options
+        self._inv_problem = inv_problem
+        self._inv_options = inv_options
         self._validate_inv_problem()
         self._validate_inv_options()
         self._assign_options()  # this assigns options to self._params
+        self._components_used = list()
+
+    @classmethod
+    @abstractmethod
+    def required_in_problem(cls) -> set:
+        r"""a set of components required in :class:`BaseProblem` instance
+        
+        This is a standard part for a subclass of :class:`BaseSolver` and helps
+        validate input :class:`BaseProblem` instance
+        """
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
+    def optional_in_problem(cls) -> dict:
+        r"""a dictionary of components that are optional in :class:`BaseProblem`
+        instance
+
+        The keys stand for name of the components in ``BaseProblem``, and the values
+        input :class:`BaseProblem` instance
+        """
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
+    def required_in_options(cls) -> set:
+        """a set of solver-specific options required in :class:`InversionOptions`
+        instance
+
+        This is a standard part for a subclass of :class:`BaseSolver` and helps 
+        validate input :class:`InversionOptions` instance
+        """
+        raise NotImplementedError
+
+    @classmethod
+    @abstractmethod
+    def optional_in_options(cls) -> dict:
+        """dict: a dictioanry of solver-specific options that are optional in
+        :class:`InversionOptions` instance
+
+        This is a standard part for a subclass of :class:`BaseSolver` and helps 
+        validate input :class:`InversionOptions` instance
+        """
+        raise NotImplementedError
 
     @abstractmethod
     def __call__(self) -> dict:
@@ -201,10 +202,36 @@ class BaseSolver(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
+    @property
+    def components_used(self) -> set:
+        r"""a set of strings describing what components defined in :class:`BaseProblem`
+        are used in this solving process. This is typically the intersection of three
+        sets: :func:`cofi.BaseProblem.all_components`, 
+        :func:`BaseSolver.required_in_problem` and keys of 
+        :func:`BaseSolver.optional_in_problem`
+        """
+        return self._components_used
+
+    @property
+    def inv_problem(self):
+        r"""the inversion problem to be solved
+
+        This is the first argument in the constructor of :class:`BaseSolver`
+        """
+        return self._inv_problem
+    
+    @property
+    def inv_options(self):
+        r"""the inveersion settings
+
+        This is the second argument in the constructor of :class:`BaseSolver`
+        """
+        return self._inv_options
+
     def _validate_inv_problem(self):
         # check whether enough information from inv_problem is provided
         defined = self.inv_problem.defined_components()
-        required = self.required_in_problem
+        required = self.required_in_problem()
         if all({component in defined for component in required}):
             return True
         raise ValueError(
@@ -218,7 +245,7 @@ class BaseSolver(metaclass=ABCMeta):
         #      (don't use the dispatch table in runner.py, avoid circular import)
         # check whether required options are provided (algorithm-specific)
         defined = self.inv_options.get_params()
-        required = self.required_in_options
+        required = self.required_in_options()
         if all({option in defined for option in required}):
             return True
         raise ValueError(
@@ -230,9 +257,9 @@ class BaseSolver(metaclass=ABCMeta):
     def _assign_options(self):
         params = self.inv_options.get_params()
         self._params = dict()
-        for opt in self.required_in_options:
+        for opt in self.required_in_options():
             self._params[opt] = params[opt]
-        for opt, val in self.optional_in_options.items():
+        for opt, val in self.optional_in_options().items():
             self._params[opt] = params.get(opt, val)
 
     def __repr__(self) -> str:

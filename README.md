@@ -3,10 +3,10 @@
 # <img src="https://raw.githubusercontent.com/inlab-geo/cofi/main/docs/source/_static/latte_art_cropped.png" width="5%" style="vertical-align:bottom"/> CoFI (Common Framework for Inference)
 
 
-[![PyPI version](https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=bde0fe)](https://pypi.org/project/cofi/)
-[![Documentation Status](https://img.shields.io/readthedocs/cofi?logo=readthedocs&style=flat-square&color=faedcd)](https://cofi.readthedocs.io/en/latest/?badge=latest)
-[![codecov](https://img.shields.io/codecov/c/github/inlab-geo/cofi?logo=pytest&style=flat-square&token=T8R9VKM4D7&color=f7d6e0)](https://codecov.io/gh/inlab-geo/cofi)
-[![Slack](https://img.shields.io/badge/Slack-inlab-4A154B?logo=slack&style=flat-square&color=cdb4db)](https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg)
+[![PyPI version](https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=90e0ef&labelColor=f8f9fa)](https://pypi.org/project/cofi/)
+[![Documentation Status](https://img.shields.io/readthedocs/cofi?logo=readthedocs&style=flat-square&color=fed9b7&labelColor=f8f9fa&logoColor=eaac8b)](https://cofi.readthedocs.io/en/latest/?badge=latest)
+[![codecov](https://img.shields.io/codecov/c/github/inlab-geo/cofi?logo=pytest&style=flat-square&token=T8R9VKM4D7&color=ffcad4&labelColor=f8f9fa&logoColor=ff99c8)](https://codecov.io/gh/inlab-geo/cofi)
+[![Slack](https://img.shields.io/badge/Slack-InLab_community-4A154B?logo=slack&style=flat-square&color=cdb4db&labelColor=f8f9fa&logoColor=9c89b8)](https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg)
 <!-- [![Wheels](https://img.shields.io/pypi/wheel/cofi)](https://pypi.org/project/cofi/) -->
 
 
@@ -45,7 +45,7 @@ Once a problem is defined, `cofi` can tell you what inference solvers you can us
 information you've provided:
 
 ```python
-inv_problem.suggest_solvers()   # a tree will be printed
+inv_problem.suggest_tools()   # a tree will be printed
 ```
 
 Run an inversion with these lines:

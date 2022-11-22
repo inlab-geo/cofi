@@ -23,10 +23,20 @@ def subclass_soler_empty():
 @pytest.fixture
 def subclass_solver1():
     class MyOwnSolverRequiringProblemDef(BaseSolver):
-        required_in_problem = {"gradient"}
-
         def __call__(self) -> dict:
             return super().__call__()
+        @classmethod
+        def required_in_problem(cls) -> set:
+            return {"gradient"}
+        @classmethod
+        def optional_in_problem(cls) -> dict:
+            return dict()
+        @classmethod
+        def required_in_options(cls) -> set:
+            return set()
+        @classmethod
+        def optional_in_options(cls) -> dict:
+            return dict()
 
     return MyOwnSolverRequiringProblemDef
 
@@ -34,10 +44,20 @@ def subclass_solver1():
 @pytest.fixture
 def subclass_solver2():
     class MyOwnSolverRequiringOptionsDef(BaseSolver):
-        required_in_options = {"tol"}
-
         def __call__(self) -> dict:
             return super().__call__()
+        @classmethod
+        def required_in_problem(cls) -> set:
+            return set()
+        @classmethod
+        def optional_in_problem(cls) -> dict:
+            return dict()
+        @classmethod
+        def required_in_options(cls) -> set:
+            return {"tol"}
+        @classmethod
+        def optional_in_options(cls) -> dict:
+            return dict()
 
     return MyOwnSolverRequiringOptionsDef
 

@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev22 (Not yet released)
+
+### CoFI Core
+
+- [#90](https://github.com/inlab-geo/cofi/issues/90) Replaced `BaseProblem.suggest_solvers` with `BaseProblem.suggest_tools`
+
+
 ## v0.1.2.dev21 (27/10/2022)
 
 ### CoFI Solvers

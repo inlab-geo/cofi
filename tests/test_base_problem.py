@@ -414,18 +414,18 @@ def test_set_data():
     assert inv_problem.data_covariance[0,0] == 1
 
 
-############### TEST suggest_solvers ##################################################
+############### TEST suggest_tools ##################################################
 def test_suggest_solvers(capsys):
     inv_problem = BaseProblem()
     # 0
-    inv_problem.suggest_solvers()
+    inv_problem.suggest_tools()
     console_output = capsys.readouterr().out
     assert "scipy.optimize.minimize" not in console_output
     assert "scipy.linalg.lstsq" not in console_output
     # 1
     inv_problem.set_initial_model(1)
     inv_problem.set_objective(lambda x: x)
-    inv_problem.suggest_solvers()
+    inv_problem.suggest_tools()
     console_output = capsys.readouterr().out
     assert "scipy.optimize.minimize" in console_output
     assert "scipy.optimize.least_squares" not in console_output
@@ -433,7 +433,7 @@ def test_suggest_solvers(capsys):
     # 2
     inv_problem.set_jacobian(np.array([1]))
     inv_problem.set_data(2)
-    inv_problem.suggest_solvers()
+    inv_problem.suggest_tools()
     console_output = capsys.readouterr().out
     assert "scipy.linalg.lstsq" in console_output
 
@@ -442,7 +442,7 @@ def test_suggest_solvers_return():
     inv_problem = BaseProblem()
     inv_problem.set_jacobian(np.array([1]))
     inv_problem.set_data(2)
-    suggested = inv_problem.suggest_solvers(print_to_console=False)
+    suggested = inv_problem.suggest_tools(print_to_console=False)
     assert "scipy.linalg.lstsq" in suggested["matrix solvers"]
 
 

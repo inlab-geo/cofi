@@ -52,6 +52,18 @@ def test_dispatch_custom_solver(polynomial_problem, capsys):
     class CustomSolver(BaseSolver):
         def __call__(self) -> dict:
             return {"successful": True}
+        @classmethod
+        def required_in_problem(cls) -> set:
+            return set()
+        @classmethod
+        def optional_in_problem(cls) -> dict:
+            return dict()
+        @classmethod
+        def required_in_options(cls) -> set:
+            return set()
+        @classmethod
+        def optional_in_options(cls) -> dict:
+            return dict()
     inv_options.set_tool(CustomSolver)
     runner = Inversion(inv_problem, inv_options)
     with pytest.raises(ValueError):

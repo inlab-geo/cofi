@@ -1,6 +1,5 @@
-import inspect
+import functools
 import numpy as np
-from scipy.linalg import lstsq
 
 from . import BaseSolver, error_handler
 
@@ -37,24 +36,25 @@ class ScipyLstSqSolver(BaseSolver):
         "using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver"
     )
 
-    _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
-    components_used: list = []
-    required_in_problem: set = {"jacobian", "data"}
-    optional_in_problem: dict = {
-        "data_covariance_inv": None,
-        "data_covariance": None,
-        "regularization_matrix": None,
-    }
-    required_in_options: set = {}
-    optional_in_options: dict = {
-        k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
-    }
-    optional_in_options["with_uncertainty_if_possible"] = True
-    optional_in_options["with_tikhonov_if_possible"] = True
+    @classmethod
+    def required_in_problem(cls) -> set:
+        return _init_class_methods()[0]
 
+    @classmethod
+    def optional_in_problem(cls) -> dict:
+        return _init_class_methods()[1]
+
+    @classmethod
+    def required_in_options(cls) -> set:
+        return _init_class_methods()[2]
+
+    @classmethod
+    def optional_in_options(cls) -> dict:
+        return _init_class_methods()[3]
+ 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self.components_used = list(self.required_in_problem)
+        self._components_used = list(self.required_in_problem())
         self._assign_args()
 
     def _assign_args(self):
@@ -89,10 +89,10 @@ class ScipyLstSqSolver(BaseSolver):
         if self._params["with_uncertainty"]:
             if not inv_problem.data_covariance_inv_defined:
                 self._Cd_inv = np.linalg.inv(inv_problem.data_covariance)
-                self.components_used.append("data_covariance")
+                self._components_used.append("data_covariance")
             else:
                 self._Cd_inv = inv_problem.data_covariance_inv
-                self.components_used.append("data_covariance_inv")
+                self._components_used.append("data_covariance_inv")
             # check diagonal (for potential shortcut in computation)
             diag_elem = np.diag(self._Cd_inv).copy()
             np.fill_diagonal(self._Cd_inv, 0)
@@ -126,7 +126,7 @@ class ScipyLstSqSolver(BaseSolver):
                         "model vector"
                     ) from exception
                 self._LtL = np.square(_L)
-                self.components_used.append("regularization_matrix")
+                self._components_used.append("regularization_matrix")
             else:
                 self._LtL = np.identity(self._G.shape[1])
             self._a += self._lamda * self._LtL
@@ -149,6 +149,7 @@ class ScipyLstSqSolver(BaseSolver):
         context="in the process of solving",
     )
     def _call_lstsq(self):
+        from scipy.linalg import lstsq
         return lstsq(
             a=self._a,
             b=self._b,
@@ -165,3 +166,23 @@ class ScipyLstSqSolver(BaseSolver):
     )
     def _calculate_model_covariance(self):
         return np.linalg.inv(self._a)
+
+
+@functools.cache
+def _init_class_methods():
+    import inspect
+    from scipy.linalg import lstsq
+    _scipy_lstsq_args = dict(inspect.signature(lstsq).parameters)
+    required_in_problem: set = {"jacobian", "data"}
+    optional_in_problem: dict = {
+        "data_covariance_inv": None,
+        "data_covariance": None,
+        "regularization_matrix": None,
+    }
+    required_in_options: set = {}
+    optional_in_options: dict = {
+        k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
+    }
+    optional_in_options["with_uncertainty_if_possible"] = True
+    optional_in_options["with_tikhonov_if_possible"] = True
+    return required_in_problem, optional_in_problem, required_in_options, optional_in_options

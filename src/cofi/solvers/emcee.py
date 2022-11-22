@@ -1,6 +1,5 @@
-import inspect
+import functools
 import numpy as np
-from emcee import EnsembleSampler
 
 from . import BaseSolver, error_handler
 
@@ -15,29 +14,25 @@ class EmceeSolver(BaseSolver):
         "Invariant Markov chain Monte Carlo (MCMC) Ensemble sampler"
     )
 
-    _emcee_EnsembleSampler_args = dict(inspect.signature(EnsembleSampler).parameters)
-    _emcee_EnsembleSampler_sample_args = dict(
-        inspect.signature(EnsembleSampler.sample).parameters
-    )
-    required_in_problem = {"log_posterior", "model_shape", "walkers_starting_pos"}
-    optional_in_problem = dict()
-    required_in_options = {"nwalkers", "nsteps"}
-    optional_in_options = {
-        k: v.default
-        for k, v in _emcee_EnsembleSampler_args.items()
-        if k not in {"nwalkers", "ndim", "log_prob_fn", "self", "args", "kwargs"}
-    }
-    optional_in_options.update(
-        {
-            k: v.default
-            for k, v in _emcee_EnsembleSampler_sample_args.items()
-            if k not in {"initial_state", "iterations", "self"}
-        }
-    )
+    @classmethod
+    def required_in_problem(cls) -> set:
+        return _init_class_methods()[0]
+
+    @classmethod
+    def optional_in_problem(cls) -> dict:
+        return _init_class_methods()[1]
+
+    @classmethod
+    def required_in_options(cls) -> set:
+        return _init_class_methods()[2]
+
+    @classmethod
+    def optional_in_options(cls) -> dict:
+        return  _init_class_methods()[3]
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self.components_used = list(self.required_in_problem)
+        self._components_used = list(self.required_in_problem())
         self._assign_args()
         self._initialize_sampler()
 
@@ -53,7 +48,7 @@ class EmceeSolver(BaseSolver):
     def _assign_args(self):
         # assign components in problem to args
         inv_problem = self.inv_problem
-        self.components_used = list(self.required_in_problem)
+        self._components_used = list(self.required_in_problem())
         self._params["blobs_dtype"] = None
         self._params["blob_names"] = None
         if inv_problem.log_posterior_with_blobs_defined:
@@ -75,6 +70,7 @@ class EmceeSolver(BaseSolver):
         context="before sampling",
     )
     def _initialize_sampler(self):
+        from emcee import EnsembleSampler
         self.sampler = EnsembleSampler(
             nwalkers=self._params["nwalkers"],
             ndim=self._params["ndim"],
@@ -114,3 +110,29 @@ class EmceeSolver(BaseSolver):
             progress=self._params["progress"],
             progress_kwargs=self._params["progress_kwargs"],
         )
+
+
+@functools.cache
+def _init_class_methods():
+    import inspect
+    from emcee import EnsembleSampler
+    _emcee_EnsembleSampler_args = dict(inspect.signature(EnsembleSampler).parameters)
+    _emcee_EnsembleSampler_sample_args = dict(
+        inspect.signature(EnsembleSampler.sample).parameters
+    )
+    required_in_problem = {"log_posterior", "model_shape", "walkers_starting_pos"}
+    optional_in_problem = dict()
+    required_in_options = {"nwalkers", "nsteps"}
+    optional_in_options = {
+        k: v.default
+        for k, v in _emcee_EnsembleSampler_args.items()
+        if k not in {"nwalkers", "ndim", "log_prob_fn", "self", "args", "kwargs"}
+    }
+    optional_in_options.update(
+        {
+            k: v.default
+            for k, v in _emcee_EnsembleSampler_sample_args.items()
+            if k not in {"initial_state", "iterations", "self"}
+        }
+    )
+    return required_in_problem, optional_in_problem, required_in_options, optional_in_options
