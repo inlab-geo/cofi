@@ -1,27 +1,6 @@
-import torch
+import functools
 
 from . import BaseSolver, error_handler
-
-
-class CofiObjective(torch.autograd.Function):
-    # https://pytorch.org/docs/stable/generated/torch.autograd.Function.backward.html
-    @staticmethod
-    def forward(ctx, m, my_objective, my_gradient):
-        # calculate and save gradient value
-        grad = my_gradient(m)
-        if not torch.is_tensor(grad):  # converting type only when not tensor
-            grad = torch.tensor(grad)
-        ctx.save_for_backward(grad)
-        # calculate and return objective value
-        obj_val = my_objective(m)
-        if not torch.is_tensor(obj_val):  # converting type only when not tensor
-            obj_val = torch.tensor(obj_val, requires_grad=True)
-        return obj_val
-
-    @staticmethod
-    def backward(ctx, _):
-        grad = ctx.saved_tensors[0]
-        return grad, None, None
 
 
 class PyTorchOptim(BaseSolver):
@@ -30,35 +9,38 @@ class PyTorchOptim(BaseSolver):
     ]
     short_description = "PyTorch Optimizers under module `pytorch.optim`"
 
-    required_in_problem = {"objective", "gradient", "initial_model"}
-    optional_in_problem = dict()
-    required_in_options = {"algorithm", "num_iterations"}
-    optional_in_options = {
-        "verbose": True,
-        "callback": None,
-        "algorithm_params": dict(),
-    }
+    @classmethod
+    def required_in_problem(cls) -> set:
+        return {"objective", "gradient", "initial_model"}
 
-    available_algs = [
-        "Adadelta",
-        "Adagrad",
-        "Adam",
-        "AdamW",
-        "SparseAdam",
-        "Adamax",
-        "ASGD",
-        "LBFGS",
-        "NAdam",
-        "RAdam",
-        "RMSprop",
-        "Rprop",
-        "SGD",
-    ]
+    @classmethod
+    def optional_in_problem(cls) -> dict:
+        return dict()
+
+    @classmethod
+    def required_in_options(cls) -> set:
+        return {"algorithm", "num_iterations"}
+
+    @classmethod
+    def optional_in_options(cls) -> dict:
+        return {
+            "verbose": True,
+            "callback": None,
+            "algorithm_params": dict(),
+        }
+
+    @classmethod
+    @functools.lru_cache(maxsize=None)
+    def available_algorithms(cls) -> list:
+        import torch
+
+        optim_dir = dir(torch.optim)
+        algs = [name for name in optim_dir if name[0].isupper() and name != "Optimizer"]
+        return algs
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self.components_used = list(self.required_in_problem)
-        self._assign_options()
+        self._components_used = list(self.required_in_problem())
         self._validate_algorithm()
 
         # save options (not "verbose") into self._params["algorithm_params"]
@@ -66,7 +48,7 @@ class PyTorchOptim(BaseSolver):
             if (
                 param != "verbose"
                 and param != "callback"
-                and param not in self.required_in_options
+                and param not in self.required_in_options()
             ):
                 self._params["algorithm_params"][param] = self.inv_options.hyper_params[
                     param
@@ -85,6 +67,8 @@ class PyTorchOptim(BaseSolver):
         self._nb_evaluations = 0
 
     def __call__(self) -> dict:
+        import torch
+
         losses = []
         for i in range(self._params["num_iterations"]):
             self._one_iteration(i, losses)
@@ -99,10 +83,11 @@ class PyTorchOptim(BaseSolver):
         }
 
     def _validate_algorithm(self):
-        if self._params["algorithm"] not in self.available_algs:
+        if self._params["algorithm"] not in self.available_algorithms():
             raise ValueError(
                 f"the algorithm you've chosen ({self._params['algorithm']}) "
-                f"is invalid. Please choose from the following: {self.available_algs}"
+                "is invalid. Please choose from the following: "
+                f"{self.available_algorithms()}"
             )
 
     @error_handler(
@@ -110,6 +95,8 @@ class PyTorchOptim(BaseSolver):
         context="before solving the optimization problem",
     )
     def _initialize_torch_tensor(self):
+        import torch
+
         if torch.is_tensor(self.inv_problem.initial_model):
             self._m = (
                 self.inv_problem.initial_model.double()
@@ -127,6 +114,8 @@ class PyTorchOptim(BaseSolver):
         context="before solving the optimization problem",
     )
     def _initialize_torch_optimizer(self):
+        import torch
+
         self.torch_optimizer = getattr(torch.optim, self._params["algorithm"])(
             [self._m],
             **self._params["algorithm_params"],
@@ -137,7 +126,7 @@ class PyTorchOptim(BaseSolver):
         context="before solving the optimization problem",
     )
     def _initialize_torch_objective(self):
-        self.torch_objective = CofiObjective.apply
+        self.torch_objective = _CoFIObjective().apply
 
     @error_handler(
         when="when performing optimization stepping",
@@ -164,3 +153,29 @@ class PyTorchOptim(BaseSolver):
     )
     def _run_callback(self):
         self._params["callback"](self._m)
+
+
+def _CoFIObjective():
+    import torch
+
+    class CoFIObjective(torch.autograd.Function):
+        # https://pytorch.org/docs/stable/generated/torch.autograd.Function.backward.html
+        @staticmethod
+        def forward(ctx, m, my_objective, my_gradient):
+            # calculate and save gradient value
+            grad = my_gradient(m)
+            if not torch.is_tensor(grad):  # converting type only when not tensor
+                grad = torch.tensor(grad)
+            ctx.save_for_backward(grad)
+            # calculate and return objective value
+            obj_val = my_objective(m)
+            if not torch.is_tensor(obj_val):  # converting type only when not tensor
+                obj_val = torch.tensor(obj_val, requires_grad=True)
+            return obj_val
+
+        @staticmethod
+        def backward(ctx, _):
+            grad = ctx.saved_tensors[0]
+            return grad, None, None
+
+    return CoFIObjective

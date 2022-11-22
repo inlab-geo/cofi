@@ -2,7 +2,6 @@ from numbers import Number
 from abc import abstractmethod, ABCMeta
 from typing import Union, Any
 import numpy as np
-import findiff
 
 from ..exceptions import DimensionMismatchError
 
@@ -379,6 +378,8 @@ class QuadraticReg(BaseRegularization):
         return reg_type
 
     def _generate_matrix(self):
+        import findiff
+
         if self._reg_type == "damping":
             if not isinstance(self._model_size, Number):
                 raise ValueError("model_size must be a number when damping is selected")

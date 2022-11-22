@@ -12,17 +12,27 @@ class CoFISimpleNewtonSolver(BaseSolver):
         "CoFI's own solver - simple Newton's approach (for testing mainly)"
     )
 
-    required_in_problem = {"objective", "gradient", "hessian", "initial_model"}
-    optional_in_problem = dict()
-    required_in_options = {"max_iterations"}
-    optional_in_options = {
-        "step_length": 1,
-        "verbose": True,
-    }
+    @classmethod
+    def required_in_problem(cls) -> set:
+        return {"objective", "gradient", "hessian", "initial_model"}
+
+    @classmethod
+    def optional_in_problem(cls) -> dict:
+        return dict()
+
+    @classmethod
+    def required_in_options(cls) -> set:
+        return {"max_iterations"}
+
+    @classmethod
+    def optional_in_options(cls) -> dict:
+        return {
+            "step_length": 1,
+            "verbose": True,
+        }
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self.components_used = list(self.required_in_problem)
 
     def __call__(self) -> dict:
         m = self.inv_problem.initial_model

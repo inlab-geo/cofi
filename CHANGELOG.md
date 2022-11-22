@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev22 (Not yet released)
+
+### CoFI Core
+
+- [#90](https://github.com/inlab-geo/cofi/issues/90) Replaced `BaseProblem.suggest_solvers` with `BaseProblem.suggest_tools`
+- [#89](https://github.com/inlab-geo/cofi/issues/89) Avoid importing third party modules on `import cofi`
+
+### CoFI Solvers
+
+- [#92](https://github.com/inlab-geo/cofi/issues/92) List pytorch optim algorithms dynamically
+
+
 ## v0.1.2.dev21 (27/10/2022)
 
 ### CoFI Solvers

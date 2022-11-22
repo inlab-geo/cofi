@@ -5,6 +5,13 @@ from cofi.solvers import PyTorchOptim
 from cofi import BaseProblem, InversionOptions
 
 
+def test_torch_algorithms():
+    algs = PyTorchOptim.available_algorithms()
+    assert "__builtins__" not in algs
+    assert "Optimizer" not in algs
+    assert "Adam" in algs
+    assert "ASGD" in algs
+
 inv_problem1 = BaseProblem()
 inv_problem1.set_objective(lambda: 3)
 inv_problem1.set_gradient(lambda: 3)
@@ -40,8 +47,22 @@ def test_run_simple_obj():
     inv_problem.set_initial_model(30)
     inv_problem.set_gradient(lambda x: 2*x - 6)
     inv_problem.set_hessian(lambda x: 2)
-    learning_rates = [1000, 10, 1, 1, 1, 2, 0.1, 1, 2, 0.1, 10, 10, 0.1]
-    for i, alg in enumerate(PyTorchOptim.available_algs):
+    learning_rates = {
+        "Adadelta": 1000, 
+        "Adagrad": 10, 
+        "Adam": 1, 
+        "AdamW": 1, 
+        "SparseAdam": 1, 
+        "Adamax": 2, 
+        "ASGD": 0.1, 
+        "LBFGS": 1, 
+        "NAdam": 2, 
+        "RAdam": 0.1, 
+        "RMSprop": 10, 
+        "Rprop": 10,
+        "SGD": 0.1
+    }
+    for i, alg in enumerate(PyTorchOptim.available_algorithms()):
         print(alg)
         if alg == "SparseAdam":
             continue
@@ -50,14 +71,14 @@ def test_run_simple_obj():
             inv_options.set_params(
                 algorithm=alg,
                 verbose=False,
-                lr=learning_rates[i],
+                lr=learning_rates[alg],
                 num_iterations=400
             )
         else:
             inv_options.set_params(
                 algorithm=alg, 
                 verbose=False, 
-                lr=learning_rates[i], 
+                lr=learning_rates[alg], 
                 num_iterations=100
             )
         solver = PyTorchOptim(inv_problem, inv_options)
