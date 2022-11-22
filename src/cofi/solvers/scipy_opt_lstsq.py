@@ -91,7 +91,7 @@ class ScipyOptLstSqSolver(BaseSolver):
         )
 
 
-@functools.lru_cache
+@functools.lru_cache(maxsize=None)
 def _init_class_methods():
     """get a list of arguments and defaults for scipy.minimize.least_squares
 

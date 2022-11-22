@@ -30,7 +30,7 @@ class PyTorchOptim(BaseSolver):
         }
 
     @classmethod
-    @functools.lru_cache
+    @functools.lru_cache(maxsize=None)
     def available_algorithms(cls) -> list:
         import torch
 

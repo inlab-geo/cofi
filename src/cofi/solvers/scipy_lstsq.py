@@ -169,7 +169,7 @@ class ScipyLstSqSolver(BaseSolver):
         return np.linalg.inv(self._a)
 
 
-@functools.lru_cache
+@functools.lru_cache(maxsize=None)
 def _init_class_methods():
     import inspect
     from scipy.linalg import lstsq

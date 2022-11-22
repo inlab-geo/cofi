@@ -111,7 +111,7 @@ class EmceeSolver(BaseSolver):
         )
 
 
-@functools.lru_cache
+@functools.lru_cache(maxsize=None)
 def _init_class_methods():
     import inspect
     from emcee import EnsembleSampler
