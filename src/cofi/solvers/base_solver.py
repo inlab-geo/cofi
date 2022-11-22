@@ -22,16 +22,16 @@ class BaseSolver(metaclass=ABCMeta):
             >>> class MyDummySolver(BaseSolver):
             ...   short_description = "My dummy solver that always return (1,2) as result"
             ...   documentation_links = ["https://cofi.readthedocs.io/en/latest/api/generated/cofi.solvers.BaseSolver.html"]
-            ...   required_in_problem = ["objective", "gradient"]
-            ...   optional_in_problem = {"initial_model": [0,0]}
-            ...   required_in_options = []
-            ...   optional_in_options = {"method": "dummy"}
+            ...   @classmethod
+            ...   def required_in_problem(cls): return ["objective", "gradient"]
+            ...   def optional_in_problem(cls): return {"initial_model": [0,0]}
+            ...   def required_in_options(cls): return []
+            ...   def optional_in_options(cls): return {"method": "dummy"}
             ...   def __init__(self, inv_problem, inv_options):
             ...     super().__init__(inv_problem, inv_options)
             ...   def __call__(self):
             ...     return {"model": np.array([1,2]), "success": True}
             ...
-            >>>
             >>> from cofi import InversionOptions
             >>> inv_options = InversionOptions()
             >>> inv_options.set_tool(MyDummySolver)
@@ -42,8 +42,7 @@ class BaseSolver(metaclass=ABCMeta):
             Solving method: None set
             Use `suggest_solving_methods()` to check available solving methods.
             -----------------------------
-            Backend tool: `<class '__main__.MyDummySolver'>` - My dummy solver that
-            always return (1,2) as result
+            Backend tool: `<class '__main__.MyDummySolver'>` - My dummy solver that always return (1,2) as result
             References: ['https://cofi.readthedocs.io/en/latest/api/generated/cofi.solvers.BaseSolver.html']
             Use `suggest_tools()` to check available backend tools.
             -----------------------------
@@ -52,25 +51,25 @@ class BaseSolver(metaclass=ABCMeta):
 
     .. rubric:: Minimal implementation
 
-    Define the following minimally:
-
-    .. autosummary::
-        BaseSolver.__init__
-        BaseSolver.__call__
-
-    .. rubric:: Validation and displaying
-
-    In addition, the following class variables help us validate and display properly.
-    Failure to include them won't cause an error, but may result in some information
-    mismatch in displaying methods like :func:`cofi.Inversion.summary`. We also wouldn't
-    do input validation, so you'll have to handle it yourself, or assume the users of
-    your program know exactly what to provide.
+    Define the following minimally. Input validation will be performed automatically
+    when a new instance is created, based on what you've returned for the first four
+    class methods below.
 
     .. autosummary::
         BaseSolver.required_in_problem
         BaseSolver.optional_in_problem
         BaseSolver.required_in_options
         BaseSolver.optional_in_options
+        BaseSolver.__init__
+        BaseSolver.__call__
+
+    .. rubric:: Displaying
+
+    In addition, the following class variables help us display properly.
+    Failure to include them won't cause an error, but may result in some information
+    mismatch in displaying methods like :func:`cofi.Inversion.summary`.
+
+    .. autosummary::
         BaseSolver.short_description
         BaseSolver.documentation_links
 
@@ -112,20 +111,25 @@ class BaseSolver(metaclass=ABCMeta):
 
             super().__init__(inv_problem, inv_options)
 
-        What it does is (a) to attach the :class:`BaseProblem` and :class:`InversionOptions`
-        objects to ``self``, and (b) to validate them based on the information in
-        :func:`BaseSolver.required_in_problem`, :func:`BaseSolver.optional_in_problem`,
-        :func:`BaseSolver.required_in_options`, and :func:`BaseSolver.optional_in_options`
-        (which is why it's recommended to define the above four fields).
+        What it does are:
+        - Attaching the :class:`BaseProblem` and :class:`InversionOptions` objects to 
+          ``self``;
+        - Validating both input objects based on the information in 
+          :meth:`required_in_problem`, :meth:`optional_in_problem`, 
+          :meth:`required_in_options`, and :meth:`optional_in_options`;
+        - Assigning inversion tool parameters to ``self._params`` based on what are 
+          returned by class methods :meth:`required_in_options`, 
+          :meth:`optional_in_options`, and what are set by users in the
+          :class:`InversionOptions` object;
+        - Initializing the ``self._components_used`` dictionary based on what are
+          returned by class methods :meth:`required_in_problem`,
+          :meth:`optional_in_problem`, and what are defined by users in the
+          :class:`BaseProblem` object. You can overwrite this if your solver is more
+          specific in deciding what components get used.
 
         Alternatively (if you want), you can also define your own validation routines,
-        then you don't have to call the ``__init__`` method defined in this super class,
-        and don't have to add things to the fields.
-
-        Solver-specific configurations are to be declared as a part of
-        :class:`InversionOptions` object using :func:`InversionOptions.set_params`.
-        You can then extract these in your own ``__init__`` method as needed. It's
-        recommended to document solver-specific settings clearly in your docstrings.
+        then you don't have to call the ``__init__`` method defined in this super 
+        class, and don't have to add things to the fields.
 
         Parameters
         ----------
@@ -139,8 +143,8 @@ class BaseSolver(metaclass=ABCMeta):
         self._inv_options = inv_options
         self._validate_inv_problem()
         self._validate_inv_options()
-        self._assign_options()  # this assigns options to self._params
-        self._components_used = list()
+        self._assign_options()          # assigns options to self._params
+        self._update_components_used()  # update components to self._components_used
 
     @classmethod
     @abstractmethod
@@ -150,7 +154,7 @@ class BaseSolver(metaclass=ABCMeta):
         This is a standard part for a subclass of :class:`BaseSolver` and helps
         validate input :class:`BaseProblem` instance
         """
-        raise NotImplementedError
+        return set()
 
     @classmethod
     @abstractmethod
@@ -161,7 +165,7 @@ class BaseSolver(metaclass=ABCMeta):
         The keys stand for name of the components in ``BaseProblem``, and the values
         input :class:`BaseProblem` instance
         """
-        raise NotImplementedError
+        return dict()
 
     @classmethod
     @abstractmethod
@@ -172,7 +176,7 @@ class BaseSolver(metaclass=ABCMeta):
         This is a standard part for a subclass of :class:`BaseSolver` and helps
         validate input :class:`InversionOptions` instance
         """
-        raise NotImplementedError
+        return set()
 
     @classmethod
     @abstractmethod
@@ -183,7 +187,7 @@ class BaseSolver(metaclass=ABCMeta):
         This is a standard part for a subclass of :class:`BaseSolver` and helps
         validate input :class:`InversionOptions` instance
         """
-        raise NotImplementedError
+        return dict()
 
     @abstractmethod
     def __call__(self) -> dict:
@@ -261,6 +265,12 @@ class BaseSolver(metaclass=ABCMeta):
             self._params[opt] = params[opt]
         for opt, val in self.optional_in_options().items():
             self._params[opt] = params.get(opt, val)
+        
+    def _update_components_used(self):
+        self._components_used = list(self.required_in_problem())
+        defined_in_problem = self.inv_problem.defined_components()
+        optional_components_defined = set(defined_in_problem).union(self.optional_in_problem())
+        self._components_used.extend(list(optional_components_defined))
 
     def __repr__(self) -> str:
         return self.__class__.__name__

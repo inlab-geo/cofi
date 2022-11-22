@@ -51,7 +51,10 @@ def test_dispatch_custom_solver(polynomial_problem, capsys):
     inv_problem, inv_options = polynomial_problem
     class CustomSolver(BaseSolver):
         def __call__(self) -> dict:
-            return {"successful": True}
+            return {
+                "successful": True, 
+                "prob_optional": self.optional_in_problem()
+            }
         @classmethod
         def required_in_problem(cls) -> set:
             return set()

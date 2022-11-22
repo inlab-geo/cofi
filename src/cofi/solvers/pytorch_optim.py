@@ -46,7 +46,6 @@ class PyTorchOptim(BaseSolver):
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self._components_used = list(self.required_in_problem())
-        self._assign_options()
         self._validate_algorithm()
 
         # save options (not "verbose") into self._params["algorithm_params"]

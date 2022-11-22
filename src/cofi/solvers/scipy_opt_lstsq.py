@@ -30,11 +30,11 @@ class ScipyOptLstSqSolver(BaseSolver):
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
+        self._components_used = list(self.required_in_problem())
         self._assign_args()
 
     def _assign_args(self):
         inv_problem = self.inv_problem
-        self._components_used = list(self.required_in_problem())
         # required_in_problem
         self._fun = inv_problem.residual
         self._x0 = inv_problem.initial_model

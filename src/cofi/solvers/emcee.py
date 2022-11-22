@@ -32,7 +32,6 @@ class EmceeSolver(BaseSolver):
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self._components_used = list(self.required_in_problem())
         self._assign_args()
         self._initialize_sampler()
 
@@ -48,7 +47,6 @@ class EmceeSolver(BaseSolver):
     def _assign_args(self):
         # assign components in problem to args
         inv_problem = self.inv_problem
-        self._components_used = list(self.required_in_problem())
         self._params["blobs_dtype"] = None
         self._params["blob_names"] = None
         if inv_problem.log_posterior_with_blobs_defined:

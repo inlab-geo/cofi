@@ -33,7 +33,6 @@ class CoFISimpleNewtonSolver(BaseSolver):
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self._components_used = list(self.required_in_problem())
 
     def __call__(self) -> dict:
         m = self.inv_problem.initial_model
