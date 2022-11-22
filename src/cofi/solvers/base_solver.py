@@ -112,13 +112,13 @@ class BaseSolver(metaclass=ABCMeta):
             super().__init__(inv_problem, inv_options)
 
         What it does are:
-        - Attaching the :class:`BaseProblem` and :class:`InversionOptions` objects to 
+        - Attaching the :class:`BaseProblem` and :class:`InversionOptions` objects to
           ``self``;
-        - Validating both input objects based on the information in 
-          :meth:`required_in_problem`, :meth:`optional_in_problem`, 
+        - Validating both input objects based on the information in
+          :meth:`required_in_problem`, :meth:`optional_in_problem`,
           :meth:`required_in_options`, and :meth:`optional_in_options`;
-        - Assigning inversion tool parameters to ``self._params`` based on what are 
-          returned by class methods :meth:`required_in_options`, 
+        - Assigning inversion tool parameters to ``self._params`` based on what are
+          returned by class methods :meth:`required_in_options`,
           :meth:`optional_in_options`, and what are set by users in the
           :class:`InversionOptions` object;
         - Initializing the ``self._components_used`` dictionary based on what are
@@ -128,7 +128,7 @@ class BaseSolver(metaclass=ABCMeta):
           specific in deciding what components get used.
 
         Alternatively (if you want), you can also define your own validation routines,
-        then you don't have to call the ``__init__`` method defined in this super 
+        then you don't have to call the ``__init__`` method defined in this super
         class, and don't have to add things to the fields.
 
         Parameters
@@ -143,7 +143,7 @@ class BaseSolver(metaclass=ABCMeta):
         self._inv_options = inv_options
         self._validate_inv_problem()
         self._validate_inv_options()
-        self._assign_options()          # assigns options to self._params
+        self._assign_options()  # assigns options to self._params
         self._update_components_used()  # update components to self._components_used
 
     @classmethod
@@ -265,11 +265,13 @@ class BaseSolver(metaclass=ABCMeta):
             self._params[opt] = params[opt]
         for opt, val in self.optional_in_options().items():
             self._params[opt] = params.get(opt, val)
-        
+
     def _update_components_used(self):
         self._components_used = list(self.required_in_problem())
         defined_in_problem = self.inv_problem.defined_components()
-        optional_components_defined = set(defined_in_problem).union(self.optional_in_problem())
+        optional_components_defined = set(defined_in_problem).union(
+            self.optional_in_problem()
+        )
         self._components_used.extend(list(optional_components_defined))
 
     def __repr__(self) -> str:
