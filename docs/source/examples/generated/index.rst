@@ -5,10 +5,10 @@ Example Gallery
 
 |Open In Colab| |Download from GitHub|
 
-.. |Open In Colab| image:: https://colab.research.google.com/assets/colab-badge.svg
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670&labelColor=f8f9fa
    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/index.ipynb
 
-.. |Download from GitHub| image:: https://img.shields.io/badge/Download%20from-GitHub-171515?logo=github
+.. |Download from GitHub| image:: https://img.shields.io/badge/Download%20from-GitHub-171515?logo=github&labelColor=f8f9fa&style=flat-square&logoColor=171515
    :target: https://github.com/inlab-geo/cofi-examples
 
 
@@ -80,6 +80,23 @@ Below is a gallery of examples.
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Polynomial Linear Regression</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Linear regression with Eustatic Sea-level data">
+
+.. only:: html
+
+  .. image:: /examples/generated/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
+    :alt: Linear regression with Eustatic Sea-level data
+
+  :ref:`sphx_glr_examples_generated_linear_regression_sealevel.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Linear regression with Eustatic Sea-level data</div>
     </div>
 
 
@@ -179,6 +196,7 @@ Below is a gallery of examples.
    /examples/generated/fmm_tomography
    /examples/generated/gravity_density
    /examples/generated/linear_regression
+   /examples/generated/linear_regression_sealevel
    /examples/generated/pygimli_dcip
    /examples/generated/pygimli_dcip_century_rect_mesh
    /examples/generated/pygimli_dcip_century_tri_mesh

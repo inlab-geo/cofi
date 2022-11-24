@@ -8,6 +8,12 @@
 ######################################################################
 # |Open In Colab|
 # 
+# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/1_linear_regression.ipynb
+# 
+
+
+######################################################################
 # --------------
 # 
 # What we do in this notebook
@@ -32,9 +38,6 @@
 #    different inference approaches** under a common interface.
 # -  A demonstration of CoFI’s **expandability** in that it may be used
 #    with pre-set, or user defined, misfits, likelihood or priors.
-# 
-# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
-#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/1_linear_regression.ipynb
 # 
 
 # Environment setup (uncomment code below)
@@ -439,7 +442,7 @@ plot_model(x,true_y, "true model", color="darkorange")
 # (i.e. :math:`M=1`) by adding the required commands below. What does the
 # plot looks like?
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 1|
 # 
 # Start from code below:
 # 
@@ -458,7 +461,7 @@ plot_model(x,true_y, "true model", color="darkorange")
 #    plot_model(x,jacobian(x,n=<CHANGE ME>).dot(inv_result.model), "optimization solution", color="cornflowerblue")
 #    plot_model(x,true_y, "true model", color="darkorange")
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/1Fu_vIhWIlDl-gs9gzSPBNXLjzj2CsS70fLMDN8-7Sew/edit?usp=sharing
 # 
 
@@ -804,7 +807,7 @@ for i in range(ndim):
 # 
 # What does this do to the posterior distribution?
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 2|
 # 
 # Start from the code template below:
 # 
@@ -833,7 +836,7 @@ for i in range(ndim):
 #    plot_models(flat_samples[inds])
 #    plot_model(x, true_y, "True model", color="darkorange")
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/1h_O8PNuHzpyH2zQUraqiMT4SQR0TMhUmiZzFn_HMZl4/edit?usp=sharing
 # 
 
@@ -927,7 +930,7 @@ def log_prior(model):    # uniform distribution
 # Your challenge is then to tell CoFI that the Likelihood and prior have
 # changed and then to rerun the sample, and plot results.
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 3|
 # 
 # Feel free to start from the code below:
 # 
@@ -949,7 +952,7 @@ def log_prior(model):    # uniform distribution
 #    plot_models(flat_samples[inds])
 #    plot_model(x,true_y, "True model", color="darkorange")
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/1ewIkma6uTeNWu7ACEC3vG4J0FNPQZVLdlQLhyeLh-qM/edit?usp=sharing
 # 
 
@@ -997,7 +1000,7 @@ plot_model(x,true_y, "True model", color="darkorange")
 # We suggest you reduce the number of steps taken by all 32 random walkers
 # and see how it affects the posterior ensemble.
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 4|
 # 
 # You can start from code template below:
 # 
@@ -1033,7 +1036,7 @@ plot_model(x,true_y, "True model", color="darkorange")
 #    plot_models(flat_samples[inds])
 #    plot_model(x,true_y, "True model", color="darkorange")
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 4| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/1vAm3dpaI4UTZiFXzb6vEku8AlVWUw7PRxz8KJk-dVf8/edit?usp=sharing
 # 
 
@@ -1078,6 +1081,17 @@ plot_model(x,true_y, "True model", color="darkorange")
 
 ######################################################################
 #
+
+
+######################################################################
+# --------------
+# 
+# Where to next?
+# --------------
+# 
+# -  Linear regression with Eustatic Sea-level data - `link to
+#    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
+# 
 
 
 ######################################################################

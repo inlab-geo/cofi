@@ -8,6 +8,12 @@
 ######################################################################
 # |Open In Colab|
 # 
+# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/2_travel_time_tomography.ipynb
+# 
+
+
+######################################################################
 # --------------
 # 
 # What we do in this notebook
@@ -19,9 +25,6 @@
 # -  a **nonlinear travel time tomography** cross borehole problem
 # 
 # --------------
-# 
-# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
-#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/2_travel_time_tomography.ipynb
 # 
 
 
@@ -262,7 +265,7 @@ ax = linear_tomo_example.plot_model(tomo_inv_result.model);
 # 
 # How many ray paths do you need before the image becomes recognizable?
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 1|
 # 
 # Start from the code template below:
 # 
@@ -292,7 +295,7 @@ ax = linear_tomo_example.plot_model(tomo_inv_result.model);
 #    for p in linear_tomo_example._paths[idx_from:idx_to]:
 #        plt.plot([p[0],p[2]],[p[1],p[3]],'y',linewidth=0.05)
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/15UiYLe84zlkgLmi_ssbGuxRKyU-s4XuHSHsL8VppKJs/edit?usp=sharing
 # 
 
@@ -382,10 +385,10 @@ nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model, with_paths=
 # where :math:`\mathbf{g}(\mathbf{s})` represents the predicted travel
 # times in the slowness model :math:`\mathbf{s}`, :math:`\sigma^2` is the
 # noise variance on the travel times, :math:`(\lambda_1,\lambda_2)` are
-# weights of damping and smoothing regularization terms respectively, $
-# :raw-latex:`\mathbf{s}`\_{0}$ is the reference slowness model provided
-# by the espresso example, and :math:`D` is a second derivative finite
-# difference stencil for the slowness model with shape ``model_shape``.
+# weights of damping and smoothing regularization terms respectively,
+# :math:`\mathbf{s}_{0}` is the reference slowness model provided by the
+# espresso example, and :math:`D` is a second derivative finite difference
+# stencil for the slowness model with shape ``model_shape``.
 # 
 # In the set up below this objective function is defined outside of CoFI
 # in the function ``objective_func`` together with its gradient and
@@ -570,7 +573,7 @@ nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model);
 # select a subset by passing an additional array of indices to the
 # functions that calculate objective, gradient and hessian.
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 2|
 # 
 # Start from the code template below:
 # 
@@ -601,7 +604,7 @@ nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model);
 #    for p in np.array(paths, dtype=object)[data_subset]:
 #        fig.axes[0].plot(p[:,0], p[:,1], "g", alpha=0.5,lw=0.5)
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/1TlHvC6_vHLDaZzWT3cG2hV3KCrh3M6aoxDVAJ2RGJBw/edit?usp=sharing
 # 
 
@@ -666,7 +669,7 @@ for p in np.array(paths, dtype=object)[data_subset]:
 # strength. See the documentation for
 # `cofi.utils.QuadraticReg <https://cofi.readthedocs.io/en/latest/api/generated/cofi.utils.QuadraticReg.html>`__.
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 3|
 # 
 # You can start from the template below:
 # 
@@ -697,7 +700,7 @@ for p in np.array(paths, dtype=object)[data_subset]:
 #    fig = nonlinear_tomo_example.plot_model(my_own_result.model)
 #    fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/15FrdSczK_TK_COOLxfSJZ5CWMzH3qMoQKySJTAp5n-4/edit?usp=sharing
 # 
 

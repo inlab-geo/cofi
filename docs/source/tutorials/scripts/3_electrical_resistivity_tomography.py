@@ -8,6 +8,12 @@
 ######################################################################
 # |Open In Colab|
 # 
+# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/3_electrical_resistivity_tomography.ipynb
+# 
+
+
+######################################################################
 # --------------
 # 
 # What we do in this notebook
@@ -29,9 +35,6 @@
 #    PyTorch specificially ``torch.optim``
 # -  An illustration of how CoFI can be used to identify the most
 #    appropriate iterative non-linear solver for a given problem
-# 
-# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
-#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/3_electrical_resistivity_tomography.ipynb
 # 
 
 # Environment setup (uncomment code lines below)
@@ -89,12 +92,10 @@
 # 
 # The objective function we are minimizing is given as:
 # 
-# $ :raw-latex:`\Psi`(:raw-latex:`\mathbf{m}`) = (:raw-latex:`\mathbf{d}`
-# -:raw-latex:`\mathrm{f}`(:raw-latex:`\mathbf{m}`))^{:raw-latex:`\mathrm{T}`}
-# C_{d}^{-1}(:raw-latex:`\mathbf{d}`
-# -:raw-latex:`\mathrm{f}`(:raw-latex:`\mathbf{m}`))^{:raw-latex:`\mathrm{T}`}
-# + :raw-latex:`\lambda `:raw-latex:`\mathbf{m}`^{T}
-# W^{:raw-latex:`\mathrm{T}`} W :raw-latex:`\mathbf{{m}}`, $
+# .. math::
+# 
+# 
+#    \Psi(\mathbf{m}) = (\mathbf{d} -\mathrm{f}(\mathbf{m}))^{\mathrm{T}} C_{d}^{-1}(\mathbf{d} -\mathrm{f}(\mathbf{m}))^{\mathrm{T}} + \lambda \mathbf{m}^{T} W^{\mathrm{T}} W \mathbf{{m}},
 # 
 # where :math:`\mathbf{d}` represents the data vector of measured apparent
 # resistivties, :math:`\mathrm{f}(\mathbf{m})` is the model prediction,
@@ -104,11 +105,13 @@
 # 
 # The model update is then given as
 # 
-# $
-# :raw-latex:`\begin{equation} \Delta \mathbf{m}= (\underbrace{\mathbf{J}^T \mathbf{C}_d^{-1} \mathbf{J}+\lambda W^{T} W}_{\mathbf{Hessian}})^{-1}
-# (\underbrace{ \mathbf{J}^T\mathbf{C}_d^{-1} 
-# (\mathbf{d}-\mathrm{f}(\mathbf{m}))+\lambda W^{T} W \mathbf{m}}_{\mathbf{Gradient}}),
-# \end{equation}` $
+# .. math::
+# 
+# 
+#    \begin{equation} \Delta \mathbf{m}= (\underbrace{\mathbf{J}^T \mathbf{C}_d^{-1} \mathbf{J}+\lambda W^{T} W}_{\mathbf{Hessian}})^{-1}
+#    (\underbrace{ \mathbf{J}^T\mathbf{C}_d^{-1} 
+#    (\mathbf{d}-\mathrm{f}(\mathbf{m}))+\lambda W^{T} W \mathbf{m}}_{\mathbf{Gradient}}),
+#    \end{equation} 
 # 
 # where :math:`J` represents the Jacobian.
 # 
@@ -642,9 +645,9 @@ scipy.optimize.newton(lambda x: x**3-2*x+2, x0, fprime=lambda x: 3 * x**2-2,
 # - “trust-ncg”-
 # https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 1|
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/1d-xjFfSi-TiQC64OOchgzmlhx5f4axtC7QZwGSbjyL4/edit?usp=sharing
 # 
 
@@ -775,7 +778,7 @@ plot_result(inv_result, "trust-krylov")
 # you can find a better value for the learning rate ``lr=`` which plays a
 # similar role as the step length.*
 # 
-# |Upload to Jamboard|
+# |Upload to Jamboard 2|
 # 
 # You may start from this template:
 # 
@@ -793,7 +796,7 @@ plot_result(inv_result, "trust-krylov")
 # 
 #    plot_result(inv_result, "CHANGE ME")
 # 
-# .. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+# .. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
 #    :target: https://jamboard.google.com/d/13DkBtGDD2DQZWz9XqFgdx9PPpZJ91ZZcOOhTdITEvHY/edit?usp=sharing
 # 
 
@@ -838,8 +841,8 @@ plot_result(inv_result, "RAdam")
 # Where to next?
 # --------------
 # 
-# -  Induced polarisation…
-#    https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip.ipynb
+# -  Induced polarisation with real dataset! - `link to
+#    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
 # 
 
 

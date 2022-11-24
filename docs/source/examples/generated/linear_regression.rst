@@ -21,13 +21,15 @@
 Polynomial Linear Regression
 ============================
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-12
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
-.. raw:: html
+|Open In Colab|
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression.ipynb
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-22
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-24
 
 If you are running this notebook locally, make sure you’ve followed
 `steps
@@ -37,7 +39,7 @@ to set up the environment. (This
 file specifies a list of packages required to run the notebooks)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-42
+.. GENERATED FROM PYTHON SOURCE LINES 27-44
 
 This tutorial focusses on regression - that is, fitting curves to
 datasets. We will look at a simple linear regression example with
@@ -57,12 +59,12 @@ and wish to find the best fit degree 3 polynomial.
 The function we are going to fit is: :math:`y=-6-5x+2x^2+x^3`
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 45-47
+.. GENERATED FROM PYTHON SOURCE LINES 47-49
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-94
+.. GENERATED FROM PYTHON SOURCE LINES 52-96
 
 Introduction 
 -------------
@@ -109,7 +111,7 @@ So a common workflow includes 4 steps:
    ``InversionOptions`` objects
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-102
+.. GENERATED FROM PYTHON SOURCE LINES 99-104
 
 --------------
 
@@ -117,7 +119,7 @@ So a common workflow includes 4 steps:
 ------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-111
+.. GENERATED FROM PYTHON SOURCE LINES 104-113
 
 .. code-block:: default
 
@@ -137,7 +139,7 @@ So a common workflow includes 4 steps:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-122
+.. GENERATED FROM PYTHON SOURCE LINES 115-124
 
 .. code-block:: default
 
@@ -157,7 +159,7 @@ So a common workflow includes 4 steps:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-166
+.. GENERATED FROM PYTHON SOURCE LINES 129-168
 
 --------------
 
@@ -199,7 +201,7 @@ Recall that the function we are going to fit is:
 :math:`y=-6-5x+2x^2+x^3`
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-188
+.. GENERATED FROM PYTHON SOURCE LINES 168-190
 
 .. code-block:: default
 
@@ -239,11 +241,11 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f63e8b29210>
+    <matplotlib.legend.Legend object at 0x7f12f8d30e50>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-221
+.. GENERATED FROM PYTHON SOURCE LINES 195-223
 
 Now we define the problem in ``cofi`` - in other words,we set the
 problem information for a ``BaseProblem`` object.
@@ -274,7 +276,7 @@ Jacobian matrix are needed. We thus set them to our ``BaseProblem``
 object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 221-230
+.. GENERATED FROM PYTHON SOURCE LINES 223-232
 
 .. code-block:: default
 
@@ -313,7 +315,7 @@ object.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 235-252
+.. GENERATED FROM PYTHON SOURCE LINES 237-254
 
 --------------
 
@@ -333,7 +335,7 @@ which backend tool you’d like to use 2. then with
 solver-specific parameters.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 252-256
+.. GENERATED FROM PYTHON SOURCE LINES 254-258
 
 .. code-block:: default
 
@@ -365,14 +367,14 @@ solver-specific parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 261-265
+.. GENERATED FROM PYTHON SOURCE LINES 263-267
 
 We have a **suggesting system** that is being improved at the moment, so
 that you can see what backend tools are available based on the
 categories of inversion approaches you’d like to use.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-268
+.. GENERATED FROM PYTHON SOURCE LINES 267-270
 
 .. code-block:: default
 
@@ -406,13 +408,13 @@ categories of inversion approaches you’d like to use.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 273-276
+.. GENERATED FROM PYTHON SOURCE LINES 275-278
 
 Having seen what a default ``InversionOptions`` object look like, we
 customise the inversion process by constraining the solving approach:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 276-280
+.. GENERATED FROM PYTHON SOURCE LINES 278-282
 
 .. code-block:: default
 
@@ -444,7 +446,7 @@ customise the inversion process by constraining the solving approach:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 285-293
+.. GENERATED FROM PYTHON SOURCE LINES 287-295
 
 --------------
 
@@ -455,7 +457,7 @@ If there are more than one backend tool options, then the following
 function shows available options and set your desired backend solver.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 293-296
+.. GENERATED FROM PYTHON SOURCE LINES 295-298
 
 .. code-block:: default
 
@@ -481,13 +483,13 @@ function shows available options and set your desired backend solver.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 301-304
+.. GENERATED FROM PYTHON SOURCE LINES 303-306
 
 You can also set the backend tool directly (as following), without the
 call to ``inv_options.set_solving_method()`` above.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 304-308
+.. GENERATED FROM PYTHON SOURCE LINES 306-310
 
 .. code-block:: default
 
@@ -519,7 +521,7 @@ call to ``inv_options.set_solving_method()`` above.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 313-325
+.. GENERATED FROM PYTHON SOURCE LINES 315-327
 
 --------------
 
@@ -534,7 +536,7 @@ Taking them both in, an ``Inversion`` object knows all the information
 and is an engine to actually perform the inversion.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 325-329
+.. GENERATED FROM PYTHON SOURCE LINES 327-331
 
 .. code-block:: default
 
@@ -581,12 +583,12 @@ and is an engine to actually perform the inversion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 334-336
+.. GENERATED FROM PYTHON SOURCE LINES 336-338
 
 Now, let’s run it!
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 336-340
+.. GENERATED FROM PYTHON SOURCE LINES 338-342
 
 .. code-block:: default
 
@@ -607,7 +609,7 @@ Now, let’s run it!
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 345-359
+.. GENERATED FROM PYTHON SOURCE LINES 347-361
 
 The inversion result returned by ``inv.run()`` is an instance of
 ``InversionResult``.
@@ -624,7 +626,7 @@ Similar to the other class objects, you can see what’s inside it with
 the ``summary()`` method.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 359-362
+.. GENERATED FROM PYTHON SOURCE LINES 361-364
 
 .. code-block:: default
 
@@ -652,7 +654,7 @@ the ``summary()`` method.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 367-372
+.. GENERATED FROM PYTHON SOURCE LINES 369-374
 
 --------------
 
@@ -660,7 +662,7 @@ the ``summary()`` method.
 ---------------------------------------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 375-380
+.. GENERATED FROM PYTHON SOURCE LINES 377-382
 
 A summary view of the ``Inversion`` object shows information about the
 whole inversion process, including how the problem is defined, how the
@@ -668,7 +670,7 @@ inversion is defined to be run, as well as what the results are (if
 any).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 380-383
+.. GENERATED FROM PYTHON SOURCE LINES 382-385
 
 .. code-block:: default
 
@@ -723,13 +725,13 @@ any).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 388-391
+.. GENERATED FROM PYTHON SOURCE LINES 390-393
 
 Now, let’s plot the predicted curve and compare it to the data and
 ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 391-407
+.. GENERATED FROM PYTHON SOURCE LINES 393-409
 
 .. code-block:: default
 
@@ -763,17 +765,17 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f63d29ab3a0>
+    <matplotlib.legend.Legend object at 0x7f130117d480>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 412-415
+.. GENERATED FROM PYTHON SOURCE LINES 414-417
 
 Here we see the least squares solver (green curve) fits all of the data
 well and is a close approximation of the true curve (orange).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 418-426
+.. GENERATED FROM PYTHON SOURCE LINES 420-428
 
 --------------
 
@@ -784,7 +786,7 @@ For review purpose, here are the minimal set of commands we’ve used to
 produce the above result:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 426-461
+.. GENERATED FROM PYTHON SOURCE LINES 428-463
 
 .. code-block:: default
 
@@ -846,7 +848,7 @@ produce the above result:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 466-497
+.. GENERATED FROM PYTHON SOURCE LINES 468-499
 
 --------------
 
@@ -880,7 +882,7 @@ alternative to this would be to directly provide objective function to
 CoFI.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 497-516
+.. GENERATED FROM PYTHON SOURCE LINES 499-518
 
 .. code-block:: default
 
@@ -934,7 +936,7 @@ CoFI.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 518-534
+.. GENERATED FROM PYTHON SOURCE LINES 520-536
 
 .. code-block:: default
 
@@ -968,17 +970,17 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f63d2a5fcd0>
+    <matplotlib.legend.Legend object at 0x7f12e1a7f520>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 539-542
+.. GENERATED FROM PYTHON SOURCE LINES 541-544
 
 Here we see the (blue curve) is also a relatively good approximation of
 the true curve (orange).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 545-654
+.. GENERATED FROM PYTHON SOURCE LINES 547-656
 
 7.2. Sampling 
 ~~~~~~~~~~~~~~
@@ -1090,7 +1092,7 @@ datum. Hence :math:`C_D^{-1} = \frac{1}{\sigma^2}I` where
 :math:`\sigma=1`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 654-663
+.. GENERATED FROM PYTHON SOURCE LINES 656-665
 
 .. code-block:: default
 
@@ -1110,7 +1112,7 @@ datum. Hence :math:`C_D^{-1} = \frac{1}{\sigma^2}I` where
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 668-706
+.. GENERATED FROM PYTHON SOURCE LINES 670-708
 
 Prior
 '''''
@@ -1151,7 +1153,7 @@ Here we choose a Uniform prior with
 :math:`{\mathbf u}^T = (10.,10.,10.,10.)`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 706-715
+.. GENERATED FROM PYTHON SOURCE LINES 708-717
 
 .. code-block:: default
 
@@ -1171,7 +1173,7 @@ Here we choose a Uniform prior with
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 720-727
+.. GENERATED FROM PYTHON SOURCE LINES 722-729
 
 Walkers’ starting points
 ''''''''''''''''''''''''
@@ -1181,7 +1183,7 @@ steps), and initialise the starting positions of walkers. We start all
 walkers in a small ball about a chosen point :math:`(0, 0, 0, 0)`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 727-733
+.. GENERATED FROM PYTHON SOURCE LINES 729-735
 
 .. code-block:: default
 
@@ -1198,13 +1200,13 @@ walkers in a small ball about a chosen point :math:`(0, 0, 0, 0)`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 738-741
+.. GENERATED FROM PYTHON SOURCE LINES 740-743
 
 Finally, we attach all above information to our ``BaseProblem`` and
 ``InversionOptions`` objects.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 741-760
+.. GENERATED FROM PYTHON SOURCE LINES 743-762
 
 .. code-block:: default
 
@@ -1247,7 +1249,7 @@ Finally, we attach all above information to our ``BaseProblem`` and
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 765-784
+.. GENERATED FROM PYTHON SOURCE LINES 767-786
 
 Analyse sampling results
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1269,7 +1271,7 @@ so that all the plotting functions from
 `arviz <https://python.arviz.org/en/latest/index.html>`__ are exposed.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 784-788
+.. GENERATED FROM PYTHON SOURCE LINES 786-790
 
 .. code-block:: default
 
@@ -1284,7 +1286,7 @@ so that all the plotting functions from
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 793-804
+.. GENERATED FROM PYTHON SOURCE LINES 795-806
 
 Sampling performance
 ''''''''''''''''''''
@@ -1298,7 +1300,7 @@ positions of each walker as a function of the number of steps in the
 chain:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 804-808
+.. GENERATED FROM PYTHON SOURCE LINES 806-810
 
 .. code-block:: default
 
@@ -1331,7 +1333,7 @@ chain:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 813-826
+.. GENERATED FROM PYTHON SOURCE LINES 815-828
 
 Autocorrelation analysis
 ''''''''''''''''''''''''
@@ -1347,7 +1349,7 @@ tutorial <https://emcee.readthedocs.io/en/stable/tutorials/autocorr/>`__
 for more details):
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 826-830
+.. GENERATED FROM PYTHON SOURCE LINES 828-832
 
 .. code-block:: default
 
@@ -1368,7 +1370,7 @@ for more details):
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 835-848
+.. GENERATED FROM PYTHON SOURCE LINES 837-850
 
 Corner plot
 '''''''''''
@@ -1384,7 +1386,7 @@ Let’s make one of the most useful plots you can make with your MCMC
 results: a corner plot.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 848-857
+.. GENERATED FROM PYTHON SOURCE LINES 850-859
 
 .. code-block:: default
 
@@ -1423,7 +1425,7 @@ results: a corner plot.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 862-879
+.. GENERATED FROM PYTHON SOURCE LINES 864-881
 
 The corner plot shows all the one and two dimensional projections of the
 posterior probability distributions of your parameters. This is useful
@@ -1443,7 +1445,7 @@ Now lets plot the a sub-sample of 100 the predicted curves from this
 posterior ensemble and compare to the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 879-899
+.. GENERATED FROM PYTHON SOURCE LINES 881-901
 
 .. code-block:: default
 
@@ -1481,11 +1483,11 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f63dadd21d0>
+    <matplotlib.legend.Legend object at 0x7f12eadd14b0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 904-910
+.. GENERATED FROM PYTHON SOURCE LINES 906-912
 
 Uncertainty estimates
 '''''''''''''''''''''
@@ -1494,7 +1496,7 @@ We can now calculate some formal uncertainties based on the 16th, 50th,
 and 84th percentiles of the samples in the marginalized distributions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 910-921
+.. GENERATED FROM PYTHON SOURCE LINES 912-923
 
 .. code-block:: default
 
@@ -1525,7 +1527,7 @@ and 84th percentiles of the samples in the marginalized distributions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 926-936
+.. GENERATED FROM PYTHON SOURCE LINES 928-938
 
 The first number here is the median value of each model coefficient in
 the posterior ensemble, while the upper and lower numbers correspond to
@@ -1538,7 +1540,7 @@ We can also calculate the posterior model covariance matrix and compare
 to that estimated by least squares.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 936-948
+.. GENERATED FROM PYTHON SOURCE LINES 938-950
 
 .. code-block:: default
 
@@ -1583,7 +1585,7 @@ to that estimated by least squares.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 950-956
+.. GENERATED FROM PYTHON SOURCE LINES 952-958
 
 .. code-block:: default
 
@@ -1611,7 +1613,7 @@ to that estimated by least squares.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 961-966
+.. GENERATED FROM PYTHON SOURCE LINES 963-968
 
 --------------
 
@@ -1619,7 +1621,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 966-972
+.. GENERATED FROM PYTHON SOURCE LINES 968-974
 
 .. code-block:: default
 
@@ -1650,7 +1652,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.281 seconds)
+   **Total running time of the script:** ( 0 minutes  7.290 seconds)
 
 
 .. _sphx_glr_download_examples_generated_linear_regression.py:

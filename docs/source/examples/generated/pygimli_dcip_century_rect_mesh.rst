@@ -21,13 +21,15 @@
 DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)
 ==================================================
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-12
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
-.. raw:: html
+|Open In Colab|
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_rect_mesh.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_rect_mesh.ipynb
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-92
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-94
 
 .. raw:: html
 
@@ -107,7 +109,7 @@ The application of geophysics during evaluation of the Century zinc
 deposit. Geophysics, 65(6), 1946–1960. https://doi.org/10.1190/1.1444878
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-101
+.. GENERATED FROM PYTHON SOURCE LINES 97-103
 
 1. Set up environment
 ---------------------
@@ -116,7 +118,7 @@ We’ll do the following: 1. Install PyGIMLi (if on CoLab) 2. Download
 processed dataset (if on CoLab) 3. Import modules
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-115
+.. GENERATED FROM PYTHON SOURCE LINES 103-117
 
 .. code-block:: default
 
@@ -141,7 +143,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-127
+.. GENERATED FROM PYTHON SOURCE LINES 119-129
 
 .. code-block:: default
 
@@ -162,7 +164,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-140
+.. GENERATED FROM PYTHON SOURCE LINES 134-142
 
 We will need the following packages:
 
@@ -173,7 +175,7 @@ We will need the following packages:
 -  ``cofi`` for accessing different inference solvers
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-148
+.. GENERATED FROM PYTHON SOURCE LINES 142-150
 
 .. code-block:: default
 
@@ -192,7 +194,7 @@ We will need the following packages:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-160
+.. GENERATED FROM PYTHON SOURCE LINES 155-162
 
 2. Load the data
 ----------------
@@ -202,7 +204,7 @@ We will need to download the preprocessed dataset first. This notebook
 contains the code for data preprocessing.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-163
+.. GENERATED FROM PYTHON SOURCE LINES 162-165
 
 .. code-block:: default
 
@@ -216,7 +218,7 @@ contains the code for data preprocessing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-183
+.. GENERATED FROM PYTHON SOURCE LINES 167-185
 
 .. code-block:: default
 
@@ -251,7 +253,7 @@ contains the code for data preprocessing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-205
+.. GENERATED FROM PYTHON SOURCE LINES 187-207
 
 .. code-block:: default
 
@@ -282,7 +284,7 @@ contains the code for data preprocessing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 210-217
+.. GENERATED FROM PYTHON SOURCE LINES 212-219
 
 3. Utility wrappers to PyGIMLi functions
 ----------------------------------------
@@ -292,13 +294,13 @@ generating data and making plots. Feel free to skip reading the details
 of these utility functions and come back later if you want.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-223
+.. GENERATED FROM PYTHON SOURCE LINES 222-225
 
 3.1. Helper functions for complex numbers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-236
+.. GENERATED FROM PYTHON SOURCE LINES 225-238
 
 .. code-block:: default
 
@@ -322,13 +324,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 241-244
+.. GENERATED FROM PYTHON SOURCE LINES 243-246
 
 3.2. Helper functions for PyGIMLi modelling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 244-343
+.. GENERATED FROM PYTHON SOURCE LINES 246-345
 
 .. code-block:: default
 
@@ -438,13 +440,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 348-351
+.. GENERATED FROM PYTHON SOURCE LINES 350-353
 
 3.3. Plotting utilities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 351-413
+.. GENERATED FROM PYTHON SOURCE LINES 353-415
 
 .. code-block:: default
 
@@ -517,7 +519,7 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 418-424
+.. GENERATED FROM PYTHON SOURCE LINES 420-426
 
 4. PyGIMLi problem setup
 ------------------------
@@ -526,7 +528,7 @@ of these utility functions and come back later if you want.
 ~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 424-428
+.. GENERATED FROM PYTHON SOURCE LINES 426-430
 
 .. code-block:: default
 
@@ -547,7 +549,7 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 430-434
+.. GENERATED FROM PYTHON SOURCE LINES 432-436
 
 .. code-block:: default
 
@@ -579,13 +581,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 439-442
+.. GENERATED FROM PYTHON SOURCE LINES 441-444
 
 4.2. ERT manager
 ~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 442-445
+.. GENERATED FROM PYTHON SOURCE LINES 444-447
 
 .. code-block:: default
 
@@ -599,13 +601,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 450-453
+.. GENERATED FROM PYTHON SOURCE LINES 452-455
 
 4.3. Inversion mesh
 ~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 453-459
+.. GENERATED FROM PYTHON SOURCE LINES 455-461
 
 .. code-block:: default
 
@@ -633,13 +635,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 464-467
+.. GENERATED FROM PYTHON SOURCE LINES 466-469
 
 4.4. Forward operator
 ~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 467-470
+.. GENERATED FROM PYTHON SOURCE LINES 469-472
 
 .. code-block:: default
 
@@ -653,13 +655,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 475-478
+.. GENERATED FROM PYTHON SOURCE LINES 477-480
 
 4.5. Regularization matrix
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 478-481
+.. GENERATED FROM PYTHON SOURCE LINES 480-483
 
 .. code-block:: default
 
@@ -673,13 +675,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 486-489
+.. GENERATED FROM PYTHON SOURCE LINES 488-491
 
 4.6. Starting model
 ~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 489-494
+.. GENERATED FROM PYTHON SOURCE LINES 491-496
 
 .. code-block:: default
 
@@ -700,7 +702,7 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 499-516
+.. GENERATED FROM PYTHON SOURCE LINES 501-518
 
 5. Create utility functions to pass to CoFI
 -------------------------------------------
@@ -720,7 +722,7 @@ you want to understand more. These functions are:
 -  ``get_hessian``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 516-603
+.. GENERATED FROM PYTHON SOURCE LINES 518-605
 
 .. code-block:: default
 
@@ -818,7 +820,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 605-613
+.. GENERATED FROM PYTHON SOURCE LINES 607-615
 
 .. code-block:: default
 
@@ -843,7 +845,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 615-620
+.. GENERATED FROM PYTHON SOURCE LINES 617-622
 
 .. code-block:: default
 
@@ -866,7 +868,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 622-627
+.. GENERATED FROM PYTHON SOURCE LINES 624-629
 
 .. code-block:: default
 
@@ -888,7 +890,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 629-634
+.. GENERATED FROM PYTHON SOURCE LINES 631-636
 
 .. code-block:: default
 
@@ -922,14 +924,14 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 639-643
+.. GENERATED FROM PYTHON SOURCE LINES 641-645
 
 With all the above forward operations set up with PyGIMLi, we now define
 the problem in ``cofi`` by setting the problem information for a
 ``BaseProblem`` object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 643-655
+.. GENERATED FROM PYTHON SOURCE LINES 645-657
 
 .. code-block:: default
 
@@ -952,7 +954,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 657-660
+.. GENERATED FROM PYTHON SOURCE LINES 659-662
 
 .. code-block:: default
 
@@ -983,7 +985,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 665-670
+.. GENERATED FROM PYTHON SOURCE LINES 667-672
 
 6. Define the inversion options and run
 ---------------------------------------
@@ -991,7 +993,7 @@ the problem in ``cofi`` by setting the problem information for a
 Rectangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 670-683
+.. GENERATED FROM PYTHON SOURCE LINES 672-685
 
 .. code-block:: default
 
@@ -1015,7 +1017,7 @@ Rectangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 685-690
+.. GENERATED FROM PYTHON SOURCE LINES 687-692
 
 .. code-block:: default
 
@@ -1069,7 +1071,7 @@ Rectangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 692-699
+.. GENERATED FROM PYTHON SOURCE LINES 694-701
 
 .. code-block:: default
 
@@ -1087,13 +1089,13 @@ Rectangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 704-707
+.. GENERATED FROM PYTHON SOURCE LINES 706-709
 
 Compare with UBC results
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 707-723
+.. GENERATED FROM PYTHON SOURCE LINES 709-725
 
 .. code-block:: default
 
@@ -1125,7 +1127,7 @@ Compare with UBC results
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 728-733
+.. GENERATED FROM PYTHON SOURCE LINES 730-735
 
 --------------
 
@@ -1133,7 +1135,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 733-739
+.. GENERATED FROM PYTHON SOURCE LINES 735-741
 
 .. code-block:: default
 
@@ -1164,7 +1166,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 23 minutes  45.693 seconds)
+   **Total running time of the script:** ( 23 minutes  32.141 seconds)
 
 
 .. _sphx_glr_download_examples_generated_pygimli_dcip_century_rect_mesh.py:

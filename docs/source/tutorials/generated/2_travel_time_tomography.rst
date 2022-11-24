@@ -21,9 +21,15 @@
 2 - linear & non-linear travel time tomography
 ==============================================
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-26
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
 |Open In Colab|
+
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/2_travel_time_tomography.ipynb
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-29
 
 --------------
 
@@ -37,11 +43,8 @@ Here we apply CoFI to two geophysical examples:
 
 --------------
 
-.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
-   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/2_travel_time_tomography.ipynb
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 29-39
+.. GENERATED FROM PYTHON SOURCE LINES 32-42
 
 Learning outcomes
 -----------------
@@ -54,7 +57,7 @@ Learning outcomes
 -  See how nonlinear iterative matrix solvers can be accessed in CoFI.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-44
+.. GENERATED FROM PYTHON SOURCE LINES 42-47
 
 .. code-block:: default
 
@@ -70,7 +73,7 @@ Learning outcomes
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-116
+.. GENERATED FROM PYTHON SOURCE LINES 52-119
 
 Problem description
 -------------------
@@ -140,7 +143,7 @@ reference model, and the parameters :math:`\delta s_j` are slowness
 perturbations to the reference model.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-123
+.. GENERATED FROM PYTHON SOURCE LINES 119-126
 
 .. code-block:: default
 
@@ -158,19 +161,19 @@ perturbations to the reference model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-131
+.. GENERATED FROM PYTHON SOURCE LINES 131-134
 
 1. Linear Travel Time Tomography
 --------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-137
+.. GENERATED FROM PYTHON SOURCE LINES 137-140
 
 To illustrate the setting we plot a reference model supplied through the
 *espresso* Xray example, together with 100 raypaths in the dataset.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-140
+.. GENERATED FROM PYTHON SOURCE LINES 140-143
 
 .. code-block:: default
 
@@ -184,7 +187,7 @@ To illustrate the setting we plot a reference model supplied through the
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-150
+.. GENERATED FROM PYTHON SOURCE LINES 145-153
 
 .. code-block:: default
 
@@ -214,20 +217,20 @@ To illustrate the setting we plot a reference model supplied through the
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-158
+.. GENERATED FROM PYTHON SOURCE LINES 158-161
 
 Step 1. Define CoFI ``BaseProblem``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-165
+.. GENERATED FROM PYTHON SOURCE LINES 164-168
 
 Now we: - set up the BaseProblem in CoFI, - supply it the data vector
 from espresso example, (i.e. the :math:`\mathbf{d}` vector) - supply it
 the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-173
+.. GENERATED FROM PYTHON SOURCE LINES 168-176
 
 .. code-block:: default
 
@@ -247,12 +250,12 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 799/10416 [00:00<00:01, 7988.69it/s]    Evaluating paths:  16%|#6        | 1671/10416 [00:00<00:01, 8413.60it/s]    Evaluating paths:  24%|##4       | 2521/10416 [00:00<00:00, 8452.48it/s]    Evaluating paths:  32%|###2      | 3367/10416 [00:00<00:00, 8433.51it/s]    Evaluating paths:  40%|####      | 4211/10416 [00:00<00:00, 8262.42it/s]    Evaluating paths:  49%|####8     | 5059/10416 [00:00<00:00, 8333.32it/s]    Evaluating paths:  57%|#####6    | 5913/10416 [00:00<00:00, 8397.98it/s]    Evaluating paths:  65%|######5   | 6774/10416 [00:00<00:00, 8463.57it/s]    Evaluating paths:  73%|#######3  | 7621/10416 [00:00<00:00, 8398.53it/s]    Evaluating paths:  81%|########1 | 8462/10416 [00:01<00:00, 8384.10it/s]    Evaluating paths:  89%|########9 | 9317/10416 [00:01<00:00, 8432.28it/s]    Evaluating paths:  98%|#########7| 10161/10416 [00:01<00:00, 8372.53it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8389.51it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 854/10416 [00:00<00:01, 8538.89it/s]    Evaluating paths:  17%|#6        | 1734/10416 [00:00<00:00, 8689.67it/s]    Evaluating paths:  25%|##4       | 2603/10416 [00:00<00:00, 8605.12it/s]    Evaluating paths:  33%|###3      | 3465/10416 [00:00<00:00, 8608.51it/s]    Evaluating paths:  42%|####1     | 4340/10416 [00:00<00:00, 8657.30it/s]    Evaluating paths:  50%|####9     | 5206/10416 [00:00<00:00, 8593.54it/s]    Evaluating paths:  58%|#####8    | 6074/10416 [00:00<00:00, 8619.13it/s]    Evaluating paths:  67%|######6   | 6953/10416 [00:00<00:00, 8672.82it/s]    Evaluating paths:  75%|#######5  | 7821/10416 [00:00<00:00, 8609.37it/s]    Evaluating paths:  83%|########3 | 8692/10416 [00:01<00:00, 8638.19it/s]    Evaluating paths:  92%|#########1| 9562/10416 [00:01<00:00, 8656.42it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8649.69it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-191
+.. GENERATED FROM PYTHON SOURCE LINES 181-194
 
 Since :math:`\mathbf{d}` and :math:`G` have been defined then this
 implies a linear system. Now we choose to regularize the linear system
@@ -268,7 +271,7 @@ The matrix system we are solving is
    (\mathbf{A}^T \textbf{C}_d^{-1} \textbf{A} + \lambda \mathbf D^T\mathbf D) \textbf{s} = \textbf{A}^T \mathbf C_d^{-1} \textbf{d}
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 191-199
+.. GENERATED FROM PYTHON SOURCE LINES 194-202
 
 .. code-block:: default
 
@@ -293,12 +296,12 @@ The matrix system we are solving is
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 204-206
+.. GENERATED FROM PYTHON SOURCE LINES 207-209
 
 and lets print a summary of the set up.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-209
+.. GENERATED FROM PYTHON SOURCE LINES 209-212
 
 .. code-block:: default
 
@@ -331,19 +334,19 @@ and lets print a summary of the set up.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-217
+.. GENERATED FROM PYTHON SOURCE LINES 217-220
 
 Step 2. Define CoFI ``InversionOptions``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-223
+.. GENERATED FROM PYTHON SOURCE LINES 223-226
 
 Here we choose the backend tool for solving the tomographic system,
 which is scipy’s least squares solver.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-227
+.. GENERATED FROM PYTHON SOURCE LINES 226-230
 
 .. code-block:: default
 
@@ -358,13 +361,13 @@ which is scipy’s least squares solver.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 232-235
+.. GENERATED FROM PYTHON SOURCE LINES 235-238
 
 Step 3. Define CoFI ``Inversion`` and run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 235-240
+.. GENERATED FROM PYTHON SOURCE LINES 238-243
 
 .. code-block:: default
 
@@ -408,12 +411,12 @@ Step 3. Define CoFI ``Inversion`` and run
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 245-247
+.. GENERATED FROM PYTHON SOURCE LINES 248-250
 
 Lets plot the image to see what we got.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 247-250
+.. GENERATED FROM PYTHON SOURCE LINES 250-253
 
 .. code-block:: default
 
@@ -432,7 +435,7 @@ Lets plot the image to see what we got.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 255-298
+.. GENERATED FROM PYTHON SOURCE LINES 258-301
 
 Challenge: Fewer ray paths for linear travel time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -444,7 +447,7 @@ and see what you get.
 
 How many ray paths do you need before the image becomes recognizable?
 
-|Upload to Jamboard|
+|Upload to Jamboard 1|
 
 Start from the code template below:
 
@@ -474,11 +477,11 @@ Start from the code template below:
    for p in linear_tomo_example._paths[idx_from:idx_to]:
        plt.plot([p[0],p[2]],[p[1],p[3]],'y',linewidth=0.05)
 
-.. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+.. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
    :target: https://jamboard.google.com/d/15UiYLe84zlkgLmi_ssbGuxRKyU-s4XuHSHsL8VppKJs/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 298-303
+.. GENERATED FROM PYTHON SOURCE LINES 301-306
 
 .. code-block:: default
 
@@ -494,7 +497,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 305-332
+.. GENERATED FROM PYTHON SOURCE LINES 308-335
 
 .. code-block:: default
 
@@ -550,23 +553,23 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 832/10416 [00:00<00:01, 8313.86it/s]    Evaluating paths:  16%|#6        | 1685/10416 [00:00<00:01, 8437.79it/s]    Evaluating paths:  24%|##4       | 2529/10416 [00:00<00:00, 8365.97it/s]    Evaluating paths:  32%|###2      | 3366/10416 [00:00<00:00, 8310.84it/s]    Evaluating paths:  40%|####      | 4218/10416 [00:00<00:00, 8382.27it/s]    Evaluating paths:  49%|####8     | 5057/10416 [00:00<00:00, 8379.14it/s]    Evaluating paths:  57%|#####6    | 5895/10416 [00:00<00:00, 8323.53it/s]    Evaluating paths:  65%|######4   | 6745/10416 [00:00<00:00, 8376.65it/s]    Evaluating paths:  73%|#######2  | 7583/10416 [00:00<00:00, 8366.04it/s]    Evaluating paths:  81%|########  | 8420/10416 [00:01<00:00, 8362.78it/s]    Evaluating paths:  89%|########8 | 9262/10416 [00:01<00:00, 8379.02it/s]    Evaluating paths:  97%|#########7| 10111/10416 [00:01<00:00, 8409.75it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8387.55it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 859/10416 [00:00<00:01, 8587.20it/s]    Evaluating paths:  17%|#6        | 1749/10416 [00:00<00:00, 8769.57it/s]    Evaluating paths:  25%|##5       | 2626/10416 [00:00<00:00, 8599.42it/s]    Evaluating paths:  34%|###3      | 3497/10416 [00:00<00:00, 8638.24it/s]    Evaluating paths:  42%|####2     | 4375/10416 [00:00<00:00, 8687.99it/s]    Evaluating paths:  50%|#####     | 5245/10416 [00:00<00:00, 8668.36it/s]    Evaluating paths:  59%|#####8    | 6115/10416 [00:00<00:00, 8678.29it/s]    Evaluating paths:  67%|######7   | 6991/10416 [00:00<00:00, 8702.55it/s]    Evaluating paths:  75%|#######5  | 7862/10416 [00:00<00:00, 8644.85it/s]    Evaluating paths:  84%|########3 | 8742/10416 [00:01<00:00, 8690.01it/s]    Evaluating paths:  92%|#########2| 9616/10416 [00:01<00:00, 8702.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8693.89it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 337-339
+.. GENERATED FROM PYTHON SOURCE LINES 340-342
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 342-345
+.. GENERATED FROM PYTHON SOURCE LINES 345-348
 
 2. Non-linear Travel Time Tomography
 ------------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 348-354
+.. GENERATED FROM PYTHON SOURCE LINES 351-357
 
 Now we demonstrate CoFI on a nonlinear iterative tomographic problem in
 a cross borehole setting.
@@ -575,7 +578,7 @@ We use a different tomographic example from espresso. Here we import the
 example module and plot the reference seismic model.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 354-359
+.. GENERATED FROM PYTHON SOURCE LINES 357-362
 
 .. code-block:: default
 
@@ -608,13 +611,13 @@ example module and plot the reference seismic model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 364-367
+.. GENERATED FROM PYTHON SOURCE LINES 367-370
 
 Solving the tomographic system with optimization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 370-431
+.. GENERATED FROM PYTHON SOURCE LINES 373-434
 
 Now we solve the tomographic system of equations using either CoFI’s
 optimization method interface, or its iterative matrix-solver interface.
@@ -631,10 +634,10 @@ We choose an objective function of the form.
 where :math:`\mathbf{g}(\mathbf{s})` represents the predicted travel
 times in the slowness model :math:`\mathbf{s}`, :math:`\sigma^2` is the
 noise variance on the travel times, :math:`(\lambda_1,\lambda_2)` are
-weights of damping and smoothing regularization terms respectively, $
-:raw-latex:`\mathbf{s}`\_{0}$ is the reference slowness model provided
-by the espresso example, and :math:`D` is a second derivative finite
-difference stencil for the slowness model with shape ``model_shape``.
+weights of damping and smoothing regularization terms respectively,
+:math:`\mathbf{s}_{0}` is the reference slowness model provided by the
+espresso example, and :math:`D` is a second derivative finite difference
+stencil for the slowness model with shape ``model_shape``.
 
 In the set up below this objective function is defined outside of CoFI
 in the function ``objective_func`` together with its gradient and
@@ -678,13 +681,13 @@ matrix solver
 with :math:`C_d^{-1} = \sigma^{-2} I`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 434-437
+.. GENERATED FROM PYTHON SOURCE LINES 437-440
 
 Step 1. Define CoFI ``BaseProblem``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 437-444
+.. GENERATED FROM PYTHON SOURCE LINES 440-447
 
 .. code-block:: default
 
@@ -702,13 +705,13 @@ Step 1. Define CoFI ``BaseProblem``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 449-452
+.. GENERATED FROM PYTHON SOURCE LINES 452-455
 
 Here we define the baseproblem object and a starting velocity model
 guess.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 452-457
+.. GENERATED FROM PYTHON SOURCE LINES 455-460
 
 .. code-block:: default
 
@@ -724,12 +727,12 @@ guess.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 462-464
+.. GENERATED FROM PYTHON SOURCE LINES 465-467
 
 Here we define regularization of the tomographic system.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 464-472
+.. GENERATED FROM PYTHON SOURCE LINES 467-475
 
 .. code-block:: default
 
@@ -748,7 +751,7 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 474-502
+.. GENERATED FROM PYTHON SOURCE LINES 477-505
 
 .. code-block:: default
 
@@ -787,7 +790,7 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 504-511
+.. GENERATED FROM PYTHON SOURCE LINES 507-514
 
 .. code-block:: default
 
@@ -805,13 +808,13 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 516-519
+.. GENERATED FROM PYTHON SOURCE LINES 519-522
 
 Step 2. Define CoFI ``InversionOptions``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 519-530
+.. GENERATED FROM PYTHON SOURCE LINES 522-533
 
 .. code-block:: default
 
@@ -833,7 +836,7 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 532-535
+.. GENERATED FROM PYTHON SOURCE LINES 535-538
 
 .. code-block:: default
 
@@ -867,13 +870,13 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 540-543
+.. GENERATED FROM PYTHON SOURCE LINES 543-546
 
 Step 3. Define CoFI ``Inversion`` and run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 543-548
+.. GENERATED FROM PYTHON SOURCE LINES 546-551
 
 .. code-block:: default
 
@@ -905,12 +908,12 @@ Step 3. Define CoFI ``Inversion`` and run
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 553-555
+.. GENERATED FROM PYTHON SOURCE LINES 556-558
 
 Now lets plot the true model for comparison.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 555-558
+.. GENERATED FROM PYTHON SOURCE LINES 558-561
 
 .. code-block:: default
 
@@ -935,7 +938,7 @@ Now lets plot the true model for comparison.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 563-607
+.. GENERATED FROM PYTHON SOURCE LINES 566-610
 
 Challenge: Change the number of tomographic data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -947,7 +950,7 @@ There are 100 raypaths in the full dataset and you can tell CoFI to
 select a subset by passing an additional array of indices to the
 functions that calculate objective, gradient and hessian.
 
-|Upload to Jamboard|
+|Upload to Jamboard 2|
 
 Start from the code template below:
 
@@ -978,11 +981,11 @@ Start from the code template below:
    for p in np.array(paths, dtype=object)[data_subset]:
        fig.axes[0].plot(p[:,0], p[:,1], "g", alpha=0.5,lw=0.5)
 
-.. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+.. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
    :target: https://jamboard.google.com/d/1TlHvC6_vHLDaZzWT3cG2hV3KCrh3M6aoxDVAJ2RGJBw/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 607-612
+.. GENERATED FROM PYTHON SOURCE LINES 610-615
 
 .. code-block:: default
 
@@ -998,7 +1001,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 614-642
+.. GENERATED FROM PYTHON SOURCE LINES 617-645
 
 .. code-block:: default
 
@@ -1064,7 +1067,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 647-703
+.. GENERATED FROM PYTHON SOURCE LINES 650-706
 
 Challenge: Change regularization settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1088,7 +1091,7 @@ To repeat this solver with other settings for smoothing and damping
 strength. See the documentation for
 `cofi.utils.QuadraticReg <https://cofi.readthedocs.io/en/latest/api/generated/cofi.utils.QuadraticReg.html>`__.
 
-|Upload to Jamboard|
+|Upload to Jamboard 3|
 
 You can start from the template below:
 
@@ -1119,11 +1122,11 @@ You can start from the template below:
    fig = nonlinear_tomo_example.plot_model(my_own_result.model)
    fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
 
-.. |Upload to Jamboard| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+.. |Upload to Jamboard 3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
    :target: https://jamboard.google.com/d/15FrdSczK_TK_COOLxfSJZ5CWMzH3qMoQKySJTAp5n-4/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 703-708
+.. GENERATED FROM PYTHON SOURCE LINES 706-711
 
 .. code-block:: default
 
@@ -1139,7 +1142,7 @@ You can start from the template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 710-738
+.. GENERATED FROM PYTHON SOURCE LINES 713-741
 
 .. code-block:: default
 
@@ -1194,7 +1197,7 @@ You can start from the template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 743-748
+.. GENERATED FROM PYTHON SOURCE LINES 746-751
 
 --------------
 
@@ -1202,7 +1205,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 748-754
+.. GENERATED FROM PYTHON SOURCE LINES 751-757
 
 .. code-block:: default
 
@@ -1234,7 +1237,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  29.586 seconds)
+   **Total running time of the script:** ( 0 minutes  27.597 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_2_travel_time_tomography.py:

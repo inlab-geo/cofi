@@ -5,22 +5,24 @@
 
 Computation times
 =================
-**29:26.747** total execution time for **examples_generated** files:
+**02:33.084** total execution time for **examples_generated** files:
 
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_pygimli_dcip_century_rect_mesh.py` (``pygimli_dcip_century_rect_mesh.py``) | 23:45.693 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_linear_regression_sealevel.py` (``linear_regression_sealevel.py``)         | 02:33.084 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_pygimli_dcip.py` (``pygimli_dcip.py``)                                     | 02:52.211 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_fmm_tomography.py` (``fmm_tomography.py``)                                 | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_pygimli_dcip_century_tri_mesh.py` (``pygimli_dcip_century_tri_mesh.py``)   | 01:51.172 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_gravity_density.py` (``gravity_density.py``)                               | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_gravity_density.py` (``gravity_density.py``)                               | 00:20.104 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_linear_regression.py` (``linear_regression.py``)                           | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_pygimli_ert.py` (``pygimli_ert.py``)                                       | 00:17.228 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_pygimli_dcip.py` (``pygimli_dcip.py``)                                     | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_fmm_tomography.py` (``fmm_tomography.py``)                                 | 00:09.071 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_pygimli_dcip_century_rect_mesh.py` (``pygimli_dcip_century_rect_mesh.py``) | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_linear_regression.py` (``linear_regression.py``)                           | 00:07.281 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_pygimli_dcip_century_tri_mesh.py` (``pygimli_dcip_century_tri_mesh.py``)   | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_xray_tomography.py` (``xray_tomography.py``)                               | 00:03.987 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_pygimli_ert.py` (``pygimli_ert.py``)                                       | 00:00.000 | 0.0 MB |
++--------------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_examples_generated_xray_tomography.py` (``xray_tomography.py``)                               | 00:00.000 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+

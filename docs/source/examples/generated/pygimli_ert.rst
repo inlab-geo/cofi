@@ -28,13 +28,15 @@ provided by `PyGIMLi <https://www.pygimli.org/>`__, we use different
 ``cofi`` solvers to solve the corresponding inverse problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-19
+.. GENERATED FROM PYTHON SOURCE LINES 16-21
 
-.. raw:: html
+|Open In Colab|
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/pygimli_ert/pygimli_ert.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/pygimli_ert/pygimli_ert.ipynb
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-45
+
+.. GENERATED FROM PYTHON SOURCE LINES 24-47
 
 .. raw:: html
 
@@ -60,13 +62,13 @@ complex-valued electrical
 inversion <https://www.pygimli.org/_examples_auto/3_dc_and_ip/plot_07_simple_complex_inversion.html#sphx-glr-examples-auto-3-dc-and-ip-plot-07-simple-complex-inversion-py>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-51
+.. GENERATED FROM PYTHON SOURCE LINES 50-53
 
 0. Import modules
 -----------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-65
+.. GENERATED FROM PYTHON SOURCE LINES 53-67
 
 .. code-block:: default
 
@@ -91,7 +93,7 @@ inversion <https://www.pygimli.org/_examples_auto/3_dc_and_ip/plot_07_simple_com
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-71
+.. GENERATED FROM PYTHON SOURCE LINES 69-73
 
 .. code-block:: default
 
@@ -106,7 +108,7 @@ inversion <https://www.pygimli.org/_examples_auto/3_dc_and_ip/plot_07_simple_com
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 76-86
+.. GENERATED FROM PYTHON SOURCE LINES 78-88
 
 We will need the following packages:
 
@@ -119,7 +121,7 @@ Additionally, we wrap some ``pygimli`` code in file
 ``pygimli_ert_lib.py`` and import it here for conciseness.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-99
+.. GENERATED FROM PYTHON SOURCE LINES 88-101
 
 .. code-block:: default
 
@@ -143,19 +145,19 @@ Additionally, we wrap some ``pygimli`` code in file
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-107
+.. GENERATED FROM PYTHON SOURCE LINES 106-109
 
 1. Define the problem
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-113
+.. GENERATED FROM PYTHON SOURCE LINES 112-115
 
 We first define the true model, the survey and map it on a computational
 mesh designed for the survey and true anomaly.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-122
+.. GENERATED FROM PYTHON SOURCE LINES 115-124
 
 .. code-block:: default
 
@@ -186,7 +188,7 @@ mesh designed for the survey and true anomaly.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-133
+.. GENERATED FROM PYTHON SOURCE LINES 129-135
 
 Generate the synthetic data as a container with all the necessary
 information for plotting.
@@ -195,7 +197,7 @@ In ERT problems, the model and data are by convention treated in log
 space.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-140
+.. GENERATED FROM PYTHON SOURCE LINES 135-142
 
 .. code-block:: default
 
@@ -226,14 +228,14 @@ space.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-149
+.. GENERATED FROM PYTHON SOURCE LINES 147-151
 
 Further, we create a ``pygimli.ert.ERTManager`` instance to keep record
 of problem-specific information like the inversion mesh, and to perform
 forward operation for the inversion solvers.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-153
+.. GENERATED FROM PYTHON SOURCE LINES 151-155
 
 .. code-block:: default
 
@@ -248,7 +250,7 @@ forward operation for the inversion solvers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-180
+.. GENERATED FROM PYTHON SOURCE LINES 160-182
 
 The inversion can use a different mesh and the mesh to be used should
 know nothing about the mesh that was designed based on the true model.
@@ -273,7 +275,7 @@ Here we first demonstrate how to use a *triangular mesh*. Note that this
 makes the inversion problem under-determined.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-185
+.. GENERATED FROM PYTHON SOURCE LINES 182-187
 
 .. code-block:: default
 
@@ -300,7 +302,7 @@ makes the inversion problem under-determined.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 190-195
+.. GENERATED FROM PYTHON SOURCE LINES 192-197
 
 `This
 folder <https://github.com/inlab-geo/cofi-examples/tree/main/examples/pygimli_ert>`__
@@ -308,7 +310,7 @@ contains examples scripts that run inversion for triangular or
 rectangular meshes, with different inversion approaches.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 198-204
+.. GENERATED FROM PYTHON SOURCE LINES 200-206
 
 With the inversion mesh created, we now define a starting model, forward
 operator and weighting matrix for regularization using PyGIMLi.
@@ -317,7 +319,7 @@ Recall that both our model and data will be in log space when we perform
 inversion.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 204-216
+.. GENERATED FROM PYTHON SOURCE LINES 206-218
 
 .. code-block:: default
 
@@ -351,7 +353,7 @@ inversion.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 221-235
+.. GENERATED FROM PYTHON SOURCE LINES 223-237
 
 CoFI and other inference packages require a set of functions that
 provide the misfit, the jacobian the residual within the case of scipy
@@ -368,14 +370,14 @@ the details. These functions are:
 -  ``get_hessian``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 238-242
+.. GENERATED FROM PYTHON SOURCE LINES 240-244
 
 With all the above forward operations set up with PyGIMLi, we now define
 the problem in ``cofi`` by setting the problem information for a
 ``BaseProblem`` object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 242-258
+.. GENERATED FROM PYTHON SOURCE LINES 244-260
 
 .. code-block:: default
 
@@ -402,12 +404,12 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 263-265
+.. GENERATED FROM PYTHON SOURCE LINES 265-267
 
 Review what information is included in the ``BaseProblem`` object:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-268
+.. GENERATED FROM PYTHON SOURCE LINES 267-270
 
 .. code-block:: default
 
@@ -440,7 +442,7 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 273-279
+.. GENERATED FROM PYTHON SOURCE LINES 275-281
 
 2. Define the inversion options and run
 ---------------------------------------
@@ -449,7 +451,7 @@ SciPy’s optimizer (`trust-exact <https://docs.scipy.org/doc/scipy/reference/op
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 279-282
+.. GENERATED FROM PYTHON SOURCE LINES 281-284
 
 .. code-block:: default
 
@@ -481,7 +483,7 @@ SciPy’s optimizer (`trust-exact <https://docs.scipy.org/doc/scipy/reference/op
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 284-289
+.. GENERATED FROM PYTHON SOURCE LINES 286-291
 
 .. code-block:: default
 
@@ -497,12 +499,12 @@ SciPy’s optimizer (`trust-exact <https://docs.scipy.org/doc/scipy/reference/op
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 294-296
+.. GENERATED FROM PYTHON SOURCE LINES 296-298
 
 Review what’s been defined for the inversion we are about to run:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 296-299
+.. GENERATED FROM PYTHON SOURCE LINES 298-301
 
 .. code-block:: default
 
@@ -535,7 +537,7 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 301-307
+.. GENERATED FROM PYTHON SOURCE LINES 303-309
 
 .. code-block:: default
 
@@ -561,7 +563,7 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 309-312
+.. GENERATED FROM PYTHON SOURCE LINES 311-314
 
 .. code-block:: default
 
@@ -581,12 +583,12 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 317-319
+.. GENERATED FROM PYTHON SOURCE LINES 319-321
 
 Plot the results:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 319-327
+.. GENERATED FROM PYTHON SOURCE LINES 321-329
 
 .. code-block:: default
 
@@ -616,12 +618,12 @@ Plot the results:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 332-334
+.. GENERATED FROM PYTHON SOURCE LINES 334-336
 
 We can now also compare the synthetic data with provided observations.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 334-346
+.. GENERATED FROM PYTHON SOURCE LINES 336-348
 
 .. code-block:: default
 
@@ -655,7 +657,7 @@ We can now also compare the synthetic data with provided observations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 351-362
+.. GENERATED FROM PYTHON SOURCE LINES 353-364
 
 3. What’s next?
 ---------------
@@ -669,7 +671,7 @@ folder <https://github.com/inlab-geo/cofi-examples/tree/main/examples/pygimli_er
 to explore more.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 365-375
+.. GENERATED FROM PYTHON SOURCE LINES 367-377
 
 .. raw:: html
 
@@ -682,7 +684,7 @@ to explore more.
    And CoFI will combine them to get the `log_posterior`. -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 378-383
+.. GENERATED FROM PYTHON SOURCE LINES 380-385
 
 --------------
 
@@ -690,7 +692,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 383-389
+.. GENERATED FROM PYTHON SOURCE LINES 385-391
 
 .. code-block:: default
 
@@ -720,7 +722,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  17.228 seconds)
+   **Total running time of the script:** ( 0 minutes  16.356 seconds)
 
 
 .. _sphx_glr_download_examples_generated_pygimli_ert.py:

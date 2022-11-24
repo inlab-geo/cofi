@@ -21,13 +21,15 @@
 Seismic Wave Tomography via Fast Marching
 =========================================
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-12
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
-.. raw:: html
+|Open In Colab|
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/fmm_tomography/fmm_tomography.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/fmm_tomography/fmm_tomography.ipynb
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-34
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-36
 
 .. raw:: html
 
@@ -49,7 +51,7 @@ Seismic Wave Tomography via Fast Marching
    file specifies a list of packages required to run the notebooks)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-105
+.. GENERATED FROM PYTHON SOURCE LINES 39-107
 
 .. raw:: html
 
@@ -120,13 +122,13 @@ Fortran code within the package
 ```FMTOMO`` <http://iearth.edu.au/codes/FMTOMO/>`__ by Nick Rawlinson.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-111
+.. GENERATED FROM PYTHON SOURCE LINES 110-113
 
 0. Import modules
 -----------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-120
+.. GENERATED FROM PYTHON SOURCE LINES 113-122
 
 .. code-block:: default
 
@@ -146,7 +148,7 @@ Fortran code within the package
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-130
+.. GENERATED FROM PYTHON SOURCE LINES 124-132
 
 .. code-block:: default
 
@@ -165,7 +167,7 @@ Fortran code within the package
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-145
+.. GENERATED FROM PYTHON SOURCE LINES 137-147
 
 Problem setup
 ~~~~~~~~~~~~~
@@ -178,7 +180,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 (red, top left) and the other with higher velocity (blue, bottom right).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-150
+.. GENERATED FROM PYTHON SOURCE LINES 147-152
 
 .. code-block:: default
 
@@ -211,7 +213,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 152-155
+.. GENERATED FROM PYTHON SOURCE LINES 154-157
 
 .. code-block:: default
 
@@ -254,13 +256,13 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-163
+.. GENERATED FROM PYTHON SOURCE LINES 162-165
 
 1. Define the problem
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-170
+.. GENERATED FROM PYTHON SOURCE LINES 165-172
 
 .. code-block:: default
 
@@ -278,7 +280,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-177
+.. GENERATED FROM PYTHON SOURCE LINES 174-179
 
 .. code-block:: default
 
@@ -294,7 +296,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-187
+.. GENERATED FROM PYTHON SOURCE LINES 181-189
 
 .. code-block:: default
 
@@ -313,7 +315,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 189-215
+.. GENERATED FROM PYTHON SOURCE LINES 191-217
 
 .. code-block:: default
 
@@ -350,7 +352,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 217-224
+.. GENERATED FROM PYTHON SOURCE LINES 219-226
 
 .. code-block:: default
 
@@ -368,12 +370,12 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 229-231
+.. GENERATED FROM PYTHON SOURCE LINES 231-233
 
 Review what information is included in the ``BaseProblem`` object:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-234
+.. GENERATED FROM PYTHON SOURCE LINES 233-236
 
 .. code-block:: default
 
@@ -406,13 +408,13 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 239-242
+.. GENERATED FROM PYTHON SOURCE LINES 241-244
 
 2. Define the inversion options
 -------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 242-249
+.. GENERATED FROM PYTHON SOURCE LINES 244-251
 
 .. code-block:: default
 
@@ -430,12 +432,12 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 254-256
+.. GENERATED FROM PYTHON SOURCE LINES 256-258
 
 Review what’s been defined for the inversion we are about to run:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 256-259
+.. GENERATED FROM PYTHON SOURCE LINES 258-261
 
 .. code-block:: default
 
@@ -469,13 +471,13 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 264-267
+.. GENERATED FROM PYTHON SOURCE LINES 266-269
 
 3. Start an inversion
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 267-272
+.. GENERATED FROM PYTHON SOURCE LINES 269-274
 
 .. code-block:: default
 
@@ -513,13 +515,13 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 277-280
+.. GENERATED FROM PYTHON SOURCE LINES 279-282
 
 4. Plotting
 -----------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 280-284
+.. GENERATED FROM PYTHON SOURCE LINES 282-286
 
 .. code-block:: default
 
@@ -557,7 +559,7 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 289-302
+.. GENERATED FROM PYTHON SOURCE LINES 291-304
 
 --------------
 
@@ -573,7 +575,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 302-308
+.. GENERATED FROM PYTHON SOURCE LINES 304-310
 
 .. code-block:: default
 
@@ -602,7 +604,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  9.071 seconds)
+   **Total running time of the script:** ( 0 minutes  7.982 seconds)
 
 
 .. _sphx_glr_download_examples_generated_fmm_tomography.py:
