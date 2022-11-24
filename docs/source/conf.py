@@ -14,6 +14,7 @@ import os
 import datetime
 import sys
 import subprocess
+from sphinx_gallery.sorting import FileNameSortKey
 
 import cofi
 
@@ -56,6 +57,10 @@ exclude_patterns = [
     "examples/generated/*.md5",
     "examples/generated/*.py",
     "examples/generated/*.ipynb",
+    "tutorials/scripts/README.rst",
+    "tutorials/generated/*.md5",
+    "tutorials/generated/*.py",
+    "tutorials/generated/*.ipynb",
 ]
 
 source_suffix = ".rst"
@@ -119,13 +124,15 @@ html_context = {
 
 # -- Sphinx Gallery settings --------------------------------------------------
 sphinx_gallery_conf = {
-    "examples_dirs": "examples/scripts",
-    "gallery_dirs": "examples/generated",
+    "examples_dirs": ["examples/scripts", "tutorials/scripts"],
+    "gallery_dirs": ["examples/generated", "tutorials/generated"],
+    "within_subsection_order": FileNameSortKey,
     "filename_pattern": ".",
-    "ignore_pattern": "._lib.py",
+    "ignore_pattern": "._lib.py|_preprocessing.py",
     "pypandoc": True,
     "download_all_examples": False,
 }
+
 
 # -- myst-nb settings ---------------------------------------------------------
 myst_enable_extensions = [

@@ -2,7 +2,7 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.2.dev22 (Not yet released)
+## v0.1.2.dev22 (23/11/2022)
 
 ### CoFI Core
 

@@ -55,6 +55,6 @@ current status.
 
   Congrats! You are on board. Click `here <installation.html>`_ if you haven't 
   installed CoFI locally yet. Otherwise, continue with 
-  `tutorials <tutorials/index.html>`_ for a step-by-step guide, or 
+  `tutorials <tutorials/generated/index.html>`_ for a step-by-step guide, or 
   `example gallery <examples/generated/index.html>`_ if you are eager to learn
   through examples.

@@ -134,5 +134,5 @@ Install
 .. hint::
 
   CoFI time!
-  Check out our step-by-step `tutorials <tutorials/index.html>`_ or 
+  Check out our step-by-step `tutorials <tutorials/generated/index.html>`_ or 
   `examples <examples/generated/index.html>`_ to get started.

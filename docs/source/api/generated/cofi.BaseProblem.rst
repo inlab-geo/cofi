@@ -662,7 +662,7 @@ cofi.BaseProblem
 
 
 
-    .. automethod:: BaseProblem.suggest_solvers
+    .. automethod:: BaseProblem.suggest_tools
 
 
 

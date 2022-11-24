@@ -21,13 +21,15 @@
 Gravity Density Model
 =====================
 
-.. GENERATED FROM PYTHON SOURCE LINES 9-12
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
-.. raw:: html
+|Open In Colab|
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/gravity/gravity_density.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+.. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/gravity/gravity_density.ipynb
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-22
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-24
 
 If you are running this notebook locally, make sure you’ve followed
 `steps
@@ -37,14 +39,14 @@ to set up the environment. (This
 file specifies a list of packages required to run the notebooks)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-29
+.. GENERATED FROM PYTHON SOURCE LINES 27-31
 
 Adapted from `gravity forward
 code <https://github.com/inlab-geo/inversion-test-problems/blob/main/contrib/gravityforward/__init__.py>`__
 written in inversion-test-problems
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-37
+.. GENERATED FROM PYTHON SOURCE LINES 34-39
 
 --------------
 
@@ -52,7 +54,7 @@ written in inversion-test-problems
 -----------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-46
+.. GENERATED FROM PYTHON SOURCE LINES 39-48
 
 .. code-block:: default
 
@@ -72,13 +74,13 @@ written in inversion-test-problems
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-52
+.. GENERATED FROM PYTHON SOURCE LINES 50-54
 
 .. code-block:: default
 
 
     # !git clone https://github.com/inlab-geo/cofi-examples.git
-    # %cd cofi-examples/notebooks/gravity
+    # %cd cofi-examples/examples/gravity
 
 
 
@@ -87,7 +89,7 @@ written in inversion-test-problems
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-64
+.. GENERATED FROM PYTHON SOURCE LINES 56-66
 
 .. code-block:: default
 
@@ -108,7 +110,7 @@ written in inversion-test-problems
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-144
+.. GENERATED FROM PYTHON SOURCE LINES 71-146
 
 --------------
 
@@ -186,7 +188,7 @@ pp.552-560
    above described approach by Plouff et al., 1976.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 144-194
+.. GENERATED FROM PYTHON SOURCE LINES 146-196
 
 .. code-block:: default
 
@@ -259,13 +261,14 @@ pp.552-560
     List of functions/properties created based on what you have provided:
     ['objective', 'residual', 'jacobian_times_vector', 'data_misfit']
     ---------------------------------------------------------------------
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization_matrix', 'data_covariance', 'data_covariance_inv', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 199-204
+.. GENERATED FROM PYTHON SOURCE LINES 201-206
 
 --------------
 
@@ -273,7 +276,7 @@ pp.552-560
 -----------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 204-210
+.. GENERATED FROM PYTHON SOURCE LINES 206-212
 
 .. code-block:: default
 
@@ -307,7 +310,7 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 215-220
+.. GENERATED FROM PYTHON SOURCE LINES 217-222
 
 --------------
 
@@ -315,7 +318,7 @@ pp.552-560
 ----------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-224
+.. GENERATED FROM PYTHON SOURCE LINES 222-226
 
 .. code-block:: default
 
@@ -330,7 +333,7 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 226-230
+.. GENERATED FROM PYTHON SOURCE LINES 228-232
 
 .. code-block:: default
 
@@ -446,12 +449,12 @@ pp.552-560
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 235-237
+.. GENERATED FROM PYTHON SOURCE LINES 237-239
 
 Let’s see the density image from a vertical plane:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 237-243
+.. GENERATED FROM PYTHON SOURCE LINES 239-245
 
 .. code-block:: default
 
@@ -475,16 +478,16 @@ Let’s see the density image from a vertical plane:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fe11d600a60>
+    <matplotlib.colorbar.Colorbar object at 0x7f12f8e74b20>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 248-250
+.. GENERATED FROM PYTHON SOURCE LINES 250-252
 
 From a different angle:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 250-254
+.. GENERATED FROM PYTHON SOURCE LINES 252-256
 
 .. code-block:: default
 
@@ -506,11 +509,11 @@ From a different angle:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fe11d50a3b0>
+    <matplotlib.colorbar.Colorbar object at 0x7f130117cbb0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 259-264
+.. GENERATED FROM PYTHON SOURCE LINES 261-266
 
 --------------
 
@@ -518,7 +521,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 264-270
+.. GENERATED FROM PYTHON SOURCE LINES 266-272
 
 .. code-block:: default
 
@@ -536,7 +539,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev13
+    cofi 0.1.2.dev22
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
@@ -549,7 +552,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.864 seconds)
+   **Total running time of the script:** ( 0 minutes  19.313 seconds)
 
 
 .. _sphx_glr_download_examples_generated_gravity_density.py:

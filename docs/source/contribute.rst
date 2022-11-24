@@ -187,7 +187,7 @@ Follow the instructions
 `here <https://github.com/inlab-geo/cofi-examples#contribution>`_ for details on
 how to contribute to the example repository.
 
-Our `tutorials <tutorial.html>`_ page is a good place to start learning about how to
+Our `tutorials <tutorials/generated/index.html>`_ page is a good place to start learning about how to
 plug in an inversion problem in ``cofi``. Furthermore, there are examples with increasing 
 complexity presented in the `example gallery <cofi-examples/tools/sphinx_gallery/generated/index.html>`_ 
 page for you to learn from.
@@ -207,7 +207,7 @@ solvers tree under ``src/cofi/solvers/__init__.py`` so that our dispatch routine
 find the class from the name specified in an :class:`InversionOptions` instance.
 
 Documentation in
-`tutorials <tutorial.html>`_ and 
+`tutorials <tutorials/generated/index.html>`_ and 
 `API reference - BaseSolver <api/generated/cofi.solvers.BaseSolver.html>`_ provides
 further details and examples.
 
@@ -317,12 +317,14 @@ below:
      - docs/index.rst
    * - `Installation <installation.html>`_
      - docs/installation.rst
-   * - `Tutorials <tutorial.html>`_
-     - docs/tutorial.rst
-   * - `Example gallery (front page) <cofi-examples/tools/sphinx_gallery/generated/index.html>`_
-     - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ scripts/README.rst
-   * - `Exmaple gallery (examples content) <cofi-examples/tools/sphinx_gallery/generated/index.html>`_
-     - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ notebooks/example.ipynb
+   * - `Tutorials (front page) <tutorials/generated/index.html>`_
+     - docs/tutorials/scripts/README.rst
+   * - `Tutorials (tutorials content) <tutorials/generated/index.html>`_
+     - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ tutorials/tutorial_name.ipynb
+   * - `Example gallery (front page) <examples/generated/index.html>`_
+     - docs/examples/scripts/README.rst
+   * - `Exmaple gallery (examples content) <examples/generated/index.html>`_
+     - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ examples/example_name/example_name.ipynb
    * - `Frequently asked questions <faq.html>`_
      - docs/faq.rst
    * - `List of functions and classes (API) <api/index.html>`_
@@ -382,7 +384,7 @@ To **test** the changes, go to ``docs`` directory, run ``make html`` and open th
 .. │   │   ├── linear_regression.html
 .. │   │   └── sg_execution_times.html
 .. │   ├── index.html
-.. │   ├── notebooks
+.. │   ├── examples
 .. │   │   ├── gravity_density.html
 .. │   │   ├── gravity_density_lab.html
 .. │   │   ├── linear_regression.html

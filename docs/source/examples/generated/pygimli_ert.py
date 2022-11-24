@@ -1,6 +1,6 @@
 """
-PyGIMLi - ERT
-=============
+Electrical Resistivity Tomography with PyGIMLi
+==============================================
 
 """
 
@@ -13,9 +13,11 @@ PyGIMLi - ERT
 
 
 ######################################################################
-# .. raw:: html
+# |Open In Colab|
 # 
-# 	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/pygimli_ert/pygimli_ert.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+# .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
+#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/pygimli_ert/pygimli_ert.ipynb
+# 
 
 
 ######################################################################
@@ -37,6 +39,10 @@ PyGIMLi - ERT
 #    to set up the environment. (This
 #    `environment.yml <https://github.com/inlab-geo/cofi-examples/blob/main/envs/environment.yml>`__
 #    file specifies a list of packages required to run the notebooks)
+# 
+# Note: This notebook is adapted from a PyGIMLi example: `Naive
+# complex-valued electrical
+# inversion <https://www.pygimli.org/_examples_auto/3_dc_and_ip/plot_07_simple_complex_inversion.html#sphx-glr-examples-auto-3-dc-and-ip-plot-07-simple-complex-inversion-py>`__
 # 
 
 
@@ -62,7 +68,7 @@ PyGIMLi - ERT
 #
 
 # !git clone https://github.com/inlab-geo/cofi-examples.git
-# %cd cofi-examples/notebooks/pygimli_ert
+# %cd cofi-examples/examples/pygimli_ert
 
 ######################################################################
 #
@@ -184,7 +190,7 @@ ax[0].set_title("Mesh used for inversion")
 
 ######################################################################
 # `This
-# folder <https://github.com/inlab-geo/cofi-examples/tree/main/notebooks/pygimli_ert>`__
+# folder <https://github.com/inlab-geo/cofi-examples/tree/main/examples/pygimli_ert>`__
 # contains examples scripts that run inversion for triangular or
 # rectangular meshes, with different inversion approaches.
 # 
@@ -273,7 +279,7 @@ ert_problem.summary()
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
-ert_problem.suggest_solvers();
+ert_problem.suggest_tools();
 
 ######################################################################
 #
@@ -352,7 +358,7 @@ axes[1].set_title("Provided data")
 # inversion solvers (even a sampler!) and a similar problem defined with a
 # rectangular mesh. If you’d like to see some self-contained examples,
 # head to `this GitHub
-# folder <https://github.com/inlab-geo/cofi-examples/tree/main/notebooks/pygimli_ert>`__
+# folder <https://github.com/inlab-geo/cofi-examples/tree/main/examples/pygimli_ert>`__
 # to explore more.
 # 
 
