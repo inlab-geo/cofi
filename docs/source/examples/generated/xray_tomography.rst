@@ -25,7 +25,7 @@ Xray Tomography
 
 .. raw:: html
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/xray_tomography/xray_tomography.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/xray_tomography/xray_tomography.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
 
 .. GENERATED FROM PYTHON SOURCE LINES 15-34
 
@@ -190,7 +190,7 @@ stays constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 864/10416 [00:00<00:01, 8634.10it/s]    Evaluating paths:  17%|#6        | 1764/10416 [00:00<00:00, 8847.74it/s]    Evaluating paths:  25%|##5       | 2649/10416 [00:00<00:00, 8695.27it/s]    Evaluating paths:  34%|###3      | 3519/10416 [00:00<00:00, 8632.42it/s]    Evaluating paths:  42%|####2     | 4383/10416 [00:00<00:00, 8598.25it/s]    Evaluating paths:  50%|#####     | 5243/10416 [00:00<00:00, 8517.38it/s]    Evaluating paths:  59%|#####8    | 6117/10416 [00:00<00:00, 8585.54it/s]    Evaluating paths:  67%|######7   | 6989/10416 [00:00<00:00, 8627.42it/s]    Evaluating paths:  75%|#######5  | 7852/10416 [00:00<00:00, 8587.61it/s]    Evaluating paths:  84%|########3 | 8725/10416 [00:01<00:00, 8630.37it/s]    Evaluating paths:  92%|#########2| 9610/10416 [00:01<00:00, 8693.16it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8669.19it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 852/10416 [00:00<00:01, 8509.82it/s]    Evaluating paths:  17%|#6        | 1737/10416 [00:00<00:00, 8705.01it/s]    Evaluating paths:  25%|##5       | 2608/10416 [00:00<00:00, 8631.56it/s]    Evaluating paths:  33%|###3      | 3474/10416 [00:00<00:00, 8639.34it/s]    Evaluating paths:  42%|####1     | 4349/10416 [00:00<00:00, 8676.84it/s]    Evaluating paths:  50%|#####     | 5217/10416 [00:00<00:00, 8629.94it/s]    Evaluating paths:  58%|#####8    | 6089/10416 [00:00<00:00, 8657.82it/s]    Evaluating paths:  67%|######6   | 6965/10416 [00:00<00:00, 8686.48it/s]    Evaluating paths:  75%|#######5  | 7834/10416 [00:00<00:00, 8634.28it/s]    Evaluating paths:  84%|########3 | 8706/10416 [00:01<00:00, 8658.51it/s]    Evaluating paths:  92%|#########2| 9584/10416 [00:01<00:00, 8693.94it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8680.04it/s]
 
 
 
@@ -264,7 +264,8 @@ Review what information is included in the ``BaseProblem`` object:
     List of functions/properties created based on what you have provided:
     ['jacobian_times_vector']
     ---------------------------------------------------------------------
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
 
 
@@ -583,7 +584,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev13
+    cofi 0.1.2.dev22
     cofi_espresso 0.0.1.dev10
     numpy 1.21.6
     scipy 1.9.1
@@ -595,7 +596,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  4.720 seconds)
+   **Total running time of the script:** ( 0 minutes  3.987 seconds)
 
 
 .. _sphx_glr_download_examples_generated_xray_tomography.py:

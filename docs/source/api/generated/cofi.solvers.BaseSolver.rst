@@ -156,6 +156,34 @@ cofi.solvers.BaseSolver
 
 
 
+    .. automethod:: BaseSolver.optional_in_options
+
+
+
+
+
+
+    .. automethod:: BaseSolver.optional_in_problem
+
+
+
+
+
+
+    .. automethod:: BaseSolver.required_in_options
+
+
+
+
+
+
+    .. automethod:: BaseSolver.required_in_problem
+
+
+
+
+
+
     .. autoattribute:: BaseSolver.components_used
 
     .. autoattribute:: BaseSolver.documentation_links
@@ -163,14 +191,6 @@ cofi.solvers.BaseSolver
     .. autoattribute:: BaseSolver.inv_options
 
     .. autoattribute:: BaseSolver.inv_problem
-
-    .. autoattribute:: BaseSolver.optional_in_options
-
-    .. autoattribute:: BaseSolver.optional_in_problem
-
-    .. autoattribute:: BaseSolver.required_in_options
-
-    .. autoattribute:: BaseSolver.required_in_problem
 
     .. autoattribute:: BaseSolver.short_description
 

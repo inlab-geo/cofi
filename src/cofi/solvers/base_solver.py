@@ -111,7 +111,9 @@ class BaseSolver(metaclass=ABCMeta):
 
             super().__init__(inv_problem, inv_options)
 
+
         What it does are:
+
         - Attaching the :class:`BaseProblem` and :class:`InversionOptions` objects to
           ``self``;
         - Validating both input objects based on the information in

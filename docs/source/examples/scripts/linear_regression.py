@@ -8,7 +8,7 @@ Polynomial Linear Regression
 ######################################################################
 # .. raw:: html
 # 
-# 	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+# 	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
 
 
 ######################################################################
@@ -202,7 +202,7 @@ plt.legend();
 # 
 # -  ``defined_components()`` (review what have been set)
 # -  ``summary()`` (better displayed information)
-# -  ``suggest_solvers()``
+# -  ``suggest_tools()``
 # 
 # We refer readers to `cofi’s API reference
 # page <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html>`__

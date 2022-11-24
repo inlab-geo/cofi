@@ -25,7 +25,7 @@ Seismic Wave Tomography via Fast Marching
 
 .. raw:: html
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/fmm_tomography/fmm_tomography.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/fmm_tomography/fmm_tomography.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
 
 .. GENERATED FROM PYTHON SOURCE LINES 15-34
 
@@ -399,7 +399,8 @@ Review what information is included in the ``BaseProblem`` object:
     List of functions/properties created based on what you have provided:
     ['hessian_times_vector']
     ---------------------------------------------------------------------
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data', 'data_covariance', 'data_covariance_inv', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
 
 
@@ -505,6 +506,9 @@ Review what’s been defined for the inversion we are about to run:
     model: [0.00048375 0.00048181 0.00048015 ... 0.00050722 0.00050676 0.00050618]
     num_iterations: 5
     objective_val: 2.98668774544954
+    n_obj_evaluations: 6
+    n_grad_evaluations: 6
+    n_hess_evaluations: 6
 
 
 
@@ -587,7 +591,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev13
+    cofi 0.1.2.dev22
     cofi_espresso 0.0.1.dev10
     numpy 1.21.6
     matplotlib 3.5.3
@@ -598,7 +602,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.650 seconds)
+   **Total running time of the script:** ( 0 minutes  9.071 seconds)
 
 
 .. _sphx_glr_download_examples_generated_fmm_tomography.py:

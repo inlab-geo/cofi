@@ -19,15 +19,17 @@ import json
 current_dir = Path(__file__).resolve().parent
 docs_src = current_dir.parent
 cofi_examples_dir = docs_src / "cofi-examples"
-NOTEBOOKS = "notebooks"
-NOTEBOOKS_DIR = str(cofi_examples_dir / NOTEBOOKS)
 EXAMPLES = "examples"
-SCRIPTS_DIR = str(docs_src / EXAMPLES / "scripts")
+EXAMPLES_SRC_DIR = str(cofi_examples_dir / EXAMPLES)
+EXAMPLES_SCRIPTS = str(docs_src / EXAMPLES / "scripts")
+TUTORIALS = "tutorials"
+TUTORIALS_SRC_DIR = str(cofi_examples_dir / TUTORIALS)
+TUTORIALS_SCRIPTS = str(docs_src / TUTORIALS / "scripts")
 
 BADGE_BEGIN = "<!--<badge>-->"
 BADGE_END = "<!--</badge>-->"
 
-def convert_ipynb_to_gallery(file_name):
+def convert_ipynb_to_gallery(file_name, dst_folder):
     python_file = ""
 
     nb_dict = json.load(open(file_name))
@@ -61,33 +63,57 @@ def convert_ipynb_to_gallery(file_name):
                 python_file = python_file + '\n' * 2 + '#' * 70 + '\n' + '#'
 
     python_file = python_file.replace("\n%", "\n# %")
+    python_file = python_file.replace("\n!", "\n# !")
 
     file_name_without_path = file_name.split("/")[-1]
-    script_file_path = f"{SCRIPTS_DIR}/{file_name_without_path}"
+    script_file_path = f"{dst_folder}/{file_name_without_path}"
     script_file_path = script_file_path.replace(".ipynb", ".py")
     open(script_file_path, 'w').write(python_file)
 
-def gen_scripts_all(_):
-    print("Generating gallery scripts...")
-    # collect notebooks to convert to sphinx gallery scripts
-    all_scripts = glob(f"{NOTEBOOKS_DIR}/*/*.ipynb")
-    all_scripts = [name for name in all_scripts if "lab" not in name]
-    # convert
-    print("Converting files...")
-    for script in all_scripts:
-        print(f"file: {script}")
-        convert_ipynb_to_gallery(script)
-    # collect all data and library files to move to scripts/
-    all_data = glob(f"{NOTEBOOKS_DIR}/*/*.npz")
-    all_data.extend(glob(f"{NOTEBOOKS_DIR}/*/*.dat"))
-    all_data.extend(glob(f"{NOTEBOOKS_DIR}/*/*.csv"))
-    all_data.extend(glob(f"{NOTEBOOKS_DIR}/*/*_lib.py"))
+def move_data_files(src_folder, dst_folder):
+    # collect all data and library files to move to dst_folder
+    all_patterns = [
+        "*.npz",
+        "*.dat",
+        "*.csv",
+        "*.vtk",
+        "*.txt",
+        "*_lib.py",
+    ]
+    all_data = []
+    for pattern in all_patterns:
+        all_data.extend(glob(f"{src_folder}/{pattern}"))
     # move
     print("\nMoving data files...")
     for data_file in all_data:
         data_filename_without_path = data_file.split("/")[-1]
-        dest_file_path = f"{SCRIPTS_DIR}/{data_filename_without_path}"
+        dest_file_path = f"{dst_folder}/{data_filename_without_path}"
         copyfile(data_file, dest_file_path)
+
+def gen_scripts_all(_):
+    # #### TUTORIALS ####
+    print("Generating tutorials gallery scripts...")
+    # collect tutorials to convert to sphinx gallery scripts
+    all_tutorials_scripts = glob(f"{TUTORIALS_SRC_DIR}/*.ipynb")
+    # convert
+    print("Converting tutorial files...")
+    for script in all_tutorials_scripts:
+        print(f"file: {script}")
+        convert_ipynb_to_gallery(script, TUTORIALS_SCRIPTS)
+    # collect all data and library files to move to scripts/
+    move_data_files(TUTORIALS_SRC_DIR, TUTORIALS_SCRIPTS)
+    # #### EXAMPLES ####
+    print("Generating examples gallery scripts...")
+    # collect examples to convert to sphinx gallery scripts
+    all_examples_scripts = glob(f"{EXAMPLES_SRC_DIR}/*/*.ipynb")
+    all_examples_scripts = [name for name in all_examples_scripts if "lab" not in name]
+    # convert
+    print("Converting example files...")
+    for script in all_examples_scripts:
+        print(f"file: {script}")
+        convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
+    # collect all data and library files to move to scripts/
+    move_data_files(f"{EXAMPLES_SRC_DIR}/*", EXAMPLES_SCRIPTS)
     print("\nOK.")
 
 def setup(app):
@@ -100,9 +126,9 @@ def setup(app):
 
 
 if __name__ == '__main__':
-    # collect notebooks to convert to sphinx gallery scripts
+    # collect examples to convert to sphinx gallery scripts
     if sys.argv[-1] == "all":
-        all_scripts = glob(f"{NOTEBOOKS_DIR}/*/*.ipynb")
+        all_scripts = glob(f"{EXAMPLES_SRC_DIR}/*/*.ipynb")
         all_scripts = [name for name in all_scripts if "lab" not in name]
     else:
         all_scripts = [sys.argv[-1]]
@@ -112,14 +138,14 @@ if __name__ == '__main__':
         print(f"file: {script}")
         convert_ipynb_to_gallery(script)
     # collect all data and library files to move to scripts/
-    all_data = glob(f"{NOTEBOOKS_DIR}/*/*.npz")
-    all_data.extend(glob(f"{NOTEBOOKS_DIR}/*/*.dat"))
-    all_data.extend(glob(f"{NOTEBOOKS_DIR}/*/*.csv"))
-    all_data.extend(glob(f"{NOTEBOOKS_DIR}/*/*_lib.py"))
+    all_data = glob(f"{EXAMPLES_SRC_DIR}/*/*.npz")
+    all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*.dat"))
+    all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*.csv"))
+    all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*_lib.py"))
     # move
     print("\nMoving data files...")
     for data_file in all_data:
         data_filename_without_path = data_file.split("/")[-1]
-        dest_file_path = f"{SCRIPTS_DIR}/{data_filename_without_path}"
+        dest_file_path = f"{EXAMPLES_SCRIPTS}/{data_filename_without_path}"
         copyfile(data_file, dest_file_path)
     print("\nOK.")

@@ -34,18 +34,18 @@ Below is a gallery of examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Xray Tomography">
+    <div class="sphx-glr-thumbcontainer" tooltip="Seismic Wave Tomography via Fast Marching">
 
 .. only:: html
 
-  .. image:: /examples/generated/images/thumb/sphx_glr_xray_tomography_thumb.png
-    :alt: Xray Tomography
+  .. image:: /examples/generated/images/thumb/sphx_glr_fmm_tomography_thumb.png
+    :alt: Seismic Wave Tomography via Fast Marching
 
-  :ref:`sphx_glr_examples_generated_xray_tomography.py`
+  :ref:`sphx_glr_examples_generated_fmm_tomography.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Xray Tomography</div>
+      <div class="sphx-glr-thumbnail-title">Seismic Wave Tomography via Fast Marching</div>
     </div>
 
 
@@ -68,40 +68,6 @@ Below is a gallery of examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Seismic Wave Tomography via Fast Marching">
-
-.. only:: html
-
-  .. image:: /examples/generated/images/thumb/sphx_glr_fmm_tomography_thumb.png
-    :alt: Seismic Wave Tomography via Fast Marching
-
-  :ref:`sphx_glr_examples_generated_fmm_tomography.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Seismic Wave Tomography via Fast Marching</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="PyGIMLi - ERT">
-
-.. only:: html
-
-  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_ert_thumb.png
-    :alt: PyGIMLi - ERT
-
-  :ref:`sphx_glr_examples_generated_pygimli_ert.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">PyGIMLi - ERT</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Polynomial Linear Regression">
 
 .. only:: html
@@ -119,17 +85,105 @@ Below is a gallery of examples.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Synthetic example)">
+
+.. only:: html
+
+  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_thumb.png
+    :alt: DCIP with PyGIMLi (Synthetic example)
+
+  :ref:`sphx_glr_examples_generated_pygimli_dcip.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">DCIP with PyGIMLi (Synthetic example)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)">
+
+.. only:: html
+
+  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_century_rect_mesh_thumb.png
+    :alt: DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)
+
+  :ref:`sphx_glr_examples_generated_pygimli_dcip_century_rect_mesh.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Real Dataset, Triangular Mesh)">
+
+.. only:: html
+
+  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
+    :alt: DCIP with PyGIMLi (Real Dataset, Triangular Mesh)
+
+  :ref:`sphx_glr_examples_generated_pygimli_dcip_century_tri_mesh.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">DCIP with PyGIMLi (Real Dataset, Triangular Mesh)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Electrical Resistivity Tomography with PyGIMLi">
+
+.. only:: html
+
+  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_ert_thumb.png
+    :alt: Electrical Resistivity Tomography with PyGIMLi
+
+  :ref:`sphx_glr_examples_generated_pygimli_ert.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Electrical Resistivity Tomography with PyGIMLi</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Xray Tomography">
+
+.. only:: html
+
+  .. image:: /examples/generated/images/thumb/sphx_glr_xray_tomography_thumb.png
+    :alt: Xray Tomography
+
+  :ref:`sphx_glr_examples_generated_xray_tomography.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Xray Tomography</div>
+    </div>
+
+
+.. raw:: html
+
     </div>
 
 
 .. toctree::
    :hidden:
 
-   /examples/generated/xray_tomography
-   /examples/generated/gravity_density
    /examples/generated/fmm_tomography
-   /examples/generated/pygimli_ert
+   /examples/generated/gravity_density
    /examples/generated/linear_regression
+   /examples/generated/pygimli_dcip
+   /examples/generated/pygimli_dcip_century_rect_mesh
+   /examples/generated/pygimli_dcip_century_tri_mesh
+   /examples/generated/pygimli_ert
+   /examples/generated/xray_tomography
 
 
 

@@ -8,7 +8,7 @@ Gravity Density Model
 ######################################################################
 # .. raw:: html
 # 
-# 	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/gravity/gravity_density.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+# 	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/gravity/gravity_density.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
 
 
 ######################################################################
@@ -47,7 +47,7 @@ Gravity Density Model
 #
 
 # !git clone https://github.com/inlab-geo/cofi-examples.git
-# %cd cofi-examples/notebooks/gravity
+# %cd cofi-examples/examples/gravity
 
 ######################################################################
 #

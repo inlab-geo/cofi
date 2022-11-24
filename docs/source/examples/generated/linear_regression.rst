@@ -25,7 +25,7 @@ Polynomial Linear Regression
 
 .. raw:: html
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/linear_regression/linear_regression.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
 
 .. GENERATED FROM PYTHON SOURCE LINES 15-22
 
@@ -239,7 +239,7 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f7951ff1d20>
+    <matplotlib.legend.Legend object at 0x7f63e8b29210>
 
 
 
@@ -257,7 +257,7 @@ Other helper methods for ``BaseProblem`` include:
 
 -  ``defined_components()`` (review what have been set)
 -  ``summary()`` (better displayed information)
--  ``suggest_solvers()``
+-  ``suggest_tools()``
 
 We refer readers to `cofi’s API reference
 page <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html>`__
@@ -306,7 +306,8 @@ object.
     List of functions/properties created based on what you have provided:
     ['jacobian_times_vector']
     ---------------------------------------------------------------------
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
 
 
@@ -390,7 +391,8 @@ categories of inversion approaches you’d like to use.
     {
         "optimization": [
             "scipy.optimize.minimize",
-            "scipy.optimize.least_squares"
+            "scipy.optimize.least_squares",
+            "torch.optim"
         ],
         "matrix solvers": [
             "scipy.linalg.lstsq",
@@ -572,7 +574,8 @@ and is an engine to actually perform the inversion.
     ['jacobian', 'data']
     List of functions/properties created based on what you have provided:
     ['jacobian_times_vector']
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
 
 
@@ -711,10 +714,11 @@ any).
     ['jacobian', 'data']
     List of functions/properties created based on what you have provided:
     ['jacobian_times_vector']
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
     List of functions/properties got used by the backend tool:
-    ['data', 'jacobian']
+    ['jacobian', 'data']
 
 
 
@@ -759,7 +763,7 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f79521c4fa0>
+    <matplotlib.legend.Legend object at 0x7f63d29ab3a0>
 
 
 
@@ -964,7 +968,7 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f7945acfd60>
+    <matplotlib.legend.Legend object at 0x7f63d2a5fcd0>
 
 
 
@@ -1477,7 +1481,7 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f7951f8ec50>
+    <matplotlib.legend.Legend object at 0x7f63dadd21d0>
 
 
 
@@ -1633,7 +1637,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev13
+    cofi 0.1.2.dev22
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
@@ -1646,7 +1650,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.183 seconds)
+   **Total running time of the script:** ( 0 minutes  7.281 seconds)
 
 
 .. _sphx_glr_download_examples_generated_linear_regression.py:

@@ -187,7 +187,7 @@ def calculate_gradiometry(model, x_final, y_final, z_final, recvec):
 
 def load(file_name):
     data_source = np.DataSource()
-    url_base = "https://github.com/inlab-geo/cofi-examples/raw/main/notebooks/gravity"
+    url_base = "https://github.com/inlab-geo/cofi-examples/raw/main/examples/gravity"
 
     if data_source.exists(file_name):
         tmp = np.load(file_name)

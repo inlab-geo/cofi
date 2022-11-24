@@ -25,7 +25,7 @@ Gravity Density Model
 
 .. raw:: html
 
-	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/notebooks/gravity/gravity_density.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
+	<badge><a href="https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/gravity/gravity_density.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a></badge>
 
 .. GENERATED FROM PYTHON SOURCE LINES 15-22
 
@@ -78,7 +78,7 @@ written in inversion-test-problems
 
 
     # !git clone https://github.com/inlab-geo/cofi-examples.git
-    # %cd cofi-examples/notebooks/gravity
+    # %cd cofi-examples/examples/gravity
 
 
 
@@ -259,7 +259,8 @@ pp.552-560
     List of functions/properties created based on what you have provided:
     ['objective', 'residual', 'jacobian_times_vector', 'data_misfit']
     ---------------------------------------------------------------------
-    List of functions/properties not set by you:
+    List of functions/properties that can be further set for the problem:
+    ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization_matrix', 'data_covariance', 'data_covariance_inv', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
 
 
@@ -475,7 +476,7 @@ Let’s see the density image from a vertical plane:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fe11d600a60>
+    <matplotlib.colorbar.Colorbar object at 0x7f63e8b3ff70>
 
 
 
@@ -506,7 +507,7 @@ From a different angle:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fe11d50a3b0>
+    <matplotlib.colorbar.Colorbar object at 0x7f63e8b2bd30>
 
 
 
@@ -536,7 +537,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev13
+    cofi 0.1.2.dev22
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
@@ -549,7 +550,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  19.864 seconds)
+   **Total running time of the script:** ( 0 minutes  20.104 seconds)
 
 
 .. _sphx_glr_download_examples_generated_gravity_density.py:
