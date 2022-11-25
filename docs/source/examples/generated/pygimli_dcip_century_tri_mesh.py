@@ -1,6 +1,6 @@
 """
-DCIP with PyGIMLi (Real Dataset, Triangular Mesh)
-=================================================
+Century DCIP Inversion with a Triangular Mesh
+=============================================
 
 """
 
@@ -33,63 +33,59 @@ DCIP with PyGIMLi (Real Dataset, Triangular Mesh)
 #    `environment.yml <https://github.com/inlab-geo/cofi-examples/blob/main/envs/environment.yml>`__
 #    file specifies a list of packages required to run the notebooks)
 # 
-# Using the DCIP (Direct Current, Induced Polarization) solver implemented
-# provided by `PyGIMLi <https://www.pygimli.org/>`__, we use different
-# ``cofi`` solvers to solve problem with a real dataset.
+
+
+######################################################################
+# Motivation
+# ==========
 # 
-# Note: This notebook is adapted from a SimPEG example authored by Lindsey
-# Heagy and presented at Transform 2020. `Original
-# Materials <https://curvenote.com/@simpeg/transform-2020-simpeg-tutorial/!6DDumb03Le6D8N8xuJNs>`__
+# The Century Deposit is a zinc-lead-silver deposit in the Mt Isa region
+# in Queensland Australia and UBC 2D DCIP inversion results have been
+# published by `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__ and
+# reproduced with
+# `SimPEG <https://curvenote.com/@simpeg/transform-2020-simpeg-tutorial/!6DDumb03Le6D8N8xuJNs>`__.
+# It provides an excellent test case to verify if CoFI can indeed act as a
+# glue between forward solvers and inverse solvers and be applied to real
+# data. Figure 1 from `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__
+# provides a map of the location and geological setting for the Century
+# deposit.
 # 
-# DCIP
-# ----
+# A detailed descrtiption of the geological setting is available
+# `here <http://portergeo.com.au/database/mineinfo.asp?mineid=mn075>`__
+# and `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__ also provide
+# the following cross-section for the survey line 46800mE, which we will
+# invert in the following.
 # 
-# The key difference between ERT and DCIP as implemented in PyGIMLi is
-# that for DCIP resistivties are expressed as complex numbers with the
-# real part representing the resistivtiy and the imaginary part
-# representing the chargeability. This means that entries into the model
-# vector and the data vector are complex numbers. While
-# ``numpy.linalg.solve`` is able to call the appropriate lapack subroutine
-# for a complex linear system other solvers typically expect the model
-# vector and data vector to be real. This means that the following
-# transformation needs to be accounted for in the user provided functions
-# for the objective function, Hessian and gradient for CoFI.
+# What we are interested in is delineating the mineralised units by using
+# the DCIP (Direct Current, Induced Polarization) solver implemented in
+# `PyGIMLi <https://www.pygimli.org/>`__ together with the ``cofi``
+# solvers.
 # 
-# The linear equation $ A x =b $ with the elements of :math:`A`, :math:`b`
-# and :math:`x` being complex numbers can be rewritten using real numbers
-# as follows
+# Some background information around how a DCIP inversion using complex
+# numbers to express resistivity and chargeability can be implemented
+# using CoFI is given in `the synthetic example
+# notebook <pygimli_dcip.ipynb>`__. While PyGIMLi allows us to use a
+# triangular mesh which can be adanvatengous when compared with a
+# rectilinear mesh, it also requires the data and model to be expressed as
+# frequency domain measurements, that is as complex numbers where the real
+# part represents the resistivity and the phase angle the chargeability.
+# There are several ways to `capture/express
+# chargeability <https://gpg.geosci.xyz/content/induced_polarization/induced_polarization_data.html>`__
+# and SimPEG uses apparent chargeabilities :math:`\mathrm{M}`. Thus prior
+# to inversion we will convert them using the following rule of thumb
+# :math:`0.1 M \approx70 \mathrm{mrad}`.
 # 
-# .. math::
+# References
+# ^^^^^^^^^^
 # 
-#    \begin{pmatrix}A^r & -A^c \\A^c & A^r \end{pmatrix}
-#    \begin{pmatrix}
-#    x^r \\
-#    x^c 
-#    \end{pmatrix}
-#    =
-#    \begin{pmatrix}
-#    b^r \\
-#    b^c 
-#    \end{pmatrix},
+# Martin, T., Günther, T., Orozco, A. F., & Dahlin, T. (2020). Evaluation
+# of spectral induced polarization field measurements in time and
+# frequency domain. Journal of Applied Geophysics, 180.
+# https://doi.org/10.1016/j.jappgeo.2020.104141
 # 
-# with :math:`b=( b_1^r+b_1^c i, b_2^r+b_2^c i,...,b_n^r+b_n^c i)` being
-# rewritten as :math:`(b^r,b^c)` with :math:`b^r=(b_1^r,b_2^r,...,b_n^r)`
-# and :math:`b^c=(b_1^c,b_2^c,...,b_n^c)` and analogus reordering for
-# :math:`A` and :math:`x`.
-# 
-# See https://ijpam.eu/contents/2012-76-1/11/11.pdf for more details.
-# 
-# Frequency domain vs Time domain measurements of chargeability
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# 
-# References: -
-# https://gpg.geosci.xyz/content/induced_polarization/induced_polarization_data.html
-# - Martin, T., Günther, T., Orozco, A. F., & Dahlin, T. (2020).
-# Evaluation of spectral induced polarization field measurements in time
-# and frequency domain. Journal of Applied Geophysics, 180.
-# https://doi.org/10.1016/j.jappgeo.2020.104141 - Mutton, A. J. (2000).
-# The application of geophysics during evaluation of the Century zinc
-# deposit. Geophysics, 65(6), 1946–1960. https://doi.org/10.1190/1.1444878
+# Mutton, A. J. (2000). The application of geophysics during evaluation of
+# the Century zinc deposit. Geophysics, 65(6), 1946–1960.
+# https://doi.org/10.1190/1.1444878
 # 
 
 
@@ -124,7 +120,7 @@ DCIP with PyGIMLi (Real Dataset, Triangular Mesh)
 # -------------------------------------------------------- #
 
 # !git clone https://github.com/inlab-geo/cofi-examples.git
-# %cd examples/pygimli_dcip/
+# %cd cofi-examples/examples/pygimli_dcip
 
 ######################################################################
 #
@@ -164,6 +160,15 @@ dcip_data = np.loadtxt("century_dcip_data.txt")
 
 ######################################################################
 #
+
+
+######################################################################
+# Converting measurements of chargeability
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+# PyGIMLi expresses chargeability in :math:`\mathrm{radians}` and we
+# convert the apparent chargeabilites as we load the data.
+# 
 
 a_locs = dcip_data[:,0]
 b_locs = dcip_data[:,1]
@@ -245,8 +250,8 @@ def complex_from_real(real):           # real vector of size n -> size n/2
 # 
 
 # inversion mesh bound
-x_inv_start = location_start - 1000
-x_inv_stop = location_stop + 1000
+x_inv_start = location_start - 200
+x_inv_stop = location_stop + 200
 y_inv_start = -400
 y_inv_stop = 0
 
@@ -269,7 +274,7 @@ def pygimli_data(a_locs, b_locs, m_locs, n_locs, dc_obs, dc_err, ip_obs, ip_err)
     # --- fill in the observed data and error estimation ---
     pg_data["rhoa"] = dc_obs
     pg_data["err"] = dc_err
-    pg_data["phia"] = -ip_obs/1000.     # to make me happy CHECKME
+    pg_data["phia"] = -ip_obs/1000.  # PyGIMLi accepts radians (instead of milliradians) for forward modelling
     pg_data["iperr"] = ip_err/1000.
     # --- create geometric factor k ---
     pg_data["k"] = pygimli.physics.ert.createGeometricFactors(pg_data, numerical=True)
@@ -350,22 +355,37 @@ def starting_model_ref(ert_mgr):
 # 3.3. Plotting utilities
 # ~~~~~~~~~~~~~~~~~~~~~~~
 # 
+# Note: We lifted out the plotting of colorbars only for Colab
+# compatibility.
+# 
+
+resistivity_label = r"$\Omega m$"
+chargeability_label = r"mrad"
 
 def plot_geologic_section(geologic_section, ax):
     for data in geologic_section:
         ax.plot(data[:,0], data[:,1], 'k--', alpha=0.5)
 
+def plot_colorbar(ax, cMin, cMax, label, orientation="horizontal"):
+    norm = mpl.colors.Normalize(cMin, cMax)
+    sm = plt.cm.ScalarMappable(norm=norm)
+    cb = plt.colorbar(sm, orientation=orientation, ax=ax)
+    cb.set_label(label)
+    cb.set_ticks(np.linspace(cMin, cMax, 5, endpoint=True))
+        
 def plot_model(mesh, model_complex, title):
     rho, phi = rho_phi_from_complex(model_complex)
     fig, axes = plt.subplots(2,1,figsize=(12,5))
-    pygimli.show(mesh, data=rho, label=r"$\Omega m$", ax=axes[0])
+    pygimli.show(mesh, data=rho, label=resistivity_label, ax=axes[0], colorBar=False)
     axes[0].set_xlim(x_inv_start, x_inv_stop)
     axes[0].set_ylim(y_inv_start, y_inv_stop)
     axes[0].set_title("Resistivity")
-    pygimli.show(mesh, data=phi * 1000, label=r"mrad", ax=axes[1])
+    plot_colorbar(axes[0], 136, 170, resistivity_label)
+    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, ax=axes[1], colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title("Chargeability")
+    plot_colorbar(axes[1], -4.76, -4, chargeability_label)
     if title != "Starting model":
         plot_geologic_section(geologic_section, axes[0])
         plot_geologic_section(geologic_section, axes[1])
@@ -374,10 +394,12 @@ def plot_model(mesh, model_complex, title):
 def plot_data(pg_data, data_complex, title):
     rho, phi = rho_phi_from_complex(data_complex)
     fig, axes = plt.subplots(1,2,figsize=(10,4))
-    pygimli.physics.ert.showERTData(pg_data, vals=rho, label=r"$\Omega$m", ax=axes[0])
+    pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
     axes[0].set_title("Apparent Resistivity")
-    pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=r"mrad", ax=axes[1])
+    plot_colorbar(axes[0], np.min(rho), np.max(rho), resistivity_label)
+    pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
     axes[1].set_title("Apparent Chargeability")
+    plot_colorbar(axes[1], np.min(phi*1000), np.max(phi*1000), chargeability_label)
     fig.suptitle(title)
     
 def plot_mesh(mesh, title="Mesh used for inversion"):
@@ -391,25 +413,29 @@ def plot_comparison(mesh1, model1, title1, mesh2, model2, title2, rho_min, rho_m
     rho1, phi1 = rho_phi_from_complex(model1)
     rho2, phi2 = rho_phi_from_complex(model2)
     fig, axes = plt.subplots(4, 1, figsize=(10,12))
-    pygimli.show(mesh1, data=rho1, label=r"$\Omega m$", ax=axes[0])
+    pygimli.show(mesh1, data=rho1, label=resistivity_label, ax=axes[0], colorBar=False)
     axes[0].set_xlim(x_inv_start, x_inv_stop)
     axes[0].set_ylim(y_inv_start, y_inv_stop)
     axes[0].set_title(f"{title1} - Resistivity")
+    plot_colorbar(axes[0], rho_min, rho_max, resistivity_label)
     plot_geologic_section(geologic_section, axes[0])
-    pygimli.show(mesh2, data=rho2, label=r"$\Omega m$", ax=axes[1], cMin=rho_min, cMax=rho_max)
+    pygimli.show(mesh2, data=rho2, label=resistivity_label, ax=axes[1], cMin=rho_min, cMax=rho_max, colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title(f"{title2} - Resistivity")
+    plot_colorbar(axes[1], rho_min, rho_max, resistivity_label)
     plot_geologic_section(geologic_section, axes[1])
-    pygimli.show(mesh1, data=phi1 * 1000, label=r"mrad", ax=axes[2])
+    pygimli.show(mesh1, data=phi1 * 1000, label=chargeability_label, ax=axes[2], colorBar=False)
     axes[2].set_xlim(x_inv_start, x_inv_stop)
     axes[2].set_ylim(y_inv_start, y_inv_stop)
     axes[2].set_title(f"{title1} - Chargeability")
+    plot_colorbar(axes[2], phi_min*1000, phi_max*1000, chargeability_label)
     plot_geologic_section(geologic_section, axes[2])
-    pygimli.show(mesh2, data=phi2 * 1000, label=r"mrad", ax=axes[3], cMin=phi_min*1000, cMax=phi_max*1000)
+    pygimli.show(mesh2, data=phi2 * 1000, label=chargeability_label, ax=axes[3], cMin=phi_min*1000, cMax=phi_max*1000, colorBar=False)
     axes[3].set_xlim(x_inv_start, x_inv_stop)
     axes[3].set_ylim(y_inv_start, y_inv_stop)
     axes[3].set_title(f"{title2} - Chargeability")
+    plot_colorbar(axes[3], phi_min*1000, phi_max*1000, chargeability_label)
     plot_geologic_section(geologic_section, axes[3])
 
 ######################################################################
@@ -703,17 +729,19 @@ synth_data_scipy = np.exp(get_response(np.log(model_scipy), forward_oprt))
 
 
 ######################################################################
-# Compare with UBC results
-# ~~~~~~~~~~~~~~~~~~~~~~~~
+# Comparison with published results
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
 model_ref_dc = reference_dc_model()
 model_ref_ip = reference_ip_model()
 model_ref = rho_phi_to_complex(model_ref_dc, model_ref_ip)
-mesh_ref = pygimli.meshtools.readMeshIO("century_mesh.vtk")
+mesh_ref_x = np.loadtxt("century_mesh_nodes_x.txt")
+mesh_ref_z = np.loadtxt("century_mesh_nodes_z.txt")
+mesh_ref = pygimli.meshtools.createMesh2D(mesh_ref_x, mesh_ref_z)
 plot_comparison(mesh_ref, 
                 model_ref, 
-                "Reference model", 
+                "Mutton A. J. (2000).", 
                 ert_mgr.paraDomain, 
                 model_scipy, 
                 "Inference result", 
@@ -722,6 +750,23 @@ plot_comparison(mesh_ref,
                 np.min(model_ref_ip), 
                 np.max(model_ref_ip),
                )
+
+######################################################################
+#
+
+
+######################################################################
+# The use of an adaptive triangular mesh means that we use fewer model
+# parameters when compared with the original example and that our mesh is
+# reflective of the underlying physics. This speeds up the forward problem
+# and in turn means that the inverse problem is less under-determined and
+# a simpler regularisation (i.e. smoothing) in a single stage inversion is
+# sufficient to obtain a result that compares favorably with the original
+# solution.
+# 
+
+print("Model size in the original Mutton paper:", mesh_ref.cellCount())
+print("Model size of our model:", ert_mgr.paraDomain.cellCount())
 
 ######################################################################
 #

@@ -841,7 +841,7 @@ plot_result(inv_result, "RAdam")
 # Where to next?
 # --------------
 # 
-# -  Induced polarisation with real dataset! - `link to
+# -  Induced polarisation example with a real dataset! - `link to
 #    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
 # 
 
@@ -851,7 +851,7 @@ plot_result(inv_result, "RAdam")
 # ---------
 # 
 
-watermark_list = ["cofi", "numpy", "scipy", "pygimli", "matplotlib"]
+watermark_list = ["cofi", "numpy", "scipy", "pygimli", "torch", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
