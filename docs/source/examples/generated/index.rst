@@ -51,23 +51,6 @@ Below is a gallery of examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Gravity Density Model">
-
-.. only:: html
-
-  .. image:: /examples/generated/images/thumb/sphx_glr_gravity_density_thumb.png
-    :alt: Gravity Density Model
-
-  :ref:`sphx_glr_examples_generated_gravity_density.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Gravity Density Model</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Polynomial Linear Regression">
 
 .. only:: html
@@ -119,35 +102,18 @@ Below is a gallery of examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)">
-
-.. only:: html
-
-  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_century_rect_mesh_thumb.png
-    :alt: DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)
-
-  :ref:`sphx_glr_examples_generated_pygimli_dcip_century_rect_mesh.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">DCIP with PyGIMLi (Real Dataset, Rectangular Mesh)</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Real Dataset, Triangular Mesh)">
+    <div class="sphx-glr-thumbcontainer" tooltip="Century DCIP Inversion with a Triangular Mesh">
 
 .. only:: html
 
   .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
-    :alt: DCIP with PyGIMLi (Real Dataset, Triangular Mesh)
+    :alt: Century DCIP Inversion with a Triangular Mesh
 
   :ref:`sphx_glr_examples_generated_pygimli_dcip_century_tri_mesh.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">DCIP with PyGIMLi (Real Dataset, Triangular Mesh)</div>
+      <div class="sphx-glr-thumbnail-title">Century DCIP Inversion with a Triangular Mesh</div>
     </div>
 
 
@@ -194,11 +160,9 @@ Below is a gallery of examples.
    :hidden:
 
    /examples/generated/fmm_tomography
-   /examples/generated/gravity_density
    /examples/generated/linear_regression
    /examples/generated/linear_regression_sealevel
    /examples/generated/pygimli_dcip
-   /examples/generated/pygimli_dcip_century_rect_mesh
    /examples/generated/pygimli_dcip_century_tri_mesh
    /examples/generated/pygimli_ert
    /examples/generated/xray_tomography

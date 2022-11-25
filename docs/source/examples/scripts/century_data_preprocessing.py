@@ -6,14 +6,14 @@ Note: The preprocessing code is adapted from a SimPEG example authored
 by Lindsey Heagy and presented at Transform 2020. `Original
 Materials <https://curvenote.com/@simpeg/transform-2020-simpeg-tutorial/!6DDumb03Le6D8N8xuJNs>`__
 
-This notebook is not meant to be a working example of CoFI. It’s a
-notebook that prepares the dataset needed for the `Century Data DCIP
-example <pygimli_century_dcip.ipynb>`__. More specifically, the DC and
-IP data on line ``46800E`` are organized and stored into file
-``century_dcip_data.txt`` with the following attributes: - a_location -
-b_location - m_location - n_location - apparent resistivity - apparent
-resistivity standard deviation - apparent chargeability - apparent
-chargeability standard deviation - geometric_factor
+This notebook cpatures the preprocessing of the dataset being used in
+`Century Data DCIP example <pygimli_century_dcip.ipynb>`__. More
+specifically, the DC and IP data on line ``46800E`` are organized and
+stored into file ``century_dcip_data.txt`` with the following
+attributes: - a_location - b_location - m_location - n_location -
+apparent resistivity - apparent resistivity standard deviation -
+apparent chargeability - apparent chargeability standard deviation -
+geometric_factor
 
 """
 
@@ -71,6 +71,13 @@ dc_data_file, ip_data_file
 
 # copy geologic section data
 shutil.copy("century/geologic_section.csv", "../century_geologic_section.csv")
+
+######################################################################
+#
+
+# copy reference images
+shutil.copy("images/Mutton-Figure1-1.png", "../Mutton-Figure1-1.png")
+shutil.copy("images/Mutton-Figure2-1.png", "../Mutton-Figure2-1.png")
 
 ######################################################################
 #
@@ -527,8 +534,9 @@ mesh_file, dc_model_file, ip_model_file
 #
 
 mesh_ubc = discretize.TensorMesh.read_UBC(mesh_file)
-mesh_vtk = mesh_ubc.to_vtk()
-mesh_vtk.save("../century_mesh.vtk")
+mesh_tensor = mesh_ubc.get_tensor("nodes")
+np.savetxt("../century_mesh_nodes_x.txt", mesh_tensor[0])
+np.savetxt("../century_mesh_nodes_z.txt", mesh_tensor[1])
 
 ######################################################################
 #

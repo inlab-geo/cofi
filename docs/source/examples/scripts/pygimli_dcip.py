@@ -33,9 +33,9 @@ DCIP with PyGIMLi (Synthetic example)
 #    `environment.yml <https://github.com/inlab-geo/cofi-examples/blob/main/envs/environment.yml>`__
 #    file specifies a list of packages required to run the notebooks)
 # 
-# Using the DCIP (Direct Current, Induced Polarization) solver implemented
-# provided by `PyGIMLi <https://www.pygimli.org/>`__, we use different
-# ``cofi`` solvers to solve the corresponding inverse problem.
+# Using the DCIP (Direct Current, Induced Polarization) solver provided by
+# `PyGIMLi <https://www.pygimli.org/>`__, we use different ``cofi``
+# solvers to solve the corresponding inverse problem.
 # 
 # Note: This notebook is adapted from a PyGIMLi example: `Naive
 # complex-valued electrical
@@ -43,14 +43,20 @@ DCIP with PyGIMLi (Synthetic example)
 # 
 # The key difference between ERT and DCIP as implemented in PyGIMLi is
 # that for DCIP resistivties are expressed as complex numbers with the
-# real part representing the resistivtiy and the imaginary part
-# representing the chargeability. This means that entries into the model
-# vector and the data vector are complex numbers. While
-# ``numpy.linalg.solve`` is able to call the appropriate lapack subroutine
-# for a complex linear system other solvers typically expect the model
-# vector and data vector to be real. This means that the following
-# transformation needs to be accounted for in the user provided functions
-# for the objective function, Hessian and gradient for CoFI.
+# real part representing the resistivity and the phase angle presenting
+# the chargeability. This means that entries into the model vector and the
+# data vector are complex numbers and that DCIP inversions using PyGIMLI
+# rely on the induced polarization field measurements being expressed in
+# the frequency domain.
+# 
+# While ``numpy.linalg.solve`` is able to call the appropriate Lapack
+# subroutine for a complex linear system ``cgesv`` or ``zcgesv``, other
+# solvers typically expect the model vector and data vector to be real.
+# This means that the complex system of equation needs to be transformed
+# into a real system of equations. Such a transformation needs to be
+# accounted for in the user provided functions for the objective function,
+# Hessian and gradient; care must also be taken when transforming the data
+# covariance matrix.
 # 
 # The linear equation $ A x =b $ with the elements of :math:`A`, :math:`b`
 # and :math:`x` being complex numbers can be rewritten using real numbers
