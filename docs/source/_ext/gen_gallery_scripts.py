@@ -1,5 +1,4 @@
 """Convert jupyter notebook to sphinx gallery notebook styled examples.
-Usage: python ipynb_to_gallery.py <notebook.ipynb>
 Dependencies:
 pypandoc: install using `pip install pypandoc`
 
@@ -14,6 +13,7 @@ from pathlib import Path
 
 import pypandoc as pdoc
 import json
+import numpy as np
 
 
 current_dir = Path(__file__).resolve().parent
@@ -25,9 +25,15 @@ EXAMPLES_SCRIPTS = str(docs_src / EXAMPLES / "scripts")
 TUTORIALS = "tutorials"
 TUTORIALS_SRC_DIR = str(cofi_examples_dir / TUTORIALS)
 TUTORIALS_SCRIPTS = str(docs_src / TUTORIALS / "scripts")
+FIELD_DATA = "field_data"
+SYNTH_DATA = "synth_data"
 
 BADGE_BEGIN = "<!--<badge>-->"
 BADGE_END = "<!--</badge>-->"
+
+FIELD_DATA_EXAMPLES = []
+with open(current_dir / "field_data_example.txt", "r") as f:
+    FIELD_DATA_EXAMPLES = f.read().splitlines() 
 
 def convert_ipynb_to_gallery(file_name, dst_folder):
     python_file = ""
@@ -65,10 +71,20 @@ def convert_ipynb_to_gallery(file_name, dst_folder):
     python_file = python_file.replace("\n%", "\n# %")
     python_file = python_file.replace("\n!", "\n# !")
 
-    file_name_without_path = file_name.split("/")[-1]
-    script_file_path = f"{dst_folder}/{file_name_without_path}"
+    _file_name, _example_name = file_name_without_path(file_name)
+    if dst_folder == TUTORIALS_SCRIPTS:
+        script_file_path = f"{dst_folder}/{_file_name}"
+    elif _example_name in FIELD_DATA_EXAMPLES:
+        script_file_path = f"{dst_folder}/{FIELD_DATA}/{_file_name}"
+    else:
+        script_file_path = f"{dst_folder}/{SYNTH_DATA}/{_file_name}"
     script_file_path = script_file_path.replace(".ipynb", ".py")
     open(script_file_path, 'w').write(python_file)
+
+def file_name_without_path(file_path):
+    name = file_path.split("/")[-1]
+    name_without_suffix = name.split(".")[0]
+    return name, name_without_suffix
 
 def move_data_files(src_folder, dst_folder):
     # collect all data and library files to move to dst_folder
@@ -112,8 +128,8 @@ def gen_scripts_all(_):
     for script in all_examples_scripts:
         print(f"file: {script}")
         convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
-    # collect all data and library files to move to scripts/
-    move_data_files(f"{EXAMPLES_SRC_DIR}/*", EXAMPLES_SCRIPTS)
+    # collect all data and library files to move to scripts/field_data
+    move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}/{FIELD_DATA}")
     print("\nOK.")
 
 def setup(app):
