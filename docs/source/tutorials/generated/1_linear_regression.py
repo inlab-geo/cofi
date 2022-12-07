@@ -113,7 +113,7 @@ plot_data()
 # 
 # For this class of problem the forward operator takes the following form:
 # 
-# .. math::  \left(\begin{array}{c}y_0\\y_1\\\vdots\\y_N\end{array}\right) = \left(\begin{array}{ccc}1&x_0&x_0^2&x_0^3\\1&x_1&x_1^2&x_1^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)\left(\begin{array}{c}m_0\\m_1\\m_2\end{array}\right)
+# .. math:: \left(\begin{array}{c}y_0\\y_1\\\vdots\\y_N\end{array}\right) = \left(\begin{array}{ccc}1&x_0&x_0^2&x_0^3\\1&x_1&x_1^2&x_1^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)\left(\begin{array}{c}m_0\\m_1\\m_2\\m_3\end{array}\right)
 # 
 # This clearly has the required general form,
 # :math:`\mathbf{d} =G{\mathbf m}`.
@@ -1021,7 +1021,7 @@ plot_model(x,true_y, "True model", color="darkorange")
 #    inv_problem.set_walkers_starting_pos(walkers_start)
 # 
 #    ######## CoFI InversionOptions - get a different tool
-#    inv_options_3.set_params(nsteps=nsteps)
+#    inv_options_3.set_params(nsteps=nsteps, nwalkers=nwalkers)
 # 
 #    ######## CoFI Inversion - run it
 #    inv_6 = Inversion(inv_problem, inv_options_3)
