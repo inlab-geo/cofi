@@ -250,7 +250,7 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 854/10416 [00:00<00:01, 8538.89it/s]    Evaluating paths:  17%|#6        | 1734/10416 [00:00<00:00, 8689.67it/s]    Evaluating paths:  25%|##4       | 2603/10416 [00:00<00:00, 8605.12it/s]    Evaluating paths:  33%|###3      | 3465/10416 [00:00<00:00, 8608.51it/s]    Evaluating paths:  42%|####1     | 4340/10416 [00:00<00:00, 8657.30it/s]    Evaluating paths:  50%|####9     | 5206/10416 [00:00<00:00, 8593.54it/s]    Evaluating paths:  58%|#####8    | 6074/10416 [00:00<00:00, 8619.13it/s]    Evaluating paths:  67%|######6   | 6953/10416 [00:00<00:00, 8672.82it/s]    Evaluating paths:  75%|#######5  | 7821/10416 [00:00<00:00, 8609.37it/s]    Evaluating paths:  83%|########3 | 8692/10416 [00:01<00:00, 8638.19it/s]    Evaluating paths:  92%|#########1| 9562/10416 [00:01<00:00, 8656.42it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8649.69it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 849/10416 [00:00<00:01, 8486.71it/s]    Evaluating paths:  17%|#6        | 1731/10416 [00:00<00:01, 8678.90it/s]    Evaluating paths:  25%|##4       | 2599/10416 [00:00<00:00, 8611.95it/s]    Evaluating paths:  33%|###3      | 3464/10416 [00:00<00:00, 8624.26it/s]    Evaluating paths:  42%|####1     | 4337/10416 [00:00<00:00, 8660.06it/s]    Evaluating paths:  50%|####9     | 5204/10416 [00:00<00:00, 8598.60it/s]    Evaluating paths:  58%|#####8    | 6074/10416 [00:00<00:00, 8627.83it/s]    Evaluating paths:  67%|######6   | 6945/10416 [00:00<00:00, 8652.32it/s]    Evaluating paths:  75%|#######4  | 7811/10416 [00:00<00:00, 8591.31it/s]    Evaluating paths:  83%|########3 | 8683/10416 [00:01<00:00, 8629.62it/s]    Evaluating paths:  92%|#########1| 9555/10416 [00:01<00:00, 8655.14it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8646.18it/s]
 
 
 
@@ -553,7 +553,7 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 859/10416 [00:00<00:01, 8587.20it/s]    Evaluating paths:  17%|#6        | 1749/10416 [00:00<00:00, 8769.57it/s]    Evaluating paths:  25%|##5       | 2626/10416 [00:00<00:00, 8599.42it/s]    Evaluating paths:  34%|###3      | 3497/10416 [00:00<00:00, 8638.24it/s]    Evaluating paths:  42%|####2     | 4375/10416 [00:00<00:00, 8687.99it/s]    Evaluating paths:  50%|#####     | 5245/10416 [00:00<00:00, 8668.36it/s]    Evaluating paths:  59%|#####8    | 6115/10416 [00:00<00:00, 8678.29it/s]    Evaluating paths:  67%|######7   | 6991/10416 [00:00<00:00, 8702.55it/s]    Evaluating paths:  75%|#######5  | 7862/10416 [00:00<00:00, 8644.85it/s]    Evaluating paths:  84%|########3 | 8742/10416 [00:01<00:00, 8690.01it/s]    Evaluating paths:  92%|#########2| 9616/10416 [00:01<00:00, 8702.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8693.89it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 853/10416 [00:00<00:01, 8523.44it/s]    Evaluating paths:  17%|#6        | 1737/10416 [00:00<00:00, 8709.11it/s]    Evaluating paths:  25%|##5       | 2608/10416 [00:00<00:00, 8668.12it/s]    Evaluating paths:  33%|###3      | 3475/10416 [00:00<00:00, 8553.69it/s]    Evaluating paths:  42%|####1     | 4358/10416 [00:00<00:00, 8649.97it/s]    Evaluating paths:  50%|#####     | 5224/10416 [00:00<00:00, 8648.07it/s]    Evaluating paths:  59%|#####8    | 6097/10416 [00:00<00:00, 8671.99it/s]    Evaluating paths:  67%|######6   | 6976/10416 [00:00<00:00, 8708.55it/s]    Evaluating paths:  75%|#######5  | 7847/10416 [00:00<00:00, 8680.79it/s]    Evaluating paths:  84%|########3 | 8720/10416 [00:01<00:00, 8693.69it/s]    Evaluating paths:  92%|#########2| 9601/10416 [00:01<00:00, 8727.72it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8687.82it/s]
 
 
 
@@ -617,7 +617,7 @@ Solving the tomographic system with optimization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 373-434
+.. GENERATED FROM PYTHON SOURCE LINES 373-431
 
 Now we solve the tomographic system of equations using either CoFI’s
 optimization method interface, or its iterative matrix-solver interface.
@@ -626,10 +626,7 @@ optimization method interface, or its iterative matrix-solver interface.
 
 We choose an objective function of the form.
 
-.. math::
-
-    \phi(\mathbf{d},\mathbf{s}) = \frac{1}{\sigma^2}|| \mathbf{d} - \mathbf{g}(\mathbf{s})||_2^2 + \lambda_1 ||\mathbf{s}- \mathbf{s}_{0}||_2^2 
-       + \lambda_2 ||D~\mathbf{s}||_2^2
+.. math:: \phi(\mathbf{d},\mathbf{s}) = \frac{1}{\sigma^2}|| \mathbf{d} - \mathbf{g}(\mathbf{s})||_2^2 + \lambda_1 ||\mathbf{s}- \mathbf{s}_{0}||_2^2  + \lambda_2 ||D~\mathbf{s}||_2^2
 
 where :math:`\mathbf{g}(\mathbf{s})` represents the predicted travel
 times in the slowness model :math:`\mathbf{s}`, :math:`\sigma^2` is the
@@ -681,13 +678,13 @@ matrix solver
 with :math:`C_d^{-1} = \sigma^{-2} I`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 437-440
+.. GENERATED FROM PYTHON SOURCE LINES 434-437
 
 Step 1. Define CoFI ``BaseProblem``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 440-447
+.. GENERATED FROM PYTHON SOURCE LINES 437-444
 
 .. code-block:: default
 
@@ -705,13 +702,13 @@ Step 1. Define CoFI ``BaseProblem``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 452-455
+.. GENERATED FROM PYTHON SOURCE LINES 449-452
 
 Here we define the baseproblem object and a starting velocity model
 guess.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 455-460
+.. GENERATED FROM PYTHON SOURCE LINES 452-457
 
 .. code-block:: default
 
@@ -727,12 +724,12 @@ guess.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 465-467
+.. GENERATED FROM PYTHON SOURCE LINES 462-464
 
 Here we define regularization of the tomographic system.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 467-475
+.. GENERATED FROM PYTHON SOURCE LINES 464-472
 
 .. code-block:: default
 
@@ -751,7 +748,7 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 477-505
+.. GENERATED FROM PYTHON SOURCE LINES 474-502
 
 .. code-block:: default
 
@@ -790,7 +787,7 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 507-514
+.. GENERATED FROM PYTHON SOURCE LINES 504-511
 
 .. code-block:: default
 
@@ -808,13 +805,13 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 519-522
+.. GENERATED FROM PYTHON SOURCE LINES 516-519
 
 Step 2. Define CoFI ``InversionOptions``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 522-533
+.. GENERATED FROM PYTHON SOURCE LINES 519-530
 
 .. code-block:: default
 
@@ -836,7 +833,7 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 535-538
+.. GENERATED FROM PYTHON SOURCE LINES 532-535
 
 .. code-block:: default
 
@@ -870,13 +867,13 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 543-546
+.. GENERATED FROM PYTHON SOURCE LINES 540-543
 
 Step 3. Define CoFI ``Inversion`` and run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 546-551
+.. GENERATED FROM PYTHON SOURCE LINES 543-548
 
 .. code-block:: default
 
@@ -908,12 +905,12 @@ Step 3. Define CoFI ``Inversion`` and run
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 556-558
+.. GENERATED FROM PYTHON SOURCE LINES 553-555
 
 Now lets plot the true model for comparison.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 558-561
+.. GENERATED FROM PYTHON SOURCE LINES 555-558
 
 .. code-block:: default
 
@@ -938,7 +935,7 @@ Now lets plot the true model for comparison.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 566-610
+.. GENERATED FROM PYTHON SOURCE LINES 563-607
 
 Challenge: Change the number of tomographic data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -975,7 +972,7 @@ Start from the code template below:
 
    # plot inverted model
    fig, paths = nonlinear_tomo_example.plot_model(my_own_result.model, return_paths=True)
-   print(f"Number of paths used: {len(paths)}")
+   print(f"Number of paths used: {len(data_subset)}")
 
    # plot paths used
    for p in np.array(paths, dtype=object)[data_subset]:
@@ -985,7 +982,7 @@ Start from the code template below:
    :target: https://jamboard.google.com/d/1TlHvC6_vHLDaZzWT3cG2hV3KCrh3M6aoxDVAJ2RGJBw/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 610-615
+.. GENERATED FROM PYTHON SOURCE LINES 607-612
 
 .. code-block:: default
 
@@ -1001,7 +998,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 617-645
+.. GENERATED FROM PYTHON SOURCE LINES 614-642
 
 .. code-block:: default
 
@@ -1027,7 +1024,7 @@ Start from the code template below:
 
     # plot inverted model
     fig, paths = nonlinear_tomo_example.plot_model(my_own_result.model, return_paths=True)
-    print(f"Number of paths used: {len(paths)}")
+    print(f"Number of paths used: {len(data_subset)}")
 
     # plot paths used
     for p in np.array(paths, dtype=object)[data_subset]:
@@ -1062,12 +1059,12 @@ Start from the code template below:
     n_obj_evaluations: 5
     n_grad_evaluations: 5
     n_hess_evaluations: 5
-    Number of paths used: 100
+    Number of paths used: 30
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 650-706
+.. GENERATED FROM PYTHON SOURCE LINES 647-703
 
 Challenge: Change regularization settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1126,7 +1123,7 @@ You can start from the template below:
    :target: https://jamboard.google.com/d/15FrdSczK_TK_COOLxfSJZ5CWMzH3qMoQKySJTAp5n-4/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 706-711
+.. GENERATED FROM PYTHON SOURCE LINES 703-708
 
 .. code-block:: default
 
@@ -1142,7 +1139,7 @@ You can start from the template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 713-741
+.. GENERATED FROM PYTHON SOURCE LINES 710-738
 
 .. code-block:: default
 
@@ -1197,7 +1194,7 @@ You can start from the template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 746-751
+.. GENERATED FROM PYTHON SOURCE LINES 743-748
 
 --------------
 
@@ -1205,12 +1202,12 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 751-757
+.. GENERATED FROM PYTHON SOURCE LINES 748-754
 
 .. code-block:: default
 
 
-    watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib", "emcee", "arviz"]
+    watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -1228,8 +1225,6 @@ Watermark
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
-    emcee 3.1.2
-    arviz 0.12.1
 
 
 
@@ -1237,7 +1232,7 @@ Watermark
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  27.597 seconds)
+   **Total running time of the script:** ( 0 minutes  27.334 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_2_travel_time_tomography.py:

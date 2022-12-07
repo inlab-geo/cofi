@@ -377,10 +377,7 @@ nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model, with_paths=
 # 
 # We choose an objective function of the form.
 # 
-# .. math::
-# 
-#     \phi(\mathbf{d},\mathbf{s}) = \frac{1}{\sigma^2}|| \mathbf{d} - \mathbf{g}(\mathbf{s})||_2^2 + \lambda_1 ||\mathbf{s}- \mathbf{s}_{0}||_2^2 
-#        + \lambda_2 ||D~\mathbf{s}||_2^2
+# .. math:: \phi(\mathbf{d},\mathbf{s}) = \frac{1}{\sigma^2}|| \mathbf{d} - \mathbf{g}(\mathbf{s})||_2^2 + \lambda_1 ||\mathbf{s}- \mathbf{s}_{0}||_2^2  + \lambda_2 ||D~\mathbf{s}||_2^2
 # 
 # where :math:`\mathbf{g}(\mathbf{s})` represents the predicted travel
 # times in the slowness model :math:`\mathbf{s}`, :math:`\sigma^2` is the
@@ -598,7 +595,7 @@ nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model);
 # 
 #    # plot inverted model
 #    fig, paths = nonlinear_tomo_example.plot_model(my_own_result.model, return_paths=True)
-#    print(f"Number of paths used: {len(paths)}")
+#    print(f"Number of paths used: {len(data_subset)}")
 # 
 #    # plot paths used
 #    for p in np.array(paths, dtype=object)[data_subset]:
@@ -636,7 +633,7 @@ my_own_result.summary()
 
 # plot inverted model
 fig, paths = nonlinear_tomo_example.plot_model(my_own_result.model, return_paths=True)
-print(f"Number of paths used: {len(paths)}")
+print(f"Number of paths used: {len(data_subset)}")
 
 # plot paths used
 for p in np.array(paths, dtype=object)[data_subset]:
@@ -749,7 +746,7 @@ fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothi
 # ---------
 # 
 
-watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib", "emcee", "arviz"]
+watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))

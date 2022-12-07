@@ -5,12 +5,12 @@
 
 Computation times
 =================
-**01:03.772** total execution time for **tutorials_generated** files:
+**00:56.874** total execution time for **tutorials_generated** files:
 
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_tutorials_generated_3_electrical_resistivity_tomography.py` (``3_electrical_resistivity_tomography.py``) | 01:03.772 | 0.0 MB |
+| :ref:`sphx_glr_tutorials_generated_1_linear_regression.py` (``1_linear_regression.py``)                                 | 00:29.540 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_tutorials_generated_1_linear_regression.py` (``1_linear_regression.py``)                                 | 00:00.000 | 0.0 MB |
+| :ref:`sphx_glr_tutorials_generated_2_travel_time_tomography.py` (``2_travel_time_tomography.py``)                       | 00:27.334 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_tutorials_generated_2_travel_time_tomography.py` (``2_travel_time_tomography.py``)                       | 00:00.000 | 0.0 MB |
+| :ref:`sphx_glr_tutorials_generated_3_electrical_resistivity_tomography.py` (``3_electrical_resistivity_tomography.py``) | 00:00.000 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
