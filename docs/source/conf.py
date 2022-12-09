@@ -53,14 +53,10 @@ exclude_patterns = [
     ".DS_Store", 
     "README.md",
     "cofi-examples/**",
-    "examples/scripts/README.rst",
-    "examples/generated/*.md5",
-    "examples/generated/*.py",
-    "examples/generated/*.ipynb",
-    "tutorials/scripts/README.rst",
-    "tutorials/generated/*.md5",
-    "tutorials/generated/*.py",
-    "tutorials/generated/*.ipynb",
+    "**/scripts/**README.rst",
+    "**/generated/**.md5",
+    "**/generated/**.py",
+    "**/generated/**.ipynb",
 ]
 
 source_suffix = ".rst"
@@ -131,6 +127,8 @@ sphinx_gallery_conf = {
     "ignore_pattern": "._lib.py|_preprocessing.py",
     "pypandoc": True,
     "download_all_examples": False,
+    "backreferences_dir"  : "api/generated/backreferences",
+    "doc_module": "cofi",
 }
 
 

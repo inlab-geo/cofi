@@ -34,14 +34,76 @@ Below is a gallery of examples.
 
 .. raw:: html
 
+    </div>
+
+===================
+Field Data Examples
+===================
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Linear regression with Eustatic Sea-level data">
+
+.. only:: html
+
+  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
+    :alt: Linear regression with Eustatic Sea-level data
+
+  :ref:`sphx_glr_examples_generated_field_data_linear_regression_sealevel.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Linear regression with Eustatic Sea-level data</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Century DCIP Inversion with a Triangular Mesh">
+
+.. only:: html
+
+  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
+    :alt: Century DCIP Inversion with a Triangular Mesh
+
+  :ref:`sphx_glr_examples_generated_field_data_pygimli_dcip_century_tri_mesh.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Century DCIP Inversion with a Triangular Mesh</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+==================
+Synthetic Examples
+==================
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Seismic Wave Tomography via Fast Marching">
 
 .. only:: html
 
-  .. image:: /examples/generated/images/thumb/sphx_glr_fmm_tomography_thumb.png
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_fmm_tomography_thumb.png
     :alt: Seismic Wave Tomography via Fast Marching
 
-  :ref:`sphx_glr_examples_generated_fmm_tomography.py`
+  :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py`
 
 .. raw:: html
 
@@ -55,10 +117,10 @@ Below is a gallery of examples.
 
 .. only:: html
 
-  .. image:: /examples/generated/images/thumb/sphx_glr_linear_regression_thumb.png
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_linear_regression_thumb.png
     :alt: Polynomial Linear Regression
 
-  :ref:`sphx_glr_examples_generated_linear_regression.py`
+  :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py`
 
 .. raw:: html
 
@@ -68,31 +130,14 @@ Below is a gallery of examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Linear regression with Eustatic Sea-level data">
-
-.. only:: html
-
-  .. image:: /examples/generated/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
-    :alt: Linear regression with Eustatic Sea-level data
-
-  :ref:`sphx_glr_examples_generated_linear_regression_sealevel.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Linear regression with Eustatic Sea-level data</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Synthetic example)">
 
 .. only:: html
 
-  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_thumb.png
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_dcip_thumb.png
     :alt: DCIP with PyGIMLi (Synthetic example)
 
-  :ref:`sphx_glr_examples_generated_pygimli_dcip.py`
+  :ref:`sphx_glr_examples_generated_synth_data_pygimli_dcip.py`
 
 .. raw:: html
 
@@ -102,31 +147,14 @@ Below is a gallery of examples.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Century DCIP Inversion with a Triangular Mesh">
-
-.. only:: html
-
-  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
-    :alt: Century DCIP Inversion with a Triangular Mesh
-
-  :ref:`sphx_glr_examples_generated_pygimli_dcip_century_tri_mesh.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Century DCIP Inversion with a Triangular Mesh</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Electrical Resistivity Tomography with PyGIMLi">
 
 .. only:: html
 
-  .. image:: /examples/generated/images/thumb/sphx_glr_pygimli_ert_thumb.png
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_ert_thumb.png
     :alt: Electrical Resistivity Tomography with PyGIMLi
 
-  :ref:`sphx_glr_examples_generated_pygimli_ert.py`
+  :ref:`sphx_glr_examples_generated_synth_data_pygimli_ert.py`
 
 .. raw:: html
 
@@ -140,10 +168,10 @@ Below is a gallery of examples.
 
 .. only:: html
 
-  .. image:: /examples/generated/images/thumb/sphx_glr_xray_tomography_thumb.png
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_xray_tomography_thumb.png
     :alt: Xray Tomography
 
-  :ref:`sphx_glr_examples_generated_xray_tomography.py`
+  :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py`
 
 .. raw:: html
 
@@ -158,14 +186,10 @@ Below is a gallery of examples.
 
 .. toctree::
    :hidden:
+   :includehidden:
 
-   /examples/generated/fmm_tomography
-   /examples/generated/linear_regression
-   /examples/generated/linear_regression_sealevel
-   /examples/generated/pygimli_dcip
-   /examples/generated/pygimli_dcip_century_tri_mesh
-   /examples/generated/pygimli_ert
-   /examples/generated/xray_tomography
+   /examples/generated/field_data/index.rst
+   /examples/generated/synth_data/index.rst
 
 
 
