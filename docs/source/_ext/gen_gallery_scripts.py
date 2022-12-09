@@ -70,6 +70,7 @@ def convert_ipynb_to_gallery(file_name, dst_folder):
 
     python_file = python_file.replace("\n%", "\n# %")
     python_file = python_file.replace("\n!", "\n# !")
+    python_file += "\n# sphinx_gallery_thumbnail_number = -1"
 
     _file_name, _example_name = file_name_without_path(file_name)
     if dst_folder == TUTORIALS_SCRIPTS:

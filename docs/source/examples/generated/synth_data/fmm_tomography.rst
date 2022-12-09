@@ -601,10 +601,14 @@ Watermark
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 311-311
+
+sphinx_gallery_thumbnail_number = -1
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.039 seconds)
+   **Total running time of the script:** ( 0 minutes  7.992 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography.py:

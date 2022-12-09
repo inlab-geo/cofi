@@ -192,7 +192,7 @@ stays constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 858/10416 [00:00<00:01, 8571.73it/s]    Evaluating paths:  17%|#6        | 1746/10416 [00:00<00:00, 8749.92it/s]    Evaluating paths:  25%|##5       | 2621/10416 [00:00<00:00, 8671.36it/s]    Evaluating paths:  33%|###3      | 3489/10416 [00:00<00:00, 8665.30it/s]    Evaluating paths:  42%|####1     | 4369/10416 [00:00<00:00, 8712.57it/s]    Evaluating paths:  50%|#####     | 5241/10416 [00:00<00:00, 8684.94it/s]    Evaluating paths:  59%|#####8    | 6110/10416 [00:00<00:00, 8598.45it/s]    Evaluating paths:  67%|######7   | 6992/10416 [00:00<00:00, 8666.83it/s]    Evaluating paths:  75%|#######5  | 7859/10416 [00:00<00:00, 8635.49it/s]    Evaluating paths:  84%|########3 | 8733/10416 [00:01<00:00, 8666.54it/s]    Evaluating paths:  92%|#########2| 9600/10416 [00:01<00:00, 8544.67it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8650.48it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   7%|7         | 774/10416 [00:00<00:01, 7736.52it/s]    Evaluating paths:  16%|#5        | 1633/10416 [00:00<00:01, 8237.53it/s]    Evaluating paths:  24%|##3       | 2468/10416 [00:00<00:00, 8285.12it/s]    Evaluating paths:  32%|###1      | 3308/10416 [00:00<00:00, 8328.77it/s]    Evaluating paths:  40%|####      | 4172/10416 [00:00<00:00, 8437.97it/s]    Evaluating paths:  48%|####8     | 5017/10416 [00:00<00:00, 8441.20it/s]    Evaluating paths:  56%|#####6    | 5865/10416 [00:00<00:00, 8453.27it/s]    Evaluating paths:  65%|######4   | 6733/10416 [00:00<00:00, 8525.10it/s]    Evaluating paths:  73%|#######2  | 7586/10416 [00:00<00:00, 8521.84it/s]    Evaluating paths:  81%|########1 | 8439/10416 [00:01<00:00, 8523.42it/s]    Evaluating paths:  89%|########9 | 9306/10416 [00:01<00:00, 8565.22it/s]    Evaluating paths:  98%|#########7| 10163/10416 [00:01<00:00, 8563.09it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8473.60it/s]
 
 
 
@@ -595,10 +595,14 @@ Watermark
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 319-319
+
+sphinx_gallery_thumbnail_number = -1
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.731 seconds)
+   **Total running time of the script:** ( 0 minutes  3.716 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_xray_tomography.py:

@@ -766,10 +766,10 @@ model update. In practice:
  .. code-block:: none
 
     Iteration #0, objective function value: 229.71418345445022
-    Iteration #1, objective function value: 224.7987515141351
-    Iteration #2, objective function value: 220.36237268797552
-    Iteration #3, objective function value: 215.9057002091113
-    Iteration #4, objective function value: 211.61775613255284
+    Iteration #1, objective function value: 224.79875151412557
+    Iteration #2, objective function value: 220.36237268797532
+    Iteration #3, objective function value: 215.90570020911278
+    Iteration #4, objective function value: 211.617756132559
 
     Number of objective function evaluations: 5
     Number of gradient function evaluations: 5
@@ -990,19 +990,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 69.41232753902352
+      objective value: 69.41232753902361
     Iteration #2
-      model change: 1.9521920346073673
-      objective value: 32.31371502955892
+      model change: 1.9521920346073596
+      objective value: 32.31371502955887
     Iteration #3
-      model change: 2.005000505011226
-      objective value: 31.17194038808488
+      model change: 2.005000505011234
+      objective value: 31.171940388085254
     Iteration #4
-      model change: 0.3774794759723875
-      objective value: 27.46044537825089
+      model change: 0.3774794759723892
+      objective value: 27.46044537825035
     Iteration #5
-      model change: 1.2758048179582917
-      objective value: 17.691012543494242
+      model change: 1.2758048179587598
+      objective value: 17.691012543494267
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
@@ -1059,17 +1059,17 @@ You may start from the following template:
     Iteration #1
       objective value: 157.50708172346376
     Iteration #2
-      model change: 1.9999999999999998
-      objective value: 68.94013122104029
+      model change: 2.0
+      objective value: 68.9401312210403
     Iteration #3
       model change: 4.0
-      objective value: 34.90264090871462
+      objective value: 34.90264090870657
     Iteration #4
       model change: 0.0
-      objective value: 34.90264090871462
+      objective value: 34.90264090870657
     Iteration #5
-      model change: 1.9999999999999998
-      objective value: 22.81471892056244
+      model change: 2.0
+      objective value: 22.814718920647355
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -1126,17 +1126,17 @@ You may start from the following template:
     Iteration #1
       objective value: 157.50708172346376
     Iteration #2
-      model change: 1.9999999999999998
-      objective value: 68.94013122104028
+      model change: 1.9999999999999996
+      objective value: 68.94013122104026
     Iteration #3
-      model change: 2.0885981986782802
-      objective value: 51.744476378630004
+      model change: 2.088598198678278
+      objective value: 51.744476378629734
     Iteration #4
-      model change: 2.2357683820767695
-      objective value: 32.60775764541604
+      model change: 2.235768382076782
+      objective value: 32.60775764541582
     Iteration #5
-      model change: 1.7295706120934415
-      objective value: 29.213175185113887
+      model change: 1.7295706120934395
+      objective value: 29.213175185113556
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
@@ -1255,13 +1255,13 @@ You may start from this template:
     Iteration #0, objective value: 229.71418345445022
     Iteration #1, objective value: 156.9046492247727
     Iteration #2, objective value: 107.12950312045994
-    Iteration #3, objective value: 76.24719314425752
-    Iteration #4, objective value: 59.93096014283094
-    Iteration #5, objective value: 53.933908806636694
-    Iteration #6, objective value: 53.88443707299379
-    Iteration #7, objective value: 53.81331650273359
-    Iteration #8, objective value: 53.72275180400425
-    Iteration #9, objective value: 53.615023896331984
+    Iteration #3, objective value: 76.24719314425751
+    Iteration #4, objective value: 59.93096014283092
+    Iteration #5, objective value: 53.93390880663665
+    Iteration #6, objective value: 53.88443707299375
+    Iteration #7, objective value: 53.81331650273353
+    Iteration #8, objective value: 53.72275180400419
+    Iteration #9, objective value: 53.61502389633193
 
     Number of objective function evaluations: 10
     Number of gradient function evaluations: 10
@@ -1325,10 +1325,14 @@ Watermark
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 860-860
+
+sphinx_gallery_thumbnail_number = -1
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  3.772 seconds)
+   **Total running time of the script:** ( 1 minutes  3.830 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py:

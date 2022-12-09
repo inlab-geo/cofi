@@ -250,7 +250,7 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 849/10416 [00:00<00:01, 8486.71it/s]    Evaluating paths:  17%|#6        | 1731/10416 [00:00<00:01, 8678.90it/s]    Evaluating paths:  25%|##4       | 2599/10416 [00:00<00:00, 8611.95it/s]    Evaluating paths:  33%|###3      | 3464/10416 [00:00<00:00, 8624.26it/s]    Evaluating paths:  42%|####1     | 4337/10416 [00:00<00:00, 8660.06it/s]    Evaluating paths:  50%|####9     | 5204/10416 [00:00<00:00, 8598.60it/s]    Evaluating paths:  58%|#####8    | 6074/10416 [00:00<00:00, 8627.83it/s]    Evaluating paths:  67%|######6   | 6945/10416 [00:00<00:00, 8652.32it/s]    Evaluating paths:  75%|#######4  | 7811/10416 [00:00<00:00, 8591.31it/s]    Evaluating paths:  83%|########3 | 8683/10416 [00:01<00:00, 8629.62it/s]    Evaluating paths:  92%|#########1| 9555/10416 [00:01<00:00, 8655.14it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8646.18it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 821/10416 [00:00<00:01, 8208.21it/s]    Evaluating paths:  16%|#6        | 1684/10416 [00:00<00:01, 8453.45it/s]    Evaluating paths:  24%|##4       | 2530/10416 [00:00<00:00, 8406.77it/s]    Evaluating paths:  32%|###2      | 3371/10416 [00:00<00:00, 8397.63it/s]    Evaluating paths:  41%|####      | 4229/10416 [00:00<00:00, 8461.93it/s]    Evaluating paths:  49%|####8     | 5076/10416 [00:00<00:00, 8452.59it/s]    Evaluating paths:  57%|#####6    | 5922/10416 [00:00<00:00, 8425.19it/s]    Evaluating paths:  65%|######5   | 6776/10416 [00:00<00:00, 8460.56it/s]    Evaluating paths:  73%|#######3  | 7623/10416 [00:00<00:00, 8385.14it/s]    Evaluating paths:  81%|########1 | 8462/10416 [00:01<00:00, 8378.80it/s]    Evaluating paths:  89%|########9 | 9317/10416 [00:01<00:00, 8429.28it/s]    Evaluating paths:  98%|#########7| 10161/10416 [00:01<00:00, 8352.10it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8408.82it/s]
 
 
 
@@ -553,7 +553,7 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 853/10416 [00:00<00:01, 8523.44it/s]    Evaluating paths:  17%|#6        | 1737/10416 [00:00<00:00, 8709.11it/s]    Evaluating paths:  25%|##5       | 2608/10416 [00:00<00:00, 8668.12it/s]    Evaluating paths:  33%|###3      | 3475/10416 [00:00<00:00, 8553.69it/s]    Evaluating paths:  42%|####1     | 4358/10416 [00:00<00:00, 8649.97it/s]    Evaluating paths:  50%|#####     | 5224/10416 [00:00<00:00, 8648.07it/s]    Evaluating paths:  59%|#####8    | 6097/10416 [00:00<00:00, 8671.99it/s]    Evaluating paths:  67%|######6   | 6976/10416 [00:00<00:00, 8708.55it/s]    Evaluating paths:  75%|#######5  | 7847/10416 [00:00<00:00, 8680.79it/s]    Evaluating paths:  84%|########3 | 8720/10416 [00:01<00:00, 8693.69it/s]    Evaluating paths:  92%|#########2| 9601/10416 [00:01<00:00, 8727.72it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8687.82it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 837/10416 [00:00<00:01, 8365.12it/s]    Evaluating paths:  16%|#6        | 1674/10416 [00:00<00:01, 8036.52it/s]    Evaluating paths:  24%|##3       | 2479/10416 [00:00<00:01, 7742.51it/s]    Evaluating paths:  31%|###1      | 3255/10416 [00:00<00:00, 7540.65it/s]    Evaluating paths:  38%|###8      | 4010/10416 [00:00<00:00, 6833.97it/s]    Evaluating paths:  46%|####5     | 4776/10416 [00:00<00:00, 7089.34it/s]    Evaluating paths:  54%|#####3    | 5597/10416 [00:00<00:00, 7431.43it/s]    Evaluating paths:  62%|######1   | 6445/10416 [00:00<00:00, 7748.94it/s]    Evaluating paths:  70%|#######   | 7292/10416 [00:00<00:00, 7965.74it/s]    Evaluating paths:  78%|#######7  | 8114/10416 [00:01<00:00, 8042.17it/s]    Evaluating paths:  86%|########6 | 8964/10416 [00:01<00:00, 8179.43it/s]    Evaluating paths:  94%|#########4| 9816/10416 [00:01<00:00, 8280.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7888.31it/s]
 
 
 
@@ -1229,10 +1229,14 @@ Watermark
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 755-755
+
+sphinx_gallery_thumbnail_number = -1
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  27.334 seconds)
+   **Total running time of the script:** ( 0 minutes  27.812 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_2_travel_time_tomography.py:

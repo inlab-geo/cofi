@@ -1108,3 +1108,4 @@ for pkg in watermark_list:
 
 ######################################################################
 #
+# sphinx_gallery_thumbnail_number = -1

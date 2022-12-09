@@ -127,6 +127,8 @@ sphinx_gallery_conf = {
     "ignore_pattern": "._lib.py|_preprocessing.py",
     "pypandoc": True,
     "download_all_examples": False,
+    "backreferences_dir"  : "api/generated/backreferences",
+    "doc_module": "cofi",
 }
 
 

@@ -241,7 +241,7 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fe401794d30>
+    <matplotlib.legend.Legend object at 0x7fdd1e701660>
 
 
 
@@ -720,7 +720,7 @@ any).
     ( not all of these may be relevant to your inversion workflow )
     ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
     List of functions/properties got used by the backend tool:
-    ['jacobian', 'data']
+    ['data', 'jacobian']
 
 
 
@@ -765,7 +765,7 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fe40a0eba60>
+    <matplotlib.legend.Legend object at 0x7fdd02a31a50>
 
 
 
@@ -970,7 +970,7 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fe435979840>
+    <matplotlib.legend.Legend object at 0x7fdd1e6fe800>
 
 
 
@@ -1483,7 +1483,7 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fe4358731c0>
+    <matplotlib.legend.Legend object at 0x7fdd2d5982b0>
 
 
 
@@ -1649,10 +1649,14 @@ Watermark
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 975-975
+
+sphinx_gallery_thumbnail_number = -1
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.278 seconds)
+   **Total running time of the script:** ( 0 minutes  7.269 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_linear_regression.py:
