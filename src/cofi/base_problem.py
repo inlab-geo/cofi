@@ -154,7 +154,6 @@ class BaseProblem:
         BaseProblem.set_data_from_file
         BaseProblem.set_initial_model
         BaseProblem.set_model_shape
-        BaseProblem.set_walkers_starting_pos
         .. BaseProblem.set_bounds
         .. BaseProblem.set_constraints
 
@@ -207,7 +206,6 @@ class BaseProblem:
         BaseProblem.model_covariance_inv
         BaseProblem.initial_model
         BaseProblem.model_shape
-        BaseProblem.walkers_starting_pos
         BaseProblem.blobs_dtype
         BaseProblem.bounds
         BaseProblem.constraints
@@ -238,7 +236,6 @@ class BaseProblem:
         "data_covariance_inv",
         "initial_model",
         "model_shape",
-        "walkers_starting_pos",
         "blobs_dtype",
         "bounds",
         "constraints",
@@ -1239,23 +1236,6 @@ class BaseProblem:
                 ) from err
         self._model_shape = model_shape
 
-    def set_walkers_starting_pos(self, starting_pos: np.ndarray):
-        r"""Sets the starting positions for each walker in sampling methods
-
-        This initialisation is optional. If not set, we rely on the default behaviour
-        of the backend sampling tools.
-
-        Parameters
-        ----------
-        starting_pos : np.ndarray
-            starting positions, with the shape ``(nwalkers, ndims)``, where
-            ``nwalkers`` is the number of walkers you plan to use for the sampler, and
-            ``ndims`` is the dimension of your model parameters (for fixed dimension
-            samplers)
-        """
-        self._walkers_starting_pos = starting_pos
-        self._model_shape = (starting_pos.shape[1],)
-
     def set_bounds(self, bounds: Sequence[Tuple[Number, Number]]):
         """TODO document me
 
@@ -1435,30 +1415,11 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by either
-            :meth:`set_model_shape`,
-            :meth:`set_model_shape`, or
-            :meth:`set_walkers_starting_pos`)
+            :meth:`set_model_shape` or :meth:`set_model_shape`)
         """
         if hasattr(self, "_model_shape") and self._model_shape is not None:
             return self._model_shape
         raise NotDefinedError(needs="model_shape")
-
-    @property
-    def walkers_starting_pos(self) -> np.ndarray:
-        r"""the starting positions for each walker
-
-        Raises
-        ------
-        NotDefinedError
-            when this property has not been defined (by
-            :meth:`set_walkers_starting_pos`)
-        """
-        if (
-            hasattr(self, "_walkers_starting_pos")
-            and self._walkers_starting_pos is not None
-        ):
-            return self._walkers_starting_pos
-        raise NotDefinedError(needs="walkers' starting positions")
 
     @property
     def blobs_dtype(self) -> list:
@@ -1623,11 +1584,6 @@ class BaseProblem:
     def model_shape_defined(self) -> bool:
         r"""indicates whether :meth:`model_shape` has been defined"""
         return self._check_property_defined("model_shape")
-
-    @property
-    def walkers_starting_pos_defined(self) -> bool:
-        r"""indicates whether :meth:`walkers_starting_pos` has been defined"""
-        return self._check_property_defined("walkers_starting_pos")
 
     @property
     def blobs_dtype_defined(self) -> bool:

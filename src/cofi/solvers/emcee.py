@@ -60,8 +60,8 @@ class EmceeSolver(BaseSolver):
                 # self._blobs_dtype = inv_problem._blobs_dtype
         else:
             self._params["log_prob_fn"] = inv_problem.log_posterior
+        self._params["ndim"] = np.shape(self._params["initial_state"])[0]
         self._params["ndim"] = np.prod(inv_problem.model_shape)
-        self._params["initial_state"] = inv_problem.walkers_starting_pos
 
     @error_handler(
         when="in creating emcee.EnsembleSampler object",
@@ -120,9 +120,9 @@ def _init_class_methods():
     _emcee_EnsembleSampler_sample_args = dict(
         inspect.signature(EnsembleSampler.sample).parameters
     )
-    required_in_problem = {"log_posterior", "model_shape", "walkers_starting_pos"}
+    required_in_problem = {"log_posterior"}
     optional_in_problem = dict()
-    required_in_options = {"nwalkers", "nsteps"}
+    required_in_options = {"nwalkers", "nsteps", "initial_state"}
     optional_in_options = {
         k: v.default
         for k, v in _emcee_EnsembleSampler_args.items()
@@ -132,7 +132,7 @@ def _init_class_methods():
         {
             k: v.default
             for k, v in _emcee_EnsembleSampler_sample_args.items()
-            if k not in {"initial_state", "iterations", "self"}
+            if k not in {"iterations", "self"}
         }
     )
     return (
