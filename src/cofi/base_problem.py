@@ -1320,7 +1320,7 @@ class BaseProblem:
                 >>> inv_problem.set_initial_model(np.array([1,2,3]))
                 >>> inv_problem.set_data_misfit("least squares")
                 >>> inv_problem.suggest_tools()
-                Based on what you've provided so far, here are possible solvers:
+                Based on what you've provided so far, here are possible tools:
                 {
                     "optimization": [
                         "scipy.optimize.minimize"
@@ -1343,7 +1343,7 @@ class BaseProblem:
                 if required.issubset(all_components):
                     to_suggest[solving_method].append(tool)
         if print_to_console:
-            print("Based on what you've provided so far, here are possible solvers:")
+            print("Based on what you've provided so far, here are possible tools:")
             print(json.dumps(to_suggest, indent=4))
         return to_suggest
 
