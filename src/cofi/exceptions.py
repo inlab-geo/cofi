@@ -7,9 +7,11 @@ GITHUB_ISSUE = "https://github.com/inlab-geo/cofi/issues"
 # Sets a custom exception handler for the scope of a 'with' block."
 def _cofi_except_handler(type, value, traceback):
     if issubclass(type, CofiError):
-        print(': '.join([str(type.__name__), str(value)]))
+        print(": ".join([str(type.__name__), str(value)]))
     else:
         sys.__excepthook__(type, value, traceback)
+
+
 sys.excepthook = _cofi_except_handler
 
 
@@ -41,7 +43,11 @@ class InvalidOptionError(CofiError, ValueError):
     """
 
     def __init__(
-        self, *args, name: str, invalid_option: Any, valid_options: Union[List, str],
+        self,
+        *args,
+        name: str,
+        invalid_option: Any,
+        valid_options: Union[List, str],
         **kwargs,
     ):
         super().__init__(*args, **kwargs)

@@ -1817,7 +1817,7 @@ def _objective_from_dm_reg(model, data_misfit, regularization):
         return data_misfit(model) + regularization(model)
     except Exception as exception:
         raise InvocationError(
-            func_name="objective function from data misfit and regularization", 
+            func_name="objective function from data misfit and regularization",
             autogen=True,
         ) from exception
 
@@ -1827,7 +1827,7 @@ def _objective_from_dm(model, data_misfit):
         return data_misfit(model)
     except Exception as exception:
         raise InvocationError(
-            func_name="objective function from data misfit", 
+            func_name="objective function from data misfit",
             autogen=True,
         ) from exception
 
@@ -1839,7 +1839,7 @@ def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
         return ll + lp, ll, lp
     except Exception as exception:
         raise InvocationError(
-            func_name="log posterior function from log likelihood and log prior", 
+            func_name="log posterior function from log likelihood and log prior",
             autogen=True,
         ) from exception
 
@@ -1849,7 +1849,7 @@ def _log_posterior_from_lp_with_blobs(model, log_posterior_with_blobs):
         return log_posterior_with_blobs(model)[0]
     except Exception as exception:
         raise InvocationError(
-            func_name="log posterior function from log likelihood and log prior", 
+            func_name="log posterior function from log likelihood and log prior",
             autogen=True,
         ) from exception
 
@@ -1859,7 +1859,7 @@ def _hessian_times_vector_from_hess(model, vector, hessian):
         return np.squeeze(np.asarray(hessian(model) @ vector))
     except Exception as exception:
         raise InvocationError(
-            func_name="hessian_times_vector function from given hessian function", 
+            func_name="hessian_times_vector function from given hessian function",
             autogen=True,
         ) from exception
 
@@ -1869,7 +1869,7 @@ def _residual_from_fwd_dt(model, forward, data):
         return forward(model) - data
     except Exception as exception:
         raise InvocationError(
-            func_name="residual function from forward and data provided", 
+            func_name="residual function from forward and data provided",
             autogen=True,
         ) from exception
 
@@ -1879,7 +1879,7 @@ def _jacobian_times_vector_from_jcb(model, vector, jacobian):
         return np.squeeze(np.asarray(jacobian(model) @ vector))
     except Exception as exception:
         raise InvocationError(
-            func_name="jacobian_times_vector from given jacobian function", 
+            func_name="jacobian_times_vector from given jacobian function",
             autogen=True,
         ) from exception
 
@@ -1926,12 +1926,11 @@ class _FunctionWrapper:
             return self.func(model, *extra_args, *self.args, **self.kwargs)
         except Exception as e:
             import sys
+
             if self.autogen:
                 raise
             else:
-                raise InvocationError(
-                    func_name=self.name, autogen=self.autogen
-                ) from e
+                raise InvocationError(func_name=self.name, autogen=self.autogen) from e
 
             # import traceback
             # print(f"cofi: Exception while calling your {self.name} function:")
