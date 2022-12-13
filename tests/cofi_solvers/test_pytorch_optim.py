@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from cofi.solvers import PyTorchOptim
+from cofi.exceptions import CofiError
 from cofi import BaseProblem, InversionOptions
 
 
@@ -32,13 +33,13 @@ def test_torch_init_tensor_nativetype():
 
 def test_torch_init_tensor_error():
     inv_problem1.set_initial_model([[1,2],[3]])
-    with pytest.raises(RuntimeError, match=r".*error ocurred in converting.*"):
+    with pytest.raises(CofiError, match=r".*error ocurred in converting.*"):
         PyTorchOptim(inv_problem1, inv_options1)
     inv_problem1.set_initial_model(1)
 
 def test_torch_optimizer_error():
     inv_options1.set_params(algorithm="SGD")
-    with pytest.raises(RuntimeError, match=r".*error ocurred in creating*"):
+    with pytest.raises(CofiError, match=r".*error ocurred in creating*"):
         PyTorchOptim(inv_problem1, inv_options1)
 
 def test_run_simple_obj():

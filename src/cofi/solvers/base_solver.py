@@ -1,5 +1,7 @@
 from abc import abstractmethod, ABCMeta
 
+from ..exceptions import CofiError
+
 
 class BaseSolver(metaclass=ABCMeta):
     r"""Base class for backend solver wrappers
@@ -288,9 +290,9 @@ def error_handler(when, context):
             try:
                 return func(*args, **kwargs)
             except Exception as e:
-                raise RuntimeError(
+                raise CofiError(
                     f"error ocurred {when} ({context}). Check exception details from "
-                    "message above."
+                    "message above.",
                 ) from e
 
         return wrapped_func
