@@ -3,6 +3,7 @@ import pytest
 
 from cofi.solvers import EmceeSolver
 from cofi import BaseProblem, InversionOptions, Inversion
+from cofi.exceptions import CofiError
 
 
 ############### Problem setup #########################################################
@@ -138,3 +139,13 @@ def test_no_initial_state():
     # define inversion
     with pytest.raises(ValueError):
         inv = Inversion(inv_problem, inv_options)
+
+def test_runtime_cofi_error():
+    # set up problem
+    inv_problem = BaseProblem()
+    def my_bad_lp(x):
+        assert 0
+    inv_problem.set_log_posterior(my_bad_lp)
+    inv_problem.set_model_shape(ndim)
+    with pytest.raises(CofiError) as e:
+        inv_problem.log_posterior("1") 

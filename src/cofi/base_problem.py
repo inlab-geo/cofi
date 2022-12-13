@@ -1925,18 +1925,13 @@ class _FunctionWrapper:
         try:
             return self.func(model, *extra_args, *self.args, **self.kwargs)
         except Exception as e:
-            import sys
-
+            import traceback
+            print(f"cofi: Exception while calling your {self.name} function:")
+            print("  params:", model, *extra_args)
+            print("  args:", self.args, len(self.args))
+            print("  kwargs:", self.kwargs)
+            print("  Look at details below:\n", "-"*88)
             if self.autogen:
                 raise
             else:
                 raise InvocationError(func_name=self.name, autogen=self.autogen) from e
-
-            # import traceback
-            # print(f"cofi: Exception while calling your {self.name} function:")
-            # print("  params:", model, *extra_args)
-            # print("  args:", self.args, len(self.args))
-            # print("  kwargs:", self.kwargs)
-            # print("  exception:")
-            # traceback.print_exc()
-            # raise exception
