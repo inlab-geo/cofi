@@ -32,7 +32,7 @@ pip-wheel-metadata
 wheelhouse
 .tox
 MANIFEST
-src/cofi/version.py
+src/cofi/_version.py
 
 # pytest cache #
 ################
