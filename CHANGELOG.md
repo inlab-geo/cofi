@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev23 (14/12/2022)
+
+### CoFI Core
+
+- [#91](https://github.com/inlab-geo/cofi/issues/91) Raise warning when people set solver params that are not in optional list
+- [#97](https://github.com/inlab-geo/cofi/issues/97) Make walkers_start_pos a property of InversionOptions instead of BaseProblem
+- [#98](https://github.com/inlab-geo/cofi/issues/98) Typo, wording fixes; shorten error messages
+
 ## v0.1.2.dev22 (23/11/2022)
 
 ### CoFI Core
