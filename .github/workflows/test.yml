@@ -21,7 +21,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Get tags
-        run: git fetch --tags origin
+        run: |
+          git fetch --tags origin
+          git describe
       # Setup
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
