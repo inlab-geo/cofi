@@ -85,4 +85,4 @@ dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
 distance-dirty = "{base_version}+{distance}.{vcs}{rev}.dirty"
 
 [tool.versioningit.write]
-file = "src/cofi/version.py"
+file = "src/cofi/_version.py"

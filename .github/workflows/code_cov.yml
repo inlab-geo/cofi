@@ -7,14 +7,14 @@ on:
     paths:
       - 'src/cofi/**'
       - 'pyproject.toml'
-      - '!src/cofi/_version.py'
+      - '!src/cofi/version.py'
   pull_request:
     types:
       - ready_for_review
     paths:
       - 'src/cofi/**'
       - 'pyproject.toml'
-      - '!src/cofi/_version.py'
+      - '!src/cofi/version.py'
 
 jobs:
   code_coverage:

@@ -5,7 +5,7 @@ on:
   push:
     branches: main
     paths:
-      - "src/cofi/_version.py"
+      - "src/cofi/version.py"
 
 jobs:
   publish_pypi:
@@ -27,7 +27,7 @@ jobs:
         working-directory: src/cofi
         run: |
           set -e
-          python -c "import _version as v; print(v.__version__)"
+          python -c "import version as v; print(v.__version__)"
           echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
 
       - name: Create release tag
