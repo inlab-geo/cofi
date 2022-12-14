@@ -28,7 +28,7 @@ jobs:
         run: |
           set -e
           python -c "import version as v; print(v.__version__)"
-          echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
+          echo ::set-output name=version::$(python -c "import version as v; print(v.__version__)")
 
       - name: Create release tag
         uses: rickstaa/action-create-tag@v1.3.0
