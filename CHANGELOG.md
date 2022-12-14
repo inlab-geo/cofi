@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev24 (14/12/2022)
+
+### CoFI Tools
+
+- [#84](https://github.com/inlab-geo/cofi/issues/84) Use versioningit in build process
+
 ## v0.1.2.dev23 (14/12/2022)
 
 ### CoFI Core

@@ -24,6 +24,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get tags
+        run: |
+          git fetch --tags origin
+          git describe
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:

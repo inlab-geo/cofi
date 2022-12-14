@@ -21,6 +21,20 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+      
+      - name: Extract Release Version
+        id: release_version
+        working-directory: src/cofi
+        run: |
+          set -e
+          python -c "import _version as v; print(v.__version__)"
+          echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
+
+      - name: Create release tag
+        uses: rickstaa/action-create-tag@v1.3.0
+        with:
+          tag: "v${{ steps.release_version.outputs.version }}"
+          force_push_tag: true
 
       - name: Build and check sdist
         run: |
@@ -41,17 +55,3 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
           verbose: true
-      
-      - name: Extract Release Version
-        id: release_version
-        working-directory: src/cofi
-        run: |
-          set -e
-          python -c "import _version as v; print(v.__version__)"
-          echo ::set-output name=version::$(python -c "import _version as v; print(v.__version__)")
-
-      - name: Create release tag
-        uses: rickstaa/action-create-tag@v1.3.0
-        with:
-          tag: "v${{ steps.release_version.outputs.version }}"
-          force_push_tag: true

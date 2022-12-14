@@ -5,12 +5,7 @@ from .inversion import Inversion, InversionResult, SamplingResult
 from . import utils
 from . import solvers
 
-try:
-    from . import _version
-
-    __version__ = _version.__version__
-except ImportError:
-    pass
+from ._version import __version__
 
 
 __all__ = [
