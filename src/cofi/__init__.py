@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from .base_problem import BaseProblem
 from .inversion_options import InversionOptions
 from .inversion import Inversion, InversionResult, SamplingResult
@@ -5,13 +7,8 @@ from .inversion import Inversion, InversionResult, SamplingResult
 from . import utils
 from . import solvers
 
-try:
-    from . import _version
 
-    __version__ = _version.__version__
-except ImportError:
-    pass
-
+__version__ = Path(__file__).with_name("VERSION").read_text().strip()
 
 __all__ = [
     "BaseProblem",  # public API, basic usage
