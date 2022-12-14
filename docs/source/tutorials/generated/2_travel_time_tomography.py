@@ -521,7 +521,7 @@ nonlinear_options = cofi.InversionOptions()
 
 # cofi's own simple newton's matrix-based optimization solver
 nonlinear_options.set_tool("cofi.simple_newton")
-nonlinear_options.set_params(max_iterations=5, step_length=1, verbose=True)
+nonlinear_options.set_params(num_iterations=5, step_length=1, verbose=True)
 
 # scipy's Newton-CG solver (alternative approach with similar results)
 # nonlinear_options.set_tool("scipy.optimize.minimize")

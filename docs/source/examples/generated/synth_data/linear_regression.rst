@@ -241,7 +241,7 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fdd1e701660>
+    <matplotlib.legend.Legend object at 0x7f2d28db09a0>
 
 
 
@@ -310,7 +310,7 @@ object.
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -389,7 +389,7 @@ categories of inversion approaches you’d like to use.
 
  .. code-block:: none
 
-    Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+    Here's a complete list of inversion tools supported by CoFI (grouped by methods):
     {
         "optimization": [
             "scipy.optimize.minimize",
@@ -478,7 +478,7 @@ function shows available options and set your desired backend solver.
     Use `InversionOptions.set_tool(tool_name)` to set a specific tool from above
     Use `InversionOptions.set_solving_method(method_name)` to change solving method
     Use `InversionOptions.unset_solving_method()` if you'd like to see more options
-    Check CoFI documentation 'Advanced Usage' section for how to plug in your own solver
+    Check CoFI documentation 'Advanced Usage' section for how to plug in your own tool or solver
 
 
 
@@ -578,7 +578,7 @@ and is an engine to actually perform the inversion.
     ['jacobian_times_vector']
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -718,9 +718,9 @@ any).
     ['jacobian_times_vector']
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
     List of functions/properties got used by the backend tool:
-    ['data', 'jacobian']
+    ['jacobian', 'data']
 
 
 
@@ -765,7 +765,7 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fdd02a31a50>
+    <matplotlib.legend.Legend object at 0x7f2d5580fee0>
 
 
 
@@ -970,7 +970,7 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fdd1e6fe800>
+    <matplotlib.legend.Legend object at 0x7f2d30a65f00>
 
 
 
@@ -1214,12 +1214,12 @@ Finally, we attach all above information to our ``BaseProblem`` and
     ######## Provide additional information
     inv_problem.set_log_prior(log_prior)
     inv_problem.set_log_likelihood(log_likelihood)
-    inv_problem.set_walkers_starting_pos(walkers_start)
+    inv_problem.set_model_shape(ndim)
 
     ######## Set a different tool
     inv_options_3 = InversionOptions()
     inv_options_3.set_tool("emcee")
-    inv_options_3.set_params(nwalkers=nwalkers, nsteps=nsteps)
+    inv_options_3.set_params(nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_start)
 
     ######## Run it
     inv_3 = Inversion(inv_problem, inv_options_3)
@@ -1483,7 +1483,7 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fdd2d5982b0>
+    <matplotlib.legend.Legend object at 0x7f2d5c77ef80>
 
 
 
@@ -1656,7 +1656,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.269 seconds)
+   **Total running time of the script:** ( 0 minutes  7.315 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_linear_regression.py:

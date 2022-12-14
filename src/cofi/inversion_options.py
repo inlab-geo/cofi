@@ -33,7 +33,7 @@ class InversionOptions:
         >>> inv_options.get_default_tool()
         'scipy.optimize.minimize'
         >>> inv_options.suggest_tools()
-        Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+        Here's a complete list of inversion tools supported by CoFI (grouped by methods):
         {
             "optimization": [
                 "scipy.optimize.minimize",
@@ -431,7 +431,7 @@ class InversionOptions:
                 >>> from cofi import InversionOptions
                 >>> inv_options = InversionOptions()
                 >>> inv_options.suggest_tools()
-                Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+                Here's a complete list of inversion tools supported by CoFI (grouped by methods):
                 {
                     "optimization": [
                         "scipy.optimize.minimize",
@@ -477,7 +477,7 @@ class InversionOptions:
             )
         else:
             print(
-                "Here's a complete list of inversion solvers supported by CoFI (grouped"
+                "Here's a complete list of inversion tools supported by CoFI (grouped"
                 " by methods):"
             )
             print(json.dumps(solver_suggest_table, indent=4))

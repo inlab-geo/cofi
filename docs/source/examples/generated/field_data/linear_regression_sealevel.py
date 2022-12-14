@@ -702,12 +702,12 @@ walkers_start = np.zeros(nparams) + 1e-4 * np.random.randn(nwalkers, ndim)
 ######## CoFI BaseProblem - provide additional information
 inv_problem.set_log_prior(log_prior)
 inv_problem.set_log_likelihood(log_likelihood)
-inv_problem.set_walkers_starting_pos(walkers_start)
+inv_problem.set_model_shape(ndim)
 
 ######## CoFI InversionOptions - get a different tool
 inv_options_3 = InversionOptions()
 inv_options_3.set_tool("emcee")      # Here we use to Affine Invariant McMC sampler from Goodman and Weare (2010).
-inv_options_3.set_params(nwalkers=nwalkers, nsteps=nsteps, progress=True)
+inv_options_3.set_params(nwalkers=nwalkers, nsteps=nsteps, progress=True, initial_state=walkers_start)
 
 ######## CoFI Inversion - run it
 inv_3 = Inversion(inv_problem, inv_options_3)

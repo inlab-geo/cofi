@@ -682,7 +682,7 @@ libraries we can use for our problem.
 
  .. code-block:: none
 
-    Based on what you've provided so far, here are possible solvers:
+    Based on what you've provided so far, here are possible tools:
     {
         "optimization": [
             "scipy.optimize.minimize",
@@ -729,7 +729,7 @@ model update. In practice:
 
     inv_options_newton = InversionOptions()
     inv_options_newton.set_tool("cofi.simple_newton")
-    inv_options_newton.set_params(max_iterations=5, step_length=0.01)
+    inv_options_newton.set_params(num_iterations=5, step_length=0.01)
 
     inv = Inversion(ert_problem, inv_options_newton)
     inv_result = inv.run()
@@ -766,10 +766,10 @@ model update. In practice:
  .. code-block:: none
 
     Iteration #0, objective function value: 229.71418345445022
-    Iteration #1, objective function value: 224.79875151412557
-    Iteration #2, objective function value: 220.36237268797532
-    Iteration #3, objective function value: 215.90570020911278
-    Iteration #4, objective function value: 211.617756132559
+    Iteration #1, objective function value: 224.7987515141377
+    Iteration #2, objective function value: 220.36237268797754
+    Iteration #3, objective function value: 215.9057002091127
+    Iteration #4, objective function value: 211.6177561325492
 
     Number of objective function evaluations: 5
     Number of gradient function evaluations: 5
@@ -992,17 +992,17 @@ You may start from the following template:
     Iteration #1
       objective value: 69.41232753902361
     Iteration #2
-      model change: 1.9521920346073596
-      objective value: 32.31371502955887
+      model change: 1.9521920346073456
+      objective value: 32.313715029558715
     Iteration #3
-      model change: 2.005000505011234
-      objective value: 31.171940388085254
+      model change: 2.0050005050112407
+      objective value: 31.17194038808538
     Iteration #4
-      model change: 0.3774794759723892
-      objective value: 27.46044537825035
+      model change: 0.3774794759723972
+      objective value: 27.460445378250956
     Iteration #5
-      model change: 1.2758048179587598
-      objective value: 17.691012543494267
+      model change: 1.2758048179583221
+      objective value: 17.69101254349345
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
@@ -1060,16 +1060,16 @@ You may start from the following template:
       objective value: 157.50708172346376
     Iteration #2
       model change: 2.0
-      objective value: 68.9401312210403
+      objective value: 68.94013122104025
     Iteration #3
-      model change: 4.0
-      objective value: 34.90264090870657
+      model change: 3.9999999999999996
+      objective value: 34.90264090870997
     Iteration #4
       model change: 0.0
-      objective value: 34.90264090870657
+      objective value: 34.90264090870997
     Iteration #5
-      model change: 2.0
-      objective value: 22.814718920647355
+      model change: 1.9999999999999998
+      objective value: 22.814718920602395
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -1126,17 +1126,17 @@ You may start from the following template:
     Iteration #1
       objective value: 157.50708172346376
     Iteration #2
-      model change: 1.9999999999999996
-      objective value: 68.94013122104026
+      model change: 1.9999999999999993
+      objective value: 68.94013122104023
     Iteration #3
-      model change: 2.088598198678278
-      objective value: 51.744476378629734
+      model change: 2.0885981986782762
+      objective value: 51.74447637862965
     Iteration #4
-      model change: 2.235768382076782
-      objective value: 32.60775764541582
+      model change: 2.235768382076769
+      objective value: 32.607757645416285
     Iteration #5
-      model change: 1.7295706120934395
-      objective value: 29.213175185113556
+      model change: 1.7295706120934249
+      objective value: 29.21317518511462
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
@@ -1252,15 +1252,17 @@ You may start from this template:
 
  .. code-block:: none
 
+    /home/jiawen/cofi/src/cofi/solvers/base_solver.py:267: UserWarning: the following options are defined but not in parameter list for the chosen tool: ['lr']
+      warnings.warn(
     Iteration #0, objective value: 229.71418345445022
-    Iteration #1, objective value: 156.9046492247727
-    Iteration #2, objective value: 107.12950312045994
-    Iteration #3, objective value: 76.24719314425751
-    Iteration #4, objective value: 59.93096014283092
-    Iteration #5, objective value: 53.93390880663665
+    Iteration #1, objective value: 156.90464922477267
+    Iteration #2, objective value: 107.12950312045993
+    Iteration #3, objective value: 76.2471931442575
+    Iteration #4, objective value: 59.93096014283091
+    Iteration #5, objective value: 53.93390880663664
     Iteration #6, objective value: 53.88443707299375
     Iteration #7, objective value: 53.81331650273353
-    Iteration #8, objective value: 53.72275180400419
+    Iteration #8, objective value: 53.722751804004204
     Iteration #9, objective value: 53.61502389633193
 
     Number of objective function evaluations: 10
@@ -1332,7 +1334,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  3.830 seconds)
+   **Total running time of the script:** ( 1 minutes  3.825 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py:

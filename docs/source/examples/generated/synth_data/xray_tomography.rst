@@ -192,7 +192,7 @@ stays constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   7%|7         | 774/10416 [00:00<00:01, 7736.52it/s]    Evaluating paths:  16%|#5        | 1633/10416 [00:00<00:01, 8237.53it/s]    Evaluating paths:  24%|##3       | 2468/10416 [00:00<00:00, 8285.12it/s]    Evaluating paths:  32%|###1      | 3308/10416 [00:00<00:00, 8328.77it/s]    Evaluating paths:  40%|####      | 4172/10416 [00:00<00:00, 8437.97it/s]    Evaluating paths:  48%|####8     | 5017/10416 [00:00<00:00, 8441.20it/s]    Evaluating paths:  56%|#####6    | 5865/10416 [00:00<00:00, 8453.27it/s]    Evaluating paths:  65%|######4   | 6733/10416 [00:00<00:00, 8525.10it/s]    Evaluating paths:  73%|#######2  | 7586/10416 [00:00<00:00, 8521.84it/s]    Evaluating paths:  81%|########1 | 8439/10416 [00:01<00:00, 8523.42it/s]    Evaluating paths:  89%|########9 | 9306/10416 [00:01<00:00, 8565.22it/s]    Evaluating paths:  98%|#########7| 10163/10416 [00:01<00:00, 8563.09it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8473.60it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 838/10416 [00:00<00:01, 8376.15it/s]    Evaluating paths:  16%|#6        | 1686/10416 [00:00<00:01, 8433.53it/s]    Evaluating paths:  24%|##4       | 2530/10416 [00:00<00:00, 8204.28it/s]    Evaluating paths:  32%|###2      | 3352/10416 [00:00<00:00, 8039.22it/s]    Evaluating paths:  40%|###9      | 4157/10416 [00:00<00:00, 8035.06it/s]    Evaluating paths:  48%|####7     | 4961/10416 [00:00<00:00, 7810.83it/s]    Evaluating paths:  55%|#####5    | 5744/10416 [00:00<00:00, 7596.04it/s]    Evaluating paths:  63%|######2   | 6557/10416 [00:00<00:00, 7758.26it/s]    Evaluating paths:  71%|#######   | 7360/10416 [00:00<00:00, 7840.34it/s]    Evaluating paths:  78%|#######8  | 8146/10416 [00:01<00:00, 7778.84it/s]    Evaluating paths:  86%|########5 | 8955/10416 [00:01<00:00, 7870.80it/s]    Evaluating paths:  94%|#########3| 9775/10416 [00:01<00:00, 7969.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7972.45it/s]
 
 
 
@@ -268,7 +268,7 @@ Review what information is included in the ``BaseProblem`` object:
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -602,7 +602,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.716 seconds)
+   **Total running time of the script:** ( 0 minutes  3.787 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_xray_tomography.py:
