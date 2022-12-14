@@ -16,7 +16,7 @@
 # --------------------------- END NOTES ---------------------------
 
 [build-system]
-requires = ["setuptools", "numpy"]
+requires = ["setuptools", "numpy", "versioneer[toml]==0.28"]
 build-backend = "setuptools.build_meta"
 
 [project]
