@@ -1,3 +1,4 @@
+import sys
 from typing import Any, List, Tuple, Union
 
 
@@ -6,6 +7,9 @@ GITHUB_ISSUE = "https://github.com/inlab-geo/cofi/issues"
 
 class CofiError(Exception):
     """Base class for all CoFI errors"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
     def _form_str(self, super_msg, msg):
         return f"{msg}\n\n{super_msg}" if super_msg else msg
@@ -29,9 +33,14 @@ class InvalidOptionError(CofiError, ValueError):
     """
 
     def __init__(
-        self, *args, name: str, invalid_option: Any, valid_options: Union[List, str]
+        self,
+        *args,
+        name: str,
+        invalid_option: Any,
+        valid_options: Union[List, str],
+        **kwargs,
     ):
-        super().__init__(*args)
+        super().__init__(*args, **kwargs)
         self._name = name
         self._invalid_option = invalid_option
         self._valid_options = valid_options
@@ -73,8 +82,9 @@ class DimensionMismatchError(CofiError, ValueError):
         entered_name: str,
         expected_dimension: Tuple,
         expected_source: str,
+        **kwargs,
     ) -> None:
-        super().__init__(*args)
+        super().__init__(*args, **kwargs)
         self._entered_dimension = entered_dimension
         self._entered_name = entered_name
         self._expected_dimension = expected_dimension
@@ -106,8 +116,8 @@ class NotDefinedError(CofiError, NotImplementedError):
         them
     """
 
-    def __init__(self, *args, needs: Union[List, str]):
-        super().__init__(*args)
+    def __init__(self, *args, needs: Union[List, str], **kwargs):
+        super().__init__(*args, **kwargs)
         self._needs = needs
 
     def __str__(self) -> str:
@@ -137,8 +147,8 @@ class InvocationError(CofiError, RuntimeError):
         whether this function is automatically generated or defined by users
     """
 
-    def __init__(self, *args, func_name: str, autogen: bool):
-        super().__init__(*args)
+    def __init__(self, *args, func_name: str, autogen: bool, **kwargs):
+        super().__init__(*args, **kwargs)
         self._func_name = func_name
         self._func_name_prefix = "auto-generated" if autogen else "your"
 
@@ -146,7 +156,6 @@ class InvocationError(CofiError, RuntimeError):
         super_msg = super().__str__()
         msg = (
             f"exception while calling {self._func_name_prefix} {self._func_name}. "
-            "Check exception details from message above. If not sure, "
-            f"please report this issue at {GITHUB_ISSUE}"
+            "Check exception details from message above. "
         )
         return self._form_str(super_msg, msg)

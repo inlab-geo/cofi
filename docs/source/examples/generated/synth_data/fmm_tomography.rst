@@ -403,7 +403,7 @@ Review what information is included in the ``BaseProblem`` object:
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data', 'data_covariance', 'data_covariance_inv', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data', 'data_covariance', 'data_covariance_inv', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -423,7 +423,7 @@ Review what information is included in the ``BaseProblem`` object:
 
     # cofi's own simple newton's matrix-based optimization solver
     my_options.set_tool("cofi.simple_newton")
-    my_options.set_params(max_iterations=6, step_length=1, verbose=True)
+    my_options.set_params(num_iterations=6, step_length=1, verbose=True)
 
 
 
@@ -459,11 +459,11 @@ Review what’s been defined for the inversion we are about to run:
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
     Backend tool: `cofi.simple_newton` - CoFI's own solver - simple Newton's approach (for testing mainly)
-    References: ['https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization', 'https://en.wikipedia.org/wiki/Backtracking_line_search']
+    References: ['https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
     Solver-specific parameters: 
-    max_iterations = 6
+    num_iterations = 6
     step_length = 1
     verbose = True
     Use `suggest_solver_params()` to check required/optional solver-specific parameters.
@@ -608,7 +608,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.992 seconds)
+   **Total running time of the script:** ( 0 minutes  9.712 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography.py:

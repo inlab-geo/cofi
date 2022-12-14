@@ -684,7 +684,7 @@ the problem in ``cofi`` by setting the problem information for a
 
  .. code-block:: none
 
-    Based on what you've provided so far, here are possible solvers:
+    Based on what you've provided so far, here are possible tools:
     {
         "optimization": [
             "scipy.optimize.minimize",
@@ -812,26 +812,28 @@ the problem in ``cofi`` by setting the problem information for a
 
  .. code-block:: none
 
-    Iteration #0, objective value: 40.95771199605638
-    Iteration #1, objective value: 33.00676105436523
-    Iteration #2, objective value: 27.517003420370493
-    Iteration #3, objective value: 23.856374111765216
-    Iteration #4, objective value: 21.50039198382915
-    Iteration #5, objective value: 20.031913540512758
-    Iteration #6, objective value: 19.94374499736552
-    Iteration #7, objective value: 19.827200872787692
-    Iteration #8, objective value: 19.68751418779837
-    Iteration #9, objective value: 19.529728014788613
-    Iteration #10, objective value: 19.358622701101357
-    Iteration #11, objective value: 19.178021476346988
-    Iteration #12, objective value: 18.990944837951876
-    Iteration #13, objective value: 18.80075206647256
-    Iteration #14, objective value: 18.61164377301345
-    Iteration #15, objective value: 18.428027398821495
-    Iteration #16, objective value: 18.253580046588773
-    Iteration #17, objective value: 18.090719054250933
-    Iteration #18, objective value: 17.940812351147578
-    Iteration #19, objective value: 17.80478600956866
+    /home/jiawen/cofi/src/cofi/solvers/base_solver.py:267: UserWarning: the following options are defined but not in parameter list for the chosen tool: ['lr']
+      warnings.warn(
+    Iteration #0, objective value: 40.95771199605861
+    Iteration #1, objective value: 33.006761054365505
+    Iteration #2, objective value: 27.517003420367388
+    Iteration #3, objective value: 23.856374111760857
+    Iteration #4, objective value: 21.50039198382136
+    Iteration #5, objective value: 20.03191354052629
+    Iteration #6, objective value: 19.94374499737532
+    Iteration #7, objective value: 19.827200872779063
+    Iteration #8, objective value: 19.687514187805156
+    Iteration #9, objective value: 19.529728014807965
+    Iteration #10, objective value: 19.35862270111142
+    Iteration #11, objective value: 19.178021476356154
+    Iteration #12, objective value: 18.990944837953872
+    Iteration #13, objective value: 18.800752066476278
+    Iteration #14, objective value: 18.61164377300838
+    Iteration #15, objective value: 18.428027398836804
+    Iteration #16, objective value: 18.253580046609493
+    Iteration #17, objective value: 18.090719054270597
+    Iteration #18, objective value: 17.94081235117483
+    Iteration #19, objective value: 17.804786009588636
 
 
 
@@ -914,7 +916,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 2 minutes  57.612 seconds)
+   **Total running time of the script:** ( 3 minutes  4.958 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_pygimli_dcip.py:

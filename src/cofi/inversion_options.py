@@ -33,7 +33,7 @@ class InversionOptions:
         >>> inv_options.get_default_tool()
         'scipy.optimize.minimize'
         >>> inv_options.suggest_tools()
-        Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+        Here's a complete list of inversion tools supported by CoFI (grouped by methods):
         {
             "optimization": [
                 "scipy.optimize.minimize",
@@ -233,7 +233,7 @@ class InversionOptions:
         else:
             close_matches = difflib.get_close_matches(method, solver_methods)
             _error_msg_suffix = (
-                f"\n\nDid you mean '{close_matches[0]}?'" if len(close_matches) else ""
+                f"\n\nDid you mean '{close_matches[0]}'?" if len(close_matches) else ""
             )
             raise ValueError(
                 "the solver method is invalid, please choose from"
@@ -345,7 +345,7 @@ class InversionOptions:
                     tool, solver_dispatch_table.keys()
                 )
                 _error_msg_suffix = (
-                    f"\n\nDid you mean '{close_matches[0]}?'"
+                    f"\n\nDid you mean '{close_matches[0]}'?"
                     if len(close_matches)
                     else ""
                 )
@@ -431,7 +431,7 @@ class InversionOptions:
                 >>> from cofi import InversionOptions
                 >>> inv_options = InversionOptions()
                 >>> inv_options.suggest_tools()
-                Here's a complete list of inversion solvers supported by CoFI (grouped by methods):
+                Here's a complete list of inversion tools supported by CoFI (grouped by methods):
                 {
                     "optimization": [
                         "scipy.optimize.minimize",
@@ -473,11 +473,11 @@ class InversionOptions:
             )
             print(
                 "Check CoFI documentation 'Advanced Usage' section for how to plug in"
-                " your own solver"
+                " your own tool or solver"
             )
         else:
             print(
-                "Here's a complete list of inversion solvers supported by CoFI (grouped"
+                "Here's a complete list of inversion tools supported by CoFI (grouped"
                 " by methods):"
             )
             print(json.dumps(solver_suggest_table, indent=4))

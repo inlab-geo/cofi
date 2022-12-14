@@ -122,12 +122,8 @@ def test_validation_options(empty_setup, subclass_solver2):
     inv_solver._assign_options()
 
 
-# ############################### TEST ALL SOLVERS ###############################
-# 1. The four class methods are implemented and they return correct data types
-# 2. __call__ method returns a dictionary with at least "success" and "model"
-#    as keys
-# ################################################################################
-
-
-
-
+def test_validation_options_warnings(empty_setup, subclass_solver2):
+    inv_prob, inv_opt = empty_setup
+    inv_opt.set_params(tol=1, toll=1000)
+    with pytest.warns(UserWarning, match=".*the following options are defined but not in parameter list for the chosen tool.*"):
+        inv_tool = subclass_solver2(inv_prob, inv_opt)

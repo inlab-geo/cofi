@@ -154,7 +154,6 @@ class BaseProblem:
         BaseProblem.set_data_from_file
         BaseProblem.set_initial_model
         BaseProblem.set_model_shape
-        BaseProblem.set_walkers_starting_pos
         .. BaseProblem.set_bounds
         .. BaseProblem.set_constraints
 
@@ -207,7 +206,6 @@ class BaseProblem:
         BaseProblem.model_covariance_inv
         BaseProblem.initial_model
         BaseProblem.model_shape
-        BaseProblem.walkers_starting_pos
         BaseProblem.blobs_dtype
         BaseProblem.bounds
         BaseProblem.constraints
@@ -238,7 +236,6 @@ class BaseProblem:
         "data_covariance_inv",
         "initial_model",
         "model_shape",
-        "walkers_starting_pos",
         "blobs_dtype",
         "bounds",
         "constraints",
@@ -1239,23 +1236,6 @@ class BaseProblem:
                 ) from err
         self._model_shape = model_shape
 
-    def set_walkers_starting_pos(self, starting_pos: np.ndarray):
-        r"""Sets the starting positions for each walker in sampling methods
-
-        This initialisation is optional. If not set, we rely on the default behaviour
-        of the backend sampling tools.
-
-        Parameters
-        ----------
-        starting_pos : np.ndarray
-            starting positions, with the shape ``(nwalkers, ndims)``, where
-            ``nwalkers`` is the number of walkers you plan to use for the sampler, and
-            ``ndims`` is the dimension of your model parameters (for fixed dimension
-            samplers)
-        """
-        self._walkers_starting_pos = starting_pos
-        self._model_shape = (starting_pos.shape[1],)
-
     def set_bounds(self, bounds: Sequence[Tuple[Number, Number]]):
         """TODO document me
 
@@ -1340,7 +1320,7 @@ class BaseProblem:
                 >>> inv_problem.set_initial_model(np.array([1,2,3]))
                 >>> inv_problem.set_data_misfit("least squares")
                 >>> inv_problem.suggest_tools()
-                Based on what you've provided so far, here are possible solvers:
+                Based on what you've provided so far, here are possible tools:
                 {
                     "optimization": [
                         "scipy.optimize.minimize"
@@ -1363,7 +1343,7 @@ class BaseProblem:
                 if required.issubset(all_components):
                     to_suggest[solving_method].append(tool)
         if print_to_console:
-            print("Based on what you've provided so far, here are possible solvers:")
+            print("Based on what you've provided so far, here are possible tools:")
             print(json.dumps(to_suggest, indent=4))
         return to_suggest
 
@@ -1435,30 +1415,11 @@ class BaseProblem:
         ------
         NotDefinedError
             when this property has not been defined (by either
-            :meth:`set_model_shape`,
-            :meth:`set_model_shape`, or
-            :meth:`set_walkers_starting_pos`)
+            :meth:`set_model_shape` or :meth:`set_model_shape`)
         """
         if hasattr(self, "_model_shape") and self._model_shape is not None:
             return self._model_shape
         raise NotDefinedError(needs="model_shape")
-
-    @property
-    def walkers_starting_pos(self) -> np.ndarray:
-        r"""the starting positions for each walker
-
-        Raises
-        ------
-        NotDefinedError
-            when this property has not been defined (by
-            :meth:`set_walkers_starting_pos`)
-        """
-        if (
-            hasattr(self, "_walkers_starting_pos")
-            and self._walkers_starting_pos is not None
-        ):
-            return self._walkers_starting_pos
-        raise NotDefinedError(needs="walkers' starting positions")
 
     @property
     def blobs_dtype(self) -> list:
@@ -1623,11 +1584,6 @@ class BaseProblem:
     def model_shape_defined(self) -> bool:
         r"""indicates whether :meth:`model_shape` has been defined"""
         return self._check_property_defined("model_shape")
-
-    @property
-    def walkers_starting_pos_defined(self) -> bool:
-        r"""indicates whether :meth:`walkers_starting_pos` has been defined"""
-        return self._check_property_defined("walkers_starting_pos")
 
     @property
     def blobs_dtype_defined(self) -> bool:
@@ -1871,7 +1827,8 @@ def _objective_from_dm(model, data_misfit):
         return data_misfit(model)
     except Exception as exception:
         raise InvocationError(
-            func_name="objective function from data misfit", autogen=True
+            func_name="objective function from data misfit",
+            autogen=True,
         ) from exception
 
 
@@ -1912,7 +1869,8 @@ def _residual_from_fwd_dt(model, forward, data):
         return forward(model) - data
     except Exception as exception:
         raise InvocationError(
-            func_name="residual function from forward and data provided", autogen=True
+            func_name="residual function from forward and data provided",
+            autogen=True,
         ) from exception
 
 
@@ -1921,7 +1879,8 @@ def _jacobian_times_vector_from_jcb(model, vector, jacobian):
         return np.squeeze(np.asarray(jacobian(model) @ vector))
     except Exception as exception:
         raise InvocationError(
-            func_name="jacobian_times_vector from given jacobian function", autogen=True
+            func_name="jacobian_times_vector from given jacobian function",
+            autogen=True,
         ) from exception
 
 
@@ -1965,19 +1924,15 @@ class _FunctionWrapper:
     def __call__(self, model, *extra_args):
         try:
             return self.func(model, *extra_args, *self.args, **self.kwargs)
-        except Exception as exception:
-            if self.autogen:
-                raise exception
-            else:
-                raise InvocationError(
-                    func_name=self.name, autogen=self.autogen
-                ) from exception
+        except Exception as e:
+            import traceback
 
-            # import traceback
-            # print(f"cofi: Exception while calling your {self.name} function:")
-            # print("  params:", model, *extra_args)
-            # print("  args:", self.args, len(self.args))
-            # print("  kwargs:", self.kwargs)
-            # print("  exception:")
-            # traceback.print_exc()
-            # raise exception
+            print(f"cofi: Exception while calling your {self.name} function:")
+            print("  params:", model, *extra_args)
+            print("  args:", self.args, len(self.args))
+            print("  kwargs:", self.kwargs)
+            print("  Look at details below:\n", "-" * 88)
+            if self.autogen:
+                raise
+            else:
+                raise InvocationError(func_name=self.name, autogen=self.autogen) from e

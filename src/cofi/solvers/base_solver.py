@@ -1,4 +1,7 @@
 from abc import abstractmethod, ABCMeta
+import warnings
+
+from ..exceptions import CofiError
 
 
 class BaseSolver(metaclass=ABCMeta):
@@ -248,11 +251,23 @@ class BaseSolver(metaclass=ABCMeta):
 
     def _validate_inv_options(self):
         # check whether inv_options matches current solver (correctness of dispatch) from callee
-        #      (don't use the dispatch table in runner.py, avoid circular import)
         # check whether required options are provided (algorithm-specific)
         defined = self.inv_options.get_params()
         required = self.required_in_options()
-        if all({option in defined for option in required}):
+        optional = self.optional_in_options()
+        all_required_are_defined = all({option in defined for option in required})
+        if all_required_are_defined:
+            defined_not_required_or_optional = {
+                option not in optional and option not in required for option in defined
+            }
+            if any(defined_not_required_or_optional):
+                from itertools import compress
+
+                items = list(compress(defined, defined_not_required_or_optional))
+                warnings.warn(
+                    "the following options are defined but not in parameter list for "
+                    f"the chosen tool: {items}"
+                )
             return True
         raise ValueError(
             f"you've chosen {self.__class__.__name__} to be your solving tool, but "
@@ -288,9 +303,9 @@ def error_handler(when, context):
             try:
                 return func(*args, **kwargs)
             except Exception as e:
-                raise RuntimeError(
-                    f"error ocurred {when} ({context}). Check exception details from "
-                    "message above."
+                raise CofiError(
+                    f"error ocurred {when} ({context}). Check exception details "
+                    "from message above.",
                 ) from e
 
         return wrapped_func

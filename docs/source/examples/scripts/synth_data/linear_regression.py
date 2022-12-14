@@ -744,12 +744,12 @@ walkers_start = np.array([0.,0.,0.,0.]) + 1e-4 * np.random.randn(nwalkers, ndim)
 ######## Provide additional information
 inv_problem.set_log_prior(log_prior)
 inv_problem.set_log_likelihood(log_likelihood)
-inv_problem.set_walkers_starting_pos(walkers_start)
+inv_problem.set_model_shape(ndim)
 
 ######## Set a different tool
 inv_options_3 = InversionOptions()
 inv_options_3.set_tool("emcee")
-inv_options_3.set_params(nwalkers=nwalkers, nsteps=nsteps)
+inv_options_3.set_params(nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_start)
 
 ######## Run it
 inv_3 = Inversion(inv_problem, inv_options_3)

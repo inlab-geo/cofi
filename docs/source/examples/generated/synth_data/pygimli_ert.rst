@@ -437,7 +437,7 @@ Review what information is included in the ``BaseProblem`` object:
     ----------------------------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'jacobian_times_vector', 'regularization_matrix', 'data', 'data_covariance', 'data_covariance_inv', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'jacobian_times_vector', 'regularization_matrix', 'data', 'data_covariance', 'data_covariance_inv', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -466,7 +466,7 @@ SciPy’s optimizer (`trust-exact <https://docs.scipy.org/doc/scipy/reference/op
 
  .. code-block:: none
 
-    Based on what you've provided so far, here are possible solvers:
+    Based on what you've provided so far, here are possible tools:
     {
         "optimization": [
             "scipy.optimize.minimize",
@@ -726,7 +726,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  16.936 seconds)
+   **Total running time of the script:** ( 0 minutes  16.787 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_pygimli_ert.py:

@@ -250,7 +250,7 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 821/10416 [00:00<00:01, 8208.21it/s]    Evaluating paths:  16%|#6        | 1684/10416 [00:00<00:01, 8453.45it/s]    Evaluating paths:  24%|##4       | 2530/10416 [00:00<00:00, 8406.77it/s]    Evaluating paths:  32%|###2      | 3371/10416 [00:00<00:00, 8397.63it/s]    Evaluating paths:  41%|####      | 4229/10416 [00:00<00:00, 8461.93it/s]    Evaluating paths:  49%|####8     | 5076/10416 [00:00<00:00, 8452.59it/s]    Evaluating paths:  57%|#####6    | 5922/10416 [00:00<00:00, 8425.19it/s]    Evaluating paths:  65%|######5   | 6776/10416 [00:00<00:00, 8460.56it/s]    Evaluating paths:  73%|#######3  | 7623/10416 [00:00<00:00, 8385.14it/s]    Evaluating paths:  81%|########1 | 8462/10416 [00:01<00:00, 8378.80it/s]    Evaluating paths:  89%|########9 | 9317/10416 [00:01<00:00, 8429.28it/s]    Evaluating paths:  98%|#########7| 10161/10416 [00:01<00:00, 8352.10it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8408.82it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 803/10416 [00:00<00:01, 8021.19it/s]    Evaluating paths:  16%|#5        | 1663/10416 [00:00<00:01, 8355.97it/s]    Evaluating paths:  24%|##3       | 2499/10416 [00:00<00:00, 8329.32it/s]    Evaluating paths:  32%|###2      | 3339/10416 [00:00<00:00, 8356.16it/s]    Evaluating paths:  40%|####      | 4190/10416 [00:00<00:00, 8408.91it/s]    Evaluating paths:  48%|####8     | 5031/10416 [00:00<00:00, 8326.70it/s]    Evaluating paths:  56%|#####6    | 5864/10416 [00:00<00:00, 8326.11it/s]    Evaluating paths:  64%|######4   | 6718/10416 [00:00<00:00, 8391.39it/s]    Evaluating paths:  73%|#######2  | 7558/10416 [00:00<00:00, 8374.04it/s]    Evaluating paths:  81%|########  | 8396/10416 [00:01<00:00, 8320.60it/s]    Evaluating paths:  89%|########8 | 9251/10416 [00:01<00:00, 8388.24it/s]    Evaluating paths:  97%|#########6| 10102/10416 [00:01<00:00, 8422.25it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8377.28it/s]
 
 
 
@@ -329,7 +329,7 @@ and lets print a summary of the set up.
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'walkers_starting_pos', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -553,7 +553,7 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 837/10416 [00:00<00:01, 8365.12it/s]    Evaluating paths:  16%|#6        | 1674/10416 [00:00<00:01, 8036.52it/s]    Evaluating paths:  24%|##3       | 2479/10416 [00:00<00:01, 7742.51it/s]    Evaluating paths:  31%|###1      | 3255/10416 [00:00<00:00, 7540.65it/s]    Evaluating paths:  38%|###8      | 4010/10416 [00:00<00:00, 6833.97it/s]    Evaluating paths:  46%|####5     | 4776/10416 [00:00<00:00, 7089.34it/s]    Evaluating paths:  54%|#####3    | 5597/10416 [00:00<00:00, 7431.43it/s]    Evaluating paths:  62%|######1   | 6445/10416 [00:00<00:00, 7748.94it/s]    Evaluating paths:  70%|#######   | 7292/10416 [00:00<00:00, 7965.74it/s]    Evaluating paths:  78%|#######7  | 8114/10416 [00:01<00:00, 8042.17it/s]    Evaluating paths:  86%|########6 | 8964/10416 [00:01<00:00, 8179.43it/s]    Evaluating paths:  94%|#########4| 9816/10416 [00:01<00:00, 8280.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7888.31it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 836/10416 [00:00<00:01, 8358.95it/s]    Evaluating paths:  17%|#6        | 1720/10416 [00:00<00:01, 8637.10it/s]    Evaluating paths:  25%|##4       | 2584/10416 [00:00<00:00, 8602.80it/s]    Evaluating paths:  33%|###3      | 3449/10416 [00:00<00:00, 8619.38it/s]    Evaluating paths:  41%|####1     | 4322/10416 [00:00<00:00, 8657.66it/s]    Evaluating paths:  50%|####9     | 5188/10416 [00:00<00:00, 8632.27it/s]    Evaluating paths:  58%|#####8    | 6057/10416 [00:00<00:00, 8648.50it/s]    Evaluating paths:  67%|######6   | 6936/10416 [00:00<00:00, 8690.47it/s]    Evaluating paths:  75%|#######4  | 7806/10416 [00:00<00:00, 8625.44it/s]    Evaluating paths:  83%|########3 | 8669/10416 [00:01<00:00, 8622.15it/s]    Evaluating paths:  92%|#########1| 9545/10416 [00:01<00:00, 8660.61it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8651.44it/s]
 
 
 
@@ -820,7 +820,7 @@ Step 2. Define CoFI ``InversionOptions``
 
     # cofi's own simple newton's matrix-based optimization solver
     nonlinear_options.set_tool("cofi.simple_newton")
-    nonlinear_options.set_params(max_iterations=5, step_length=1, verbose=True)
+    nonlinear_options.set_params(num_iterations=5, step_length=1, verbose=True)
 
     # scipy's Newton-CG solver (alternative approach with similar results)
     # nonlinear_options.set_tool("scipy.optimize.minimize")
@@ -855,11 +855,11 @@ Step 2. Define CoFI ``InversionOptions``
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
     Backend tool: `cofi.simple_newton` - CoFI's own solver - simple Newton's approach (for testing mainly)
-    References: ['https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization', 'https://en.wikipedia.org/wiki/Backtracking_line_search']
+    References: ['https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
     Solver-specific parameters: 
-    max_iterations = 5
+    num_iterations = 5
     step_length = 1
     verbose = True
     Use `suggest_solver_params()` to check required/optional solver-specific parameters.
@@ -1236,7 +1236,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  27.812 seconds)
+   **Total running time of the script:** ( 0 minutes  30.438 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_2_travel_time_tomography.py:

@@ -246,7 +246,7 @@ my_options = cofi.InversionOptions()
 
 # cofi's own simple newton's matrix-based optimization solver
 my_options.set_tool("cofi.simple_newton")
-my_options.set_params(max_iterations=6, step_length=1, verbose=True)
+my_options.set_params(num_iterations=6, step_length=1, verbose=True)
 
 ######################################################################
 #

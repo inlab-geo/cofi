@@ -6,7 +6,6 @@ from . import BaseSolver
 class CoFISimpleNewtonSolver(BaseSolver):
     documentation_links = [
         "https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization",
-        "https://en.wikipedia.org/wiki/Backtracking_line_search",
     ]
     short_description = (
         "CoFI's own solver - simple Newton's approach (for testing mainly)"
@@ -22,7 +21,7 @@ class CoFISimpleNewtonSolver(BaseSolver):
 
     @classmethod
     def required_in_options(cls) -> set:
-        return {"max_iterations"}
+        return {"num_iterations"}
 
     @classmethod
     def optional_in_options(cls) -> dict:
@@ -39,7 +38,7 @@ class CoFISimpleNewtonSolver(BaseSolver):
         n_obj_evaluations = 0
         n_grad_evaluations = 0
         n_hess_evaluations = 0
-        for i in range(self._params["max_iterations"]):
+        for i in range(self._params["num_iterations"]):
             if self._params["verbose"]:
                 print(
                     f"Iteration #{i}, objective function value:"

@@ -359,15 +359,6 @@ cofi.BaseProblem
 
 
 
-
-
-
-
-
-
-
-
-
     .. automethod:: BaseProblem.data_misfit
 
 
@@ -655,13 +646,6 @@ cofi.BaseProblem
 
 
 
-    .. automethod:: BaseProblem.set_walkers_starting_pos
-
-
-
-
-
-
     .. automethod:: BaseProblem.suggest_tools
 
 
@@ -747,10 +731,6 @@ cofi.BaseProblem
     .. autoattribute:: BaseProblem.regularization_matrix_defined
 
     .. autoattribute:: BaseProblem.residual_defined
-
-    .. autoattribute:: BaseProblem.walkers_starting_pos
-
-    .. autoattribute:: BaseProblem.walkers_starting_pos_defined
 
 
 :ref:`back to top <top_BaseProblem>`

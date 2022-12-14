@@ -555,7 +555,7 @@ ert_problem.suggest_tools();
 
 inv_options_newton = InversionOptions()
 inv_options_newton.set_tool("cofi.simple_newton")
-inv_options_newton.set_params(max_iterations=5, step_length=0.01)
+inv_options_newton.set_params(num_iterations=5, step_length=0.01)
 
 inv = Inversion(ert_problem, inv_options_newton)
 inv_result = inv.run()

@@ -84,8 +84,6 @@ def test_non_set():
     with pytest.raises(NotDefinedError):
         inv_problem.log_likelihood(1)
     with pytest.raises(NotDefinedError):
-        inv_problem.walkers_starting_pos
-    with pytest.raises(NotDefinedError):
         inv_problem.log_posterior_with_blobs(1)
     with pytest.raises(NotDefinedError):
         inv_problem.blobs_dtype
@@ -112,7 +110,6 @@ def test_non_set():
     assert not inv_problem.log_posterior_defined
     assert not inv_problem.log_prior_defined
     assert not inv_problem.log_likelihood_defined
-    assert not inv_problem.walkers_starting_pos_defined
     assert not inv_problem.log_posterior_with_blobs_defined
     assert not inv_problem.blobs_dtype_defined
     assert not inv_problem.regularization_factor_defined

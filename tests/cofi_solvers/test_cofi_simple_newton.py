@@ -10,7 +10,7 @@ inv_problem.set_initial_model(30)
 inv_problem.set_gradient(lambda x: 2*x - 6)
 inv_problem.set_hessian(lambda x: 2)
 inv_options = InversionOptions()
-inv_options.set_params(max_iterations=4)
+inv_options.set_params(num_iterations=4)
 inv_options.set_tool("cofi.simple_newton")
 
 def test_run():
