@@ -17,3 +17,4 @@ pypandoc
 myst-nb
 papermill
 jupyterlab
+versioningit
