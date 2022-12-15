@@ -3,7 +3,8 @@
 # <img src="https://raw.githubusercontent.com/inlab-geo/cofi/main/docs/source/_static/latte_art_cropped.png" width="5%" style="vertical-align:bottom"/> CoFI (Common Framework for Inference)
 
 
-[![PyPI version](https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=90e0ef&labelColor=f8f9fa)](https://pypi.org/project/cofi/)
+[![PyPI version](https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=cae9ff&labelColor=f8f9fa)](https://pypi.org/project/cofi/)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/cofi.svg?logo=condaforge&style=flat-square&color=cce3de&labelColor=f8f9fa&logoColor=344e41)](https://anaconda.org/conda-forge/cofi)
 [![Documentation Status](https://img.shields.io/readthedocs/cofi?logo=readthedocs&style=flat-square&color=fed9b7&labelColor=f8f9fa&logoColor=eaac8b)](https://cofi.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://img.shields.io/codecov/c/github/inlab-geo/cofi?logo=pytest&style=flat-square&token=T8R9VKM4D7&color=ffcad4&labelColor=f8f9fa&logoColor=ff99c8)](https://codecov.io/gh/inlab-geo/cofi)
 [![Slack](https://img.shields.io/badge/Slack-InLab_community-4A154B?logo=slack&style=flat-square&color=cdb4db&labelColor=f8f9fa&logoColor=9c89b8)](https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg)
@@ -21,8 +22,16 @@ With a mission to bridge the gap between the domain expertise and the inference 
 
 ## Installation
 
+From PyPI:
+
 ```console
 $ pip install cofi
+```
+
+Or alternatively, from conda-forge:
+
+```console
+$ conda install -c conda-forge cofi
 ```
 
 Check CoFI documentation - 

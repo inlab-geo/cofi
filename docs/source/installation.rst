@@ -25,9 +25,9 @@ Install
 
 .. tabbed:: conda-forge
 
-  Uploading to conda-forge is still work in progress. 
-  
-  It won't be long!
+  .. code-block:: console
+
+    $ conda install -c conda-forge cofi
 
 .. tabbed:: from source
 
