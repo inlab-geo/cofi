@@ -83,6 +83,8 @@ Fork and clone respository
    your computer locally::
 
      git clone https://github.com/YOUR_GITHUB_ACCOUNT/cofi.git
+     git remote add upstream https://github.com/inlab-geo/cofi.git
+     git fetch upstream
 
    replacing ``YOUR_GITHUB_ACCOUNT`` with your own account.
 5. If you are working on documentation, then remember to update the submodule linked to

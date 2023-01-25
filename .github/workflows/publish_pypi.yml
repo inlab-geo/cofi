@@ -10,7 +10,7 @@ on:
 jobs:
   publish_pypi:
     if: github.repository_owner == 'inlab-geo'
-    name: Upload source distribution and wheels to PyPI
+    name: Upload source distribution to PyPI
     runs-on: ubuntu-latest
 
     steps:

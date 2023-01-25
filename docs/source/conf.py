@@ -95,7 +95,7 @@ html_theme = "sphinx_book_theme"
 html_theme_options = {
     "repository_url": "https://github.com/inlab-geo/cofi",
     "repository_branch": "main",
-    "path_to_docs": "docs",
+    "path_to_docs": "docs/source/",
     "launch_buttons": {
         "notebook_interface": "classic",
         "inlab_url": "http://www.inlab.edu.au/",
@@ -114,7 +114,7 @@ html_context = {
     "github_user": "inlab-geo", # Username
     "github_repo": "cofi", # Repo name
     "github_version": "main", # Version
-    "conf_py_path": "", # Path in the checkout to the docs root
+    "conf_py_path": "/source/", # Path in the checkout to the docs root
 }
 
 
