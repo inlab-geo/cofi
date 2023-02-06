@@ -169,10 +169,10 @@ class QuadraticReg(BaseRegularization):
         The regularization term is generally calculated in the form of:
         :math:`\text{factor}\times||D(m-m_0)||_2^2`, hence called ``QuadraticReg``.
         Where:
-        
-        - :math:`\text{factor}` is a coefficient of the regularization term 
-        - :math:`D` is a weighting matrix depending on what type of regularization 
-          you've specified (details :ref:`below <details_reg_type>`), and can also be a 
+
+        - :math:`\text{factor}` is a coefficient of the regularization term
+        - :math:`D` is a weighting matrix depending on what type of regularization
+          you've specified (details :ref:`below <details_reg_type>`), and can also be a
           "bring-your-own" matrix fed by the ``byo_matrix`` parameter
         - :math:`m_0` is a reference matrix only used in the ``damping`` case
 
@@ -428,7 +428,9 @@ class QuadraticReg(BaseRegularization):
                 maty = d_dy.matrix((nx, ny))  # scipy sparse matrix
                 self._D = np.vstack((matx.toarray(), maty.toarray()))  # combine above
             else:
-                raise NotImplementedError("only 1D and 2D derivative operators implemented")
+                raise NotImplementedError(
+                    "only 1D and 2D derivative operators implemented"
+                )
         elif self._reg_type is None:
             if not isinstance(self._model_size, Number):
                 raise ValueError(
@@ -453,9 +455,9 @@ class QuadraticReg(BaseRegularization):
         flat_m = np.ravel(model)
         if flat_m.size != self.model_size:
             raise DimensionMismatchError(
-                    entered_name="model",
-                    entered_dimension=model.shape,
-                    expected_source="model_size",
-                    expected_dimension=self._model_size,
-                )
+                entered_name="model",
+                entered_dimension=model.shape,
+                expected_source="model_size",
+                expected_dimension=self._model_size,
+            )
         return flat_m
