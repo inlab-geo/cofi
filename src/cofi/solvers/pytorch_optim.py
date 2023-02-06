@@ -39,20 +39,23 @@ class PyTorchOptim(BaseSolver):
         return algs
 
     def __init__(self, inv_problem, inv_options):
+        # save extra options into inv_options.hyper_params["algorithm_params"]
+        if "algorithm_params" not in inv_options.hyper_params:
+            inv_options.hyper_params["algorithm_params"] = dict()
+        for param in list(inv_options.hyper_params):
+            print(param)
+            if (
+                param not in self.optional_in_options()
+                and param not in self.required_in_options()
+            ):
+                print(1)
+                inv_options.hyper_params["algorithm_params"][param] = \
+                    inv_options.hyper_params.pop(param)
+
+        # initialisation, validation
         super().__init__(inv_problem, inv_options)
         self._components_used = list(self.required_in_problem())
         self._validate_algorithm()
-
-        # save options (not "verbose") into self._params["algorithm_params"]
-        for param in self.inv_options.hyper_params:
-            if (
-                param != "verbose"
-                and param != "callback"
-                and param not in self.required_in_options()
-            ):
-                self._params["algorithm_params"][param] = self.inv_options.hyper_params[
-                    param
-                ]
 
         # save problem info for later use
         self._obj = self.inv_problem.objective

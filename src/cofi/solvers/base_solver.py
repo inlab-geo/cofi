@@ -257,13 +257,15 @@ class BaseSolver(metaclass=ABCMeta):
         optional = self.optional_in_options()
         all_required_are_defined = all({option in defined for option in required})
         if all_required_are_defined:
-            defined_not_required_or_optional = {
-                option not in optional and option not in required for option in defined
-            }
-            if any(defined_not_required_or_optional):
+            defined_list = list(defined)
+            defined_but_not_required_or_optional = [
+                option not in optional and option not in required \
+                    for option in defined_list
+            ]
+            if any(defined_but_not_required_or_optional):
                 from itertools import compress
 
-                items = list(compress(defined, defined_not_required_or_optional))
+                items = list(compress(defined_list, defined_but_not_required_or_optional))
                 warnings.warn(
                     "the following options are defined but not in parameter list for "
                     f"the chosen tool: {items}"
