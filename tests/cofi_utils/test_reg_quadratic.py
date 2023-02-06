@@ -45,7 +45,13 @@ def test_damping_invalid():
     with pytest.raises(DimensionMismatchError): 
         reg(np.array([1,1]))
 
-def test_flattening():
+def test_smoothing_1d():
+    reg = QuadraticReg(factor=1, model_size=3, reg_type="flattening")
+    assert pytest.approx(reg(np.zeros(3))) == 0
+    assert pytest.approx(reg(np.ones(3))) == 0
+    assert pytest.approx(reg(np.array([1,5,10]))) == 62.75
+
+def test_flattening_2d():
     reg = QuadraticReg(factor=1, model_size=(3,3), reg_type="flattening")
     reg = QuadraticReg(factor=1, model_size=(3,3), reg_type="roughening")
     # 1
@@ -70,7 +76,7 @@ def test_flattening():
 
 def test_flattening_invalid():
     # 1
-    with pytest.raises(NotImplementedError, match=r".*only 2D derivative.*"): 
+    with pytest.raises(NotImplementedError, match=r".*only 1D and 2D derivative.*"): 
         QuadraticReg(factor=1, model_size=(1,2,3), reg_type="roughening")
     # 2
     with pytest.raises(ValueError, match=r".*at least \(>=3, >=3\).*'roughening'.*"):
@@ -79,7 +85,13 @@ def test_flattening_invalid():
     with pytest.raises(ValueError, match=r".*at least >=3 for.*flattening.*"): 
         QuadraticReg(factor=1, model_size=2, reg_type="flattening")
 
-def test_smoothing():
+def test_smoothing_1d():
+    reg = QuadraticReg(factor=1, model_size=4, reg_type="smoothing")
+    assert pytest.approx(reg(np.zeros(4))) == 0
+    assert pytest.approx(reg(np.ones(4))) == 0
+    assert pytest.approx(reg(np.array([1,5,10,20]))) == 116
+
+def test_smoothing_2d():
     reg = QuadraticReg(factor=1, model_size=(4,4), reg_type="smoothing")
     # 1
     assert pytest.approx(reg(np.zeros((4,4)))) == 0
@@ -103,7 +115,7 @@ def test_smoothing():
 
 def test_smoothing_invalid():
     # 1
-    with pytest.raises(NotImplementedError, match=r".*only 2D derivative.*"): 
+    with pytest.raises(NotImplementedError, match=r".*only 1D and 2D derivative.*"): 
         QuadraticReg(1, (1,2,3), reg_type="smoothing")
     # 2
     with pytest.raises(ValueError, match=r".*at least \(>=4, >=4\).*'smoothing'.*"):
