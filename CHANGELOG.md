@@ -2,9 +2,20 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.2.dev25 (06/02/2023)
+
+### CoFI Solvers
+
+- Bug fixes in `BaseSolver`
+
+### CoFI Utils
+
+- [#108](https://github.com/inlab-geo/cofi/issues/108) Utility regularization for flattening and smoothing in 1D cases
+
+
 ## v0.1.2.dev24 (14/12/2022)
 
-### CoFI Tools
+### Infrastructure
 
 - [#84](https://github.com/inlab-geo/cofi/issues/84) Use versioningit in build process
 
