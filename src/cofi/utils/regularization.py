@@ -1,6 +1,7 @@
 from numbers import Number
 from abc import abstractmethod, ABCMeta
-from typing import Union, Any
+from typing import Union
+from functools import reduce
 import numpy as np
 
 from ..exceptions import DimensionMismatchError
@@ -163,8 +164,25 @@ class QuadraticReg(BaseRegularization):
     r"""CoFI's utility class to calculate damping, flattening (roughening), and
     smoothing regularization
 
-    They correspond to the zeroth order, first order and second order Tikhonov
-    regularization approaches respectively.
+    .. tip::
+
+        The regularization term is generally calculated in the form of:
+        :math:`\text{factor}\times||D(m-m_0)||_2^2`, hence called ``QuadraticReg``.
+        Where:
+        
+        - :math:`\text{factor}` is a coefficient of the regularization term 
+        - :math:`D` is a weighting matrix depending on what type of regularization 
+          you've specified (details :ref:`below <details_reg_type>`), and can also be a 
+          "bring-your-own" matrix fed by the ``byo_matrix`` parameter
+        - :math:`m_0` is a reference matrix only used in the ``damping`` case
+
+
+    .. _details_reg_type:
+
+    Now we explain what is the ``reg_type``, and how it changes the ``matrix`` (i.e.
+    :math:`D` in the generic formula above).
+    The terms "damping", "flattening" and "smoothing" correspond to the zeroth order,
+    first order and second order Tikhonov regularization approaches respectively.
 
     - If ``reg_type == "damping"``, then
 
@@ -250,7 +268,7 @@ class QuadraticReg(BaseRegularization):
     factor : Number
         the scale for the regularization term
     model_size : Number
-        the number of elements in a inference model
+        the number or shape of elements in an inference model
     reg_type : str
         specify what kind of regularization is to be calculated, by default
         ``"damping"``
@@ -258,7 +276,7 @@ class QuadraticReg(BaseRegularization):
         reference model used only when ``reg_type == "damping"``,
         by default None (if this is None, then reference model is assumed to be zero)
     byo_matrix : np.ndarray
-        bring-your-own matrix, activated only when ``reg_type == None``
+        bring-your-own matrix, used only when ``reg_type == None``
 
     Raises
     ------
@@ -289,7 +307,7 @@ class QuadraticReg(BaseRegularization):
     >>> from cofi import BaseProblem
     >>> from cofi.utils import QuadraticReg
     >>> reg1 = QuadraticReg(factor=1, model_size=3, reg_type="damping")
-    >>> reg2 = QuadraticReg(factor=2, model_size=3, reg_type="smoothing")
+    >>> reg2 = QuadraticReg(factor=2, model_size=5, reg_type="smoothing")
     >>> my_problem = BaseProblem()
     >>> my_problem.set_regularization(reg1 + reg2)
     """
@@ -316,10 +334,9 @@ class QuadraticReg(BaseRegularization):
 
         This is always a number describing number of unknowns
         """
-        if self._reg_type == "damping":
-            return self._model_size
-        else:
-            return self._model_size[0] * self._model_size[1]
+        if np.ndim(self._model_size):
+            return reduce(lambda a, b: a * b, np.array(self._model_size), 1)
+        return self._model_size
 
     @property
     def matrix(self) -> np.ndarray:
@@ -385,6 +402,7 @@ class QuadraticReg(BaseRegularization):
                 raise ValueError("model_size must be a number when damping is selected")
             self._D = np.identity(self._model_size)
         elif self._reg_type in REG_TYPES:  # 1st/2nd order Tikhonov
+            # 1D model
             if np.size(self._model_size) == 1:
                 order = REG_TYPES[self._reg_type]
                 if self._model_size < order + 2:
@@ -394,6 +412,7 @@ class QuadraticReg(BaseRegularization):
                     )
                 d_dx = findiff.FinDiff(0, 1, order)
                 self._D = d_dx.matrix((self._model_size,)).toarray()
+            # 2D model
             elif np.size(self._model_size) == 2 and np.ndim(self._model_size) == 1:
                 nx = self._model_size[0]
                 ny = self._model_size[1]
@@ -409,7 +428,7 @@ class QuadraticReg(BaseRegularization):
                 maty = d_dy.matrix((nx, ny))  # scipy sparse matrix
                 self._D = np.vstack((matx.toarray(), maty.toarray()))  # combine above
             else:
-                raise NotImplementedError("only 2D derivative operators implemented")
+                raise NotImplementedError("only 1D and 2D derivative operators implemented")
         elif self._reg_type is None:
             if not isinstance(self._model_size, Number):
                 raise ValueError(
@@ -432,20 +451,11 @@ class QuadraticReg(BaseRegularization):
 
     def _validate_model(self, model):
         flat_m = np.ravel(model)
-        if self._reg_type == "damping":
-            if flat_m.size != self._model_size:
-                raise DimensionMismatchError(
+        if flat_m.size != self.model_size:
+            raise DimensionMismatchError(
                     entered_name="model",
                     entered_dimension=model.shape,
-                    expected_source="model",
-                    expected_dimension=self._model_size,
-                )
-        else:
-            if flat_m.shape[0] != self._model_size[0] * self._model_size[1]:
-                raise DimensionMismatchError(
-                    entered_name="model",
-                    entered_dimension=model.shape,
-                    expected_source="model",
+                    expected_source="model_size",
                     expected_dimension=self._model_size,
                 )
         return flat_m
