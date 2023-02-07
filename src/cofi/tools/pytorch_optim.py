@@ -1,9 +1,9 @@
 import functools
 
-from . import BaseSolver, error_handler
+from . import BaseInferenceTool, error_handler
 
 
-class PyTorchOptim(BaseSolver):
+class PyTorchOptim(BaseInferenceTool):
     documentation_links = [
         "https://pytorch.org/docs/stable/optim.html#algorithms",
     ]

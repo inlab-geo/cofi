@@ -45,7 +45,7 @@ def test_damping_invalid():
     with pytest.raises(DimensionMismatchError): 
         reg(np.array([1,1]))
 
-def test_smoothing_1d():
+def test_flattening_1d():
     reg = QuadraticReg(factor=1, model_size=3, reg_type="flattening")
     assert pytest.approx(reg(np.zeros(3))) == 0
     assert pytest.approx(reg(np.ones(3))) == 0

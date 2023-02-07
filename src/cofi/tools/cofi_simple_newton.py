@@ -1,9 +1,9 @@
 import numpy as np
 
-from . import BaseSolver
+from . import BaseInferenceTool
 
 
-class CoFISimpleNewtonSolver(BaseSolver):
+class CoFISimpleNewtonSolver(BaseInferenceTool):
     documentation_links = [
         "https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization",
     ]

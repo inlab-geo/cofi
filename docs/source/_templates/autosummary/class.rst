@@ -24,7 +24,7 @@
 
 {% for item in methods %}
 
-{% if "BaseSolver" in objname and item == '__init__' %}
+{% if "BaseInferenceTool" in objname and item == '__init__' %}
     .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
 

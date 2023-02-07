@@ -53,14 +53,14 @@ object we mention above, and how to use them.
 APIs for Advanced Usage
 -----------------------
 
-**BaseSolver** is the base class of all backend inversion tools. To plug in your own inversion
-tools, simply create a subclass of :code:`BaseSolver` and implements :code:`__init__()` and 
+**BaseInferenceTool** is the base class of all backend inversion tools. To plug in your own inversion
+tools, simply create a subclass of :code:`BaseInferenceTool` and implements :code:`__init__()` and 
 :code:`__call__()`. Expand the details below for more concrete examples.
 
 .. autosummary::
     :toctree: generated/
 
-    cofi.solvers.BaseSolver
+    cofi.tools.BaseInferenceTool
 
 
 CoFI Utils

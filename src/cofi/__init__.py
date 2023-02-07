@@ -1,9 +1,11 @@
+import sys
+
 from .base_problem import BaseProblem
 from .inversion_options import InversionOptions
 from .inversion import Inversion, InversionResult, SamplingResult
 
 from . import utils
-from . import solvers
+from . import tools
 
 from ._version import __version__
 
@@ -21,3 +23,6 @@ __all__ = [
 import logging
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
+
+# alias for deprecated API
+sys.modules["cofi.solvers"] = tools

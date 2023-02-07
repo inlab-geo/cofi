@@ -2,14 +2,14 @@ import numpy as np
 import pytest
 
 from cofi import Inversion, BaseProblem, InversionOptions
-from cofi.solvers.base_solver import BaseSolver
+from cofi.tools.base_inference_tool import BaseInferenceTool
 
 
 @pytest.fixture
 def polynomial_problem():
     inv_problem = BaseProblem()
     _x = np.array([1, 2, 3, 4, 5])
-    _G = np.array([_x ** i for i in range(3)]).T
+    _G = np.array([_x**i for i in range(3)]).T
     _m_true = np.array([2, 1, 1])
     _y = _G @ _m_true
     inv_problem.set_data(_y)
@@ -49,24 +49,27 @@ def test_runner_result_summary(polynomial_problem, capsys):
 
 def test_dispatch_custom_solver(polynomial_problem, capsys):
     inv_problem, inv_options = polynomial_problem
-    class CustomSolver(BaseSolver):
+
+    class CustomSolver(BaseInferenceTool):
         def __call__(self) -> dict:
-            return {
-                "successful": True, 
-                "prob_optional": self.optional_in_problem()
-            }
+            return {"successful": True, "prob_optional": self.optional_in_problem()}
+
         @classmethod
         def required_in_problem(cls) -> set:
             return set()
+
         @classmethod
         def optional_in_problem(cls) -> dict:
             return dict()
+
         @classmethod
         def required_in_options(cls) -> set:
             return set()
+
         @classmethod
         def optional_in_options(cls) -> dict:
             return dict()
+
     inv_options.set_tool(CustomSolver)
     runner = Inversion(inv_problem, inv_options)
     with pytest.raises(ValueError):

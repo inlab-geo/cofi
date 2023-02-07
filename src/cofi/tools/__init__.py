@@ -1,4 +1,4 @@
-from .base_solver import BaseSolver, error_handler
+from .base_inference_tool import BaseInferenceTool, error_handler
 
 from .scipy_opt_min import ScipyOptMinSolver
 from .scipy_opt_lstsq import ScipyOptLstSqSolver
@@ -9,7 +9,7 @@ from .pytorch_optim import PyTorchOptim
 
 
 __all__ = [
-    "BaseSolver",  # public API, for advanced usage (own solver)
+    "BaseInferenceTool",  # public API, for advanced usage (own solver)
     "ScipyOptMinSolver",
     "ScipyOptLstSqSolver",
     "ScipyLstSqSolver",
@@ -18,9 +18,9 @@ __all__ = [
     "PyTorchOptim",
 ]
 
-
-# solvers table grouped by method: {inv_options.method -> {inv_options.tool -> BaseSolver}}
-solvers_table = {
+# inference tools table grouped by method: 
+# {inv_options.method -> {inv_options.tool -> BaseInferenceTool}}
+inference_tools_table = {
     "optimization": {
         "scipy.optimize.minimize": ScipyOptMinSolver,
         "scipy.optimize.least_squares": ScipyOptLstSqSolver,
@@ -33,20 +33,23 @@ solvers_table = {
     "sampling": {"emcee": EmceeSolver},
 }
 
-# solvers suggest table grouped by method: {inv_options.method -> inv_options.tool}
+# inference tools suggest table grouped by method: {inv_options.method -> inv_options.tool}
 # NOTE: the default backend solver is from this table, set the first one manually when necessary
 # e.g. {'optimization': ['scipy.optimize.minimize'], 'matrix solvers': ['scipy.linalg.lstsq']}
-solver_suggest_table = {k: list(val.keys()) for k, val in solvers_table.items()}
+tool_suggest_table = {k: list(val.keys()) for k, val in inference_tools_table.items()}
 
-# solvers dispatch table grouped by tool: {inv_options.tool -> BaseSolver}
+# tools dispatch table grouped by tool: {inv_options.tool -> BaseInferenceTool}
 # e.g. {'scipy.optimize.minimize':
-#           <class 'cofi.solvers.scipy_opt_min.ScipyOptMinSolver'>,
+#           <class 'cofi.tools.scipy_opt_min.ScipyOptMinSolver'>,
 #       'scipy.linalg.lstsq':
-#           <class 'cofi.solvers.scipy_lstsq.ScipyLstSqSolver'>}
-solver_dispatch_table = {
-    k: val for values in solvers_table.values() for k, val in values.items()
+#           <class 'cofi.tools.scipy_lstsq.ScipyLstSqSolver'>}
+tool_dispatch_table = {
+    k: val for values in inference_tools_table.values() for k, val in values.items()
 }
 
 # all solving methods: {inv_options.method}
 # e.g. {'optimization', 'matrix solvers'}
-solver_methods = set(solvers_table.keys())
+solving_methods = set(inference_tools_table.keys())
+
+# alias for deprecated API
+BaseSolver = BaseInferenceTool

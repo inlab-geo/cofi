@@ -29,7 +29,7 @@ We aim to find a relatively stable public API that guarantees user experience an
 extensibility. The current status of CoFI includes three objects that represent
 inference problem (`BaseProblem`), inference options (`InversionOptions`) as well as a 
 "running engine" (`Inversion`). Additionally, the actual library wrappers 
-(subclasses of `BaseSolver`) are exposed to more advanced users for them to make it 
+(subclasses of `BaseInferenceTool`) are exposed to more advanced users for them to make it 
 easier to plug in their own solver or do some hacking.
 
 The details of the APIs mentioned above will be tested by first group of users and 
@@ -55,7 +55,7 @@ The following documentation pages are planned to be written or expanded:
 
 - ***Tutorials*** section, where guides are step-by-step and compact enough to present users
   with common use cases and best practices with CoFI.
-- ***Solvers library*** section - this will be a brand new part of CoFI's documentation, 
+- ***Inference tools library*** section - this will be a brand new part of CoFI's documentation, 
   starting from the solver's tree you've seen in [home page](index.rst) to expand the
   details of each inference methods. This part will focus on theories instead of 
   technical details.

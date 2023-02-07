@@ -1,10 +1,10 @@
 import functools
 import numpy as np
 
-from . import BaseSolver, error_handler
+from . import BaseInferenceTool, error_handler
 
 
-class ScipyLstSqSolver(BaseSolver):
+class ScipyLstSqSolver(BaseInferenceTool):
     r"""Wrapper for generalised linear system solver :func:`scipy.linalg.lstsq`
 
     There are four cases:

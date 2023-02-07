@@ -1,10 +1,10 @@
 import functools
 import numpy as np
 
-from . import BaseSolver, error_handler
+from . import BaseInferenceTool, error_handler
 
 
-class EmceeSolver(BaseSolver):
+class EmceeSolver(BaseInferenceTool):
     documentation_links = [
         "https://emcee.readthedocs.io/en/stable/user/sampler/#emcee.EnsembleSampler",
         "https://emcee.readthedocs.io/en/stable/user/sampler/#emcee.EnsembleSampler.sample",
