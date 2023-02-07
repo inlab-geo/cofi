@@ -1,25 +1,24 @@
 from abc import abstractmethod, ABCMeta
 import warnings
 
-from ..exceptions import CofiError
+from .._exceptions import CofiError
 
 
 class BaseInferenceTool(metaclass=ABCMeta):
-    r"""Base class for backend solver wrappers
+    r"""Base class for backend inference tool wrappers
 
     This is the point where we connect ``cofi`` to other inversion libraries or
     code. We expose this as a part of ``cofi``'s public interface, to facilitate minimal
     effort to link ``cofi`` to your own inversion code or external libraries that aren't
     connected by us yet.
 
-    To create your own inversion solver, simply subclass :class:`BaseInferenceTool` and
+    To create your own inference tool, simply subclass :class:`BaseInferenceTool` and
     define the following methods & fields.
 
     .. admonition:: Example definition of a custom solver
-        :class: dropdown, attention
+        :class: dropdown, hint
 
         .. code-block:: pycon
-            :emphasize-lines: 1-12, 17, 24-25
 
             >>> from cofi.tools import BaseInferenceTool
             >>> class MyDummySolver(BaseInferenceTool):
@@ -27,8 +26,11 @@ class BaseInferenceTool(metaclass=ABCMeta):
             ...   documentation_links = ["https://cofi.readthedocs.io/en/latest/api/generated/cofi.tools.BaseInferenceTool.html"]
             ...   @classmethod
             ...   def required_in_problem(cls): return ["objective", "gradient"]
+            ...   @classmethod
             ...   def optional_in_problem(cls): return {"initial_model": [0,0]}
+            ...   @classmethod
             ...   def required_in_options(cls): return []
+            ...   @classmethod
             ...   def optional_in_options(cls): return {"method": "dummy"}
             ...   def __init__(self, inv_problem, inv_options):
             ...     super().__init__(inv_problem, inv_options)

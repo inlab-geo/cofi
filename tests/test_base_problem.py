@@ -4,7 +4,7 @@ import pytest
 import numpy as np
 
 from cofi import BaseProblem
-from cofi.exceptions import (
+from cofi._exceptions import (
     DimensionMismatchError, 
     InvalidOptionError,
     InvocationError, 

@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from cofi import Inversion, BaseProblem, InversionOptions
-from cofi.tools.base_inference_tool import BaseInferenceTool
+from cofi.tools import BaseInferenceTool
 
 
 @pytest.fixture

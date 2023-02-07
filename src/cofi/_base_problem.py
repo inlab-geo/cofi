@@ -4,7 +4,7 @@ import json
 
 import numpy as np
 
-from .exceptions import (
+from ._exceptions import (
     DimensionMismatchError,
     InvalidOptionError,
     InvocationError,

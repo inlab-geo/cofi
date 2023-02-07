@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from cofi.tools import PyTorchOptim
-from cofi.exceptions import CofiError
+from cofi._exceptions import CofiError
 from cofi import BaseProblem, InversionOptions
 
 

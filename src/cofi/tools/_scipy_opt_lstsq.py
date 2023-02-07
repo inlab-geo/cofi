@@ -27,6 +27,10 @@ class ScipyOptLstSqSolver(BaseInferenceTool):
     @classmethod
     def optional_in_options(cls) -> dict:
         return _init_class_methods()[3]
+    
+    @classmethod
+    def available_algorithms(cls) -> set:
+        return {"trf", "dogbox", "lm"}
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)

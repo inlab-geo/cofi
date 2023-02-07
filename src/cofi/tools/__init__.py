@@ -1,11 +1,11 @@
-from .base_inference_tool import BaseInferenceTool, error_handler
+from ._base_inference_tool import BaseInferenceTool, error_handler
 
-from .scipy_opt_min import ScipyOptMinSolver
-from .scipy_opt_lstsq import ScipyOptLstSqSolver
-from .scipy_lstsq import ScipyLstSqSolver
-from .emcee import EmceeSolver
-from .cofi_simple_newton import CoFISimpleNewtonSolver
-from .pytorch_optim import PyTorchOptim
+from ._scipy_opt_min import ScipyOptMinSolver
+from ._scipy_opt_lstsq import ScipyOptLstSqSolver
+from ._scipy_lstsq import ScipyLstSqSolver
+from ._emcee import EmceeSolver
+from ._cofi_simple_newton import CoFISimpleNewtonSolver
+from ._pytorch_optim import PyTorchOptim
 
 
 __all__ = [

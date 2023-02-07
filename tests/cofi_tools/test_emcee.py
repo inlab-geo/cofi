@@ -3,7 +3,7 @@ import pytest
 
 from cofi.tools import EmceeSolver
 from cofi import BaseProblem, InversionOptions, Inversion
-from cofi.exceptions import CofiError
+from cofi._exceptions import CofiError
 
 
 ############### Problem setup #########################################################

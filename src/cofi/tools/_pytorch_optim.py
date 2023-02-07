@@ -31,11 +31,11 @@ class PyTorchOptim(BaseInferenceTool):
 
     @classmethod
     @functools.lru_cache(maxsize=None)
-    def available_algorithms(cls) -> list:
+    def available_algorithms(cls) -> set:
         import torch
 
         optim_dir = dir(torch.optim)
-        algs = [name for name in optim_dir if name[0].isupper() and name != "Optimizer"]
+        algs = {name for name in optim_dir if name[0].isupper() and name != "Optimizer"}
         return algs
 
     def __init__(self, inv_problem, inv_options):
