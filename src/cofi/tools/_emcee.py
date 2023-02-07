@@ -34,6 +34,7 @@ class EmceeSolver(BaseInferenceTool):
     @functools.lru_cache(maxsize=None)
     def available_algorithms(cls) -> set:
         from emcee import moves
+
         return {move for move in moves.__all__ if move != "Move"}
 
     def __init__(self, inv_problem, inv_options):
