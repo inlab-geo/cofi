@@ -18,7 +18,7 @@ __all__ = [
     "PyTorchOptim",
 ]
 
-# inference tools table grouped by method: 
+# inference tools table grouped by method:
 # {inv_options.method -> {inv_options.tool -> BaseInferenceTool}}
 inference_tools_table = {
     "optimization": {

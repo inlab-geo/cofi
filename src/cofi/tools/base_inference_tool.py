@@ -78,8 +78,8 @@ class BaseInferenceTool(metaclass=ABCMeta):
 
     .. rubric:: Make it more complete
 
-    All backend inference tools in ``cofi`` also update the following field, and this 
-    will be displayed via :func:`cofi.Inversion.summary`. It's not required but good 
+    All backend inference tools in ``cofi`` also update the following field, and this
+    will be displayed via :func:`cofi.Inversion.summary`. It's not required but good
     to keep track of this:
 
     .. autosummary::

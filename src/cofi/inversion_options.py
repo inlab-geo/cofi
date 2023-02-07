@@ -188,7 +188,7 @@ class InversionOptions:
         r"""Sets the solving method
 
         .. warning::
-            The current version is a flattened version of our inference tools tree, we 
+            The current version is a flattened version of our inference tools tree, we
             are going to change this interface very soon.
 
         Use :func:`InversionOptions.suggest_solving_methods` to get a list of solving
@@ -263,8 +263,8 @@ class InversionOptions:
         Raises
         ------
         ValueError
-            when the string you pass in isn't in our supported tools list, or when the 
-            inference tool class you pass in doesn't implement the ``__call__(self,)`` 
+            when the string you pass in isn't in our supported tools list, or when the
+            inference tool class you pass in doesn't implement the ``__call__(self,)``
             method.
 
         Examples
