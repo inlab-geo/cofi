@@ -1,0 +1,10 @@
+# Recommended for developers: move this file into .git/hooks
+
+#!/bin/sh
+
+black src/cofi
+
+if git diff --cached --name-status | grep -q 'docs/source/cofi-examples'; then
+  cd docs
+  make html
+fi

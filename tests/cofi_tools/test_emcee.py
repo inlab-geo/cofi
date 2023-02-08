@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from cofi.tools import EmceeSolver
+from cofi.tools import Emcee
 from cofi import BaseProblem, InversionOptions, Inversion
 from cofi._exceptions import CofiError
 
@@ -73,17 +73,17 @@ def test_validate():
     inv_options.set_tool("emcee")
     # 1
     with pytest.raises(ValueError, match=r".*not enough information.*BaseProblem.*"):
-        emcee_solver = EmceeSolver(inv_problem, inv_options)
+        emcee_solver = Emcee(inv_problem, inv_options)
     # 2
     inv_problem.log_posterior = log_posterior
     inv_problem.set_model_shape(ndim)
     with pytest.raises(ValueError, match=r".*not enough info.*InversionOptions.*"):
-        emcee_solver = EmceeSolver(inv_problem, inv_options)
+        emcee_solver = Emcee(inv_problem, inv_options)
     # 3
     inv_options.set_params(
         nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_start
     )
-    emcee_solver = EmceeSolver(inv_problem, inv_options)
+    emcee_solver = Emcee(inv_problem, inv_options)
     assert emcee_solver._params["ndim"] == 4
 
 
@@ -99,7 +99,7 @@ def test_run_with_posterior():
         nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_start
     )
     # define solver
-    emcee_solver = EmceeSolver(inv_problem, inv_options)
+    emcee_solver = Emcee(inv_problem, inv_options)
     res = emcee_solver()
 
 
@@ -116,7 +116,7 @@ def test_run_with_prior_likelihood():
         nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_start
     )
     # define solver
-    emcee_solver = EmceeSolver(inv_problem, inv_options)
+    emcee_solver = Emcee(inv_problem, inv_options)
     res = emcee_solver()
 
 

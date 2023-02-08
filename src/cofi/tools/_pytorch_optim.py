@@ -43,12 +43,10 @@ class PyTorchOptim(BaseInferenceTool):
         if "algorithm_params" not in inv_options.hyper_params:
             inv_options.hyper_params["algorithm_params"] = dict()
         for param in list(inv_options.hyper_params):
-            print(param)
             if (
                 param not in self.optional_in_options()
                 and param not in self.required_in_options()
             ):
-                print(1)
                 inv_options.hyper_params["algorithm_params"][
                     param
                 ] = inv_options.hyper_params.pop(param)

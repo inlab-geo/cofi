@@ -1,6 +1,6 @@
 import numpy as np
 
-from cofi.tools import CoFISimpleNewtonSolver
+from cofi.tools import CoFISimpleNewton
 from cofi import BaseProblem, InversionOptions, Inversion
 
 
@@ -15,7 +15,7 @@ inv_options.set_tool("cofi.simple_newton")
 
 
 def test_run():
-    solver = CoFISimpleNewtonSolver(inv_problem, inv_options)
+    solver = CoFISimpleNewton(inv_problem, inv_options)
     res = solver()
     assert res["model"] == 3.0
     assert inv_problem.initial_model == 30
@@ -32,7 +32,7 @@ def test_inv_run():
 
 def test_not_inplace():
     inv_problem.set_initial_model(np.array([[30.0]]))
-    solver = CoFISimpleNewtonSolver(inv_problem, inv_options)
+    solver = CoFISimpleNewton(inv_problem, inv_options)
     res = solver()
     assert res["model"] == 3.0
     assert inv_problem.initial_model == 30.0

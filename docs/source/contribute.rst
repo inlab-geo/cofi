@@ -200,7 +200,11 @@ page for you to learn from.
 New inversion tool
 ^^^^^^^^^^^^^^^^^^
 
-Thank you for your attempt in enriching ``cofi``'s library pool. 
+Thank you for your attempt in enriching ``cofi``'s library pool.
+
+To get started, run the helper script::
+
+  python scripts/new_inference_tool.py <new_tool_name>
 
 To define and plug in your own inference tool backend, you minimally have to create a
 subclass of :class:`tools.BaseInferenceTool` and implement two methods: 
@@ -208,8 +212,7 @@ subclass of :class:`tools.BaseInferenceTool` and implement two methods:
 inference tools tree under ``src/cofi/tools/__init__.py`` so that our dispatch routine can
 find the class from the name specified in an :class:`InversionOptions` instance.
 
-Documentation in
-`tutorials <tutorials/generated/index.html>`_ and 
+Documentation 
 `API reference - BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_ provides
 further details and examples.
 
