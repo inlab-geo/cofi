@@ -4,7 +4,7 @@ import numpy as np
 from . import BaseInferenceTool, error_handler
 
 
-class EmceeSolver(BaseInferenceTool):
+class Emcee(BaseInferenceTool):
     documentation_links = [
         "https://emcee.readthedocs.io/en/stable/user/sampler/#emcee.EnsembleSampler",
         "https://emcee.readthedocs.io/en/stable/user/sampler/#emcee.EnsembleSampler.sample",

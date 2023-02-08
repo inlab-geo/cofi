@@ -25,7 +25,7 @@ from . import BaseInferenceTool, error_handler
 # other arguments include: tol, options, callback
 
 
-class ScipyOptMinSolver(BaseInferenceTool):
+class ScipyOptMin(BaseInferenceTool):
     documentation_links = [
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"
     ]
@@ -140,7 +140,7 @@ def _init_class_methods():
             "constraints",
         }
     }
-    required_in_options = {}
+    required_in_options = set()
     optional_in_options = {
         k: v.default
         for k, v in _scipy_minimize_args.items()

@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from cofi.tools import ScipyLstSqSolver
+from cofi.tools import ScipyLstSq
 from cofi import BaseProblem, InversionOptions
 
 
@@ -26,23 +26,23 @@ def test_validate_jac():
     inv_problem.set_hessian(lambda x: x)
     inv_problem.set_data(np.array([2]))
     inv_options = InversionOptions()
-    inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
+    inv_solver = ScipyLstSq(inv_problem, inv_options)
     # 2
     inv_problem.set_model_shape((1, 2))
-    inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
+    inv_solver = ScipyLstSq(inv_problem, inv_options)
     # 3
     inv_problem.set_initial_model(np.ones((1, 2)))
-    inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
+    inv_solver = ScipyLstSq(inv_problem, inv_options)
     # 4
     inv_problem.set_jacobian(lambda: np.array([1]))
     with pytest.raises(ValueError, match=".*isn't set properly.*"):
-        inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
+        inv_solver = ScipyLstSq(inv_problem, inv_options)
 
 
 def test_run(problem_setup):
     inv_problem, _, _, _ = problem_setup
     inv_options = InversionOptions()
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert res["model"][0] == pytest.approx(0, abs=0.1)
@@ -54,7 +54,7 @@ def test_uncertainty_cov(problem_setup):
     # 1
     inv_problem.set_data_covariance_inv(Cdinv)
     inv_options = InversionOptions()
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert "model_covariance" in res
@@ -67,7 +67,7 @@ def test_uncertainty_cov_inv(problem_setup):
     # 2
     inv_problem.set_data_covariance(np.linalg.inv(Cdinv))
     inv_options = InversionOptions()
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert "model_covariance" in res
@@ -76,7 +76,7 @@ def test_uncertainty_cov_inv(problem_setup):
     # 3
     Cdinv[0, 1] = 1
     inv_problem.set_data_covariance_inv(Cdinv)
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    solver = ScipyLstSq(inv_problem, inv_options)
     _G = inv_problem.jacobian(1)
     assert np.array_equal(solver._a, _G.T @ Cdinv @ _G)
 
@@ -87,7 +87,7 @@ def test_tikhonov(problem_setup):
     # 1
     inv_problem.set_regularization(2, lamda, L)
     inv_options = InversionOptions()
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert "model_covariance" in res
@@ -96,7 +96,7 @@ def test_tikhonov(problem_setup):
     # 2
     inv_problem.set_regularization(2, lamda)
     inv_options = InversionOptions()
-    solver = ScipyLstSqSolver(inv_problem, inv_options)
+    solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert "model_covariance" in res
@@ -105,4 +105,4 @@ def test_tikhonov(problem_setup):
     # 3
     inv_problem.set_regularization(2, lamda, lambda: np.array([1]))
     with pytest.raises(ValueError, match=r".*isn't set properly.*"):
-        inv_solver = ScipyLstSqSolver(inv_problem, inv_options)
+        inv_solver = ScipyLstSq(inv_problem, inv_options)

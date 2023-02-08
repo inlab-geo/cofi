@@ -3,7 +3,7 @@ import functools
 from . import BaseInferenceTool, error_handler
 
 
-class ScipyOptLstSqSolver(BaseInferenceTool):
+class ScipyOptLstSq(BaseInferenceTool):
     documentation_links = [
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"
     ]
@@ -111,7 +111,7 @@ def _init_class_methods():
     optional_in_problem = {
         k: v.default for k, v in _scipy_ls_args.items() if k in {"jacobian", "bounds"}
     }
-    required_in_options = {}
+    required_in_options = set()
     optional_in_options = {
         k: v.default
         for k, v in _scipy_ls_args.items()

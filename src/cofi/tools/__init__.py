@@ -1,20 +1,20 @@
 from ._base_inference_tool import BaseInferenceTool, error_handler
 
-from ._scipy_opt_min import ScipyOptMinSolver
-from ._scipy_opt_lstsq import ScipyOptLstSqSolver
-from ._scipy_lstsq import ScipyLstSqSolver
-from ._emcee import EmceeSolver
-from ._cofi_simple_newton import CoFISimpleNewtonSolver
+from ._scipy_opt_min import ScipyOptMin
+from ._scipy_opt_lstsq import ScipyOptLstSq
+from ._scipy_lstsq import ScipyLstSq
+from ._emcee import Emcee
+from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
 
 
 __all__ = [
     "BaseInferenceTool",  # public API, for advanced usage (own solver)
-    "ScipyOptMinSolver",
-    "ScipyOptLstSqSolver",
-    "ScipyLstSqSolver",
-    "EmceeSolver",
-    "CoFISimpleNewtonSolver",
+    "ScipyOptMin",
+    "ScipyOptLstSq",
+    "ScipyLstSq",
+    "Emcee",
+    "CoFISimpleNewton",
     "PyTorchOptim",
 ]
 
@@ -22,15 +22,15 @@ __all__ = [
 # {inv_options.method -> {inv_options.tool -> BaseInferenceTool}}
 inference_tools_table = {
     "optimization": {
-        "scipy.optimize.minimize": ScipyOptMinSolver,
-        "scipy.optimize.least_squares": ScipyOptLstSqSolver,
+        "scipy.optimize.minimize": ScipyOptMin,
+        "scipy.optimize.least_squares": ScipyOptLstSq,
         "torch.optim": PyTorchOptim,
     },
     "matrix solvers": {
-        "scipy.linalg.lstsq": ScipyLstSqSolver,
-        "cofi.simple_newton": CoFISimpleNewtonSolver,
+        "scipy.linalg.lstsq": ScipyLstSq,
+        "cofi.simple_newton": CoFISimpleNewton,
     },
-    "sampling": {"emcee": EmceeSolver},
+    "sampling": {"emcee": Emcee},
 }
 
 # inference tools suggest table grouped by method: {inv_options.method -> inv_options.tool}

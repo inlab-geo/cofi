@@ -3,7 +3,7 @@ import numpy as np
 from . import BaseInferenceTool
 
 
-class CoFISimpleNewtonSolver(BaseInferenceTool):
+class CoFISimpleNewton(BaseInferenceTool):
     documentation_links = [
         "https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization",
     ]

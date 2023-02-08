@@ -4,7 +4,7 @@ import numpy as np
 from . import BaseInferenceTool, error_handler
 
 
-class ScipyLstSqSolver(BaseInferenceTool):
+class ScipyLstSq(BaseInferenceTool):
     r"""Wrapper for generalised linear system solver :func:`scipy.linalg.lstsq`
 
     There are four cases:
@@ -185,7 +185,7 @@ def _init_class_methods():
         "data_covariance": None,
         "regularization_matrix": None,
     }
-    required_in_options: set = {}
+    required_in_options: set = set()
     optional_in_options: dict = {
         k: v.default for k, v in _scipy_lstsq_args.items() if k not in {"a", "b"}
     }

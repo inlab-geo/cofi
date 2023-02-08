@@ -4,14 +4,15 @@
 # 2. The four class methods are implemented and they return correct data types
 #        required_in_problem, optional_in_problem
 #        required_in_options, optional_in_options
-# 3. __call__ method returns a dictionary with at least "success" and "model"
-#    as keys
-# 4. available_algorithms return correct data types if implemented
+# 3. available_algorithms return correct data types if implemented
+# 4. There are no "FIXME" words in the whole file
 # ################################################################################
 
 import pathlib
 import os
 import pytest
+import warnings
+import numpy as np
 
 import cofi
 
@@ -27,7 +28,8 @@ def all_tools_from_folder():
             and name.endswith(".py") and "base_inference" not in name:
             file_names.append(name)
     tool_names = {name[1:-3] for name in file_names}
-    return tool_names
+    tool_names_all_cap = {n.upper().replace("_", "") for n in tool_names}
+    return tool_names_all_cap
 
 def all_tools_from_init_all():
     tool_names = {name for name in cofi.tools.__all__ if name != "BaseInferenceTool"}
@@ -48,12 +50,21 @@ def test_tools_included():
     tools_from_init_all = all_tools_from_init_all()
     tools_from_init_table = all_tools_from_init_table()
     # check all_tools_from_init_all == all_tools_from_init_table
-    assert len(tools_from_init_all.difference(tools_from_init_table)) == 0
+    assert len(tools_from_init_all.difference(tools_from_init_table)) == 0, \
+        "inference tools from cofi.tools.__all__ and " \
+        "cofi.tools.inference_tools_table don't match"
     # TODO check all_tools_from_folder are included
+    tools_from_init_all_capped = {n.upper() for n in tools_from_init_all}
+    assert len(tools_from_init_all_capped.difference(tools_from_folder)) == 0, \
+        "inference tools from cofi.tools.__all__ and " \
+        "files detected in folder `src/cofi/tools/` don't match"
 
 def test_each_inference_tool(inference_tool_class):
-    # TODO test __init__ and __call__
-    # TODO test required class methods
+    # test required class methods
+    assert isinstance(inference_tool_class.required_in_problem(), set)
+    assert isinstance(inference_tool_class.optional_in_problem(), dict)
+    assert isinstance(inference_tool_class.required_in_options(), set)
+    assert isinstance(inference_tool_class.optional_in_options(), dict)
     # test optional class methods
     try: algs = inference_tool_class.available_algorithms()
     except AttributeError: pass
