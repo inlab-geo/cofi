@@ -1,34 +1,36 @@
 from abc import abstractmethod, ABCMeta
 import warnings
 
-from ..exceptions import CofiError
+from .._exceptions import CofiError
 
 
-class BaseSolver(metaclass=ABCMeta):
-    r"""Base class for backend solver wrappers
+class BaseInferenceTool(metaclass=ABCMeta):
+    r"""Base class for backend inference tool wrappers
 
     This is the point where we connect ``cofi`` to other inversion libraries or
     code. We expose this as a part of ``cofi``'s public interface, to facilitate minimal
     effort to link ``cofi`` to your own inversion code or external libraries that aren't
     connected by us yet.
 
-    To create your own inversion solver, simply subclass :class:`BaseSolver` and
+    To create your own inference tool, simply subclass :class:`BaseInferenceTool` and
     define the following methods & fields.
 
     .. admonition:: Example definition of a custom solver
-        :class: dropdown, attention
+        :class: dropdown, hint
 
         .. code-block:: pycon
-            :emphasize-lines: 1-12, 17, 24-25
 
-            >>> from cofi.solvers import BaseSolver
-            >>> class MyDummySolver(BaseSolver):
+            >>> from cofi.tools import BaseInferenceTool
+            >>> class MyDummySolver(BaseInferenceTool):
             ...   short_description = "My dummy solver that always return (1,2) as result"
-            ...   documentation_links = ["https://cofi.readthedocs.io/en/latest/api/generated/cofi.solvers.BaseSolver.html"]
+            ...   documentation_links = ["https://cofi.readthedocs.io/en/latest/api/generated/cofi.tools.BaseInferenceTool.html"]
             ...   @classmethod
             ...   def required_in_problem(cls): return ["objective", "gradient"]
+            ...   @classmethod
             ...   def optional_in_problem(cls): return {"initial_model": [0,0]}
+            ...   @classmethod
             ...   def required_in_options(cls): return []
+            ...   @classmethod
             ...   def optional_in_options(cls): return {"method": "dummy"}
             ...   def __init__(self, inv_problem, inv_options):
             ...     super().__init__(inv_problem, inv_options)
@@ -46,7 +48,7 @@ class BaseSolver(metaclass=ABCMeta):
             Use `suggest_solving_methods()` to check available solving methods.
             -----------------------------
             Backend tool: `<class '__main__.MyDummySolver'>` - My dummy solver that always return (1,2) as result
-            References: ['https://cofi.readthedocs.io/en/latest/api/generated/cofi.solvers.BaseSolver.html']
+            References: ['https://cofi.readthedocs.io/en/latest/api/generated/cofi.tools.BaseInferenceTool.html']
             Use `suggest_tools()` to check available backend tools.
             -----------------------------
             Solver-specific parameters: None set
@@ -59,12 +61,12 @@ class BaseSolver(metaclass=ABCMeta):
     class methods below.
 
     .. autosummary::
-        BaseSolver.required_in_problem
-        BaseSolver.optional_in_problem
-        BaseSolver.required_in_options
-        BaseSolver.optional_in_options
-        BaseSolver.__init__
-        BaseSolver.__call__
+        BaseInferenceTool.required_in_problem
+        BaseInferenceTool.optional_in_problem
+        BaseInferenceTool.required_in_options
+        BaseInferenceTool.optional_in_options
+        BaseInferenceTool.__init__
+        BaseInferenceTool.__call__
 
     .. rubric:: Displaying
 
@@ -73,19 +75,19 @@ class BaseSolver(metaclass=ABCMeta):
     mismatch in displaying methods like :func:`cofi.Inversion.summary`.
 
     .. autosummary::
-        BaseSolver.short_description
-        BaseSolver.documentation_links
+        BaseInferenceTool.short_description
+        BaseInferenceTool.documentation_links
 
     .. rubric:: Make it more complete
 
-    All backend solvers in ``cofi`` also update the following field, and this will be
-    displayed via :func:`cofi.Inversion.summary`. It's not required but good to keep track
-    of this:
+    All backend inference tools in ``cofi`` also update the following field, and this
+    will be displayed via :func:`cofi.Inversion.summary`. It's not required but good
+    to keep track of this:
 
     .. autosummary::
-        BaseSolver.components_used
+        BaseInferenceTool.components_used
 
-    :ref:`back to top <top_BaseSolver>`
+    :ref:`back to top <top_BaseInferenceTool>`
 
     """
 
@@ -156,7 +158,7 @@ class BaseSolver(metaclass=ABCMeta):
     def required_in_problem(cls) -> set:
         r"""a set of components required in :class:`BaseProblem` instance
 
-        This is a standard part for a subclass of :class:`BaseSolver` and helps
+        This is a standard part for a subclass of :class:`BaseInferenceTool` and helps
         validate input :class:`BaseProblem` instance
         """
         return set()
@@ -178,7 +180,7 @@ class BaseSolver(metaclass=ABCMeta):
         """a set of solver-specific options required in :class:`InversionOptions`
         instance
 
-        This is a standard part for a subclass of :class:`BaseSolver` and helps
+        This is a standard part for a subclass of :class:`BaseInferenceTool` and helps
         validate input :class:`InversionOptions` instance
         """
         return set()
@@ -189,7 +191,7 @@ class BaseSolver(metaclass=ABCMeta):
         """dict: a dictioanry of solver-specific options that are optional in
         :class:`InversionOptions` instance
 
-        This is a standard part for a subclass of :class:`BaseSolver` and helps
+        This is a standard part for a subclass of :class:`BaseInferenceTool` and helps
         validate input :class:`InversionOptions` instance
         """
         return dict()
@@ -216,8 +218,8 @@ class BaseSolver(metaclass=ABCMeta):
         r"""a set of strings describing what components defined in :class:`BaseProblem`
         are used in this solving process. This is typically the intersection of three
         sets: :func:`cofi.BaseProblem.all_components`,
-        :func:`BaseSolver.required_in_problem` and keys of
-        :func:`BaseSolver.optional_in_problem`
+        :func:`BaseInferenceTool.required_in_problem` and keys of
+        :func:`BaseInferenceTool.optional_in_problem`
         """
         return self._components_used
 
@@ -225,7 +227,7 @@ class BaseSolver(metaclass=ABCMeta):
     def inv_problem(self):
         r"""the inversion problem to be solved
 
-        This is the first argument in the constructor of :class:`BaseSolver`
+        This is the first argument in the constructor of :class:`BaseInferenceTool`
         """
         return self._inv_problem
 
@@ -233,7 +235,7 @@ class BaseSolver(metaclass=ABCMeta):
     def inv_options(self):
         r"""the inveersion settings
 
-        This is the second argument in the constructor of :class:`BaseSolver`
+        This is the second argument in the constructor of :class:`BaseInferenceTool`
         """
         return self._inv_options
 
@@ -300,7 +302,7 @@ class BaseSolver(metaclass=ABCMeta):
 
 
 def error_handler(when, context):
-    """Error handler for running solvers"""
+    """Error handler for running inference tools"""
 
     def wrap_error_handler(func):
         def wrapped_func(*args, **kwargs):

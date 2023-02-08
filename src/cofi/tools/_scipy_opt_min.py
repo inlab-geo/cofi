@@ -1,6 +1,6 @@
 import functools
 
-from . import BaseSolver, error_handler
+from . import BaseInferenceTool, error_handler
 
 
 # Official documentation for scipy.optimize.minimize
@@ -25,7 +25,7 @@ from . import BaseSolver, error_handler
 # other arguments include: tol, options, callback
 
 
-class ScipyOptMinSolver(BaseSolver):
+class ScipyOptMinSolver(BaseInferenceTool):
     documentation_links = [
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html"
     ]
@@ -49,6 +49,13 @@ class ScipyOptMinSolver(BaseSolver):
     @classmethod
     def optional_in_options(cls) -> dict:
         return _init_class_methods()[3]
+
+    @classmethod
+    @functools.lru_cache(maxsize=None)
+    def available_algorithms(cls) -> set:
+        import scipy
+
+        return set(scipy.optimize._minimize.MINIMIZE_METHODS)
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)

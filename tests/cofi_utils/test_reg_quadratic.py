@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 from cofi.utils import QuadraticReg
-from cofi.exceptions import DimensionMismatchError
+from cofi._exceptions import DimensionMismatchError
 
 
 def test_damping():
@@ -45,7 +45,7 @@ def test_damping_invalid():
     with pytest.raises(DimensionMismatchError): 
         reg(np.array([1,1]))
 
-def test_smoothing_1d():
+def test_flattening_1d():
     reg = QuadraticReg(factor=1, model_size=3, reg_type="flattening")
     assert pytest.approx(reg(np.zeros(3))) == 0
     assert pytest.approx(reg(np.ones(3))) == 0

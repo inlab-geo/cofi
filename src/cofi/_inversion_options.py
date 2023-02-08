@@ -4,7 +4,7 @@ from typing import Union, Type
 from collections.abc import Callable
 import json
 
-from .solvers import solver_suggest_table, solver_dispatch_table, solver_methods
+from .tools import tool_suggest_table, tool_dispatch_table, solving_methods
 
 
 class InversionOptions:
@@ -188,8 +188,8 @@ class InversionOptions:
         r"""Sets the solving method
 
         .. warning::
-            The current version is a flattened version of our solvers tree, we are going
-            to change this interface very soon.
+            The current version is a flattened version of our inference tools tree, we
+            are going to change this interface very soon.
 
         Use :func:`InversionOptions.suggest_solving_methods` to get a list of solving
         methods to choose from.
@@ -228,16 +228,16 @@ class InversionOptions:
         """
         if method is None:
             self.unset_solving_method()
-        elif method in solver_methods:
+        elif method in solving_methods:
             self.method = method
         else:
-            close_matches = difflib.get_close_matches(method, solver_methods)
+            close_matches = difflib.get_close_matches(method, solving_methods)
             _error_msg_suffix = (
                 f"\n\nDid you mean '{close_matches[0]}'?" if len(close_matches) else ""
             )
             raise ValueError(
-                "the solver method is invalid, please choose from"
-                f" {solver_methods}{_error_msg_suffix}"
+                "the solving method is invalid, please choose from"
+                f" {solving_methods}{_error_msg_suffix}"
             )
 
     def unset_solving_method(self):
@@ -252,19 +252,20 @@ class InversionOptions:
         - a backend tool we support, use :func:`InversionOptions.suggest_tools` to get
           a list of tools you can choose from
         - or your own solver class, check `our tutorial - Advanced Usage <tutorial.html#advanced-usage>`_
-          for details about how to define and use your custom solver
+          for details about how to define and use your custom inference tool
 
         Parameters
         ----------
         tool : Union[str, Type]
-            either the name of a backend tool or your custom :class:`solver.BaseSolver`
+            either the name of a backend tool or your custom :class:`tools.BaseInferenceTool`
             class
 
         Raises
         ------
         ValueError
-            when the string you pass in isn't in our supported tools list, or when the solver
-            class you pass in doesn't implement the ``__call__(self,)`` method.
+            when the string you pass in isn't in our supported tools list, or when the
+            inference tool class you pass in doesn't implement the ``__call__(self,)``
+            method.
 
         Examples
         --------
@@ -299,9 +300,9 @@ class InversionOptions:
             .. code-block:: pycon
                 :emphasize-lines: 3-8, 11
 
-                >>> from cofi.solvers import BaseSolver
+                >>> from cofi.tools import BaseInferenceTool
                 >>> from cofi import InversionOptions
-                >>> class MyDummySolver(BaseSolver):
+                >>> class MyDummySolver(BaseInferenceTool):
                 ...   short_description = "My dummy solver that always return (1,2) as result"
                 ...   def __init__(self, inv_problem, inv_options):
                 ...     super().__init__(inv_problem, inv_options)
@@ -340,9 +341,9 @@ class InversionOptions:
                     " Advanced Usage' section for how to plug inyour own solver"
                 )
         else:
-            if tool not in solver_dispatch_table:
+            if tool not in tool_dispatch_table:
                 close_matches = difflib.get_close_matches(
-                    tool, solver_dispatch_table.keys()
+                    tool, tool_dispatch_table.keys()
                 )
                 _error_msg_suffix = (
                     f"\n\nDid you mean '{close_matches[0]}'?"
@@ -354,7 +355,7 @@ class InversionOptions:
                     " `InversionOptions.suggest_tools()` to see"
                     f" options{_error_msg_suffix}"
                 )
-            if self.method and tool not in solver_suggest_table[self.method]:
+            if self.method and tool not in tool_suggest_table[self.method]:
                 warnings.warn(
                     f"the tool {tool} is valid but doesn't match the solving method"
                     f" you've selected: {self.method}"
@@ -385,8 +386,8 @@ class InversionOptions:
             the name of the default backend tool
         """
         if self.method:
-            return solver_suggest_table[self.method][0]
-        return solver_suggest_table["optimization"][0]
+            return tool_suggest_table[self.method][0]
+        return tool_suggest_table["optimization"][0]
 
     def suggest_solving_methods(self):
         """Prints a list of solving methods to choose from
@@ -410,7 +411,7 @@ class InversionOptions:
 
         """
         print("The following solving methods are supported:")
-        print(solver_methods)
+        print(solving_methods)
         print(
             "\nUse `suggest_tools()` to see a full list of backend tools for each"
             " method"
@@ -453,7 +454,7 @@ class InversionOptions:
 
         """
         if self.method:
-            tools = solver_suggest_table[self.method]
+            tools = tool_suggest_table[self.method]
             print(
                 "Based on the solving method you've set, the following tools are"
                 " suggested:"
@@ -480,7 +481,7 @@ class InversionOptions:
                 "Here's a complete list of inversion tools supported by CoFI (grouped"
                 " by methods):"
             )
-            print(json.dumps(solver_suggest_table, indent=4))
+            print(json.dumps(tool_suggest_table, indent=4))
 
     def suggest_solver_params(self):
         """Prints required and optional solver-specific parameters
@@ -509,7 +510,7 @@ class InversionOptions:
             if self.tool
             else (f"{self.get_default_tool()}", " (default)")
         )
-        solver = solver_dispatch_table[tool]
+        solver = tool_dispatch_table[tool]
         print(
             f"Current backend tool {tool}{dft_suffix} has the following solver-specific"
             " parameters:"
@@ -576,14 +577,14 @@ class InversionOptions:
             if self.tool
             else (f"{self.get_default_tool()}", " (by default)")
         )
-        solver = solver_dispatch_table[tool] if isinstance(tool, str) else tool
+        tool = tool_dispatch_table[tool] if isinstance(tool, str) else tool
         print(f"Solving method: {solving_method}")
         print("Use `suggest_solving_methods()` to check available solving methods.")
         if display_lines:
             print(single_line)
-        print(f"Backend tool: `{tool}{dft_suffix}` - {solver.short_description}")
-        # print(f"Backend tool description: {solver.short_description}")
-        print(f"References: {solver.documentation_links}")
+        print(f"Backend tool: `{tool}{dft_suffix}` - {tool.short_description}")
+        # print(f"Backend tool description: {tool.short_description}")
+        print(f"References: {tool.documentation_links}")
         print("Use `suggest_tools()` to check available backend tools.")
         if display_lines:
             print(single_line)

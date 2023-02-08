@@ -1,10 +1,10 @@
 import functools
 import numpy as np
 
-from . import BaseSolver, error_handler
+from . import BaseInferenceTool, error_handler
 
 
-class ScipyLstSqSolver(BaseSolver):
+class ScipyLstSqSolver(BaseInferenceTool):
     r"""Wrapper for generalised linear system solver :func:`scipy.linalg.lstsq`
 
     There are four cases:
@@ -51,6 +51,10 @@ class ScipyLstSqSolver(BaseSolver):
     @classmethod
     def optional_in_options(cls) -> dict:
         return _init_class_methods()[3]
+
+    @classmethod
+    def available_algorithms(cls) -> set:
+        return {"gelsd", "gelsy", "gelss"}
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)

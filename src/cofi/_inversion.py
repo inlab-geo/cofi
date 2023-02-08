@@ -1,7 +1,7 @@
 from typing import Type
 
 from . import BaseProblem, InversionOptions
-from .solvers import solver_dispatch_table, BaseSolver
+from .tools import tool_dispatch_table, BaseInferenceTool
 
 
 class InversionResult:
@@ -19,7 +19,7 @@ class InversionResult:
 
     #: bool: indicates status of the inversion run
     success: bool
-    #: dict: raw output from backend solvers
+    #: dict: raw output from backend ineference tools
     res: dict
 
     def __init__(self, res: dict) -> None:
@@ -215,12 +215,12 @@ class Inversion:
             self.inv_result = InversionResult(res_dict)
         return self.inv_result
 
-    def _dispatch_solver(self) -> Type[BaseSolver]:
+    def _dispatch_solver(self) -> Type[BaseInferenceTool]:
         tool = self.inv_options.get_tool()
-        # look up solver_dispatch_table to return constructor for a BaseSolver subclass
+        # look up tool_dispatch_table to return constructor for a BaseInferenceTool subclass
         if isinstance(tool, str):
-            return solver_dispatch_table[tool]
-        # self-defined BaseSolver (note that a BaseSolver object is a callable)
+            return tool_dispatch_table[tool]
+        # self-defined BaseInferenceTool (note that a BaseInferenceTool object is a callable)
         return self.inv_options.tool
 
     def summary(self):

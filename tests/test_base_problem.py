@@ -4,7 +4,7 @@ import pytest
 import numpy as np
 
 from cofi import BaseProblem
-from cofi.exceptions import (
+from cofi._exceptions import (
     DimensionMismatchError, 
     InvalidOptionError,
     InvocationError, 
@@ -412,7 +412,7 @@ def test_set_data():
 
 
 ############### TEST suggest_tools ##################################################
-def test_suggest_solvers(capsys):
+def test_suggest_tools(capsys):
     inv_problem = BaseProblem()
     # 0
     inv_problem.suggest_tools()
@@ -435,7 +435,7 @@ def test_suggest_solvers(capsys):
     assert "scipy.linalg.lstsq" in console_output
 
 
-def test_suggest_solvers_return():
+def test_suggest_tools_return():
     inv_problem = BaseProblem()
     inv_problem.set_jacobian(np.array([1]))
     inv_problem.set_data(2)

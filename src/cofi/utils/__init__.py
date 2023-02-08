@@ -1,7 +1,7 @@
 """Utility classes and functions (e.g. to generate regularization terms and more)
 """
 
-from .regularization import (
+from ._regularization import (
     BaseRegularization,
     QuadraticReg,
 )

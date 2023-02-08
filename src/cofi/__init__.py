@@ -1,9 +1,11 @@
-from .base_problem import BaseProblem
-from .inversion_options import InversionOptions
-from .inversion import Inversion, InversionResult, SamplingResult
+import sys as _sys
+
+from ._base_problem import BaseProblem
+from ._inversion_options import InversionOptions
+from ._inversion import Inversion, InversionResult, SamplingResult
 
 from . import utils
-from . import solvers
+from . import tools
 
 from ._version import __version__
 
@@ -18,6 +20,9 @@ __all__ = [
 
 
 # Set default logging handler to avoid "No handler found" warnings.
-import logging
+import logging as _logging
 
-logging.getLogger(__name__).addHandler(logging.NullHandler())
+_logging.getLogger(__name__).addHandler(_logging.NullHandler())
+
+# alias for deprecated API
+_sys.modules["cofi.solvers"] = tools

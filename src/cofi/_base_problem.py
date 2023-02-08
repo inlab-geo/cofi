@@ -4,7 +4,7 @@ import json
 
 import numpy as np
 
-from .exceptions import (
+from ._exceptions import (
     DimensionMismatchError,
     InvalidOptionError,
     InvocationError,
@@ -113,7 +113,7 @@ class BaseProblem:
     and what are generated automatically for you.
 
     At any point of defining your inversion problem, the ``suggest_tools()``
-    method helps get a list of solvers that can be applied to your problem based on
+    method helps get a list of inference tools that can be applied to your problem based on
     what have been supplied so far.
 
     .. tip::
@@ -1200,7 +1200,7 @@ class BaseProblem:
         r"""Sets the starting point for the model
 
         Once set, we will infer the property :meth:`model_shape` in
-        case this is required for some inference solvers
+        case this is required for some inference tools
 
         Parameters
         ----------
@@ -1332,10 +1332,10 @@ class BaseProblem:
         """
         to_suggest = dict()
         all_components = self.defined_components()
-        from .solvers import solvers_table
+        from .tools import inference_tools_table
 
-        for solving_method in solvers_table:
-            backend_tools = solvers_table[solving_method]
+        for solving_method in inference_tools_table:
+            backend_tools = inference_tools_table[solving_method]
             to_suggest[solving_method] = []
             for tool in backend_tools:
                 solver_class = backend_tools[tool]
@@ -1676,7 +1676,7 @@ class BaseProblem:
                     )
                 self._update_autogen(to_update)
 
-    # ---------- Extra inforamtion inferred, not generally used by solvers -----------
+    # ---------- Extra inforamtion inferred, not generally used by inference tools ----
     def model_covariance(self, model: np.ndarray):
         C_minv = self.model_covariance_inv(model)
         return np.linalg.inv(C_minv)

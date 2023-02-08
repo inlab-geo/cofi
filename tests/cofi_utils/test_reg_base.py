@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 
 from cofi.utils import BaseRegularization, QuadraticReg
-from cofi.exceptions import DimensionMismatchError
+from cofi._exceptions import DimensionMismatchError
 
 
 def test_base_reg():

@@ -1,7 +1,7 @@
 import pytest
 
 from cofi import InversionOptions
-from cofi.solvers import BaseSolver
+from cofi.tools import BaseInferenceTool
 
 
 def test_set_unset_solving_method(capsys):
@@ -73,13 +73,15 @@ def test_set_unset_tool(capsys):
     inv_options.set_tool(None)
     assert inv_options.tool is None
     # 6 - self-defined tool
-    class MyOwnSolver(BaseSolver):
+    class MyOwnSolver(BaseInferenceTool):
         def __init__(self, inv_problem, inv_options): pass
         def __call__(self): return 1
+
     inv_options.set_tool(MyOwnSolver)
     # 7 - self-defined invalid tool
-    class AnotherSolver(BaseSolver):
+    class AnotherSolver(BaseInferenceTool):
         def __init__(self, inv_problem, inv_options): pass
+
     with pytest.raises(ValueError):
         inv_options.set_tool(AnotherSolver)
 

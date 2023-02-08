@@ -50,7 +50,7 @@ inv_problem.set_objective(my_objective_func)
 inv_problem.set_initial_model(my_starting_point)
 ```
 
-Once a problem is defined, `cofi` can tell you what inference solvers you can use based on what level of
+Once a problem is defined, `cofi` can tell you what inference tools you can use based on what level of
 information you've provided:
 
 ```python

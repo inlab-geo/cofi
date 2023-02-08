@@ -1,9 +1,9 @@
 import functools
 
-from . import BaseSolver, error_handler
+from . import BaseInferenceTool, error_handler
 
 
-class ScipyOptLstSqSolver(BaseSolver):
+class ScipyOptLstSqSolver(BaseInferenceTool):
     documentation_links = [
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html"
     ]
@@ -27,6 +27,10 @@ class ScipyOptLstSqSolver(BaseSolver):
     @classmethod
     def optional_in_options(cls) -> dict:
         return _init_class_methods()[3]
+
+    @classmethod
+    def available_algorithms(cls) -> set:
+        return {"trf", "dogbox", "lm"}
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -96,7 +100,7 @@ def _init_class_methods():
     """get a list of arguments and defaults for scipy.minimize.least_squares
 
     TODO arguments not supported by BaseProblem due to myself not sure how this can be
-    handled for other backend solvers: `args`, `kwargs`, `x_scale`, `loss`, `f_scale`
+    handled for other backend tools: `args`, `kwargs`, `x_scale`, `loss`, `f_scale`
     """
     import inspect
     from scipy.optimize import least_squares

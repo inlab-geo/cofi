@@ -4,7 +4,7 @@ from typing import Union
 from functools import reduce
 import numpy as np
 
-from ..exceptions import DimensionMismatchError
+from .._exceptions import DimensionMismatchError
 
 
 REG_TYPES = {

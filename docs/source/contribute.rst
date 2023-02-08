@@ -103,7 +103,7 @@ The environment setup is different depending on your purpose:
 
 - If you are going to work on :ref:`adding new forward examples <new_forward>`, then make 
   sure you have CoFI `installed <installation.html>`_ in the usual way.
-- If you are going to work on :ref:`adding/linking new inversion solver <new_inversion>`, 
+- If you are going to work on :ref:`adding/linking new inversion tool <new_inversion>`, 
   or looking to :ref:`add features or fix bugs <cofi_core>` in the library core, then 
   try to prepare your environment to have dependencies listed in this 
   `environment_dev.yml <https://github.com/inlab-geo/cofi/blob/main/envs/environment_dev.yml>`_
@@ -127,7 +127,7 @@ Coding / editting
 We have some guidance on the following scenarios:
 
 - :ref:`adding new forward examples <new_forward>`
-- :ref:`adding/linking new inversion solver <new_inversion>`
+- :ref:`adding/linking new inversion tool <new_inversion>`
 - :ref:`add features or fix bugs <cofi_core>`
 - :ref:`edit the documentation <doc>`
 
@@ -197,20 +197,20 @@ page for you to learn from.
 
 .. _new_inversion:
 
-New inversion solver
-^^^^^^^^^^^^^^^^^^^^
+New inversion tool
+^^^^^^^^^^^^^^^^^^
 
 Thank you for your attempt in enriching ``cofi``'s library pool. 
 
-To define and plug in your own solver backend, you minimally have to create a
-subclass of :class:`solvers.BaseSolver` and implement two methods: 
+To define and plug in your own inference tool backend, you minimally have to create a
+subclass of :class:`tools.BaseInferenceTool` and implement two methods: 
 ``__init__`` and ``__call__``. Additionally, add the name and class reference to our
-solvers tree under ``src/cofi/solvers/__init__.py`` so that our dispatch routine can
+inference tools tree under ``src/cofi/tools/__init__.py`` so that our dispatch routine can
 find the class from the name specified in an :class:`InversionOptions` instance.
 
 Documentation in
 `tutorials <tutorials/generated/index.html>`_ and 
-`API reference - BaseSolver <api/generated/cofi.solvers.BaseSolver.html>`_ provides
+`API reference - BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_ provides
 further details and examples.
 
 Follow the :ref:`environment setup section <env_setup>` to set up the package
@@ -223,18 +223,18 @@ file path ``tests``.
 .. admonition:: Checklist
   :class: tip, dropdown
 
-  1. Have you added a new file with a proper name under ``src/cofi/solvers/``?
-  2. Have you declared the solver class as a subclass of :class:`solvers.BaseSolver`?
+  1. Have you added a new file with a proper name under ``src/cofi/tools/``?
+  2. Have you declared the tool class as a subclass of :class:`tools.BaseInferenceTool`?
   3. Have you implemented ``__init__`` and ``__call__`` methods minimally? 
   4. If you'd like us to do input validation, have you defined class variables
      ``required_in_problems``, ``optional_in_problem``, ``required_in_options`` and
      ``optional_in_options``?
-  5. If you'd like us to display the solver related information properly, have you 
+  5. If you'd like us to display the tool related information properly, have you 
      defined class variables ``short_description`` and ``documentation_links``?
-  6. Have you imported and added the solver subclass name to ``src/cofi/solvers/__init__.py``?
-  7. Have you added solver name and class reference to the ``solvers_tree`` in file
-     ``src/cofi/solvers/__init__.py``?
-  8. Have you written tests for your new solver under ``tests/solvers``?
+  6. Have you imported and added the tool subclass name to ``src/cofi/tools/__init__.py``?
+  7. Have you added tool name and class reference to the ``inference_tools_table`` in file
+     ``src/cofi/tools/__init__.py``?
+  8. Have you written tests for your new inference tool under ``tests/cofi_tools``?
 
 
 .. _cofi_core:
@@ -264,14 +264,14 @@ Here we provide a mapping table to the parts of code related to each existing fe
      - src/cofi/inversion.py
    * - :class:`InversionResult`
      - src/cofi/inversion.py
-   * - solvers tree
-     - src/cofi/solvers/__init__.py
-   * - solver dispatch function
+   * - inference tools tree
+     - src/cofi/tools/__init__.py
+   * - inference tool dispatch function
      - src/cofi/inversion.py
-   * - :class:`BaseSolver`
-     - src/cofi/solvers/base_solver.py
+   * - :class:`BaseInferenceTool`
+     - src/cofi/tools/base_inference_tool.py
    * - validation for :class:`BaseProblem` and :class:`InversionOptions` objects
-     - src/cofi/solvers/base_solver.py
+     - src/cofi/tools/base_inference_tool.py
 
 .. src/cofi
 .. ├── __init__.py
@@ -279,11 +279,14 @@ Here we provide a mapping table to the parts of code related to each existing fe
 .. ├── base_problem.py
 .. ├── inversion.py
 .. ├── inversion_options.py
-.. └── solvers
+.. └── tools
 ..     ├── __init__.py
-..     ├── base_solver.py
-..     ├── scipy_lstsq.py
-..     ├── scipy_opt_lstsq.py
+..     ├── base_inference_tool.py
+..     ├── cofi_simple_newton.py
+..     ├── emcee.py
+..     └── pytorch_optim.py
+..     └── scipy_lstsq.py
+..     └── scipy_opt_lstsq.py
 ..     └── scipy_opt_min.py
 
 .. admonition:: Checklist on adding a new set method in ``BaseProblem``
@@ -339,8 +342,8 @@ below:
      - src/cofi/inversion.py
    * - `API refernece for InversionResult <api/generated/cofi.InversionResult.html>`_
      - src/cofi/inversion.py
-   * - `API reference for BaseSolver <api/generated/cofi.solvers.BaseSolver.html>`_
-     - src/cofi/solvers/base_solver.py
+   * - `API reference for BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_
+     - src/cofi/tools/base_inference_tool.py
    * - `Change Log <changelog.html>`_
      - CHANGELOG.md
    * - `Contribute to CoFI <contribute.html>`_
@@ -375,7 +378,7 @@ To **test** the changes, go to ``docs`` directory, run ``make html`` and open th
 .. │   │   ├── cofi.Inversion.html
 .. │   │   ├── cofi.InversionOptions.html
 .. │   │   ├── cofi.InversionResult.html
-.. │   │   └── cofi.solvers.BaseSolver.html
+.. │   │   └── cofi.tools.BaseInferenceTool.html
 .. │   └── index.html
 .. ├── changelog.html
 .. ├── cofi-examples
