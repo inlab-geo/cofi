@@ -3,7 +3,9 @@
 Example Gallery
 ===============
 
+
 |Open In Colab| |Download from GitHub|
+
 
 .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670&labelColor=f8f9fa
    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/index.ipynb
@@ -12,10 +14,8 @@ Example Gallery
    :target: https://github.com/inlab-geo/cofi-examples
 
 
-Below is a gallery of examples.
-
 .. admonition:: Run the examples
-   :class: tip
+   :class: hint
 
    If you want some interactivity without the need of installing anything, it's 
    strongly recommended to 
@@ -25,6 +25,16 @@ Below is a gallery of examples.
    install cofi and fork the examples repository.
    Check `here <https://github.com/inlab-geo/cofi-examples/blob/main/README.md>`_
    for full instructions.
+
+
+------------
+
+.. epigraph::
+
+   “A good example is the best sermon.”
+
+   -- Benjamin Franklin
+
 
 
 .. raw:: html
