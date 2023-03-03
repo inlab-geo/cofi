@@ -140,7 +140,7 @@ problem.
 
     import numpy as np
     from cofi import BaseProblem, InversionOptions, Inversion
-    from cofi_espresso import XrayTomography
+    from espresso import XrayTomography
 
 
 
@@ -192,7 +192,21 @@ stays constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 838/10416 [00:00<00:01, 8376.15it/s]    Evaluating paths:  16%|#6        | 1686/10416 [00:00<00:01, 8433.53it/s]    Evaluating paths:  24%|##4       | 2530/10416 [00:00<00:00, 8204.28it/s]    Evaluating paths:  32%|###2      | 3352/10416 [00:00<00:00, 8039.22it/s]    Evaluating paths:  40%|###9      | 4157/10416 [00:00<00:00, 8035.06it/s]    Evaluating paths:  48%|####7     | 4961/10416 [00:00<00:00, 7810.83it/s]    Evaluating paths:  55%|#####5    | 5744/10416 [00:00<00:00, 7596.04it/s]    Evaluating paths:  63%|######2   | 6557/10416 [00:00<00:00, 7758.26it/s]    Evaluating paths:  71%|#######   | 7360/10416 [00:00<00:00, 7840.34it/s]    Evaluating paths:  78%|#######8  | 8146/10416 [00:01<00:00, 7778.84it/s]    Evaluating paths:  86%|########5 | 8955/10416 [00:01<00:00, 7870.80it/s]    Evaluating paths:  94%|#########3| 9775/10416 [00:01<00:00, 7969.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7972.45it/s]
+
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]
+    Evaluating paths:   8%|8         | 838/10416 [00:00<00:01, 8376.15it/s]
+    Evaluating paths:  16%|#6        | 1686/10416 [00:00<00:01, 8433.53it/s]
+    Evaluating paths:  24%|##4       | 2530/10416 [00:00<00:00, 8204.28it/s]
+    Evaluating paths:  32%|###2      | 3352/10416 [00:00<00:00, 8039.22it/s]
+    Evaluating paths:  40%|###9      | 4157/10416 [00:00<00:00, 8035.06it/s]
+    Evaluating paths:  48%|####7     | 4961/10416 [00:00<00:00, 7810.83it/s]
+    Evaluating paths:  55%|#####5    | 5744/10416 [00:00<00:00, 7596.04it/s]
+    Evaluating paths:  63%|######2   | 6557/10416 [00:00<00:00, 7758.26it/s]
+    Evaluating paths:  71%|#######   | 7360/10416 [00:00<00:00, 7840.34it/s]
+    Evaluating paths:  78%|#######8  | 8146/10416 [00:01<00:00, 7778.84it/s]
+    Evaluating paths:  86%|########5 | 8955/10416 [00:01<00:00, 7870.80it/s]
+    Evaluating paths:  94%|#########3| 9775/10416 [00:01<00:00, 7969.28it/s]
+    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7972.45it/s]
 
 
 
@@ -559,7 +573,7 @@ uncertainty.
 Watermark
 ---------
 
-.. raw:: html
+.. raw:: htmlespresso
 
    <!-- Feel free to add more modules in the watermark_list below, if more packages are used -->
 
@@ -573,7 +587,7 @@ Watermark
 .. code-block:: default
 
 
-    watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+    espressot = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))

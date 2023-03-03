@@ -60,7 +60,7 @@ Seismic Wave Tomography via Fast Marching
 In this notebook, we use ``cofi`` to run a seismic wave tomography
 example, in which the forward calculation is based on the Fast Marching
 Fortran code by Nick Rawlinson. The Fast Marching code is wrapped in
-package ``cofi_espresso``.
+package ``espresso``.
 
 Theoretical background
 ----------------------
@@ -158,7 +158,7 @@ Fortran code within the package
     import pprint
 
     import cofi
-    import cofi_espresso
+    import espresso
 
 
 
@@ -185,7 +185,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 .. code-block:: default
 
 
-    fmm = cofi_espresso.FmmTomography()
+    fmm = espresso.FmmTomography()
 
     fmm.plot_model(fmm.good_model, with_paths=True);
 
@@ -580,7 +580,7 @@ Watermark
 .. code-block:: default
 
 
-    watermark_list = ["cofi", "cofi_espresso", "numpy", "matplotlib"]
+    watermark_list = ["cofi", "espresso", "numpy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -594,7 +594,7 @@ Watermark
  .. code-block:: none
 
     cofi 0.1.2.dev22
-    cofi_espresso 0.0.1.dev10
+    espresso 0.0.1.dev10
     numpy 1.21.6
     matplotlib 3.5.3
 

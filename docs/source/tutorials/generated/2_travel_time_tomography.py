@@ -121,7 +121,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import cofi
-import cofi_espresso
+import espresso
 
 ######################################################################
 #
@@ -138,7 +138,7 @@ import cofi_espresso
 # *espresso* Xray example, together with 100 raypaths in the dataset.
 # 
 
-linear_tomo_example = cofi_espresso.XrayTomography()
+linear_tomo_example = espresso.XrayTomography()
 
 ######################################################################
 #
@@ -355,7 +355,7 @@ for p in linear_tomo_example._paths[idx_from:idx_to]:
 # example module and plot the reference seismic model.
 # 
 
-nonlinear_tomo_example = cofi_espresso.FmmTomography()
+nonlinear_tomo_example = espresso.FmmTomography()
 
 nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model, with_paths=True,lw=0.5);
 
@@ -746,7 +746,7 @@ fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothi
 # ---------
 # 
 
-watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))

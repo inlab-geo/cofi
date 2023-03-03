@@ -152,7 +152,7 @@ perturbations to the reference model.
     import matplotlib.pyplot as plt
 
     import cofi
-    import cofi_espresso
+    import espresso
 
 
 
@@ -178,7 +178,7 @@ To illustrate the setting we plot a reference model supplied through the
 .. code-block:: default
 
 
-    linear_tomo_example = cofi_espresso.XrayTomography()
+    linear_tomo_example = espresso.XrayTomography()
 
 
 
@@ -250,7 +250,21 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 803/10416 [00:00<00:01, 8021.19it/s]    Evaluating paths:  16%|#5        | 1663/10416 [00:00<00:01, 8355.97it/s]    Evaluating paths:  24%|##3       | 2499/10416 [00:00<00:00, 8329.32it/s]    Evaluating paths:  32%|###2      | 3339/10416 [00:00<00:00, 8356.16it/s]    Evaluating paths:  40%|####      | 4190/10416 [00:00<00:00, 8408.91it/s]    Evaluating paths:  48%|####8     | 5031/10416 [00:00<00:00, 8326.70it/s]    Evaluating paths:  56%|#####6    | 5864/10416 [00:00<00:00, 8326.11it/s]    Evaluating paths:  64%|######4   | 6718/10416 [00:00<00:00, 8391.39it/s]    Evaluating paths:  73%|#######2  | 7558/10416 [00:00<00:00, 8374.04it/s]    Evaluating paths:  81%|########  | 8396/10416 [00:01<00:00, 8320.60it/s]    Evaluating paths:  89%|########8 | 9251/10416 [00:01<00:00, 8388.24it/s]    Evaluating paths:  97%|#########6| 10102/10416 [00:01<00:00, 8422.25it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8377.28it/s]
+
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]
+    Evaluating paths:   8%|7         | 803/10416 [00:00<00:01, 8021.19it/s]
+    Evaluating paths:  16%|#5        | 1663/10416 [00:00<00:01, 8355.97it/s]
+    Evaluating paths:  24%|##3       | 2499/10416 [00:00<00:00, 8329.32it/s]
+    Evaluating paths:  32%|###2      | 3339/10416 [00:00<00:00, 8356.16it/s]
+    Evaluating paths:  40%|####      | 4190/10416 [00:00<00:00, 8408.91it/s]
+    Evaluating paths:  48%|####8     | 5031/10416 [00:00<00:00, 8326.70it/s]
+    Evaluating paths:  56%|#####6    | 5864/10416 [00:00<00:00, 8326.11it/s]
+    Evaluating paths:  64%|######4   | 6718/10416 [00:00<00:00, 8391.39it/s]
+    Evaluating paths:  73%|#######2  | 7558/10416 [00:00<00:00, 8374.04it/s]
+    Evaluating paths:  81%|########  | 8396/10416 [00:01<00:00, 8320.60it/s]
+    Evaluating paths:  89%|########8 | 9251/10416 [00:01<00:00, 8388.24it/s]
+    Evaluating paths:  97%|#########6| 10102/10416 [00:01<00:00, 8422.25it/s]
+    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8377.28it/s]
 
 
 
@@ -553,10 +567,23 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 836/10416 [00:00<00:01, 8358.95it/s]    Evaluating paths:  17%|#6        | 1720/10416 [00:00<00:01, 8637.10it/s]    Evaluating paths:  25%|##4       | 2584/10416 [00:00<00:00, 8602.80it/s]    Evaluating paths:  33%|###3      | 3449/10416 [00:00<00:00, 8619.38it/s]    Evaluating paths:  41%|####1     | 4322/10416 [00:00<00:00, 8657.66it/s]    Evaluating paths:  50%|####9     | 5188/10416 [00:00<00:00, 8632.27it/s]    Evaluating paths:  58%|#####8    | 6057/10416 [00:00<00:00, 8648.50it/s]    Evaluating paths:  67%|######6   | 6936/10416 [00:00<00:00, 8690.47it/s]    Evaluating paths:  75%|#######4  | 7806/10416 [00:00<00:00, 8625.44it/s]    Evaluating paths:  83%|########3 | 8669/10416 [00:01<00:00, 8622.15it/s]    Evaluating paths:  92%|#########1| 9545/10416 [00:01<00:00, 8660.61it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8651.44it/s]
+
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]
+    Evaluating paths:   8%|8         | 836/10416 [00:00<00:01, 8358.95it/s]
+    Evaluating paths:  17%|#6        | 1720/10416 [00:00<00:01, 8637.10it/s]
+    Evaluating paths:  25%|##4       | 2584/10416 [00:00<00:00, 8602.80it/s]
+    Evaluating paths:  33%|###3      | 3449/10416 [00:00<00:00, 8619.38it/s]
+    Evaluating paths:  41%|####1     | 4322/10416 [00:00<00:00, 8657.66it/s]
+    Evaluating paths:  50%|####9     | 5188/10416 [00:00<00:00, 8632.27it/s]
+    Evaluating paths:  58%|#####8    | 6057/10416 [00:00<00:00, 8648.50it/s]
+    Evaluating paths:  67%|######6   | 6936/10416 [00:00<00:00, 8690.47it/s]
+    Evaluating paths:  75%|#######4  | 7806/10416 [00:00<00:00, 8625.44it/s]
+    Evaluating paths:  83%|########3 | 8669/10416 [00:01<00:00, 8622.15it/s]
+    Evaluating paths:  92%|#########1| 9545/10416 [00:01<00:00, 8660.61it/s]
+    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8651.44it/s]
 
 
-
+espresso
 
 .. GENERATED FROM PYTHON SOURCE LINES 340-342
 
@@ -1180,7 +1207,7 @@ You can start from the template below:
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
+.. rst-class:: sphx-glr-script-espresso
 
  .. code-block:: none
 
@@ -1194,7 +1221,7 @@ You can start from the template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 743-748
+.. Gespresso PYTHON SOURCE LINES 743-748
 
 --------------
 

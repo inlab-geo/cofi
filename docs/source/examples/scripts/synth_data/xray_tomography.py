@@ -109,7 +109,7 @@ Xray Tomography
 
 import numpy as np
 from cofi import BaseProblem, InversionOptions, Inversion
-from cofi_espresso import XrayTomography
+from espresso import XrayTomography
 
 ######################################################################
 #
@@ -310,7 +310,7 @@ xrt.plot_model(np.sqrt(np.diag(Cm)) * inv_result.model);
 #    <!-- Otherwise please leave the below code cell unchanged -->
 # 
 
-watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
