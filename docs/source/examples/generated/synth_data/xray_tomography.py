@@ -91,7 +91,7 @@ Xray Tomography
 # 0. Import modules
 # -----------------
 # 
-# The package ``cofi-espresso`` contains the forward code for this
+# The package ``geo-espresso`` contains the forward code for this
 # problem.
 # 
 
@@ -102,7 +102,7 @@ Xray Tomography
 # -------------------------------------------------------- #
 
 # !pip install -U cofi
-# !pip install -U cofi-espresso
+# !pip install -U geo-espresso
 
 ######################################################################
 #
@@ -119,7 +119,7 @@ from espresso import XrayTomography
 # 1. Define the problem
 # ---------------------
 # 
-# Firstly, we get some information from the ``cofi-espresso`` module.
+# Firstly, we get some information from the ``geo-espresso`` module.
 # These include the dataset and the Jacobian matrix. In the Xray
 # Tomography example, the Jacobian matrix is related to the lengths of
 # paths within each grid. Since the paths are fixed, the Jacobian matrix

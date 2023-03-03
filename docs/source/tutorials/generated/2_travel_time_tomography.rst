@@ -52,7 +52,7 @@ Learning outcomes
 -  A demonstration of running CoFI for a regularized linear parameter
    estimation problem. Can be used as an example of a CoFI **template**.
 -  A demonstration of how a (3rd party) nonlinear forward model can be
-   imported from cofi-espresso and used. Fast Marching algorithm for
+   imported from geo-espresso and used. Fast Marching algorithm for
    first arriving raypaths.
 -  See how nonlinear iterative matrix solvers can be accessed in CoFI.
 
@@ -64,7 +64,7 @@ Learning outcomes
 
     # Environment setup (uncomment code below)
 
-    # !pip install -U cofi cofi-espresso
+    # !pip install -U cofi geo-espresso
 
 
 

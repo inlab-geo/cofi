@@ -139,7 +139,7 @@ Fortran code within the package
     #                                                          #
     # -------------------------------------------------------- #
 
-    # !pip install -U cofi cofi-espresso
+    # !pip install -U cofi geo-espresso
 
 
 

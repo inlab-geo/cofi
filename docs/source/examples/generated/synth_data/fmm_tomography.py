@@ -117,7 +117,7 @@ Seismic Wave Tomography via Fast Marching
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi cofi-espresso
+# !pip install -U cofi geo-espresso
 
 ######################################################################
 #
