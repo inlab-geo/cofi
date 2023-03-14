@@ -1,5 +1,6 @@
 from numbers import Number
 from typing import Callable, Union, Tuple, Sequence
+import functools
 import json
 
 import numpy as np
@@ -1920,6 +1921,9 @@ class _FunctionWrapper:
         self.args = list() if args is None else args
         self.kwargs = dict() if kwargs is None else kwargs
         self.autogen = autogen
+        functools.update_wrapper(self, func)
+        self.__name__ = func.__name__
+        self.__doc__ = func.__doc__
 
     def __call__(self, model, *extra_args):
         try:
