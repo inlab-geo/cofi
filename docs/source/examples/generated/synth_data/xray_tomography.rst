@@ -103,16 +103,15 @@ where :math:`d_i = -\log {I^{(i)}_{rec}}/{I^{(i)}_{src}}`, and where
 discretized model.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-97
+.. GENERATED FROM PYTHON SOURCE LINES 91-96
 
 0. Import modules
 -----------------
 
-The package ``cofi-espresso`` contains the forward code for this
-problem.
+The package ``geo-espresso`` contains the forward code for this problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-107
+.. GENERATED FROM PYTHON SOURCE LINES 96-106
 
 .. code-block:: default
 
@@ -124,7 +123,7 @@ problem.
     # -------------------------------------------------------- #
 
     # !pip install -U cofi
-    # !pip install -U cofi-espresso
+    # !pip install -U geo-espresso
 
 
 
@@ -133,14 +132,14 @@ problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-114
+.. GENERATED FROM PYTHON SOURCE LINES 108-113
 
 .. code-block:: default
 
 
     import numpy as np
     from cofi import BaseProblem, InversionOptions, Inversion
-    from cofi_espresso import XrayTomography
+    from espresso import XrayTomography
 
 
 
@@ -149,19 +148,19 @@ problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-128
+.. GENERATED FROM PYTHON SOURCE LINES 118-127
 
 1. Define the problem
 ---------------------
 
-Firstly, we get some information from the ``cofi-espresso`` module.
-These include the dataset and the Jacobian matrix. In the Xray
-Tomography example, the Jacobian matrix is related to the lengths of
-paths within each grid. Since the paths are fixed, the Jacobian matrix
-stays constant.
+Firstly, we get some information from the ``geo-espresso`` module. These
+include the dataset and the Jacobian matrix. In the Xray Tomography
+example, the Jacobian matrix is related to the lengths of paths within
+each grid. Since the paths are fixed, the Jacobian matrix stays
+constant.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-131
+.. GENERATED FROM PYTHON SOURCE LINES 127-130
 
 .. code-block:: default
 
@@ -175,7 +174,7 @@ stays constant.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-138
+.. GENERATED FROM PYTHON SOURCE LINES 132-137
 
 .. code-block:: default
 
@@ -192,18 +191,18 @@ stays constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 838/10416 [00:00<00:01, 8376.15it/s]    Evaluating paths:  16%|#6        | 1686/10416 [00:00<00:01, 8433.53it/s]    Evaluating paths:  24%|##4       | 2530/10416 [00:00<00:00, 8204.28it/s]    Evaluating paths:  32%|###2      | 3352/10416 [00:00<00:00, 8039.22it/s]    Evaluating paths:  40%|###9      | 4157/10416 [00:00<00:00, 8035.06it/s]    Evaluating paths:  48%|####7     | 4961/10416 [00:00<00:00, 7810.83it/s]    Evaluating paths:  55%|#####5    | 5744/10416 [00:00<00:00, 7596.04it/s]    Evaluating paths:  63%|######2   | 6557/10416 [00:00<00:00, 7758.26it/s]    Evaluating paths:  71%|#######   | 7360/10416 [00:00<00:00, 7840.34it/s]    Evaluating paths:  78%|#######8  | 8146/10416 [00:01<00:00, 7778.84it/s]    Evaluating paths:  86%|########5 | 8955/10416 [00:01<00:00, 7870.80it/s]    Evaluating paths:  94%|#########3| 9775/10416 [00:01<00:00, 7969.28it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7972.45it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 822/10416 [00:00<00:01, 8218.26it/s]    Evaluating paths:  16%|#6        | 1681/10416 [00:00<00:01, 8435.42it/s]    Evaluating paths:  24%|##4       | 2525/10416 [00:00<00:00, 8334.07it/s]    Evaluating paths:  32%|###2      | 3359/10416 [00:00<00:00, 8299.39it/s]    Evaluating paths:  40%|####      | 4197/10416 [00:00<00:00, 8326.02it/s]    Evaluating paths:  48%|####8     | 5032/10416 [00:00<00:00, 8332.88it/s]    Evaluating paths:  56%|#####6    | 5871/10416 [00:00<00:00, 8350.55it/s]    Evaluating paths:  64%|######4   | 6707/10416 [00:00<00:00, 8310.33it/s]    Evaluating paths:  72%|#######2  | 7539/10416 [00:00<00:00, 8147.65it/s]    Evaluating paths:  80%|########  | 8369/10416 [00:01<00:00, 8192.30it/s]    Evaluating paths:  89%|########8 | 9225/10416 [00:01<00:00, 8303.33it/s]    Evaluating paths:  97%|#########6| 10080/10416 [00:01<00:00, 8375.52it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8324.76it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-146
+.. GENERATED FROM PYTHON SOURCE LINES 142-145
 
 We do some estimation on data noise and further perform a
 regularization.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-152
+.. GENERATED FROM PYTHON SOURCE LINES 145-151
 
 .. code-block:: default
 
@@ -220,7 +219,7 @@ regularization.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-158
+.. GENERATED FROM PYTHON SOURCE LINES 153-157
 
 .. code-block:: default
 
@@ -235,12 +234,12 @@ regularization.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-165
+.. GENERATED FROM PYTHON SOURCE LINES 162-164
 
 Review what information is included in the ``BaseProblem`` object:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-168
+.. GENERATED FROM PYTHON SOURCE LINES 164-167
 
 .. code-block:: default
 
@@ -273,13 +272,13 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-176
+.. GENERATED FROM PYTHON SOURCE LINES 172-175
 
 2. Define the inversion options
 -------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-180
+.. GENERATED FROM PYTHON SOURCE LINES 175-179
 
 .. code-block:: default
 
@@ -294,12 +293,12 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-187
+.. GENERATED FROM PYTHON SOURCE LINES 184-186
 
 Review what’s been defined for the inversion we are about to run:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-190
+.. GENERATED FROM PYTHON SOURCE LINES 186-189
 
 .. code-block:: default
 
@@ -320,7 +319,7 @@ Review what’s been defined for the inversion we are about to run:
     Solving method: None set
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
-    Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+    Backend tool: `<class 'cofi.tools._scipy_lstsq.ScipyLstSq'>` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
@@ -330,7 +329,7 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 195-209
+.. GENERATED FROM PYTHON SOURCE LINES 194-208
 
 3. Start an inversion
 ---------------------
@@ -347,7 +346,7 @@ For this dataset, we’ve taken :math:`\sigma = 0.002`\ s and chosen
 :math:`\epsilon^2 = 50`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-214
+.. GENERATED FROM PYTHON SOURCE LINES 208-213
 
 .. code-block:: default
 
@@ -391,7 +390,7 @@ For this dataset, we’ve taken :math:`\sigma = 0.002`\ s and chosen
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-225
+.. GENERATED FROM PYTHON SOURCE LINES 218-224
 
 4. Plotting
 -----------
@@ -400,7 +399,7 @@ Below the two figures refers to the inferred model and true model
 respectively.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 225-229
+.. GENERATED FROM PYTHON SOURCE LINES 224-228
 
 .. code-block:: default
 
@@ -438,7 +437,7 @@ respectively.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 234-251
+.. GENERATED FROM PYTHON SOURCE LINES 233-250
 
 5. Estimated uncertainties
 --------------------------
@@ -458,7 +457,7 @@ square roots of the diagonal entries of this matrix are the
 :math:`\sigma` errors in the slowness in each cell.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 251-254
+.. GENERATED FROM PYTHON SOURCE LINES 250-253
 
 .. code-block:: default
 
@@ -472,13 +471,13 @@ square roots of the diagonal entries of this matrix are the
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 259-262
+.. GENERATED FROM PYTHON SOURCE LINES 258-261
 
 Lets plot the slowness uncertainties as a function of position across
 the cellular model.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 262-265
+.. GENERATED FROM PYTHON SOURCE LINES 261-264
 
 .. code-block:: default
 
@@ -503,7 +502,7 @@ the cellular model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 270-284
+.. GENERATED FROM PYTHON SOURCE LINES 269-283
 
 Uncertainty is uniformly low across the entire model and only
 significant near the corners where there are few ray paths.
@@ -520,7 +519,7 @@ and since :math:`s = 1/v` we get
 which gives the uncertainty image on velocity, which looks very similar.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 284-287
+.. GENERATED FROM PYTHON SOURCE LINES 283-286
 
 .. code-block:: default
 
@@ -545,14 +544,14 @@ which gives the uncertainty image on velocity, which looks very similar.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 292-296
+.. GENERATED FROM PYTHON SOURCE LINES 291-295
 
 By clipping the colour range you can see an imprint of the true image,
 indicating that high slowness/low velcoity areas have slightly higher
 uncertainty.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 299-312
+.. GENERATED FROM PYTHON SOURCE LINES 298-311
 
 --------------
 
@@ -568,12 +567,12 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 312-318
+.. GENERATED FROM PYTHON SOURCE LINES 311-317
 
 .. code-block:: default
 
 
-    watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+    watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -586,8 +585,8 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
-    cofi_espresso 0.0.1.dev10
+    cofi 0.1.2.dev25+11.gab1f820.dirty
+    espresso 0.2.1.dev0
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
@@ -595,14 +594,14 @@ Watermark
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 319-319
+.. GENERATED FROM PYTHON SOURCE LINES 318-318
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.787 seconds)
+   **Total running time of the script:** ( 0 minutes  3.755 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_xray_tomography.py:

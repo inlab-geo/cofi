@@ -52,7 +52,7 @@ Learning outcomes
 -  A demonstration of running CoFI for a regularized linear parameter
    estimation problem. Can be used as an example of a CoFI **template**.
 -  A demonstration of how a (3rd party) nonlinear forward model can be
-   imported from cofi-espresso and used. Fast Marching algorithm for
+   imported from geo-espresso and used. Fast Marching algorithm for
    first arriving raypaths.
 -  See how nonlinear iterative matrix solvers can be accessed in CoFI.
 
@@ -64,7 +64,7 @@ Learning outcomes
 
     # Environment setup (uncomment code below)
 
-    # !pip install -U cofi cofi-espresso
+    # !pip install -U cofi geo-espresso
 
 
 
@@ -152,7 +152,7 @@ perturbations to the reference model.
     import matplotlib.pyplot as plt
 
     import cofi
-    import cofi_espresso
+    import espresso
 
 
 
@@ -178,7 +178,7 @@ To illustrate the setting we plot a reference model supplied through the
 .. code-block:: default
 
 
-    linear_tomo_example = cofi_espresso.XrayTomography()
+    linear_tomo_example = espresso.XrayTomography()
 
 
 
@@ -250,7 +250,7 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 803/10416 [00:00<00:01, 8021.19it/s]    Evaluating paths:  16%|#5        | 1663/10416 [00:00<00:01, 8355.97it/s]    Evaluating paths:  24%|##3       | 2499/10416 [00:00<00:00, 8329.32it/s]    Evaluating paths:  32%|###2      | 3339/10416 [00:00<00:00, 8356.16it/s]    Evaluating paths:  40%|####      | 4190/10416 [00:00<00:00, 8408.91it/s]    Evaluating paths:  48%|####8     | 5031/10416 [00:00<00:00, 8326.70it/s]    Evaluating paths:  56%|#####6    | 5864/10416 [00:00<00:00, 8326.11it/s]    Evaluating paths:  64%|######4   | 6718/10416 [00:00<00:00, 8391.39it/s]    Evaluating paths:  73%|#######2  | 7558/10416 [00:00<00:00, 8374.04it/s]    Evaluating paths:  81%|########  | 8396/10416 [00:01<00:00, 8320.60it/s]    Evaluating paths:  89%|########8 | 9251/10416 [00:01<00:00, 8388.24it/s]    Evaluating paths:  97%|#########6| 10102/10416 [00:01<00:00, 8422.25it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8377.28it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 783/10416 [00:00<00:01, 7822.34it/s]    Evaluating paths:  16%|#5        | 1629/10416 [00:00<00:01, 8195.84it/s]    Evaluating paths:  24%|##3       | 2449/10416 [00:00<00:00, 8191.67it/s]    Evaluating paths:  32%|###1      | 3300/10416 [00:00<00:00, 8316.37it/s]    Evaluating paths:  40%|###9      | 4160/10416 [00:00<00:00, 8416.84it/s]    Evaluating paths:  48%|####8     | 5003/10416 [00:00<00:00, 8420.47it/s]    Evaluating paths:  56%|#####6    | 5850/10416 [00:00<00:00, 8434.01it/s]    Evaluating paths:  65%|######4   | 6722/10416 [00:00<00:00, 8522.12it/s]    Evaluating paths:  73%|#######2  | 7575/10416 [00:00<00:00, 8488.07it/s]    Evaluating paths:  81%|########  | 8424/10416 [00:01<00:00, 8475.59it/s]    Evaluating paths:  89%|########9 | 9285/10416 [00:01<00:00, 8515.99it/s]    Evaluating paths:  97%|#########7| 10137/10416 [00:01<00:00, 8259.53it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8367.14it/s]
 
 
 
@@ -553,7 +553,7 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 836/10416 [00:00<00:01, 8358.95it/s]    Evaluating paths:  17%|#6        | 1720/10416 [00:00<00:01, 8637.10it/s]    Evaluating paths:  25%|##4       | 2584/10416 [00:00<00:00, 8602.80it/s]    Evaluating paths:  33%|###3      | 3449/10416 [00:00<00:00, 8619.38it/s]    Evaluating paths:  41%|####1     | 4322/10416 [00:00<00:00, 8657.66it/s]    Evaluating paths:  50%|####9     | 5188/10416 [00:00<00:00, 8632.27it/s]    Evaluating paths:  58%|#####8    | 6057/10416 [00:00<00:00, 8648.50it/s]    Evaluating paths:  67%|######6   | 6936/10416 [00:00<00:00, 8690.47it/s]    Evaluating paths:  75%|#######4  | 7806/10416 [00:00<00:00, 8625.44it/s]    Evaluating paths:  83%|########3 | 8669/10416 [00:01<00:00, 8622.15it/s]    Evaluating paths:  92%|#########1| 9545/10416 [00:01<00:00, 8660.61it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8651.44it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 801/10416 [00:00<00:01, 7997.39it/s]    Evaluating paths:  16%|#5        | 1643/10416 [00:00<00:01, 8242.26it/s]    Evaluating paths:  24%|##3       | 2468/10416 [00:00<00:00, 8205.18it/s]    Evaluating paths:  32%|###1      | 3299/10416 [00:00<00:00, 8245.30it/s]    Evaluating paths:  40%|###9      | 4147/10416 [00:00<00:00, 8322.44it/s]    Evaluating paths:  48%|####7     | 4982/10416 [00:00<00:00, 8331.07it/s]    Evaluating paths:  56%|#####5    | 5816/10416 [00:00<00:00, 8281.23it/s]    Evaluating paths:  64%|######4   | 6670/10416 [00:00<00:00, 8361.06it/s]    Evaluating paths:  72%|#######2  | 7507/10416 [00:00<00:00, 8293.69it/s]    Evaluating paths:  80%|########  | 8342/10416 [00:01<00:00, 8310.23it/s]    Evaluating paths:  88%|########8 | 9180/10416 [00:01<00:00, 8323.51it/s]    Evaluating paths:  96%|#########6| 10016/10416 [00:01<00:00, 8332.57it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8304.96it/s]
 
 
 
@@ -583,7 +583,7 @@ example module and plot the reference seismic model.
 .. code-block:: default
 
 
-    nonlinear_tomo_example = cofi_espresso.FmmTomography()
+    nonlinear_tomo_example = espresso.FmmTomography()
 
     nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model, with_paths=True,lw=0.5);
 
@@ -854,7 +854,7 @@ Step 2. Define CoFI ``InversionOptions``
     Solving method: None set
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
-    Backend tool: `cofi.simple_newton` - CoFI's own solver - simple Newton's approach (for testing mainly)
+    Backend tool: `<class 'cofi.tools._cofi_simple_newton.CoFISimpleNewton'>` - CoFI's own solver - simple Newton's approach (for testing mainly)
     References: ['https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
@@ -1207,7 +1207,7 @@ Watermark
 .. code-block:: default
 
 
-    watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+    watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -1220,8 +1220,8 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
-    cofi_espresso 0.0.1.dev10
+    cofi 0.1.2.dev25+11.gab1f820.dirty
+    espresso 0.2.1.dev0
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
@@ -1236,7 +1236,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  30.438 seconds)
+   **Total running time of the script:** ( 0 minutes  42.986 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_2_travel_time_tomography.py:
