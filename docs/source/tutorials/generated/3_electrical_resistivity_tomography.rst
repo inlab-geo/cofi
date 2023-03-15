@@ -61,7 +61,7 @@ Learning outcomes
 
     # Environment setup (uncomment code lines below)
 
-    # !pip install -U cofi cofi-espresso
+    # !pip install -U cofi geo-espresso
 
     # !pip install -q condacolab
     # import condacolab
@@ -188,7 +188,7 @@ model.
 To achieve this we first define a set of utility functions that will
 facilitate interfacing to PyGIMLi. We will also show how CoFI can
 directly interface with a mature package without the need to go via
-`Espresso <https://cofi-espresso.readthedocs.io/en/latest/>`__.
+`Espresso <https://geo-espresso.readthedocs.io/en/latest/>`__.
 
 PyGIMLi uses different meshes and adaptive meshing capabilities via Gmsh
 https://gmsh.info/, all CoFI needs to access are the model vector, the
@@ -409,6 +409,12 @@ https://www.agiusa.com/dipole-dipole%E2%80%8B-%E2%80%8Barray%E2%80%8B
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    15/03/23 - 10:45:11 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f3056107bb0>
+
 
 
 
@@ -463,6 +469,12 @@ magnitude of the noise depending on the dipole dipole separation.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    15/03/23 - 10:45:12 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f3056218a90>
+
 
 
 
@@ -503,6 +515,234 @@ plotted in yellow.
 
  .. code-block:: none
 
+    15/03/23 - 10:45:12 - pyGIMLi - INFO - Found 2 regions.
+    15/03/23 - 10:45:12 - pyGIMLi - INFO - Region with smallest marker (1) set to background
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: Matching sans\-serif:style=normal:variant=normal:weight=bold:stretch=normal:size=9.0.
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.33499999999999996
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/khmeros/KhmerOS_content.ttf', name='Khmer OS Content', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Medium.otf', name='Montserrat', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree.ttf', name='Waree', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Light.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-Bold.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-Roman.otf', name='C059', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraBold.otf', name='Montserrat', style='normal', variant='normal', weight=800, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-MediumItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-Oblique.otf', name='Cantarell', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSansBoldOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMonoBoldOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-devanagari/Lohit-Devanagari.ttf', name='Lohit Devanagari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansThai.ttf', name='Droid Sans Thai', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 0.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-Bold.otf', name='Cantarell', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansSinhala-Regular.ttf', name='Noto Sans Sinhala', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-abyssinica/AbyssinicaSIL-R.ttf', name='Abyssinica SIL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansTaiViet-Regular.ttf', name='Noto Sans Tai Viet', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-BoldItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-Regular.ttf', name='Liberation Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paktype-naskh-basic/PakTypeNaskhBasic.ttf', name='PakType Naskh Basic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSans-Bold.ttf', name='Droid Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Medium.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansTaiTham-Regular.ttf', name='Noto Sans Tai Tham', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansHebrew-Bold.ttf', name='Droid Sans Hebrew', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-Regular.otf', name='Cantarell', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMonoOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-BoldItalic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSans.ttf', name='Droid Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-Bold.otf', name='C059', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-SemiBold.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-Roman.otf', name='P052', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSansOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-tamil/Lohit-Tamil.ttf', name='Lohit Tamil', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-Bold.otf', name='STIX', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.535
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansGeorgian.ttf', name='Droid Sans Georgian', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraBold.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=800, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ThinItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=250, stretch='normal', size='scalable')) = 11.4775
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansTamil-Bold.ttf', name='Droid Sans Tamil', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-BoldOblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-SemiBoldItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Regular.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansSinhala-Bold.ttf', name='Noto Sans Sinhala', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-ExtraLight.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=200, stretch='normal', size='scalable')) = 0.525
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-Demi.otf', name='URW Bookman', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTN57F.ttf', name='PT Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.535
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-Bold.otf', name='P052', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-Italic.otf', name='P052', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/khmeros/KhmerOS.ttf', name='Khmer OS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-MediumItalic.otf', name='Montserrat', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerifItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-SemiBold.otf', name='Montserrat', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-DemiItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraLight.otf', name='Montserrat', style='normal', variant='normal', weight=275, stretch='normal', size='scalable')) = 10.45375
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-Bold.ttf', name='Liberation Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 1.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-BoldItalic.otf', name='STIX', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/smc/Meera.ttf', name='Meera', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/khmeros/KhmerOS_sys.ttf', name='Khmer OS System', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-Italic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Italic.otf', name='Montserrat', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-DemiOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Thin.otf', name='Montserrat', style='normal', variant='normal', weight=250, stretch='normal', size='scalable')) = 10.4775
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-Demi.otf', name='URW Gothic', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree-Bold.ttf', name='Waree', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraBoldItalic.otf', name='Montserrat', style='italic', variant='normal', weight=800, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS75F.ttf', name='PT Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-SemiBoldItalic.otf', name='Montserrat', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansMandaic-Regular.ttf', name='Noto Sans Mandaic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansEthiopic-Bold.ttf', name='Droid Sans Ethiopic', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Bold.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Regular.otf', name='Montserrat', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMono.ttf', name='FreeMono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-Italic.otf', name='STIX', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/jomolhari/Jomolhari-alpha3c-0605331.ttf', name='Jomolhari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-BoldItalic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansTamil-Regular.ttf', name='Droid Sans Tamil', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Bold.otf', name='Montserrat', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ThinItalic.otf', name='Montserrat', style='italic', variant='normal', weight=250, stretch='normal', size='scalable')) = 11.4775
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-Light.otf', name='URW Bookman', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMonoBold.ttf', name='FreeMono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-Regular.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Thin.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=250, stretch='normal', size='scalable')) = 10.4775
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-Regular.otf', name='Nimbus Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Light.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-Bold.ttf', name='Liberation Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansArmenian.ttf', name='Droid Sans Armenian', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Light.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansEthiopic-Regular.ttf', name='Droid Sans Ethiopic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/D050000L.otf', name='D050000L', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Bold.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-BlackItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=900, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-Italic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-Regular.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.535
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS76F.ttf', name='PT Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-BlackItalic.otf', name='Montserrat', style='italic', variant='normal', weight=900, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-Bold.otf', name='Nimbus Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansFallback.ttf', name='Droid Sans Fallback', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-Italic.otf', name='C059', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansArabic.ttf', name='Droid Sans Arabic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-BoldItalic.otf', name='P052', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-LightItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraLight.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=275, stretch='normal', size='scalable')) = 10.45375
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraLightItalic.otf', name='Montserrat', style='italic', variant='normal', weight=275, stretch='normal', size='scalable')) = 11.45375
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-BookOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-BoldItalic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-BdIta.otf', name='C059', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.33499999999999996
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-BoldItalic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Italic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansDevanagari-Regular.ttf', name='Droid Sans Devanagari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansTagalog-Regular.ttf', name='Noto Sans Tagalog', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Black.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-Oblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.535
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerifBoldItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-Regular.otf', name='Nimbus Roman', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-assamese/Lohit-Assamese.ttf', name='Lohit Assamese', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-LightItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-odia/Lohit-Odia.ttf', name='Lohit Odia', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS55F.ttf', name='PT Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Bold.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-gujarati/Lohit-Gujarati.ttf', name='Lohit Gujarati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Black.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-emoji/NotoEmoji-Regular.ttf', name='Noto Emoji', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-Italic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerifBold.ttf', name='FreeSerif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-BoldItalic.otf', name='Montserrat', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-DemiLight.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=350, stretch='normal', size='scalable')) = 10.3825
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-Italic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerif.ttf', name='FreeSerif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-SemiBold.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSans.ttf', name='FreeSans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-padauk/Padauk-Bold.ttf', name='Padauk', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSansBold.ttf', name='FreeSans', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansLisu-Regular.ttf', name='Noto Sans Lisu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-BoldOblique.otf', name='Cantarell', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-gurmukhi/Lohit-Gurmukhi.ttf', name='Lohit Gurmukhi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraBoldItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=800, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.535
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Regular.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Thin.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=100, stretch='normal', size='scalable')) = 10.62
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-nuosu/NuosuSIL-Regular.ttf', name='Nuosu SIL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTN77F.ttf', name='PT Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-kannada/Lohit-Kannada.ttf', name='Lohit Kannada', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 0.5349999999999999
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-LightItalic.otf', name='Montserrat', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Medium.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansJapanese.ttf', name='Droid Sans Japanese', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansHebrew-Regular.ttf', name='Droid Sans Hebrew', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-Book.otf', name='URW Gothic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/Z003-MediumItalic.otf', name='Z003', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-telugu/Lohit-Telugu.ttf', name='Lohit Telugu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Regular.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-ExtraLight.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=200, stretch='normal', size='scalable')) = 10.525
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Black.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Medium.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-Bold.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.25
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-bengali/Lohit-Bengali.ttf', name='Lohit Bengali', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-BoldItalic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS56F.ttf', name='PT Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-Bold.otf', name='Nimbus Roman', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-Regular.otf', name='STIX', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Light.otf', name='Montserrat', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-Italic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 1.535
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansMeeteiMayek-Regular.ttf', name='Noto Sans Meetei Mayek', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree-Oblique.ttf', name='Waree', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Black.otf', name='Montserrat', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraLightItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=275, stretch='normal', size='scalable')) = 11.45375
+    15/03/23 - 10:45:12 - matplotlib.font_manager - DEBUG - findfont: Matching sans\-serif:style=normal:variant=normal:weight=bold:stretch=normal:size=9.0 to DejaVu Sans ('/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf') with score of 0.050000.
 
     Text(71.47222222222221, 0.5, 'Elevation (m)')
 
@@ -536,6 +776,16 @@ plotted in yellow.
    :srcset: /tutorials/generated/images/sphx_glr_3_electrical_resistivity_tomography_004.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    15/03/23 - 10:45:12 - Core - WARNING - Region Nr: 1  is background and should not get a model transformation.
+    15/03/23 - 10:45:12 - Core - WARNING - Region Nr: 1  is background and should not get a model control.
+    15/03/23 - 10:45:12 - pyGIMLi - INFO - Creating forward mesh from region infos.
+    15/03/23 - 10:45:12 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
+    15/03/23 - 10:45:12 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f2fd78209d0>
 
 
 
@@ -682,6 +932,10 @@ libraries we can use for our problem.
 
  .. code-block:: none
 
+    15/03/23 - 10:45:12 - h5py._conv - DEBUG - Creating converter from 7 to 5
+    15/03/23 - 10:45:12 - h5py._conv - DEBUG - Creating converter from 5 to 7
+    15/03/23 - 10:45:12 - h5py._conv - DEBUG - Creating converter from 7 to 5
+    15/03/23 - 10:45:12 - h5py._conv - DEBUG - Creating converter from 5 to 7
     Based on what you've provided so far, here are possible tools:
     {
         "optimization": [
@@ -765,15 +1019,244 @@ model update. In practice:
 
  .. code-block:: none
 
+    15/03/23 - 10:45:12 - Core - WARNING -  data contains no K-factors but we calculate them  analytically for the response call
     Iteration #0, objective function value: 229.71418345445022
-    Iteration #1, objective function value: 224.7987515141377
-    Iteration #2, objective function value: 220.36237268797754
-    Iteration #3, objective function value: 215.9057002091127
-    Iteration #4, objective function value: 211.6177561325492
+    Iteration #1, objective function value: 224.79875151411954
+    Iteration #2, objective function value: 220.3623726879751
+    Iteration #3, objective function value: 215.90570020911568
+    Iteration #4, objective function value: 211.61775613255463
 
     Number of objective function evaluations: 5
     Number of gradient function evaluations: 5
     Number of hessian function evaluations: 5
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=16.0.
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/khmeros/KhmerOS_content.ttf', name='Khmer OS Content', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Medium.otf', name='Montserrat', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree.ttf', name='Waree', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Light.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-Bold.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-Roman.otf', name='C059', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraBold.otf', name='Montserrat', style='normal', variant='normal', weight=800, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-MediumItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-Oblique.otf', name='Cantarell', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSansBoldOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMonoBoldOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-devanagari/Lohit-Devanagari.ttf', name='Lohit Devanagari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansThai.ttf', name='Droid Sans Thai', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 0.5349999999999999
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-Bold.otf', name='Cantarell', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansSinhala-Regular.ttf', name='Noto Sans Sinhala', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-abyssinica/AbyssinicaSIL-R.ttf', name='Abyssinica SIL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansTaiViet-Regular.ttf', name='Noto Sans Tai Viet', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-BoldItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-Regular.ttf', name='Liberation Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paktype-naskh-basic/PakTypeNaskhBasic.ttf', name='PakType Naskh Basic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSans-Bold.ttf', name='Droid Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Medium.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansTaiTham-Regular.ttf', name='Noto Sans Tai Tham', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansHebrew-Bold.ttf', name='Droid Sans Hebrew', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-Regular.otf', name='Cantarell', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMonoOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-BoldItalic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSans.ttf', name='Droid Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-Bold.otf', name='C059', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-SemiBold.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-Roman.otf', name='P052', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSansOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-tamil/Lohit-Tamil.ttf', name='Lohit Tamil', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-Bold.otf', name='STIX', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansGeorgian.ttf', name='Droid Sans Georgian', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraBold.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=800, stretch='normal', size='scalable')) = 10.43
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ThinItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=250, stretch='normal', size='scalable')) = 11.1925
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansTamil-Bold.ttf', name='Droid Sans Tamil', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-BoldOblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-SemiBoldItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Regular.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansSinhala-Bold.ttf', name='Noto Sans Sinhala', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-ExtraLight.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=200, stretch='normal', size='scalable')) = 0.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-Demi.otf', name='URW Bookman', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTN57F.ttf', name='PT Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-Bold.otf', name='P052', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-Italic.otf', name='P052', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/khmeros/KhmerOS.ttf', name='Khmer OS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-MediumItalic.otf', name='Montserrat', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerifItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-SemiBold.otf', name='Montserrat', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-DemiItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraLight.otf', name='Montserrat', style='normal', variant='normal', weight=275, stretch='normal', size='scalable')) = 10.16875
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-Bold.ttf', name='Liberation Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 1.535
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-BoldItalic.otf', name='STIX', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/smc/Meera.ttf', name='Meera', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/khmeros/KhmerOS_sys.ttf', name='Khmer OS System', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-Italic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Italic.otf', name='Montserrat', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-DemiOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Thin.otf', name='Montserrat', style='normal', variant='normal', weight=250, stretch='normal', size='scalable')) = 10.1925
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-Demi.otf', name='URW Gothic', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree-Bold.ttf', name='Waree', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraBoldItalic.otf', name='Montserrat', style='italic', variant='normal', weight=800, stretch='normal', size='scalable')) = 11.43
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS75F.ttf', name='PT Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-SemiBoldItalic.otf', name='Montserrat', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansMandaic-Regular.ttf', name='Noto Sans Mandaic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansEthiopic-Bold.ttf', name='Droid Sans Ethiopic', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Bold.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Regular.otf', name='Montserrat', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMono.ttf', name='FreeMono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-Italic.otf', name='STIX', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/jomolhari/Jomolhari-alpha3c-0605331.ttf', name='Jomolhari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-BoldItalic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansTamil-Regular.ttf', name='Droid Sans Tamil', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Bold.otf', name='Montserrat', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ThinItalic.otf', name='Montserrat', style='italic', variant='normal', weight=250, stretch='normal', size='scalable')) = 11.1925
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-Light.otf', name='URW Bookman', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeMonoBold.ttf', name='FreeMono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-Regular.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Thin.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=250, stretch='normal', size='scalable')) = 10.1925
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-Regular.otf', name='Nimbus Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Light.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-Bold.ttf', name='Liberation Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansArmenian.ttf', name='Droid Sans Armenian', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Light.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansEthiopic-Regular.ttf', name='Droid Sans Ethiopic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/D050000L.otf', name='D050000L', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Bold.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-BlackItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=900, stretch='normal', size='scalable')) = 11.525
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-Italic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-Regular.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS76F.ttf', name='PT Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-BlackItalic.otf', name='Montserrat', style='italic', variant='normal', weight=900, stretch='normal', size='scalable')) = 11.525
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-Bold.otf', name='Nimbus Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansFallback.ttf', name='Droid Sans Fallback', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-Italic.otf', name='C059', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansArabic.ttf', name='Droid Sans Arabic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/P052-BoldItalic.otf', name='P052', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWBookman-LightItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraLight.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=275, stretch='normal', size='scalable')) = 10.16875
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-ExtraLightItalic.otf', name='Montserrat', style='italic', variant='normal', weight=275, stretch='normal', size='scalable')) = 11.16875
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-BookOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusMonoPS-BoldItalic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/C059-BdIta.otf', name='C059', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-BoldItalic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Italic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansDevanagari-Regular.ttf', name='Droid Sans Devanagari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansTagalog-Regular.ttf', name='Noto Sans Tagalog', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Black.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.525
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-Oblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerifBoldItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-Regular.otf', name='Nimbus Roman', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-assamese/Lohit-Assamese.ttf', name='Lohit Assamese', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-LightItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-odia/Lohit-Odia.ttf', name='Lohit Odia', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS55F.ttf', name='PT Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Bold.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-gujarati/Lohit-Gujarati.ttf', name='Lohit Gujarati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Black.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.525
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-emoji/NotoEmoji-Regular.ttf', name='Noto Emoji', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-Italic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerifBold.ttf', name='FreeSerif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-BoldItalic.otf', name='Montserrat', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-DemiLight.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=350, stretch='normal', size='scalable')) = 10.0975
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-mono/LiberationMono-Italic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSerif.ttf', name='FreeSerif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-SemiBold.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSans.ttf', name='FreeSans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-padauk/Padauk-Bold.ttf', name='Padauk', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/gnu-free/FreeSansBold.ttf', name='FreeSans', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansLisu-Regular.ttf', name='Noto Sans Lisu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/abattis-cantarell/Cantarell-BoldOblique.otf', name='Cantarell', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-gurmukhi/Lohit-Gurmukhi.ttf', name='Lohit Gurmukhi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraBoldItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=800, stretch='normal', size='scalable')) = 11.43
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Regular.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Thin.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=100, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/sil-nuosu/NuosuSIL-Regular.ttf', name='Nuosu SIL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTN77F.ttf', name='PT Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-kannada/Lohit-Kannada.ttf', name='Lohit Kannada', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 0.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-LightItalic.otf', name='Montserrat', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Medium.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansJapanese.ttf', name='Droid Sans Japanese', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-droid/DroidSansHebrew-Regular.ttf', name='Droid Sans Hebrew', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/URWGothic-Book.otf', name='URW Gothic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/Z003-MediumItalic.otf', name='Z003', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-telugu/Lohit-Telugu.ttf', name='Lohit Telugu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-Regular.otf', name='Montserrat Alternates', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-ExtraLight.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=200, stretch='normal', size='scalable')) = 10.24
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSerifCJK-Black.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.525
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto-cjk/NotoSansCJK-Medium.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSansNarrow-Bold.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSerifCondensed-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/lohit-bengali/Lohit-Bengali.ttf', name='Lohit Bengali', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusSans-BoldItalic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/paratype-pt-sans/PTS56F.ttf', name='PT Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/urw-base35/NimbusRoman-Bold.otf', name='Nimbus Roman', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/stix/STIX-Regular.otf', name='STIX', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Light.otf', name='Montserrat', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/liberation-sans/LiberationSans-Italic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/dejavu/DejaVuSansCondensed-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 1.25
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/google-noto/NotoSansMeeteiMayek-Regular.ttf', name='Noto Sans Meetei Mayek', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/thai-scalable/Waree-Oblique.ttf', name='Waree', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/Montserrat-Black.otf', name='Montserrat', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.525
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: score(FontEntry(fname='/usr/share/fonts/julietaula-montserrat/MontserratAlternates-ExtraLightItalic.otf', name='Montserrat Alternates', style='italic', variant='normal', weight=275, stretch='normal', size='scalable')) = 11.16875
+    15/03/23 - 10:45:21 - matplotlib.font_manager - DEBUG - findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=16.0 to DejaVu Sans ('/home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
+    15/03/23 - 10:45:21 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f3055baebc0>
+    15/03/23 - 10:45:21 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f3055510220>
 
 
 
@@ -990,23 +1473,25 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 69.41232753902361
+      objective value: 69.41232753902358
     Iteration #2
-      model change: 1.9521920346073456
-      objective value: 32.313715029558715
+      model change: 1.9521920346073645
+      objective value: 32.31371502955868
     Iteration #3
-      model change: 2.0050005050112407
-      objective value: 31.17194038808538
+      model change: 2.0050005050112394
+      objective value: 31.171940388084856
     Iteration #4
-      model change: 0.3774794759723972
-      objective value: 27.460445378250956
+      model change: 0.37747947597238807
+      objective value: 27.46044537824982
     Iteration #5
-      model change: 1.2758048179583221
-      objective value: 17.69101254349345
+      model change: 1.2758048179587458
+      objective value: 17.69101254349437
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
     Number of hessian function evaluations: 5
+    15/03/23 - 10:45:34 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f305538d4e0>
+    15/03/23 - 10:45:34 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f30554f0940>
 
 
 
@@ -1057,23 +1542,25 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 157.50708172346376
+      objective value: 157.50708172346378
     Iteration #2
-      model change: 2.0
-      objective value: 68.94013122104025
+      model change: 2.0000000000000004
+      objective value: 68.94013122104022
     Iteration #3
-      model change: 3.9999999999999996
-      objective value: 34.90264090870997
+      model change: 4.0
+      objective value: 34.9026409087254
     Iteration #4
       model change: 0.0
-      objective value: 34.90264090870997
+      objective value: 34.9026409087254
     Iteration #5
       model change: 1.9999999999999998
-      objective value: 22.814718920602395
+      objective value: 22.81471892065761
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
     Number of hessian function evaluations: 4
+    15/03/23 - 10:45:44 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f30527c3dc0>
+    15/03/23 - 10:45:44 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f3075274af0>
 
 
 
@@ -1124,23 +1611,25 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 157.50708172346376
+      objective value: 157.50708172346378
     Iteration #2
-      model change: 1.9999999999999993
-      objective value: 68.94013122104023
+      model change: 2.0000000000000004
+      objective value: 68.94013122104028
     Iteration #3
-      model change: 2.0885981986782762
-      objective value: 51.74447637862965
+      model change: 2.088598198678278
+      objective value: 51.744476378629784
     Iteration #4
-      model change: 2.235768382076769
-      objective value: 32.607757645416285
+      model change: 2.23576838207677
+      objective value: 32.60775764541542
     Iteration #5
-      model change: 1.7295706120934249
-      objective value: 29.21317518511462
+      model change: 1.7295706120934284
+      objective value: 29.21317518511378
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
     Number of hessian function evaluations: 17
+    15/03/23 - 10:46:02 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f2fd7d0c700>
+    15/03/23 - 10:46:03 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f305241b190>
 
 
 
@@ -1252,21 +1741,21 @@ You may start from this template:
 
  .. code-block:: none
 
-    /home/jiawen/cofi/src/cofi/solvers/base_solver.py:267: UserWarning: the following options are defined but not in parameter list for the chosen tool: ['lr']
-      warnings.warn(
     Iteration #0, objective value: 229.71418345445022
-    Iteration #1, objective value: 156.90464922477267
-    Iteration #2, objective value: 107.12950312045993
-    Iteration #3, objective value: 76.2471931442575
-    Iteration #4, objective value: 59.93096014283091
-    Iteration #5, objective value: 53.93390880663664
-    Iteration #6, objective value: 53.88443707299375
-    Iteration #7, objective value: 53.81331650273353
-    Iteration #8, objective value: 53.722751804004204
-    Iteration #9, objective value: 53.61502389633193
+    Iteration #1, objective value: 156.9046492247727
+    Iteration #2, objective value: 107.12950312045997
+    Iteration #3, objective value: 76.24719314425755
+    Iteration #4, objective value: 59.93096014283101
+    Iteration #5, objective value: 53.93390880663678
+    Iteration #6, objective value: 53.88443707299388
+    Iteration #7, objective value: 53.81331650273367
+    Iteration #8, objective value: 53.72275180400433
+    Iteration #9, objective value: 53.61502389633207
 
     Number of objective function evaluations: 10
     Number of gradient function evaluations: 10
+    15/03/23 - 10:46:12 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f308d153520>
+    15/03/23 - 10:46:13 - matplotlib.colorbar - DEBUG - locator: <matplotlib.ticker.AutoLocator object at 0x7f308d0703a0>
 
 
 
@@ -1317,7 +1806,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
+    cofi 0.1.2.dev25+11.gab1f820.dirty
     numpy 1.21.6
     scipy 1.9.1
     pygimli 1.2.6
@@ -1334,7 +1823,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  3.825 seconds)
+   **Total running time of the script:** ( 1 minutes  2.387 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py:

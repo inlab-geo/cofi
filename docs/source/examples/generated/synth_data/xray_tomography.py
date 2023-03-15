@@ -91,8 +91,7 @@ Xray Tomography
 # 0. Import modules
 # -----------------
 # 
-# The package ``cofi-espresso`` contains the forward code for this
-# problem.
+# The package ``geo-espresso`` contains the forward code for this problem.
 # 
 
 # -------------------------------------------------------- #
@@ -102,14 +101,14 @@ Xray Tomography
 # -------------------------------------------------------- #
 
 # !pip install -U cofi
-# !pip install -U cofi-espresso
+# !pip install -U geo-espresso
 
 ######################################################################
 #
 
 import numpy as np
 from cofi import BaseProblem, InversionOptions, Inversion
-from cofi_espresso import XrayTomography
+from espresso import XrayTomography
 
 ######################################################################
 #
@@ -119,11 +118,11 @@ from cofi_espresso import XrayTomography
 # 1. Define the problem
 # ---------------------
 # 
-# Firstly, we get some information from the ``cofi-espresso`` module.
-# These include the dataset and the Jacobian matrix. In the Xray
-# Tomography example, the Jacobian matrix is related to the lengths of
-# paths within each grid. Since the paths are fixed, the Jacobian matrix
-# stays constant.
+# Firstly, we get some information from the ``geo-espresso`` module. These
+# include the dataset and the Jacobian matrix. In the Xray Tomography
+# example, the Jacobian matrix is related to the lengths of paths within
+# each grid. Since the paths are fixed, the Jacobian matrix stays
+# constant.
 # 
 
 xrt = XrayTomography()
@@ -310,7 +309,7 @@ xrt.plot_model(np.sqrt(np.diag(Cm)) * inv_result.model);
 #    <!-- Otherwise please leave the below code cell unchanged -->
 # 
 
-watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))

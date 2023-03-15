@@ -2,11 +2,15 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.3.dev0 (not yet released)
+## v0.1.3.dev0 (15/03/2023)
 
 ### CoFI Solvers -> CoFI Tools
 
 - [#110](https://github.com/inlab-geo/cofi/issues/110) `BaseSolver` -> `BaseInferenceTool`
+
+### CoFI Core
+
+- `_base_problem._FunctionWrapper` improvements
 
 ## v0.1.2.dev25 (06/02/2023)
 

@@ -39,7 +39,7 @@
 
 # Environment setup (uncomment code lines below)
 
-# !pip install -U cofi cofi-espresso
+# !pip install -U cofi geo-espresso
 
 # !pip install -q condacolab
 # import condacolab
@@ -153,7 +153,7 @@
 # To achieve this we first define a set of utility functions that will
 # facilitate interfacing to PyGIMLi. We will also show how CoFI can
 # directly interface with a mature package without the need to go via
-# `Espresso <https://cofi-espresso.readthedocs.io/en/latest/>`__.
+# `Espresso <https://geo-espresso.readthedocs.io/en/latest/>`__.
 # 
 # PyGIMLi uses different meshes and adaptive meshing capabilities via Gmsh
 # https://gmsh.info/, all CoFI needs to access are the model vector, the
