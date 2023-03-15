@@ -1921,9 +1921,12 @@ class _FunctionWrapper:
         self.args = list() if args is None else args
         self.kwargs = dict() if kwargs is None else kwargs
         self.autogen = autogen
-        functools.update_wrapper(self, func)
-        self.__name__ = func.__name__
-        self.__doc__ = func.__doc__
+        try:    # not every function has __name__
+            functools.update_wrapper(self, func)
+            self.__name__ = func.__name__
+            self.__doc__ = func.__doc__
+        except:
+            pass
 
     def __call__(self, model, *extra_args):
         try:
