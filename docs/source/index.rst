@@ -29,10 +29,10 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         linear(Matrix based solvers):::cls_parameter_estimation;
         non_linear(Optimization):::cls_parameter_estimation;
         linear_system_solvers(Linear system solvers):::cls_parameter_estimation;
-        linear_solverlist(scipy.linalg.lstsq <br> PETSc <br>...):::cls_solvers;
+        linear_solverlist(scipy.linalg.lstsq <br>...):::cls_solvers;
         optimization(Non linear):::cls_parameter_estimation;
         optimization2(Linear):::cls_parameter_estimation;
-        opt_solverlist(scipy.optimize.minimize <br> torch.optim <br> PETSc <br>...):::cls_solvers;
+        opt_solverlist(scipy.optimize.minimize <br> torch.optim <br> ROL <br>...):::cls_solvers;
         ensemble_methods(Ensemble methods):::cls_ensemble_methods;
         direct_search(Direct Search):::cls_ensemble_methods;
         amc(Monte Carlo):::cls_ensemble_methods;

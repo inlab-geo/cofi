@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.3.dev1 (15/03/2023)
+
+### CoFI Core
+
+- Use try block for functools.update_wrapper
+
 ## v0.1.3.dev0 (15/03/2023)
 
 ### CoFI Solvers -> CoFI Tools
