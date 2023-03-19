@@ -42,6 +42,7 @@ extensions = [
     "sphinxcontrib.mermaid",
     "run_sphinx_autogen",               # our own extension
     "gen_gallery_scripts",              # our own extension
+    "render_cofi_gallery",              # our own extension
     "sphinx_gallery.gen_gallery",
 ]
 
@@ -53,6 +54,7 @@ exclude_patterns = [
     ".DS_Store", 
     "README.md",
     "cofi-examples/**",
+    "cofi-gallery/**",
     "**/scripts/**README.rst",
     "**/generated/**.md5",
     "**/generated/**.py",
