@@ -214,7 +214,7 @@ plot_model(x,true_y, "true model")
 
 ######################################################################
 # The structure of CoFI 
-# ----------------------
+# ---------------------
 # 
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
@@ -222,7 +222,13 @@ plot_model(x,true_y, "true model")
 # -  ``BaseProblem`` defines the inverse problem including any user
 #    supplied quantities such as data vector, number of model parameters
 #    and measure of fit between model predictions and data.
-#    ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_jacobian(some_function_here)     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
+# 
+#    .. code:: python
+# 
+#       inv_problem = BaseProblem()
+#       inv_problem.set_objective(some_function_here)
+#       inv_problem.set_jacobian(some_function_here)
+#       inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
 # 
 #     
 # 

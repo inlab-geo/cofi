@@ -135,6 +135,7 @@ Table of contents
     installation.rst
     tutorials/generated/index.rst
     examples/generated/index.rst
+    gallery/generated/index.rst
     faq.rst
 
 .. toctree::
