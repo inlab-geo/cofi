@@ -1,3 +1,7 @@
+# Method : CoFI Simple Newton
+# cofi_simple_newton <- simple Newton step <- InLab <- non-linear <- optimization <- parameter estimation <- CoFI
+# description: This method is blalabala!
+
 import numpy as np
 
 from . import BaseInferenceTool
