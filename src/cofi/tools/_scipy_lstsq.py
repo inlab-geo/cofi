@@ -1,3 +1,6 @@
+# Method : scipy_lstsq
+# CoFI -> unkown -> scipy_lstsq
+# description: balabala scip
 import functools
 import numpy as np
 

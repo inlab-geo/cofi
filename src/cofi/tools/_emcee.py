@@ -1,3 +1,6 @@
+# Method : emcee
+# CoFI -> unkown -> inversion_options
+# description: balabala emcee
 import functools
 import numpy as np
 
