@@ -129,7 +129,7 @@ class ScipyLstSq(BaseInferenceTool):
                         "squares solver, this should return a matrix unrelated to "
                         "model vector"
                     ) from exception
-                self._LtL = np.square(_L)
+                self._LtL = _L.T @ _L
                 self._components_used.append("regularization_matrix")
             else:
                 self._LtL = np.identity(self._G.shape[1])
