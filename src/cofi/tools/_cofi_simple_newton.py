@@ -1,5 +1,5 @@
 # Method : CoFI Simple Newton
-# CoFI -> parameter estimation -> optimization -> non-linear -> InLab -> simple Newtown step -> cofi_simple_newton
+# CoFI -> Parameter estimation -> optimization -> non-linear -> InLab -> simple Newtown step
 # description: This method is blalabala!
 
 import numpy as np

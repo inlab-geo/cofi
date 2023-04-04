@@ -1,5 +1,5 @@
 # Method : emcee
-# CoFI -> unkown -> inversion_options
+# CoFI -> Ensemble methods -> Bayesian Sampling -> MCMC sampler -> emcee -> Affine Invariant Markov chain Monte Carlo -> Stretch Move
 # description: balabala emcee
 import functools
 import numpy as np

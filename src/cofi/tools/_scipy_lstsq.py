@@ -1,5 +1,5 @@
 # Method : scipy_lstsq
-# CoFI -> unkown -> scipy_lstsq
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq
 # description: balabala scip
 import functools
 import numpy as np

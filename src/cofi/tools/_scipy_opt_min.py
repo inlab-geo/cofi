@@ -1,5 +1,11 @@
 # Method : scipy_opt_min
-# CoFI -> unkown -> scipy_opt_min
+# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.minimize -> way
+# description: balabala scip
+# Method : scipy_opt_min
+# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.minimize -> second way
+# description: balabala scip
+# Method : scipy_opt_min
+# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.minimize -> another way
 # description: balabala scip
 import functools
 
@@ -9,7 +15,7 @@ from . import BaseInferenceTool, error_handler
 # Official documentation for scipy.optimize.minimize
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
 
-# 'jac' is only for:
+# 'jac' is required for:
 # CG, BFGS, Newton-CG, L-BFGS-B, TNC, SLSQP, dogleg, trust-ncg, trust-krylov, trust-exact
 # and trust-constr
 

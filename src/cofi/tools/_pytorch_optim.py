@@ -1,6 +1,12 @@
 # Method : Pytorch Optimization
-# CoFI -> unkown -> pytorch_optim
-# description: balabala opt
+# CoFI -> Parameter estimation -> optimization -> non-linear -> pytorch.optim -> way1
+# description: balabala opt1
+# Method : Pytorch Optimization
+# CoFI -> Parameter estimation -> optimization -> non-linear -> pytorch.optim -> way2
+# description: balabala opt2
+# Method : Pytorch Optimization
+# CoFI -> Parameter estimation -> optimization -> non-linear -> pytorch.optim -> way3
+# description: balabala opt3
 import functools
 
 from . import BaseInferenceTool, error_handler

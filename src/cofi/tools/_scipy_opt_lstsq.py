@@ -1,5 +1,11 @@
 # Method : scipy_opt_lstsq
-# CoFI -> unkown -> scipy_opt_lstsq
+# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.least_squares -> way
+# description: balabala scip
+# Method : scipy_opt_lstsq
+# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.least_squares -> way
+# description: balabala scip
+# Method : scipy_opt_lstsq
+# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.least_squares -> way
 # description: balabala scip
 import functools
 
