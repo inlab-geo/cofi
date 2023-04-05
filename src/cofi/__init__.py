@@ -26,4 +26,3 @@ _logging.getLogger(__name__).addHandler(_logging.NullHandler())
 
 # alias for deprecated API
 _sys.modules["cofi.solvers"] = tools
-

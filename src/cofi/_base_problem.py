@@ -243,7 +243,13 @@ class BaseProblem:
     ]
 
     def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+        for kw, val in kwargs.items():
+            if kw in self.all_components:
+                set_func = getattr(self, f"set_{kw}")
+                if isinstance(val, dict):
+                    set_func(**val)
+                else:
+                    set_func(val)
 
     def objective(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the objective function given a model
@@ -1616,8 +1622,10 @@ class BaseProblem:
             func(*[np.array([])] * args_num)
         except NotDefinedError:
             return False
-        except Exception:  # ok if there're errors caused by dummy input
+        except Exception:   # ok if there're errors caused by dummy input
             return True
+        else:
+            return True     # ok if the function works without a wrapper
 
     def _check_property_defined(self, prop):
         try:
