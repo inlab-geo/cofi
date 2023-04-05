@@ -1622,10 +1622,10 @@ class BaseProblem:
             func(*[np.array([])] * args_num)
         except NotDefinedError:
             return False
-        except Exception:   # ok if there're errors caused by dummy input
+        except Exception:  # ok if there're errors caused by dummy input
             return True
         else:
-            return True     # ok if the function works without a wrapper
+            return True  # ok if the function works without a wrapper
 
     def _check_property_defined(self, prop):
         try:
