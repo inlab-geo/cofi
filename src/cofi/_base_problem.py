@@ -1835,8 +1835,10 @@ def _objective_from_dm(model, data_misfit):
 
 def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
     try:
-        ll = log_likelihood(model)
         lp = log_prior(model)
+        if lp == float("-inf"):
+            return lp, None, lp
+        ll = log_likelihood(model)
         return ll + lp, ll, lp
     except Exception as exception:
         raise InvocationError(

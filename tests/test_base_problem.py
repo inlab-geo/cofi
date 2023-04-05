@@ -367,6 +367,13 @@ def test_prior_likelihood():
     assert inv_problem.log_likelihood_defined
     assert inv_problem.log_posterior_defined
 
+def test_prior_likelihood_skip_ll():
+    inv_problem = BaseProblem()
+    inv_problem.set_log_prior(_dummy_dist)
+    def _failing_dist(_): assert "this line shouldn't be reached"
+    inv_problem.set_log_likelihood(_failing_dist)
+    inv_problem.log_posterior(np.array([-1]))
+
 def test_posterior():
     inv_problem = BaseProblem()
     inv_problem.set_log_posterior(_dummy_dist)
