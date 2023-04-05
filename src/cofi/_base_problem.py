@@ -243,7 +243,13 @@ class BaseProblem:
     ]
 
     def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+        for kw, val in kwargs.items():
+            if kw in self.all_components:
+                set_func = getattr(self, f"set_{kw}")
+                if isinstance(val, dict):
+                    set_func(**val)
+                else:
+                    set_func(val)
 
     def objective(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the objective function given a model
@@ -1618,6 +1624,8 @@ class BaseProblem:
             return False
         except Exception:  # ok if there're errors caused by dummy input
             return True
+        else:
+            return True  # ok if the function works without a wrapper
 
     def _check_property_defined(self, prop):
         try:
@@ -1835,8 +1843,10 @@ def _objective_from_dm(model, data_misfit):
 
 def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
     try:
-        ll = log_likelihood(model)
         lp = log_prior(model)
+        if lp == float("-inf"):
+            return lp, None, lp
+        ll = log_likelihood(model)
         return ll + lp, ll, lp
     except Exception as exception:
         raise InvocationError(

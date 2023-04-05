@@ -367,6 +367,13 @@ def test_prior_likelihood():
     assert inv_problem.log_likelihood_defined
     assert inv_problem.log_posterior_defined
 
+def test_prior_likelihood_skip_ll():
+    inv_problem = BaseProblem()
+    inv_problem.set_log_prior(_dummy_dist)
+    def _failing_dist(_): assert "this line shouldn't be reached"
+    inv_problem.set_log_likelihood(_failing_dist)
+    inv_problem.log_posterior(np.array([-1]))
+
 def test_posterior():
     inv_problem = BaseProblem()
     inv_problem.set_log_posterior(_dummy_dist)
@@ -509,7 +516,7 @@ def test_model_cov():
     sigma = 1.0
     Cdinv = np.eye(100)/(sigma**2)
     inv_problem.set_data_covariance_inv(Cdinv)
-    with pytest.raises(NotDefinedError, match=r".*`jacobian` is required.*"):
+    with pytest.raises(NotDefinedError, match=r".*`jacobian` is called.*"):
         inv_problem.model_covariance_inv(None)
     inv_problem.set_jacobian(np.array([[n**i for i in range(2)] for n in range(100)]))
     inv_problem.model_covariance(None)
@@ -579,3 +586,19 @@ def test_res_from_fwd_dt():
     inv_problem.set_data(np.array([1,4,9]))
     with pytest.raises(InvocationError):
         inv_problem.residual(np.array([1,2]))
+
+
+############### TEST set from BaseProblem.__init__ ####################################
+def test_init_set_fwd():
+    _fwd = lambda x: x**2
+    _fwd_w_args = lambda x, a: x**a
+    p1 = BaseProblem(forward=_fwd)
+    assert p1.forward_defined
+    assert p1.forward(2) == 4
+    p2 = BaseProblem(forwardd=_fwd)
+    assert not p2.forward_defined
+    p3 = BaseProblem(forward={"forward":_fwd_w_args, "args":[2]}, model_shape=(1,2))
+    assert p3.forward_defined
+    assert p3.forward(2) == 4
+    assert p3.model_shape_defined
+    assert p3.model_shape[1] == 2

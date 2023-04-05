@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v0.1.3.dev2 (05/04/2023)
+
+### CoFI Core
+
+- Bug fix: avoid evaluating log_likelihood if prior is -np.inf
+- Enable properties set at `BaseProblem` constructor, e.g. `cofi.BaseProblem(forward=my_fwd, model_shape=my_shape)`
+
+### CoFI Tools
+
+- Bug fix in `numpy.linalg.lstsq`
+
 ## v0.1.3.dev1 (15/03/2023)
 
 ### CoFI Core

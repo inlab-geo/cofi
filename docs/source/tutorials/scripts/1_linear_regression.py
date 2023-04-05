@@ -214,7 +214,7 @@ plot_model(x,true_y, "true model")
 
 ######################################################################
 # The structure of CoFI 
-# ---------------------
+# ----------------------
 # 
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.

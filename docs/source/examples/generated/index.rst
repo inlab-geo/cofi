@@ -140,6 +140,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-linear Curve Fitting">
+
+.. only:: html
+
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_nonlinear_curve_fitting_thumb.png
+    :alt: Non-linear Curve Fitting
+
+  :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Non-linear Curve Fitting</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Synthetic example)">
 
 .. only:: html
