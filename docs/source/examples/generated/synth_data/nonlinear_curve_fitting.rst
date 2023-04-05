@@ -21,11 +21,7 @@
 Non-linear Curve Fitting
 ========================
 
-.. raw:: html
-
-   <!-- Please leave the cell below as it is -->
-
-.. GENERATED FROM PYTHON SOURCE LINES 13-18
+.. GENERATED FROM PYTHON SOURCE LINES 9-14
 
 |Open In Colab|
 
@@ -33,7 +29,7 @@ Non-linear Curve Fitting
    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/nonlinear_curve_fitting/nonlinear_curve_fitting.ipynb
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-40
+.. GENERATED FROM PYTHON SOURCE LINES 17-36
 
 .. raw:: html
 
@@ -55,7 +51,7 @@ Non-linear Curve Fitting
    file specifies a list of packages required to run the notebooks)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-52
+.. GENERATED FROM PYTHON SOURCE LINES 39-48
 
 .. raw:: html
 
@@ -67,13 +63,13 @@ problem:
 .. math:: f(x)=\exp(a*x)+b
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-58
+.. GENERATED FROM PYTHON SOURCE LINES 51-54
 
 Import modules
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-67
+.. GENERATED FROM PYTHON SOURCE LINES 54-63
 
 .. code-block:: default
 
@@ -93,7 +89,7 @@ Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-78
+.. GENERATED FROM PYTHON SOURCE LINES 65-74
 
 .. code-block:: default
 
@@ -113,13 +109,13 @@ Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-86
+.. GENERATED FROM PYTHON SOURCE LINES 79-82
 
 Define the problem
 ------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-100
+.. GENERATED FROM PYTHON SOURCE LINES 82-96
 
 .. code-block:: default
 
@@ -144,7 +140,7 @@ Define the problem
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-111
+.. GENERATED FROM PYTHON SOURCE LINES 98-107
 
 .. code-block:: default
 
@@ -164,7 +160,7 @@ Define the problem
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-128
+.. GENERATED FROM PYTHON SOURCE LINES 109-124
 
 .. code-block:: default
 
@@ -201,7 +197,7 @@ Define the problem
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-140
+.. GENERATED FROM PYTHON SOURCE LINES 126-136
 
 .. code-block:: default
 
@@ -222,13 +218,13 @@ Define the problem
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-148
+.. GENERATED FROM PYTHON SOURCE LINES 141-144
 
 Example 1. least squares optimizer (levenber marquardt)
 -------------------------------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-153
+.. GENERATED FROM PYTHON SOURCE LINES 144-149
 
 .. code-block:: default
 
@@ -244,7 +240,7 @@ Example 1. least squares optimizer (levenber marquardt)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-164
+.. GENERATED FROM PYTHON SOURCE LINES 151-160
 
 .. code-block:: default
 
@@ -348,13 +344,13 @@ Example 1. least squares optimizer (levenber marquardt)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-172
+.. GENERATED FROM PYTHON SOURCE LINES 165-168
 
 Example 2. emcee
 ----------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-181
+.. GENERATED FROM PYTHON SOURCE LINES 168-177
 
 .. code-block:: default
 
@@ -374,7 +370,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 183-192
+.. GENERATED FROM PYTHON SOURCE LINES 179-188
 
 .. code-block:: default
 
@@ -394,7 +390,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 194-200
+.. GENERATED FROM PYTHON SOURCE LINES 190-196
 
 .. code-block:: default
 
@@ -411,7 +407,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-207
+.. GENERATED FROM PYTHON SOURCE LINES 198-203
 
 .. code-block:: default
 
@@ -427,7 +423,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-222
+.. GENERATED FROM PYTHON SOURCE LINES 205-218
 
 .. code-block:: default
 
@@ -464,7 +460,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 224-228
+.. GENERATED FROM PYTHON SOURCE LINES 220-224
 
 .. code-block:: default
 
@@ -479,7 +475,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-234
+.. GENERATED FROM PYTHON SOURCE LINES 226-230
 
 .. code-block:: default
 
@@ -508,7 +504,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-245
+.. GENERATED FROM PYTHON SOURCE LINES 232-241
 
 .. code-block:: default
 
@@ -541,7 +537,7 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 247-266
+.. GENERATED FROM PYTHON SOURCE LINES 243-262
 
 .. code-block:: default
 
@@ -578,11 +574,11 @@ Example 2. emcee
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f30c7444f70>
+    <matplotlib.legend.Legend object at 0x7f35c45ad3c0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 271-284
+.. GENERATED FROM PYTHON SOURCE LINES 267-280
 
 --------------
 
@@ -598,7 +594,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 284-290
+.. GENERATED FROM PYTHON SOURCE LINES 280-286
 
 .. code-block:: default
 
@@ -626,14 +622,14 @@ Watermark
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 291-291
+.. GENERATED FROM PYTHON SOURCE LINES 287-287
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  2.607 seconds)
+   **Total running time of the script:** ( 0 minutes  2.128 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_nonlinear_curve_fitting.py:

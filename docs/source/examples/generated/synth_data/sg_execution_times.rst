@@ -5,10 +5,10 @@
 
 Computation times
 =================
-**00:02.607** total execution time for **examples_generated_synth_data** files:
+**00:02.128** total execution time for **examples_generated_synth_data** files:
 
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py` (``nonlinear_curve_fitting.py``) | 00:02.607 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py` (``nonlinear_curve_fitting.py``) | 00:02.128 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``fmm_tomography.py``)                   | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+

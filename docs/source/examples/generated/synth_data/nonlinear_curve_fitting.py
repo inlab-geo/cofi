@@ -2,10 +2,6 @@
 Non-linear Curve Fitting
 ========================
 
-.. raw:: html
-
-   <!-- Please leave the cell below as it is -->
-
 """
 
 

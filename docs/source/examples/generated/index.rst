@@ -140,7 +140,7 @@ Synthetic Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="   &lt;!-- Please leave the cell below as it is --&gt;">
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-linear Curve Fitting">
 
 .. only:: html
 
