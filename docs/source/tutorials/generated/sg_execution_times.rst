@@ -5,10 +5,10 @@
 
 Computation times
 =================
-**00:16.345** total execution time for **tutorials_generated** files:
+**00:28.492** total execution time for **tutorials_generated** files:
 
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_tutorials_generated_1_linear_regression.py` (``1_linear_regression.py``)                                 | 00:16.345 | 0.0 MB |
+| :ref:`sphx_glr_tutorials_generated_1_linear_regression.py` (``1_linear_regression.py``)                                 | 00:28.492 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_tutorials_generated_2_travel_time_tomography.py` (``2_travel_time_tomography.py``)                       | 00:00.000 | 0.0 MB |
 +-------------------------------------------------------------------------------------------------------------------------+-----------+--------+
