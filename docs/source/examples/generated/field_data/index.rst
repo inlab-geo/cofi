@@ -19,7 +19,7 @@ Field Data Examples
 .. only:: html
 
   .. image:: /examples/generated/field_data/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
-    :alt: Linear regression with Eustatic Sea-level data
+    :alt:
 
   :ref:`sphx_glr_examples_generated_field_data_linear_regression_sealevel.py`
 
@@ -36,7 +36,7 @@ Field Data Examples
 .. only:: html
 
   .. image:: /examples/generated/field_data/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
-    :alt: Century DCIP Inversion with a Triangular Mesh
+    :alt:
 
   :ref:`sphx_glr_examples_generated_field_data_pygimli_dcip_century_tri_mesh.py`
 

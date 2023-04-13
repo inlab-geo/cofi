@@ -39,7 +39,7 @@ Below is an ordered list of tutorials.
 .. only:: html
 
   .. image:: /tutorials/generated/images/thumb/sphx_glr_1_linear_regression_thumb.png
-    :alt: 1 - Linear regression
+    :alt:
 
   :ref:`sphx_glr_tutorials_generated_1_linear_regression.py`
 
@@ -56,7 +56,7 @@ Below is an ordered list of tutorials.
 .. only:: html
 
   .. image:: /tutorials/generated/images/thumb/sphx_glr_2_travel_time_tomography_thumb.png
-    :alt: 2 - linear & non-linear travel time tomography
+    :alt:
 
   :ref:`sphx_glr_tutorials_generated_2_travel_time_tomography.py`
 
@@ -73,7 +73,7 @@ Below is an ordered list of tutorials.
 .. only:: html
 
   .. image:: /tutorials/generated/images/thumb/sphx_glr_3_electrical_resistivity_tomography_thumb.png
-    :alt: 3 - Electrical resistivity tomography
+    :alt:
 
   :ref:`sphx_glr_tutorials_generated_3_electrical_resistivity_tomography.py`
 

@@ -63,7 +63,7 @@ Field Data Examples
 .. only:: html
 
   .. image:: /examples/generated/field_data/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
-    :alt: Linear regression with Eustatic Sea-level data
+    :alt:
 
   :ref:`sphx_glr_examples_generated_field_data_linear_regression_sealevel.py`
 
@@ -80,7 +80,7 @@ Field Data Examples
 .. only:: html
 
   .. image:: /examples/generated/field_data/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
-    :alt: Century DCIP Inversion with a Triangular Mesh
+    :alt:
 
   :ref:`sphx_glr_examples_generated_field_data_pygimli_dcip_century_tri_mesh.py`
 
@@ -111,7 +111,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_fmm_tomography_thumb.png
-    :alt: Seismic Wave Tomography via Fast Marching
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py`
 
@@ -128,7 +128,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_linear_regression_thumb.png
-    :alt: Polynomial Linear Regression
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py`
 
@@ -145,7 +145,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_nonlinear_curve_fitting_thumb.png
-    :alt: Non-linear Curve Fitting
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py`
 
@@ -162,7 +162,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_dcip_thumb.png
-    :alt: DCIP with PyGIMLi (Synthetic example)
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_pygimli_dcip.py`
 
@@ -179,7 +179,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_ert_thumb.png
-    :alt: Electrical Resistivity Tomography with PyGIMLi
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_pygimli_ert.py`
 
@@ -196,7 +196,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_xray_tomography_thumb.png
-    :alt: Xray Tomography
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py`
 
@@ -214,6 +214,7 @@ Synthetic Examples
 .. toctree::
    :hidden:
    :includehidden:
+
 
    /examples/generated/field_data/index.rst
    /examples/generated/synth_data/index.rst

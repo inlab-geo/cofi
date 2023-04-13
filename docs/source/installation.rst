@@ -17,118 +17,124 @@ CoFI requires Python 3.7+, and the following dependencies:
 Install
 -------
 
-.. tabbed:: PyPI
+.. tab-set::
 
-  .. code-block:: console
-    
-    $ pip install cofi
+  .. tab-item:: PyPI
 
-.. tabbed:: conda-forge
+    .. code-block:: console
 
-  .. code-block:: console
+      $ pip install cofi
 
-    $ conda install -c conda-forge cofi
+  .. tab-item:: conda-forge
 
-.. tabbed:: from source
+    .. code-block:: console
 
-  If you'd like to build from source, clone the repository
+      $ conda install -c conda-forge cofi
 
-  .. code-block:: console
+  .. tab-item:: from source
 
-    $ git clone https://github.com/inlab-geo/cofi.git
-    $ cd cofi
+    If you'd like to build from source, clone the repository
 
-  And use either one of the following command to install
+    .. code-block:: console
 
-  .. code-block:: console
+      $ git clone https://github.com/inlab-geo/cofi.git
+      $ cd cofi
 
-    $ pip install .         # library will be copied over to site-packages
-    $ pip install -e .      # developer mode, library will be symbol linked to site-packages
+    And use either one of the following command to install
 
-.. admonition:: Virtual environment setup (optional)
-  :class: info, dropdown
+    .. code-block:: console
+
+      $ pip install .
+      $ pip install -e .      # (alternatively) developer mode
+
+
+
+.. admonition:: Virtual environment setup (*strongly recommended*)
+  :class: attention, dropdown
 
   It's optional, but recommended to use a virtual environment.
 
-  .. tabbed:: venv
+  .. tab-set::
 
-    Ensure you have `python>=3.7`.
+    .. tab-item:: venv
 
-    To create:
+      Ensure you have `python>=3.7`.
 
-    .. code-block:: console
+      To create:
 
-      python -m venv <path-to-new-env>/cofi_env
+      .. code-block:: console
 
-    To activate:
-    
-    .. code-block:: console
+        python -m venv <path-to-new-env>/cofi_env
 
-      source <path-to-new-env>/cofi_env/bin/activate
+      To activate:
+      
+      .. code-block:: console
 
-    To exit:
-    
-    .. code-block:: console
+        source <path-to-new-env>/cofi_env/bin/activate
 
-      deactivate
+      To exit:
+      
+      .. code-block:: console
 
-    To remove:
+        deactivate
 
-    .. code-block:: console
+      To remove:
 
-      rm -rf <path-to-new-env>/cofi_env
+      .. code-block:: console
 
-  .. tabbed:: virtualenv
+        rm -rf <path-to-new-env>/cofi_env
 
-    To create:
+    .. tab-item:: virtualenv
 
-    .. code-block:: console
+      To create:
 
-      virtualenv <path-to-new-env>/cofi_env -p=3.10
+      .. code-block:: console
 
-    To activate:
+        virtualenv <path-to-new-env>/cofi_env -p=3.10
 
-    .. code-block:: console
+      To activate:
 
-      source <path-to-new-env>/cofi_env/bin/activate
+      .. code-block:: console
 
-    To exit:
+        source <path-to-new-env>/cofi_env/bin/activate
 
-    .. code-block:: console
+      To exit:
 
-      deactivate
+      .. code-block:: console
 
-    To remove:
+        deactivate
 
-    .. code-block:: console
+      To remove:
 
-      rm -rf <path-to-new-env>/cofi_env
+      .. code-block:: console
 
-  .. tabbed:: conda / mamba
+        rm -rf <path-to-new-env>/cofi_env
 
-    To create:
+    .. tab-item::  conda / mamba
 
-    .. code-block:: console
+      To create:
 
-      conda create -n cofi_env python=3.10
+      .. code-block:: console
 
-    To activate:
+        conda create -n cofi_env python=3.10
 
-    .. code-block:: console
+      To activate:
 
-      conda activate cofi_env
+      .. code-block:: console
 
-    To exit:
+        conda activate cofi_env
 
-    .. code-block:: console
+      To exit:
 
-      conda deactivate
+      .. code-block:: console
 
-    To remove:
-    
-    .. code-block:: console
+        conda deactivate
 
-      conda env remove -n cofi_env
+      To remove:
+      
+      .. code-block:: console
+
+        conda env remove -n cofi_env
 
 
 .. hint::

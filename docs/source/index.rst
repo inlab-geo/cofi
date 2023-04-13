@@ -73,55 +73,46 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     classDef cls_solvers fill: #faedcd, stroke-width:0;
 
 
-.. panels::
-    :header: text-center text-large
-    :card: border-1 m-1 text-center
 
-    **Installation**
-    ^^^^^^^^^^^^^^^^^^^
+.. grid:: 1 2 2 2
+    :margin: 3
+    :gutter: 4
 
-    🐣 New to CoFI?
+    .. grid-item-card::
+        :link: installation.html
+        :text-align: center
+        :class-card: green-border
 
-    .. link-button:: installation
-        :type: ref
-        :text: Start here
-        :classes: btn-outline-primary btn-block stretched-link
+        *New to CoFI?*
+        ^^^^^^^^^^^^^^
+        🐣 Start here
 
-    ---
+    .. grid-item-card::
+        :link: api/index.html
+        :text-align: center
+        :class-card: green-border
 
-    **Reference documentation**
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        *Want details?*
+        ^^^^^^^^^^^^^^^
+        📑 API reference
+    
+    .. grid-item-card::
+        :link: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
+        :text-align: center
+        :class-card: green-border
 
-    📑 A list of our functions and classes
+        *Have questions?*
+        ^^^^^^^^^^^^^^^^^
+        💬 Join our Slack workspace
+    
+    .. grid-item-card::
+        :link: contribute.html
+        :text-align: center
+        :class-card: green-border
 
-    .. link-button:: api
-        :type: ref
-        :text: API reference
-        :classes: btn-outline-primary btn-block stretched-link
-
-    ---
-
-    **Need support?**
-    ^^^^^^^^^^^^^^
-
-    ❓ Ask in our Slack workspace
-
-    .. link-button:: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
-        :type: url
-        :text: Join the conversation
-        :classes: btn-outline-primary btn-block stretched-link
-
-    ---
-
-    **Contribute to CoFI**
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    🛠 Any forms of contribution are welcomed
-
-    .. link-button:: contribute
-        :type: ref
-        :text: Developer notes
-        :classes: btn-outline-primary btn-block stretched-link
+        *Contributions welcomed!*
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        🛠 Developer guide
 
 
 Table of contents
