@@ -2,29 +2,41 @@
 Frequently Asked Questions
 ==========================
 
-.. 🚧 This page can be further constructed by you.
+Contents
+********
 
-Our `Slack`_ workspace is open to the community! 
-Feel free to get in for more conversation.
+.. contents::
+    :local:
+    :class: toggle:
 
-.. rubric:: I have written an inverse code that uses CoFI but how do I share my example?
 
-- We are working on a solution by adressing `this issue <https://github.com/inlab-geo/cofi/issues/113>`_.
+I have written an inverse code that uses CoFI but how do I share my example?
+----------------------------------------------------------------------------
 
-.. rubric:: I would like to see a specific inference method become a part of CoFI, what do I do?
+- Excellent! We use `cofi-gallery <https://github.com/inlab-geo/cofi-gallery>`_ 
+  to host user-contributed CoFI showcases.
+- Simply create an issue with a link to your example, a thumbnail image and a title.
+  We refer you to 
+  `this contributor guide <https://github.com/inlab-geo/cofi-gallery/blob/main/CONTRIBUTE.md>`_ 
+  for detailed instructions.
+
+I would like to see a specific inference method become a part of CoFI, what do I do?
+------------------------------------------------------------------------------------
 
 - If you identify a method or inference tool that suits CoFI's purpose well, you are welcome to 
   `raise an issue here <https://github.com/inlab-geo/cofi/issues>`_ or contact us directly 
   `Slack`_. 
 
-.. rubric:: I would like to integrate my inference method into CoFI, what do I do?
+I would like to integrate my inference method into CoFI, what do I do?
+----------------------------------------------------------------------
 
 - Please head to `CoFI's contributor guide <https://cofi.readthedocs.io/en/latest/contribute.html>`_ 
   and follow the steps under the 
   `adding a new inference tool <https://cofi.readthedocs.io/en/latest/contribute.html#new-inversion-tool>`_ 
   section.
 
-.. rubric:: Can I use CoFI to run my inversion in parallel if the selected tool allows that?
+Can I use CoFI to run my inversion in parallel if the selected tool allows that?
+--------------------------------------------------------------------------------
 
 - Yes. You can run your inversion in parallel using exactly the same ways as are 
   described in the tool's own documentation.
