@@ -13,7 +13,6 @@
 import os
 import datetime
 import sys
-import subprocess
 from sphinx_gallery.sorting import FileNameSortKey
 
 import cofi
@@ -34,7 +33,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.doctest",
     "sphinx.ext.mathjax",
-    "sphinx_panels",
+    "sphinx_design",
     "sphinx_togglebutton",
     "sphinx_copybutton",
     "sphinx.ext.napoleon",
@@ -73,13 +72,6 @@ intersphinx_mapping = {
     "numpy": ("https://numpy.org/doc/stable/", None),
     "arviz": ("https://python.arviz.org/en/latest/", None),
     "findiff": ("https://findiff.readthedocs.io/en/latest/", None),
-}
-
-# Disable including boostrap CSS for sphinx_panels since it's already included
-# with sphinx-book-theme
-panels_add_bootstrap_css = False
-panels_css_variables = {
-    "tabs-color-label-inactive": "hsla(231, 99%, 66%, 0.5)",
 }
 
 # settings for the sphinx-copybutton extension

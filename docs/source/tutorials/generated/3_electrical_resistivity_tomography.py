@@ -588,7 +588,7 @@ plot_result(inv_result, "Newton Step")
 # Further reading
 # ^^^^^^^^^^^^^^^
 # 
-# https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
+# https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
 # 
 
 import scipy

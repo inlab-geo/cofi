@@ -1,9 +1,32 @@
 /* https://github.com/pydata/pydata-sphinx-theme/blob/master/src/pydata_sphinx_theme/theme/pydata_sphinx_theme/layout.html */
 /* https://github.com/executablebooks/sphinx-book-theme/blob/master/src/sphinx_book_theme/theme/sphinx_book_theme/layout.html */
 
-/* ALL: text font size */
+/* ALL: color, text font size */
+html[data-theme="light"] {
+    --pst-color-primary: #649a69;
+}
 p {
     font-size: 1rem;
+}
+/* Mainly designed to get FAQ looking good */
+h1 {
+    font-size: 200%;
+}
+
+h2 {
+    font-size: 150%;
+}
+
+h3 {
+    font-size:100%;
+    font-weight: 450;
+}
+
+div.contents {
+    padding: 1em 1em 1em;
+}
+div.contents>ul>li>p>a {
+    font-size: 100%;
 }
 
 /* TOP LEFT: logo + project title */
@@ -17,23 +40,12 @@ span.project-version {
     margin-left: 3px;
 }
 
-/* TOP RIGHT: three little logos */
-/* .topbar .topbar-main button.topbarbtn {
-    font-size: 1.2em;
-}
-[aria-label] {
-    position: relative;
-}
-div.dropdown-buttons-trigger div.dropdown-buttons button.topbarbtn {
-    font-size: .85em !important;
-} */
-
 /* LEFT: side bar font size */
 .bd-sidenav a.reference.internal {
     font-size: 0.8rem;
 }
 
-/* HOME: inference tree */
+/* Mermaid */
 div.mermaid:not([data-processed]) {
     display: none;
 }
@@ -46,23 +58,8 @@ div.mermaid:hover {
 
 
 /* HOME: panel button */
-.btn-outline-primary:hover {
-    color: rgb(51, 125, 222);
-    background-color: #d6eadf;
-    border-color: #d6eadf
-}
-.btn-outline-primary {
-    /* color: rgb(51, 125, 222); */
-    /* color: #99582a; */
-    border-color: #d6eadf;
-}
-.card-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.card:hover {
-    border: 1px solid #649a69;
+.green-border:hover {
+    border: 1.5px solid #649a69 !important;
 }
 
 /* API: class/method name */
@@ -90,5 +87,7 @@ div.sphx-glr-download {
 div.sphx-glr-download-link-note {
     height: 0px;
     visibility: hidden;
-  }
-  
+}
+.sphx-glr-thumbcontainer:hover {
+    border: 1.5px solid #649a69 !important;
+}

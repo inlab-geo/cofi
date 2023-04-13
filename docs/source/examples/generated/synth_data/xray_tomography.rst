@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_generated_synth_data_xray_tomography.py>`
+        :ref:`Go to the end <sphx_glr_download_examples_generated_synth_data_xray_tomography.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
@@ -139,7 +139,7 @@ The package ``geo-espresso`` contains the forward code for this problem.
 
     import numpy as np
     from cofi import BaseProblem, InversionOptions, Inversion
-    from espresso import XrayTomography
+    from espresso import XrayTracer
 
 
 
@@ -165,7 +165,7 @@ constant.
 .. code-block:: default
 
 
-    xrt = XrayTomography()
+    xrt = XrayTracer()
 
 
 
@@ -191,7 +191,7 @@ constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|7         | 822/10416 [00:00<00:01, 8218.26it/s]    Evaluating paths:  16%|#6        | 1681/10416 [00:00<00:01, 8435.42it/s]    Evaluating paths:  24%|##4       | 2525/10416 [00:00<00:00, 8334.07it/s]    Evaluating paths:  32%|###2      | 3359/10416 [00:00<00:00, 8299.39it/s]    Evaluating paths:  40%|####      | 4197/10416 [00:00<00:00, 8326.02it/s]    Evaluating paths:  48%|####8     | 5032/10416 [00:00<00:00, 8332.88it/s]    Evaluating paths:  56%|#####6    | 5871/10416 [00:00<00:00, 8350.55it/s]    Evaluating paths:  64%|######4   | 6707/10416 [00:00<00:00, 8310.33it/s]    Evaluating paths:  72%|#######2  | 7539/10416 [00:00<00:00, 8147.65it/s]    Evaluating paths:  80%|########  | 8369/10416 [00:01<00:00, 8192.30it/s]    Evaluating paths:  89%|########8 | 9225/10416 [00:01<00:00, 8303.33it/s]    Evaluating paths:  97%|#########6| 10080/10416 [00:01<00:00, 8375.52it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8324.76it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   6%|6         | 635/10416 [00:00<00:01, 6349.64it/s]    Evaluating paths:  13%|#3        | 1398/10416 [00:00<00:01, 7100.58it/s]    Evaluating paths:  21%|##        | 2147/10416 [00:00<00:01, 7273.29it/s]    Evaluating paths:  28%|##7       | 2877/10416 [00:00<00:01, 7282.64it/s]    Evaluating paths:  35%|###4      | 3620/10416 [00:00<00:00, 7333.68it/s]    Evaluating paths:  42%|####1     | 4370/10416 [00:00<00:00, 7389.50it/s]    Evaluating paths:  49%|####9     | 5113/10416 [00:00<00:00, 7401.00it/s]    Evaluating paths:  56%|#####6    | 5854/10416 [00:00<00:00, 7358.08it/s]    Evaluating paths:  63%|######3   | 6612/10416 [00:00<00:00, 7425.56it/s]    Evaluating paths:  71%|#######   | 7376/10416 [00:01<00:00, 7490.65it/s]    Evaluating paths:  78%|#######8  | 8126/10416 [00:01<00:00, 7359.41it/s]    Evaluating paths:  85%|########5 | 8878/10416 [00:01<00:00, 7404.21it/s]    Evaluating paths:  92%|#########2| 9632/10416 [00:01<00:00, 7442.48it/s]    Evaluating paths: 100%|#########9| 10399/10416 [00:01<00:00, 7509.85it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7383.63it/s]
 
 
 
@@ -585,11 +585,11 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev25+11.gab1f820.dirty
-    espresso 0.2.1.dev0
-    numpy 1.21.6
-    scipy 1.9.1
-    matplotlib 3.5.3
+    cofi 0.1.3.dev2+2.g8ef207d.dirty
+    espresso 0.2.2.dev0
+    numpy 1.20.3
+    scipy 1.10.1
+    matplotlib 3.5.1
 
 
 
@@ -601,7 +601,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  3.755 seconds)
+   **Total running time of the script:** ( 0 minutes  12.342 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_xray_tomography.py:
@@ -609,6 +609,8 @@ sphinx_gallery_thumbnail_number = -1
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
+
+
 
 
     .. container:: sphx-glr-download sphx-glr-download-python

@@ -24,11 +24,6 @@ Example Gallery
    Check `here <https://github.com/inlab-geo/cofi-examples/blob/main/README.md>`_
    for full instructions.
 
-
-------------
-
-.. epigraph::
-
-   “A good example is the best sermon.”
+.. topic::  “A good example is the best sermon.”
 
    -- Benjamin Franklin

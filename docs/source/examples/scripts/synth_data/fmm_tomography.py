@@ -145,7 +145,7 @@ import espresso
 # (red, top left) and the other with higher velocity (blue, bottom right).
 # 
 
-fmm = espresso.FmmTomography()
+fmm = espresso.FmWavefrontTracker()
 
 fmm.plot_model(fmm.good_model, with_paths=True);
 
@@ -163,7 +163,7 @@ pprint.pprint(fmm.metadata)
 # ---------------------
 # 
 
-# get problem information from  espresso FmmTomography
+# get problem information from  espresso FmWavefrontTracker
 model_size = fmm.model_size         # number of model parameters
 model_shape = fmm.model_shape       # 2D spatial grids
 data_size = fmm.data_size           # number of data points

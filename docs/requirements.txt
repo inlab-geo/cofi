@@ -1,6 +1,6 @@
 sphinx==4.5.0
 sphinx-book-theme==1.0.1
-sphinx-panels>=0.6.0
+sphinx-design>=0.3.0
 sphinx-togglebutton>=0.3.1
 myst-nb>=0.14.0
 sphinx-gallery>=0.10.1

@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_generated_synth_data_fmm_tomography.py>`
+        :ref:`Go to the end <sphx_glr_download_examples_generated_synth_data_fmm_tomography.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
@@ -185,7 +185,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 .. code-block:: default
 
 
-    fmm = espresso.FmmTomography()
+    fmm = espresso.FmWavefrontTracker()
 
     fmm.plot_model(fmm.good_model, with_paths=True);
 
@@ -208,6 +208,8 @@ model. As you can see, there are two anomalies, one with lower velocity
      100  travel times
      Range of travel times:  0.008911182496368759 0.0153757024856463 
      Mean travel time: 0.01085811731230709
+    Trying to fix now...
+    Execute permission given to fm2dss.o.
 
     <Figure size 600x600 with 2 Axes>
 
@@ -267,7 +269,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 .. code-block:: default
 
 
-    # get problem information from  espresso FmmTomography
+    # get problem information from  espresso FmWavefrontTracker
     model_size = fmm.model_size         # number of model parameters
     model_shape = fmm.model_shape       # 2D spatial grids
     data_size = fmm.data_size           # number of data points
@@ -593,10 +595,10 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev25+11.gab1f820.dirty
-    espresso 0.2.1.dev0
-    numpy 1.21.6
-    matplotlib 3.5.3
+    cofi 0.1.3.dev2+2.g8ef207d.dirty
+    espresso 0.2.2.dev0
+    numpy 1.20.3
+    matplotlib 3.5.1
 
 
 
@@ -608,7 +610,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  14.140 seconds)
+   **Total running time of the script:** ( 0 minutes  26.798 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography.py:
@@ -616,6 +618,8 @@ sphinx_gallery_thumbnail_number = -1
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
+
+
 
 
     .. container:: sphx-glr-download sphx-glr-download-python

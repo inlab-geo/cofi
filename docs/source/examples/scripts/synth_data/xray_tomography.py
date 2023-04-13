@@ -108,7 +108,7 @@ Xray Tomography
 
 import numpy as np
 from cofi import BaseProblem, InversionOptions, Inversion
-from espresso import XrayTomography
+from espresso import XrayTracer
 
 ######################################################################
 #
@@ -125,7 +125,7 @@ from espresso import XrayTomography
 # constant.
 # 
 
-xrt = XrayTomography()
+xrt = XrayTracer()
 
 ######################################################################
 #
