@@ -27,11 +27,12 @@ Example Gallery
    for full instructions.
 
 
-------------
+.. admonition:: “A good example is the best sermon.”
+   :class: topic
 
-.. epigraph::
+   -- Benjamin Franklin
 
-   “A good example is the best sermon.”
+.. topic::  “A good example is the best sermon.”
 
    -- Benjamin Franklin
 
@@ -87,6 +88,23 @@ Field Data Examples
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Century DCIP Inversion with a Triangular Mesh</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Surface-Wave Tomography">
+
+.. only:: html
+
+  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_sw_tomography_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_field_data_sw_tomography.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Surface-Wave Tomography</div>
     </div>
 
 

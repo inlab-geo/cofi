@@ -17,3 +17,4 @@ sphinx-copybutton>=0.5.1
 papermill
 jupyterlab
 versioningit==2.1.0
+seislib>=0.6.10

@@ -8,6 +8,26 @@ html[data-theme="light"] {
 p {
     font-size: 1rem;
 }
+/* Mainly designed to get FAQ looking good */
+h1 {
+    font-size: 200%;
+}
+
+h2 {
+    font-size: 150%;
+}
+
+h3 {
+    font-size:100%;
+    font-weight: 450;
+}
+
+div.contents {
+    padding: 1em 1em 1em;
+}
+div.contents>ul>li>p>a {
+    font-size: 100%;
+}
 
 /* TOP LEFT: logo + project title */
 div.navbar-brand-box a.navbar-brand img {
@@ -25,7 +45,7 @@ span.project-version {
     font-size: 0.8rem;
 }
 
-/* HOME: inference tree */
+/* Mermaid */
 div.mermaid:not([data-processed]) {
     display: none;
 }

@@ -28,3 +28,9 @@ dependencies:
   - nodejs>=12
   - pygimli==1.3.0
   - simpeg
+  - cython
+  - cartopy
+  - shapely
+  - pip
+  - pip:
+    - seislib>=0.6.7

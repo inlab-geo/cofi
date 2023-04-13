@@ -48,6 +48,23 @@ Field Data Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Surface-Wave Tomography">
+
+.. only:: html
+
+  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_sw_tomography_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_field_data_sw_tomography.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Surface-Wave Tomography</div>
+    </div>
+
+
+.. raw:: html
+
     </div>
 
 
@@ -56,4 +73,5 @@ Field Data Examples
 
    /examples/generated/field_data/linear_regression_sealevel
    /examples/generated/field_data/pygimli_dcip_century_tri_mesh
+   /examples/generated/field_data/sw_tomography
 

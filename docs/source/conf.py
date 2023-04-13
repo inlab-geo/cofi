@@ -13,7 +13,6 @@
 import os
 import datetime
 import sys
-import subprocess
 from sphinx_gallery.sorting import FileNameSortKey
 
 import cofi

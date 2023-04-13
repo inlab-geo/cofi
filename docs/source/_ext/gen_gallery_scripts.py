@@ -10,10 +10,8 @@ import sys
 from glob import glob
 from shutil import copyfile
 from pathlib import Path
-
-import pypandoc as pdoc
 import json
-import numpy as np
+import pypandoc
 
 
 current_dir = Path(__file__).resolve().parent
@@ -32,7 +30,7 @@ BADGE_BEGIN = "<!--<badge>-->"
 BADGE_END = "<!--</badge>-->"
 
 FIELD_DATA_EXAMPLES = []
-with open(current_dir / "field_data_example.txt", "r") as f:
+with open(current_dir / "real_data_examples.txt", "r") as f:
     FIELD_DATA_EXAMPLES = f.read().splitlines() 
 
 def convert_ipynb_to_gallery(file_name, dst_folder):
@@ -47,7 +45,7 @@ def convert_ipynb_to_gallery(file_name, dst_folder):
                 'First cell has to be markdown'
 
             md_source = ''.join(cell['source'])
-            rst_source = pdoc.convert_text(md_source, 'rst', 'md')
+            rst_source = pypandoc.convert_text(md_source, 'rst', 'md')
             python_file = '"""\n' + rst_source + '\n"""'
         else:
             if cell['cell_type'] == 'markdown':
@@ -58,7 +56,7 @@ def convert_ipynb_to_gallery(file_name, dst_folder):
                 elif "Table of contents" in md_source:
                     continue
                 else:
-                    rst_source = pdoc.convert_text(md_source, 'rst', 'md')
+                    rst_source = pypandoc.convert_text(md_source, 'rst', 'md')
                 commented_source = '\n'.join(['# ' + x for x in
                                               rst_source.split('\n')])
                 python_file = python_file + '\n\n\n' + '#' * 70 + '\n' + \
@@ -153,7 +151,7 @@ if __name__ == '__main__':
     print("Converting files...")
     for script in all_scripts:
         print(f"file: {script}")
-        convert_ipynb_to_gallery(script)
+        convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
     # collect all data and library files to move to scripts/
     all_data = glob(f"{EXAMPLES_SRC_DIR}/*/*.npz")
     all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*.dat"))
