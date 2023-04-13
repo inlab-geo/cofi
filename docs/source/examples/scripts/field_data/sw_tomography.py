@@ -58,48 +58,61 @@ Surface-Wave Tomography
 # assume each block (or grid cell) of such parameterization has constant
 # slowness. The above integral expression can then be reformulated in the
 # discrete form
-# :raw-latex:`\begin{equation}\label{eq:forward_problem}\tag{1}
-# s = \frac{1}{L} \sum_{n}{s_n l_n},
-# \end{equation}` where :math:`L` is the length of the great-circle path
-# and :math:`l` the distance traveled by the surface wave through the
-# :math:`n`\ th block. Equation (:raw-latex:`\ref{eq:forward_problem}`)
-# represents the *forward* calculation that allows for retrieving the
-# average velocity of propagation between two points on the Earth’s
-# surface (i.e., the quantity which is typically measured in ambient-noise
-# seismology), provided that the (discrete) spatial variations in velocity
-# (or slowness) are known.
+# 
+# .. math::
+# 
+# 
+#    \label{eq:forward_problem}\tag{1}
+#    s = \frac{1}{L} \sum_{n}{s_n l_n},
+# 
+# where :math:`L` is the length of the great-circle path and :math:`l` the
+# distance traveled by the surface wave through the :math:`n`\ th block.
+# Equation (:math:`\ref{eq:forward_problem}`) represents the *forward*
+# calculation that allows for retrieving the average velocity of
+# propagation between two points on the Earth’s surface (i.e., the
+# quantity which is typically measured in ambient-noise seismology),
+# provided that the (discrete) spatial variations in velocity (or
+# slowness) are known.
 # 
 # If we now define the :math:`m \times n` matrix such that
 # :math:`A_{ij} = \frac{l_j}{L_i}`, where :math:`L_i` is the length of the
 # great circle associated with :math:`i`\ th observation, we can switch to
 # matrix notation and write
-# :raw-latex:`\begin{equation}\label{eq:forward_matrix}\tag{2}
-# {\bf A \cdot x} = {\bf d},
-# \end{equation}` where :math:`\bf d` is an :math:`m`-vector whose
-# :math:`k`\ th element corresponds to the measured slowness, and
-# :math:`\bf x` the sought :math:`n`-vector whose :math:`k`\ th element
-# corresponds to the model coefficient :math:`s_k`. Matrix :math:`\bf A`,
-# also known as “data kernel” or “Jacobian”, is computed numerically in a
-# relatively simple fashion. For each pair of receivers for which a
-# velocity measurement is available, its :math:`i`\ th entries is found by
-# calculating the fraction of great-circle path connecting them through
-# each of the :math:`n` blocks associated with the parameterization.
+# 
+# .. math::
+# 
+# 
+#    \label{eq:forward_matrix}\tag{2}
+#    {\bf A \cdot x} = {\bf d},
+# 
+# where :math:`\bf d` is an :math:`m`-vector whose :math:`k`\ th element
+# corresponds to the measured slowness, and :math:`\bf x` the sought
+# :math:`n`-vector whose :math:`k`\ th element corresponds to the model
+# coefficient :math:`s_k`. Matrix :math:`\bf A`, also known as “data
+# kernel” or “Jacobian”, is computed numerically in a relatively simple
+# fashion. For each pair of receivers for which a velocity measurement is
+# available, its :math:`i`\ th entries is found by calculating the
+# fraction of great-circle path connecting them through each of the
+# :math:`n` blocks associated with the parameterization.
 # 
 # In geophysical applications, the system of linear equations
-# (:raw-latex:`\ref{eq:forward_matrix}`) is usually ill-conditioned,
-# meaning that it is not possible to find an exact solution for
-# :math:`\bf x`. (In our case, it is strongly overdetermined,
-# i.e. :math:`m \gg n`.) We overcome this issue by first assuming that the
-# target slowness model is approximately known,
-# i.e. :math:`{\bf x}_0 \sim \bf{x}`. We then invert for the regularized
-# least-squares solution
-# :raw-latex:`\begin{equation}\label{eq_inverse_prob}\tag{3}
-# {\bf x} = {\bf x}_0 + \left( {\bf A}^T \cdot {\bf A} + \mu^2 {\bf R}^T \cdot {\bf R} \right)^{-1} \cdot {\bf A}^T \cdot ({\bf d} - {\bf A} \cdot {\bf x}_0),
-# \end{equation}` where the roughness of the final model is determined by
-# the scalar weight :math:`\mu` and the roughness operator :math:`\bf R`
-# is dependent on the parameterization (for technical details on its
-# computation, see `Magrini et
-# al. (2022) <https://doi.org/10.1093/gji/ggac236>`__).
+# (:math:`\ref{eq:forward_matrix}`) is usually ill-conditioned, meaning
+# that it is not possible to find an exact solution for :math:`\bf x`. (In
+# our case, it is strongly overdetermined, i.e. :math:`m \gg n`.) We
+# overcome this issue by first assuming that the target slowness model is
+# approximately known, i.e. :math:`{\bf x}_0 \sim \bf{x}`. We then invert
+# for the regularized least-squares solution
+# 
+# .. math::
+# 
+# 
+#    \label{eq_inverse_prob}\tag{3}
+#    {\bf x} = {\bf x}_0 + \left( {\bf A}^T \cdot {\bf A} + \mu^2 {\bf R}^T \cdot {\bf R} \right)^{-1} \cdot {\bf A}^T \cdot ({\bf d} - {\bf A} \cdot {\bf x}_0),
+# 
+# where the roughness of the final model is determined by the scalar
+# weight :math:`\mu` and the roughness operator :math:`\bf R` is dependent
+# on the parameterization (for technical details on its computation, see
+# `Magrini et al. (2022) <https://doi.org/10.1093/gji/ggac236>`__).
 # 
 
 

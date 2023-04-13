@@ -59,7 +59,7 @@ Theoretical Background
 ----------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-104
+.. GENERATED FROM PYTHON SOURCE LINES 47-117
 
 To map lateral variations in surface-wave velocity, SeisLib implements a
 least-squares inversion scheme based on ray theory. This method rests on
@@ -75,57 +75,70 @@ Let us consider a discrete parameterization of the Earth’s surface, and
 assume each block (or grid cell) of such parameterization has constant
 slowness. The above integral expression can then be reformulated in the
 discrete form
-:raw-latex:`\begin{equation}\label{eq:forward_problem}\tag{1}
-s = \frac{1}{L} \sum_{n}{s_n l_n},
-\end{equation}` where :math:`L` is the length of the great-circle path
-and :math:`l` the distance traveled by the surface wave through the
-:math:`n`\ th block. Equation (:raw-latex:`\ref{eq:forward_problem}`)
-represents the *forward* calculation that allows for retrieving the
-average velocity of propagation between two points on the Earth’s
-surface (i.e., the quantity which is typically measured in ambient-noise
-seismology), provided that the (discrete) spatial variations in velocity
-(or slowness) are known.
+
+.. math::
+
+
+   \label{eq:forward_problem}\tag{1}
+   s = \frac{1}{L} \sum_{n}{s_n l_n},
+
+where :math:`L` is the length of the great-circle path and :math:`l` the
+distance traveled by the surface wave through the :math:`n`\ th block.
+Equation (:math:`\ref{eq:forward_problem}`) represents the *forward*
+calculation that allows for retrieving the average velocity of
+propagation between two points on the Earth’s surface (i.e., the
+quantity which is typically measured in ambient-noise seismology),
+provided that the (discrete) spatial variations in velocity (or
+slowness) are known.
 
 If we now define the :math:`m \times n` matrix such that
 :math:`A_{ij} = \frac{l_j}{L_i}`, where :math:`L_i` is the length of the
 great circle associated with :math:`i`\ th observation, we can switch to
 matrix notation and write
-:raw-latex:`\begin{equation}\label{eq:forward_matrix}\tag{2}
-{\bf A \cdot x} = {\bf d},
-\end{equation}` where :math:`\bf d` is an :math:`m`-vector whose
-:math:`k`\ th element corresponds to the measured slowness, and
-:math:`\bf x` the sought :math:`n`-vector whose :math:`k`\ th element
-corresponds to the model coefficient :math:`s_k`. Matrix :math:`\bf A`,
-also known as “data kernel” or “Jacobian”, is computed numerically in a
-relatively simple fashion. For each pair of receivers for which a
-velocity measurement is available, its :math:`i`\ th entries is found by
-calculating the fraction of great-circle path connecting them through
-each of the :math:`n` blocks associated with the parameterization.
+
+.. math::
+
+
+   \label{eq:forward_matrix}\tag{2}
+   {\bf A \cdot x} = {\bf d},
+
+where :math:`\bf d` is an :math:`m`-vector whose :math:`k`\ th element
+corresponds to the measured slowness, and :math:`\bf x` the sought
+:math:`n`-vector whose :math:`k`\ th element corresponds to the model
+coefficient :math:`s_k`. Matrix :math:`\bf A`, also known as “data
+kernel” or “Jacobian”, is computed numerically in a relatively simple
+fashion. For each pair of receivers for which a velocity measurement is
+available, its :math:`i`\ th entries is found by calculating the
+fraction of great-circle path connecting them through each of the
+:math:`n` blocks associated with the parameterization.
 
 In geophysical applications, the system of linear equations
-(:raw-latex:`\ref{eq:forward_matrix}`) is usually ill-conditioned,
-meaning that it is not possible to find an exact solution for
-:math:`\bf x`. (In our case, it is strongly overdetermined,
-i.e. :math:`m \gg n`.) We overcome this issue by first assuming that the
-target slowness model is approximately known,
-i.e. :math:`{\bf x}_0 \sim \bf{x}`. We then invert for the regularized
-least-squares solution
-:raw-latex:`\begin{equation}\label{eq_inverse_prob}\tag{3}
-{\bf x} = {\bf x}_0 + \left( {\bf A}^T \cdot {\bf A} + \mu^2 {\bf R}^T \cdot {\bf R} \right)^{-1} \cdot {\bf A}^T \cdot ({\bf d} - {\bf A} \cdot {\bf x}_0),
-\end{equation}` where the roughness of the final model is determined by
-the scalar weight :math:`\mu` and the roughness operator :math:`\bf R`
-is dependent on the parameterization (for technical details on its
-computation, see `Magrini et
-al. (2022) <https://doi.org/10.1093/gji/ggac236>`__).
+(:math:`\ref{eq:forward_matrix}`) is usually ill-conditioned, meaning
+that it is not possible to find an exact solution for :math:`\bf x`. (In
+our case, it is strongly overdetermined, i.e. :math:`m \gg n`.) We
+overcome this issue by first assuming that the target slowness model is
+approximately known, i.e. :math:`{\bf x}_0 \sim \bf{x}`. We then invert
+for the regularized least-squares solution
+
+.. math::
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-110
+   \label{eq_inverse_prob}\tag{3}
+   {\bf x} = {\bf x}_0 + \left( {\bf A}^T \cdot {\bf A} + \mu^2 {\bf R}^T \cdot {\bf R} \right)^{-1} \cdot {\bf A}^T \cdot ({\bf d} - {\bf A} \cdot {\bf x}_0),
+
+where the roughness of the final model is determined by the scalar
+weight :math:`\mu` and the roughness operator :math:`\bf R` is dependent
+on the parameterization (for technical details on its computation, see
+`Magrini et al. (2022) <https://doi.org/10.1093/gji/ggac236>`__).
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 120-123
 
 1. Data and Parameterization
 ----------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-119
+.. GENERATED FROM PYTHON SOURCE LINES 126-132
 
 As mentioned earlier, the
 `data <https://github.com/inlab-geo/cofi-examples/blob/main/examples/sw_tomography/data.txt>`__
@@ -134,7 +147,7 @@ Rayleigh-wave phase velocity at 5 s period. We parameterize the Earth’s
 surface through equal-area blocks of :math:`1^{\circ} \times 1^{\circ}`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-128
+.. GENERATED FROM PYTHON SOURCE LINES 132-141
 
 .. code-block:: default
 
@@ -176,7 +189,7 @@ surface through equal-area blocks of :math:`1^{\circ} \times 1^{\circ}`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-139
+.. GENERATED FROM PYTHON SOURCE LINES 146-152
 
 Overall, 171,353 velocity measurements are available (check
 ``tomo.velocity``), each associated with a different pair of receveirs
@@ -185,13 +198,13 @@ Overall, 171,353 velocity measurements are available (check
 :math:`\phi_2`).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-145
+.. GENERATED FROM PYTHON SOURCE LINES 155-158
 
 2. Jacobian
 -----------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-155
+.. GENERATED FROM PYTHON SOURCE LINES 161-168
 
 We use the information about the data coordinates to calculate the
 matrix :math:`\bf A` (i.e. the Jacobian). In doing so, we will discard
@@ -201,7 +214,7 @@ by at least one inter-station great-circle path. These model parameters
 our data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-163
+.. GENERATED FROM PYTHON SOURCE LINES 168-176
 
 .. code-block:: default
 
@@ -233,7 +246,7 @@ our data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 165-169
+.. GENERATED FROM PYTHON SOURCE LINES 178-182
 
 .. code-block:: default
 
@@ -261,13 +274,13 @@ our data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 174-177
+.. GENERATED FROM PYTHON SOURCE LINES 187-190
 
 The Jacobian can now be accessed by typing ``tomo.A``, and the
 associated parameterization can be visualized by typing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-180
+.. GENERATED FROM PYTHON SOURCE LINES 190-193
 
 .. code-block:: default
 
@@ -292,19 +305,19 @@ associated parameterization can be visualized by typing
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-188
+.. GENERATED FROM PYTHON SOURCE LINES 198-201
 
 3. Inversion – SeisLib style
 ----------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 191-194
+.. GENERATED FROM PYTHON SOURCE LINES 204-207
 
 The lateral variations in phase velocity can now simply be retrieved,
 via SeisLib, through
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 194-201
+.. GENERATED FROM PYTHON SOURCE LINES 207-214
 
 .. code-block:: default
 
@@ -322,12 +335,12 @@ via SeisLib, through
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-208
+.. GENERATED FROM PYTHON SOURCE LINES 219-221
 
 Let’s have a look at the results (the colorbar is in km/s).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 208-214
+.. GENERATED FROM PYTHON SOURCE LINES 221-227
 
 .. code-block:: default
 
@@ -349,20 +362,20 @@ Let’s have a look at the results (the colorbar is in km/s).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-222
+.. GENERATED FROM PYTHON SOURCE LINES 232-235
 
 4. Inversion – CoFI style
 -------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 225-229
+.. GENERATED FROM PYTHON SOURCE LINES 238-242
 
 Let’s now reproduce the above results through CoFI. First, we need to
 define a starting model :math:`{\bf x}_0` to compute the residuals
 :math:`{\bf r} = {\bf d} - {\bf A} \cdot {\bf x}_0`, as in equation (3).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 229-237
+.. GENERATED FROM PYTHON SOURCE LINES 242-250
 
 .. code-block:: default
 
@@ -381,14 +394,14 @@ define a starting model :math:`{\bf x}_0` to compute the residuals
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 242-246
+.. GENERATED FROM PYTHON SOURCE LINES 255-259
 
 We now need to define the roughness operator :math:`\bf R`. This is done
 under the hood by SeisLib through the “private” method
 ``_derivatives_lat_lon``.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 246-254
+.. GENERATED FROM PYTHON SOURCE LINES 259-267
 
 .. code-block:: default
 
@@ -407,7 +420,7 @@ under the hood by SeisLib through the “private” method
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 259-265
+.. GENERATED FROM PYTHON SOURCE LINES 272-278
 
 Almost everything is ready to carry out the inversion through CoFI.
 Before doing so, we need to define our inverse problem (through
@@ -416,7 +429,7 @@ Before doing so, we need to define our inverse problem (through
 regularizazion criterion (through ``set_regularization``).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-277
+.. GENERATED FROM PYTHON SOURCE LINES 278-290
 
 .. code-block:: default
 
@@ -458,12 +471,12 @@ regularizazion criterion (through ``set_regularization``).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 282-284
+.. GENERATED FROM PYTHON SOURCE LINES 295-297
 
 We now carry out the inversion through ``scipy.linalg.lstsq``.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 284-294
+.. GENERATED FROM PYTHON SOURCE LINES 297-307
 
 .. code-block:: default
 
@@ -872,13 +885,13 @@ We now carry out the inversion through ``scipy.linalg.lstsq``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 299-302
+.. GENERATED FROM PYTHON SOURCE LINES 312-315
 
 5. Cross validation
 -------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 305-310
+.. GENERATED FROM PYTHON SOURCE LINES 318-323
 
 The inversion converged. Let’s now check whether the results are
 consistent with those obtained from SeisLib. To do so, remember that we
@@ -886,7 +899,7 @@ need to add back, to the retrieved model parameters, the initial
 reference model :math:`{\bf x}_0`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 310-318
+.. GENERATED FROM PYTHON SOURCE LINES 323-331
 
 .. code-block:: default
 
@@ -911,13 +924,13 @@ reference model :math:`{\bf x}_0`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 323-326
+.. GENERATED FROM PYTHON SOURCE LINES 336-339
 
 Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 326-332
+.. GENERATED FROM PYTHON SOURCE LINES 339-345
 
 .. code-block:: default
 
@@ -942,14 +955,14 @@ Watermark
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 333-333
+.. GENERATED FROM PYTHON SOURCE LINES 346-346
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  12.213 seconds)
+   **Total running time of the script:** ( 0 minutes  10.019 seconds)
 
 
 .. _sphx_glr_download_examples_generated_field_data_sw_tomography.py:

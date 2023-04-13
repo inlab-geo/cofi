@@ -26,12 +26,6 @@ Example Gallery
    Check `here <https://github.com/inlab-geo/cofi-examples/blob/main/README.md>`_
    for full instructions.
 
-
-.. admonition:: “A good example is the best sermon.”
-   :class: topic
-
-   -- Benjamin Franklin
-
 .. topic::  “A good example is the best sermon.”
 
    -- Benjamin Franklin
