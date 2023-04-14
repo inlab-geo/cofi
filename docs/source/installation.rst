@@ -4,9 +4,9 @@ Installation
 
 **Step 1**: (*Optional*) Set up a virtual environment.
 
-We strongly recommend installing cofi_env within a 
+We strongly recommend installing CoFI within a 
 `virtual environment <https://docs.python.org/3/tutorial/venv.html>`_. 
-This ensures that cofi_env can install the various modules that it needs without the 
+This ensures that CoFI can install the various modules that it needs without the 
 risk of breaking anything else on your system. There are a number of tools that can 
 facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
