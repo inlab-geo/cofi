@@ -81,7 +81,6 @@ copybutton_prompt_text = ">>> "
 # -- Options for HTML output -------------------------------------------------
 html_title = f'{project} <span class="project-version">{version}</span>'
 html_short_title = project
-# html_logo = "_static/cofi-logo-removebg.png"
 html_logo = "_static/latte_art-removebg.png"
 html_favicon = "_static/inlab_logo_60px.png"
 
@@ -98,7 +97,30 @@ html_theme_options = {
     "home_page_in_toc": True,
     "use_repository_button": True,
     "use_edit_page_button": True,
+    "use_source_button": True,
     "use_issues_button": True,
+    "use_download_button": True,
+    "use_sidenotes": True,
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/inlab-geo/cofi",
+            "icon": "https://img.shields.io/badge/GitHub-cofi-171515?logo=github&labelColor=f8f9fa&style=flat-square&logoColor=171515",
+            "type": "url",
+        },
+        {
+            "name": "Colab",
+            "url": "https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/index.ipynb",
+            "icon": "https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670&labelColor=f8f9fa",
+            "type": "url",
+        },
+        {
+            "name": "Version",
+            "url": "https://pypi.org/project/cofi/",
+            "icon": "https://img.shields.io/pypi/v/cofi?logo=pypi&style=flat-square&color=6CA8D2&labelColor=f8f9fa&label=latest",
+            "type": "url",
+        },
+    ],
 }
 
 html_static_path = ["_static"]

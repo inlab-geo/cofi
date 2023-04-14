@@ -30,8 +30,8 @@ div.contents>ul>li>p>a {
 }
 
 /* TOP LEFT: logo + project title */
-div.navbar-brand-box a.navbar-brand img {
-    max-height: 10vh !important;
+.navbar-brand img {
+    max-height: 6vw !important;
 }
 span.project-version {
     color: rgb(181, 151, 141);

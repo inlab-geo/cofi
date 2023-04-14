@@ -115,11 +115,12 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         🛠 Developer guide
 
 
-Table of contents
------------------
+.. Table of contents
+.. -----------------
 
 .. toctree::
     :caption: Guides
+    :hidden: 
     :maxdepth: 1
 
     introduction.rst
@@ -131,6 +132,7 @@ Table of contents
 
 .. toctree::
     :caption: Reference
+    :hidden: 
     :maxdepth: 1
 
     api/index.rst
@@ -138,6 +140,7 @@ Table of contents
 
 .. toctree::
     :caption: Development
+    :hidden: 
     :maxdepth: 1
 
     contribute.rst

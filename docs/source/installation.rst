@@ -2,20 +2,127 @@
 Installation
 ============
 
-Pre-requisites
---------------
+**Step 1**: (*Optional*) Set up a virtual environment.
 
-CoFI requires Python 3.7+, and the following dependencies:
+We strongly recommend installing CoFI within a 
+`virtual environment <https://docs.python.org/3/tutorial/venv.html>`_. 
+This ensures that CoFI can install the various modules that it needs without the 
+risk of breaking anything else on your system. There are a number of tools that can 
+facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
-- numpy>=1.18
-- scipy>=1.0.0
-- emcee>=3.1.0
-- arviz>=0.9.0
-- findiff>=0.7.0
-- torch>=1.10
+.. admonition:: steps to create a virtual environment
+  :class: attention, dropdown
 
-Install
--------
+  .. tab-set::
+
+    .. tab-item:: venv
+
+      Ensure you have `python>=3.7`. Then, you can create a new virtual environment by 
+      running the command:
+
+      .. code-block:: console
+
+        $ python -m venv <path-to-new-env>/cofi_env
+
+      where :code:`<path-to-new-env>` is your prefered location for storing information 
+      about this environment, and :code:`<env-name>` is your preferred name for the 
+      virtual environmment. For example,
+
+      .. code-block:: console
+
+        $ python -m venv ~/my_envs/cofi_env 
+
+      will create a virtual environment named :code:`cofi_env` and store everything within a sub-directory of your home-space named :code:`my_envs`.
+
+      To 'activate' or 'switch on' the virtual environment, run the command
+    
+      .. code-block:: console
+
+        $ source <path-to-new-env>/<env-name>/bin/activate
+
+      At this point you effectively have a 'clean' Python installation. You can now install and use cofi_env, following the instructions at step 2. When you are finished, you can run the command
+      
+      .. code-block:: console
+
+        $ deactivate
+
+      and your system will return to its default state. If you want to use cofi_env again, simply re-run the 'activate' step above; you do not need to repeat the installation process. Alternatively, you can remove cofi_env and the virtual environment from your system by running
+
+      .. code-block:: console
+
+        $ rm -rf <path-to-new-env>/<env-name>
+
+    .. tab-item:: virtualenv
+
+      You can create a new virtual environment (using Python version 3.10) by running the command
+
+      .. code-block:: console
+
+        $ virtualenv <path-to-new-env>/<env-name> -p=3.10
+      
+      where :code:`<path-to-new-env>` is your prefered location for storing information about this environment, and :code:`<env-name>` is your preferred name for the virtual environmment. For example,
+
+      .. code-block:: console
+
+        $ virtualenv ~/my_envs/cofi_env -p=3.10
+
+      will create a virtual environment named :code:`cofi_env` and store everything within a sub-directory of your home-space named :code:`my_envs`.
+
+      To 'activate' or 'switch on' the virtual environment, run the command
+
+      .. code-block:: console
+
+        $ source <path-to-new-env>/<env-name>/bin/activate
+
+      At this point you effectively have a 'clean' Python installation. You can now install and use cofi_env, following the instructions at step 2. When you are finished, you can run the command
+
+      .. code-block:: console
+
+        $ deactivate
+
+      and your system will return to its default state. If you want to use cofi_env again, simply re-run the 'activate' step above; you do not need to repeat the installation process. Alternatively, you can remove cofi_env and the virtual environment from your system by running
+
+      .. code-block:: console
+
+        $ rm -rf <path-to-new-env>/<env-name>
+
+    .. tab-item::  conda / mamba
+
+      You can create a new virtual environment (using Python version 3.10) by running the command
+
+      .. code-block:: console
+
+        $ conda create -n <env-name> python=3.10
+
+      where :code:`<env-name>` is your preferred name for the virtual environmment. For example,
+
+      .. code-block:: console
+
+        $ conda create -n cofi_env python=3.10
+
+      will create a virtual environment named :code:`cofi_env`.
+      
+      To 'activate' or 'switch on' the virtual environment, run the command
+
+      .. code-block:: console
+
+        $ conda activate <env-name>
+
+      At this point you effectively have a 'clean' Python installation. You can now install and use cofi_env, following the instructions at step 2. When you are finished, you can run the command
+      
+      .. code-block:: console
+
+        $ conda deactivate
+
+      and your system will return to its default state. If you want to use cofi_env again, simply re-run the 'activate' step above; you do not need to repeat the installation process. Alternatively, you can remove cofi_env and the virtual environment from your system by running
+      
+      .. code-block:: console
+
+        $ conda env remove -n <env-name>
+
+
+
+**Step 2**: Install CoFI
 
 .. tab-set::
 
@@ -48,97 +155,8 @@ Install
       $ pip install -e .      # (alternatively) developer mode
 
 
+.. admonition:: CoFI time!
+  :class: tip
 
-.. admonition:: Virtual environment setup (*strongly recommended*)
-  :class: attention, dropdown
-
-  It's optional, but recommended to use a virtual environment.
-
-  .. tab-set::
-
-    .. tab-item:: venv
-
-      Ensure you have `python>=3.7`.
-
-      To create:
-
-      .. code-block:: console
-
-        python -m venv <path-to-new-env>/cofi_env
-
-      To activate:
-      
-      .. code-block:: console
-
-        source <path-to-new-env>/cofi_env/bin/activate
-
-      To exit:
-      
-      .. code-block:: console
-
-        deactivate
-
-      To remove:
-
-      .. code-block:: console
-
-        rm -rf <path-to-new-env>/cofi_env
-
-    .. tab-item:: virtualenv
-
-      To create:
-
-      .. code-block:: console
-
-        virtualenv <path-to-new-env>/cofi_env -p=3.10
-
-      To activate:
-
-      .. code-block:: console
-
-        source <path-to-new-env>/cofi_env/bin/activate
-
-      To exit:
-
-      .. code-block:: console
-
-        deactivate
-
-      To remove:
-
-      .. code-block:: console
-
-        rm -rf <path-to-new-env>/cofi_env
-
-    .. tab-item::  conda / mamba
-
-      To create:
-
-      .. code-block:: console
-
-        conda create -n cofi_env python=3.10
-
-      To activate:
-
-      .. code-block:: console
-
-        conda activate cofi_env
-
-      To exit:
-
-      .. code-block:: console
-
-        conda deactivate
-
-      To remove:
-      
-      .. code-block:: console
-
-        conda env remove -n cofi_env
-
-
-.. hint::
-
-  CoFI time!
   Check out our step-by-step `tutorials <tutorials/generated/index.html>`_ or 
   `examples <examples/generated/index.html>`_ to get started.
