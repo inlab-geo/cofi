@@ -81,7 +81,7 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     .. grid-item-card::
         :link: installation.html
         :text-align: center
-        :class-card: green-border
+        :class-card: card-border
 
         *New to CoFI?*
         ^^^^^^^^^^^^^^
@@ -90,7 +90,7 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     .. grid-item-card::
         :link: api/index.html
         :text-align: center
-        :class-card: green-border
+        :class-card: card-border
 
         *Want details?*
         ^^^^^^^^^^^^^^^
@@ -99,7 +99,7 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     .. grid-item-card::
         :link: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
         :text-align: center
-        :class-card: green-border
+        :class-card: card-border
 
         *Have questions?*
         ^^^^^^^^^^^^^^^^^
@@ -108,7 +108,7 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     .. grid-item-card::
         :link: contribute.html
         :text-align: center
-        :class-card: green-border
+        :class-card: card-border
 
         *Contributions welcomed!*
         ^^^^^^^^^^^^^^^^^^^^^^^^^

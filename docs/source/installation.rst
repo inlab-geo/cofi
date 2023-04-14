@@ -2,6 +2,9 @@
 Installation
 ============
 
+Install CoFI
+------------
+
 **Step 1**: (*Optional*) Set up a virtual environment.
 
 We strongly recommend installing CoFI within a 
@@ -10,8 +13,8 @@ This ensures that CoFI can install the various modules that it needs without the
 risk of breaking anything else on your system. There are a number of tools that can 
 facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
-.. admonition:: steps to create a virtual environment
-  :class: attention, dropdown
+.. dropdown:: Expand for how to manage virtual environments
+  :icon: package
 
   .. tab-set::
 
@@ -186,3 +189,12 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
   Check out our step-by-step `tutorials <tutorials/generated/index.html>`_ or 
   `examples <examples/generated/index.html>`_ to get started.
+
+
+Container support
+-----------------
+
+CoFI and the InLab geoscience software ecosystem are now available in the form of 
+a handy container image. We kindly refer you to the 
+`inlab-containers guide <https://github.com/inlab-geo/inlab-containers#getting-started>`_
+to get started.
