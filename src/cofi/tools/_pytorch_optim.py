@@ -1,11 +1,35 @@
 # Method : Pytorch Optimization
-# CoFI -> Parameter estimation -> optimization -> non-linear -> pytorch.optim -> way1
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> Adadelta
 # description: balabala opt1
 # Method : Pytorch Optimization
-# CoFI -> Parameter estimation -> optimization -> non-linear -> pytorch.optim -> way2
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> Adagrad
 # description: balabala opt2
 # Method : Pytorch Optimization
-# CoFI -> Parameter estimation -> optimization -> non-linear -> pytorch.optim -> way3
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> Adam
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> AdamW
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> SparseAdam
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> Admx
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> LBGFGS
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> NAdam
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> RMSprop
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> Rprop
+# description: balabala opt3
+# Method : Pytorch Optimization
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> SGD
 # description: balabala opt3
 import functools
 

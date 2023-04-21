@@ -1,11 +1,11 @@
 # Method : scipy_opt_lstsq
-# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.least_squares -> way
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (trx)
 # description: balabala scip
 # Method : scipy_opt_lstsq
-# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.least_squares -> way
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (dogbox)
 # description: balabala scip
 # Method : scipy_opt_lstsq
-# CoFI -> Parameter estimation -> optimization -> non-linear -> scipy.optimize.least_squares -> way
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (lm)
 # description: balabala scip
 import functools
 

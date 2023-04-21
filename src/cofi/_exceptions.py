@@ -1,6 +1,3 @@
-# Method : Exceptions
-# CoFI -> unkown -> exceptions
-
 import sys
 from typing import Any, List, Tuple, Union
 
