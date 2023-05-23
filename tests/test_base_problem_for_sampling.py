@@ -1,4 +1,3 @@
-import pytest
 import numpy
 
 from cofi import BaseProblem

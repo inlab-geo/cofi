@@ -93,12 +93,12 @@ def test_set_reg_with_args():
     inv_problem = BaseProblem()
     from scipy.sparse import csr_matrix
     A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
-    inv_problem.set_regularization(lambda m, A: A @ m.T @ m, 2, args=[A])
+    inv_problem.set_regularization(lambda m, A: A @ m.T @ m, args=[A])
     inv_problem.regularization(numpy.array([1,2,3]))
 
 def test_invalid_func():
     inv_problem = BaseProblem()
-    with pytest.raises(InvalidOptionError):
+    with pytest.raises(InvalidOptionError, match=".*invalid, please choose from the following.*"):
         inv_problem.set_forward(1)
 
 
@@ -121,11 +121,17 @@ def test_init_set_fwd():
 ############### TEST check_defined ####################################################
 def test_check_defined():
     inv_problem = BaseProblem()
+    # function defined by set_*
     inv_problem.set_objective(lambda a: a + 1)
     assert inv_problem.objective_defined
-    assert str(inv_problem) == "BaseProblem"
+    # function defined by attaching
+    inv_problem.forward = lambda x: x**2
+    assert inv_problem.forward_defined
+    # repr
+    assert "BaseProblem" in str(inv_problem)
     inv_problem.name = "AnotherProblem"
-    assert str(inv_problem) == "AnotherProblem"
+    assert "AnotherProblem" in str(inv_problem)
+    # initial model and model shape
     inv_problem.set_initial_model(numpy.array([1, 2, 3]))
     assert inv_problem.initial_model_defined
     assert inv_problem.model_shape_defined

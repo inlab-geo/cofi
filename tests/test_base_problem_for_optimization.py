@@ -82,7 +82,7 @@ def test_set_obj(problem_objective_setup):
 
 
 # ---------------- data misfit --------------------------------------------------------
-def test_set_data_misfit(problem_objective_setup):
+def test_set_data_misfit(problem_objective_setup, capsys):
     # setup instance
     inv_problem, _, _, _dt_misfit, _ = problem_objective_setup
     inv_problem.set_data_misfit(_dt_misfit)
@@ -91,6 +91,9 @@ def test_set_data_misfit(problem_objective_setup):
     assert inv_problem.objective_defined
     assert len(inv_problem.defined_components()) == 2
     assert inv_problem.objective(numpy.array([2, 1, 1])) == 0
+    inv_problem.summary()
+    captured = capsys.readouterr()
+    assert "you did not set regularization" in captured.out
 
 
 # ---------------- regularization -----------------------------------------------------
@@ -115,7 +118,7 @@ def test_set_regularization_from_utils_quadratic_reg(problem_objective_setup):
     _my_reg_from_utils = utils.QuadraticReg(2, 3)
     inv_problem.set_regularization(_my_reg_from_utils)
     # check
-    assert len(inv_problem.defined_components()) == 3
+    assert len(inv_problem.defined_components()) == 4
     # assert inv_problem.regularization(numpy.array([2, 1, 1])) == "TODO"
     # assert inv_problem.regularization(numpy.array([2, 1, 2])) == "TODO"
 
@@ -127,7 +130,7 @@ def test_set_regularization_from_utils_gaussian_prior(problem_objective_setup):
     _my_reg_from_utils = utils.QuadraticReg(2, 3)
     inv_problem.set_regularization(_my_reg_from_utils)
     # check
-    assert len(inv_problem.defined_components()) == 3
+    assert len(inv_problem.defined_components()) == 4
     # assert inv_problem.regularization(numpy.array([2, 1, 1])) == "TODO"
     # assert inv_problem.regularization(numpy.array([2, 1, 2])) == "TODO"
 
@@ -169,6 +172,19 @@ def test_set_forward_data_with_Cdinv(problem_objective_setup):
     assert inv_problem.data_misfit(numpy.array([2, 1, 1])) == 0
     assert inv_problem.data_misfit(numpy.array([2, 1, 2])) == 979 / 2
 
+def test_set_forward_data_with_Cdinv_non_diagonal(problem_objective_setup):
+    # setup instance
+    inv_problem, _fwd, _y, _, _ = problem_objective_setup
+    inv_problem.set_forward(_fwd)
+    inv_problem.set_data(_y)
+    inv_problem.set_data_misfit("squared error")
+    Cdinv = 0.5 * numpy.eye(5)
+    Cdinv[0,1] = 1
+    inv_problem.set_data_covariance_inv(Cdinv)
+    # check
+    assert len(inv_problem.defined_components()) == 6
+    assert inv_problem.data_misfit(numpy.array([2, 1, 1])) == 0
+    assert inv_problem.data_misfit(numpy.array([2, 1, 2])) == 493.5
 
 def test_set_invalid_misfit_options():
     inv_problem = BaseProblem()
