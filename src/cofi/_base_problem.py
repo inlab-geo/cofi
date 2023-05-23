@@ -966,13 +966,13 @@ class BaseProblem:
         self._update_autogen("data_misfit")
 
     def set_regularization(
-        self, 
-        regularization: Union[Callable[[np.ndarray], Number], BaseRegularization], 
+        self,
+        regularization: Union[Callable[[np.ndarray], Number], BaseRegularization],
         regularization_matrix: Union[
             np.ndarray, Callable[[np.ndarray], np.ndarray]
         ] = None,
-        args: list = None, 
-        kwargs: dict = None, 
+        args: list = None,
+        kwargs: dict = None,
     ):
         r"""Sets the function to compute the regularization
 
@@ -1016,9 +1016,9 @@ class BaseProblem:
         >>> inv_problem.set_regularization(lambda x: sum(x))
         >>> inv_problem.regularization([1,1])
         2
-        
+
         2. Example with a custom regularization + a regularization matrix
-        
+
         >>> inv_problem.set_regularization(lambda x: np.sum(x**2), np.eye(3))
         >>> inv_problem.regularization([1,1])
         2
@@ -1027,8 +1027,9 @@ class BaseProblem:
         _reg_matrix = None
         if regularization_matrix is not None:
             _reg_matrix = regularization_matrix
-        elif isinstance(regularization, BaseRegularization) and \
-            hasattr(regularization, "matrix"):
+        elif isinstance(regularization, BaseRegularization) and hasattr(
+            regularization, "matrix"
+        ):
             _reg_matrix = regularization.matrix
         # wrap regularization_matrix as a function
         if _reg_matrix is not None and np.ndim(_reg_matrix) != 0:
@@ -1041,7 +1042,7 @@ class BaseProblem:
             )
         else:
             self.regularization_matrix = None
-        # process regularization function 
+        # process regularization function
         self.regularization = _FunctionWrapper(
             "regularization", regularization, args, kwargs
         )
