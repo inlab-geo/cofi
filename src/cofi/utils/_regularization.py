@@ -164,10 +164,13 @@ class BaseRegularization(metaclass=ABCMeta):
 class LpNormRegularization(BaseRegularization):
     r"""CoFI's utility class to calculate Lp-norm regularization, given the p value
     (default to 2), an optional weighting matrix and an optional reference value
-    
+
     :math:`L(p, W, m_0) = ||W(m-m_0)||_p^p`
     """
-    def __init__(self, p=2, weighting_matrix="damping", model_shape=None, reference_model=None):
+
+    def __init__(
+        self, p=2, weighting_matrix="damping", model_shape=None, reference_model=None
+    ):
         self._order = p
         self._weighting_matrix = weighting_matrix
         self._reference_model = reference_model
@@ -187,15 +190,16 @@ class LpNormRegularization(BaseRegularization):
 
 
 class GaussianPrior(BaseRegularization):
-    r"""CoFI's utility class to calculate the Gaussian prior, given the inverse of 
+    r"""CoFI's utility class to calculate the Gaussian prior, given the inverse of
     model covariance matrix and the mean model
-    
+
     :math:`GaussianPrior(C_m^{-1}, \mu) = -\frac{1}{2}(m-\mu)^TC_m^{-1}(m-\mu)`
-    
+
     Parameters
     ----------
-    
+
     """
+
     def __init__(self, model_covariance_inv, mean_model):
         self._Cminv = model_covariance_inv
         self._mu = mean_model

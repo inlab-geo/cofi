@@ -3,15 +3,15 @@
 
 from ._regularization import (
     BaseRegularization,
-    LpNormRegularization, 
-    GaussianPrior, 
+    LpNormRegularization,
+    GaussianPrior,
     QuadraticReg,
 )
 
 
 __all__ = [
     "BaseRegularization",
-    "LpNormRegularization", 
-    "GaussianPrior", 
+    "LpNormRegularization",
+    "GaussianPrior",
     "QuadraticReg",
 ]
