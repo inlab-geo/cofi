@@ -39,29 +39,55 @@ def test_p_vals_invalid():
     with pytest.raises(ValueError, match=".*number expected.*got jump jump of type <class 'str'>.*"):
         LpNormRegularization(p="jump jump", model_shape=(2,))
 
+def test_weighting_none():
+    reg = LpNormRegularization(model_shape=(2,), weighting_matrix=None)
+    assert reg.matrix[0,0] == reg.matrix[1,1] == 1
+    assert reg.matrix[0,1] == reg.matrix[1,0] == 0
+    assert _is_sparse_matrix(reg.matrix)
+
 def test_weighting_damping():
-    reg = LpNormRegularization(model_shape=(2,))
-    assert numpy.array_equal(reg.matrix, numpy.array([[1,0],[0,1]]))
+    reg = LpNormRegularization(model_shape=(2,), weighting_matrix="damping")
+    assert reg.matrix[0,0] == reg.matrix[1,1] == 1
+    assert reg.matrix[0,1] == reg.matrix[1,0] == 0
     assert _is_sparse_matrix(reg.matrix)
 
 def test_weighting_flattening():
-    # ensure matrix is sparse
-    pass
+    reg = LpNormRegularization(model_shape=(5,), weighting_matrix="flattening")
+    assert reg.matrix[0,0] == -1.5
+    assert reg.matrix[0,1] == 2
+    assert reg.matrix[0,2] == reg.matrix[1,0] == reg.matrix[3,2] == -0.5
+    assert reg.matrix[-1,-1] == 1.5
+    assert _is_sparse_matrix(reg.matrix)
 
 def test_weighting_smoothing():
-    # ensure matrix is sparse
-    pass
-
-def test_weighting_none():
-    # ensure matrix is sparse
-    pass
+    reg = LpNormRegularization(model_shape=(5,), weighting_matrix="smoothing")
+    assert reg.matrix[0,0] == 2
+    assert reg.matrix[0,1] == -5
+    assert reg.matrix[1,0] == reg.matrix[-2,-1] == 1
+    assert pytest.approx(reg.matrix[-1,-1]) == 2
+    assert pytest.approx(reg.matrix[-1,-2]) == -5
+    assert _is_sparse_matrix(reg.matrix)
 
 def test_weighting_byo():
-    # ensure matrix is sparse
-    pass
+    my_matrix = numpy.array([[2,0],[0,2]])
+    reg = LpNormRegularization(model_shape=(2,), weighting_matrix=my_matrix)
+    assert reg.matrix[0,0] == reg.matrix[1,1] == 2
+    assert reg.matrix[0,1] == reg.matrix[1,0] == 0
+    assert _is_sparse_matrix(reg.matrix)
 
 def test_weighting_invalid():
-    pass
+    # not matrix
+    my_matrix = numpy.array([1,2])
+    with pytest.raises(ValueError, match=".*must be 2-dimensional.*"):
+        LpNormRegularization(model_shape=(2,), weighting_matrix=my_matrix)
+    # shape mismatch
+    my_matrix = numpy.array([[1,2],[0,1]])
+    with pytest.raises(ValueError, match=".*in shape \(_, M\).*"):
+        LpNormRegularization(model_shape=(3,), weighting_matrix=my_matrix)
+    # wrong type
+    my_matrix = "matrix"
+    with pytest.raises(ValueError, match=".*specify the weighting matrix either.*"):
+        LpNormRegularization(model_shape=(3,), weighting_matrix=my_matrix)
 
 def test_reference_model():
     pass

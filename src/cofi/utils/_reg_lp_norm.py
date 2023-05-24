@@ -87,10 +87,11 @@ class LpNormRegularization(BaseRegularization):
     def _generate_matrix(self):
         import findiff
 
-        if isinstance(self._weighting_matrix, str) or self._weighting_matrix is None:
+        if (isinstance(self._weighting_matrix, str) and self._weighting_matrix in REG_TYPES) \
+            or self._weighting_matrix is None:
             _reg_type = self._weighting_matrix
             if _reg_type == "damping" or _reg_type is None:  # 0th order difference
-                self._weighting_matrix = np.identity(self.model_size)
+                self._weighting_matrix = scipy.sparse.identity(self.model_size, format="csr")
             elif _reg_type in REG_TYPES:  # 1st/2nd order difference
                 if np.size(self.model_shape) == 1:  # 1D model
                     order = REG_TYPES[_reg_type]
@@ -123,7 +124,7 @@ class LpNormRegularization(BaseRegularization):
                     raise NotImplementedError(
                         "only 1D and 2D derivative operators implemented"
                     )
-        elif self._weighting_matrix:  # byo matrix
+        elif is_matrix_like(self._weighting_matrix):  # byo matrix
             if len(self._weighting_matrix.shape) != 2:
                 raise ValueError(
                     "the bring-your-own regularization matrix must be 2-dimensional"
@@ -133,6 +134,7 @@ class LpNormRegularization(BaseRegularization):
                     "the bring-your-own regularization matrix must be in shape (_, M) "
                     "where M is the model size"
                 )
+            self._weighting_matrix = scipy.sparse.csr_matrix(self._weighting_matrix)
         else:
             raise ValueError(
                 "please specify the weighting matrix either via a string among "
@@ -469,3 +471,13 @@ class QuadraticReg(BaseRegularization):
                 expected_dimension=self._model_size,
             )
         return flat_m
+
+
+matrix_like_classes = [np.ndarray] + [
+    getattr(scipy.sparse, name)
+    for name in scipy.sparse.__all__
+    if name.endswith('_matrix')
+]
+
+def is_matrix_like(obj):
+    return any(isinstance(obj, cls) for cls in matrix_like_classes)
