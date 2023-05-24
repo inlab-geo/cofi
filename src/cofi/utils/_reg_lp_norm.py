@@ -87,11 +87,15 @@ class LpNormRegularization(BaseRegularization):
     def _generate_matrix(self):
         import findiff
 
-        if (isinstance(self._weighting_matrix, str) and self._weighting_matrix in REG_TYPES) \
-            or self._weighting_matrix is None:
+        if (
+            isinstance(self._weighting_matrix, str)
+            and self._weighting_matrix in REG_TYPES
+        ) or self._weighting_matrix is None:
             _reg_type = self._weighting_matrix
             if _reg_type == "damping" or _reg_type is None:  # 0th order difference
-                self._weighting_matrix = scipy.sparse.identity(self.model_size, format="csr")
+                self._weighting_matrix = scipy.sparse.identity(
+                    self.model_size, format="csr"
+                )
             elif _reg_type in REG_TYPES:  # 1st/2nd order difference
                 if np.size(self.model_shape) == 1:  # 1D model
                     order = REG_TYPES[_reg_type]
@@ -476,8 +480,9 @@ class QuadraticReg(BaseRegularization):
 matrix_like_classes = [np.ndarray] + [
     getattr(scipy.sparse, name)
     for name in scipy.sparse.__all__
-    if name.endswith('_matrix')
+    if name.endswith("_matrix")
 ]
+
 
 def is_matrix_like(obj):
     return any(isinstance(obj, cls) for cls in matrix_like_classes)
