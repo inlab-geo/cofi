@@ -46,3 +46,7 @@ def test_add_regs_invalid():
         reg1 + reg2
     with pytest.raises(TypeError):
         reg1 + 1
+
+def test_mul_reg_with_constant():
+    # TODO
+    pass
