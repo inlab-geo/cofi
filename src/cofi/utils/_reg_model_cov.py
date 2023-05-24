@@ -6,9 +6,10 @@ from ._reg_base import BaseRegularization
 
 class ModelCovariance(BaseRegularization):
     r"""CoFI's utility class to calculate model prior distribution given
-    
+
     TODO Document me
     """
+
     def __init__(self, model_covariance_inv, mean_model):
         self._Cminv = model_covariance_inv
         self._mu = mean_model

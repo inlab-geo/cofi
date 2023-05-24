@@ -15,6 +15,7 @@ REG_TYPES = {
     "smoothing": 2,
 }
 
+
 class LpNormRegularization(BaseRegularization):
     r"""CoFI's utility class to calculate Lp-norm regularization, given the p value
     (default to 2), an optional weighting matrix and an optional reference value

@@ -10,6 +10,6 @@ __all__ = [
     "BaseRegularization",
     "LpNormRegularization",
     "QuadraticReg",
-    "ModelCovariance", 
+    "ModelCovariance",
     "GaussianPrior",
 ]
