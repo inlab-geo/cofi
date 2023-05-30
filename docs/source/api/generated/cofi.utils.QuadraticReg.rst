@@ -148,6 +148,21 @@ cofi.utils.QuadraticReg
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     .. automethod:: QuadraticReg.gradient
 
 

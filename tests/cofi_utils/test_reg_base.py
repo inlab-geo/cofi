@@ -52,5 +52,12 @@ def test_add_regs_invalid():
         reg1 + 1
 
 def test_mul_reg_with_constant():
-    # TODO
-    pass
+    reg = QuadraticReg(model_shape=(3,), weighting_matrix="damping")
+    with pytest.raises(TypeError):
+        "1" * reg
+    new_reg = 10 * reg
+    test_model = np.array([1,2,3])
+    assert new_reg(test_model) == 10 * reg(test_model)
+    assert np.array_equal(new_reg.gradient(test_model), 10 * reg.gradient(test_model))
+    assert np.array_equal(new_reg.hessian(test_model), 10 * reg.hessian(test_model))
+    assert reg.model_shape == new_reg.model_shape

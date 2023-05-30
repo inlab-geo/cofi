@@ -116,8 +116,8 @@ class BaseRegularization(metaclass=ABCMeta):
 
         >>> from cofi import BaseProblem
         >>> from cofi.utils import QuadraticReg
-        >>> reg1 = QuadraticReg(factor=1, model_size=3, reg_type="damping")
-        >>> reg2 = QuadraticReg(factor=2, model_size=3, reg_type="smoothing")
+        >>> reg1 = QuadraticReg(model_shape=(3,), weighting_matrix="damping")
+        >>> reg2 = QuadraticReg(model_shape=(3,), weighting_matrix="smoothing")
         >>> my_problem = BaseProblem()
         >>> my_problem.set_regularization(reg1 + reg2)
 
@@ -152,5 +152,63 @@ class BaseRegularization(metaclass=ABCMeta):
 
             def hessian(self, model):
                 return tmp_hess(model) + other_reg.hessian(model)
+
+        return CompositeRegularization()
+
+    def __rmul__(self, coefficient):
+        r"""Multiply a regularization term with a constant number
+
+        Parameters
+        ----------
+        coefficient : Number
+            the first argument of "*" operator; must be a Number
+
+        Returns
+        -------
+        BaseRegularization
+            a regularization term ``resRegularization`` such that:
+
+            - :math:`\text{resRegularization.reg}(m)=\text{coefficient}\times\text{self.reg}(m)`
+            - :math:`\text{resRegularization.gradient}(m)=\text{coefficient}\times\text{self.gradient}(m)`
+            - :math:`\text{resRegularization.hessian}(m)=\text{coefficient}\times\text{self.hessian}(m)`
+
+        Raises
+        ------
+        TypeError
+            when the ``coefficient`` is not of a python Number type
+
+        Examples
+        --------
+
+        >>> from cofi import BaseProblem
+        >>> from cofi.utils import QuadraticReg
+        >>> reg = QuadraticReg(model_shape=(3,), weighting_matrix="damping")
+        >>> my_problem = BaseProblem()
+        >>> my_problem.set_regularization(10 * reg)
+
+        """
+        if not isinstance(coefficient, Number):
+            raise TypeError(
+                f"unsupported operand type(s) for *: '{coefficient.__class__.__name__}' "
+                f"and '{self.__class__.__name__}"
+            )
+        tmp_model_shape = self.model_shape
+        tmp_reg = self.reg
+        tmp_grad = self.gradient
+        tmp_hess = self.hessian
+
+        class CompositeRegularization(BaseRegularization):
+            @property
+            def model_shape(self):
+                return tmp_model_shape
+
+            def reg(self, model):
+                return coefficient * tmp_reg(model)
+
+            def gradient(self, model):
+                return coefficient * tmp_grad(model)
+
+            def hessian(self, model):
+                return coefficient * tmp_hess(model)
 
         return CompositeRegularization()
