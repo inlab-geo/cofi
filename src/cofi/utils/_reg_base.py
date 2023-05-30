@@ -189,8 +189,8 @@ class BaseRegularization(metaclass=ABCMeta):
         """
         if not isinstance(coefficient, Number):
             raise TypeError(
-                f"unsupported operand type(s) for *: '{coefficient.__class__.__name__}' "
-                f"and '{self.__class__.__name__}"
+                f"unsupported operand type(s) for *: '{coefficient.__class__.__name__}'"
+                f" and '{self.__class__.__name__}"
             )
         tmp_model_shape = self.model_shape
         tmp_reg = self.reg
