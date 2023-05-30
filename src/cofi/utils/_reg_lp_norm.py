@@ -161,9 +161,7 @@ class LpNormRegularization(BaseRegularization):
                 f"number expected for argument `p` but got {p} of type {type(p)}"
             )
         elif p <= 0:
-            raise ValueError(
-                f"positive number expected for argument `p` but got {p}"
-            )
+            raise ValueError(f"positive number expected for argument `p` but got {p}")
         return p
 
     @staticmethod
@@ -177,10 +175,10 @@ class LpNormRegularization(BaseRegularization):
         else:
             if reference_model.shape != model_shape:
                 raise DimensionMismatchError(
-                    entered_dimension=reference_model.shape, 
-                    entered_name="reference_model", 
-                    expected_dimension=model_shape, 
-                    expected_source="model_shape", 
+                    entered_dimension=reference_model.shape,
+                    entered_name="reference_model",
+                    expected_dimension=model_shape,
+                    expected_source="model_shape",
                 )
             return model_shape
 
@@ -205,11 +203,11 @@ class LpNormRegularization(BaseRegularization):
         return np.sum(np.abs(mat) ** self._order)
 
     def _lp_norm_gradient(self, mat):
-        return self._order * np.abs(mat)**(self._order-1) * np.sign(mat)
+        return self._order * np.abs(mat) ** (self._order - 1) * np.sign(mat)
 
     def _lp_norm_hessian(self, mat):
         p = self._order
-        return p * (p - 1) * np.abs(mat)**(p-2)
+        return p * (p - 1) * np.abs(mat) ** (p - 2)
 
 
 class QuadraticReg(BaseRegularization):
