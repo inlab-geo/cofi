@@ -26,6 +26,9 @@ def test_p_vals_valid():
     assert reg(numpy.array([1,4])) == 3
 
 def test_p_vals_invalid():
+    # p = -1
+    with pytest.raises(ValueError, match=".*positive number expected.*got -1.*"):
+        LpNormRegularization(p=-1, model_shape=(2,))
     # p = None
     with pytest.raises(ValueError, match=".*number expected.*got None of type.*"):
         LpNormRegularization(p=None, model_shape=(2,))

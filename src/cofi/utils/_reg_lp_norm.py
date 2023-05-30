@@ -21,28 +21,28 @@ class LpNormRegularization(BaseRegularization):
     (default to 2), an optional weighting matrix and an optional reference value
 
     :math:`L(p, W, m_0) = ||W(m-m_0)||_p^p = \sum_i |W(m-m_0)_i|^p`
-    
+
     With element-wise gradient of:
-    
+
     :math:`\sum_i p|(W(m-m_0))_i|^{p-1}sign((W(m-m_0))_i)W_{ij}`
-    
+
     And element-wise hessian of:
-    
+
     :math:`\sum_i p(p-1)|(W(m-m_0))_i|^{p-2}W_{ij}W_{ik}`
 
     Where :math:`W` is a weighting matrix either generated given a specified type
     (e.g. :code:`weighting_matrix="smoothing"`), or a bring-your-own matrix
     (e.g. :code:`weighting_matrix=my_matrix`). This weighting matrix is by default
     in sparse type :class:`scipy.sparse.csr_matrix`.
-    
-    The weighting matrix (if not bring-your-own) can be generated provided with an 
+
+    The weighting matrix (if not bring-your-own) can be generated provided with an
     option from {:code:`"damping"`, :code:`"flattening"`, :code:`"smoothing"`}.
-    
+
     - If ``weighting_matrix == "damping"``, then
 
       .. toggle::
 
-        - :attr:`matrix` is the identity matrix of size :math:`(M,M)`, where 
+        - :attr:`matrix` is the identity matrix of size :math:`(M,M)`, where
           :math:`M` is the number of model parameters
 
     - If ``weighting_matrix == "roughening"`` (or equivalently ``"flattening"``),
@@ -50,7 +50,7 @@ class LpNormRegularization(BaseRegularization):
 
       .. toggle::
 
-        - :attr:`matrix` is :math:`W` that we generate based on the model shape you've 
+        - :attr:`matrix` is :math:`W` that we generate based on the model shape you've
           provided. For 1D problems, it looks like
 
           :math:`\begin{pmatrix}-1.5&2&-0.5&&&\\-0.5&&0.5&&&&&\\&-0.5&&0.5&&&&\\&&...&&...&&&\\&&&-0.5&&0.5&&\\&&&&-0.5&&0.5&\\&&&&&0.5&-2&1.5\end{pmatrix}`
@@ -97,19 +97,19 @@ class LpNormRegularization(BaseRegularization):
     DimensionMismatchError
         if both :code:`model_size` and :code:`reference_model` are given but they don't
         match in dimension
-    
+
     Examples
     --------
-    
+
     Generate an L1 norm damping regularization for models of size 3:
-    
+
     >>> from cofi.utils import LpNormRegularization
     >>> my_reg = LpNormRegularization(p=1, model_shape=(3,))
     >>> my_reg(np.array([0,2,1]))
     3.0
-    
+
     To use togethter with :class:`cofi.BaseProblem`:
-    
+
     >>> from cofi import BaseProblem
     >>> my_problem.set_regularization(my_reg)
     """
@@ -280,24 +280,24 @@ class LpNormRegularization(BaseRegularization):
 
 
 class QuadraticReg(LpNormRegularization):
-    r"""CoFI's utility class to calculate weighted L2 norm regularization with an 
+    r"""CoFI's utility class to calculate weighted L2 norm regularization with an
     optional reference model
-    
+
     :math:`L(W, m_0) = ||D(m-m_0)||_2^2`
-    
+
     With gradient of:
-    
+
     :math:`2\times W(m-m_0)`
-    
+
     And hessian of:
-    
+
     :math:`2\times W.T W`
-    
+
     Where :math:`W` is a weighting matrix either generated given a specified type
     (e.g. :code:`weighting_matrix="smoothing"`), or a bring-your-own matrix
     (e.g. :code:`weighting_matrix=my_matrix`). This weighting matrix is by default
     in sparse type :class:`scipy.sparse.csr_matrix`.
-    
+
     This class is a special case of :class:`LpNormRegularization` with :code:`p=2`.
 
     Parameters
@@ -324,7 +324,7 @@ class QuadraticReg(LpNormRegularization):
     --------
 
     Generate an quadratic smoothing regularization for models of size 3:
-    
+
     >>> from cofi.utils import QuadraticReg
     >>> my_reg = QuadraticReg(weighting_matrix="smoothing", model_shape=(4,))
     >>> my_reg(np.array([0,2,1,0]))
@@ -343,13 +343,11 @@ class QuadraticReg(LpNormRegularization):
         reference_model: np.ndarray = None,
     ):
         super().__init__(
-            p=2, 
+            p=2,
             weighting_matrix=weighting_matrix,
             model_shape=model_shape,
-            reference_model=reference_model
+            reference_model=reference_model,
         )
-
-
 
 
 matrix_like_classes = [np.ndarray] + [
