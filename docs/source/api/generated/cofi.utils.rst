@@ -25,6 +25,8 @@ cofi.utils
 
   cofi.utils.LpNormRegularization
 
+  cofi.utils.ModelCovariance
+
   cofi.utils.QuadraticReg
 
 

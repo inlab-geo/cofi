@@ -21,6 +21,60 @@ class LpNormRegularization(BaseRegularization):
     (default to 2), an optional weighting matrix and an optional reference value
 
     :math:`L(p, W, m_0) = ||W(m-m_0)||_p^p = \sum_i |W(m-m_0)_i|^p`
+    
+    With element-wise gradient of:
+    
+    :math:`\sum_i p|(W(m-m_0))_i|^{p-1}sign((W(m-m_0))_i)W_{ij}`
+    
+    And element-wise hessian of:
+    
+    :math:`\sum_i p(p-1)|(W(m-m_0))_i|^{p-2}W_{ij}W_{ik}`
+
+    Where :math:`W` is a weighting matrix either generated given a specified type
+    (e.g. :code:`weighting_matrix="smoothing"`), or a bring-your-own matrix
+    (e.g. :code:`weighting_matrix=my_matrix`). This weighting matrix is by default
+    in sparse type :class:`scipy.sparse.csr_matrix`.
+    
+    The weighting matrix (if not bring-your-own) can be generated provided with an 
+    option from {:code:`"damping"`, :code:`"flattening"`, :code:`"smoothing"`}.
+    
+    - If ``weighting_matrix == "damping"``, then
+
+      .. toggle::
+
+        - :attr:`matrix` is the identity matrix of size :math:`(M,M)`, where 
+          :math:`M` is the number of model parameters
+
+    - If ``weighting_matrix == "roughening"`` (or equivalently ``"flattening"``),
+      then
+
+      .. toggle::
+
+        - :attr:`matrix` is :math:`W` that we generate based on the model shape you've 
+          provided. For 1D problems, it looks like
+
+          :math:`\begin{pmatrix}-1.5&2&-0.5&&&\\-0.5&&0.5&&&&&\\&-0.5&&0.5&&&&\\&&...&&...&&&\\&&&-0.5&&0.5&&\\&&&&-0.5&&0.5&\\&&&&&0.5&-2&1.5\end{pmatrix}`
+
+          .. :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
+
+          While for higher dimension problems, by default it's a flattened version of
+          an N-D array. The actual ordering of model parameters in higher dimensions
+          is controlled by :class:`findiff.operators.FinDiff`.
+
+    - If ``reg_type == "smoothing"``, then
+
+      .. toggle::
+
+        - :attr:`matrix` is :math:`W` that we generate based on the model shape you've
+          provided. For 1D problems, it looks like
+
+          :math:`\begin{pmatrix}2&-5&4&-1&&&\\1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\\&&&-1&4&-5&2\end{pmatrix}`
+
+          .. :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
+
+          While for higher dimension problems, by default it's a flattened version of
+          an N-D array. The actual ordering of model parameters in higher dimensions
+          is controlled by :class:`findiff.operators.FinDiff`.
 
     Parameters
     ----------
@@ -43,6 +97,21 @@ class LpNormRegularization(BaseRegularization):
     DimensionMismatchError
         if both :code:`model_size` and :code:`reference_model` are given but they don't
         match in dimension
+    
+    Examples
+    --------
+    
+    Generate an L1 norm damping regularization for models of size 3:
+    
+    >>> from cofi.utils import LpNormRegularization
+    >>> my_reg = LpNormRegularization(p=1, model_shape=(3,))
+    >>> my_reg(np.array([0,2,1]))
+    3.0
+    
+    To use togethter with :class:`cofi.BaseProblem`:
+    
+    >>> from cofi import BaseProblem
+    >>> my_problem.set_regularization(my_reg)
     """
 
     def __init__(
@@ -111,7 +180,7 @@ class LpNormRegularization(BaseRegularization):
                     if self.model_size < order + 2:
                         raise ValueError(
                             f"the model_size needs to be at least >={order+2} "
-                            f"for regularization type '{self._reg_type}'"
+                            f"for regularization type '{_reg_type}'"
                         )
                     d_dx = findiff.FinDiff(0, 1, order)
                     self._weighting_matrix = d_dx.matrix((self.model_size,))
@@ -121,10 +190,10 @@ class LpNormRegularization(BaseRegularization):
                     nx = self.model_shape[0]
                     ny = self.model_shape[1]
                     order = REG_TYPES[_reg_type]
-                    if nx > order + 2 or ny < order + 2:
+                    if nx < order + 2 or ny < order + 2:
                         raise ValueError(
                             f"the model_size needs to be at least (>={order+2},"
-                            f" >={order+2}) for regularization type '{self._reg_type}'"
+                            f" >={order+2}) for regularization type '{_reg_type}'"
                         )
                     d_dx = findiff.FinDiff(0, 1, order)  # x direction
                     d_dy = findiff.FinDiff(1, 1, order)  # y direction
@@ -189,7 +258,7 @@ class LpNormRegularization(BaseRegularization):
                 entered_name="model",
                 entered_dimension=model.shape,
                 expected_source="model_size",
-                expected_dimension=self._model_size,
+                expected_dimension=self.model_size,
             )
         return flat_m
 
@@ -210,311 +279,77 @@ class LpNormRegularization(BaseRegularization):
         return p * (p - 1) * np.abs(mat) ** (p - 2)
 
 
-class QuadraticReg(BaseRegularization):
-    r"""CoFI's utility class to calculate damping, flattening (roughening), and
-    smoothing regularization
-
-    .. tip::
-
-        The regularization term is generally calculated in the form of:
-        :math:`\text{factor}\times||D(m-m_0)||_2^2`, hence called ``QuadraticReg``.
-        Where:
-
-        - :math:`\text{factor}` is a coefficient of the regularization term
-        - :math:`D` is a weighting matrix depending on what type of regularization
-          you've specified (details :ref:`below <details_reg_type>`), and can also be a
-          "bring-your-own" matrix fed by the ``byo_matrix`` parameter
-        - :math:`m_0` is a reference matrix only used in the ``damping`` case
-
-
-    .. _details_reg_type:
-
-    Now we explain what is the ``reg_type``, and how it changes the ``matrix`` (i.e.
-    :math:`D` in the generic formula above).
-    The terms "damping", "flattening" and "smoothing" correspond to the zeroth order,
-    first order and second order Tikhonov regularization approaches respectively.
-
-    - If ``reg_type == "damping"``, then
-
-      .. toggle::
-
-        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||m-m_0||_2^2`
-        - :meth:`gradient` produces
-          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times(m-m_0)`
-        - :meth:`hessian` produces
-          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times I`
-        - :attr:`matrix` is the identity matrix of size :math:`(M,M)`
-        - where
-
-          - :math:`m_0` is a reference model that you can specify in ``ref_model`` argument
-            (default to zero)
-          - :math:`M` is the number of model parameters
-
-    - If ``reg_type == "roughening"`` (or equivalently ``"flattening"``),
-      then
-
-      .. toggle::
-
-        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
-        - :meth:`gradient` produces
-          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times D^TDm`
-        - :meth:`hessian` produces
-          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times D^TD`
-        - :attr:`matrix` is :math:`D`
-        - where
-
-          - :math:`D` matrix helps calculate the first order derivative of :math:`m`.
-            For 1D problems, it looks like
-
-            :math:`\begin{pmatrix}-1.5&2&-0.5&&&\\-0.5&&0.5&&&&&\\&-0.5&&0.5&&&&\\&&...&&...&&&\\&&&-0.5&&0.5&&\\&&&&-0.5&&0.5&\\&&&&&0.5&-2&1.5\end{pmatrix}`
-
-            .. :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
-
-            While for higher dimension problems, by default it's a flattened version of
-            an N-D array. The actual ordering of model parameters in higher dimensions
-            is controlled by :class:`findiff.operators.FinDiff`.
-
-    - If ``reg_type == "smoothing"``, then
-
-      .. toggle::
-
-        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
-        - :meth:`gradient` produces
-          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times D^TDm`
-        - :meth:`hessian` produces
-          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times D^TD`
-        - :attr:`matrix` is :math:`D`
-        - where
-
-          - :math:`D` matrix helps calculate the second order derivatives of :math:`m`.
-            For 1D problems, it looks like
-
-            :math:`\begin{pmatrix}2&-5&4&-1&&&\\1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\\&&&-1&4&-5&2\end{pmatrix}`
-
-            .. :math:`\begin{pmatrix}1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\end{pmatrix}`
-
-            While for higher dimension problems, by default it's a flattened version of
-            an N-D array. The actual ordering of model parameters in higher dimensions
-            is controlled by :class:`findiff.operators.FinDiff`.
-
-    - If ``reg_type == None``, then we assume you want to use the argument
-      ``byo_matrix``,
-
-      .. toggle::
-
-        - :meth:`reg` produces :math:`\text{reg}=\text{factor}\times||Dm||_2^2`
-        - :meth:`gradient` produces
-          :math:`\frac{\partial\text{reg}}{\partial m}=2\times\text{factor}\times D^TDm`
-        - :meth:`hessian` produces
-          :math:`\frac{\partial^2\text{reg}}{\partial m}=2\times\text{factor}\times D^TD`
-        - :attr:`matrix` is :math:`D`
-        - where
-
-          - :math:`D` matrix is ``byo_matrix`` from the arguments (or identity matrix
-            if ``byo_matrix is None``)
+class QuadraticReg(LpNormRegularization):
+    r"""CoFI's utility class to calculate weighted L2 norm regularization with an 
+    optional reference model
+    
+    :math:`L(W, m_0) = ||D(m-m_0)||_2^2`
+    
+    With gradient of:
+    
+    :math:`2\times W(m-m_0)`
+    
+    And hessian of:
+    
+    :math:`2\times W.T W`
+    
+    Where :math:`W` is a weighting matrix either generated given a specified type
+    (e.g. :code:`weighting_matrix="smoothing"`), or a bring-your-own matrix
+    (e.g. :code:`weighting_matrix=my_matrix`). This weighting matrix is by default
+    in sparse type :class:`scipy.sparse.csr_matrix`.
+    
+    This class is a special case of :class:`LpNormRegularization` with :code:`p=2`.
 
     Parameters
     ----------
-    factor : Number
-        the scale for the regularization term
-    model_size : Number
-        the number or shape of elements in an inference model
-    reg_type : str
-        specify what kind of regularization is to be calculated, by default
-        ``"damping"``
-    ref_model : np.ndarray
-        reference model used only when ``reg_type == "damping"``,
-        by default None (if this is None, then reference model is assumed to be zero)
-    byo_matrix : np.ndarray
-        bring-your-own matrix, used only when ``reg_type == None``
+    weighting_matrix: str or np.ndarray
+        regularization type (one of {:code:`"damping"`, :code:`"flattening"`
+        :code:`"smoothing"`}), or a bring-your-own weighting matrix, default to
+        "damping" (identity matrix for weighting)
+    model_shape : tuple
+        shape of the model, must be supplied if the :code:`reference_model` is not
+        given
+    reference_model: np.ndarray
+        :math:`m_0` in the formula above
 
     Raises
     ------
     ValueError
-        when input arguments don't conform to the standards described above. Check
-        error message for details.
+        if neither :code:`model_size` nor :code:`reference_model` is given
+    DimensionMismatchError
+        if both :code:`model_size` and :code:`reference_model` are given but they don't
+        match in dimension
 
     Examples
     --------
 
-    Generate a quadratic damping regularization matrix for model of size 3:
-
+    Generate an quadratic smoothing regularization for models of size 3:
+    
     >>> from cofi.utils import QuadraticReg
-    >>> reg = QuadraticReg(factor=1, model_size=3)
-    >>> reg(np.array([1,2,3]))
-    3.0
+    >>> my_reg = QuadraticReg(weighting_matrix="smoothing", model_shape=(4,))
+    >>> my_reg(np.array([0,2,1,0]))
+    53.99999999999999
 
-    To use together with :class:`cofi.BaseProblem`:
+    To use togethter with :class:`cofi.BaseProblem`:
 
     >>> from cofi import BaseProblem
-    >>> from cofi.utils import QuadraticReg
-    >>> reg = QuadraticReg(factor=1, model_size=3)
-    >>> my_problem = BaseProblem()
-    >>> my_problem.set_regularization(reg)
-
-    You may also combine two regularization terms:
-
-    >>> from cofi import BaseProblem
-    >>> from cofi.utils import QuadraticReg
-    >>> reg1 = QuadraticReg(factor=1, model_size=3, reg_type="damping")
-    >>> reg2 = QuadraticReg(factor=2, model_size=5, reg_type="smoothing")
-    >>> my_problem = BaseProblem()
-    >>> my_problem.set_regularization(reg1 + reg2)
+    >>> my_problem.set_regularization(my_reg)
     """
 
     def __init__(
         self,
-        factor: Number,
-        model_size: Union[Number, np.ndarray],
-        reg_type: str = "damping",
-        ref_model: np.ndarray = None,
-        byo_matrix: np.ndarray = None,
+        weighting_matrix: Union[str, np.ndarray] = "damping",
+        model_shape: tuple = None,
+        reference_model: np.ndarray = None,
     ):
-        super().__init__()
-        self._factor = self._validate_factor(factor)
-        self._model_size = model_size
-        self._reg_type = self._validate_reg_type(reg_type)
-        self._ref_model = ref_model
-        self._byo_matrix = byo_matrix
-        self._generate_matrix()
+        super().__init__(
+            p=2, 
+            weighting_matrix=weighting_matrix,
+            model_shape=model_shape,
+            reference_model=reference_model
+        )
 
-    @property
-    def model_shape(self) -> tuple:
-        return self._model_size
 
-    @property
-    def model_size(self) -> Number:
-        """the number of model parameters
-
-        This is always a number describing number of unknowns
-        """
-        if np.ndim(self._model_size):
-            return reduce(lambda a, b: a * b, np.array(self._model_size), 1)
-        return self._model_size
-
-    @property
-    def matrix(self) -> np.ndarray:
-        """the regularization matrix
-
-        This is either an identity matrix, or first/second order difference matrix
-        (generated by Python package ``findiff``), or a custom matrix brought on your
-        own.
-        """
-        return self._D
-
-    def reg(self, model: np.ndarray) -> Number:
-        flat_m = self._validate_model(model)
-        if self._reg_type == "damping":
-            if self._ref_model is None:
-                return self._factor * flat_m.T @ flat_m
-            diff_ref = flat_m - self._ref_model
-            return self._factor * diff_ref.T @ diff_ref
-        else:
-            flat_m = self._validate_model(model)
-            weighted_m = self.matrix @ flat_m
-            return self._factor * weighted_m.T @ weighted_m
-
-    def gradient(self, model: np.ndarray) -> np.ndarray:
-        flat_m = self._validate_model(model)
-        if self._reg_type == "damping":
-            if self._ref_model is None:
-                return 2 * self._factor * flat_m
-            return 2 * self._factor * (flat_m - self._ref_model)
-        else:
-            return 2 * self._factor * self.matrix.T @ self.matrix @ flat_m
-
-    def hessian(self, model: np.ndarray) -> np.ndarray:
-        if self._reg_type == "damping":
-            return 2 * self._factor * np.eye(self._model_size)
-        else:
-            return 2 * self._factor * self.matrix.T @ self.matrix
-
-    @staticmethod
-    def _validate_factor(factor):
-        if not isinstance(factor, Number):
-            raise ValueError("the regularization factor must be a number")
-        elif factor < 0:
-            raise ValueError("the regularization factor must be non-negative")
-        return factor
-
-    @staticmethod
-    def _validate_reg_type(reg_type):
-        if reg_type is not None and (
-            not isinstance(reg_type, str) or reg_type not in REG_TYPES
-        ):
-            raise ValueError(
-                "Please choose a valid regularization type. `damping`, "
-                "`flattening` and `smoothing` are supported."
-            )
-        return reg_type
-
-    def _generate_matrix(self):
-        import findiff
-
-        if self._reg_type == "damping":
-            if not isinstance(self._model_size, Number):
-                raise ValueError("model_size must be a number when damping is selected")
-            self._D = np.identity(self._model_size)
-        elif self._reg_type in REG_TYPES:  # 1st/2nd order Tikhonov
-            # 1D model
-            if np.size(self._model_size) == 1:
-                order = REG_TYPES[self._reg_type]
-                if self._model_size < order + 2:
-                    raise ValueError(
-                        f"the model_size needs to be at least >={order+2} "
-                        f"for regularization type '{self._reg_type}'"
-                    )
-                d_dx = findiff.FinDiff(0, 1, order)
-                self._D = d_dx.matrix((self._model_size,)).toarray()
-            # 2D model
-            elif np.size(self._model_size) == 2 and np.ndim(self._model_size) == 1:
-                nx = self._model_size[0]
-                ny = self._model_size[1]
-                order = REG_TYPES[self._reg_type]
-                if nx < order + 2 or ny < order + 2:
-                    raise ValueError(
-                        f"the model_size needs to be at least (>={order+2},"
-                        f" >={order+2}) for regularization type '{self._reg_type}'"
-                    )
-                d_dx = findiff.FinDiff(0, 1, order)  # x direction
-                d_dy = findiff.FinDiff(1, 1, order)  # y direction
-                matx = d_dx.matrix((nx, ny))  # scipy sparse matrix
-                maty = d_dy.matrix((nx, ny))  # scipy sparse matrix
-                self._D = np.vstack((matx.toarray(), maty.toarray()))  # combine above
-            else:
-                raise NotImplementedError(
-                    "only 1D and 2D derivative operators implemented"
-                )
-        elif self._reg_type is None:
-            if not isinstance(self._model_size, Number):
-                raise ValueError(
-                    "please provide a number for 'model_size' when bringing your "
-                    "own weighting matrix"
-                )
-            if self._byo_matrix is None:
-                self._D = np.identity(self._model_size)
-            else:
-                self._D = self._byo_matrix
-            if len(self._D.shape) != 2:
-                raise ValueError(
-                    "the bring-your-own regularization matrix must be 2-dimensional"
-                )
-            elif self._D.shape[1] != self._model_size:
-                raise ValueError(
-                    "the bring-your-own regularization matrix must be in shape (_, M) "
-                    "where M is the model size"
-                )
-
-    def _validate_model(self, model):
-        flat_m = np.ravel(model)
-        if flat_m.size != self.model_size:
-            raise DimensionMismatchError(
-                entered_name="model",
-                entered_dimension=model.shape,
-                expected_source="model_size",
-                expected_dimension=self._model_size,
-            )
-        return flat_m
 
 
 matrix_like_classes = [np.ndarray] + [

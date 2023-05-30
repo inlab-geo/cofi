@@ -145,6 +145,9 @@ cofi.utils.QuadraticReg
 
 
 
+
+
+
     .. automethod:: QuadraticReg.gradient
 
 
@@ -167,6 +170,8 @@ cofi.utils.QuadraticReg
 
 
     .. autoattribute:: QuadraticReg.matrix
+
+    .. autoattribute:: QuadraticReg.model_shape
 
     .. autoattribute:: QuadraticReg.model_size
 

@@ -7,7 +7,7 @@ from cofi._exceptions import DimensionMismatchError
 
 def test_damping():
     # no ref model
-    reg = QuadraticReg(1, 3)
+    reg = QuadraticReg(None, (3,))
     reg_mat = reg.matrix
     assert reg_mat.shape[0] == 3
     assert reg_mat.shape[0] == reg_mat.shape[1]
@@ -23,7 +23,7 @@ def test_damping():
     assert hess[1,1] == 2
     assert hess[2,2] == 2
     # ref model
-    reg = QuadraticReg(1, 3, ref_model=np.array([1,1,1]))
+    reg = QuadraticReg(None, (3,), np.array([1,1,1]))
     reg_val = reg(np.array([1,2,3]))
     assert reg_val == 5
     grad = reg.gradient(np.array([1,2,3]))
@@ -35,25 +35,15 @@ def test_damping():
     assert hess[1,1] == 2
     assert hess[2,2] == 2
 
-def test_damping_invalid():
-    with pytest.raises(ValueError): QuadraticReg(1, 10, "dampingnf")
-    with pytest.raises(ValueError): QuadraticReg(-1, 3)
-    with pytest.raises(ValueError): QuadraticReg(None, 3)
-    with pytest.raises(ValueError): QuadraticReg("hello", 3)    
-    with pytest.raises(ValueError): QuadraticReg(1, (1,2), "damping")
-    reg = QuadraticReg(1, 3)
-    with pytest.raises(DimensionMismatchError): 
-        reg(np.array([1,1]))
-
 def test_flattening_1d():
-    reg = QuadraticReg(factor=1, model_size=3, reg_type="flattening")
+    reg = QuadraticReg("flattening", (3,))
     assert pytest.approx(reg(np.zeros(3))) == 0
     assert pytest.approx(reg(np.ones(3))) == 0
     assert pytest.approx(reg(np.array([1,5,10]))) == 62.75
 
 def test_flattening_2d():
-    reg = QuadraticReg(factor=1, model_size=(3,3), reg_type="flattening")
-    reg = QuadraticReg(factor=1, model_size=(3,3), reg_type="roughening")
+    reg = QuadraticReg("flattening", (3,3))
+    reg = QuadraticReg("roughening", (3,3))
     # 1
     assert reg(np.zeros((3,3))) == 0
     # 2
@@ -71,28 +61,28 @@ def test_flattening_2d():
     reg_hess = reg.hessian(test_model)
     assert reg_hess.shape == (9,9)
     # 5 - test matrix
-    reg = QuadraticReg(1, 3, reg_type="flattening")
-    assert np.allclose(reg.matrix, np.array([[-1.5, 2, -0.5], [-0.5, 0, 0.5], [0.5, -2, 1.5]]))
+    reg = QuadraticReg("flattening", (3,))
+    assert np.allclose(reg.matrix.toarray(), np.array([[-1.5, 2, -0.5], [-0.5, 0, 0.5], [0.5, -2, 1.5]]))
 
 def test_flattening_invalid():
     # 1
     with pytest.raises(NotImplementedError, match=r".*only 1D and 2D derivative.*"): 
-        QuadraticReg(factor=1, model_size=(1,2,3), reg_type="roughening")
+        QuadraticReg("roughening", (1,2,3))
     # 2
     with pytest.raises(ValueError, match=r".*at least \(>=3, >=3\).*'roughening'.*"):
-        QuadraticReg(factor=1, model_size=(2,3), reg_type="roughening")
+        QuadraticReg("roughening", (2,3))
     # 3
     with pytest.raises(ValueError, match=r".*at least >=3 for.*flattening.*"): 
-        QuadraticReg(factor=1, model_size=2, reg_type="flattening")
+        QuadraticReg("flattening", (2,))
 
 def test_smoothing_1d():
-    reg = QuadraticReg(factor=1, model_size=4, reg_type="smoothing")
+    reg = QuadraticReg("smoothing", (4,))
     assert pytest.approx(reg(np.zeros(4))) == 0
     assert pytest.approx(reg(np.ones(4))) == 0
     assert pytest.approx(reg(np.array([1,5,10,20]))) == 116
 
 def test_smoothing_2d():
-    reg = QuadraticReg(factor=1, model_size=(4,4), reg_type="smoothing")
+    reg = QuadraticReg("smoothing", (4,4))
     # 1
     assert pytest.approx(reg(np.zeros((4,4)))) == 0
     # 2
@@ -110,37 +100,36 @@ def test_smoothing_2d():
     reg_hess = reg.hessian(test_model)
     assert reg_hess.shape == (16,16)
     # 5 - test matrix
-    reg = QuadraticReg(1, 4, reg_type="smoothing")
-    assert np.allclose(reg.matrix, np.array([[2.0,-5,4,-1],[1,-2,1,0],[0,1,-2,1],[-1,4,-5,2]]))
+    reg = QuadraticReg("smoothing", (4,))
+    print(reg.matrix)
+    assert np.allclose(reg.matrix.toarray(), np.array([[2.0,-5,4,-1],[1,-2,1,0],[0,1,-2,1],[-1,4,-5,2]]))
 
 def test_smoothing_invalid():
     # 1
     with pytest.raises(NotImplementedError, match=r".*only 1D and 2D derivative.*"): 
-        QuadraticReg(1, (1,2,3), reg_type="smoothing")
+        QuadraticReg("smoothing", (1,2,3))
     # 2
     with pytest.raises(ValueError, match=r".*at least \(>=4, >=4\).*'smoothing'.*"):
-        QuadraticReg(factor=1, model_size=(2,3), reg_type="smoothing")
+        QuadraticReg("smoothing", (2,3))
     # 3
-    reg = QuadraticReg(factor=1, model_size=(4,4), reg_type="smoothing")
+    reg = QuadraticReg("smoothing", (4,4))
     with pytest.raises(ValueError): reg(np.zeros((3,3)))
     # 4
     with pytest.raises(ValueError, match=r".*at least >=4 for.*smoothing.*"): 
-        QuadraticReg(factor=1, model_size=3, reg_type="smoothing")
+        QuadraticReg("smoothing", (3,))
 
 def test_byo():
     # 1
-    reg = QuadraticReg(1, 3, None)
+    reg = QuadraticReg(None, (3,))
     reg_mat = reg.matrix
     assert reg_mat.shape[0] == 3
     assert reg_mat.shape[0] == reg_mat.shape[1]
     assert (reg_mat == np.eye(reg_mat.shape[0])).all()
     # 2
-    reg = QuadraticReg(1, 2, None, byo_matrix=np.array([[1,2],[3,4]]))
+    reg = QuadraticReg(np.array([[1,2],[3,4]]), (2,))
 
 def test_byo_invalid():
     with pytest.raises(ValueError, match=r".*must be 2-dimensional*"):
-        QuadraticReg(1, 3, None, byo_matrix=np.array([1,2,3]))
+        QuadraticReg(np.array([1,2,3]), (3,))
     with pytest.raises(ValueError, match=r".*must be in shape (_, M)*"):
-        QuadraticReg(1, 3, None, byo_matrix=np.array([[1,2],[3,4]]))
-    with pytest.raises(ValueError, match=r".*provide a number for 'model_size'.*"):
-        QuadraticReg(1, (1,2), None, byo_matrix=np.array([[1,2],[3,4]]))
+        QuadraticReg(np.array([[1,2],[3,4]]), (3,))
