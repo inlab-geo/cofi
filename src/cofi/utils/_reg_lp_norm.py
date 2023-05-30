@@ -54,7 +54,7 @@ class LpNormRegularization(BaseRegularization):
     ):
         self._order = self._validate_p(p)
         self._weighting_matrix = weighting_matrix
-        self._model_shape = model_shape
+        self._model_shape = self._validate_shape(model_shape, reference_model)
         self._reference_model = reference_model
         self._generate_matrix()
 
@@ -65,10 +65,19 @@ class LpNormRegularization(BaseRegularization):
         return self._lp_norm(weighted_diff_m)
 
     def gradient(self, model: np.ndarray) -> np.ndarray:
-        pass
+        flat_m = self._validate_model(model)
+        diff_m = self._model_diff_to_ref(flat_m)
+        weighted_diff_m = self._weighting_matrix @ diff_m
+        grad_lp_norm = self._lp_norm_gradient(weighted_diff_m)
+        return self.matrix.T @ grad_lp_norm
 
     def hessian(self, model: np.ndarray) -> np.ndarray:
-        pass
+        W = self._weighting_matrix
+        flat_m = self._validate_model(model)
+        diff_m = self._model_diff_to_ref(flat_m)
+        weighted_diff_m = W @ diff_m
+        hess_lp_norm = self._lp_norm_hessian(weighted_diff_m)
+        return W.T @ np.diag(hess_lp_norm) @ W
 
     @property
     def model_shape(self) -> tuple:
@@ -149,9 +158,31 @@ class LpNormRegularization(BaseRegularization):
     def _validate_p(p):
         if not isinstance(p, Number):
             raise ValueError(
-                f"number expected for argument p but got {p} of type {type(p)}"
+                f"number expected for argument `p` but got {p} of type {type(p)}"
+            )
+        elif p <= 0:
+            raise ValueError(
+                f"positive number expected for argument `p` but got {p}"
             )
         return p
+
+    @staticmethod
+    def _validate_shape(model_shape, reference_model):
+        if model_shape is None and reference_model is None:
+            raise ValueError("please provide the model shape")
+        elif model_shape is None and reference_model is not None:
+            return reference_model.shape
+        elif model_shape is not None and reference_model is None:
+            return model_shape
+        else:
+            if reference_model.shape != model_shape:
+                raise DimensionMismatchError(
+                    entered_dimension=reference_model.shape, 
+                    entered_name="reference_model", 
+                    expected_dimension=model_shape, 
+                    expected_source="model_shape", 
+                )
+            return model_shape
 
     def _validate_model(self, model):
         flat_m = np.ravel(model)
@@ -172,6 +203,13 @@ class LpNormRegularization(BaseRegularization):
 
     def _lp_norm(self, mat):
         return np.sum(np.abs(mat) ** self._order)
+
+    def _lp_norm_gradient(self, mat):
+        return self._order * np.abs(mat)**(self._order-1) * np.sign(mat)
+
+    def _lp_norm_hessian(self, mat):
+        p = self._order
+        return p * (p - 1) * np.abs(mat)**(p-2)
 
 
 class QuadraticReg(BaseRegularization):
@@ -341,6 +379,10 @@ class QuadraticReg(BaseRegularization):
         self._ref_model = ref_model
         self._byo_matrix = byo_matrix
         self._generate_matrix()
+
+    @property
+    def model_shape(self) -> tuple:
+        return self._model_size
 
     @property
     def model_size(self) -> Number:

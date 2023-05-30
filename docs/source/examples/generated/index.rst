@@ -41,9 +41,10 @@ Example Gallery
 
     </div>
 
-========================
-Real-world Data Examples
-========================
+=============
+Data Examples
+=============
+
 
 
 .. raw:: html

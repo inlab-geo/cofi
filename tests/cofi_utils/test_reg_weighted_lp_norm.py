@@ -21,9 +21,6 @@ def test_p_vals_valid():
     # p = 1
     reg = LpNormRegularization(p=1, model_shape=(2,))
     assert reg(numpy.array([1,2])) == 3
-    # p = 0
-    reg = LpNormRegularization(p=0, model_shape=(2,))
-    assert reg(numpy.array([1,2])) == 2
     # p = 0.5
     reg = LpNormRegularization(p=0.5, model_shape=(2,))
     assert reg(numpy.array([1,4])) == 3
@@ -90,57 +87,100 @@ def test_weighting_invalid():
         LpNormRegularization(model_shape=(3,), weighting_matrix=my_matrix)
 
 def test_reference_model():
-    pass
+    # zero reference model == default
+    ref_model = numpy.array([0,0])
+    reg_with_m0 = LpNormRegularization(2, reference_model=ref_model)
+    reg_without_m0 = LpNormRegularization(2, model_shape=(2,))
+    assert reg_with_m0(ref_model) == reg_without_m0(ref_model)
+    # nonzero reference model
+    ref_model = numpy.array([0,1])
+    reg = LpNormRegularization(reference_model=ref_model)
+    assert reg(ref_model) == 0
+    assert reg(numpy.array([0,0])) == 1
 
 def test_model_size_must_be_given():
     # through model_size
+    reg = LpNormRegularization(model_shape=(2,))
+    assert reg.model_shape == (2,)
+    assert reg.model_size == 2
     # through reference_model
+    reg = LpNormRegularization(reference_model=numpy.array([1,2]))
+    assert reg.model_shape == (2,)
+    assert reg.model_size == 2
     # error if neither is supplied
-    pass
+    with pytest.raises(ValueError, match=".*please provide the model shape.*"):
+        reg = LpNormRegularization()
 
 def test_reference_model_matching_shape():
-    # ensure shape inferred from reference_model
     # ensure given model_shape matches reference_model
-    pass
+    LpNormRegularization(model_shape=(2,), reference_model=numpy.array([1,2]))
+    with pytest.raises(DimensionMismatchError, match=".*doesn't match and cannot be reshaped.*"):
+        LpNormRegularization(model_shape=(3,), reference_model=numpy.array([1,2]))
 
+def test_gradient_hessian_1():
+    # None, p=1, without m0
+    reg_none = LpNormRegularization(p=1, model_shape=(3,))
+    grad_none = reg_none.gradient(numpy.array([1,2,3]))
+    assert numpy.array_equal(grad_none, numpy.array([1,1,1]))
+    hess_none = reg_none.hessian(numpy.array([1,2,3]))
+    assert not numpy.any(hess_none)
 
-# integration test
-@pytest.mark.parametrize(
-    (
-        "input_p,input_weighting_matrix,input_model_shape,input_reference_model,"
-        "expected_matrix,test_model_valid,expected_reg,expected_gradient,"
-        "expected_hessian,expected_model_size,test_model_invalid"
-    ),
-    [
-        # (),
-        # (),
-    ]
-)
-def test_valid_cases(
-    input_p, 
-    input_weighting_matrix, 
-    input_model_shape, 
-    input_reference_model, 
-    expected_matrix, 
-    expected_model_size, 
-    test_model_valid, 
-    expected_reg,
-    expected_gradient, 
-    expected_hessian, 
-    test_model_invalid, 
-):
-    reg = LpNormRegularization(
-        input_p, 
-        input_weighting_matrix, 
-        input_model_shape, 
-        input_reference_model, 
+def test_gradient_hessian_2():
+    # damping, p=1, with m0
+    reg_damping = LpNormRegularization(p=1, weighting_matrix="damping", model_shape=(3,))
+    grad_damping = reg_damping.gradient(numpy.array([1,2,3]))
+    assert numpy.array_equal(grad_damping, numpy.array([1,1,1]))
+    hess_damping = reg_damping.hessian(numpy.array([1,2,3]))
+    assert not numpy.any(hess_damping)
+
+def test_gradient_hessian_3():
+    # flattening, p=1, with m0
+    reg_flattening = LpNormRegularization(p=1, weighting_matrix="flattening", model_shape=(3,))
+    grad_flattening = reg_flattening.gradient(numpy.array([1,2,3]))
+    assert numpy.array_equal(grad_flattening, numpy.array([-1.5,0,1.5]))
+    hess_flattening = reg_flattening.hessian(numpy.array([1,2,3]))
+    assert not numpy.any(hess_flattening)
+
+def test_gradient_hessian_4():
+    # smoothing, p=2, with m0
+    reg_smoothing = LpNormRegularization(
+        p=2, 
+        weighting_matrix="smoothing", 
+        reference_model=numpy.ones((4,4))
     )
-    assert numpy.array_equal(reg.matrix, expected_matrix)
-    assert _is_sparse_matrix(reg.matrix)
-    assert reg.model_size == expected_model_size
-    assert reg(test_model_valid) == expected_reg
-    assert reg.reg(test_model_valid) == expected_reg
-    assert numpy.array_equal(reg.gradient(test_model_valid), expected_gradient)
-    assert numpy.array_equal(reg.hessian(test_model_valid), expected_hessian)
-    with pytest.raises(DimensionMismatchError):
-        reg(test_model_invalid)
+    test_model_4x4 = numpy.array([[0., 0., 5., 0.],
+                                [0., 0., 0., 2.],
+                                [0., 3., 0., 3.],
+                                [0., 0., 0., 0.]])
+    grad_smoothing = reg_smoothing.gradient(test_model_4x4)
+    expected_grad = numpy.array([ 140., -356.,  520., -140.,  -16., -208., -224.,  
+                                 -56., -120., 636., -220.,  220.,    0.,  -96.,  -40.,  
+                                 -40.])
+    assert numpy.allclose(grad_smoothing, expected_grad)
+    hess_smoothing = reg_smoothing.hessian(test_model_4x4)
+    assert pytest.approx(hess_smoothing[0,0]) == 24
+    assert pytest.approx(hess_smoothing[-1,-1]) == 24
+    assert pytest.approx(hess_smoothing[0,1]) == -32
+    assert pytest.approx(hess_smoothing[1,0]) == -32
+    assert pytest.approx(hess_smoothing[1,5]) == -32
+
+def test_gradient_hessian_5():
+    # byo, p=2, with m0
+    test_model_4x4 = numpy.array([[0., 0., 5., 0.],
+                                [0., 0., 0., 2.],
+                                [0., 3., 0., 3.],
+                                [0., 0., 0., 0.]])
+    reg_byo = LpNormRegularization(
+        p=2,
+        weighting_matrix=test_model_4x4,
+        reference_model=numpy.array([1,2,1,2])
+    )
+    grad_byo = reg_byo.gradient(numpy.zeros((4,)))
+    expected_grad = numpy.array([0, -72, -50, -88])
+    assert numpy.allclose(grad_byo, expected_grad)
+    hess_byo = reg_byo.hessian(numpy.zeros((4,)))
+    assert pytest.approx(hess_byo[1,1]) == 18
+    assert pytest.approx(hess_byo[1,3]) == 18
+    assert pytest.approx(hess_byo[2,2]) == 50
+    assert pytest.approx(hess_byo[3,1]) == 18
+    assert pytest.approx(hess_byo[3,3]) == 26
