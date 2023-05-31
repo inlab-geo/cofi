@@ -232,9 +232,11 @@ class LpNormRegularization(BaseRegularization):
                 "please specify the weighting matrix either via a string among "
                 "\{`damping`, `flattening`, `smoothing`\}, or bringing your own matrix"
             )
-            
+
     def _generate_matrix_operator(self) -> scipy.sparse.linalg.LinearOperator:
-        self._weighting_matrix_operator = scipy.sparse.linalg.aslinearoperator(self.matrix)
+        self._weighting_matrix_operator = scipy.sparse.linalg.aslinearoperator(
+            self.matrix
+        )
 
     @staticmethod
     def _validate_p(p):
