@@ -1,6 +1,5 @@
 from typing import Union
 from numbers import Number
-from functools import reduce
 import numpy as np
 import scipy
 

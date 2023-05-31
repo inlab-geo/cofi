@@ -1,4 +1,14 @@
-"""Utility classes and functions (e.g. to generate regularization terms and more)
+r"""Utility classes and functions (e.g. to generate regularization terms and more)
+
+The class inheritance of regularization classes:
+
+.. mermaid::
+    graph TD;
+    BaseRegularization --> LpNormRegularization;
+    LpNormRegularization --> QuadraticReg;
+    BaseRegularization --> ModelCovariance;
+    ModelCovariance --> GaussianPrior;
+
 """
 
 from ._reg_base import BaseRegularization

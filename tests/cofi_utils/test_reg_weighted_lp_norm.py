@@ -134,7 +134,7 @@ def test_gradient_hessian_1():
     assert not numpy.any(hess_none)
 
 def test_gradient_hessian_2():
-    # damping, p=1, with m0
+    # damping, p=1, without m0
     reg_damping = LpNormRegularization(p=1, weighting_matrix="damping", model_shape=(3,))
     grad_damping = reg_damping.gradient(numpy.array([1,2,3]))
     assert numpy.array_equal(grad_damping, numpy.array([1,1,1]))
@@ -142,7 +142,7 @@ def test_gradient_hessian_2():
     assert not numpy.any(hess_damping)
 
 def test_gradient_hessian_3():
-    # flattening, p=1, with m0
+    # flattening, p=1, without m0
     reg_flattening = LpNormRegularization(p=1, weighting_matrix="flattening", model_shape=(3,))
     grad_flattening = reg_flattening.gradient(numpy.array([1,2,3]))
     assert numpy.array_equal(grad_flattening, numpy.array([-1.5,0,1.5]))
