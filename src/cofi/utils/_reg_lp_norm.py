@@ -126,7 +126,6 @@ class LpNormRegularization(BaseRegularization):
         self._model_shape = self._validate_shape(model_shape, reference_model)
         self._reference_model = reference_model
         self._generate_matrix()
-        self._generate_matrix_operator()
 
     def reg(self, model: np.ndarray) -> Number:
         flat_m = self._validate_model(model)
@@ -241,15 +240,23 @@ class LpNormRegularization(BaseRegularization):
         elif model_shape is None and reference_model is not None:
             return reference_model.shape
         elif model_shape is not None and reference_model is None:
+            if not isinstance(model_shape, tuple):
+                raise TypeError(
+                    "expected model shape in tuple (e.g. `(100,)`) but got "
+                    f"{model_shape} instead"
+                )
             return model_shape
         else:
             if reference_model.shape != model_shape:
-                raise DimensionMismatchError(
-                    entered_dimension=reference_model.shape,
-                    entered_name="reference_model",
-                    expected_dimension=model_shape,
-                    expected_source="model_shape",
-                )
+                try:
+                    np.reshape(reference_model, model_shape)
+                except:
+                    raise DimensionMismatchError(
+                        entered_dimension=reference_model.shape,
+                        entered_name="reference_model",
+                        expected_dimension=model_shape,
+                        expected_source="model_shape",
+                    )
             return model_shape
 
     def _validate_model(self, model):

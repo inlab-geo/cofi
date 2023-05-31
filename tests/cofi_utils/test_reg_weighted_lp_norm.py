@@ -101,7 +101,7 @@ def test_reference_model():
     assert reg(ref_model) == 0
     assert reg(numpy.array([0,0])) == 1
 
-def test_model_size_must_be_given():
+def test_model_shape_must_be_given():
     # through model_size
     reg = LpNormRegularization(model_shape=(2,))
     assert reg.model_shape == (2,)
@@ -113,12 +113,17 @@ def test_model_size_must_be_given():
     # error if neither is supplied
     with pytest.raises(ValueError, match=".*please provide the model shape.*"):
         reg = LpNormRegularization()
+    # error if model_shape not in tuple
+    with pytest.raises(TypeError, match=".*expected model shape in tuple.*"):
+        reg = LpNormRegularization(model_shape=100)
 
 def test_reference_model_matching_shape():
     # ensure given model_shape matches reference_model
     LpNormRegularization(model_shape=(2,), reference_model=numpy.array([1,2]))
     with pytest.raises(DimensionMismatchError, match=".*doesn't match and cannot be reshaped.*"):
         LpNormRegularization(model_shape=(3,), reference_model=numpy.array([1,2]))
+    # ensure given model_shape matches reshaped reference_model
+    LpNormRegularization(model_shape=(2,2), reference_model=numpy.array([1,2,3,4]))
 
 def test_gradient_hessian_1():
     # None, p=1, without m0
