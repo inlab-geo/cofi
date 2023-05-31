@@ -131,32 +131,23 @@ class LpNormRegularization(BaseRegularization):
     def reg(self, model: np.ndarray) -> Number:
         flat_m = self._validate_model(model)
         diff_m = self._model_diff_to_ref(flat_m)
-        # weighted_diff_m = self._weighting_matrix @ diff_m
-        # return self._lp_norm(weighted_diff_m)
-        weighted_diff_m = self._weighting_matrix_operator.matvec(diff_m)
+        weighted_diff_m = self._weighting_matrix @ diff_m
         return self._lp_norm(weighted_diff_m)
 
     def gradient(self, model: np.ndarray) -> np.ndarray:
         flat_m = self._validate_model(model)
         diff_m = self._model_diff_to_ref(flat_m)
-        # weighted_diff_m = self._weighting_matrix @ diff_m
-        # grad_lp_norm = self._lp_norm_gradient(weighted_diff_m)
-        # return self.matrix.T @ grad_lp_norm
-        weighted_diff_m = self._weighting_matrix_operator.matvec(diff_m)
+        weighted_diff_m = self._weighting_matrix @ diff_m
         grad_lp_norm = self._lp_norm_gradient(weighted_diff_m)
-        return self._weighting_matrix_operator.transpose().matvec(grad_lp_norm)
+        return self.matrix.T @ grad_lp_norm
 
     def hessian(self, model: np.ndarray) -> np.ndarray:
         W = self._weighting_matrix
         flat_m = self._validate_model(model)
         diff_m = self._model_diff_to_ref(flat_m)
-        # weighted_diff_m = W @ diff_m
-        # hess_lp_norm = self._lp_norm_hessian(weighted_diff_m)
-        # return W.T @ np.diag(hess_lp_norm) @ W
-        W_oprt = self._weighting_matrix_operator
-        weighted_diff_m = self._weighting_matrix_operator.matvec(diff_m)
+        weighted_diff_m = W @ diff_m
         hess_lp_norm = self._lp_norm_hessian(weighted_diff_m)
-        return W_oprt.transpose().matmat(np.diag(hess_lp_norm)) @ W
+        return W.T @ np.diag(hess_lp_norm) @ W
 
     @property
     def model_shape(self) -> tuple:
@@ -232,11 +223,6 @@ class LpNormRegularization(BaseRegularization):
                 "please specify the weighting matrix either via a string among "
                 "\{`damping`, `flattening`, `smoothing`\}, or bringing your own matrix"
             )
-
-    def _generate_matrix_operator(self) -> scipy.sparse.linalg.LinearOperator:
-        self._weighting_matrix_operator = scipy.sparse.linalg.aslinearoperator(
-            self.matrix
-        )
 
     @staticmethod
     def _validate_p(p):
