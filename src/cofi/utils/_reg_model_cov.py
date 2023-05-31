@@ -44,7 +44,7 @@ class GaussianPrior(ModelCovariance):
     @property
     def model_shape(self) -> tuple:
         return self._model_shape
-    
+
     def _validate_shape(self):
         Cminv = self._Cminv
         mu = self._mu
