@@ -119,18 +119,18 @@ def test_set_regularization_from_utils_quadratic_reg(problem_objective_setup):
     inv_problem.set_regularization(_my_reg_from_utils)
     # check
     assert len(inv_problem.defined_components()) == 4
-    # assert inv_problem.regularization(numpy.array([2, 1, 1])) == "TODO"
-    # assert inv_problem.regularization(numpy.array([2, 1, 2])) == "TODO"
+    assert inv_problem.regularization(numpy.array([2, 1, 1])) == 6
+    assert inv_problem.regularization(numpy.array([2, 1, 2])) == 9
 
 
 def test_set_regularization_from_utils_gaussian_prior(problem_objective_setup):
     # setup instance
     inv_problem, _, _, _dt_misfit, _ = problem_objective_setup
     inv_problem.set_data_misfit(_dt_misfit)
-    _my_reg_from_utils = utils.QuadraticReg(model_shape=(3,))
-    inv_problem.set_regularization(_my_reg_from_utils)
-    # check
-    assert len(inv_problem.defined_components()) == 4
+    # _my_reg_from_utils = utils.GaussianPrior("TODO")
+    # inv_problem.set_regularization(_my_reg_from_utils)
+    # # check
+    # assert len(inv_problem.defined_components()) == 4
     # assert inv_problem.regularization(numpy.array([2, 1, 1])) == "TODO"
     # assert inv_problem.regularization(numpy.array([2, 1, 2])) == "TODO"
 

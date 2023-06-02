@@ -124,7 +124,7 @@ class LpNormRegularization(BaseRegularization):
         self._weighting_matrix = weighting_matrix
         self._model_shape = self._validate_shape(model_shape, reference_model)
         self._reference_model = reference_model
-        self._generate_matrix()
+        self._generate_weighting_matrix()
 
     def reg(self, model: np.ndarray) -> Number:
         flat_m = self._validate_model(model)
@@ -161,7 +161,7 @@ class LpNormRegularization(BaseRegularization):
         """
         return self._weighting_matrix
 
-    def _generate_matrix(self):
+    def _generate_weighting_matrix(self):
         import findiff
 
         if (
@@ -340,6 +340,7 @@ class QuadraticReg(LpNormRegularization):
     To use togethter with :class:`cofi.BaseProblem`:
 
     >>> from cofi import BaseProblem
+    >>> my_problem = BaseProblem()
     >>> my_problem.set_regularization(my_reg)
     """
 
