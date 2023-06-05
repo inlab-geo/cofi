@@ -2,6 +2,22 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.0 (05/06/2023)
+
+### CoFI Core
+
+- Rewrite `BaseProblem.set_regularization`
+
+### CoFI Utils
+
+- Rewrite and implement regularization utils:
+  - `cofi.utils.BaseRegularization`
+  - `cofi.utils.LpNormRegularization`
+  - `cofi.utils.QuadraticReg`
+  - `cofi.utils.ModelCovariance`
+  - `cofi.utils.GaussianPrior`
+
+
 ## v0.1.3.dev2 (05/04/2023)
 
 ### CoFI Core

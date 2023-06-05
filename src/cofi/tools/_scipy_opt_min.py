@@ -6,20 +6,20 @@ from . import BaseInferenceTool, error_handler
 # Official documentation for scipy.optimize.minimize
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
 
-# 'jac' is only for:
+# 'jac' will be used when choosing the following methods:
 # CG, BFGS, Newton-CG, L-BFGS-B, TNC, SLSQP, dogleg, trust-ncg, trust-krylov, trust-exact
 # and trust-constr
 
-# 'hess' is only for:
+# 'hess' will be used when choosing the following methods:
 # Newton-CG, dogleg, trust-ncg, trust-krylov, trust-exact and trust-constr
 
-# 'hessp' is only for:
+# 'hessp' will be used when choosing the following methods:
 # Newton-CG, trust-ncg, trust-krylov, trust-constr
 
-# 'bounds' is only for:
+# 'bounds' will be used when choosing the following methods:
 # Nelder-Mead, L-BFGS-B, TNC, SLSQP, Powell, and trust-constr
 
-# 'constraints' is only for:
+# 'constraints' will be used when choosing the following methods:
 # COBYLA, SLSQP and trust-constr
 
 # other arguments include: tol, options, callback
