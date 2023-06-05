@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Union
+from typing import Union, Tuple
 import numpy as np
 
 from ._reg_base import BaseRegularization
@@ -71,7 +71,7 @@ class GaussianPrior(ModelCovariance):
 
     def __init__(
         self,
-        model_covariance_inv: Union[np.ndarray, tuple[tuple, float]],
+        model_covariance_inv: Union[np.ndarray, Tuple[Tuple, float]],
         mean_model: np.ndarray,
     ):
         self._mu = np.ravel(mean_model)
