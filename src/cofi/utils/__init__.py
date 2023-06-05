@@ -3,6 +3,7 @@ r"""Utility classes and functions (e.g. to generate regularization terms and mor
 The class inheritance of regularization classes:
 
 .. mermaid::
+
     graph TD;
     BaseRegularization --> LpNormRegularization;
     LpNormRegularization --> QuadraticReg;

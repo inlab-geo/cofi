@@ -51,8 +51,8 @@ class LpNormRegularization(BaseRegularization):
 
         - :attr:`matrix` is :math:`W` that we generate based on the model shape you've
           provided. We use the Python package :mod:`findiff` to generate it.
-          "By default, findiff uses finite difference schemes with second 
-          order accuracy in the grid spacing." (See `findiff documentation on 
+          "By default, findiff uses finite difference schemes with second
+          order accuracy in the grid spacing." (See `findiff documentation on
           Derivatives <https://findiff.readthedocs.io/en/latest/source/getstarted.html#accuracy-control>`_
           for more details). For 1D problems, it looks like
 
@@ -68,8 +68,8 @@ class LpNormRegularization(BaseRegularization):
 
         - :attr:`matrix` is :math:`W` that we generate based on the model shape you've
           provided. We use the Python package :mod:`findiff` to generate it.
-          "By default, findiff uses finite difference schemes with second 
-          order accuracy in the grid spacing." (See `findiff documentation on 
+          "By default, findiff uses finite difference schemes with second
+          order accuracy in the grid spacing." (See `findiff documentation on
           Derivatives <https://findiff.readthedocs.io/en/latest/source/getstarted.html#accuracy-control>`_
           for more details). For 1D problems, it looks like
 

@@ -136,6 +136,18 @@ cofi.utils.GaussianPrior
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     .. automethod:: GaussianPrior.gradient
 
 
@@ -156,6 +168,8 @@ cofi.utils.GaussianPrior
 
 
 
+
+    .. autoattribute:: GaussianPrior.gaussian_model_covariance_inv
 
     .. autoattribute:: GaussianPrior.model_shape
 
