@@ -91,8 +91,8 @@ def test_not_overwriting_by_autogen():
 
 def test_set_reg_with_args():
     inv_problem = BaseProblem()
-    from scipy.sparse import csr_matrix
-    A = csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
+    from scipy import sparse
+    A = sparse.csr_matrix([[1, 2, 0], [0, 0, 3], [4, 0, 5]])
     inv_problem.set_regularization(lambda m, A: A @ m.T @ m, args=[A])
     inv_problem.regularization(numpy.array([1,2,3]))
 

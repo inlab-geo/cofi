@@ -1,6 +1,7 @@
 import pytest
 import numpy
 import scipy
+from scipy import sparse
 
 from cofi.utils import LpNormRegularization
 from cofi._exceptions import DimensionMismatchError
@@ -8,8 +9,8 @@ from cofi._exceptions import DimensionMismatchError
 
 def _is_sparse_matrix(mat):
     sparse_types = [
-        getattr(scipy.sparse, name)
-        for name in scipy.sparse.__all__
+        getattr(sparse, name)
+        for name in sparse.__all__
         if name.endswith('_matrix')
     ]
     return any(isinstance(mat, cls) for cls in sparse_types)

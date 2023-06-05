@@ -1,7 +1,7 @@
 from typing import Union
 from numbers import Number
 import numpy as np
-import scipy
+from scipy import sparse
 
 from ._reg_base import BaseRegularization
 from .._exceptions import DimensionMismatchError
@@ -158,7 +158,7 @@ class LpNormRegularization(BaseRegularization):
         return self._model_shape
 
     @property
-    def matrix(self) -> scipy.sparse.csr_matrix:
+    def matrix(self) -> sparse.csr_matrix:
         """the regularization matrix
 
         This is either an identity matrix, or first/second order difference matrix
@@ -176,7 +176,7 @@ class LpNormRegularization(BaseRegularization):
         ) or self._weighting_matrix is None:
             _reg_type = self._weighting_matrix
             if _reg_type == "damping" or _reg_type is None:  # 0th order difference
-                self._weighting_matrix = scipy.sparse.identity(
+                self._weighting_matrix = sparse.identity(
                     self.model_size, format="csr"
                 )
             elif _reg_type in REG_TYPES:  # 1st/2nd order difference
@@ -221,7 +221,7 @@ class LpNormRegularization(BaseRegularization):
                     "the bring-your-own regularization matrix must be in shape (_, M) "
                     "where M is the model size"
                 )
-            self._weighting_matrix = scipy.sparse.csr_matrix(self._weighting_matrix)
+            self._weighting_matrix = sparse.csr_matrix(self._weighting_matrix)
         else:
             raise ValueError(
                 "please specify the weighting matrix either via a string among "
@@ -365,8 +365,8 @@ class QuadraticReg(LpNormRegularization):
 
 
 matrix_like_classes = [np.ndarray] + [
-    getattr(scipy.sparse, name)
-    for name in scipy.sparse.__all__
+    getattr(sparse, name)
+    for name in sparse.__all__
     if name.endswith("_matrix")
 ]
 
