@@ -176,9 +176,7 @@ class LpNormRegularization(BaseRegularization):
         ) or self._weighting_matrix is None:
             _reg_type = self._weighting_matrix
             if _reg_type == "damping" or _reg_type is None:  # 0th order difference
-                self._weighting_matrix = sparse.identity(
-                    self.model_size, format="csr"
-                )
+                self._weighting_matrix = sparse.identity(self.model_size, format="csr")
             elif _reg_type in REG_TYPES:  # 1st/2nd order difference
                 if np.size(self.model_shape) == 1:  # 1D model
                     order = REG_TYPES[_reg_type]
@@ -365,9 +363,7 @@ class QuadraticReg(LpNormRegularization):
 
 
 matrix_like_classes = [np.ndarray] + [
-    getattr(sparse, name)
-    for name in sparse.__all__
-    if name.endswith("_matrix")
+    getattr(sparse, name) for name in sparse.__all__ if name.endswith("_matrix")
 ]
 
 
