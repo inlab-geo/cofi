@@ -21,6 +21,12 @@ cofi.utils
 
   cofi.utils.BaseRegularization
 
+  cofi.utils.GaussianPrior
+
+  cofi.utils.LpNormRegularization
+
+  cofi.utils.ModelCovariance
+
   cofi.utils.QuadraticReg
 
 

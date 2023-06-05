@@ -15,7 +15,7 @@
 {% if item in ['__call__'] %}
     .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
-{% if "BaseRegularization" in objname and item == '__add__' %}
+{% if "BaseRegularization" in objname and (item == '__add__' or item == '__rmul__')%}
     .. automethod:: {{ objname }}.{{ item }}
 {% endif %}
 {% endfor %}

@@ -91,6 +91,14 @@ cofi.utils.BaseRegularization
 
 
 
+    .. automethod:: BaseRegularization.__rmul__
+
+
+
+
+
+
+
 
 
 
@@ -152,6 +160,8 @@ cofi.utils.BaseRegularization
 
 
 
+
+    .. autoattribute:: BaseRegularization.model_shape
 
     .. autoattribute:: BaseRegularization.model_size
 

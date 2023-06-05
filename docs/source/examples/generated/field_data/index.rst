@@ -2,9 +2,10 @@
 
 .. _sphx_glr_examples_generated_field_data:
 
-========================
-Real-world Data Examples
-========================
+=============
+Data Examples
+=============
+
 
 
 .. raw:: html
