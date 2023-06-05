@@ -192,3 +192,33 @@ def test_gradient_hessian_5():
     assert pytest.approx(hess_byo[2,2]) == 50
     assert pytest.approx(hess_byo[3,1]) == 18
     assert pytest.approx(hess_byo[3,3]) == 26
+
+def test_gradient_finite_diff():
+    reg = LpNormRegularization(p=2, model_shape=(3,))
+    model = numpy.array([0.1, 0.2, 0.3])
+    delta_m = 0.00001
+    gradient_actual = reg.gradient(model)
+    # Finite difference approximation
+    gradient_approx = numpy.zeros_like(model)
+    for i in range(len(model)):
+        model_perturbed = model.copy()
+        model_perturbed[i] += delta_m
+        gradient_approx[i] = (reg.reg(model_perturbed) - reg.reg(model)) / delta_m
+    numpy.testing.assert_almost_equal(gradient_actual, gradient_approx, decimal=5)
+
+def test_hessian_finite_diff():
+    reg = LpNormRegularization(p=2, model_shape=(3,))
+    model = numpy.array([0.1, 0.2, 0.3])
+    delta_m = 0.05
+    hessian_actual = reg.hessian(model)
+    # Finite difference approximation
+    hessian_approx = numpy.zeros((len(model), len(model)))
+    for j in range(len(model)):
+        model_perturbed_plus = model.copy()
+        model_perturbed_plus[j] += delta_m
+        model_perturbed_minus = model.copy()
+        model_perturbed_minus[j] -= delta_m
+        gradient_plus = reg.gradient(model_perturbed_plus)
+        gradient_minus = reg.gradient(model_perturbed_minus)
+        hessian_approx[:, j] = (gradient_plus - gradient_minus) / (2 * delta_m)
+    numpy.testing.assert_almost_equal(hessian_actual, hessian_approx, decimal=5)

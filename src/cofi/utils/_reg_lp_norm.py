@@ -50,11 +50,13 @@ class LpNormRegularization(BaseRegularization):
       .. toggle::
 
         - :attr:`matrix` is :math:`W` that we generate based on the model shape you've
-          provided. For 1D problems, it looks like
+          provided. We use the Python package :mod:`findiff` to generate it.
+          "By default, findiff uses finite difference schemes with second 
+          order accuracy in the grid spacing." (See `findiff documentation on 
+          Derivatives <https://findiff.readthedocs.io/en/latest/source/getstarted.html#accuracy-control>`_
+          for more details). For 1D problems, it looks like
 
-          :math:`\begin{pmatrix}-1.5&2&-0.5&&&\\-0.5&&0.5&&&&&\\&-0.5&&0.5&&&&\\&&...&&...&&&\\&&&-0.5&&0.5&&\\&&&&-0.5&&0.5&\\&&&&&0.5&-2&1.5\end{pmatrix}`
-
-          .. :math:`\begin{pmatrix}-1&1&&&&\\&-1&1&&&\\&&...&...&&\\&&&-1&1&\\&&&&&-1&1\end{pmatrix}`
+          :math:`\begin{pmatrix}-1.5&2&-0.5&&&\\-0.5&&0.5&&&&&\\&-0.5&&0.5&&&&\\&&...&&...&&&\\&&&-0.5&&0.5&\\&&&&-0.5&&0.5\\&&&&0.5&-2&1.5\end{pmatrix}`
 
           While for higher dimension problems, by default it's a flattened version of
           an N-D array. The actual ordering of model parameters in higher dimensions
@@ -65,7 +67,11 @@ class LpNormRegularization(BaseRegularization):
       .. toggle::
 
         - :attr:`matrix` is :math:`W` that we generate based on the model shape you've
-          provided. For 1D problems, it looks like
+          provided. We use the Python package :mod:`findiff` to generate it.
+          "By default, findiff uses finite difference schemes with second 
+          order accuracy in the grid spacing." (See `findiff documentation on 
+          Derivatives <https://findiff.readthedocs.io/en/latest/source/getstarted.html#accuracy-control>`_
+          for more details). For 1D problems, it looks like
 
           :math:`\begin{pmatrix}2&-5&4&-1&&&\\1&-2&1&&&&\\&1&-2&1&&&\\&&...&...&...&&\\&&&1&-2&1&\\&&&&1&-2&1\\&&&-1&4&-5&2\end{pmatrix}`
 
