@@ -6,12 +6,12 @@
 
 Computation times
 =================
-**00:39.139** total execution time for **examples_generated_synth_data** files:
+**00:13.220** total execution time for **examples_generated_synth_data** files:
 
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``fmm_tomography.py``)                   | 00:26.798 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``fmm_tomography.py``)                   | 00:08.938 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py` (``xray_tomography.py``)                 | 00:12.342 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py` (``xray_tomography.py``)                 | 00:04.282 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py` (``linear_regression.py``)             | 00:00.000 | 0.0 MB |
 +-----------------------------------------------------------------------------------------------------------+-----------+--------+

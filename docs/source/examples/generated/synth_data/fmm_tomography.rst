@@ -185,7 +185,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 .. code-block:: default
 
 
-    fmm = espresso.FmWavefrontTracker()
+    fmm = espresso.FmmTomography()
 
     fmm.plot_model(fmm.good_model, with_paths=True);
 
@@ -211,7 +211,7 @@ model. As you can see, there are two anomalies, one with lower velocity
     Trying to fix now...
     Execute permission given to fm2dss.o.
 
-    <Figure size 600x600 with 2 Axes>
+    <Axes: >
 
 
 
@@ -269,7 +269,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 .. code-block:: default
 
 
-    # get problem information from  espresso FmWavefrontTracker
+    # get problem information from  espresso FmmTomography
     model_size = fmm.model_size         # number of model parameters
     model_shape = fmm.model_shape       # 2D spatial grids
     data_size = fmm.data_size           # number of data points
@@ -298,7 +298,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 181-189
+.. GENERATED FROM PYTHON SOURCE LINES 181-196
 
 .. code-block:: default
 
@@ -306,8 +306,15 @@ model. As you can see, there are two anomalies, one with lower velocity
     # add regularization: damping + smoothing
     damping_factor = 50
     smoothing_factor = 5e3
-    reg_damping = cofi.utils.QuadraticReg(damping_factor, model_size, "damping", ref_start_slowness)
-    reg_smoothing = cofi.utils.QuadraticReg(smoothing_factor, model_shape, "smoothing")
+    reg_damping = damping_factor * cofi.utils.QuadraticReg(
+        model_shape=model_shape, 
+        weighting_matrix="damping", 
+        reference_model=ref_start_slowness
+    )
+    reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
+        model_shape=model_shape,
+        weighting_matrix="smoothing"
+    )
     reg = reg_damping + reg_smoothing
 
 
@@ -317,7 +324,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 191-217
+.. GENERATED FROM PYTHON SOURCE LINES 198-224
 
 .. code-block:: default
 
@@ -354,7 +361,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-226
+.. GENERATED FROM PYTHON SOURCE LINES 226-233
 
 .. code-block:: default
 
@@ -372,12 +379,12 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-233
+.. GENERATED FROM PYTHON SOURCE LINES 238-240
 
 Review what information is included in the ``BaseProblem`` object:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 233-236
+.. GENERATED FROM PYTHON SOURCE LINES 240-243
 
 .. code-block:: default
 
@@ -405,18 +412,18 @@ Review what information is included in the ``BaseProblem`` object:
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data', 'data_covariance', 'data_covariance_inv', 'blobs_dtype', 'bounds', 'constraints']
+    ['log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'hessian_times_vector', 'residual', 'jacobian', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'forward', 'data', 'data_covariance', 'data_covariance_inv', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 241-244
+.. GENERATED FROM PYTHON SOURCE LINES 248-251
 
 2. Define the inversion options
 -------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 244-251
+.. GENERATED FROM PYTHON SOURCE LINES 251-258
 
 .. code-block:: default
 
@@ -434,12 +441,12 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 256-258
+.. GENERATED FROM PYTHON SOURCE LINES 263-265
 
 Review what’s been defined for the inversion we are about to run:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 258-261
+.. GENERATED FROM PYTHON SOURCE LINES 265-268
 
 .. code-block:: default
 
@@ -473,13 +480,13 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 266-269
+.. GENERATED FROM PYTHON SOURCE LINES 273-276
 
 3. Start an inversion
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 269-274
+.. GENERATED FROM PYTHON SOURCE LINES 276-281
 
 .. code-block:: default
 
@@ -497,19 +504,19 @@ Review what’s been defined for the inversion we are about to run:
  .. code-block:: none
 
     Iteration #0, objective function value: 110298.7001724638
-    Iteration #1, objective function value: 1787.1051514815424
-    Iteration #2, objective function value: 121.1495033985667
-    Iteration #3, objective function value: 5.814222496115815
-    Iteration #4, objective function value: 4.086694560516768
-    Iteration #5, objective function value: 1.6665887726105881
+    Iteration #1, objective function value: 1787.0459655957825
+    Iteration #2, objective function value: 121.09918298452581
+    Iteration #3, objective function value: 5.805217146094518
+    Iteration #4, objective function value: 3.853291569236922
+    Iteration #5, objective function value: 1.6509714163979023
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00048375 0.00048181 0.00048015 ... 0.00050722 0.00050676 0.00050618]
+    model: [0.00048363 0.0004817  0.00048005 ... 0.00050727 0.00050677 0.00050617]
     num_iterations: 5
-    objective_val: 2.98668774544954
+    objective_val: 2.717895837439228
     n_obj_evaluations: 6
     n_grad_evaluations: 6
     n_hess_evaluations: 6
@@ -517,13 +524,13 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 279-282
+.. GENERATED FROM PYTHON SOURCE LINES 286-289
 
 4. Plotting
 -----------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 282-286
+.. GENERATED FROM PYTHON SOURCE LINES 289-293
 
 .. code-block:: default
 
@@ -557,11 +564,11 @@ Review what’s been defined for the inversion we are about to run:
  .. code-block:: none
 
 
-    <Figure size 600x600 with 2 Axes>
+    <Axes: >
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 291-304
+.. GENERATED FROM PYTHON SOURCE LINES 298-311
 
 --------------
 
@@ -577,7 +584,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 304-310
+.. GENERATED FROM PYTHON SOURCE LINES 311-317
 
 .. code-block:: default
 
@@ -595,22 +602,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.3.dev2+2.g8ef207d.dirty
-    espresso 0.2.2.dev0
-    numpy 1.20.3
-    matplotlib 3.5.1
+    cofi 0.2.0
+    espresso 0.3.7
+    numpy 1.24.3
+    matplotlib 3.7.1
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 311-311
+.. GENERATED FROM PYTHON SOURCE LINES 318-318
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  26.798 seconds)
+   **Total running time of the script:** ( 0 minutes  8.938 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography.py:

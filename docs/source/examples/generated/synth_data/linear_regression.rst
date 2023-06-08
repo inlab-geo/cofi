@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_generated_synth_data_linear_regression.py>`
+        :ref:`Go to the end <sphx_glr_download_examples_generated_synth_data_linear_regression.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
@@ -139,7 +139,7 @@ So a common workflow includes 4 steps:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-124
+.. GENERATED FROM PYTHON SOURCE LINES 115-125
 
 .. code-block:: default
 
@@ -149,6 +149,7 @@ So a common workflow includes 4 steps:
     import arviz as az
 
     from cofi import BaseProblem, InversionOptions, Inversion
+    from cofi.utils import QuadraticReg
 
     np.random.seed(42)
 
@@ -159,7 +160,7 @@ So a common workflow includes 4 steps:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-168
+.. GENERATED FROM PYTHON SOURCE LINES 130-169
 
 --------------
 
@@ -201,7 +202,7 @@ Recall that the function we are going to fit is:
 :math:`y=-6-5x+2x^2+x^3`
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 168-190
+.. GENERATED FROM PYTHON SOURCE LINES 169-191
 
 .. code-block:: default
 
@@ -241,11 +242,11 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f2d28db09a0>
+    <matplotlib.legend.Legend object at 0x7fa2d218ba90>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 195-223
+.. GENERATED FROM PYTHON SOURCE LINES 196-224
 
 Now we define the problem in ``cofi`` - in other words,we set the
 problem information for a ``BaseProblem`` object.
@@ -276,7 +277,7 @@ Jacobian matrix are needed. We thus set them to our ``BaseProblem``
 object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-232
+.. GENERATED FROM PYTHON SOURCE LINES 224-233
 
 .. code-block:: default
 
@@ -310,12 +311,12 @@ object.
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 237-254
+.. GENERATED FROM PYTHON SOURCE LINES 238-255
 
 --------------
 
@@ -335,7 +336,7 @@ which backend tool you’d like to use 2. then with
 solver-specific parameters.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 254-258
+.. GENERATED FROM PYTHON SOURCE LINES 255-259
 
 .. code-block:: default
 
@@ -357,7 +358,7 @@ solver-specific parameters.
     Solving method: None set
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
-    Backend tool: `scipy.optimize.minimize (by default)` - SciPy's optimizers that minimizes a scalar function with respect to one or more variables, check SciPy's documentation page for a list of methods
+    Backend tool: `<class 'cofi.tools._scipy_opt_min.ScipyOptMin'> (by default)` - SciPy's optimizers that minimizes a scalar function with respect to one or more variables, check SciPy's documentation page for a list of methods
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
@@ -367,14 +368,14 @@ solver-specific parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 263-267
+.. GENERATED FROM PYTHON SOURCE LINES 264-268
 
 We have a **suggesting system** that is being improved at the moment, so
 that you can see what backend tools are available based on the
 categories of inversion approaches you’d like to use.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 267-270
+.. GENERATED FROM PYTHON SOURCE LINES 268-271
 
 .. code-block:: default
 
@@ -408,13 +409,13 @@ categories of inversion approaches you’d like to use.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 275-278
+.. GENERATED FROM PYTHON SOURCE LINES 276-279
 
 Having seen what a default ``InversionOptions`` object look like, we
 customise the inversion process by constraining the solving approach:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 278-282
+.. GENERATED FROM PYTHON SOURCE LINES 279-283
 
 .. code-block:: default
 
@@ -436,7 +437,7 @@ customise the inversion process by constraining the solving approach:
     Solving method: matrix solvers
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
-    Backend tool: `scipy.linalg.lstsq (by default)` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+    Backend tool: `<class 'cofi.tools._scipy_lstsq.ScipyLstSq'> (by default)` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
@@ -446,7 +447,7 @@ customise the inversion process by constraining the solving approach:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 287-295
+.. GENERATED FROM PYTHON SOURCE LINES 288-296
 
 --------------
 
@@ -457,7 +458,7 @@ If there are more than one backend tool options, then the following
 function shows available options and set your desired backend solver.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 295-298
+.. GENERATED FROM PYTHON SOURCE LINES 296-299
 
 .. code-block:: default
 
@@ -483,13 +484,13 @@ function shows available options and set your desired backend solver.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 303-306
+.. GENERATED FROM PYTHON SOURCE LINES 304-307
 
 You can also set the backend tool directly (as following), without the
 call to ``inv_options.set_solving_method()`` above.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 306-310
+.. GENERATED FROM PYTHON SOURCE LINES 307-311
 
 .. code-block:: default
 
@@ -511,7 +512,7 @@ call to ``inv_options.set_solving_method()`` above.
     Solving method: matrix solvers
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
-    Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+    Backend tool: `<class 'cofi.tools._scipy_lstsq.ScipyLstSq'>` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
@@ -521,7 +522,7 @@ call to ``inv_options.set_solving_method()`` above.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 315-327
+.. GENERATED FROM PYTHON SOURCE LINES 316-328
 
 --------------
 
@@ -536,7 +537,7 @@ Taking them both in, an ``Inversion`` object knows all the information
 and is an engine to actually perform the inversion.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 327-331
+.. GENERATED FROM PYTHON SOURCE LINES 328-332
 
 .. code-block:: default
 
@@ -562,7 +563,7 @@ and is an engine to actually perform the inversion.
     Summary for inversion options
     Solving method: matrix solvers
     Use `suggest_solving_methods()` to check available solving methods.
-    Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+    Backend tool: `<class 'cofi.tools._scipy_lstsq.ScipyLstSq'>` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
     Use `suggest_tools()` to check available backend tools.
     Solver-specific parameters: None set
@@ -578,17 +579,17 @@ and is an engine to actually perform the inversion.
     ['jacobian_times_vector']
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 336-338
+.. GENERATED FROM PYTHON SOURCE LINES 337-339
 
 Now, let’s run it!
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 338-342
+.. GENERATED FROM PYTHON SOURCE LINES 339-343
 
 .. code-block:: default
 
@@ -609,7 +610,7 @@ Now, let’s run it!
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 347-361
+.. GENERATED FROM PYTHON SOURCE LINES 348-362
 
 The inversion result returned by ``inv.run()`` is an instance of
 ``InversionResult``.
@@ -626,7 +627,7 @@ Similar to the other class objects, you can see what’s inside it with
 the ``summary()`` method.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 361-364
+.. GENERATED FROM PYTHON SOURCE LINES 362-365
 
 .. code-block:: default
 
@@ -654,7 +655,7 @@ the ``summary()`` method.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 369-374
+.. GENERATED FROM PYTHON SOURCE LINES 370-375
 
 --------------
 
@@ -662,7 +663,7 @@ the ``summary()`` method.
 ---------------------------------------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 377-382
+.. GENERATED FROM PYTHON SOURCE LINES 378-383
 
 A summary view of the ``Inversion`` object shows information about the
 whole inversion process, including how the problem is defined, how the
@@ -670,7 +671,7 @@ inversion is defined to be run, as well as what the results are (if
 any).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 382-385
+.. GENERATED FROM PYTHON SOURCE LINES 383-386
 
 .. code-block:: default
 
@@ -702,7 +703,7 @@ any).
     Summary for inversion options
     Solving method: matrix solvers
     Use `suggest_solving_methods()` to check available solving methods.
-    Backend tool: `scipy.linalg.lstsq` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+    Backend tool: `<class 'cofi.tools._scipy_lstsq.ScipyLstSq'>` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
     Use `suggest_tools()` to check available backend tools.
     Solver-specific parameters: None set
@@ -718,20 +719,20 @@ any).
     ['jacobian_times_vector']
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'regularization_factor', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization', 'regularization_matrix', 'forward', 'data_covariance', 'data_covariance_inv', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
     List of functions/properties got used by the backend tool:
     ['jacobian', 'data']
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 390-393
+.. GENERATED FROM PYTHON SOURCE LINES 391-394
 
 Now, let’s plot the predicted curve and compare it to the data and
 ground truth.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 393-409
+.. GENERATED FROM PYTHON SOURCE LINES 394-410
 
 .. code-block:: default
 
@@ -765,17 +766,17 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f2d5580fee0>
+    <matplotlib.legend.Legend object at 0x7fa2d2116d30>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 414-417
+.. GENERATED FROM PYTHON SOURCE LINES 415-418
 
 Here we see the least squares solver (green curve) fits all of the data
 well and is a close approximation of the true curve (orange).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 420-428
+.. GENERATED FROM PYTHON SOURCE LINES 421-429
 
 --------------
 
@@ -786,7 +787,7 @@ For review purpose, here are the minimal set of commands we’ve used to
 produce the above result:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 428-463
+.. GENERATED FROM PYTHON SOURCE LINES 429-464
 
 .. code-block:: default
 
@@ -848,7 +849,7 @@ produce the above result:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 468-499
+.. GENERATED FROM PYTHON SOURCE LINES 469-500
 
 --------------
 
@@ -882,7 +883,7 @@ alternative to this would be to directly provide objective function to
 CoFI.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 499-518
+.. GENERATED FROM PYTHON SOURCE LINES 500-519
 
 .. code-block:: default
 
@@ -891,7 +892,7 @@ CoFI.
     inv_problem.set_initial_model(np.ones(4))
     inv_problem.set_forward(forward_func)
     inv_problem.set_data_misfit("least squares")
-    inv_problem.set_regularization(2, 0.02)        # optional
+    inv_problem.set_regularization(0.02 * QuadraticReg(model_shape=(4,)))      # optional
 
     ######## Set a different tool
     inv_options_2 = InversionOptions()
@@ -913,30 +914,30 @@ CoFI.
 
  .. code-block:: none
 
-    The inversion result from `scipy.optimize.minimize`: [-5.71767991 -5.1079628   1.8245948   0.97437582]
+    The inversion result from `scipy.optimize.minimize`: [-5.68862266 -5.09203993  1.81066089  0.96922711]
 
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    fun: 15.120354332359751
-    jac: [-2.38418579e-07  3.57627869e-07 -8.34465027e-07 -1.19209290e-07]
-    hess_inv: [[ 0.09513941  0.02907043 -0.04084281 -0.0127553 ]
-     [ 0.02907043  0.04336575 -0.01656594 -0.00906342]
-     [-0.04084281 -0.01656594  0.02592338  0.0085207 ]
-     [-0.0127553  -0.00906342  0.0085207   0.00338009]]
+    fun: 16.217557592947745
+    jac: [ 0.00000000e+00  2.38418579e-07 -4.76837158e-07 -2.38418579e-07]
+    hess_inv: [[ 0.09466099  0.02886397 -0.0406164  -0.01267773]
+     [ 0.02886397  0.04324386 -0.01646474 -0.00902502]
+     [-0.0406164  -0.01646474  0.0258144   0.00848302]
+     [-0.01267773 -0.00902502  0.00848302  0.00336663]]
     nfev: 55
     njev: 11
     status: 0
     message: Optimization terminated successfully.
     nit: 8
-    model: [-5.71767991 -5.1079628   1.8245948   0.97437582]
+    model: [-5.68862266 -5.09203993  1.81066089  0.96922711]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 520-536
+.. GENERATED FROM PYTHON SOURCE LINES 521-537
 
 .. code-block:: default
 
@@ -970,17 +971,17 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f2d30a65f00>
+    <matplotlib.legend.Legend object at 0x7fa2b8d9dc10>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 541-544
+.. GENERATED FROM PYTHON SOURCE LINES 542-545
 
 Here we see the (blue curve) is also a relatively good approximation of
 the true curve (orange).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 547-656
+.. GENERATED FROM PYTHON SOURCE LINES 548-657
 
 7.2. Sampling 
 ~~~~~~~~~~~~~~
@@ -1092,7 +1093,7 @@ datum. Hence :math:`C_D^{-1} = \frac{1}{\sigma^2}I` where
 :math:`\sigma=1`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 656-665
+.. GENERATED FROM PYTHON SOURCE LINES 657-666
 
 .. code-block:: default
 
@@ -1112,7 +1113,7 @@ datum. Hence :math:`C_D^{-1} = \frac{1}{\sigma^2}I` where
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 670-708
+.. GENERATED FROM PYTHON SOURCE LINES 671-709
 
 Prior
 '''''
@@ -1153,7 +1154,7 @@ Here we choose a Uniform prior with
 :math:`{\mathbf u}^T = (10.,10.,10.,10.)`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 708-717
+.. GENERATED FROM PYTHON SOURCE LINES 709-718
 
 .. code-block:: default
 
@@ -1173,7 +1174,7 @@ Here we choose a Uniform prior with
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 722-729
+.. GENERATED FROM PYTHON SOURCE LINES 723-730
 
 Walkers’ starting points
 ''''''''''''''''''''''''
@@ -1183,7 +1184,7 @@ steps), and initialise the starting positions of walkers. We start all
 walkers in a small ball about a chosen point :math:`(0, 0, 0, 0)`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 729-735
+.. GENERATED FROM PYTHON SOURCE LINES 730-736
 
 .. code-block:: default
 
@@ -1200,13 +1201,13 @@ walkers in a small ball about a chosen point :math:`(0, 0, 0, 0)`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 740-743
+.. GENERATED FROM PYTHON SOURCE LINES 741-744
 
 Finally, we attach all above information to our ``BaseProblem`` and
 ``InversionOptions`` objects.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 743-762
+.. GENERATED FROM PYTHON SOURCE LINES 744-763
 
 .. code-block:: default
 
@@ -1249,7 +1250,7 @@ Finally, we attach all above information to our ``BaseProblem`` and
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 767-786
+.. GENERATED FROM PYTHON SOURCE LINES 768-787
 
 Analyse sampling results
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1271,7 +1272,7 @@ so that all the plotting functions from
 `arviz <https://python.arviz.org/en/latest/index.html>`__ are exposed.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 786-790
+.. GENERATED FROM PYTHON SOURCE LINES 787-791
 
 .. code-block:: default
 
@@ -1286,7 +1287,7 @@ so that all the plotting functions from
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 795-806
+.. GENERATED FROM PYTHON SOURCE LINES 796-807
 
 Sampling performance
 ''''''''''''''''''''
@@ -1300,7 +1301,7 @@ positions of each walker as a function of the number of steps in the
 chain:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 806-810
+.. GENERATED FROM PYTHON SOURCE LINES 807-811
 
 .. code-block:: default
 
@@ -1333,7 +1334,7 @@ chain:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 815-828
+.. GENERATED FROM PYTHON SOURCE LINES 816-829
 
 Autocorrelation analysis
 ''''''''''''''''''''''''
@@ -1349,7 +1350,7 @@ tutorial <https://emcee.readthedocs.io/en/stable/tutorials/autocorr/>`__
 for more details):
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 828-832
+.. GENERATED FROM PYTHON SOURCE LINES 829-833
 
 .. code-block:: default
 
@@ -1370,7 +1371,7 @@ for more details):
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 837-850
+.. GENERATED FROM PYTHON SOURCE LINES 838-851
 
 Corner plot
 '''''''''''
@@ -1386,7 +1387,7 @@ Let’s make one of the most useful plots you can make with your MCMC
 results: a corner plot.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 850-859
+.. GENERATED FROM PYTHON SOURCE LINES 851-860
 
 .. code-block:: default
 
@@ -1425,7 +1426,7 @@ results: a corner plot.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 864-881
+.. GENERATED FROM PYTHON SOURCE LINES 865-882
 
 The corner plot shows all the one and two dimensional projections of the
 posterior probability distributions of your parameters. This is useful
@@ -1445,7 +1446,7 @@ Now lets plot the a sub-sample of 100 the predicted curves from this
 posterior ensemble and compare to the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 881-901
+.. GENERATED FROM PYTHON SOURCE LINES 882-902
 
 .. code-block:: default
 
@@ -1483,11 +1484,11 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f2d5c77ef80>
+    <matplotlib.legend.Legend object at 0x7fa130c3d100>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 906-912
+.. GENERATED FROM PYTHON SOURCE LINES 907-913
 
 Uncertainty estimates
 '''''''''''''''''''''
@@ -1496,7 +1497,7 @@ We can now calculate some formal uncertainties based on the 16th, 50th,
 and 84th percentiles of the samples in the marginalized distributions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 912-923
+.. GENERATED FROM PYTHON SOURCE LINES 913-924
 
 .. code-block:: default
 
@@ -1527,7 +1528,7 @@ and 84th percentiles of the samples in the marginalized distributions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 928-938
+.. GENERATED FROM PYTHON SOURCE LINES 929-939
 
 The first number here is the median value of each model coefficient in
 the posterior ensemble, while the upper and lower numbers correspond to
@@ -1540,7 +1541,7 @@ We can also calculate the posterior model covariance matrix and compare
 to that estimated by least squares.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 938-950
+.. GENERATED FROM PYTHON SOURCE LINES 939-951
 
 .. code-block:: default
 
@@ -1585,7 +1586,7 @@ to that estimated by least squares.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 952-958
+.. GENERATED FROM PYTHON SOURCE LINES 953-959
 
 .. code-block:: default
 
@@ -1613,7 +1614,7 @@ to that estimated by least squares.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 963-968
+.. GENERATED FROM PYTHON SOURCE LINES 964-969
 
 --------------
 
@@ -1621,7 +1622,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 968-974
+.. GENERATED FROM PYTHON SOURCE LINES 969-975
 
 .. code-block:: default
 
@@ -1639,24 +1640,24 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
-    numpy 1.21.6
-    scipy 1.9.1
-    matplotlib 3.5.3
-    emcee 3.1.2
-    arviz 0.12.1
+    cofi 0.2.0
+    numpy 1.20.3
+    scipy 1.10.1
+    matplotlib 3.5.1
+    emcee 3.1.4
+    arviz 0.15.1
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 975-975
+.. GENERATED FROM PYTHON SOURCE LINES 976-976
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  7.315 seconds)
+   **Total running time of the script:** ( 0 minutes  11.411 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_linear_regression.py:
@@ -1664,6 +1665,8 @@ sphinx_gallery_thumbnail_number = -1
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
+
+
 
 
     .. container:: sphx-glr-download sphx-glr-download-python

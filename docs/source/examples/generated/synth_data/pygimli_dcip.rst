@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_examples_generated_synth_data_pygimli_dcip.py>`
+        :ref:`Go to the end <sphx_glr_download_examples_generated_synth_data_pygimli_dcip.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
@@ -404,8 +404,8 @@ information for plotting:
  .. code-block:: none
 
     relativeError set to a value > 0.5 .. assuming this is a percentage Error level dividing them by 100
-    Data error estimate (min:max)  0.010018232527676921 : 0.39689542284224183
-    Data IP abs error estimate (min:max)  7.507792421169821e-10 : 0.00022318579899318784
+    Data error estimate (min:max)  0.010018169079115617 : 0.39389812850648426
+    Data IP abs error estimate (min:max)  7.191825579036248e-10 : 0.00022500434438975863
 
 
 
@@ -453,7 +453,7 @@ problem underdetermined.
 
     inv_mesh = inversion_mesh(ert_mgr)
 
-    ax = pygimli.show(inv_mesh, showMesh=True, markers=True, colorBar=False)
+    ax = pygimli.show(inv_mesh, showMesh=True, markers=False, colorBar=False)
     ax[0].set_title("Mesh used for inversion")
 
 
@@ -812,28 +812,26 @@ the problem in ``cofi`` by setting the problem information for a
 
  .. code-block:: none
 
-    /home/jiawen/cofi/src/cofi/solvers/base_solver.py:267: UserWarning: the following options are defined but not in parameter list for the chosen tool: ['lr']
-      warnings.warn(
-    Iteration #0, objective value: 40.95771199605861
-    Iteration #1, objective value: 33.006761054365505
-    Iteration #2, objective value: 27.517003420367388
-    Iteration #3, objective value: 23.856374111760857
-    Iteration #4, objective value: 21.50039198382136
-    Iteration #5, objective value: 20.03191354052629
-    Iteration #6, objective value: 19.94374499737532
-    Iteration #7, objective value: 19.827200872779063
-    Iteration #8, objective value: 19.687514187805156
-    Iteration #9, objective value: 19.529728014807965
-    Iteration #10, objective value: 19.35862270111142
-    Iteration #11, objective value: 19.178021476356154
-    Iteration #12, objective value: 18.990944837953872
-    Iteration #13, objective value: 18.800752066476278
-    Iteration #14, objective value: 18.61164377300838
-    Iteration #15, objective value: 18.428027398836804
-    Iteration #16, objective value: 18.253580046609493
-    Iteration #17, objective value: 18.090719054270597
-    Iteration #18, objective value: 17.94081235117483
-    Iteration #19, objective value: 17.804786009588636
+    Iteration #0, objective value: 40.45486222399078
+    Iteration #1, objective value: 32.666473848814995
+    Iteration #2, objective value: 27.25509818674189
+    Iteration #3, objective value: 23.61689870942886
+    Iteration #4, objective value: 21.25003985205533
+    Iteration #5, objective value: 19.75437517387362
+    Iteration #6, objective value: 19.664967415538342
+    Iteration #7, objective value: 19.546714992422306
+    Iteration #8, objective value: 19.404993594384244
+    Iteration #9, objective value: 19.244973185559466
+    Iteration #10, objective value: 19.0715885484967
+    Iteration #11, objective value: 18.88883917457543
+    Iteration #12, objective value: 18.699874814672363
+    Iteration #13, objective value: 18.508109556557223
+    Iteration #14, objective value: 18.31777058175494
+    Iteration #15, objective value: 18.13326509050161
+    Iteration #16, objective value: 17.958221380757422
+    Iteration #17, objective value: 17.794951128717095
+    Iteration #18, objective value: 17.644666903666035
+    Iteration #19, objective value: 17.508098503144264
 
 
 
@@ -899,12 +897,12 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
-    numpy 1.21.6
-    scipy 1.9.1
-    pygimli 1.2.6
-    torch 1.12.1+cu102
-    matplotlib 3.5.3
+    cofi 0.2.0
+    numpy 1.20.3
+    scipy 1.10.1
+    pygimli 1.4.1
+    torch 1.13.1
+    matplotlib 3.5.1
 
 
 
@@ -916,7 +914,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 3 minutes  4.958 seconds)
+   **Total running time of the script:** ( 2 minutes  49.472 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_pygimli_dcip.py:
@@ -924,6 +922,8 @@ sphinx_gallery_thumbnail_number = -1
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
+
+
 
 
     .. container:: sphx-glr-download sphx-glr-download-python

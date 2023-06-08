@@ -79,7 +79,7 @@ Xray Tomography
 # :math:`N_x \times N_y` vector :math:`\boldsymbol{\mu}`. This is related
 # to the data by
 # 
-# .. math:: d_i = A_{ij}\mu_j 
+# .. math:: d_i = A_{ij}\mu_j
 # 
 # where :math:`d_i = -\log {I^{(i)}_{rec}}/{I^{(i)}_{src}}`, and where
 # :math:`A_{ij}` represents the path length in cell :math:`j` of the
@@ -108,7 +108,8 @@ Xray Tomography
 
 import numpy as np
 from cofi import BaseProblem, InversionOptions, Inversion
-from espresso import XrayTracer
+from cofi.utils import QuadraticReg
+from espresso import XrayTomography
 
 ######################################################################
 #
@@ -125,7 +126,7 @@ from espresso import XrayTracer
 # constant.
 # 
 
-xrt = XrayTracer()
+xrt = XrayTomography()
 
 ######################################################################
 #
@@ -146,13 +147,12 @@ xrt_problem.set_jacobian(xrt.jacobian(xrt.starting_model))
 sigma = 0.002
 lamda = 50
 data_cov_inv = np.identity(xrt.data_size) * (1/sigma**2)
-reg_matrix = lamda * np.identity(xrt.model_size)
 
 ######################################################################
 #
 
 xrt_problem.set_data_covariance_inv(data_cov_inv)
-xrt_problem.set_regularization(2, 1, reg_matrix)
+xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(xrt.model_size,)))
 
 ######################################################################
 #

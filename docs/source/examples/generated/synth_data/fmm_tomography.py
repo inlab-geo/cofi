@@ -145,7 +145,7 @@ import espresso
 # (red, top left) and the other with higher velocity (blue, bottom right).
 # 
 
-fmm = espresso.FmWavefrontTracker()
+fmm = espresso.FmmTomography()
 
 fmm.plot_model(fmm.good_model, with_paths=True);
 
@@ -163,7 +163,7 @@ pprint.pprint(fmm.metadata)
 # ---------------------
 # 
 
-# get problem information from  espresso FmWavefrontTracker
+# get problem information from  espresso FmmTomography
 model_size = fmm.model_size         # number of model parameters
 model_shape = fmm.model_shape       # 2D spatial grids
 data_size = fmm.data_size           # number of data points
@@ -182,8 +182,15 @@ fmm_problem.set_initial_model(ref_start_slowness)
 # add regularization: damping + smoothing
 damping_factor = 50
 smoothing_factor = 5e3
-reg_damping = cofi.utils.QuadraticReg(damping_factor, model_size, "damping", ref_start_slowness)
-reg_smoothing = cofi.utils.QuadraticReg(smoothing_factor, model_shape, "smoothing")
+reg_damping = damping_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape, 
+    weighting_matrix="damping", 
+    reference_model=ref_start_slowness
+)
+reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape,
+    weighting_matrix="smoothing"
+)
 reg = reg_damping + reg_smoothing
 
 ######################################################################

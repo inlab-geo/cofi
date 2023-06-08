@@ -485,7 +485,7 @@ plotted in yellow.
 
     inv_mesh = inversion_mesh(ert_mgr)
     _, ax = plt.subplots(figsize=(10,8))
-    pygimli.show(inv_mesh, showMesh=True, markers=True, colorBar=False, ax=ax)
+    pygimli.show(inv_mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
     ax.set_title("Mesh used for inversion");
     ax.set_xlabel("Horizontal Distance (m)");
     ax.set_ylabel("Elevation (m)");
@@ -503,8 +503,6 @@ plotted in yellow.
 
  .. code-block:: none
 
-    13/04/23 - 11:41:24 - pyGIMLi - INFO - Found 2 regions.
-    13/04/23 - 11:41:24 - pyGIMLi - INFO - Region with smallest marker (1) set to background
 
     Text(71.47222222222221, 0.5, 'Elevation (m)')
 
@@ -538,13 +536,6 @@ plotted in yellow.
    :srcset: /tutorials/generated/images/sphx_glr_3_electrical_resistivity_tomography_004.png
    :class: sphx-glr-single-img
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    13/04/23 - 11:41:24 - pyGIMLi - INFO - Creating forward mesh from region infos.
-    13/04/23 - 11:41:24 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
 
 
 
@@ -774,12 +765,11 @@ model update. In practice:
 
  .. code-block:: none
 
-    13/04/23 - 11:41:24 - Core - WARNING -  data contains no K-factors but we calculate them  analytically for the response call
     Iteration #0, objective function value: 229.71418345445022
     Iteration #1, objective function value: 224.7987515141377
-    Iteration #2, objective function value: 220.36237268797305
-    Iteration #3, objective function value: 215.90570020911076
-    Iteration #4, objective function value: 211.61775613254892
+    Iteration #2, objective function value: 220.36237268797268
+    Iteration #3, objective function value: 215.90570020911395
+    Iteration #4, objective function value: 211.61775613255435
 
     Number of objective function evaluations: 5
     Number of gradient function evaluations: 5
@@ -1002,17 +992,17 @@ You may start from the following template:
     Iteration #1
       objective value: 69.4123275390053
     Iteration #2
-      model change: 1.9521920346072368
-      objective value: 32.31371502910788
+      model change: 1.9521920346072341
+      objective value: 32.31371502910786
     Iteration #3
-      model change: 2.0050005049882933
-      objective value: 31.171940385221244
+      model change: 2.0050005049882893
+      objective value: 31.17194038522148
     Iteration #4
-      model change: 0.37747947588991526
-      objective value: 27.46044538043933
+      model change: 0.3774794758899083
+      objective value: 27.46044538043943
     Iteration #5
-      model change: 1.275804817790106
-      objective value: 17.69101254439491
+      model change: 1.2758048177901025
+      objective value: 17.691012544394344
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
@@ -1071,17 +1061,17 @@ You may start from the following template:
     Iteration #1
       objective value: 157.50708172346924
     Iteration #2
-      model change: 2.0
-      objective value: 68.9401312210485
+      model change: 2.0000000000000004
+      objective value: 68.94013122104855
     Iteration #3
-      model change: 4.0
-      objective value: 34.90264090874991
+      model change: 3.9999999999999987
+      objective value: 34.902640908745205
     Iteration #4
       model change: 0.0
-      objective value: 34.90264090874991
+      objective value: 34.902640908745205
     Iteration #5
-      model change: 2.0
-      objective value: 22.814718920534673
+      model change: 2.0000000000000004
+      objective value: 22.814718920593325
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -1138,17 +1128,17 @@ You may start from the following template:
     Iteration #1
       objective value: 157.50708172346924
     Iteration #2
-      model change: 1.9999999999999993
-      objective value: 68.94013122104849
+      model change: 2.0
+      objective value: 68.94013122104852
     Iteration #3
-      model change: 2.0885981986782407
-      objective value: 51.744476378639455
+      model change: 2.088598198678242
+      objective value: 51.74447637863951
     Iteration #4
-      model change: 2.235768382076456
-      objective value: 32.60775764541799
+      model change: 2.235768382076445
+      objective value: 32.60775764541853
     Iteration #5
-      model change: 1.7295706120906573
-      objective value: 29.213175185119272
+      model change: 1.7295706120906618
+      objective value: 29.213175185119823
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
@@ -1268,12 +1258,12 @@ You may start from this template:
     Iteration #1, objective value: 156.90464922477352
     Iteration #2, objective value: 107.129503120462
     Iteration #3, objective value: 76.24719314426025
-    Iteration #4, objective value: 59.93096014283379
-    Iteration #5, objective value: 53.933908806639394
-    Iteration #6, objective value: 53.884437072996484
-    Iteration #7, objective value: 53.81331650273627
-    Iteration #8, objective value: 53.72275180400695
-    Iteration #9, objective value: 53.61502389632334
+    Iteration #4, objective value: 59.930960142833776
+    Iteration #5, objective value: 53.93390880663936
+    Iteration #6, objective value: 53.88443707299647
+    Iteration #7, objective value: 53.81331650273624
+    Iteration #8, objective value: 53.72275180400693
+    Iteration #9, objective value: 53.61502389632332
 
     Number of objective function evaluations: 10
     Number of gradient function evaluations: 10
@@ -1327,10 +1317,10 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.3.dev2+2.g8ef207d.dirty
+    cofi 0.2.0
     numpy 1.20.3
     scipy 1.10.1
-    pygimli 1.3.0
+    pygimli 1.4.1
     torch 1.13.1
     matplotlib 3.5.1
 
@@ -1344,7 +1334,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  3.462 seconds)
+   **Total running time of the script:** ( 1 minutes  6.081 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py:

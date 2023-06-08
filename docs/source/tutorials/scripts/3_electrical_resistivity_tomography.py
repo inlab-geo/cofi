@@ -390,7 +390,7 @@ colorbar_data(ax)
 
 inv_mesh = inversion_mesh(ert_mgr)
 _, ax = plt.subplots(figsize=(10,8))
-pygimli.show(inv_mesh, showMesh=True, markers=True, colorBar=False, ax=ax)
+pygimli.show(inv_mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
 ax.set_title("Mesh used for inversion");
 ax.set_xlabel("Horizontal Distance (m)");
 ax.set_ylabel("Elevation (m)");

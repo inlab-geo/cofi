@@ -96,7 +96,7 @@ cells in the :math:`y`-direction, we can express :math:`\mu(x,y)` as an
 :math:`N_x \times N_y` vector :math:`\boldsymbol{\mu}`. This is related
 to the data by
 
-.. math:: d_i = A_{ij}\mu_j 
+.. math:: d_i = A_{ij}\mu_j
 
 where :math:`d_i = -\log {I^{(i)}_{rec}}/{I^{(i)}_{src}}`, and where
 :math:`A_{ij}` represents the path length in cell :math:`j` of the
@@ -132,14 +132,15 @@ The package ``geo-espresso`` contains the forward code for this problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-113
+.. GENERATED FROM PYTHON SOURCE LINES 108-114
 
 .. code-block:: default
 
 
     import numpy as np
     from cofi import BaseProblem, InversionOptions, Inversion
-    from espresso import XrayTracer
+    from cofi.utils import QuadraticReg
+    from espresso import XrayTomography
 
 
 
@@ -148,7 +149,7 @@ The package ``geo-espresso`` contains the forward code for this problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-127
+.. GENERATED FROM PYTHON SOURCE LINES 119-128
 
 1. Define the problem
 ---------------------
@@ -160,12 +161,12 @@ each grid. Since the paths are fixed, the Jacobian matrix stays
 constant.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-130
+.. GENERATED FROM PYTHON SOURCE LINES 128-131
 
 .. code-block:: default
 
 
-    xrt = XrayTracer()
+    xrt = XrayTomography()
 
 
 
@@ -174,7 +175,7 @@ constant.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-137
+.. GENERATED FROM PYTHON SOURCE LINES 133-138
 
 .. code-block:: default
 
@@ -191,18 +192,18 @@ constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   6%|6         | 635/10416 [00:00<00:01, 6349.64it/s]    Evaluating paths:  13%|#3        | 1398/10416 [00:00<00:01, 7100.58it/s]    Evaluating paths:  21%|##        | 2147/10416 [00:00<00:01, 7273.29it/s]    Evaluating paths:  28%|##7       | 2877/10416 [00:00<00:01, 7282.64it/s]    Evaluating paths:  35%|###4      | 3620/10416 [00:00<00:00, 7333.68it/s]    Evaluating paths:  42%|####1     | 4370/10416 [00:00<00:00, 7389.50it/s]    Evaluating paths:  49%|####9     | 5113/10416 [00:00<00:00, 7401.00it/s]    Evaluating paths:  56%|#####6    | 5854/10416 [00:00<00:00, 7358.08it/s]    Evaluating paths:  63%|######3   | 6612/10416 [00:00<00:00, 7425.56it/s]    Evaluating paths:  71%|#######   | 7376/10416 [00:01<00:00, 7490.65it/s]    Evaluating paths:  78%|#######8  | 8126/10416 [00:01<00:00, 7359.41it/s]    Evaluating paths:  85%|########5 | 8878/10416 [00:01<00:00, 7404.21it/s]    Evaluating paths:  92%|#########2| 9632/10416 [00:01<00:00, 7442.48it/s]    Evaluating paths: 100%|#########9| 10399/10416 [00:01<00:00, 7509.85it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 7383.63it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|8         | 841/10416 [00:00<00:01, 8402.96it/s]    Evaluating paths:  16%|#6        | 1712/10416 [00:00<00:01, 8582.45it/s]    Evaluating paths:  25%|##4       | 2571/10416 [00:00<00:00, 8576.73it/s]    Evaluating paths:  33%|###2      | 3429/10416 [00:00<00:00, 8572.25it/s]    Evaluating paths:  41%|####1     | 4299/10416 [00:00<00:00, 8614.86it/s]    Evaluating paths:  50%|####9     | 5161/10416 [00:00<00:00, 8513.75it/s]    Evaluating paths:  58%|#####7    | 6015/10416 [00:00<00:00, 8513.86it/s]    Evaluating paths:  66%|######5   | 6868/10416 [00:00<00:00, 8517.08it/s]    Evaluating paths:  74%|#######4  | 7720/10416 [00:00<00:00, 8280.87it/s]    Evaluating paths:  82%|########2 | 8563/10416 [00:01<00:00, 8320.12it/s]    Evaluating paths:  90%|######### | 9418/10416 [00:01<00:00, 8389.17it/s]    Evaluating paths:  99%|#########8| 10276/10416 [00:01<00:00, 8442.98it/s]    Evaluating paths: 100%|##########| 10416/10416 [00:01<00:00, 8460.90it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-145
+.. GENERATED FROM PYTHON SOURCE LINES 143-146
 
 We do some estimation on data noise and further perform a
 regularization.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-151
+.. GENERATED FROM PYTHON SOURCE LINES 146-151
 
 .. code-block:: default
 
@@ -210,7 +211,6 @@ regularization.
     sigma = 0.002
     lamda = 50
     data_cov_inv = np.identity(xrt.data_size) * (1/sigma**2)
-    reg_matrix = lamda * np.identity(xrt.model_size)
 
 
 
@@ -225,7 +225,7 @@ regularization.
 
 
     xrt_problem.set_data_covariance_inv(data_cov_inv)
-    xrt_problem.set_regularization(2, 1, reg_matrix)
+    xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(xrt.model_size,)))
 
 
 
@@ -260,14 +260,14 @@ Review what information is included in the ``BaseProblem`` object:
     Model shape: Unknown
     ---------------------------------------------------------------------
     List of functions/properties set by you:
-    ['jacobian', 'regularization', 'regularization_matrix', 'regularization_factor', 'data', 'data_covariance_inv']
+    ['jacobian', 'regularization', 'data', 'data_covariance_inv']
     ---------------------------------------------------------------------
     List of functions/properties created based on what you have provided:
     ['jacobian_times_vector']
     ---------------------------------------------------------------------
     List of functions/properties that can be further set for the problem:
     ( not all of these may be relevant to your inversion workflow )
-    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
+    ['objective', 'log_posterior', 'log_posterior_with_blobs', 'log_likelihood', 'log_prior', 'gradient', 'hessian', 'hessian_times_vector', 'residual', 'jacobian_times_vector', 'data_misfit', 'regularization_matrix', 'forward', 'data_covariance', 'initial_model', 'model_shape', 'blobs_dtype', 'bounds', 'constraints']
 
 
 
@@ -368,24 +368,24 @@ For this dataset, we’ve taken :math:`\sigma = 0.002`\ s and chosen
     ============================
     SUCCESS
     ----------------------------
-    model: [1.13306453 0.86363911 1.01958229 ... 1.01319821 0.8615539  1.14691342]
+    model: [0.98494811 1.03000048 0.95776419 ... 0.94168322 1.03668701 1.00048943]
     sum_of_squared_residuals: []
     effective_rank: 2500
-    singular_values: [932638.73185699 860130.56593555 860130.56593555 ...   3644.1527398
-       3379.60041023   3379.60041023]
-    model_covariance: [[ 7.47520869e-05 -3.87965698e-05 -4.62858729e-06 ...  2.58820545e-08
-      -8.37982995e-09 -8.03271846e-08]
-     [-3.87965698e-05  1.21131273e-04 -2.70276186e-05 ... -1.63652129e-07
-       1.37850692e-07 -8.37982995e-09]
-     [-4.62858729e-06 -2.70276186e-05  8.87810002e-05 ...  1.30995411e-07
-      -1.63652129e-07  2.58820545e-08]
+    singular_values: [9.30139732e+05 8.57631566e+05 8.57631566e+05 ... 1.14515274e+03
+     8.80600410e+02 8.80600410e+02]
+    model_covariance: [[ 1.17571588e-04 -8.57198189e-05 -1.62727362e-06 ...  1.56635037e-07
+      -6.08653282e-08 -1.36217397e-07]
+     [-8.57198189e-05  2.14596891e-04 -5.56362665e-05 ... -6.06195208e-07
+       4.87748993e-07 -6.08653282e-08]
+     [-1.62727362e-06 -5.56362665e-05  1.35540260e-04 ...  5.04358068e-07
+      -6.06195208e-07  1.56635037e-07]
      ...
-     [ 2.58820545e-08 -1.63652129e-07  1.30995411e-07 ...  8.87810002e-05
-      -2.70276186e-05 -4.62858729e-06]
-     [-8.37982995e-09  1.37850692e-07 -1.63652129e-07 ... -2.70276186e-05
-       1.21131273e-04 -3.87965698e-05]
-     [-8.03271846e-08 -8.37982995e-09  2.58820545e-08 ... -4.62858729e-06
-      -3.87965698e-05  7.47520869e-05]]
+     [ 1.56635037e-07 -6.06195208e-07  5.04358068e-07 ...  1.35540260e-04
+      -5.56362665e-05 -1.62727362e-06]
+     [-6.08653282e-08  4.87748993e-07 -6.06195208e-07 ... -5.56362665e-05
+       2.14596891e-04 -8.57198189e-05]
+     [-1.36217397e-07 -6.08653282e-08  1.56635037e-07 ... -1.62727362e-06
+      -8.57198189e-05  1.17571588e-04]]
 
 
 
@@ -433,7 +433,7 @@ respectively.
  .. code-block:: none
 
 
-    <Figure size 640x480 with 2 Axes>
+    <Axes: >
 
 
 
@@ -498,7 +498,7 @@ the cellular model.
  .. code-block:: none
 
 
-    <Figure size 640x480 with 2 Axes>
+    <Axes: >
 
 
 
@@ -540,7 +540,7 @@ which gives the uncertainty image on velocity, which looks very similar.
  .. code-block:: none
 
 
-    <Figure size 640x480 with 2 Axes>
+    <Axes: >
 
 
 
@@ -585,11 +585,11 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.3.dev2+2.g8ef207d.dirty
-    espresso 0.2.2.dev0
-    numpy 1.20.3
+    cofi 0.2.0
+    espresso 0.3.7
+    numpy 1.24.3
     scipy 1.10.1
-    matplotlib 3.5.1
+    matplotlib 3.7.1
 
 
 
@@ -601,7 +601,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  12.342 seconds)
+   **Total running time of the script:** ( 0 minutes  4.282 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_xray_tomography.py:

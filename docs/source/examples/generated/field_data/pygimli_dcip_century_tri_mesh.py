@@ -372,7 +372,7 @@ def plot_colorbar(ax, cMin, cMax, label, orientation="horizontal"):
     cb = plt.colorbar(sm, orientation=orientation, ax=ax)
     cb.set_label(label)
     cb.set_ticks(np.linspace(cMin, cMax, 5, endpoint=True))
-        
+
 def plot_model(mesh, model_complex, title):
     rho, phi = rho_phi_from_complex(model_complex)
     fig, axes = plt.subplots(2,1,figsize=(12,5))
@@ -381,7 +381,7 @@ def plot_model(mesh, model_complex, title):
     axes[0].set_ylim(y_inv_start, y_inv_stop)
     axes[0].set_title("Resistivity")
     plot_colorbar(axes[0], 136, 170, resistivity_label)
-    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, ax=axes[1], colorBar=False)
+    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, cMin=-4.76, cMax=-4, ax=axes[1], colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title("Chargeability")
@@ -394,17 +394,19 @@ def plot_model(mesh, model_complex, title):
 def plot_data(pg_data, data_complex, title):
     rho, phi = rho_phi_from_complex(data_complex)
     fig, axes = plt.subplots(1,2,figsize=(10,4))
-    pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+    # pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+    pygimli.physics.ert.showERTData(pg_data, vals=rho, ax=axes[0], colorBar=False)
     axes[0].set_title("Apparent Resistivity")
     plot_colorbar(axes[0], np.min(rho), np.max(rho), resistivity_label)
-    pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
+    pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, ax=axes[1], colorBar=False)
+    # pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
     axes[1].set_title("Apparent Chargeability")
     plot_colorbar(axes[1], np.min(phi*1000), np.max(phi*1000), chargeability_label)
     fig.suptitle(title)
-    
+
 def plot_mesh(mesh, title="Mesh used for inversion"):
     _, ax = plt.subplots(1, 1)
-    pygimli.show(mesh, showMesh=True, markers=True, colorBar=False, ax=ax)
+    pygimli.show(mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
     ax.set_title(title)
     ax.set_xlabel("Northing (m)")
     ax.set_ylabel("Elevation (m)")
@@ -456,6 +458,7 @@ pg_data
 ######################################################################
 #
 
+# this cell needs to be run twice in order to work well
 plot_data(pg_data, np.exp(data_log_complex), "Data Observatons")
 plot_data(pg_data, np.diag(Cd_inv), "Data covariance inverse weighting in log space")
 

@@ -15,8 +15,8 @@ Surface-Wave Tomography
 
 ######################################################################
 # In this notebook, we will apply
-# `CoFI <https://github.com/inlab-geo/cofi>`__ to real-world measurements
-# of surface-wave velocity collected across the
+# `CoFI <https://github.com/inlab-geo/cofi>`__ to measurements of
+# surface-wave velocity collected across the
 # `USArray <http://www.usarray.org/>`__ from the ambient seismic noise.
 # Specifically, we will retrieve, through CoFI and
 # `SeisLib <https://pypi.org/project/seislib/>`__, a Rayleigh-wave phase
@@ -216,13 +216,14 @@ c = 1 / tomo.solve(rdamp=mu) # in km/s
 
 
 ######################################################################
-# Let’s have a look at the results (the colorbar is in km/s).
+# Let’s have a look at the results.
 # 
 
 from seislib.plotting import plot_map
 import seislib.colormaps as scm
 
-plot_map(tomo.grid.mesh, c, cmap=scm.roma)
+img, cb = plot_map(tomo.grid.mesh, c, cmap=scm.roma, show=False)
+cb.set_label('Phase velocity [km/s]')
 
 ######################################################################
 #
@@ -277,13 +278,14 @@ R = np.row_stack((R_lat, R_lon))
 # 
 
 from cofi import BaseProblem
+from cofi.utils import QuadraticReg
 
 problem = BaseProblem()
 problem.set_data(r) # our data are now the residuals defined above
 problem.set_jacobian(A)
 
 # As opposed to SeisLib, CoFI does not square the damping coefficient.
-problem.set_regularization(2, mu**2, R) # L2 norm of R, i.e. R.T @ R
+problem.set_regularization(mu**2 * QuadraticReg(R, (A.shape[1],)))   # L2 norm of R, i.e. R.T @ R
 
 problem.summary()
 
@@ -321,9 +323,33 @@ inv.summary()
 # reference model :math:`{\bf x}_0`.
 # 
 
+import cartopy.crs as ccrs
+import matplotlib.pyplot as plt
+
 # the reference model x0 is added back to get absolute values of slowness
 
 c_cofi = 1 / ( inv_results.model + x0 )
+
+fig = plt.figure(figsize=(10, 8))
+
+# SeisLib map
+
+ax1 = plt.subplot(121, projection=ccrs.Mercator())
+ax1.coastlines()
+img1, cb1 = plot_map(tomo.grid.mesh, c, ax=ax1, cmap=scm.roma, show=False)
+cb1.set_label('Phase velocity [km/s]')
+ax1.set_title('SeisLib')
+
+# CoFI map
+
+ax2 = plt.subplot(122, projection=ccrs.Mercator())
+ax2.coastlines()
+img2, cb2 = plot_map(tomo.grid.mesh, c_cofi, ax=ax2, cmap=scm.roma, show=False)
+cb2.set_label('Phase velocity [km/s]')
+ax2.set_title('CoFI')
+
+plt.tight_layout()
+plt.show()
 
 print('Are the results obtained from seislib and cofi the same?', np.allclose(c, c_cofi))
 
@@ -337,7 +363,7 @@ print('Are the results obtained from seislib and cofi the same?', np.allclose(c,
 # ---------
 # 
 
-libraries_used = ["cofi", "seislib", "numpy"]
+libraries_used = ["cartopy", "cofi", "matplotlib", "numpy", "seislib"]
 for lib in libraries_used:
     lib_var = __import__(lib)
     print(lib, getattr(lib_var, "__version__"))
