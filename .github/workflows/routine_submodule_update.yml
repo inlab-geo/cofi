@@ -18,8 +18,10 @@ jobs:
       - name: Check for submodule changes
         id: diff
         run: |
-          git submodule foreach 'git fetch origin main && [ $(git rev-parse HEAD) != $(git rev-parse origin/main) ] && exit 1 || exit 0'
-          echo ::set-output name=changed::$?
+          echo 0 > changed.txt
+          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then echo 1 > ../../../changed.txt; fi'
+          echo ::set-output name=changed::$(cat changed.txt)
+          rm changed.txt
 
       - name: Commit changes
         id: commit
@@ -28,12 +30,13 @@ jobs:
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git config --global user.name "GitHub Actions Bot"
             git checkout -b update-submodules
+            git submodule foreach 'git checkout origin/main'
             git add .
             git commit -m "chore: update submodules"
             git push origin update-submodules
-            echo ::set-output name=committed::true
+            echo "committed=true" >> $GITHUB_OUTPUT
           else
-            echo ::set-output name=committed::false
+            echo "committed=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create Pull Request
