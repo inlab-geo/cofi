@@ -51,10 +51,10 @@ Century DCIP Inversion with a Triangular Mesh
    file specifies a list of packages required to run the notebooks)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-90
+.. GENERATED FROM PYTHON SOURCE LINES 39-92
 
 Motivation
-==========
+----------
 
 The Century Deposit is a zinc-lead-silver deposit in the Mt Isa region
 in Queensland Australia and UBC 2D DCIP inversion results have been
@@ -63,15 +63,17 @@ reproduced with
 `SimPEG <https://curvenote.com/@simpeg/transform-2020-simpeg-tutorial/!6DDumb03Le6D8N8xuJNs>`__.
 It provides an excellent test case to verify if CoFI can indeed act as a
 glue between forward solvers and inverse solvers and be applied to real
-data. Figure 1 from `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__
-provides a map of the location and geological setting for the Century
-deposit.
+data. `Figure
+1 <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/Mutton-Figure1-1.png?raw=true>`__
+from `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__ provides a map
+of the location and geological setting for the Century deposit.
 
 A detailed descrtiption of the geological setting is available
 `here <http://portergeo.com.au/database/mineinfo.asp?mineid=mn075>`__
 and `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__ also provide
-the following cross-section for the survey line 46800mE, which we will
-invert in the following.
+the
+`cross-section <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/Mutton-Figure2-1.png?raw=true>`__
+for the survey line 46800mE, which we will invert in the following.
 
 What we are interested in is delineating the mineralised units by using
 the DCIP (Direct Current, Induced Polarization) solver implemented in
@@ -105,16 +107,16 @@ the Century zinc deposit. Geophysics, 65(6), 1946–1960.
 https://doi.org/10.1190/1.1444878
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-99
+.. GENERATED FROM PYTHON SOURCE LINES 95-101
 
-1. Set up environment
----------------------
+1. Set up environment 
+----------------------
 
 We’ll do the following: 1. Install PyGIMLi (if on CoLab) 2. Download
 processed dataset (if on CoLab) 3. Import modules
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-113
+.. GENERATED FROM PYTHON SOURCE LINES 101-115
 
 .. code-block:: default
 
@@ -139,7 +141,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-125
+.. GENERATED FROM PYTHON SOURCE LINES 117-127
 
 .. code-block:: default
 
@@ -160,7 +162,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-138
+.. GENERATED FROM PYTHON SOURCE LINES 132-140
 
 We will need the following packages:
 
@@ -171,7 +173,7 @@ We will need the following packages:
 -  ``cofi`` for accessing different inference solvers
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-146
+.. GENERATED FROM PYTHON SOURCE LINES 140-148
 
 .. code-block:: default
 
@@ -190,17 +192,17 @@ We will need the following packages:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 151-158
+.. GENERATED FROM PYTHON SOURCE LINES 153-160
 
-2. Load the data
-----------------
+2. Load the data 
+-----------------
 
 We will need to download the preprocessed dataset first. This notebook
 `century_data_preprocessing.ipynb <century_data_preprocessing.ipynb>`__
 contains the code for data preprocessing.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-161
+.. GENERATED FROM PYTHON SOURCE LINES 160-163
 
 .. code-block:: default
 
@@ -214,7 +216,7 @@ contains the code for data preprocessing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 166-172
+.. GENERATED FROM PYTHON SOURCE LINES 168-174
 
 Converting measurements of chargeability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,7 +225,7 @@ PyGIMLi expresses chargeability in :math:`\mathrm{radians}` and we
 convert the apparent chargeabilites as we load the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-190
+.. GENERATED FROM PYTHON SOURCE LINES 174-192
 
 .. code-block:: default
 
@@ -258,7 +260,7 @@ convert the apparent chargeabilites as we load the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 192-212
+.. GENERATED FROM PYTHON SOURCE LINES 194-214
 
 .. code-block:: default
 
@@ -289,23 +291,23 @@ convert the apparent chargeabilites as we load the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 217-224
+.. GENERATED FROM PYTHON SOURCE LINES 219-226
 
-3. Utility wrappers to PyGIMLi functions
-----------------------------------------
+3. Utility wrappers to PyGIMLi functions 
+-----------------------------------------
 
 Below we define a set of utility functions that help define the problem,
 generating data and making plots. Feel free to skip reading the details
 of these utility functions and come back later if you want.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 227-230
+.. GENERATED FROM PYTHON SOURCE LINES 229-232
 
-3.1. Helper functions for complex numbers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3.1. Helper functions for complex numbers 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-243
+.. GENERATED FROM PYTHON SOURCE LINES 232-245
 
 .. code-block:: default
 
@@ -329,13 +331,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 248-251
+.. GENERATED FROM PYTHON SOURCE LINES 250-253
 
-3.2. Helper functions for PyGIMLi modelling
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3.2. Helper functions for PyGIMLi modelling 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 251-350
+.. GENERATED FROM PYTHON SOURCE LINES 253-352
 
 .. code-block:: default
 
@@ -445,16 +447,16 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 355-361
+.. GENERATED FROM PYTHON SOURCE LINES 357-363
 
-3.3. Plotting utilities
-~~~~~~~~~~~~~~~~~~~~~~~
+3.3. Plotting utilities 
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note: We lifted out the plotting of colorbars only for Colab
 compatibility.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 361-443
+.. GENERATED FROM PYTHON SOURCE LINES 363-445
 
 .. code-block:: default
 
@@ -547,16 +549,16 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 448-454
+.. GENERATED FROM PYTHON SOURCE LINES 450-456
 
-4. PyGIMLi problem setup
-------------------------
+4. PyGIMLi problem setup 
+-------------------------
 
-4.1. Data container
-~~~~~~~~~~~~~~~~~~~
+4.1. Data container 
+~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 454-458
+.. GENERATED FROM PYTHON SOURCE LINES 456-460
 
 .. code-block:: default
 
@@ -572,15 +574,13 @@ compatibility.
 
  .. code-block:: none
 
-    08/06/23 - 10:19:17 - pyGIMLi - INFO - Create default mesh for geometric factor calculation.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Save RVector binary
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Cache stored: /home/jiawen/.cache/pygimli/2292745701179119498
+    20/06/23 - 18:33:07 - pyGIMLi - INFO - Cache /home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.9/site-packages/pygimli/physics/ert/ert.py:createGeometricFactors restored (2.0s x 2): /home/jiawen/.cache/pygimli/12072010675325049114
 
     Data: Sensors: 33 data: 151, nonzero entries: ['a', 'b', 'err', 'iperr', 'k', 'm', 'n', 'phia', 'rhoa', 'valid']
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 460-465
+.. GENERATED FROM PYTHON SOURCE LINES 462-467
 
 .. code-block:: default
 
@@ -613,13 +613,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 470-473
+.. GENERATED FROM PYTHON SOURCE LINES 472-475
 
-4.2. ERT manager
-~~~~~~~~~~~~~~~~
+4.2. ERT manager 
+~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 473-476
+.. GENERATED FROM PYTHON SOURCE LINES 475-478
 
 .. code-block:: default
 
@@ -633,13 +633,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 481-484
+.. GENERATED FROM PYTHON SOURCE LINES 483-486
 
-4.3. Inversion mesh
-~~~~~~~~~~~~~~~~~~~
+4.3. Inversion mesh 
+~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 484-490
+.. GENERATED FROM PYTHON SOURCE LINES 486-492
 
 .. code-block:: default
 
@@ -662,25 +662,23 @@ compatibility.
 
  .. code-block:: none
 
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Found 2 regions.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Found 2 regions.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Creating forward mesh from region infos.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
-    08/06/23 - 10:19:19 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 5657 Cells: 10912 Boundaries: 8384
+    20/06/23 - 18:33:08 - pyGIMLi - INFO - Found 2 regions.
+    20/06/23 - 18:33:08 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
+    20/06/23 - 18:33:08 - pyGIMLi - INFO - Creating forward mesh from region infos.
+    20/06/23 - 18:33:08 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
+    20/06/23 - 18:33:08 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 5657 Cells: 10912 Boundaries: 8384
     model size 1912
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 495-498
+.. GENERATED FROM PYTHON SOURCE LINES 497-500
 
-4.4. Forward operator
-~~~~~~~~~~~~~~~~~~~~~
+4.4. Forward operator 
+~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 498-501
+.. GENERATED FROM PYTHON SOURCE LINES 500-503
 
 .. code-block:: default
 
@@ -694,13 +692,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 506-509
+.. GENERATED FROM PYTHON SOURCE LINES 508-511
 
-4.5. Regularization matrix
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+4.5. Regularization matrix 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 509-512
+.. GENERATED FROM PYTHON SOURCE LINES 511-514
 
 .. code-block:: default
 
@@ -715,19 +713,19 @@ compatibility.
 
  .. code-block:: none
 
-    08/06/23 - 10:19:20 - Core - INFO - More than 50 regions, so we assume single regions only.
-    08/06/23 - 10:19:20 - Core - INFO - Applying *:* interregion constraints.
+    20/06/23 - 18:33:08 - Core - INFO - More than 50 regions, so we assume single regions only.
+    20/06/23 - 18:33:08 - Core - INFO - Applying *:* interregion constraints.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 517-520
+.. GENERATED FROM PYTHON SOURCE LINES 519-522
 
-4.6. Starting model
-~~~~~~~~~~~~~~~~~~~
+4.6. Starting model 
+~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 520-525
+.. GENERATED FROM PYTHON SOURCE LINES 522-527
 
 .. code-block:: default
 
@@ -748,10 +746,10 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 530-547
+.. GENERATED FROM PYTHON SOURCE LINES 532-549
 
-5. Create utility functions to pass to CoFI
--------------------------------------------
+5. Create utility functions to pass to CoFI 
+--------------------------------------------
 
 CoFI and other inference packages require a set of functions that
 provide the misfit, the jacobian the residual within the case of scipy
@@ -768,7 +766,7 @@ you want to understand more. These functions are:
 -  ``get_hessian``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 547-634
+.. GENERATED FROM PYTHON SOURCE LINES 549-636
 
 .. code-block:: default
 
@@ -866,7 +864,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 636-644
+.. GENERATED FROM PYTHON SOURCE LINES 638-646
 
 .. code-block:: default
 
@@ -891,7 +889,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 646-651
+.. GENERATED FROM PYTHON SOURCE LINES 648-653
 
 .. code-block:: default
 
@@ -908,13 +906,13 @@ you want to understand more. These functions are:
 
  .. code-block:: none
 
-    data misfit: 16.485221244233294, reg: 0.0
+    data misfit: 16.48522124495534, reg: 0.0
 
-    16.485221244233294
+    16.48522124495534
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 653-658
+.. GENERATED FROM PYTHON SOURCE LINES 655-660
 
 .. code-block:: default
 
@@ -932,11 +930,11 @@ you want to understand more. These functions are:
  .. code-block:: none
 
 
-    ((3824,), 3824 [-0.03303060426311295,...,-9.278041144011839e-06])
+    ((3824,), 3824 [-0.03303060426070572,...,-9.278041136645495e-06])
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 660-665
+.. GENERATED FROM PYTHON SOURCE LINES 662-667
 
 .. code-block:: default
 
@@ -955,29 +953,29 @@ you want to understand more. These functions are:
 
 
     ((3824, 3824), array([[ 5.38948398e-03,  2.13205609e-03,  2.52937620e-03, ...,
-            -6.45285043e-17, -5.64234647e-17, -5.86610356e-17],
+            -7.74805813e-17, -7.06284800e-17, -6.98105937e-17],
            [ 2.13205609e-03,  1.52260555e-03,  1.36485591e-03, ...,
-            -2.37272555e-17, -1.89940703e-17, -2.07644658e-17],
+            -3.83824682e-17, -3.39835847e-17, -3.42444728e-17],
            [ 2.52937620e-03,  1.36485591e-03,  2.07533134e-03, ...,
-            -3.20246361e-17, -2.60267529e-17, -2.82835517e-17],
+            -4.44997040e-17, -3.91433897e-17, -3.97066662e-17],
            ...,
-           [-6.45284976e-17, -2.37272610e-17, -3.20246374e-17, ...,
+           [-7.74805333e-17, -3.83824422e-17, -4.44996674e-17, ...,
              3.01850225e-04,  1.83937474e-06, -9.81551500e-05],
-           [-5.64234576e-17, -1.89940745e-17, -2.60267533e-17, ...,
+           [-7.06284334e-17, -3.39835592e-17, -3.91433541e-17, ...,
              1.83937474e-06,  2.01883370e-04, -9.81077661e-05],
-           [-5.86610300e-17, -2.07644684e-17, -2.82835514e-17, ...,
+           [-6.98105591e-17, -3.42444536e-17, -3.97066394e-17, ...,
             -9.81551500e-05, -9.81077661e-05,  3.01974672e-04]]))
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 670-674
+.. GENERATED FROM PYTHON SOURCE LINES 672-676
 
 With all the above forward operations set up with PyGIMLi, we now define
 the problem in ``cofi`` by setting the problem information for a
 ``BaseProblem`` object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 674-686
+.. GENERATED FROM PYTHON SOURCE LINES 676-688
 
 .. code-block:: default
 
@@ -1000,7 +998,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 688-691
+.. GENERATED FROM PYTHON SOURCE LINES 690-693
 
 .. code-block:: default
 
@@ -1031,15 +1029,15 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 696-701
+.. GENERATED FROM PYTHON SOURCE LINES 698-703
 
-6. Define the inversion options and run
----------------------------------------
+6. Define the inversion options and run 
+----------------------------------------
 
 Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 701-714
+.. GENERATED FROM PYTHON SOURCE LINES 703-716
 
 .. code-block:: default
 
@@ -1063,7 +1061,7 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 716-721
+.. GENERATED FROM PYTHON SOURCE LINES 718-723
 
 .. code-block:: default
 
@@ -1080,44 +1078,44 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
  .. code-block:: none
 
-    data misfit: 16.485221244233294, reg: 0.0
-    data misfit: 13.07006561325456, reg: 0.0011545790036776166
-    data misfit: 13.07006561325456, reg: 0.0011545790036776166
-    Iteration #1, objective value: 13.071220192258238
-    data misfit: 8.149530828387336, reg: 0.010185794288197537
-    data misfit: 8.149530828387336, reg: 0.010185794288197537
-    Iteration #2, objective value: 8.159716622675534
-    data misfit: 4.195195896240763, reg: 0.04204069483914689
-    data misfit: 4.195195896240763, reg: 0.04204069483914689
-    Iteration #3, objective value: 4.237236591079911
-    data misfit: 1.5202708551662627, reg: 0.08827130735177954
-    data misfit: 1.5202708551662627, reg: 0.08827130735177954
-    Iteration #4, objective value: 1.6085421625180423
-    data misfit: 0.2834523499348797, reg: 0.10407508740368858
-    data misfit: 0.2834523499348797, reg: 0.10407508740368858
-    Iteration #5, objective value: 0.3875274373385683
-    data misfit: 0.06483596933857119, reg: 0.09306755760319324
-    data misfit: 0.06483596933857119, reg: 0.09306755760319324
-    Iteration #6, objective value: 0.15790352694176443
-    data misfit: 0.04121562790362159, reg: 0.08547780709311192
-    data misfit: 0.04121562790362159, reg: 0.08547780709311192
-    Iteration #7, objective value: 0.12669343499673352
-    data misfit: 0.04003562804063875, reg: 0.07218376352816137
-    data misfit: 0.04003562804063875, reg: 0.07218376352816137
-    Iteration #8, objective value: 0.11221939156880012
-    data misfit: 0.022600131848107215, reg: 0.07086130984690166
-    data misfit: 0.022600131848107215, reg: 0.07086130984690166
-    Iteration #9, objective value: 0.09346144169500888
-    data misfit: 0.02216174950189988, reg: 0.06731800791991759
-    data misfit: 0.02216174950189988, reg: 0.06731800791991759
-    Iteration #10, objective value: 0.08947975742181746
+    data misfit: 16.48522124495534, reg: 0.0
+    data misfit: 13.070065613424653, reg: 0.0011545790036786038
+    data misfit: 13.070065613424653, reg: 0.0011545790036786038
+    Iteration #1, objective value: 13.071220192428331
+    data misfit: 8.149530828893903, reg: 0.010185794288183737
+    data misfit: 8.149530828893903, reg: 0.010185794288183737
+    Iteration #2, objective value: 8.159716623182087
+    data misfit: 4.195195896305659, reg: 0.04204069483997438
+    data misfit: 4.195195896305659, reg: 0.04204069483997438
+    Iteration #3, objective value: 4.237236591145633
+    data misfit: 1.5202708552359534, reg: 0.08827130735062753
+    data misfit: 1.5202708552359534, reg: 0.08827130735062753
+    Iteration #4, objective value: 1.608542162586581
+    data misfit: 0.28345234989609774, reg: 0.10407508740909083
+    data misfit: 0.28345234989609774, reg: 0.10407508740909083
+    Iteration #5, objective value: 0.38752743730518857
+    data misfit: 0.06483596932829146, reg: 0.09306755759739038
+    data misfit: 0.06483596932829146, reg: 0.09306755759739038
+    Iteration #6, objective value: 0.15790352692568183
+    data misfit: 0.04121562792390625, reg: 0.08547780709429739
+    data misfit: 0.04121562792390625, reg: 0.08547780709429739
+    Iteration #7, objective value: 0.12669343501820363
+    data misfit: 0.038972354065371924, reg: 0.07253311325537863
+    data misfit: 0.038972354065371924, reg: 0.07253311325537863
+    Iteration #8, objective value: 0.11150546732075056
+    data misfit: 0.022374871141085363, reg: 0.07117692102550968
+    data misfit: 0.022374871141085363, reg: 0.07117692102550968
+    Iteration #9, objective value: 0.09355179216659504
+    data misfit: 0.022087864202305192, reg: 0.06743524956116008
+    data misfit: 0.022087864202305192, reg: 0.06743524956116008
+    Iteration #10, objective value: 0.08952311376346528
 
     Solver message: Maximum number of iterations has been exceeded.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 723-730
+.. GENERATED FROM PYTHON SOURCE LINES 725-732
 
 .. code-block:: default
 
@@ -1135,13 +1133,13 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 735-738
+.. GENERATED FROM PYTHON SOURCE LINES 737-740
 
-Comparison with published results
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Comparison with published results 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 738-757
+.. GENERATED FROM PYTHON SOURCE LINES 740-759
 
 .. code-block:: default
 
@@ -1176,7 +1174,7 @@ Comparison with published results
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 762-770
+.. GENERATED FROM PYTHON SOURCE LINES 764-772
 
 The use of an adaptive triangular mesh means that we use fewer model
 parameters when compared with the original example and that our mesh is
@@ -1187,7 +1185,7 @@ sufficient to obtain a result that compares favorably with the original
 solution.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 770-774
+.. GENERATED FROM PYTHON SOURCE LINES 772-776
 
 .. code-block:: default
 
@@ -1209,7 +1207,7 @@ solution.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 779-784
+.. GENERATED FROM PYTHON SOURCE LINES 781-786
 
 --------------
 
@@ -1217,7 +1215,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 784-790
+.. GENERATED FROM PYTHON SOURCE LINES 786-792
 
 .. code-block:: default
 
@@ -1236,23 +1234,23 @@ Watermark
  .. code-block:: none
 
     cofi 0.2.0
-    numpy 1.20.3
+    numpy 1.24.3
     scipy 1.10.1
-    pygimli 1.4.1
-    torch 1.13.1
-    matplotlib 3.5.1
+    pygimli 1.4.0
+    torch 2.0.0
+    matplotlib 3.7.1
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 791-791
+.. GENERATED FROM PYTHON SOURCE LINES 793-793
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  54.657 seconds)
+   **Total running time of the script:** ( 1 minutes  51.842 seconds)
 
 
 .. _sphx_glr_download_examples_generated_field_data_pygimli_dcip_century_tri_mesh.py:
