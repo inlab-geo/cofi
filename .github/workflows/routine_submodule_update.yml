@@ -18,8 +18,9 @@ jobs:
       - name: Check for submodule changes
         id: diff
         run: |
-          git submodule foreach 'git fetch origin main && [ $(git rev-parse HEAD) != $(git rev-parse origin/main) ] && exit 1 || exit 0'
-          echo ::set-output name=changed::$?
+          changed=0
+          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then changed=1; fi'
+          echo ::set-output name=changed::$changed
 
       - name: Commit changes
         id: commit
