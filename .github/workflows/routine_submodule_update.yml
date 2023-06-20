@@ -34,9 +34,9 @@ jobs:
             git add .
             git commit -m "chore: update submodules"
             git push origin update-submodules
-            echo "commited=true" >> $GITHUB_OUTPUT
+            echo "committed=true" >> $GITHUB_OUTPUT
           else
-            echo "commited=false" >> $GITHUB_OUTPUT
+            echo "committed=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create Pull Request
