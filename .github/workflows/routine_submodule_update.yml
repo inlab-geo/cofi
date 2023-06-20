@@ -1,0 +1,45 @@
+name: Routine submodule check and update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '42 0 * * *'      # daily at 0:42
+
+jobs:
+  update:
+    name: Check submodule changes and raise pull request if needed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Check for submodule changes
+        id: diff
+        run: |
+          git submodule foreach 'git fetch origin main && [ $(git rev-parse HEAD) != $(git rev-parse origin/main) ] && exit 1 || exit 0'
+          echo ::set-output name=changed::$?
+
+      - name: Commit changes
+        id: commit
+        run: |
+          if [[ "${{ steps.diff.outputs.changed }}" != "0" ]]; then
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "GitHub Actions Bot"
+            git checkout -b update-submodules
+            git add .
+            git commit -m "chore: update submodules"
+            git push origin update-submodules
+            echo ::set-output name=committed::true
+          else
+            echo ::set-output name=committed::false
+          fi
+
+      - name: Create Pull Request
+        run: |
+          if [[ "${{ steps.commit.outputs.committed }}" == 'true' ]]; then
+            gh pr create --title "Update submodules" --body "This PR updates the submodules." --head update-submodules --base main --repo ${{ github.repository }}
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
