@@ -19,8 +19,8 @@ jobs:
         id: diff
         run: |
           changed=0
-          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then changed=1; fi'
-          echo ::set-output name=changed::$changed
+          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then $changed=1; echo 1; fi'
+          echo "changed=$changed" >> $GITHUB_OUTPUT
 
       - name: Commit changes
         id: commit
@@ -32,9 +32,9 @@ jobs:
             git add .
             git commit -m "chore: update submodules"
             git push origin update-submodules
-            echo ::set-output name=committed::true
+            echo "commited=true" >> $GITHUB_OUTPUT
           else
-            echo ::set-output name=committed::false
+            echo "commited=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Create Pull Request
