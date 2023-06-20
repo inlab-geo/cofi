@@ -18,9 +18,10 @@ jobs:
       - name: Check for submodule changes
         id: diff
         run: |
-          changed=0
-          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then changed=1; echo 1; fi'
-          echo "changed=$changed" >> $GITHUB_OUTPUT
+          echo 0 > changed.txt
+          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then echo 1 > ../../../changed.txt; fi'
+          echo ::set-output name=changed::$(cat changed.txt)
+          rm changed.txt
 
       - name: Commit changes
         id: commit
