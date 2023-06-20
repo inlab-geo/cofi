@@ -30,7 +30,7 @@ jobs:
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git config --global user.name "GitHub Actions Bot"
             git checkout -b update-submodules
-            git submodule foreach 'git merge origin/main'
+            git submodule foreach 'git checkout origin/main'
             git add .
             git commit -m "chore: update submodules"
             git push origin update-submodules
