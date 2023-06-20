@@ -204,6 +204,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="   &lt;!-- Please leave the cell below as it is --&gt;">
+
+.. only:: html
+
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_receiver_function_inversion_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Receiver Function</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Xray Tomography">
 
 .. only:: html
