@@ -2,6 +2,13 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.1 (07/07/2023)
+
+### CoFI Tools
+
+- Better `cofi.simple_newton` solver (more numerically stable; addition of stopping criteria)
+
+
 ## v0.2.0 (05/06/2023)
 
 ### CoFI Core
