@@ -30,15 +30,16 @@ class CoFISimpleNewton(BaseInferenceTool):
             "step_length": 1,
             "verbose": True,
             "hessian_is_symmetric": False,
-            "obj_tol": 1e-6,    # tolerance for change in objective function
+            "obj_tol": 1e-6,  # tolerance for change in objective function
             "param_tol": 1e-6,  # tolerance for change in model parameters
-            "max_iterations": None  # alias for num_iterations
+            "max_iterations": None,  # alias for num_iterations
         }
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self._params["num_iterations"] = self._params["max_iterations"] or \
-            self._params["num_iterations"]
+        self._params["num_iterations"] = (
+            self._params["max_iterations"] or self._params["num_iterations"]
+        )
 
     def __call__(self) -> dict:
         m = self.inv_problem.initial_model
@@ -53,7 +54,8 @@ class CoFISimpleNewton(BaseInferenceTool):
             m = m + self._calculate_step(m)
             obj_val = self._verbose_objective_value(i, m)
             stop = self._stopping_criteria(obj_val, obj_val_prev, m, m_prev)
-            if stop: break
+            if stop:
+                break
             m_prev = m.copy()
             obj_val_prev = obj_val
 
@@ -66,7 +68,7 @@ class CoFISimpleNewton(BaseInferenceTool):
             "n_grad_evaluations": self._n_grad_evaluations,
             "n_hess_evaluations": self._n_hess_evaluations,
         }
-        
+
     def _calculate_step(self, m):
         grad = self.inv_problem.gradient(m)
         self._n_grad_evaluations += 1
@@ -98,8 +100,5 @@ class CoFISimpleNewton(BaseInferenceTool):
         obj_val = self.inv_problem.objective(m)
         self._n_obj_evaluations += 1
         if self._params["verbose"]:
-            print(
-                f"Iteration #{i}, updated objective function value:"
-                f" {obj_val}"
-            )
+            print(f"Iteration #{i}, updated objective function value: {obj_val}")
         return obj_val
