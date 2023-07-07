@@ -39,3 +39,9 @@ def test_not_inplace():
     assert res["n_obj_evaluations"] == 4
     assert res["n_grad_evaluations"] == 4
     assert res["n_hess_evaluations"] == 4
+
+def test_symmetric_hessian():
+    inv_options.set_params(hessian_is_symmetric=True)
+    inv_problem.set_initial_model(np.array([[30.0]]))
+    solver = CoFISimpleNewton(inv_problem, inv_options)
+    solver()

@@ -1,4 +1,5 @@
 import numpy as np
+import scipy
 
 from . import BaseInferenceTool
 
@@ -28,6 +29,7 @@ class CoFISimpleNewton(BaseInferenceTool):
         return {
             "step_length": 1,
             "verbose": True,
+            "hessian_is_symmetric": False,
         }
 
     def __init__(self, inv_problem, inv_options):
@@ -49,7 +51,11 @@ class CoFISimpleNewton(BaseInferenceTool):
             n_grad_evaluations += 1
             hess = np.atleast_2d((self.inv_problem.hessian(m)))
             n_hess_evaluations += 1
-            step = -np.linalg.inv(hess).dot(grad)
+            if self._params["hessian_is_symmetric"]:
+                hess = scipy.sparse.csr_matrix(hess)
+                step = scipy.sparse.linalg.minres(hess, -grad)[0]
+            else:
+                step = scipy.linalg.solve(hess, -grad) 
             step = np.squeeze(np.asarray(step))
             m = m + self._params["step_length"] * step
         return {
