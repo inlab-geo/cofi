@@ -196,3 +196,7 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+# CoFI -> Parameter Estimation -> Matrix Based Solvers -> Linear System Solvers -> scipy.linalg.lstsq
+# description: balabala scip

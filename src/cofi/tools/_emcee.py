@@ -148,3 +148,9 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+
+# Method : emcee
+# CoFI -> Ensemble Methods -> Bayesian Sampling -> MCMC Sampler -> EMCEE -> Affine Invariant Markov Chain Monte Carlo -> Stretch Move
+# description: balabala emcee

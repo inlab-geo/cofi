@@ -152,3 +152,49 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+
+
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Nelder-Mead
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Powell
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> CG
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> BFGS
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Newton-CG
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> L-BFGS-B
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> TNC
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> COBYLA
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> SLSQP
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-constr
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> dogleg
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-ncg
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-exact
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-keylov
+# description: balabala scip

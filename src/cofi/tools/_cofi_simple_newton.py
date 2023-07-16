@@ -102,3 +102,9 @@ class CoFISimpleNewton(BaseInferenceTool):
         if self._params["verbose"]:
             print(f"Iteration #{i}, updated objective function value: {obj_val}")
         return obj_val
+
+
+
+
+# CoFI -> Ensemble Methods -> Bayesian Sampling -> MCMC Sampler -> EMCEE -> Affine Invariant Markov Chain Monte Carlo -> Stretch Move
+# description: please type in descriptions for Stretch Move
