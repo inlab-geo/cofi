@@ -2,137 +2,199 @@
 Installation
 ============
 
-Pre-requisites
---------------
+Install CoFI
+------------
 
-CoFI requires Python 3.7+, and the following dependencies:
+**Step 1**: (*Optional*) Set up a virtual environment.
 
-- numpy>=1.18
-- scipy>=1.0.0
-- emcee>=3.1.0
-- arviz>=0.9.0
-- findiff>=0.7.0
-- torch>=1.10
+We strongly recommend installing CoFI within a 
+`virtual environment <https://docs.python.org/3/tutorial/venv.html>`_. 
+This ensures that CoFI can install the various modules that it needs without the 
+risk of breaking anything else on your system. There are a number of tools that can 
+facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
-Install
--------
+.. dropdown:: Expand for how to manage virtual environments
+  :icon: package
 
-.. tabbed:: PyPI
+  .. tab-set::
 
-  .. code-block:: console
+    .. tab-item:: venv
+
+      Ensure you have `python>=3.7`. Then, you can create a new virtual environment by 
+      running the command:
+
+      .. code-block:: console
+
+        $ python -m venv <path-to-new-env>/cofi_env
+
+      where :code:`<path-to-new-env>` is your prefered location for storing information 
+      about this environment, and :code:`<env-name>` is your preferred name for the 
+      virtual environmment. For example,
+
+      .. code-block:: console
+
+        $ python -m venv ~/my_envs/cofi_env 
+
+      will create a virtual environment named :code:`cofi_env` and store everything 
+      within a sub-directory of your home-space named :code:`my_envs`.
+
+      To 'activate' or 'switch on' the virtual environment, run the command
     
-    $ pip install cofi
+      .. code-block:: console
 
-.. tabbed:: conda-forge
+        $ source <path-to-new-env>/<env-name>/bin/activate
 
-  .. code-block:: console
+      At this point you effectively have a 'clean' Python installation. You can now 
+      install and use CoFI, following the instructions at step 2. When you are 
+      finished, you can run the command
+      
+      .. code-block:: console
 
-    $ conda install -c conda-forge cofi
+        $ deactivate
 
-.. tabbed:: from source
+      and your system will return to its default state. If you want to use CoFI again, 
+      simply re-run the 'activate' step above; you do not need to repeat the 
+      installation process. Alternatively, you can remove CoFI and the virtual 
+      environment from your system by running
 
-  If you'd like to build from source, clone the repository
+      .. code-block:: console
 
-  .. code-block:: console
+        $ rm -rf <path-to-new-env>/<env-name>
 
-    $ git clone https://github.com/inlab-geo/cofi.git
-    $ cd cofi
+    .. tab-item:: virtualenv
 
-  And use either one of the following command to install
+      You can create a new virtual environment (using Python version 3.10) by running 
+      the command
 
-  .. code-block:: console
+      .. code-block:: console
 
-    $ pip install .         # library will be copied over to site-packages
-    $ pip install -e .      # developer mode, library will be symbol linked to site-packages
+        $ virtualenv <path-to-new-env>/<env-name> -p=3.10
+      
+      where :code:`<path-to-new-env>` is your prefered location for storing information 
+      about this environment, and :code:`<env-name>` is your preferred name for the 
+      virtual environmment. For example,
 
-.. admonition:: Virtual environment setup (optional)
-  :class: info, dropdown
+      .. code-block:: console
 
-  It's optional, but recommended to use a virtual environment.
+        $ virtualenv ~/my_envs/cofi_env -p=3.10
 
-  .. tabbed:: venv
+      will create a virtual environment named :code:`cofi_env` and store everything 
+      within a sub-directory of your home-space named :code:`my_envs`.
 
-    Ensure you have `python>=3.7`.
+      To 'activate' or 'switch on' the virtual environment, run the command
 
-    To create:
+      .. code-block:: console
+
+        $ source <path-to-new-env>/<env-name>/bin/activate
+
+      At this point you effectively have a 'clean' Python installation. You can now 
+      install and use CoFI, following the instructions at step 2. When you are 
+      finished, you can run the command
+
+      .. code-block:: console
+
+        $ deactivate
+
+      and your system will return to its default state. If you want to use CoFI again, 
+      simply re-run the 'activate' step above; you do not need to repeat the 
+      installation process. Alternatively, you can remove CoFI and the virtual 
+      environment from your system by running
+
+      .. code-block:: console
+
+        $ rm -rf <path-to-new-env>/<env-name>
+
+    .. tab-item::  conda / mamba
+
+      You can create a new virtual environment (using Python version 3.10) by running 
+      the command
+
+      .. code-block:: console
+
+        $ conda create -n <env-name> python=3.10
+
+      where :code:`<env-name>` is your preferred name for the virtual environmment. 
+      For example,
+
+      .. code-block:: console
+
+        $ conda create -n cofi_env python=3.10
+
+      will create a virtual environment named :code:`cofi_env`.
+      
+      To 'activate' or 'switch on' the virtual environment, run the command
+
+      .. code-block:: console
+
+        $ conda activate <env-name>
+
+      At this point you effectively have a 'clean' Python installation. You can now 
+      install and use CoFI, following the instructions at step 2. When you are 
+      finished, you can run the command
+      
+      .. code-block:: console
+
+        $ conda deactivate
+
+      and your system will return to its default state. If you want to use CoFI again, 
+      simply re-run the 'activate' step above; you do not need to repeat the 
+      installation process. Alternatively, you can remove CoFI and the virtual 
+      environment from your system by running
+      
+      .. code-block:: console
+
+        $ conda env remove -n <env-name>
+
+
+
+**Step 2**: Install CoFI
+
+.. tab-set::
+
+  .. tab-item:: pip
+
+    CoFI is available on `PyPI <https://pypi.org/project/cofi/>`_, so for most users
+    installation is as simple as:
 
     .. code-block:: console
 
-      python -m venv <path-to-new-env>/cofi_env
+      $ pip install cofi
 
-    To activate:
+  .. tab-item:: conda / mamba
+
+    CoFI is also available on `conda-forge <https://anaconda.org/conda-forge/cofi>`_, 
+    so you can install it with ``mamba`` or ``conda``:
+
+    .. code-block:: console
+
+      $ conda install -c conda-forge cofi
+
+  .. tab-item:: From source
+
+    You can build CoFI from source. You are most likely to want to do this if you 
+    want to work in 'developer mode', and make changes to CoFI's source code.
+
+    .. code-block:: console
+
+      $ git clone https://github.com/inlab-geo/cofi.git
+      $ cd cofi
+      $ pip install -e .
     
-    .. code-block:: console
-
-      source <path-to-new-env>/cofi_env/bin/activate
-
-    To exit:
-    
-    .. code-block:: console
-
-      deactivate
-
-    To remove:
-
-    .. code-block:: console
-
-      rm -rf <path-to-new-env>/cofi_env
-
-  .. tabbed:: virtualenv
-
-    To create:
-
-    .. code-block:: console
-
-      virtualenv <path-to-new-env>/cofi_env -p=3.10
-
-    To activate:
-
-    .. code-block:: console
-
-      source <path-to-new-env>/cofi_env/bin/activate
-
-    To exit:
-
-    .. code-block:: console
-
-      deactivate
-
-    To remove:
-
-    .. code-block:: console
-
-      rm -rf <path-to-new-env>/cofi_env
-
-  .. tabbed:: conda / mamba
-
-    To create:
-
-    .. code-block:: console
-
-      conda create -n cofi_env python=3.10
-
-    To activate:
-
-    .. code-block:: console
-
-      conda activate cofi_env
-
-    To exit:
-
-    .. code-block:: console
-
-      conda deactivate
-
-    To remove:
-    
-    .. code-block:: console
-
-      conda env remove -n cofi_env
+    The :code:`-e` flag ensures that the module is installed in editable mode; you can 
+    omit this if you do not intend to make any changes.
 
 
-.. hint::
+.. admonition:: CoFI time!
+  :class: tip
 
-  CoFI time!
   Check out our step-by-step `tutorials <tutorials/generated/index.html>`_ or 
   `examples <examples/generated/index.html>`_ to get started.
+
+
+Container support
+-----------------
+
+CoFI and the InLab geoscience software ecosystem are now available in the form of 
+a handy container image. We kindly refer you to the 
+`inlab-containers guide <https://github.com/inlab-geo/inlab-containers#getting-started>`_
+to get started.

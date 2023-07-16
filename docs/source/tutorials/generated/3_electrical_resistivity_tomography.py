@@ -39,7 +39,7 @@
 
 # Environment setup (uncomment code lines below)
 
-# !pip install -U cofi cofi-espresso
+# !pip install -U cofi geo-espresso
 
 # !pip install -q condacolab
 # import condacolab
@@ -153,7 +153,7 @@
 # To achieve this we first define a set of utility functions that will
 # facilitate interfacing to PyGIMLi. We will also show how CoFI can
 # directly interface with a mature package without the need to go via
-# `Espresso <https://cofi-espresso.readthedocs.io/en/latest/>`__.
+# `Espresso <https://geo-espresso.readthedocs.io/en/latest/>`__.
 # 
 # PyGIMLi uses different meshes and adaptive meshing capabilities via Gmsh
 # https://gmsh.info/, all CoFI needs to access are the model vector, the
@@ -390,7 +390,7 @@ colorbar_data(ax)
 
 inv_mesh = inversion_mesh(ert_mgr)
 _, ax = plt.subplots(figsize=(10,8))
-pygimli.show(inv_mesh, showMesh=True, markers=True, colorBar=False, ax=ax)
+pygimli.show(inv_mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
 ax.set_title("Mesh used for inversion");
 ax.set_xlabel("Horizontal Distance (m)");
 ax.set_ylabel("Elevation (m)");
@@ -588,7 +588,7 @@ plot_result(inv_result, "Newton Step")
 # Further reading
 # ^^^^^^^^^^^^^^^
 # 
-# https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
+# https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
 # 
 
 import scipy

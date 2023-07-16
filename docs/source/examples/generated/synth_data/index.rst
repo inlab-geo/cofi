@@ -19,7 +19,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_fmm_tomography_thumb.png
-    :alt: Seismic Wave Tomography via Fast Marching
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py`
 
@@ -36,7 +36,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_linear_regression_thumb.png
-    :alt: Polynomial Linear Regression
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py`
 
@@ -48,12 +48,29 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Non-linear Curve Fitting">
+
+.. only:: html
+
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_nonlinear_curve_fitting_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Non-linear Curve Fitting</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="DCIP with PyGIMLi (Synthetic example)">
 
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_dcip_thumb.png
-    :alt: DCIP with PyGIMLi (Synthetic example)
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_pygimli_dcip.py`
 
@@ -70,7 +87,7 @@ Synthetic Examples
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_ert_thumb.png
-    :alt: Electrical Resistivity Tomography with PyGIMLi
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_pygimli_ert.py`
 
@@ -82,12 +99,29 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="   &lt;!-- Please leave the cell below as it is --&gt;">
+
+.. only:: html
+
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_receiver_function_inversion_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Receiver Function</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Xray Tomography">
 
 .. only:: html
 
   .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_xray_tomography_thumb.png
-    :alt: Xray Tomography
+    :alt:
 
   :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py`
 
@@ -107,7 +141,9 @@ Synthetic Examples
 
    /examples/generated/synth_data/fmm_tomography
    /examples/generated/synth_data/linear_regression
+   /examples/generated/synth_data/nonlinear_curve_fitting
    /examples/generated/synth_data/pygimli_dcip
    /examples/generated/synth_data/pygimli_ert
+   /examples/generated/synth_data/receiver_function_inversion
    /examples/generated/synth_data/xray_tomography
 

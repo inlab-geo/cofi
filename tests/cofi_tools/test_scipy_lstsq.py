@@ -16,7 +16,8 @@ def problem_setup():
     Cdinv = np.diag(np.array([5, 10, 100, 10, 5, 2.5, 10]))
     lamda = 1
     L = np.eye(2)
-    return inv_problem, Cdinv, lamda, L
+    reg_func = lambda m: lamda * (L @ m).T @ (L @ m)
+    return inv_problem, Cdinv, lamda, L, reg_func
 
 
 def test_validate_jac():
@@ -40,7 +41,7 @@ def test_validate_jac():
 
 
 def test_run(problem_setup):
-    inv_problem, _, _, _ = problem_setup
+    inv_problem, _, _, _, _ = problem_setup
     inv_options = InversionOptions()
     solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
@@ -50,7 +51,7 @@ def test_run(problem_setup):
 
 
 def test_uncertainty_cov(problem_setup):
-    inv_problem, Cdinv, _, _ = problem_setup
+    inv_problem, Cdinv, _, _, _ = problem_setup
     # 1
     inv_problem.set_data_covariance_inv(Cdinv)
     inv_options = InversionOptions()
@@ -63,7 +64,7 @@ def test_uncertainty_cov(problem_setup):
 
 
 def test_uncertainty_cov_inv(problem_setup):
-    inv_problem, Cdinv, _, _ = problem_setup
+    inv_problem, Cdinv, _, _, _ = problem_setup
     # 2
     inv_problem.set_data_covariance(np.linalg.inv(Cdinv))
     inv_options = InversionOptions()
@@ -82,10 +83,10 @@ def test_uncertainty_cov_inv(problem_setup):
 
 
 def test_tikhonov(problem_setup):
-    inv_problem, Cdinv, lamda, L = problem_setup
+    inv_problem, Cdinv, lamda, L, reg_func = problem_setup
     inv_problem.set_data_covariance_inv(Cdinv)
     # 1
-    inv_problem.set_regularization(2, lamda, L)
+    inv_problem.set_regularization(reg_func)
     inv_options = InversionOptions()
     solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
@@ -94,7 +95,7 @@ def test_tikhonov(problem_setup):
     assert res["model"][0] == pytest.approx(0, abs=0.02)
     assert res["model"][1] == pytest.approx(1, abs=0.02)
     # 2
-    inv_problem.set_regularization(2, lamda)
+    inv_problem.set_regularization(reg_func, L)
     inv_options = InversionOptions()
     solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
@@ -103,6 +104,6 @@ def test_tikhonov(problem_setup):
     assert res["model"][0] == pytest.approx(0, abs=0.02)
     assert res["model"][1] == pytest.approx(1, abs=0.02)
     # 3
-    inv_problem.set_regularization(2, lamda, lambda: np.array([1]))
+    inv_problem.set_regularization(reg_func, lambda: np.array([1]))
     with pytest.raises(ValueError, match=r".*isn't set properly.*"):
         inv_solver = ScipyLstSq(inv_problem, inv_options)

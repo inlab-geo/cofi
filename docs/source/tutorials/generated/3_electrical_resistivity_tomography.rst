@@ -10,7 +10,7 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py>`
+        :ref:`Go to the end <sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py>`
         to download the full example code
 
 .. rst-class:: sphx-glr-example-title
@@ -61,7 +61,7 @@ Learning outcomes
 
     # Environment setup (uncomment code lines below)
 
-    # !pip install -U cofi cofi-espresso
+    # !pip install -U cofi geo-espresso
 
     # !pip install -q condacolab
     # import condacolab
@@ -188,7 +188,7 @@ model.
 To achieve this we first define a set of utility functions that will
 facilitate interfacing to PyGIMLi. We will also show how CoFI can
 directly interface with a mature package without the need to go via
-`Espresso <https://cofi-espresso.readthedocs.io/en/latest/>`__.
+`Espresso <https://geo-espresso.readthedocs.io/en/latest/>`__.
 
 PyGIMLi uses different meshes and adaptive meshing capabilities via Gmsh
 https://gmsh.info/, all CoFI needs to access are the model vector, the
@@ -485,7 +485,7 @@ plotted in yellow.
 
     inv_mesh = inversion_mesh(ert_mgr)
     _, ax = plt.subplots(figsize=(10,8))
-    pygimli.show(inv_mesh, showMesh=True, markers=True, colorBar=False, ax=ax)
+    pygimli.show(inv_mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
     ax.set_title("Mesh used for inversion");
     ax.set_xlabel("Horizontal Distance (m)");
     ax.set_ylabel("Elevation (m)");
@@ -767,9 +767,9 @@ model update. In practice:
 
     Iteration #0, objective function value: 229.71418345445022
     Iteration #1, objective function value: 224.7987515141377
-    Iteration #2, objective function value: 220.36237268797754
-    Iteration #3, objective function value: 215.9057002091127
-    Iteration #4, objective function value: 211.6177561325492
+    Iteration #2, objective function value: 220.36237268797268
+    Iteration #3, objective function value: 215.90570020911395
+    Iteration #4, objective function value: 211.61775613255435
 
     Number of objective function evaluations: 5
     Number of gradient function evaluations: 5
@@ -797,7 +797,7 @@ between 0 and 1 and never converge to the correct solution of
 Further reading
 ^^^^^^^^^^^^^^^
 
-https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
+https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 593-599
@@ -990,19 +990,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 69.41232753902361
+      objective value: 69.4123275390053
     Iteration #2
-      model change: 1.9521920346073456
-      objective value: 32.313715029558715
+      model change: 1.9521920346072341
+      objective value: 32.31371502910786
     Iteration #3
-      model change: 2.0050005050112407
-      objective value: 31.17194038808538
+      model change: 2.0050005049882893
+      objective value: 31.17194038522148
     Iteration #4
-      model change: 0.3774794759723972
-      objective value: 27.460445378250956
+      model change: 0.3774794758899083
+      objective value: 27.46044538043943
     Iteration #5
-      model change: 1.2758048179583221
-      objective value: 17.69101254349345
+      model change: 1.2758048177901025
+      objective value: 17.691012544394344
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
@@ -1056,20 +1056,22 @@ You may start from the following template:
 
  .. code-block:: none
 
+    /home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.9/site-packages/scipy/optimize/_minimize.py:560: RuntimeWarning: Method dogleg does not use Hessian-vector product information (hessp).
+      warn('Method %s does not use Hessian-vector product '
     Iteration #1
-      objective value: 157.50708172346376
+      objective value: 157.50708172346924
     Iteration #2
-      model change: 2.0
-      objective value: 68.94013122104025
+      model change: 2.0000000000000004
+      objective value: 68.94013122104855
     Iteration #3
-      model change: 3.9999999999999996
-      objective value: 34.90264090870997
+      model change: 3.9999999999999987
+      objective value: 34.902640908745205
     Iteration #4
       model change: 0.0
-      objective value: 34.90264090870997
+      objective value: 34.902640908745205
     Iteration #5
-      model change: 1.9999999999999998
-      objective value: 22.814718920602395
+      model change: 2.0000000000000004
+      objective value: 22.814718920593325
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -1124,19 +1126,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 157.50708172346376
+      objective value: 157.50708172346924
     Iteration #2
-      model change: 1.9999999999999993
-      objective value: 68.94013122104023
+      model change: 2.0
+      objective value: 68.94013122104852
     Iteration #3
-      model change: 2.0885981986782762
-      objective value: 51.74447637862965
+      model change: 2.088598198678242
+      objective value: 51.74447637863951
     Iteration #4
-      model change: 2.235768382076769
-      objective value: 32.607757645416285
+      model change: 2.235768382076445
+      objective value: 32.60775764541853
     Iteration #5
-      model change: 1.7295706120934249
-      objective value: 29.21317518511462
+      model change: 1.7295706120906618
+      objective value: 29.213175185119823
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
@@ -1252,18 +1254,16 @@ You may start from this template:
 
  .. code-block:: none
 
-    /home/jiawen/cofi/src/cofi/solvers/base_solver.py:267: UserWarning: the following options are defined but not in parameter list for the chosen tool: ['lr']
-      warnings.warn(
     Iteration #0, objective value: 229.71418345445022
-    Iteration #1, objective value: 156.90464922477267
-    Iteration #2, objective value: 107.12950312045993
-    Iteration #3, objective value: 76.2471931442575
-    Iteration #4, objective value: 59.93096014283091
-    Iteration #5, objective value: 53.93390880663664
-    Iteration #6, objective value: 53.88443707299375
-    Iteration #7, objective value: 53.81331650273353
-    Iteration #8, objective value: 53.722751804004204
-    Iteration #9, objective value: 53.61502389633193
+    Iteration #1, objective value: 156.90464922477352
+    Iteration #2, objective value: 107.129503120462
+    Iteration #3, objective value: 76.24719314426025
+    Iteration #4, objective value: 59.930960142833776
+    Iteration #5, objective value: 53.93390880663936
+    Iteration #6, objective value: 53.88443707299647
+    Iteration #7, objective value: 53.81331650273624
+    Iteration #8, objective value: 53.72275180400693
+    Iteration #9, objective value: 53.61502389632332
 
     Number of objective function evaluations: 10
     Number of gradient function evaluations: 10
@@ -1317,12 +1317,12 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
-    numpy 1.21.6
-    scipy 1.9.1
-    pygimli 1.2.6
-    torch 1.12.1+cu102
-    matplotlib 3.5.3
+    cofi 0.2.0
+    numpy 1.20.3
+    scipy 1.10.1
+    pygimli 1.4.1
+    torch 1.13.1
+    matplotlib 3.5.1
 
 
 
@@ -1334,7 +1334,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  3.825 seconds)
+   **Total running time of the script:** ( 1 minutes  6.081 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py:
@@ -1342,6 +1342,8 @@ sphinx_gallery_thumbnail_number = -1
 .. only:: html
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
+
+
 
 
     .. container:: sphx-glr-download sphx-glr-download-python

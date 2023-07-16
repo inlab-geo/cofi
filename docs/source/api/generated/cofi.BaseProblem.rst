@@ -353,12 +353,6 @@ cofi.BaseProblem
 
 
 
-
-
-
-
-
-
     .. automethod:: BaseProblem.data_misfit
 
 
@@ -723,10 +717,6 @@ cofi.BaseProblem
     .. autoattribute:: BaseProblem.objective_defined
 
     .. autoattribute:: BaseProblem.regularization_defined
-
-    .. autoattribute:: BaseProblem.regularization_factor
-
-    .. autoattribute:: BaseProblem.regularization_factor_defined
 
     .. autoattribute:: BaseProblem.regularization_matrix_defined
 

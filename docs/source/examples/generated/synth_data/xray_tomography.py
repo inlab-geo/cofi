@@ -79,7 +79,7 @@ Xray Tomography
 # :math:`N_x \times N_y` vector :math:`\boldsymbol{\mu}`. This is related
 # to the data by
 # 
-# .. math:: d_i = A_{ij}\mu_j 
+# .. math:: d_i = A_{ij}\mu_j
 # 
 # where :math:`d_i = -\log {I^{(i)}_{rec}}/{I^{(i)}_{src}}`, and where
 # :math:`A_{ij}` represents the path length in cell :math:`j` of the
@@ -91,8 +91,7 @@ Xray Tomography
 # 0. Import modules
 # -----------------
 # 
-# The package ``cofi-espresso`` contains the forward code for this
-# problem.
+# The package ``geo-espresso`` contains the forward code for this problem.
 # 
 
 # -------------------------------------------------------- #
@@ -102,14 +101,15 @@ Xray Tomography
 # -------------------------------------------------------- #
 
 # !pip install -U cofi
-# !pip install -U cofi-espresso
+# !pip install -U geo-espresso
 
 ######################################################################
 #
 
 import numpy as np
 from cofi import BaseProblem, InversionOptions, Inversion
-from cofi_espresso import XrayTomography
+from cofi.utils import QuadraticReg
+from espresso import XrayTomography
 
 ######################################################################
 #
@@ -119,11 +119,11 @@ from cofi_espresso import XrayTomography
 # 1. Define the problem
 # ---------------------
 # 
-# Firstly, we get some information from the ``cofi-espresso`` module.
-# These include the dataset and the Jacobian matrix. In the Xray
-# Tomography example, the Jacobian matrix is related to the lengths of
-# paths within each grid. Since the paths are fixed, the Jacobian matrix
-# stays constant.
+# Firstly, we get some information from the ``geo-espresso`` module. These
+# include the dataset and the Jacobian matrix. In the Xray Tomography
+# example, the Jacobian matrix is related to the lengths of paths within
+# each grid. Since the paths are fixed, the Jacobian matrix stays
+# constant.
 # 
 
 xrt = XrayTomography()
@@ -147,13 +147,12 @@ xrt_problem.set_jacobian(xrt.jacobian(xrt.starting_model))
 sigma = 0.002
 lamda = 50
 data_cov_inv = np.identity(xrt.data_size) * (1/sigma**2)
-reg_matrix = lamda * np.identity(xrt.model_size)
 
 ######################################################################
 #
 
 xrt_problem.set_data_covariance_inv(data_cov_inv)
-xrt_problem.set_regularization(2, 1, reg_matrix)
+xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(xrt.model_size,)))
 
 ######################################################################
 #
@@ -310,7 +309,7 @@ xrt.plot_model(np.sqrt(np.diag(Cm)) * inv_result.model);
 #    <!-- Otherwise please leave the below code cell unchanged -->
 # 
 
-watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))

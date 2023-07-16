@@ -1,0 +1,48 @@
+name: Routine submodule check and update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '42 0 * * *'      # daily at 0:42
+
+jobs:
+  update:
+    name: Check submodule changes and raise pull request if needed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: Check for submodule changes
+        id: diff
+        run: |
+          echo 0 > changed.txt
+          git submodule foreach 'git fetch origin main; if [ $(git rev-parse HEAD) != $(git rev-parse FETCH_HEAD) ]; then echo 1 > ../../../changed.txt; fi'
+          echo ::set-output name=changed::$(cat changed.txt)
+          rm changed.txt
+
+      - name: Commit changes
+        id: commit
+        run: |
+          if [[ "${{ steps.diff.outputs.changed }}" != "0" ]]; then
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "GitHub Actions Bot"
+            git checkout -b update-submodules
+            git submodule foreach 'git checkout origin/main'
+            git add .
+            git commit -m "chore: update submodules"
+            git push origin update-submodules
+            echo "committed=true" >> $GITHUB_OUTPUT
+          else
+            echo "committed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        run: |
+          if [[ "${{ steps.commit.outputs.committed }}" == 'true' ]]; then
+            gh pr create --title "Update submodules" --body "This PR updates the submodules. Please run `make html` from `docs/` before merging." --head update-submodules --base main --repo ${{ github.repository }}
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

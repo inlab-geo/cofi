@@ -35,14 +35,14 @@
 # -  A demonstration of running CoFI for a regularized linear parameter
 #    estimation problem. Can be used as an example of a CoFI **template**.
 # -  A demonstration of how a (3rd party) nonlinear forward model can be
-#    imported from cofi-espresso and used. Fast Marching algorithm for
+#    imported from geo-espresso and used. Fast Marching algorithm for
 #    first arriving raypaths.
 # -  See how nonlinear iterative matrix solvers can be accessed in CoFI.
 # 
 
 # Environment setup (uncomment code below)
 
-# !pip install -U cofi cofi-espresso
+# !pip install -U cofi geo-espresso
 
 ######################################################################
 #
@@ -121,7 +121,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 import cofi
-import cofi_espresso
+import espresso
 
 ######################################################################
 #
@@ -138,7 +138,7 @@ import cofi_espresso
 # *espresso* Xray example, together with 100 raypaths in the dataset.
 # 
 
-linear_tomo_example = cofi_espresso.XrayTomography()
+linear_tomo_example = espresso.XrayTomography()
 
 ######################################################################
 #
@@ -193,10 +193,11 @@ linear_tomo_problem.set_data_covariance_inv(data_cov_inv)
 # 
 
 # set up regularization
-lamda = 0.5 # choose regularization constant
-data_cov_inv = np.identity(linear_tomo_example.data_size) * (1/sigma**2)
-reg_matrix = np.identity(linear_tomo_example.model_size)
-linear_tomo_problem.set_regularization(2, lamda, reg_matrix) # choose a regularization (see help(linear_problem.set_regularization) for more details)
+lamda = 0.5   # choose regularization constant
+reg_damping = lamda * cofi.utils.QuadraticReg(
+    model_shape=(linear_tomo_example.model_size,)
+)
+linear_tomo_problem.set_regularization(reg_damping)
 print('Number of slowness parameters to be solved for = ',linear_tomo_example.model_size)
 
 ######################################################################
@@ -355,7 +356,7 @@ for p in linear_tomo_example._paths[idx_from:idx_to]:
 # example module and plot the reference seismic model.
 # 
 
-nonlinear_tomo_example = cofi_espresso.FmmTomography()
+nonlinear_tomo_example = espresso.FmmTomography()
 
 nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model, with_paths=True,lw=0.5);
 
@@ -465,8 +466,15 @@ nonlinear_problem.set_initial_model(ref_start_slowness)
 # add regularization: damping / flattening / smoothing
 damping_factor = 50
 smoothing_factor = 5e3
-reg_damping = cofi.utils.QuadraticReg(damping_factor, model_size, "damping", ref_start_slowness)
-reg_smoothing = cofi.utils.QuadraticReg(smoothing_factor, model_shape, "smoothing")
+reg_damping = damping_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape, 
+    weighting_matrix="damping", 
+    reference_model=ref_start_slowness
+)
+reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape,
+    weighting_matrix="smoothing"
+)
 reg = reg_damping + reg_smoothing
 
 ######################################################################
@@ -637,7 +645,7 @@ print(f"Number of paths used: {len(data_subset)}")
 
 # plot paths used
 for p in np.array(paths, dtype=object)[data_subset]:
-    fig.axes[0].plot(p[:,0], p[:,1], "g", alpha=0.5,lw=0.5)
+    fig.axes.plot(p[:,0], p[:,1], "g", alpha=0.5,lw=0.5)
 
 ######################################################################
 #
@@ -677,9 +685,19 @@ for p in np.array(paths, dtype=object)[data_subset]:
 #    flattening_factor = <CHANGE ME>             # increase flattening factor here to force small first derivatives in slowness solution
 #    smoothing_factor = <CHANGE ME>              # increase smoothing factor here to force small second derivatives in slowness solution
 # 
-#    reg_damping = cofi.utils.QuadraticReg(damping_factor, model_size, "damping", ref_start_slowness)
-#    reg_flattening = cofi.utils.QuadraticReg(flattening_factor, model_shape, "flattening")
-#    reg_smoothing = cofi.utils.QuadraticReg(smoothing_factor, model_shape, "smoothing")
+#    reg_damping = damping_factor * cofi.utils.QuadraticReg(
+#        model_shape=model_shape,
+#        weighting_matrix="damping",
+#        reference_model=ref_start_slowness
+#    )
+#    reg_flattening = flattening_factor * cofi.utils.QuadraticReg(
+#        model_shape=model_shape,
+#        weighting_matrix="flattening"
+#    )
+#    reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
+#        model_shape=model_shape,
+#        weighting_matrix="smoothing"
+#    )
 #    my_own_reg = reg_damping + reg_flattening + reg_smoothing
 # 
 #    # set Baseproblem
@@ -715,9 +733,19 @@ damping_factor = 100                # select damping factor here to force soluti
 flattening_factor = 100             # increase flattening factor here to force small first derivatives in slowness solution
 smoothing_factor = 0                # increase smoothing factor here to force small second derivatives in slowness solution
 
-reg_damping = cofi.utils.QuadraticReg(damping_factor, model_size, "damping", ref_start_slowness)
-reg_flattening = cofi.utils.QuadraticReg(flattening_factor, model_shape, "flattening")
-reg_smoothing = cofi.utils.QuadraticReg(smoothing_factor, model_shape, "smoothing")
+reg_damping = damping_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape,
+    weighting_matrix="damping",
+    reference_model=ref_start_slowness
+)
+reg_flattening = flattening_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape,
+    weighting_matrix="flattening"
+)
+reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
+    model_shape=model_shape,
+    weighting_matrix="smoothing"
+)
 my_own_reg = reg_damping + reg_flattening + reg_smoothing
 
 # set Baseproblem
@@ -732,8 +760,8 @@ my_own_inversion = cofi.Inversion(my_own_nonlinear_problem, nonlinear_options)
 my_own_result = my_own_inversion.run()
 
 # check results
-fig = nonlinear_tomo_example.plot_model(my_own_result.model)
-fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
+ax = nonlinear_tomo_example.plot_model(my_own_result.model)
+ax.get_figure().suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
 
 ######################################################################
 #
@@ -746,7 +774,7 @@ fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothi
 # ---------
 # 
 
-watermark_list = ["cofi", "cofi_espresso", "numpy", "scipy", "matplotlib"]
+watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))

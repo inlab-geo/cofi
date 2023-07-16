@@ -23,7 +23,7 @@ or `Slack`_.
 General Workflow
 ----------------
 
-Here is a general flowchart for code contribution, including preparation, editting and
+Here is a general flowchart for code contribution, including preparation, editing and
 submitting stages:
 
 .. mermaid::
@@ -57,14 +57,14 @@ Fork and clone respository
 
 1. Navigate to the GitHub repository (`cofi <https://github.com/inlab-geo/cofi>`_,
    or `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ if you'd like to
-   add or edit things in the `example gallery <cofi-examples/tools/sphinx_gallery/generated/index.html>`_)
+   add or edit things in the `example gallery <examples/generated/index.html>`_)
 2. Click the "Fork" button on top right of the page (followed by a confirmation page
    with a "Create fork" button)
 3. Now you'll be redirected to your fork of ``cofi``, which is like a branch out in 
    your namespace. (And later you will see it merges back when your pull request is
    approved)
 
-  .. mermaid::
+   .. mermaid::
 
     %%{init: { 'logLevel': 'debug', 'theme': 'base', 'gitGraph': {'showCommitLabel': false}} }%%
       gitGraph
@@ -80,18 +80,22 @@ Fork and clone respository
         commit
 
 4. The fork now stays remotely on GitHub servers, what's next is to "clone" it into
-   your computer locally::
+   your computer locally:
 
-     git clone https://github.com/YOUR_GITHUB_ACCOUNT/cofi.git
-     git remote add upstream https://github.com/inlab-geo/cofi.git
-     git fetch upstream
+   .. code-block:: console
+
+     $ git clone https://github.com/YOUR_GITHUB_ACCOUNT/cofi.git
+     $ git remote add upstream https://github.com/inlab-geo/cofi.git
+     $ git fetch upstream
 
    replacing ``YOUR_GITHUB_ACCOUNT`` with your own account.
 5. If you are working on documentation, then remember to update the submodule linked to
-   `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_::
+   `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_:
 
-      cd cofi
-      git submodule update --init
+   .. code-block:: console
+
+      $ cd cofi
+      $ git submodule update --init
 
 
 .. _env_setup:
@@ -107,24 +111,34 @@ The environment setup is different depending on your purpose:
   or looking to :ref:`add features or fix bugs <cofi_core>` in the library core, then 
   try to prepare your environment to have dependencies listed in this 
   `environment_dev.yml <https://github.com/inlab-geo/cofi/blob/main/envs/environment_dev.yml>`_
-  file. It's easy to set this up using ``conda`` under your local clone::
+  file. It's easy to set this up using ``conda`` under your local clone:
 
-    conda env create -f envs/environment_dev.yml
-    conda activate cofi_dev
-    pip install -e .
+  .. code-block:: console
+
+    $ conda env create -f envs/environment_dev.yml
+    $ conda activate cofi_dev
+    $ pip install -e .
 - If you'd like to :ref:`edit the documentation <doc>`, then get the dependencies listed in this
   `environment.yml <https://github.com/inlab-geo/cofi/blob/main/docs/environment.yml>`_
-  file. Similarly, set up this with ``conda``::
+  file. Similarly, set up this with ``conda``:
 
-    conda env create -f docs/environment.yml
-    conda activate readthedocs
-    pip install -e .
+  .. code-block:: console
+
+    $ conda env create -f docs/environment.yml
+    $ conda activate readthedocs
+    $ pip install -e .
 
 
-Coding / editting
-^^^^^^^^^^^^^^^^^
+Coding / editing
+^^^^^^^^^^^^^^^^
 
-We have some guidance on the following scenarios:
+Quick reference for working with the codebase:
+
+:To install: ``pip install -e .``
+:To test: ``coverage run -m pytest``
+:To auto-format: ``black .`` or ``black --check .`` to check without changing
+
+Additionally, we have some guidance on the following scenarios:
 
 - :ref:`adding new forward examples <new_forward>`
 - :ref:`adding/linking new inversion tool <new_inversion>`
@@ -147,10 +161,12 @@ changes of the project.
 The git `add <https://git-scm.com/docs/git-add>`_ command is how you add files to 
 the so-called "staging" area.
 
-Therefore, a typical pattern of commiting a change is::
+Therefore, a typical pattern of commiting a change is:
 
-  git add path1/file1 path2/file2
-  git commit -m "my commit message"
+.. code-block:: console
+
+  $ git add path1/file1 path2/file2
+  $ git commit -m "my commit message"
 
 Please note that we aim to use 
 `Angular style <https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines>`_ 
@@ -158,14 +174,16 @@ commit messages throughout our projects. Simply speaking, we categorise our comm
 a short prefix (from ``feat``, ``fix``, ``docs``, ``style``, ``refactor``, ``perf``, 
 ``test`` and ``chore``).
 
-Once your changes are committed, push the commits into your remote fork::
+Once your changes are committed, push the commits into your remote fork:
+
+.. code-block:: console
   
-  git push
+  $ git push
 
 Open the remote repository under your GitHub account, you should be able to see the
 new commits pushed.
 
-Now that you've finished the coding and editting work, look for the "Contribute" button 
+Now that you've finished the coding and editing work, look for the "Contribute" button 
 -> "Open pull request", write a description and continue as prompted.
 
 Once your pull request is submitted, we are able to see it and will work our best to 
@@ -191,7 +209,7 @@ how to contribute to the example repository.
 
 Our `tutorials <tutorials/generated/index.html>`_ page is a good place to start learning about how to
 plug in an inversion problem in ``cofi``. Furthermore, there are examples with increasing 
-complexity presented in the `example gallery <cofi-examples/tools/sphinx_gallery/generated/index.html>`_ 
+complexity presented in the `example gallery <examples/generated/index.html>`_ 
 page for you to learn from.
 
 
@@ -202,9 +220,11 @@ New inversion tool
 
 Thank you for your attempt in enriching ``cofi``'s library pool.
 
-To get started, run the helper script::
+To get started, run the helper script:
 
-  python scripts/new_inference_tool.py <new_tool_name>
+.. code-block:: console
+
+  $ python scripts/new_inference_tool.py <new_tool_name>
 
 To define and plug in your own inference tool backend, you minimally have to create a
 subclass of :class:`tools.BaseInferenceTool` and implement two methods: 
@@ -244,12 +264,6 @@ file path ``tests``.
 
 Feature or bug fixes in ``cofi`` core
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A simple how-to guide for developing ``cofi`` core:
-
-:To (re-)build: ``rm -rf _skbuild; pip uninstall cofi -y; pip install -e .``
-:To test: ``coverage run -m pytest; coverage report; coverage xml``
-:To auto-format: ``black .`` or ``black --check .`` to check without changing
 
 Here we provide a mapping table to the parts of code related to each existing feature.
 

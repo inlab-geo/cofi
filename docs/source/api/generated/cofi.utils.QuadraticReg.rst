@@ -20,10 +20,25 @@ cofi.utils.QuadraticReg
 
 
 
-
-
-
     .. automethod:: QuadraticReg.__call__
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -170,6 +185,8 @@ cofi.utils.QuadraticReg
 
 
     .. autoattribute:: QuadraticReg.matrix
+
+    .. autoattribute:: QuadraticReg.model_shape
 
     .. autoattribute:: QuadraticReg.model_size
 

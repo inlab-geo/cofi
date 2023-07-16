@@ -1,0 +1,36 @@
+name: cofi_dev
+channels:
+  - conda-forge
+  - defaults
+  - gimli
+dependencies:
+  - python=3.9
+  - scipy>=1.0.0
+  - arviz>=0.10.0
+  - emcee
+  - findiff
+  - pytest
+  - pytorch
+  - coverage[toml]
+  - versioningit==2.1.0
+  - sphinx=4.5.0
+  - sphinx-book-theme>=1.0.1
+  - sphinx-design>=0.3.0
+  - sphinx-togglebutton>=0.3.2
+  - sphinx-gallery>=0.11.1
+  - pypandoc>=1.11
+  - myst-nb>=0.17.1
+  - sphinxcontrib-mermaid>=0.8.1
+  - sphinx-copybutton>=0.5.1
+  - papermill
+  - jupyterlab>=3
+  - matplotlib>=3.5.0
+  - nodejs>=12
+  - pygimli==1.4.0
+  - simpeg
+  - cython
+  - cartopy
+  - shapely
+  - pip
+  - pip:
+    - seislib>=0.6.7

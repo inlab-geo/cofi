@@ -29,10 +29,10 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         linear(Matrix based solvers):::cls_parameter_estimation;
         non_linear(Optimization):::cls_parameter_estimation;
         linear_system_solvers(Linear system solvers):::cls_parameter_estimation;
-        linear_solverlist(scipy.linalg.lstsq <br> PETSc <br>...):::cls_solvers;
+        linear_solverlist(scipy.linalg.lstsq <br>...):::cls_solvers;
         optimization(Non linear):::cls_parameter_estimation;
         optimization2(Linear):::cls_parameter_estimation;
-        opt_solverlist(scipy.optimize.minimize <br> torch.optim <br> PETSc <br>...):::cls_solvers;
+        opt_solverlist(scipy.optimize.minimize <br> torch.optim <br> ROL <br>...):::cls_solvers;
         ensemble_methods(Ensemble methods):::cls_ensemble_methods;
         direct_search(Direct Search):::cls_ensemble_methods;
         amc(Monte Carlo):::cls_ensemble_methods;
@@ -73,72 +73,66 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     classDef cls_solvers fill: #faedcd, stroke-width:0;
 
 
-.. panels::
-    :header: text-center text-large
-    :card: border-1 m-1 text-center
 
-    **Installation**
-    ^^^^^^^^^^^^^^^^^^^
+.. grid:: 1 2 2 2
+    :margin: 3
+    :gutter: 4
 
-    🐣 New to CoFI?
+    .. grid-item-card::
+        :link: installation.html
+        :text-align: center
+        :class-card: card-border
 
-    .. link-button:: installation
-        :type: ref
-        :text: Start here
-        :classes: btn-outline-primary btn-block stretched-link
+        *New to CoFI?*
+        ^^^^^^^^^^^^^^
+        🐣 Start here
 
-    ---
+    .. grid-item-card::
+        :link: api/index.html
+        :text-align: center
+        :class-card: card-border
 
-    **Reference documentation**
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        *Want details?*
+        ^^^^^^^^^^^^^^^
+        📑 API reference
+    
+    .. grid-item-card::
+        :link: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
+        :text-align: center
+        :class-card: card-border
 
-    📑 A list of our functions and classes
+        *Have questions?*
+        ^^^^^^^^^^^^^^^^^
+        💬 Join our Slack workspace
+    
+    .. grid-item-card::
+        :link: contribute.html
+        :text-align: center
+        :class-card: card-border
 
-    .. link-button:: api
-        :type: ref
-        :text: API reference
-        :classes: btn-outline-primary btn-block stretched-link
-
-    ---
-
-    **Need support?**
-    ^^^^^^^^^^^^^^
-
-    ❓ Ask in our Slack workspace
-
-    .. link-button:: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
-        :type: url
-        :text: Join the conversation
-        :classes: btn-outline-primary btn-block stretched-link
-
-    ---
-
-    **Contribute to CoFI**
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-    🛠 Any forms of contribution are welcomed
-
-    .. link-button:: contribute
-        :type: ref
-        :text: Developer notes
-        :classes: btn-outline-primary btn-block stretched-link
+        *Contributions welcomed!*
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        🛠 Developer guide
 
 
-Table of contents
------------------
+.. Table of contents
+.. -----------------
 
 .. toctree::
     :caption: Guides
+    :hidden: 
     :maxdepth: 1
 
     introduction.rst
     installation.rst
     tutorials/generated/index.rst
     examples/generated/index.rst
+    gallery/generated/index.rst
     faq.rst
 
 .. toctree::
     :caption: Reference
+    :hidden: 
     :maxdepth: 1
 
     api/index.rst
@@ -146,6 +140,7 @@ Table of contents
 
 .. toctree::
     :caption: Development
+    :hidden: 
     :maxdepth: 1
 
     contribute.rst

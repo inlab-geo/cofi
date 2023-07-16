@@ -123,8 +123,8 @@ class NotDefinedError(CofiError, NotImplementedError):
     def __str__(self) -> str:
         super_msg = super().__str__()
         msg = (
-            f"`{self._needs}` is required in the solving approach but you haven't "
-            "implemented or added it to the problem setup"
+            f"`{self._needs}` is called but you haven't implemented or added it to the"
+            " problem setup"
         )
         return self._form_str(super_msg, msg)
 

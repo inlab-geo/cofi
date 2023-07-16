@@ -5,7 +5,7 @@ Intro to CoFI
 With a mission to bridge the gap between the domain expertise and the 
 inference expertise, ``cofi`` provides an interface across a 
 wide range of inference algorithms from different sources, underpinned by a rich set 
-of domain relevant `examples <cofi-examples/tools/sphinx_gallery/generated/index.html>`_.
+of domain relevant `examples <examples/generated/index.html>`_.
 
 This page contains explanation about the basic concepts of this package.
 

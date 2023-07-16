@@ -53,7 +53,7 @@ def test_tools_included():
     assert len(tools_from_init_all.difference(tools_from_init_table)) == 0, \
         "inference tools from cofi.tools.__all__ and " \
         "cofi.tools.inference_tools_table don't match"
-    # TODO check all_tools_from_folder are included
+    # check all_tools_from_folder are included
     tools_from_init_all_capped = {n.upper() for n in tools_from_init_all}
     assert len(tools_from_init_all_capped.difference(tools_from_folder)) == 0, \
         "inference tools from cofi.tools.__all__ and " \

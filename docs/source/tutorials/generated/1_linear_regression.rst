@@ -310,7 +310,7 @@ Now we have the data and the forward model we can start to try and
 estimate the coefficients of the polynomial from the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 216-257
+.. GENERATED FROM PYTHON SOURCE LINES 216-263
 
 The structure of CoFI 
 ----------------------
@@ -321,7 +321,13 @@ In the workflow of ``cofi``, there are three main components:
 -  ``BaseProblem`` defines the inverse problem including any user
    supplied quantities such as data vector, number of model parameters
    and measure of fit between model predictions and data.
-   ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_jacobian(some_function_here)     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
+
+   .. code:: python
+
+      inv_problem = BaseProblem()
+      inv_problem.set_objective(some_function_here)
+      inv_problem.set_jacobian(some_function_here)
+      inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
 
     
 
@@ -354,13 +360,13 @@ set by the user and performs internal checks to ensure it has all that
 it needs to solve a problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 260-263
+.. GENERATED FROM PYTHON SOURCE LINES 266-269
 
 1. Linear system solver
 -----------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 263-266
+.. GENERATED FROM PYTHON SOURCE LINES 269-272
 
 .. code-block:: default
 
@@ -374,13 +380,13 @@ it needs to solve a problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 271-274
+.. GENERATED FROM PYTHON SOURCE LINES 277-280
 
 Step 1. Define CoFI ``BaseProblem``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 274-280
+.. GENERATED FROM PYTHON SOURCE LINES 280-286
 
 .. code-block:: default
 
@@ -397,13 +403,13 @@ Step 1. Define CoFI ``BaseProblem``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 285-288
+.. GENERATED FROM PYTHON SOURCE LINES 291-294
 
 Step 2. Define CoFI ``InversionOptions``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 288-291
+.. GENERATED FROM PYTHON SOURCE LINES 294-297
 
 .. code-block:: default
 
@@ -417,13 +423,13 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 296-299
+.. GENERATED FROM PYTHON SOURCE LINES 302-305
 
 Using the information supplied, we can ask CoFI to suggest some solving
 methods.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 299-302
+.. GENERATED FROM PYTHON SOURCE LINES 305-308
 
 .. code-block:: default
 
@@ -446,12 +452,12 @@ methods.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 307-309
+.. GENERATED FROM PYTHON SOURCE LINES 313-315
 
 We can ask CoFI to suggest some specific software tools as well.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 309-312
+.. GENERATED FROM PYTHON SOURCE LINES 315-318
 
 .. code-block:: default
 
@@ -485,7 +491,7 @@ We can ask CoFI to suggest some specific software tools as well.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 314-318
+.. GENERATED FROM PYTHON SOURCE LINES 320-324
 
 .. code-block:: default
 
@@ -507,7 +513,7 @@ We can ask CoFI to suggest some specific software tools as well.
     Solving method: matrix solvers
     Use `suggest_solving_methods()` to check available solving methods.
     -----------------------------
-    Backend tool: `scipy.linalg.lstsq (by default)` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
+    Backend tool: `<class 'cofi.tools._scipy_lstsq.ScipyLstSq'> (by default)` - SciPy's wrapper function over LAPACK's linear least-squares solver, using 'gelsd', 'gelsy' (default), or 'gelss' as backend driver
     References: ['https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html', 'https://www.netlib.org/lapack/lug/node27.html']
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
@@ -517,7 +523,7 @@ We can ask CoFI to suggest some specific software tools as well.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 320-324
+.. GENERATED FROM PYTHON SOURCE LINES 326-330
 
 .. code-block:: default
 
@@ -532,7 +538,7 @@ We can ask CoFI to suggest some specific software tools as well.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 329-347
+.. GENERATED FROM PYTHON SOURCE LINES 335-353
 
 Step 3. Define CoFI ``Inversion`` and run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -553,7 +559,7 @@ will employ scipy’s ``linalg`` package to perform the numerics.
 Lets run CoFI.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 347-351
+.. GENERATED FROM PYTHON SOURCE LINES 353-357
 
 .. code-block:: default
 
@@ -568,7 +574,7 @@ Lets run CoFI.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 353-357
+.. GENERATED FROM PYTHON SOURCE LINES 359-363
 
 .. code-block:: default
 
@@ -603,12 +609,12 @@ Lets run CoFI.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 362-364
+.. GENERATED FROM PYTHON SOURCE LINES 368-370
 
 Lets plot the solution.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 364-369
+.. GENERATED FROM PYTHON SOURCE LINES 370-375
 
 .. code-block:: default
 
@@ -629,7 +635,7 @@ Lets plot the solution.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 374-399
+.. GENERATED FROM PYTHON SOURCE LINES 380-405
 
 2. Optimizer
 ------------
@@ -657,7 +663,7 @@ this ability.
    provided. The alternative to this would be to directly provide objective function to CoFI. -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 399-421
+.. GENERATED FROM PYTHON SOURCE LINES 405-427
 
 .. code-block:: default
 
@@ -713,7 +719,7 @@ this ability.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 423-428
+.. GENERATED FROM PYTHON SOURCE LINES 429-434
 
 .. code-block:: default
 
@@ -734,12 +740,12 @@ this ability.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 433-435
+.. GENERATED FROM PYTHON SOURCE LINES 439-441
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 438-467
+.. GENERATED FROM PYTHON SOURCE LINES 444-473
 
 Challenge: Change the polynomial degree
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -771,7 +777,7 @@ Start from code below:
    :target: https://jamboard.google.com/d/1Fu_vIhWIlDl-gs9gzSPBNXLjzj2CsS70fLMDN8-7Sew/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 467-472
+.. GENERATED FROM PYTHON SOURCE LINES 473-478
 
 .. code-block:: default
 
@@ -787,7 +793,7 @@ Start from code below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 474-490
+.. GENERATED FROM PYTHON SOURCE LINES 480-496
 
 .. code-block:: default
 
@@ -825,18 +831,18 @@ Start from code below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 495-497
+.. GENERATED FROM PYTHON SOURCE LINES 501-503
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 500-503
+.. GENERATED FROM PYTHON SOURCE LINES 506-509
 
 3. Bayesian sampling
 --------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 506-529
+.. GENERATED FROM PYTHON SOURCE LINES 512-535
 
 Likelihood
 ~~~~~~~~~~
@@ -862,7 +868,7 @@ datum. Hence :math:`C_D^{-1} = \frac{1}{\sigma^2}I` where
 :math:`\sigma=1`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 529-538
+.. GENERATED FROM PYTHON SOURCE LINES 535-544
 
 .. code-block:: default
 
@@ -882,13 +888,13 @@ datum. Hence :math:`C_D^{-1} = \frac{1}{\sigma^2}I` where
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 543-546
+.. GENERATED FROM PYTHON SOURCE LINES 549-552
 
 Note that the user could specify **any appropriate Likelihood function**
 of their choosing here.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 549-573
+.. GENERATED FROM PYTHON SOURCE LINES 555-579
 
 Prior
 ~~~~~
@@ -915,7 +921,7 @@ Here use the uniform distribution with
 :math:`{\mathbf u}^T = (10.,10.,10.,10.)`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 573-582
+.. GENERATED FROM PYTHON SOURCE LINES 579-588
 
 .. code-block:: default
 
@@ -935,13 +941,13 @@ Here use the uniform distribution with
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 587-590
+.. GENERATED FROM PYTHON SOURCE LINES 593-596
 
 Note that the user could specify **any appropriate Prior PDF** of their
 choosing here.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 593-614
+.. GENERATED FROM PYTHON SOURCE LINES 599-620
 
 Bayesian sampling
 ~~~~~~~~~~~~~~~~~
@@ -965,7 +971,7 @@ posterior distribution of the model. (See more details about
 `emcee <https://emcee.readthedocs.io/en/stable/>`__).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 617-624
+.. GENERATED FROM PYTHON SOURCE LINES 623-630
 
 Starting points for random walkers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -975,7 +981,7 @@ steps), and initialise the starting positions of walkers. We start all
 walkers in a small ball about a chosen point :math:`(0, 0, 0, 0)`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 624-630
+.. GENERATED FROM PYTHON SOURCE LINES 630-636
 
 .. code-block:: default
 
@@ -992,13 +998,13 @@ walkers in a small ball about a chosen point :math:`(0, 0, 0, 0)`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 635-638
+.. GENERATED FROM PYTHON SOURCE LINES 641-644
 
 Add the information and run with CoFI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 638-657
+.. GENERATED FROM PYTHON SOURCE LINES 644-663
 
 .. code-block:: default
 
@@ -1029,7 +1035,7 @@ Add the information and run with CoFI
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      1%|1         | 119/10000 [00:00<00:08, 1184.89it/s]      2%|2         | 241/10000 [00:00<00:08, 1199.70it/s]      4%|3         | 363/10000 [00:00<00:07, 1206.12it/s]      5%|4         | 485/10000 [00:00<00:07, 1209.09it/s]      6%|6         | 607/10000 [00:00<00:07, 1210.57it/s]      7%|7         | 729/10000 [00:00<00:07, 1211.48it/s]      9%|8         | 851/10000 [00:00<00:07, 1212.32it/s]     10%|9         | 973/10000 [00:00<00:07, 1210.65it/s]     11%|#         | 1095/10000 [00:00<00:07, 1209.34it/s]     12%|#2        | 1217/10000 [00:01<00:07, 1210.89it/s]     13%|#3        | 1339/10000 [00:01<00:07, 1212.02it/s]     15%|#4        | 1461/10000 [00:01<00:07, 1213.07it/s]     16%|#5        | 1583/10000 [00:01<00:06, 1213.55it/s]     17%|#7        | 1705/10000 [00:01<00:06, 1214.41it/s]     18%|#8        | 1827/10000 [00:01<00:06, 1214.63it/s]     19%|#9        | 1949/10000 [00:01<00:06, 1214.90it/s]     21%|##        | 2071/10000 [00:01<00:06, 1214.88it/s]     22%|##1       | 2193/10000 [00:01<00:06, 1215.37it/s]     23%|##3       | 2315/10000 [00:01<00:06, 1215.12it/s]     24%|##4       | 2437/10000 [00:02<00:06, 1215.09it/s]     26%|##5       | 2559/10000 [00:02<00:06, 1214.87it/s]     27%|##6       | 2681/10000 [00:02<00:06, 1215.42it/s]     28%|##8       | 2803/10000 [00:02<00:05, 1215.43it/s]     29%|##9       | 2925/10000 [00:02<00:05, 1215.07it/s]     30%|###       | 3047/10000 [00:02<00:05, 1215.30it/s]     32%|###1      | 3169/10000 [00:02<00:05, 1215.72it/s]     33%|###2      | 3291/10000 [00:02<00:05, 1215.53it/s]     34%|###4      | 3413/10000 [00:02<00:05, 1215.59it/s]     35%|###5      | 3535/10000 [00:02<00:05, 1215.03it/s]     37%|###6      | 3657/10000 [00:03<00:05, 1215.26it/s]     38%|###7      | 3779/10000 [00:03<00:05, 1215.50it/s]     39%|###9      | 3901/10000 [00:03<00:05, 1216.04it/s]     40%|####      | 4023/10000 [00:03<00:04, 1215.59it/s]     41%|####1     | 4145/10000 [00:03<00:04, 1214.76it/s]     43%|####2     | 4267/10000 [00:03<00:04, 1214.03it/s]     44%|####3     | 4389/10000 [00:03<00:04, 1213.55it/s]     45%|####5     | 4511/10000 [00:03<00:04, 1213.90it/s]     46%|####6     | 4633/10000 [00:03<00:04, 1214.65it/s]     48%|####7     | 4755/10000 [00:03<00:04, 1213.12it/s]     49%|####8     | 4877/10000 [00:04<00:04, 1212.61it/s]     50%|####9     | 4999/10000 [00:04<00:04, 1211.53it/s]     51%|#####1    | 5121/10000 [00:04<00:04, 1211.75it/s]     52%|#####2    | 5243/10000 [00:04<00:03, 1211.44it/s]     54%|#####3    | 5365/10000 [00:04<00:03, 1212.04it/s]     55%|#####4    | 5487/10000 [00:04<00:03, 1212.33it/s]     56%|#####6    | 5609/10000 [00:04<00:03, 1212.29it/s]     57%|#####7    | 5731/10000 [00:04<00:03, 1206.94it/s]     59%|#####8    | 5853/10000 [00:04<00:03, 1208.38it/s]     60%|#####9    | 5974/10000 [00:04<00:03, 1208.35it/s]     61%|######    | 6096/10000 [00:05<00:03, 1210.29it/s]     62%|######2   | 6218/10000 [00:05<00:03, 1211.54it/s]     63%|######3   | 6340/10000 [00:05<00:03, 1212.08it/s]     65%|######4   | 6462/10000 [00:05<00:02, 1212.19it/s]     66%|######5   | 6584/10000 [00:05<00:02, 1212.84it/s]     67%|######7   | 6706/10000 [00:05<00:02, 1212.80it/s]     68%|######8   | 6828/10000 [00:05<00:02, 1213.00it/s]     70%|######9   | 6950/10000 [00:05<00:02, 1213.07it/s]     71%|#######   | 7072/10000 [00:05<00:02, 1213.26it/s]     72%|#######1  | 7194/10000 [00:05<00:02, 1212.99it/s]     73%|#######3  | 7316/10000 [00:06<00:02, 1212.93it/s]     74%|#######4  | 7438/10000 [00:06<00:02, 1213.56it/s]     76%|#######5  | 7560/10000 [00:06<00:02, 1214.57it/s]     77%|#######6  | 7682/10000 [00:06<00:01, 1214.10it/s]     78%|#######8  | 7804/10000 [00:06<00:01, 1213.40it/s]     79%|#######9  | 7926/10000 [00:06<00:01, 1212.32it/s]     80%|########  | 8048/10000 [00:06<00:01, 1212.34it/s]     82%|########1 | 8170/10000 [00:06<00:01, 1212.49it/s]     83%|########2 | 8292/10000 [00:06<00:01, 1212.80it/s]     84%|########4 | 8414/10000 [00:06<00:01, 1210.90it/s]     85%|########5 | 8536/10000 [00:07<00:01, 1211.56it/s]     87%|########6 | 8658/10000 [00:07<00:01, 1211.48it/s]     88%|########7 | 8780/10000 [00:07<00:01, 1211.52it/s]     89%|########9 | 8902/10000 [00:07<00:00, 1211.73it/s]     90%|######### | 9024/10000 [00:07<00:00, 1212.14it/s]     91%|#########1| 9146/10000 [00:07<00:00, 1212.21it/s]     93%|#########2| 9268/10000 [00:07<00:00, 1212.65it/s]     94%|#########3| 9390/10000 [00:07<00:00, 1212.68it/s]     95%|#########5| 9512/10000 [00:07<00:00, 1212.73it/s]     96%|#########6| 9634/10000 [00:07<00:00, 1212.39it/s]     98%|#########7| 9756/10000 [00:08<00:00, 1212.92it/s]     99%|#########8| 9878/10000 [00:08<00:00, 1213.09it/s]    100%|##########| 10000/10000 [00:08<00:00, 1213.17it/s]    100%|##########| 10000/10000 [00:08<00:00, 1212.71it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      1%|1         | 111/10000 [00:00<00:08, 1106.42it/s]      2%|2         | 225/10000 [00:00<00:08, 1120.19it/s]      3%|3         | 338/10000 [00:00<00:08, 1121.56it/s]      5%|4         | 452/10000 [00:00<00:08, 1126.08it/s]      6%|5         | 565/10000 [00:00<00:08, 1111.19it/s]      7%|6         | 678/10000 [00:00<00:08, 1116.48it/s]      8%|7         | 791/10000 [00:00<00:08, 1117.59it/s]      9%|9         | 903/10000 [00:00<00:08, 1117.25it/s]     10%|#         | 1015/10000 [00:00<00:08, 1115.38it/s]     11%|#1        | 1128/10000 [00:01<00:07, 1117.03it/s]     12%|#2        | 1240/10000 [00:01<00:07, 1113.06it/s]     14%|#3        | 1354/10000 [00:01<00:07, 1120.73it/s]     15%|#4        | 1467/10000 [00:01<00:07, 1121.37it/s]     16%|#5        | 1581/10000 [00:01<00:07, 1125.29it/s]     17%|#6        | 1694/10000 [00:01<00:07, 1117.15it/s]     18%|#8        | 1807/10000 [00:01<00:07, 1120.05it/s]     19%|#9        | 1921/10000 [00:01<00:07, 1125.71it/s]     20%|##        | 2035/10000 [00:01<00:07, 1128.78it/s]     21%|##1       | 2148/10000 [00:01<00:06, 1126.02it/s]     23%|##2       | 2261/10000 [00:02<00:06, 1116.10it/s]     24%|##3       | 2374/10000 [00:02<00:06, 1119.51it/s]     25%|##4       | 2488/10000 [00:02<00:06, 1123.09it/s]     26%|##6       | 2602/10000 [00:02<00:06, 1126.40it/s]     27%|##7       | 2716/10000 [00:02<00:06, 1129.60it/s]     28%|##8       | 2829/10000 [00:02<00:06, 1123.19it/s]     29%|##9       | 2942/10000 [00:02<00:06, 1123.96it/s]     31%|###       | 3055/10000 [00:02<00:06, 1123.09it/s]     32%|###1      | 3168/10000 [00:02<00:06, 1121.53it/s]     33%|###2      | 3281/10000 [00:02<00:06, 1115.44it/s]     34%|###3      | 3393/10000 [00:03<00:05, 1112.51it/s]     35%|###5      | 3505/10000 [00:03<00:05, 1106.10it/s]     36%|###6      | 3619/10000 [00:03<00:05, 1113.05it/s]     37%|###7      | 3731/10000 [00:03<00:05, 1110.89it/s]     38%|###8      | 3843/10000 [00:03<00:05, 1108.31it/s]     40%|###9      | 3955/10000 [00:03<00:05, 1110.38it/s]     41%|####      | 4067/10000 [00:03<00:05, 1111.73it/s]     42%|####1     | 4179/10000 [00:03<00:05, 1111.54it/s]     43%|####2     | 4291/10000 [00:03<00:05, 1110.86it/s]     44%|####4     | 4403/10000 [00:03<00:05, 1102.77it/s]     45%|####5     | 4515/10000 [00:04<00:04, 1107.32it/s]     46%|####6     | 4626/10000 [00:04<00:04, 1108.06it/s]     47%|####7     | 4739/10000 [00:04<00:04, 1113.33it/s]     49%|####8     | 4856/10000 [00:04<00:04, 1128.02it/s]     50%|####9     | 4974/10000 [00:04<00:04, 1142.33it/s]     51%|#####     | 5093/10000 [00:04<00:04, 1155.91it/s]     52%|#####2    | 5212/10000 [00:04<00:04, 1164.01it/s]     53%|#####3    | 5332/10000 [00:04<00:03, 1172.41it/s]     55%|#####4    | 5451/10000 [00:04<00:03, 1177.63it/s]     56%|#####5    | 5571/10000 [00:04<00:03, 1182.67it/s]     57%|#####6    | 5690/10000 [00:05<00:03, 1173.56it/s]     58%|#####8    | 5809/10000 [00:05<00:03, 1178.09it/s]     59%|#####9    | 5927/10000 [00:05<00:03, 1176.25it/s]     60%|######    | 6048/10000 [00:05<00:03, 1183.80it/s]     62%|######1   | 6167/10000 [00:05<00:03, 1179.65it/s]     63%|######2   | 6287/10000 [00:05<00:03, 1183.04it/s]     64%|######4   | 6406/10000 [00:05<00:03, 1182.49it/s]     65%|######5   | 6525/10000 [00:05<00:02, 1180.67it/s]     66%|######6   | 6644/10000 [00:05<00:02, 1166.38it/s]     68%|######7   | 6761/10000 [00:05<00:02, 1166.38it/s]     69%|######8   | 6878/10000 [00:06<00:02, 1161.22it/s]     70%|######9   | 6998/10000 [00:06<00:02, 1169.89it/s]     71%|#######1  | 7116/10000 [00:06<00:02, 1171.03it/s]     72%|#######2  | 7234/10000 [00:06<00:02, 1172.49it/s]     74%|#######3  | 7352/10000 [00:06<00:02, 1168.97it/s]     75%|#######4  | 7469/10000 [00:06<00:02, 1168.24it/s]     76%|#######5  | 7587/10000 [00:06<00:02, 1171.33it/s]     77%|#######7  | 7707/10000 [00:06<00:01, 1178.70it/s]     78%|#######8  | 7826/10000 [00:06<00:01, 1180.30it/s]     79%|#######9  | 7945/10000 [00:06<00:01, 1175.94it/s]     81%|########  | 8063/10000 [00:07<00:01, 1169.46it/s]     82%|########1 | 8182/10000 [00:07<00:01, 1173.51it/s]     83%|########2 | 8300/10000 [00:07<00:01, 1171.55it/s]     84%|########4 | 8420/10000 [00:07<00:01, 1178.64it/s]     85%|########5 | 8538/10000 [00:07<00:01, 1172.51it/s]     87%|########6 | 8657/10000 [00:07<00:01, 1175.20it/s]     88%|########7 | 8776/10000 [00:07<00:01, 1177.56it/s]     89%|########8 | 8896/10000 [00:07<00:00, 1183.09it/s]     90%|######### | 9015/10000 [00:07<00:00, 1181.60it/s]     91%|#########1| 9134/10000 [00:07<00:00, 1170.55it/s]     93%|#########2| 9252/10000 [00:08<00:00, 1166.54it/s]     94%|#########3| 9371/10000 [00:08<00:00, 1173.32it/s]     95%|#########4| 9489/10000 [00:08<00:00, 1171.06it/s]     96%|#########6| 9609/10000 [00:08<00:00, 1177.02it/s]     97%|#########7| 9727/10000 [00:08<00:00, 1172.38it/s]     98%|#########8| 9845/10000 [00:08<00:00, 1174.46it/s]    100%|#########9| 9963/10000 [00:08<00:00, 1172.44it/s]    100%|##########| 10000/10000 [00:08<00:00, 1146.85it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1042,7 +1048,7 @@ Add the information and run with CoFI
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 662-673
+.. GENERATED FROM PYTHON SOURCE LINES 668-679
 
 Post-sampling analysis
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1056,7 +1062,7 @@ have access to a range of analysis functions. (See more details in
 documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 673-682
+.. GENERATED FROM PYTHON SOURCE LINES 679-688
 
 .. code-block:: default
 
@@ -1076,7 +1082,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 684-687
+.. GENERATED FROM PYTHON SOURCE LINES 690-693
 
 .. code-block:: default
 
@@ -1449,69 +1455,69 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       * chain    (chain) int64 0 1 2 3 4 5 6 7 8 9 ... 22 23 24 25 26 27 28 29 30 31
       * draw     (draw) int64 0 1 2 3 4 5 6 7 ... 9993 9994 9995 9996 9997 9998 9999
     Data variables:
-        m0       (chain, draw) float64 -0.0001787 -0.000345 ... -6.586 -6.586
-        m1       (chain, draw) float64 -2.378e-05 0.0002541 ... -5.178 -5.178
-        m2       (chain, draw) float64 -9.894e-05 -0.0002379 ... 2.169 2.169
-        m3       (chain, draw) float64 -0.0001222 -0.0004012 ... 1.081 1.081
+        m0       (chain, draw) float64 0.0002482 0.0004314 ... -4.929 -4.929
+        m1       (chain, draw) float64 5.045e-05 8.371e-05 ... -4.764 -4.764
+        m2       (chain, draw) float64 0.0001186 0.0001716 0.0001716 ... 1.395 1.395
+        m3       (chain, draw) float64 -4.804e-06 8.14e-05 ... 0.8329 0.8329
     Attributes:
-        created_at:                 2022-12-14T02:06:34.443873
+        created_at:                 2023-04-05T06:21:45.302246
         arviz_version:              0.12.1
         inference_library:          emcee
-        inference_library_version:  3.1.2</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-0b3ba073-9f1b-4b12-ba93-dc75503a4bd3' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-0b3ba073-9f1b-4b12-ba93-dc75503a4bd3' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 32</li><li><span class='xr-has-index'>draw</span>: 10000</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-434d577c-dbfb-46cf-bf15-0186937f2606' class='xr-section-summary-in' type='checkbox'  checked><label for='section-434d577c-dbfb-46cf-bf15-0186937f2606' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 26 27 28 29 30 31</div><input id='attrs-a3458d17-ea6e-4c0a-a851-192042686444' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a3458d17-ea6e-4c0a-a851-192042686444' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-088d25d3-dcef-4d46-926e-c7bbd010d83c' class='xr-var-data-in' type='checkbox'><label for='data-088d25d3-dcef-4d46-926e-c7bbd010d83c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
-           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 9996 9997 9998 9999</div><input id='attrs-4f16e23a-829f-40e7-b976-d0ed6e6b9a05' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4f16e23a-829f-40e7-b976-d0ed6e6b9a05' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c478561c-040d-4100-be4c-fb67d15ee2ed' class='xr-var-data-in' type='checkbox'><label for='data-c478561c-040d-4100-be4c-fb67d15ee2ed' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 9997, 9998, 9999])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-fd0f8294-2c22-478a-8ea3-2db8845cc79c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-fd0f8294-2c22-478a-8ea3-2db8845cc79c' class='xr-section-summary' >Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>m0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-0.0001787 -0.000345 ... -6.586</div><input id='attrs-cd2e5b70-08f4-45a4-9dec-7c5356f3081b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-cd2e5b70-08f4-45a4-9dec-7c5356f3081b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-53b9f33b-47c4-478f-a2b6-969845f4e9fc' class='xr-var-data-in' type='checkbox'><label for='data-53b9f33b-47c4-478f-a2b6-969845f4e9fc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-1.78732944e-04, -3.44981303e-04, -4.34127035e-04, ...,
-            -6.00770614e+00, -6.39117937e+00, -6.39117937e+00],
-           [ 7.75848943e-06,  7.75848943e-06,  7.75848943e-06, ...,
-            -5.09381401e+00, -4.96946591e+00, -4.96946591e+00],
-           [-8.61800646e-05, -8.61800646e-05, -8.32036209e-05, ...,
-            -5.53264125e+00, -5.46873639e+00, -5.46873639e+00],
+        inference_library_version:  3.1.2</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-322c6db8-89b0-4a19-b7a7-bda8016895cc' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-322c6db8-89b0-4a19-b7a7-bda8016895cc' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 32</li><li><span class='xr-has-index'>draw</span>: 10000</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-90d677cc-bdec-4f8f-aead-543b220e205d' class='xr-section-summary-in' type='checkbox'  checked><label for='section-90d677cc-bdec-4f8f-aead-543b220e205d' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 26 27 28 29 30 31</div><input id='attrs-608718f8-4de2-4d5c-b3d4-4c2f545a893a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-608718f8-4de2-4d5c-b3d4-4c2f545a893a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9e9ae377-99a2-4011-b7d6-f084e38ed19c' class='xr-var-data-in' type='checkbox'><label for='data-9e9ae377-99a2-4011-b7d6-f084e38ed19c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 9996 9997 9998 9999</div><input id='attrs-cc73e165-8169-434c-ab7b-d87d717b6392' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-cc73e165-8169-434c-ab7b-d87d717b6392' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4650328c-4e79-41ac-869f-655064a19727' class='xr-var-data-in' type='checkbox'><label for='data-4650328c-4e79-41ac-869f-655064a19727' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 9997, 9998, 9999])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-268c3c80-d6dc-49be-9c2b-ea5fc72bb3cf' class='xr-section-summary-in' type='checkbox'  checked><label for='section-268c3c80-d6dc-49be-9c2b-ea5fc72bb3cf' class='xr-section-summary' >Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>m0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0002482 0.0004314 ... -4.929</div><input id='attrs-7dcc7698-6661-4a1c-85e4-715107537ae5' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7dcc7698-6661-4a1c-85e4-715107537ae5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-88343b5d-d158-4d9e-bd43-fad45a470156' class='xr-var-data-in' type='checkbox'><label for='data-88343b5d-d158-4d9e-bd43-fad45a470156' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 2.48211682e-04,  4.31377123e-04,  4.31377123e-04, ...,
+            -5.61074808e+00, -5.64212624e+00, -5.79761433e+00],
+           [ 1.27496093e-04,  2.71390878e-04,  2.95094325e-04, ...,
+            -5.55777695e+00, -5.32233310e+00, -5.32384163e+00],
+           [ 7.02125216e-05,  7.02125216e-05,  1.05339939e-04, ...,
+            -6.10828199e+00, -6.10828199e+00, -6.34858826e+00],
            ...,
-           [ 1.94553690e-06, -3.41592213e-05, -3.82827304e-05, ...,
-            -6.81393678e+00, -6.81393678e+00, -7.00851869e+00],
-           [ 1.25925755e-04,  1.25925755e-04,  7.64024427e-05, ...,
-            -5.02468418e+00, -5.02468418e+00, -4.55315661e+00],
-           [-6.68090454e-05, -2.02649998e-04, -1.96411754e-04, ...,
-            -6.32939624e+00, -6.58642942e+00, -6.58642942e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-2.378e-05 0.0002541 ... -5.178</div><input id='attrs-b5e01cd1-cd90-40a8-b703-96ff14dbccd0' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b5e01cd1-cd90-40a8-b703-96ff14dbccd0' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a60094f0-a1c0-444b-9161-955dc6929902' class='xr-var-data-in' type='checkbox'><label for='data-a60094f0-a1c0-444b-9161-955dc6929902' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-2.37767499e-05,  2.54096516e-04,  2.81173296e-04, ...,
-            -5.51370206e+00, -5.56416753e+00, -5.56416753e+00],
-           [ 6.20145762e-05,  6.20145762e-05,  6.20145762e-05, ...,
-            -5.17986958e+00, -5.19260686e+00, -5.19260686e+00],
-           [ 7.82272393e-05,  7.82272393e-05,  7.53124832e-05, ...,
-            -5.12444063e+00, -5.16703523e+00, -5.16703523e+00],
+           [-1.55898763e-04, -8.84746293e-05, -8.14527741e-05, ...,
+            -5.86379331e+00, -5.89389347e+00, -5.90261567e+00],
+           [-1.77139043e-04, -1.77139043e-04, -1.84572567e-04, ...,
+            -5.38140688e+00, -5.38935449e+00, -5.39729086e+00],
+           [-6.45322209e-05, -6.02664287e-05, -5.53781262e-05, ...,
+            -5.39590144e+00, -4.92928957e+00, -4.92928957e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>5.045e-05 8.371e-05 ... -4.764</div><input id='attrs-5e08420e-92ed-4c6b-9b44-f0c3347ef61f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5e08420e-92ed-4c6b-9b44-f0c3347ef61f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6756dc5a-14aa-4aca-a14f-09725e996c35' class='xr-var-data-in' type='checkbox'><label for='data-6756dc5a-14aa-4aca-a14f-09725e996c35' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 5.04457814e-05,  8.37136138e-05,  8.37136138e-05, ...,
+            -5.21086158e+00, -5.10331373e+00, -5.08443092e+00],
+           [ 5.34266037e-05,  5.74490916e-05,  5.71108413e-05, ...,
+            -4.88581547e+00, -4.61603903e+00, -4.62631812e+00],
+           [-2.86525516e-05, -2.86525516e-05, -2.48602197e-04, ...,
+            -5.21383704e+00, -5.21383704e+00, -5.19112075e+00],
            ...,
-           [ 2.97848286e-05,  1.90816844e-05,  1.44494684e-05, ...,
-            -5.88773061e+00, -5.88773061e+00, -5.99197849e+00],
-           [-4.26767338e-05, -4.26767338e-05,  6.78140335e-05, ...,
-            -4.82993147e+00, -4.82993147e+00, -4.78618773e+00],
-           [ 9.92042350e-05,  1.99203020e-04,  1.94612431e-04, ...,
-            -5.32727616e+00, -5.17832026e+00, -5.17832026e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-9.894e-05 -0.0002379 ... 2.169</div><input id='attrs-4fcb18ac-0e19-4478-84be-39c21a855e0e' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4fcb18ac-0e19-4478-84be-39c21a855e0e' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3c31e1f0-dc87-49b7-b8ab-db88e88d97a9' class='xr-var-data-in' type='checkbox'><label for='data-3c31e1f0-dc87-49b7-b8ab-db88e88d97a9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-9.89410103e-05, -2.37879564e-04, -4.09564337e-04, ...,
-             2.02113121e+00,  2.21982791e+00,  2.21982791e+00],
-           [ 1.42263385e-04,  1.42263385e-04,  1.42263385e-04, ...,
-             1.61467987e+00,  1.56341528e+00,  1.56341528e+00],
-           [-8.92170728e-05, -8.92170728e-05, -9.61350224e-05, ...,
-             1.74141673e+00,  1.71198938e+00,  1.71198938e+00],
+           [ 1.79078557e-04,  1.31866700e-04,  8.33886230e-05, ...,
+            -5.41053153e+00, -5.38009698e+00, -5.38000761e+00],
+           [-4.52929265e-05, -4.52929265e-05, -4.06601652e-06, ...,
+            -4.99368629e+00, -5.00314859e+00, -4.96378151e+00],
+           [-1.60061101e-04, -2.12073551e-04, -2.71676219e-04, ...,
+            -5.05942974e+00, -4.76424571e+00, -4.76424571e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0001186 0.0001716 ... 1.395 1.395</div><input id='attrs-745c12e9-eaad-4954-8068-8a511a9a4984' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-745c12e9-eaad-4954-8068-8a511a9a4984' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fb50a9e4-110b-476d-9e87-8f5ef310e70b' class='xr-var-data-in' type='checkbox'><label for='data-fb50a9e4-110b-476d-9e87-8f5ef310e70b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 1.18571819e-04,  1.71555939e-04,  1.71555939e-04, ...,
+             1.75861844e+00,  1.73944239e+00,  1.80660956e+00],
+           [ 6.43131094e-05, -8.44229820e-05, -1.06656051e-04, ...,
+             1.48049772e+00,  1.31515195e+00,  1.32539316e+00],
+           [ 1.06406245e-04,  1.06406245e-04,  2.84319623e-04, ...,
+             2.12389371e+00,  2.12389371e+00,  2.17560603e+00],
            ...,
-           [ 3.56775340e-05,  8.77687625e-06,  7.03316143e-06, ...,
-             2.35561426e+00,  2.35561426e+00,  2.44871396e+00],
-           [ 6.83631299e-05,  6.83631299e-05,  1.37032791e-05, ...,
-             1.45496935e+00,  1.45496935e+00,  1.14347167e+00],
-           [-1.74959757e-05, -7.80101259e-05, -7.36235007e-05, ...,
-             2.10359059e+00,  2.16947635e+00,  2.16947635e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-0.0001222 -0.0004012 ... 1.081</div><input id='attrs-d237856d-70e5-43e3-881e-f74c4a1d6b6a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d237856d-70e5-43e3-881e-f74c4a1d6b6a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3e3ec585-1159-4b54-a4f6-8b437dd88a7c' class='xr-var-data-in' type='checkbox'><label for='data-3e3ec585-1159-4b54-a4f6-8b437dd88a7c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-1.22152764e-04, -4.01166097e-04, -5.40330624e-04, ...,
-             1.04991546e+00,  1.09729869e+00,  1.09729869e+00],
-           [-1.29913791e-04, -1.29913791e-04, -1.29913791e-04, ...,
-             9.46232885e-01,  9.34993516e-01,  9.34993516e-01],
-           [-3.16737235e-05, -3.16737235e-05, -2.58872245e-05, ...,
-             9.81670977e-01,  9.70710271e-01,  9.70710271e-01],
+           [-1.25504762e-04, -6.07722297e-05, -1.22642579e-04, ...,
+             2.04682596e+00,  2.02569811e+00,  2.04518989e+00],
+           [ 9.57858717e-06,  9.57858717e-06, -2.43717027e-05, ...,
+             1.81213138e+00,  1.79842513e+00,  1.85120640e+00],
+           [-1.51457484e-04, -1.67614775e-04, -1.86129912e-04, ...,
+             1.63037028e+00,  1.39537430e+00,  1.39537430e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-4.804e-06 8.14e-05 ... 0.8329</div><input id='attrs-338cd658-1513-4357-8158-defae4c96865' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-338cd658-1513-4357-8158-defae4c96865' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ecd460ee-8d13-4ba8-a091-ab0aa1bc40ec' class='xr-var-data-in' type='checkbox'><label for='data-ecd460ee-8d13-4ba8-a091-ab0aa1bc40ec' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-4.80368932e-06,  8.14044332e-05,  8.14044332e-05, ...,
+             9.40855680e-01,  9.25946467e-01,  9.27657393e-01],
+           [ 2.03963919e-04,  5.27728281e-04,  5.48080025e-04, ...,
+             8.39999549e-01,  7.77624675e-01,  7.82303595e-01],
+           [ 1.83757091e-04,  1.83757091e-04,  3.39626421e-04, ...,
+             1.06728373e+00,  1.06728373e+00,  1.07009621e+00],
            ...,
-           [-6.38534794e-05, -7.55033536e-05, -1.02645187e-04, ...,
-             1.19601561e+00,  1.19601561e+00,  1.22860581e+00],
-           [ 2.95122897e-05,  2.95122897e-05,  7.89052950e-05, ...,
-             8.59088061e-01,  8.59088061e-01,  7.61748831e-01],
-           [-7.55745159e-05, -1.49640495e-04, -1.33363159e-04, ...,
-             1.06726605e+00,  1.08112932e+00,  1.08112932e+00]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-850a4d81-2006-48ac-8715-eb898a82311c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-850a4d81-2006-48ac-8715-eb898a82311c' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2022-12-14T02:06:34.443873</dd><dt><span>arviz_version :</span></dt><dd>0.12.1</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.2</dd></dl></div></li></ul></div></div>
+           [-8.61076079e-05, -2.24584968e-06,  3.07073379e-05, ...,
+             1.08386324e+00,  1.07055454e+00,  1.07703846e+00],
+           [-1.19316041e-05, -1.19316041e-05,  6.78959204e-06, ...,
+             9.61870874e-01,  9.59199810e-01,  9.69862010e-01],
+           [ 6.79659669e-05,  8.04755279e-05,  9.48106190e-05, ...,
+             9.24663625e-01,  8.32907114e-01,  8.32907114e-01]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-1922061c-51fa-40f7-84d7-794e69004f33' class='xr-section-summary-in' type='checkbox'  checked><label for='section-1922061c-51fa-40f7-84d7-794e69004f33' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2023-04-05T06:21:45.302246</dd><dt><span>arviz_version :</span></dt><dd>0.12.1</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.2</dd></dl></div></li></ul></div></div>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 689-703
+.. GENERATED FROM PYTHON SOURCE LINES 695-709
 
 .. code-block:: default
 
@@ -1541,7 +1547,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 705-709
+.. GENERATED FROM PYTHON SOURCE LINES 711-715
 
 .. code-block:: default
 
@@ -1557,12 +1563,12 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
  .. code-block:: none
 
-    autocorrelation time: [68.29219144 76.96574306 68.65854986 73.0627644 ]
+    autocorrelation time: [61.88481204 79.45186943 55.17469405 68.06185697]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 711-736
+.. GENERATED FROM PYTHON SOURCE LINES 717-742
 
 .. code-block:: default
 
@@ -1603,13 +1609,13 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 741-744
+.. GENERATED FROM PYTHON SOURCE LINES 747-750
 
 Now we plot the predicted curves for the posterior ensemble of
 solutions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 744-752
+.. GENERATED FROM PYTHON SOURCE LINES 750-758
 
 .. code-block:: default
 
@@ -1633,13 +1639,13 @@ solutions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 757-760
+.. GENERATED FROM PYTHON SOURCE LINES 763-766
 
 Expected values, credible intervals and model covariance matrix from the ensemble
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 760-766
+.. GENERATED FROM PYTHON SOURCE LINES 766-772
 
 .. code-block:: default
 
@@ -1659,15 +1665,15 @@ Expected values, credible intervals and model covariance matrix from the ensembl
 
 
      Expected value and 95% credible intervals 
-     m0  -5.718 [ -6.430,  -5.019]
-     m1  -5.114 [ -5.598,  -4.632]
-     m2   1.826 [  1.457,   2.204]
-     m3   0.976 [  0.843,   1.109]
+     m0  -5.726 [ -6.449,  -5.002]
+     m1  -5.108 [ -5.600,  -4.621]
+     m2   1.831 [  1.448,   2.205]
+     m3   0.976 [  0.839,   1.110]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 768-776
+.. GENERATED FROM PYTHON SOURCE LINES 774-782
 
 .. code-block:: default
 
@@ -1688,32 +1694,32 @@ Expected values, credible intervals and model covariance matrix from the ensembl
  .. code-block:: none
 
     Posterior model covariance matrix
-     [[ 0.18833668  0.05827435 -0.08045926 -0.02521073]
-     [ 0.05827435  0.08626787 -0.03301353 -0.01800818]
-     [-0.08045926 -0.03301353  0.05142114  0.0168967 ]
-     [-0.02521073 -0.01800818  0.0168967   0.00669061]]
+     [[ 0.1951392   0.06026701 -0.08417847 -0.02635733]
+     [ 0.06026701  0.08795035 -0.03360678 -0.01836045]
+     [-0.08417847 -0.03360678  0.05332787  0.01747176]
+     [-0.02635733 -0.01836045  0.01747176  0.00688664]]
 
      Posterior estimate of model standard deviations in each parameter
-        m0  0.4340
-        m1  0.2937
-        m2  0.2268
-        m3  0.0818
+        m0  0.4417
+        m1  0.2965
+        m2  0.2309
+        m3  0.0830
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 781-783
+.. GENERATED FROM PYTHON SOURCE LINES 787-789
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 786-789
+.. GENERATED FROM PYTHON SOURCE LINES 792-795
 
 Challenge: Change the prior model bounds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 792-842
+.. GENERATED FROM PYTHON SOURCE LINES 798-848
 
 Replace the previous prior bounds to new values
 
@@ -1766,7 +1772,7 @@ Start from the code template below:
    :target: https://jamboard.google.com/d/1h_O8PNuHzpyH2zQUraqiMT4SQR0TMhUmiZzFn_HMZl4/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 842-847
+.. GENERATED FROM PYTHON SOURCE LINES 848-853
 
 .. code-block:: default
 
@@ -1782,7 +1788,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 849-875
+.. GENERATED FROM PYTHON SOURCE LINES 855-881
 
 .. code-block:: default
 
@@ -1825,23 +1831,23 @@ Start from the code template below:
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      1%|1         | 118/10000 [00:00<00:08, 1174.97it/s]      2%|2         | 239/10000 [00:00<00:08, 1190.69it/s]      4%|3         | 360/10000 [00:00<00:08, 1195.72it/s]      5%|4         | 480/10000 [00:00<00:07, 1195.07it/s]      6%|6         | 600/10000 [00:00<00:07, 1193.87it/s]      7%|7         | 721/10000 [00:00<00:07, 1196.80it/s]      8%|8         | 841/10000 [00:00<00:07, 1194.99it/s]     10%|9         | 962/10000 [00:00<00:07, 1197.48it/s]     11%|#         | 1083/10000 [00:00<00:07, 1199.79it/s]     12%|#2        | 1203/10000 [00:01<00:07, 1198.03it/s]     13%|#3        | 1323/10000 [00:01<00:07, 1190.41it/s]     14%|#4        | 1443/10000 [00:01<00:07, 1186.44it/s]     16%|#5        | 1563/10000 [00:01<00:07, 1189.83it/s]     17%|#6        | 1684/10000 [00:01<00:06, 1193.31it/s]     18%|#8        | 1804/10000 [00:01<00:06, 1191.66it/s]     19%|#9        | 1925/10000 [00:01<00:06, 1194.84it/s]     20%|##        | 2046/10000 [00:01<00:06, 1196.87it/s]     22%|##1       | 2167/10000 [00:01<00:06, 1198.06it/s]     23%|##2       | 2288/10000 [00:01<00:06, 1198.92it/s]     24%|##4       | 2408/10000 [00:02<00:06, 1195.40it/s]     25%|##5       | 2529/10000 [00:02<00:06, 1197.39it/s]     26%|##6       | 2650/10000 [00:02<00:06, 1199.45it/s]     28%|##7       | 2771/10000 [00:02<00:06, 1200.41it/s]     29%|##8       | 2892/10000 [00:02<00:05, 1201.15it/s]     30%|###       | 3013/10000 [00:02<00:05, 1195.88it/s]     31%|###1      | 3133/10000 [00:02<00:05, 1196.78it/s]     33%|###2      | 3254/10000 [00:02<00:05, 1197.91it/s]     34%|###3      | 3374/10000 [00:02<00:05, 1198.52it/s]     35%|###4      | 3494/10000 [00:02<00:05, 1198.58it/s]     36%|###6      | 3614/10000 [00:03<00:05, 1194.91it/s]     37%|###7      | 3735/10000 [00:03<00:05, 1196.91it/s]     39%|###8      | 3856/10000 [00:03<00:05, 1198.89it/s]     40%|###9      | 3977/10000 [00:03<00:05, 1200.58it/s]     41%|####      | 4098/10000 [00:03<00:04, 1201.41it/s]     42%|####2     | 4219/10000 [00:03<00:04, 1197.17it/s]     43%|####3     | 4340/10000 [00:03<00:04, 1198.61it/s]     45%|####4     | 4461/10000 [00:03<00:04, 1199.33it/s]     46%|####5     | 4582/10000 [00:03<00:04, 1199.89it/s]     47%|####7     | 4702/10000 [00:03<00:04, 1198.99it/s]     48%|####8     | 4822/10000 [00:04<00:04, 1195.48it/s]     49%|####9     | 4943/10000 [00:04<00:04, 1197.94it/s]     51%|#####     | 5064/10000 [00:04<00:04, 1199.54it/s]     52%|#####1    | 5185/10000 [00:04<00:04, 1200.38it/s]     53%|#####3    | 5306/10000 [00:04<00:03, 1195.00it/s]     54%|#####4    | 5426/10000 [00:04<00:03, 1192.27it/s]     55%|#####5    | 5547/10000 [00:04<00:03, 1195.26it/s]     57%|#####6    | 5668/10000 [00:04<00:03, 1197.34it/s]     58%|#####7    | 5789/10000 [00:04<00:03, 1198.61it/s]     59%|#####9    | 5909/10000 [00:04<00:03, 1190.83it/s]     60%|######    | 6029/10000 [00:05<00:03, 1188.86it/s]     62%|######1   | 6150/10000 [00:05<00:03, 1192.40it/s]     63%|######2   | 6271/10000 [00:05<00:03, 1195.64it/s]     64%|######3   | 6392/10000 [00:05<00:03, 1197.94it/s]     65%|######5   | 6513/10000 [00:05<00:02, 1199.52it/s]     66%|######6   | 6633/10000 [00:05<00:02, 1181.72it/s]     68%|######7   | 6753/10000 [00:05<00:02, 1185.26it/s]     69%|######8   | 6873/10000 [00:05<00:02, 1188.21it/s]     70%|######9   | 6994/10000 [00:05<00:02, 1192.32it/s]     71%|#######1  | 7115/10000 [00:05<00:02, 1195.31it/s]     72%|#######2  | 7235/10000 [00:06<00:02, 1193.06it/s]     74%|#######3  | 7356/10000 [00:06<00:02, 1195.75it/s]     75%|#######4  | 7477/10000 [00:06<00:02, 1197.58it/s]     76%|#######5  | 7598/10000 [00:06<00:02, 1199.52it/s]     77%|#######7  | 7719/10000 [00:06<00:01, 1200.36it/s]     78%|#######8  | 7840/10000 [00:06<00:01, 1185.76it/s]     80%|#######9  | 7960/10000 [00:06<00:01, 1189.38it/s]     81%|########  | 8080/10000 [00:06<00:01, 1192.05it/s]     82%|########2 | 8201/10000 [00:06<00:01, 1194.59it/s]     83%|########3 | 8322/10000 [00:06<00:01, 1196.45it/s]     84%|########4 | 8442/10000 [00:07<00:01, 1193.44it/s]     86%|########5 | 8562/10000 [00:07<00:01, 1195.35it/s]     87%|########6 | 8683/10000 [00:07<00:01, 1196.96it/s]     88%|########8 | 8804/10000 [00:07<00:00, 1198.05it/s]     89%|########9 | 8925/10000 [00:07<00:00, 1198.85it/s]     90%|######### | 9045/10000 [00:07<00:00, 1185.96it/s]     92%|#########1| 9165/10000 [00:07<00:00, 1188.66it/s]     93%|#########2| 9286/10000 [00:07<00:00, 1192.33it/s]     94%|#########4| 9406/10000 [00:07<00:00, 1194.43it/s]     95%|#########5| 9527/10000 [00:07<00:00, 1196.13it/s]     96%|#########6| 9647/10000 [00:08<00:00, 1192.55it/s]     98%|#########7| 9767/10000 [00:08<00:00, 1194.69it/s]     99%|#########8| 9887/10000 [00:08<00:00, 1196.13it/s]    100%|##########| 10000/10000 [00:08<00:00, 1195.23it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      1%|1         | 113/10000 [00:00<00:08, 1121.88it/s]      2%|2         | 232/10000 [00:00<00:08, 1160.91it/s]      4%|3         | 350/10000 [00:00<00:08, 1165.63it/s]      5%|4         | 470/10000 [00:00<00:08, 1178.84it/s]      6%|5         | 595/10000 [00:00<00:07, 1202.84it/s]      7%|7         | 719/10000 [00:00<00:07, 1213.38it/s]      8%|8         | 841/10000 [00:00<00:07, 1214.89it/s]     10%|9         | 964/10000 [00:00<00:07, 1218.79it/s]     11%|#         | 1088/10000 [00:00<00:07, 1225.07it/s]     12%|#2        | 1211/10000 [00:01<00:07, 1220.93it/s]     13%|#3        | 1335/10000 [00:01<00:07, 1224.25it/s]     15%|#4        | 1458/10000 [00:01<00:07, 1206.75it/s]     16%|#5        | 1579/10000 [00:01<00:07, 1196.52it/s]     17%|#6        | 1699/10000 [00:01<00:06, 1193.96it/s]     18%|#8        | 1819/10000 [00:01<00:06, 1193.15it/s]     19%|#9        | 1940/10000 [00:01<00:06, 1195.52it/s]     21%|##        | 2062/10000 [00:01<00:06, 1200.81it/s]     22%|##1       | 2183/10000 [00:01<00:06, 1195.31it/s]     23%|##3       | 2306/10000 [00:01<00:06, 1202.86it/s]     24%|##4       | 2429/10000 [00:02<00:06, 1208.49it/s]     26%|##5       | 2554/10000 [00:02<00:06, 1217.90it/s]     27%|##6       | 2676/10000 [00:02<00:06, 1213.80it/s]     28%|##7       | 2799/10000 [00:02<00:05, 1218.08it/s]     29%|##9       | 2923/10000 [00:02<00:05, 1223.19it/s]     30%|###       | 3046/10000 [00:02<00:05, 1221.82it/s]     32%|###1      | 3169/10000 [00:02<00:05, 1219.07it/s]     33%|###2      | 3291/10000 [00:02<00:05, 1203.02it/s]     34%|###4      | 3412/10000 [00:02<00:05, 1201.22it/s]     35%|###5      | 3535/10000 [00:02<00:05, 1208.50it/s]     37%|###6      | 3656/10000 [00:03<00:05, 1206.09it/s]     38%|###7      | 3777/10000 [00:03<00:05, 1194.20it/s]     39%|###8      | 3898/10000 [00:03<00:05, 1198.35it/s]     40%|####      | 4018/10000 [00:03<00:05, 1195.20it/s]     41%|####1     | 4140/10000 [00:03<00:04, 1202.43it/s]     43%|####2     | 4262/10000 [00:03<00:04, 1207.55it/s]     44%|####3     | 4386/10000 [00:03<00:04, 1215.31it/s]     45%|####5     | 4508/10000 [00:03<00:04, 1208.21it/s]     46%|####6     | 4631/10000 [00:03<00:04, 1212.66it/s]     48%|####7     | 4753/10000 [00:03<00:04, 1210.78it/s]     49%|####8     | 4875/10000 [00:04<00:04, 1206.30it/s]     50%|####9     | 4998/10000 [00:04<00:04, 1210.80it/s]     51%|#####1    | 5120/10000 [00:04<00:04, 1212.42it/s]     52%|#####2    | 5242/10000 [00:04<00:03, 1209.81it/s]     54%|#####3    | 5363/10000 [00:04<00:03, 1206.83it/s]     55%|#####4    | 5484/10000 [00:04<00:03, 1195.35it/s]     56%|#####6    | 5604/10000 [00:04<00:03, 1195.52it/s]     57%|#####7    | 5724/10000 [00:04<00:03, 1195.72it/s]     58%|#####8    | 5846/10000 [00:04<00:03, 1202.41it/s]     60%|#####9    | 5968/10000 [00:04<00:03, 1206.67it/s]     61%|######    | 6090/10000 [00:05<00:03, 1207.96it/s]     62%|######2   | 6213/10000 [00:05<00:03, 1213.59it/s]     63%|######3   | 6335/10000 [00:05<00:03, 1195.75it/s]     65%|######4   | 6457/10000 [00:05<00:02, 1200.20it/s]     66%|######5   | 6578/10000 [00:05<00:02, 1201.17it/s]     67%|######6   | 6699/10000 [00:05<00:02, 1203.45it/s]     68%|######8   | 6822/10000 [00:05<00:02, 1210.88it/s]     69%|######9   | 6944/10000 [00:05<00:02, 1207.01it/s]     71%|#######   | 7067/10000 [00:05<00:02, 1211.68it/s]     72%|#######1  | 7190/10000 [00:05<00:02, 1216.24it/s]     73%|#######3  | 7312/10000 [00:06<00:02, 1204.55it/s]     74%|#######4  | 7433/10000 [00:06<00:02, 1200.74it/s]     76%|#######5  | 7554/10000 [00:06<00:02, 1189.99it/s]     77%|#######6  | 7676/10000 [00:06<00:01, 1197.42it/s]     78%|#######7  | 7796/10000 [00:06<00:01, 1194.30it/s]     79%|#######9  | 7918/10000 [00:06<00:01, 1199.25it/s]     80%|########  | 8038/10000 [00:06<00:01, 1199.02it/s]     82%|########1 | 8158/10000 [00:06<00:01, 1190.04it/s]     83%|########2 | 8280/10000 [00:06<00:01, 1198.50it/s]     84%|########4 | 8401/10000 [00:06<00:01, 1199.51it/s]     85%|########5 | 8522/10000 [00:07<00:01, 1201.61it/s]     86%|########6 | 8643/10000 [00:07<00:01, 1194.19it/s]     88%|########7 | 8764/10000 [00:07<00:01, 1197.90it/s]     89%|########8 | 8885/10000 [00:07<00:00, 1199.00it/s]     90%|######### | 9007/10000 [00:07<00:00, 1203.32it/s]     91%|#########1| 9128/10000 [00:07<00:00, 1202.42it/s]     92%|#########2| 9249/10000 [00:07<00:00, 1202.91it/s]     94%|#########3| 9370/10000 [00:07<00:00, 1198.45it/s]     95%|#########4| 9492/10000 [00:07<00:00, 1202.41it/s]     96%|#########6| 9614/10000 [00:07<00:00, 1205.06it/s]     97%|#########7| 9735/10000 [00:08<00:00, 1205.24it/s]     99%|#########8| 9856/10000 [00:08<00:00, 1203.67it/s]    100%|#########9| 9977/10000 [00:08<00:00, 1201.22it/s]    100%|##########| 10000/10000 [00:08<00:00, 1203.65it/s]
     Resulting samples with prior model lower bounds of [-1,-10,-10,-10], upper bounds of [2,10,10,10]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 880-882
+.. GENERATED FROM PYTHON SOURCE LINES 886-888
 
 Why do you think the posterior distribution looks like this?
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 885-887
+.. GENERATED FROM PYTHON SOURCE LINES 891-893
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 890-900
+.. GENERATED FROM PYTHON SOURCE LINES 896-906
 
 Challenge: Change the data uncertainty
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1854,7 +1860,7 @@ Here we increase the assumed data standard deviation by a factor of of
 than they actually are.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 900-909
+.. GENERATED FROM PYTHON SOURCE LINES 906-915
 
 .. code-block:: default
 
@@ -1874,12 +1880,12 @@ than they actually are.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 914-916
+.. GENERATED FROM PYTHON SOURCE LINES 920-922
 
 Lets return the prior to the original bounds.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 916-925
+.. GENERATED FROM PYTHON SOURCE LINES 922-931
 
 .. code-block:: default
 
@@ -1899,7 +1905,7 @@ Lets return the prior to the original bounds.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 930-958
+.. GENERATED FROM PYTHON SOURCE LINES 936-964
 
 Your challenge is then to tell CoFI that the Likelihood and prior have
 changed and then to rerun the sample, and plot results.
@@ -1930,7 +1936,7 @@ Feel free to start from the code below:
    :target: https://jamboard.google.com/d/1ewIkma6uTeNWu7ACEC3vG4J0FNPQZVLdlQLhyeLh-qM/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 958-963
+.. GENERATED FROM PYTHON SOURCE LINES 964-969
 
 .. code-block:: default
 
@@ -1946,12 +1952,12 @@ Feel free to start from the code below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 968-970
+.. GENERATED FROM PYTHON SOURCE LINES 974-976
 
 The answer is in the next cells if you want to run them.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 970-989
+.. GENERATED FROM PYTHON SOURCE LINES 976-995
 
 .. code-block:: default
 
@@ -1987,13 +1993,13 @@ The answer is in the next cells if you want to run them.
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      1%|1         | 120/10000 [00:00<00:08, 1194.22it/s]      2%|2         | 243/10000 [00:00<00:08, 1211.54it/s]      4%|3         | 366/10000 [00:00<00:07, 1217.31it/s]      5%|4         | 489/10000 [00:00<00:07, 1220.76it/s]      6%|6         | 612/10000 [00:00<00:07, 1216.79it/s]      7%|7         | 735/10000 [00:00<00:07, 1219.95it/s]      9%|8         | 858/10000 [00:00<00:07, 1221.46it/s]     10%|9         | 981/10000 [00:00<00:07, 1223.14it/s]     11%|#1        | 1104/10000 [00:00<00:07, 1223.84it/s]     12%|#2        | 1227/10000 [00:01<00:07, 1219.29it/s]     13%|#3        | 1349/10000 [00:01<00:07, 1215.03it/s]     15%|#4        | 1471/10000 [00:01<00:07, 1214.87it/s]     16%|#5        | 1594/10000 [00:01<00:06, 1216.90it/s]     17%|#7        | 1717/10000 [00:01<00:06, 1218.98it/s]     18%|#8        | 1840/10000 [00:01<00:06, 1219.82it/s]     20%|#9        | 1963/10000 [00:01<00:06, 1220.81it/s]     21%|##        | 2086/10000 [00:01<00:06, 1222.30it/s]     22%|##2       | 2209/10000 [00:01<00:06, 1223.27it/s]     23%|##3       | 2332/10000 [00:01<00:06, 1224.01it/s]     25%|##4       | 2455/10000 [00:02<00:06, 1222.83it/s]     26%|##5       | 2578/10000 [00:02<00:06, 1223.06it/s]     27%|##7       | 2701/10000 [00:02<00:05, 1223.75it/s]     28%|##8       | 2824/10000 [00:02<00:05, 1224.62it/s]     29%|##9       | 2947/10000 [00:02<00:05, 1224.63it/s]     31%|###       | 3070/10000 [00:02<00:05, 1223.22it/s]     32%|###1      | 3193/10000 [00:02<00:05, 1223.36it/s]     33%|###3      | 3316/10000 [00:02<00:05, 1223.18it/s]     34%|###4      | 3439/10000 [00:02<00:05, 1223.45it/s]     36%|###5      | 3562/10000 [00:02<00:05, 1223.40it/s]     37%|###6      | 3685/10000 [00:03<00:05, 1222.03it/s]     38%|###8      | 3808/10000 [00:03<00:05, 1217.97it/s]     39%|###9      | 3930/10000 [00:03<00:04, 1217.78it/s]     41%|####      | 4053/10000 [00:03<00:04, 1218.45it/s]     42%|####1     | 4175/10000 [00:03<00:04, 1218.65it/s]     43%|####2     | 4297/10000 [00:03<00:04, 1214.65it/s]     44%|####4     | 4419/10000 [00:03<00:04, 1215.83it/s]     45%|####5     | 4542/10000 [00:03<00:04, 1217.34it/s]     47%|####6     | 4664/10000 [00:03<00:04, 1217.95it/s]     48%|####7     | 4786/10000 [00:03<00:04, 1218.52it/s]     49%|####9     | 4908/10000 [00:04<00:04, 1214.57it/s]     50%|#####     | 5031/10000 [00:04<00:04, 1216.25it/s]     52%|#####1    | 5154/10000 [00:04<00:03, 1218.19it/s]     53%|#####2    | 5277/10000 [00:04<00:03, 1218.99it/s]     54%|#####4    | 5400/10000 [00:04<00:03, 1219.95it/s]     55%|#####5    | 5522/10000 [00:04<00:03, 1219.22it/s]     56%|#####6    | 5644/10000 [00:04<00:03, 1218.94it/s]     58%|#####7    | 5766/10000 [00:04<00:03, 1218.77it/s]     59%|#####8    | 5889/10000 [00:04<00:03, 1219.29it/s]     60%|######    | 6011/10000 [00:04<00:03, 1218.06it/s]     61%|######1   | 6133/10000 [00:05<00:03, 1217.30it/s]     63%|######2   | 6255/10000 [00:05<00:03, 1209.08it/s]     64%|######3   | 6376/10000 [00:05<00:03, 1189.13it/s]     65%|######4   | 6499/10000 [00:05<00:02, 1198.42it/s]     66%|######6   | 6622/10000 [00:05<00:02, 1205.25it/s]     67%|######7   | 6744/10000 [00:05<00:02, 1208.88it/s]     69%|######8   | 6867/10000 [00:05<00:02, 1212.39it/s]     70%|######9   | 6990/10000 [00:05<00:02, 1215.25it/s]     71%|#######1  | 7113/10000 [00:05<00:02, 1216.78it/s]     72%|#######2  | 7236/10000 [00:05<00:02, 1217.88it/s]     74%|#######3  | 7358/10000 [00:06<00:02, 1217.35it/s]     75%|#######4  | 7481/10000 [00:06<00:02, 1218.23it/s]     76%|#######6  | 7603/10000 [00:06<00:01, 1218.55it/s]     77%|#######7  | 7725/10000 [00:06<00:01, 1218.64it/s]     78%|#######8  | 7847/10000 [00:06<00:01, 1218.58it/s]     80%|#######9  | 7969/10000 [00:06<00:01, 1218.17it/s]     81%|########  | 8091/10000 [00:06<00:01, 1218.44it/s]     82%|########2 | 8214/10000 [00:06<00:01, 1219.25it/s]     83%|########3 | 8336/10000 [00:06<00:01, 1219.19it/s]     85%|########4 | 8458/10000 [00:06<00:01, 1219.31it/s]     86%|########5 | 8580/10000 [00:07<00:01, 1210.59it/s]     87%|########7 | 8702/10000 [00:07<00:01, 1210.36it/s]     88%|########8 | 8824/10000 [00:07<00:00, 1213.02it/s]     89%|########9 | 8947/10000 [00:07<00:00, 1215.49it/s]     91%|######### | 9069/10000 [00:07<00:00, 1216.53it/s]     92%|#########1| 9191/10000 [00:07<00:00, 1216.47it/s]     93%|#########3| 9314/10000 [00:07<00:00, 1217.79it/s]     94%|#########4| 9437/10000 [00:07<00:00, 1219.34it/s]     96%|#########5| 9560/10000 [00:07<00:00, 1220.49it/s]     97%|#########6| 9683/10000 [00:07<00:00, 1221.41it/s]     98%|#########8| 9806/10000 [00:08<00:00, 1219.72it/s]     99%|#########9| 9929/10000 [00:08<00:00, 1219.98it/s]    100%|##########| 10000/10000 [00:08<00:00, 1217.79it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      1%|1         | 124/10000 [00:00<00:08, 1231.91it/s]      3%|2         | 263/10000 [00:00<00:07, 1322.64it/s]      4%|3         | 397/10000 [00:00<00:07, 1326.78it/s]      5%|5         | 535/10000 [00:00<00:07, 1347.38it/s]      7%|6         | 673/10000 [00:00<00:06, 1356.99it/s]      8%|8         | 809/10000 [00:00<00:06, 1354.69it/s]      9%|9         | 945/10000 [00:00<00:06, 1340.09it/s]     11%|#         | 1082/10000 [00:00<00:06, 1348.25it/s]     12%|#2        | 1217/10000 [00:00<00:06, 1337.27it/s]     14%|#3        | 1354/10000 [00:01<00:06, 1344.76it/s]     15%|#4        | 1492/10000 [00:01<00:06, 1353.17it/s]     16%|#6        | 1628/10000 [00:01<00:06, 1352.93it/s]     18%|#7        | 1764/10000 [00:01<00:06, 1343.73it/s]     19%|#9        | 1900/10000 [00:01<00:06, 1345.72it/s]     20%|##        | 2035/10000 [00:01<00:05, 1346.39it/s]     22%|##1       | 2171/10000 [00:01<00:05, 1349.15it/s]     23%|##3       | 2307/10000 [00:01<00:05, 1352.39it/s]     24%|##4       | 2443/10000 [00:01<00:05, 1338.69it/s]     26%|##5       | 2577/10000 [00:01<00:05, 1337.10it/s]     27%|##7       | 2713/10000 [00:02<00:05, 1343.17it/s]     28%|##8       | 2850/10000 [00:02<00:05, 1348.36it/s]     30%|##9       | 2985/10000 [00:02<00:05, 1346.66it/s]     31%|###1      | 3120/10000 [00:02<00:05, 1336.78it/s]     33%|###2      | 3256/10000 [00:02<00:05, 1342.56it/s]     34%|###3      | 3392/10000 [00:02<00:04, 1346.63it/s]     35%|###5      | 3529/10000 [00:02<00:04, 1353.59it/s]     37%|###6      | 3666/10000 [00:02<00:04, 1357.93it/s]     38%|###8      | 3802/10000 [00:02<00:04, 1349.86it/s]     39%|###9      | 3940/10000 [00:02<00:04, 1355.97it/s]     41%|####      | 4076/10000 [00:03<00:04, 1355.63it/s]     42%|####2     | 4213/10000 [00:03<00:04, 1357.76it/s]     43%|####3     | 4349/10000 [00:03<00:04, 1356.37it/s]     45%|####4     | 4485/10000 [00:03<00:04, 1348.69it/s]     46%|####6     | 4622/10000 [00:03<00:03, 1352.38it/s]     48%|####7     | 4760/10000 [00:03<00:03, 1358.43it/s]     49%|####8     | 4897/10000 [00:03<00:03, 1359.63it/s]     50%|#####     | 5033/10000 [00:03<00:03, 1349.96it/s]     52%|#####1    | 5169/10000 [00:03<00:03, 1349.79it/s]     53%|#####3    | 5304/10000 [00:03<00:03, 1344.67it/s]     54%|#####4    | 5440/10000 [00:04<00:03, 1348.22it/s]     56%|#####5    | 5577/10000 [00:04<00:03, 1354.40it/s]     57%|#####7    | 5713/10000 [00:04<00:03, 1353.13it/s]     58%|#####8    | 5850/10000 [00:04<00:03, 1355.78it/s]     60%|#####9    | 5989/10000 [00:04<00:02, 1363.72it/s]     61%|######1   | 6126/10000 [00:04<00:02, 1365.20it/s]     63%|######2   | 6263/10000 [00:04<00:02, 1362.43it/s]     64%|######4   | 6400/10000 [00:04<00:02, 1361.20it/s]     65%|######5   | 6538/10000 [00:04<00:02, 1364.76it/s]     67%|######6   | 6675/10000 [00:04<00:02, 1363.84it/s]     68%|######8   | 6812/10000 [00:05<00:02, 1363.45it/s]     69%|######9   | 6949/10000 [00:05<00:02, 1360.87it/s]     71%|#######   | 7087/10000 [00:05<00:02, 1363.89it/s]     72%|#######2  | 7224/10000 [00:05<00:02, 1361.63it/s]     74%|#######3  | 7361/10000 [00:05<00:01, 1357.80it/s]     75%|#######4  | 7497/10000 [00:05<00:01, 1352.11it/s]     76%|#######6  | 7634/10000 [00:05<00:01, 1356.09it/s]     78%|#######7  | 7770/10000 [00:05<00:01, 1355.82it/s]     79%|#######9  | 7906/10000 [00:05<00:01, 1355.19it/s]     80%|########  | 8042/10000 [00:05<00:01, 1352.82it/s]     82%|########1 | 8181/10000 [00:06<00:01, 1362.38it/s]     83%|########3 | 8318/10000 [00:06<00:01, 1363.13it/s]     85%|########4 | 8455/10000 [00:06<00:01, 1357.30it/s]     86%|########5 | 8591/10000 [00:06<00:01, 1347.67it/s]     87%|########7 | 8729/10000 [00:06<00:00, 1356.83it/s]     89%|########8 | 8867/10000 [00:06<00:00, 1362.01it/s]     90%|######### | 9004/10000 [00:06<00:00, 1362.29it/s]     91%|#########1| 9141/10000 [00:06<00:00, 1358.41it/s]     93%|#########2| 9277/10000 [00:06<00:00, 1343.17it/s]     94%|#########4| 9416/10000 [00:06<00:00, 1354.11it/s]     96%|#########5| 9552/10000 [00:07<00:00, 1354.31it/s]     97%|#########6| 9691/10000 [00:07<00:00, 1362.99it/s]     98%|#########8| 9828/10000 [00:07<00:00, 1355.78it/s]    100%|#########9| 9965/10000 [00:07<00:00, 1358.33it/s]    100%|##########| 10000/10000 [00:07<00:00, 1352.51it/s]
     Resulting samples from changed data uncertainty
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 994-1039
+.. GENERATED FROM PYTHON SOURCE LINES 1000-1045
 
 Challenge: Change the number of walkers / steps in the McMC algorithm (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2041,7 +2047,7 @@ You can start from code template below:
    :target: https://jamboard.google.com/d/1vAm3dpaI4UTZiFXzb6vEku8AlVWUw7PRxz8KJk-dVf8/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1039-1044
+.. GENERATED FROM PYTHON SOURCE LINES 1045-1050
 
 .. code-block:: default
 
@@ -2057,7 +2063,7 @@ You can start from code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1046-1076
+.. GENERATED FROM PYTHON SOURCE LINES 1052-1082
 
 .. code-block:: default
 
@@ -2104,13 +2110,13 @@ You can start from code template below:
 
  .. code-block:: none
 
-      0%|          | 0/400 [00:00<?, ?it/s]     31%|###       | 123/400 [00:00<00:00, 1222.74it/s]     62%|######2   | 250/400 [00:00<00:00, 1245.87it/s]     94%|#########3| 376/400 [00:00<00:00, 1252.22it/s]    100%|##########| 400/400 [00:00<00:00, 1248.22it/s]
+      0%|          | 0/400 [00:00<?, ?it/s]     29%|##9       | 117/400 [00:00<00:00, 1169.92it/s]     59%|#####8    | 235/400 [00:00<00:00, 1173.39it/s]     89%|########9 | 357/400 [00:00<00:00, 1193.04it/s]    100%|##########| 400/400 [00:00<00:00, 1189.13it/s]
     Inference results from 400 steps and 30 walkers
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1081-1089
+.. GENERATED FROM PYTHON SOURCE LINES 1087-1095
 
 --------------
 
@@ -2121,7 +2127,7 @@ Where to next?
    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1092-1097
+.. GENERATED FROM PYTHON SOURCE LINES 1098-1103
 
 --------------
 
@@ -2129,7 +2135,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1097-1103
+.. GENERATED FROM PYTHON SOURCE LINES 1103-1109
 
 .. code-block:: default
 
@@ -2147,7 +2153,7 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.1.2.dev22
+    cofi 0.1.2.dev25+11.gab1f820.dirty
     numpy 1.21.6
     scipy 1.9.1
     matplotlib 3.5.3
@@ -2157,14 +2163,14 @@ Watermark
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1104-1104
+.. GENERATED FROM PYTHON SOURCE LINES 1110-1110
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  28.803 seconds)
+   **Total running time of the script:** ( 0 minutes  28.492 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_1_linear_regression.py:

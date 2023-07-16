@@ -1,9 +1,11 @@
 from numbers import Number
 from typing import Callable, Union, Tuple, Sequence
+import functools
 import json
 
 import numpy as np
 
+from .utils import BaseRegularization
 from ._exceptions import (
     DimensionMismatchError,
     InvalidOptionError,
@@ -196,7 +198,6 @@ class BaseProblem:
         BaseProblem.data_misfit
         BaseProblem.regularization
         BaseProblem.regularization_matrix
-        BaseProblem.regularization_factor
         BaseProblem.forward
         BaseProblem.name
         BaseProblem.data
@@ -229,7 +230,6 @@ class BaseProblem:
         "data_misfit",
         "regularization",
         "regularization_matrix",
-        "regularization_factor",
         "forward",
         "data",
         "data_covariance",
@@ -242,7 +242,13 @@ class BaseProblem:
     ]
 
     def __init__(self, **kwargs):
-        self.__dict__.update(kwargs)
+        for kw, val in kwargs.items():
+            if kw in self.all_components:
+                set_func = getattr(self, f"set_{kw}")
+                if isinstance(val, dict):
+                    set_func(**val)
+                else:
+                    set_func(val)
 
     def objective(self, model: np.ndarray, *args, **kwargs) -> Number:
         """Method for computing the objective function given a model
@@ -961,8 +967,7 @@ class BaseProblem:
 
     def set_regularization(
         self,
-        regularization: Union[str, Callable[[np.ndarray], Number]],
-        regularization_factor: Number = 1,
+        regularization: Union[Callable[[np.ndarray], Number], BaseRegularization],
         regularization_matrix: Union[
             np.ndarray, Callable[[np.ndarray], np.ndarray]
         ] = None,
@@ -982,11 +987,6 @@ class BaseProblem:
         regularization : str or (function - np.ndarray -> Number)
             either a string from pre-built functions above, or a regularization function that
             matches :meth:`regularization` in signature.
-        regularization_factor : Number, optional
-            the regularization factor (lamda) that adjusts the ratio of the regularization
-            term over the data misfit, by default 1. If ``regularization`` and ``data_misfit``
-            are set but ``objective`` isn't, then we will generate ``objective`` function as
-            following: :math:`\text{objective}(model)=\text{data_misfit}(model)+\text{factor}\times\text{regularization}(model)`
         regularization_matrix : np.ndarray or (function - np.ndarray -> np.ndarray)
             a matrix of shape ``(model_size, model_size)``, or a function that takes in
             a model and calculates the (weighting) matrix.
@@ -1003,11 +1003,6 @@ class BaseProblem:
         kwargs : dict, optional
             extra dict of keyword arguments for regularization function
 
-        Raises
-        ------
-        InvalidOptionError
-            when you've passed in a string not in our supported regularization list
-
         Examples
         --------
 
@@ -1016,87 +1011,41 @@ class BaseProblem:
         >>> from cofi import BaseProblem
         >>> inv_problem = BaseProblem()
 
-        1. Example with an L1 norm
-
-        >>> inv_problem.set_regularization(1)
-        >>> inv_problem.regularization([1,1])
-        2
-
-        2. Example with an inf norm
-
-        >>> inv_problem.set_regularization("inf")
-        >>> inv_problem.regularization([1,1])
-        1
-
-        3. Example with a custom regularization function
+        1. Example with a custom regularization function
 
         >>> inv_problem.set_regularization(lambda x: sum(x))
         >>> inv_problem.regularization([1,1])
         2
 
-        4. Example with an L2 norm and regularization factor of 0.5 (by default 1)
+        2. Example with a custom regularization + a regularization matrix
 
-        >>> inv_problem.set_regularization(2, 0.5)
+        >>> inv_problem.set_regularization(lambda x: np.sum(x**2), np.eye(3))
         >>> inv_problem.regularization([1,1])
-        0.7071067811865476
-
-        5. Example with a regularization matrix
-
-        >>> inv_problem.set_regularization(2, 0.5, np.array([[2,0], [0,1]]))
-        >>> inv_problem.regularization([1,1])
-        1.118033988749895
+        2
         """
-        # preprocess regularization_matrix
-        if np.ndim(regularization_matrix) != 0:
+        # preprocess regularization_matrix if there is one
+        _reg_matrix = None
+        if regularization_matrix is not None:
+            _reg_matrix = regularization_matrix
+        elif isinstance(regularization, BaseRegularization) and hasattr(
+            regularization, "matrix"
+        ):
+            _reg_matrix = regularization.matrix
+        # wrap regularization_matrix as a function
+        if _reg_matrix is not None and np.ndim(_reg_matrix) != 0:
             self.regularization_matrix = _FunctionWrapper(
-                "regularization_matrix", _matrix_to_func, args=[regularization_matrix]
+                "regularization_matrix", _matrix_to_func, args=[_reg_matrix]
             )
-        elif callable(regularization_matrix):
+        elif _reg_matrix is not None and callable(_reg_matrix):
             self.regularization_matrix = _FunctionWrapper(
-                "regularization_matrix", regularization_matrix
+                "regularization_matrix", _reg_matrix
             )
         else:
             self.regularization_matrix = None
-        # preprocess regularization function without lambda
-        if isinstance(regularization, (Number, str)) or not regularization:
-            order = regularization
-            if (
-                isinstance(order, str)
-                and order not in ["fro", "nuc", "inf", "-inf"]
-                or isinstance(order, Number)
-                and order < 0
-            ):
-                raise InvalidOptionError(
-                    name="regularization order",
-                    invalid_option=order,
-                    valid_options=(
-                        "[None, 'fro', 'nuc', numpy.inf, -numpy.inf] or any positive"
-                        " number"
-                    ),
-                )
-            elif isinstance(order, str) and order in ["inf", "-inf"]:
-                order = float(order)
-            _reg = _FunctionWrapper(
-                "regularization_none_lamda", np.linalg.norm, args=[order]
-            )
-        else:
-            _reg = _FunctionWrapper(
-                "regularization_none_lamda", regularization, args, kwargs
-            )
-        # wrapper function that calculates: lambda * raw regularization value
-        self._regularization_factor = regularization_factor
-        if self.regularization_matrix is None:
-            self.regularization = _FunctionWrapper(
-                "regularization",
-                _regularization_with_lamda,
-                args=[_reg, regularization_factor],
-            )
-        else:
-            self.regularization = _FunctionWrapper(
-                "regularization",
-                _regularization_with_lamda_n_matrix,
-                args=[_reg, regularization_factor, self.regularization_matrix],
-            )
+        # process regularization function
+        self.regularization = _FunctionWrapper(
+            "regularization", regularization, args, kwargs
+        )
         # update some autogenerated functions (as usual)
         self._update_autogen("regularization")
 
@@ -1438,24 +1387,6 @@ class BaseProblem:
         raise NotDefinedError(needs="blobs name and type")
 
     @property
-    def regularization_factor(self) -> Number:
-        r"""regularization factor (lambda) that adjusts weights of the regularization
-        term
-
-        Raises
-        ------
-        NotDefinedError
-            when this property has not been defined (by
-            :meth:`set_regularization`
-        """
-        if (
-            hasattr(self, "_regularization_factor")
-            and self._regularization_factor is not None
-        ):
-            return self._regularization_factor
-        raise NotDefinedError(needs="regularization_factor (lamda)")
-
-    @property
     def bounds(self):
         r"""TODO: document me!
 
@@ -1591,11 +1522,6 @@ class BaseProblem:
         return self._check_property_defined("blobs_dtype")
 
     @property
-    def regularization_factor_defined(self) -> bool:
-        r"""indicates whether :meth:`regularization_factor` has been defined"""
-        return self._check_property_defined("regularization_factor")
-
-    @property
     def bounds_defined(self) -> bool:
         r"""indicates whether :meth:`bounds` has been defined"""
         return self._check_property_defined("bounds")
@@ -1617,6 +1543,8 @@ class BaseProblem:
             return False
         except Exception:  # ok if there're errors caused by dummy input
             return True
+        else:
+            return True  # ok if the function works without a wrapper
 
     def _check_property_defined(self, prop):
         try:
@@ -1709,12 +1637,12 @@ class BaseProblem:
             if self.data_covariance_inv_defined:
                 if _is_diag(self.data_covariance_inv):
                     weighted_res = np.diag(self.data_covariance_inv) * res
-                    return np.sum(np.square(weighted_res))
+                    return res @ weighted_res
                 else:
                     return res.T @ self.data_covariance_inv @ res
             elif self.data_covariance_defined and _is_diag(self.data_covariance):
                 weighted_res = res / np.diag(self.data_covariance)
-                return np.sum(np.square(weighted_res))
+                return res @ weighted_res
             else:
                 return np.sum(np.square(res))
         except Exception as exception:
@@ -1834,8 +1762,10 @@ def _objective_from_dm(model, data_misfit):
 
 def _log_posterior_with_blobs_from_ll_lp(model, log_likelihood, log_prior):
     try:
-        ll = log_likelihood(model)
         lp = log_prior(model)
+        if lp == float("-inf"):
+            return lp, None, lp
+        ll = log_likelihood(model)
         return ll + lp, ll, lp
     except Exception as exception:
         raise InvocationError(
@@ -1884,14 +1814,6 @@ def _jacobian_times_vector_from_jcb(model, vector, jacobian):
         ) from exception
 
 
-def _regularization_with_lamda(model, reg_func, lamda):
-    return lamda * reg_func(model)
-
-
-def _regularization_with_lamda_n_matrix(model, reg_func, lamda, reg_matrix_func):
-    return lamda * reg_func(reg_matrix_func(model) @ model)
-
-
 def _matrix_to_func(_, matrix):
     return matrix
 
@@ -1920,6 +1842,12 @@ class _FunctionWrapper:
         self.args = list() if args is None else args
         self.kwargs = dict() if kwargs is None else kwargs
         self.autogen = autogen
+        try:  # not every function has __name__
+            functools.update_wrapper(self, func)
+            self.__name__ = func.__name__
+            self.__doc__ = func.__doc__
+        except:
+            pass
 
     def __call__(self, model, *extra_args):
         try:

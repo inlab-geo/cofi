@@ -1,45 +1,3 @@
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Nelder-Mead
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Powell
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> CG
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> BFGS
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Newton-CG
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> L-BFGS-B
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> TNC
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> COBYLA
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> SLSQP
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-constr
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> dogleg
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-ncg
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-exact
-# description: balabala scip
-# Method : scipy_opt_min
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-keylov
-# description: balabala scip
 import functools
 
 from . import BaseInferenceTool, error_handler
@@ -48,20 +6,20 @@ from . import BaseInferenceTool, error_handler
 # Official documentation for scipy.optimize.minimize
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
 
-# 'jac' is required for:
+# 'jac' will be used when choosing the following methods:
 # CG, BFGS, Newton-CG, L-BFGS-B, TNC, SLSQP, dogleg, trust-ncg, trust-krylov, trust-exact
 # and trust-constr
 
-# 'hess' is only for:
+# 'hess' will be used when choosing the following methods:
 # Newton-CG, dogleg, trust-ncg, trust-krylov, trust-exact and trust-constr
 
-# 'hessp' is only for:
+# 'hessp' will be used when choosing the following methods:
 # Newton-CG, trust-ncg, trust-krylov, trust-constr
 
-# 'bounds' is only for:
+# 'bounds' will be used when choosing the following methods:
 # Nelder-Mead, L-BFGS-B, TNC, SLSQP, Powell, and trust-constr
 
-# 'constraints' is only for:
+# 'constraints' will be used when choosing the following methods:
 # COBYLA, SLSQP and trust-constr
 
 # other arguments include: tol, options, callback
@@ -194,3 +152,49 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+
+
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Nelder-Mead
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Powell
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> CG
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> BFGS
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> Newton-CG
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> L-BFGS-B
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> TNC
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> COBYLA
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> SLSQP
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-constr
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> dogleg
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-ncg
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-exact
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.minimize -> trust-keylov
+# description: balabala scip

@@ -118,6 +118,7 @@ import matplotlib.pyplot as plt
 import arviz as az
 
 from cofi import BaseProblem, InversionOptions, Inversion
+from cofi.utils import QuadraticReg
 
 np.random.seed(42)
 
@@ -501,7 +502,7 @@ inv_result.summary()
 inv_problem.set_initial_model(np.ones(4))
 inv_problem.set_forward(forward_func)
 inv_problem.set_data_misfit("least squares")
-inv_problem.set_regularization(2, 0.02)        # optional
+inv_problem.set_regularization(0.02 * QuadraticReg(model_shape=(4,)))      # optional
 
 ######## Set a different tool
 inv_options_2 = InversionOptions()

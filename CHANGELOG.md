@@ -2,11 +2,55 @@
 
 <!--next-version-placeholder-->
 
-## v0.1.3.dev0 (not yet released)
+## v0.2.1 (07/07/2023)
+
+### CoFI Tools
+
+- Better `cofi.simple_newton` solver (more numerically stable; addition of stopping criteria)
+
+
+## v0.2.0 (05/06/2023)
+
+### CoFI Core
+
+- Rewrite `BaseProblem.set_regularization`
+
+### CoFI Utils
+
+- Rewrite and implement regularization utils:
+  - `cofi.utils.BaseRegularization`
+  - `cofi.utils.LpNormRegularization`
+  - `cofi.utils.QuadraticReg`
+  - `cofi.utils.ModelCovariance`
+  - `cofi.utils.GaussianPrior`
+
+
+## v0.1.3.dev2 (05/04/2023)
+
+### CoFI Core
+
+- Bug fix: avoid evaluating log_likelihood if prior is -np.inf
+- Enable properties set at `BaseProblem` constructor, e.g. `cofi.BaseProblem(forward=my_fwd, model_shape=my_shape)`
+
+### CoFI Tools
+
+- Bug fix in `numpy.linalg.lstsq`
+
+## v0.1.3.dev1 (15/03/2023)
+
+### CoFI Core
+
+- Use try block for functools.update_wrapper
+
+## v0.1.3.dev0 (15/03/2023)
 
 ### CoFI Solvers -> CoFI Tools
 
 - [#110](https://github.com/inlab-geo/cofi/issues/110) `BaseSolver` -> `BaseInferenceTool`
+
+### CoFI Core
+
+- `_base_problem._FunctionWrapper` improvements
 
 ## v0.1.2.dev25 (06/02/2023)
 

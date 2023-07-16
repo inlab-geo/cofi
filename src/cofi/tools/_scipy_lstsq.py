@@ -1,6 +1,3 @@
-# Method : scipy_lstsq
-# CoFI -> Parameter Estimation -> Matrix Based Solvers -> Linear System Solvers -> scipy.linalg.lstsq
-# description: balabala scip
 import functools
 import numpy as np
 
@@ -122,7 +119,6 @@ class ScipyLstSq(BaseInferenceTool):
         )
         # get lamda and L matrix if needed
         if self._params["with_tikhonov"]:
-            self._lamda = inv_problem.regularization_factor
             if inv_problem.regularization_matrix_defined:
                 try:
                     _L = inv_problem.regularization_matrix(dummy_model)
@@ -132,11 +128,11 @@ class ScipyLstSq(BaseInferenceTool):
                         "squares solver, this should return a matrix unrelated to "
                         "model vector"
                     ) from exception
-                self._LtL = np.square(_L)
+                self._LtL = _L.T @ _L
                 self._components_used.append("regularization_matrix")
             else:
                 self._LtL = np.identity(self._G.shape[1])
-            self._a += self._lamda * self._LtL
+            self._a += self._LtL
 
     def __call__(self) -> dict:
         res_p, residual, rank, singular_vals = self._call_lstsq()
@@ -200,3 +196,7 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+# CoFI -> Parameter Estimation -> Matrix Based Solvers -> Linear System Solvers -> scipy.linalg.lstsq
+# description: balabala scip

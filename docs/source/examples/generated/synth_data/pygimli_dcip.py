@@ -341,7 +341,7 @@ ert_mgr = ert_manager(pg_data)
 
 inv_mesh = inversion_mesh(ert_mgr)
 
-ax = pygimli.show(inv_mesh, showMesh=True, markers=True, colorBar=False)
+ax = pygimli.show(inv_mesh, showMesh=True, markers=False, colorBar=False)
 ax[0].set_title("Mesh used for inversion")
 
 ######################################################################

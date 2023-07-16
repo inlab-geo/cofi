@@ -92,7 +92,7 @@ import pygimli
 from pygimli.physics import ert
 
 from cofi import BaseProblem, InversionOptions, Inversion
-from cofi.solvers import BaseSolver
+from cofi.tools import BaseInferenceTool
 
 from pygimli_ert_lib import *
 

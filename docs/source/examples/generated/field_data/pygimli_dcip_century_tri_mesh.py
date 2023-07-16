@@ -37,7 +37,7 @@ Century DCIP Inversion with a Triangular Mesh
 
 ######################################################################
 # Motivation
-# ==========
+# ----------
 # 
 # The Century Deposit is a zinc-lead-silver deposit in the Mt Isa region
 # in Queensland Australia and UBC 2D DCIP inversion results have been
@@ -46,15 +46,17 @@ Century DCIP Inversion with a Triangular Mesh
 # `SimPEG <https://curvenote.com/@simpeg/transform-2020-simpeg-tutorial/!6DDumb03Le6D8N8xuJNs>`__.
 # It provides an excellent test case to verify if CoFI can indeed act as a
 # glue between forward solvers and inverse solvers and be applied to real
-# data. Figure 1 from `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__
-# provides a map of the location and geological setting for the Century
-# deposit.
+# data. `Figure
+# 1 <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/Mutton-Figure1-1.png?raw=true>`__
+# from `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__ provides a map
+# of the location and geological setting for the Century deposit.
 # 
 # A detailed descrtiption of the geological setting is available
 # `here <http://portergeo.com.au/database/mineinfo.asp?mineid=mn075>`__
 # and `Mutton, 2000 <https://doi.org/10.1190/1.1444878>`__ also provide
-# the following cross-section for the survey line 46800mE, which we will
-# invert in the following.
+# the
+# `cross-section <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/Mutton-Figure2-1.png?raw=true>`__
+# for the survey line 46800mE, which we will invert in the following.
 # 
 # What we are interested in is delineating the mineralised units by using
 # the DCIP (Direct Current, Induced Polarization) solver implemented in
@@ -90,8 +92,8 @@ Century DCIP Inversion with a Triangular Mesh
 
 
 ######################################################################
-# 1. Set up environment
-# ---------------------
+# 1. Set up environment 
+# ----------------------
 # 
 # We’ll do the following: 1. Install PyGIMLi (if on CoLab) 2. Download
 # processed dataset (if on CoLab) 3. Import modules
@@ -148,8 +150,8 @@ import cofi
 
 
 ######################################################################
-# 2. Load the data
-# ----------------
+# 2. Load the data 
+# -----------------
 # 
 # We will need to download the preprocessed dataset first. This notebook
 # `century_data_preprocessing.ipynb <century_data_preprocessing.ipynb>`__
@@ -214,8 +216,8 @@ geologic_section = load_leapfrog_geologic_section()
 
 
 ######################################################################
-# 3. Utility wrappers to PyGIMLi functions
-# ----------------------------------------
+# 3. Utility wrappers to PyGIMLi functions 
+# -----------------------------------------
 # 
 # Below we define a set of utility functions that help define the problem,
 # generating data and making plots. Feel free to skip reading the details
@@ -224,8 +226,8 @@ geologic_section = load_leapfrog_geologic_section()
 
 
 ######################################################################
-# 3.1. Helper functions for complex numbers
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 3.1. Helper functions for complex numbers 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
 def rho_phi_to_complex(rho, phi):      # rho * e^(phi * i)
@@ -245,8 +247,8 @@ def complex_from_real(real):           # real vector of size n -> size n/2
 
 
 ######################################################################
-# 3.2. Helper functions for PyGIMLi modelling
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 3.2. Helper functions for PyGIMLi modelling 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
 # inversion mesh bound
@@ -352,8 +354,8 @@ def starting_model_ref(ert_mgr):
 
 
 ######################################################################
-# 3.3. Plotting utilities
-# ~~~~~~~~~~~~~~~~~~~~~~~
+# 3.3. Plotting utilities 
+# ~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 # Note: We lifted out the plotting of colorbars only for Colab
 # compatibility.
@@ -372,7 +374,7 @@ def plot_colorbar(ax, cMin, cMax, label, orientation="horizontal"):
     cb = plt.colorbar(sm, orientation=orientation, ax=ax)
     cb.set_label(label)
     cb.set_ticks(np.linspace(cMin, cMax, 5, endpoint=True))
-        
+
 def plot_model(mesh, model_complex, title):
     rho, phi = rho_phi_from_complex(model_complex)
     fig, axes = plt.subplots(2,1,figsize=(12,5))
@@ -381,7 +383,7 @@ def plot_model(mesh, model_complex, title):
     axes[0].set_ylim(y_inv_start, y_inv_stop)
     axes[0].set_title("Resistivity")
     plot_colorbar(axes[0], 136, 170, resistivity_label)
-    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, ax=axes[1], colorBar=False)
+    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, cMin=-4.76, cMax=-4, ax=axes[1], colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title("Chargeability")
@@ -394,17 +396,19 @@ def plot_model(mesh, model_complex, title):
 def plot_data(pg_data, data_complex, title):
     rho, phi = rho_phi_from_complex(data_complex)
     fig, axes = plt.subplots(1,2,figsize=(10,4))
-    pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+    # pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+    pygimli.physics.ert.showERTData(pg_data, vals=rho, ax=axes[0], colorBar=False)
     axes[0].set_title("Apparent Resistivity")
     plot_colorbar(axes[0], np.min(rho), np.max(rho), resistivity_label)
-    pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
+    pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, ax=axes[1], colorBar=False)
+    # pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
     axes[1].set_title("Apparent Chargeability")
     plot_colorbar(axes[1], np.min(phi*1000), np.max(phi*1000), chargeability_label)
     fig.suptitle(title)
-    
+
 def plot_mesh(mesh, title="Mesh used for inversion"):
     _, ax = plt.subplots(1, 1)
-    pygimli.show(mesh, showMesh=True, markers=True, colorBar=False, ax=ax)
+    pygimli.show(mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
     ax.set_title(title)
     ax.set_xlabel("Northing (m)")
     ax.set_ylabel("Elevation (m)")
@@ -443,11 +447,11 @@ def plot_comparison(mesh1, model1, title1, mesh2, model2, title2, rho_min, rho_m
 
 
 ######################################################################
-# 4. PyGIMLi problem setup
-# ------------------------
+# 4. PyGIMLi problem setup 
+# -------------------------
 # 
-# 4.1. Data container
-# ~~~~~~~~~~~~~~~~~~~
+# 4.1. Data container 
+# ~~~~~~~~~~~~~~~~~~~~
 # 
 
 pg_data, data_log_complex, Cd_inv = pygimli_data(a_locs, b_locs, m_locs, n_locs, dc_obs, dc_err, ip_obs, ip_err)
@@ -456,6 +460,7 @@ pg_data
 ######################################################################
 #
 
+# this cell needs to be run twice in order to work well
 plot_data(pg_data, np.exp(data_log_complex), "Data Observatons")
 plot_data(pg_data, np.diag(Cd_inv), "Data covariance inverse weighting in log space")
 
@@ -464,8 +469,8 @@ plot_data(pg_data, np.diag(Cd_inv), "Data covariance inverse weighting in log sp
 
 
 ######################################################################
-# 4.2. ERT manager
-# ~~~~~~~~~~~~~~~~
+# 4.2. ERT manager 
+# ~~~~~~~~~~~~~~~~~
 # 
 
 ert_mgr = ert_manager(pg_data)
@@ -475,8 +480,8 @@ ert_mgr = ert_manager(pg_data)
 
 
 ######################################################################
-# 4.3. Inversion mesh
-# ~~~~~~~~~~~~~~~~~~~
+# 4.3. Inversion mesh 
+# ~~~~~~~~~~~~~~~~~~~~
 # 
 
 inv_mesh = inversion_mesh(ert_mgr)
@@ -489,8 +494,8 @@ plot_mesh(inv_mesh)
 
 
 ######################################################################
-# 4.4. Forward operator
-# ~~~~~~~~~~~~~~~~~~~~~
+# 4.4. Forward operator 
+# ~~~~~~~~~~~~~~~~~~~~~~
 # 
 
 forward_oprt = ert_forward_operator(ert_mgr, pg_data, ert_mgr.paraDomain)
@@ -500,8 +505,8 @@ forward_oprt = ert_forward_operator(ert_mgr, pg_data, ert_mgr.paraDomain)
 
 
 ######################################################################
-# 4.5. Regularization matrix
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 4.5. Regularization matrix 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
 Wm = reg_matrix(forward_oprt, ert_mgr.paraDomain)
@@ -511,8 +516,8 @@ Wm = reg_matrix(forward_oprt, ert_mgr.paraDomain)
 
 
 ######################################################################
-# 4.6. Starting model
-# ~~~~~~~~~~~~~~~~~~~
+# 4.6. Starting model 
+# ~~~~~~~~~~~~~~~~~~~~
 # 
 
 start_model_complex, start_model_log_complex, start_model_log_real = starting_model(pg_data, ert_mgr.paraDomain)
@@ -524,8 +529,8 @@ plot_model(ert_mgr.paraDomain, start_model_complex, "Starting model")
 
 
 ######################################################################
-# 5. Create utility functions to pass to CoFI
-# -------------------------------------------
+# 5. Create utility functions to pass to CoFI 
+# --------------------------------------------
 # 
 # CoFI and other inference packages require a set of functions that
 # provide the misfit, the jacobian the residual within the case of scipy
@@ -690,8 +695,8 @@ dcip_problem.suggest_tools();
 
 
 ######################################################################
-# 6. Define the inversion options and run
-# ---------------------------------------
+# 6. Define the inversion options and run 
+# ----------------------------------------
 # 
 # Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 # 
@@ -729,8 +734,8 @@ synth_data_scipy = np.exp(get_response(np.log(model_scipy), forward_oprt))
 
 
 ######################################################################
-# Comparison with published results
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Comparison with published results 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
 
 model_ref_dc = reference_dc_model()

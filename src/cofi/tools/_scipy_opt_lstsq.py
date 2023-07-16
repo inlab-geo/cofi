@@ -1,12 +1,3 @@
-# Method : scipy_opt_lstsq
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (trx)
-# description: balabala scip
-# Method : scipy_opt_lstsq
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (dogbox)
-# description: balabala scip
-# Method : scipy_opt_lstsq
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (lm)
-# description: balabala scip
 import functools
 
 from . import BaseInferenceTool, error_handler
@@ -147,3 +138,15 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (trx)
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (dogbox)
+# description: balabala scip
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (lm)
+# description: balabala scip
