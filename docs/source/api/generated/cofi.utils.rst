@@ -35,6 +35,14 @@ cofi.utils
 
 
 
+.. rubric:: Functions
+
+.. autosummary::
+  :toctree: ./
+
+  cofi.utils.run_multiple_inversions
+
+
 
 
 

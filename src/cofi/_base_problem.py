@@ -5,7 +5,6 @@ import json
 
 import numpy as np
 
-from .utils import BaseRegularization
 from ._exceptions import (
     DimensionMismatchError,
     InvalidOptionError,
@@ -967,7 +966,7 @@ class BaseProblem:
 
     def set_regularization(
         self,
-        regularization: Union[Callable[[np.ndarray], Number], BaseRegularization],
+        regularization: Callable[[np.ndarray], Number],
         regularization_matrix: Union[
             np.ndarray, Callable[[np.ndarray], np.ndarray]
         ] = None,
@@ -1027,9 +1026,7 @@ class BaseProblem:
         _reg_matrix = None
         if regularization_matrix is not None:
             _reg_matrix = regularization_matrix
-        elif isinstance(regularization, BaseRegularization) and hasattr(
-            regularization, "matrix"
-        ):
+        elif hasattr(regularization, "matrix"):
             _reg_matrix = regularization.matrix
         # wrap regularization_matrix as a function
         if _reg_matrix is not None and np.ndim(_reg_matrix) != 0:

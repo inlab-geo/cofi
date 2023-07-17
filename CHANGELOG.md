@@ -2,6 +2,14 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.2 (17/07/2023)
+
+### CoFI Utils
+
+- `cofi.utils.run_multiple_inversions`, sequential and parallel options
+- Make `cofi.utils._reg_base.CompositeRegularization` pickleable
+
+
 ## v0.2.1 (07/07/2023)
 
 ### CoFI Tools
