@@ -21,12 +21,8 @@ def problem_setup(i):
     inv_problem.set_hessian(problem_setup_hessian, args=(i,))
     return inv_problem
 
-class CallBack:
-    def __init__(self):
-        self.objective_values = []
-
-    def __call__(self, inv_result, i):
-        self.objective_values.append(problem_setup_objective(inv_result.model, i))
+def callback(inv_result, i):
+    return problem_setup_objective(inv_result.model, i)
 
 @pytest.fixture
 def problems_and_options():
@@ -36,11 +32,11 @@ def problems_and_options():
     inv_options = cofi.InversionOptions()
     inv_options.set_tool("cofi.simple_newton")
     inv_options.set_params(num_iterations=10)
-    return problems, inv_options, CallBack()
+    return problems, inv_options
 
 def test_run_multiple_sequential(problems_and_options):
-    problems, inv_options, callback = problems_and_options
-    results = cofi.utils.run_multiple_inversions(
+    problems, inv_options = problems_and_options
+    results, callback_results = cofi.utils.run_multiple_inversions(
         problems, 
         inv_options, 
         callback, 
@@ -49,21 +45,24 @@ def test_run_multiple_sequential(problems_and_options):
     for res in results:
         assert isinstance(res, cofi.InversionResult)
         assert pytest.approx(res.model.item(), abs=1e-2) == 0
-    for obj_val in callback.objective_values:
-        assert pytest.approx(obj_val.item(), abs=1e-6) == 0
+    for callback_res in callback_results:
+        assert pytest.approx(callback_res, abs=1e-6) == 0
 
 def test_run_multiple_parallel(problems_and_options):
-    problems, inv_options, callback = problems_and_options
-    results = cofi.utils.run_multiple_inversions(
+    problems, inv_options = problems_and_options
+    results, callback_results = cofi.utils.run_multiple_inversions(
         problems, 
         inv_options, 
         callback, 
         True
     )
-    print(callback.objective_values)
-    assert False
     for res in results:
         assert isinstance(res, cofi.InversionResult)
         assert pytest.approx(res.model.item(), abs=1e-2) == 0
-    for obj_val in callback.objective_values:
-        assert pytest.approx(obj_val.item(), abs=1e-6) == 0
+    for callback_res in callback_results:
+        assert pytest.approx(callback_res, abs=1e-6) == 0
+
+def test_empty_list(problems_and_options):
+    _, inv_options = problems_and_options
+    with pytest.raises(ValueError, match=r".*empty list detected.*"):
+        cofi.utils.run_multiple_inversions([], inv_options)
