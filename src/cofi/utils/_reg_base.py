@@ -134,26 +134,8 @@ class BaseRegularization(metaclass=ABCMeta):
                 expected_source="the first regularization term",
                 expected_dimension=self.model_size,
             )
-        tmp_model_shape = self.model_shape
-        tmp_reg = self.reg
-        tmp_grad = self.gradient
-        tmp_hess = self.hessian
 
-        class CompositeRegularization(BaseRegularization):
-            @property
-            def model_shape(self):
-                return tmp_model_shape
-
-            def reg(self, model):
-                return tmp_reg(model) + other_reg(model)
-
-            def gradient(self, model):
-                return tmp_grad(model) + other_reg.gradient(model)
-
-            def hessian(self, model):
-                return tmp_hess(model) + other_reg.hessian(model)
-
-        return CompositeRegularization()
+        return CompositeRegularization(self, other=other_reg)
 
     def __rmul__(self, coefficient):
         r"""Multiply a regularization term with a constant number
@@ -192,23 +174,33 @@ class BaseRegularization(metaclass=ABCMeta):
                 f"unsupported operand type(s) for *: '{coefficient.__class__.__name__}'"
                 f" and '{self.__class__.__name__}"
             )
-        tmp_model_shape = self.model_shape
-        tmp_reg = self.reg
-        tmp_grad = self.gradient
-        tmp_hess = self.hessian
+        return CompositeRegularization(self, coefficient=coefficient)
 
-        class CompositeRegularization(BaseRegularization):
-            @property
-            def model_shape(self):
-                return tmp_model_shape
 
-            def reg(self, model):
-                return coefficient * tmp_reg(model)
+class CompositeRegularization(BaseRegularization):
+    def __init__(self, base, other=None, coefficient=None):
+        self.base = base
+        self.other = other
+        self.coefficient = coefficient
 
-            def gradient(self, model):
-                return coefficient * tmp_grad(model)
+    @property
+    def model_shape(self):
+        return self.base.model_shape
 
-            def hessian(self, model):
-                return coefficient * tmp_hess(model)
+    def reg(self, model):
+        if self.other:
+            return self.base.reg(model) + self.other.reg(model)
+        elif self.coefficient is not None:
+            return self.coefficient * self.base.reg(model)
 
-        return CompositeRegularization()
+    def gradient(self, model):
+        if self.other:
+            return self.base.gradient(model) + self.other.gradient(model)
+        elif self.coefficient is not None:
+            return self.coefficient * self.base.gradient(model)
+
+    def hessian(self, model):
+        if self.other:
+            return self.base.hessian(model) + self.other.hessian(model)
+        elif self.coefficient is not None:
+            return self.coefficient * self.base.hessian(model)
