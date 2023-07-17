@@ -1,6 +1,3 @@
-# Method : emcee
-# CoFI -> Ensemble Methods -> Bayesian Sampling -> MCMC Sampler -> EMCEE -> Affine Invariant Markov Chain Monte Carlo -> Stretch Move
-# description: balabala emcee
 import functools
 import numpy as np
 
@@ -154,6 +151,5 @@ def _init_class_methods():
 
 
 
-# Method : emcee
 # CoFI -> Ensemble Methods -> Bayesian Sampling -> MCMC Sampler -> EMCEE -> Affine Invariant Markov Chain Monte Carlo -> Stretch Move
-# description: balabala emcee
+# description: please fill the description for strech  move

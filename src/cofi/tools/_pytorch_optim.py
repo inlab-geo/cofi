@@ -219,3 +219,7 @@ def _CoFIObjective():
 
 # CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> SGD
 # description: balabala opt3
+
+# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> pytorch.optim -> RAdam
+# description: balabala opt3
+
