@@ -104,7 +104,5 @@ class CoFISimpleNewton(BaseInferenceTool):
         return obj_val
 
 
-
-
-# CoFI -> Ensemble Methods -> Bayesian Sampling -> MCMC Sampler -> EMCEE -> Affine Invariant Markov Chain Monte Carlo -> Stretch Move
-# description: please type in descriptions for Stretch Move
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> cofi.simple_newton -> Newton's method in optimization
+# description: CoFI's own implementation of the Newton's method in optimization with stopping criteria.

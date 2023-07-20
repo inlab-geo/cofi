@@ -198,5 +198,11 @@ def _init_class_methods():
     )
 
 
-# CoFI -> Parameter Estimation -> Matrix Based Solvers -> Linear System Solvers -> scipy.linalg.lstsq
-# description: balabala scip
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq -> gelsd
+# description: Solve linear least squares using divide-and-conquer SVD.
+
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq -> gelsy
+# description: Solve linear least squares using complete orthogonal factorization.
+
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq -> gelss
+# description: Solve linear least squares using SVD.

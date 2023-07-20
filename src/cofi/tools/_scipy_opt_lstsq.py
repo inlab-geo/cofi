@@ -140,13 +140,11 @@ def _init_class_methods():
     )
 
 
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.least_squares -> trf
+# description: Trust Region Reflective algorithm, particularly suitable for large sparse problems with bounds.
 
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.least_squares -> dogbox
+# description: Dogleg algorithm with rectangular trust regions, typical use case is small problems with bounds.
 
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (trx)
-# description: balabala scip
-
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (dogbox)
-# description: balabala scip
-
-# CoFI -> Parameter Estimation -> Optimization -> Non-linear -> scipy.optimize.least_squares -> scipy.optimize.least_squares (lm)
-# description: balabala scip
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.least_squares -> lm
+# description: Levenberg-Marquardt algorithm as implemented in MINPACK. Doesn’t handle bounds and sparse Jacobians.
