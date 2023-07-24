@@ -7,7 +7,7 @@ class PyTorchOptim(BaseInferenceTool):
     documentation_links = [
         "https://pytorch.org/docs/stable/optim.html#algorithms",
     ]
-    short_description = "PyTorch Optimizers under module `pytorch.optim`"
+    short_description = "PyTorch Optimizers under module `torch.optim`"
 
     @classmethod
     def required_in_problem(cls) -> set:
@@ -181,3 +181,43 @@ def _CoFIObjective():
             return grad, None, None
 
     return CoFIObjective
+
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adadelta
+# description: ADADELTA, an Adaptive Learning Rate Method.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adagrad
+# description: Adaptive Subgradient Methods for Online Learning and Stochastic Optimization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adam
+# description: Adam, a Method for Stochastic Optimization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> AdamW
+# description: Decoupled Weight Decay Regularization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> SparseAdam
+# description: Lazy version of Adam algorithm suitable for sparse tensors.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adamax
+# description: Adamax algorithm (a variant of Adam based on infinity norm).
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> ASGD
+# description: Averaged Stochastic Gradient Descent.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> LBFGS
+# description: L-BFGS algorithm, heavily inspired by minFunc.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> NAdam
+# description: NAdam algorithm, incorporating Nesterov Momentum into Adam
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> RAdam
+# description: RAdam algorithm, on the variance of the adaptive learning rate and beyond
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> RMSprop
+# description: RMSprop, a form of stochastic gradient descent where the gradients are divided by a running average of their recent magnitude
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Rprop
+# description: The resilient backpropagation algorithm.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> SGD
+# description: The stochastic gradient descent (optionally with momentum).

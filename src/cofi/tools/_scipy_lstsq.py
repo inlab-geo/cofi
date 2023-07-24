@@ -196,3 +196,13 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq -> gelsd
+# description: Solve linear least squares using divide-and-conquer SVD.
+
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq -> gelsy
+# description: Solve linear least squares using complete orthogonal factorization.
+
+# CoFI -> Parameter estimation -> Matrix based solvers -> Linear system solvers -> scipy.linalg.lstsq -> gelss
+# description: Solve linear least squares using SVD.

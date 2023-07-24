@@ -152,3 +152,46 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> Nelder-Mead
+# description: Uses the Simplex algorithm.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> Powell
+# description: A modification of Powell’s method which is a conjugate direction method.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> CG
+# description: Uses a nonlinear conjugate gradient algorithm by Polak and Ribiere, a variant of the Fletcher-Reeves method
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> BFGS
+# description: Uses the quasi-Newton method of Broyden, Fletcher, Goldfarb, and Shanno (BFGS).
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> Newton-CG
+# description: Uses a Newton-CG algorithm (also known as the truncated Newton method).
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> L-BFGS-B
+# description: Uses the L-BFGS-B algorithm for bound constrained minimization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> TNC
+# description: Uses a truncated Newton algorithm to minimize a function with variables subject to bounds.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> COBYLA
+# description: Uses the Constrained Optimization BY Linear Approximation (COBYLA) method.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> SLSQP
+# description: Uses Sequential Least SQuares Programming to minimize a function of several variables with any combination of bounds, equality and inequality constraints.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-constr
+# description: A trust-region algorithm for constrained optimization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> dogleg
+# description: Uses the dog-leg trust-region algorithm for unconstrained minimization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-ncg
+# description: Uses the Newton conjugate gradient trust-region algorithm for unconstrained minimization.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-exact
+# description: A trust-region method for unconstrained minimization in which quadratic subproblems are solved almost exactly.
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-krylov
+# description: Uses the Newton GLTR trust-region algorithm for unconstrained minimization. 

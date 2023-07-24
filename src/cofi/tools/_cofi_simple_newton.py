@@ -102,3 +102,7 @@ class CoFISimpleNewton(BaseInferenceTool):
         if self._params["verbose"]:
             print(f"Iteration #{i}, updated objective function value: {obj_val}")
         return obj_val
+
+
+# CoFI -> Parameter estimation -> Optimization -> Non linear -> cofi.simple_newton -> Newton's method in optimization
+# description: CoFI's own implementation of the Newton's method in optimization with stopping criteria.

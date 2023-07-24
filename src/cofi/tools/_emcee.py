@@ -148,3 +148,28 @@ def _init_class_methods():
         required_in_options,
         optional_in_options,
     )
+
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> MHMove
+# description: A general Metropolis-Hastings proposal.
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> GaussianMove
+# description: A Metropolis step with a Gaussian proposal function.
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> RedBlueMove
+# description: An abstract red-blue ensemble move with parallelization as described in Foreman-Mackey et al. (2013).
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> StretchMove
+# description: A Goodman & Weare (2010) “stretch move” with parallelization as described in Foreman-Mackey et al. (2013).
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> WalkMove
+# description: A Goodman & Weare (2010) “walk move” with parallelization as described in Foreman-Mackey et al. (2013).
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> KDEMove
+# description: A proposal using a KDE of the complementary ensemble.
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> DEMove
+# description: A proposal using differential evolution.
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> McMC samplers -> emcee -> DESnookerMove
+# description: A snooker proposal using differential evolution.
