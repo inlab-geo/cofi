@@ -1,0 +1,14 @@
+name: Dispatch push event
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        run: |
+          curl -XPOST -u "${{ secrets.PAT_USERNAME }}:${{ secrets.PAT_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/Denghu-JI/cofi_visualisation_backend/dispatches --data '{"event_type": "new_commit"}'
