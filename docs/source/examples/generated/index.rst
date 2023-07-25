@@ -136,6 +136,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Seismic Wave Tomography via Fast Marching - Regularization Demo">
+
+.. only:: html
+
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_fmm_tomography_regularization_discussion_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography_regularization_discussion.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Seismic Wave Tomography via Fast Marching - Regularization Demo</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Polynomial Linear Regression">
 
 .. only:: html
