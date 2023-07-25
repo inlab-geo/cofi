@@ -14,22 +14,22 @@ def run_multiple_inversions(
     parallel: bool = False,
 ) -> List[InversionResult]:
     """Run inversions on a list of problems, returning a list of InversionResult objects and a list of callback results.
-    
+
     The inversions can be performed either sequentially or in parallel, based on the value of the 'parallel' argument.
-    
+
     If a callback function is provided, it will be invoked for each problem with the InversionResult object and the index of the problem as arguments.
-    
+
     Parameters
     ----------
     problems : List[BaseProblem]
         A list of problems for which the inversions need to be performed. Each problem should be an instance of the BaseProblem class.
-        
+
     inv_options : InversionOptions
         An instance of the InversionOptions class that specifies the options to be used for the inversions.
-        
+
     callback : Callable[[InversionResult, int], None], optional
         A callback function that gets invoked for each problem after its inversion has been performed. It should accept two arguments - the result of the inversion (an instance of InversionResult) and the index of the problem. The callback can return a result that will be collected and returned in the callback results list. If no callback function is provided, None will be used.
-        
+
     parallel : bool, optional
         A flag that determines whether the inversions should be performed in parallel or sequentially. If True, the inversions will be performed in parallel using multiple processes. If False or not provided, the inversions will be performed sequentially in the same process.
 
@@ -37,12 +37,12 @@ def run_multiple_inversions(
     -------
     Tuple[List[InversionResult], List]
         A tuple containing two lists - the first list contains the results of the inversions (as InversionResult objects) for each problem in the same order as the input problems list. The second list contains the results returned by the callback function for each problem in the same order as the input problems list.
-    
+
     Examples
     --------
 
     An example of using this function to make an L-curve:
-    
+
     >>> import cofi
     >>> import matplotlib.pyplot as plt
     >>> def my_objective(m, lamda):
@@ -88,7 +88,9 @@ def _run_multiple_inversions_sequential(
 ) -> List[InversionResult]:
     results = []
     for i, problem in enumerate(problems):
-        res, callback_res = _run_one_inversion_with_callback(problem, inv_options, i, callback)
+        res, callback_res = _run_one_inversion_with_callback(
+            problem, inv_options, i, callback
+        )
         results.append((res, callback_res))
     results, callback_results = zip(*results)
     return results, callback_results
