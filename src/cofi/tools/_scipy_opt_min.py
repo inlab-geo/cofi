@@ -194,4 +194,4 @@ def _init_class_methods():
 # description: A trust-region method for unconstrained minimization in which quadratic subproblems are solved almost exactly.
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-krylov
-# description: Uses the Newton GLTR trust-region algorithm for unconstrained minimization. 
+# description: Uses the Newton GLTR trust-region algorithm for unconstrained minimization.
