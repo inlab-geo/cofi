@@ -23,7 +23,7 @@ class EnsembleOfInversions:
 
     parallel : bool, optional
         A flag that determines whether the inversions should be performed in parallel or sequentially. If True, the inversions will be performed in parallel using multiple processes. If False or not provided, the inversions will be performed sequentially in the same process.
-    
+
     Examples
     --------
 
@@ -57,10 +57,11 @@ class EnsembleOfInversions:
     >>> l_curve_points = list(zip(*all_cb_returns))
     >>> plt.plot(l_curve_points)
     """
+
     def __init__(
         self,
-        list_of_inv_problems: Union[List[BaseProblem], BaseProblem], 
-        list_of_inv_options: Union[List[InversionOptions], InversionOptions], 
+        list_of_inv_problems: Union[List[BaseProblem], BaseProblem],
+        list_of_inv_options: Union[List[InversionOptions], InversionOptions],
         callback: Callable[[InversionResult, int], None] = None,
         parallel: bool = False,
     ):
@@ -71,11 +72,14 @@ class EnsembleOfInversions:
             )
         if not list_of_inv_options:
             raise ValueError(
-                "empty list detected, please pass in a concrete list of InversionOptions "
-                "instances"
+                "empty list detected, please pass in a concrete list of"
+                " InversionOptions instances"
             )
-        if isinstance(list_of_inv_problems, list) and isinstance(list_of_inv_options, list) \
-            and len(list_of_inv_problems) != len(list_of_inv_options):
+        if (
+            isinstance(list_of_inv_problems, list)
+            and isinstance(list_of_inv_options, list)
+            and len(list_of_inv_problems) != len(list_of_inv_options)
+        ):
             raise ValueError(
                 "mismatch in lengths, `list_of_inv_problems` has length "
                 f"{len(list_of_inv_problems)} and `list_of_inv_options has length "
@@ -83,16 +87,18 @@ class EnsembleOfInversions:
                 "length"
             )
         self.problems = (
-            list_of_inv_problems if isinstance(list_of_inv_problems, list)
+            list_of_inv_problems
+            if isinstance(list_of_inv_problems, list)
             else itertools.repeat(list_of_inv_problems)
         )
         self.options = (
-            list_of_inv_options if isinstance(list_of_inv_options, list)
+            list_of_inv_options
+            if isinstance(list_of_inv_options, list)
             else itertools.repeat(list_of_inv_options)
         )
         self.callback = callback
         self.parallel = parallel
-    
+
     def run(self):
         """
         Runs all the inversions in the ensemble, either in parallel or sequentially.
@@ -108,9 +114,13 @@ class EnsembleOfInversions:
                 "instances"
             )
         if self.parallel:
-            return self._run_multiple_inversions_parallel(self.problems, self.options, self.callback)
+            return self._run_multiple_inversions_parallel(
+                self.problems, self.options, self.callback
+            )
         else:
-            return self._run_multiple_inversions_sequential(self.problems, self.options, self.callback)
+            return self._run_multiple_inversions_sequential(
+                self.problems, self.options, self.callback
+            )
 
     def _run_multiple_inversions_sequential(
         self,
@@ -119,7 +129,9 @@ class EnsembleOfInversions:
         callback: Callable[[InversionResult, int], None] = None,
     ) -> Tuple[List[InversionResult], List]:
         results = []
-        for i, (problem, inv_options) in enumerate(zip(list_of_inv_problems, list_of_inv_options)):
+        for i, (problem, inv_options) in enumerate(
+            zip(list_of_inv_problems, list_of_inv_options)
+        ):
             res, callback_res = self._run_one_inversion_with_callback(
                 problem, inv_options, i, callback
             )
@@ -142,7 +154,9 @@ class EnsembleOfInversions:
         return results, callback_results
 
     @staticmethod
-    def _run_one_inversion_with_callback(problem, inv_options=None, i=None, callback=None):
+    def _run_one_inversion_with_callback(
+        problem, inv_options=None, i=None, callback=None
+    ):
         # for parallel case where only one argument is passed in,
         # unpack the first argument
         if not isinstance(problem, BaseProblem):
