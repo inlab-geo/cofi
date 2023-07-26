@@ -16,7 +16,7 @@ from ._reg_base import BaseRegularization
 from ._reg_lp_norm import LpNormRegularization, QuadraticReg
 from ._reg_model_cov import ModelCovariance, GaussianPrior
 
-from ._multiple_runs import run_multiple_inversions
+from ._multiple_runs import EnsembleOfInversions
 
 
 __all__ = [
@@ -25,5 +25,5 @@ __all__ = [
     "QuadraticReg",
     "ModelCovariance",
     "GaussianPrior",
-    "run_multiple_inversions",
+    "EnsembleOfInversions",
 ]

@@ -36,12 +36,13 @@ def problems_and_options():
 
 def test_run_multiple_sequential(problems_and_options):
     problems, inv_options = problems_and_options
-    results, callback_results = cofi.utils.run_multiple_inversions(
-        problems, 
+    my_ensemble = cofi.utils.EnsembleOfInversions(
+        problems,
         inv_options, 
         callback, 
         False
     )
+    results, callback_results = my_ensemble.run()
     for res in results:
         assert isinstance(res, cofi.InversionResult)
         assert pytest.approx(res.model.item(), abs=1e-2) == 0
@@ -50,12 +51,13 @@ def test_run_multiple_sequential(problems_and_options):
 
 def test_run_multiple_parallel(problems_and_options):
     problems, inv_options = problems_and_options
-    results, callback_results = cofi.utils.run_multiple_inversions(
+    my_ensemble = cofi.utils.EnsembleOfInversions(
         problems, 
         inv_options, 
         callback, 
         True
     )
+    results, callback_results = my_ensemble.run()
     for res in results:
         assert isinstance(res, cofi.InversionResult)
         assert pytest.approx(res.model.item(), abs=1e-2) == 0
@@ -63,6 +65,16 @@ def test_run_multiple_parallel(problems_and_options):
         assert pytest.approx(callback_res, abs=1e-6) == 0
 
 def test_empty_list(problems_and_options):
-    _, inv_options = problems_and_options
+    problems, inv_options = problems_and_options
     with pytest.raises(ValueError, match=r".*empty list detected.*"):
-        cofi.utils.run_multiple_inversions([], inv_options)
+        cofi.utils.EnsembleOfInversions([], inv_options)
+    with pytest.raises(ValueError, match=r".*empty list detected.*"):
+        cofi.utils.EnsembleOfInversions(problems, [])
+
+def test_unmatching_list_length(problems_and_options):
+    problems, inv_options = problems_and_options
+    with pytest.raises(ValueError, match=r".*mismatch in lengths.*"):
+        cofi.utils.EnsembleOfInversions(
+            problems, 
+            [inv_options, inv_options, inv_options]
+        )
