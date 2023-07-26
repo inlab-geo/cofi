@@ -156,42 +156,56 @@ def _init_class_methods():
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> Nelder-Mead
 # description: Uses the Simplex algorithm.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-neldermead.html#optimize-minimize-neldermead
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> Powell
 # description: A modification of Powell’s method which is a conjugate direction method.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-powell.html#optimize-minimize-powell
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> CG
 # description: Uses a nonlinear conjugate gradient algorithm by Polak and Ribiere, a variant of the Fletcher-Reeves method
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-cg.html#optimize-minimize-cg
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> BFGS
 # description: Uses the quasi-Newton method of Broyden, Fletcher, Goldfarb, and Shanno (BFGS).
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-bfgs.html#optimize-minimize-bfgs
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> Newton-CG
 # description: Uses a Newton-CG algorithm (also known as the truncated Newton method).
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-newtoncg.html#optimize-minimize-newtoncg
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> L-BFGS-B
 # description: Uses the L-BFGS-B algorithm for bound constrained minimization.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-lbfgsb.html#optimize-minimize-lbfgsb
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> TNC
 # description: Uses a truncated Newton algorithm to minimize a function with variables subject to bounds.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-tnc.html#optimize-minimize-tnc
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> COBYLA
 # description: Uses the Constrained Optimization BY Linear Approximation (COBYLA) method.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-cobyla.html#optimize-minimize-cobyla
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> SLSQP
 # description: Uses Sequential Least SQuares Programming to minimize a function of several variables with any combination of bounds, equality and inequality constraints.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-slsqp.html#optimize-minimize-slsqp
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-constr
 # description: A trust-region algorithm for constrained optimization.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustconstr.html#optimize-minimize-trustconstr
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> dogleg
 # description: Uses the dog-leg trust-region algorithm for unconstrained minimization.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-dogleg.html#optimize-minimize-dogleg
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-ncg
 # description: Uses the Newton conjugate gradient trust-region algorithm for unconstrained minimization.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html#optimize-minimize-trustncg
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-exact
 # description: A trust-region method for unconstrained minimization in which quadratic subproblems are solved almost exactly.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustexact.html#optimize-minimize-trustexact
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> scipy.optimize.minimize -> trust-krylov
 # description: Uses the Newton GLTR trust-region algorithm for unconstrained minimization.
+# documentation: https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustkrylov.html#optimize-minimize-trustkrylov

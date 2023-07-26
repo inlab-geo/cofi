@@ -185,39 +185,52 @@ def _CoFIObjective():
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adadelta
 # description: ADADELTA, an Adaptive Learning Rate Method.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.Adadelta.html#torch.optim.Adadelta
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adagrad
 # description: Adaptive Subgradient Methods for Online Learning and Stochastic Optimization.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.Adagrad.html#torch.optim.Adagrad
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adam
 # description: Adam, a Method for Stochastic Optimization.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.Adam.html#torch.optim.Adam
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> AdamW
 # description: Decoupled Weight Decay Regularization.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> SparseAdam
 # description: Lazy version of Adam algorithm suitable for sparse tensors.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.SparseAdam.html#torch.optim.SparseAdam
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Adamax
 # description: Adamax algorithm (a variant of Adam based on infinity norm).
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.Adamax.html#torch.optim.Adamax
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> ASGD
 # description: Averaged Stochastic Gradient Descent.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.ASGD.html#torch.optim.ASGD
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> LBFGS
 # description: L-BFGS algorithm, heavily inspired by minFunc.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.LBFGS.html#torch.optim.LBFGS
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> NAdam
 # description: NAdam algorithm, incorporating Nesterov Momentum into Adam
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.NAdam.html#torch.optim.NAdam
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> RAdam
 # description: RAdam algorithm, on the variance of the adaptive learning rate and beyond
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.RAdam.html#torch.optim.RAdam
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> RMSprop
 # description: RMSprop, a form of stochastic gradient descent where the gradients are divided by a running average of their recent magnitude
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.RMSprop.html#torch.optim.RMSprop
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> Rprop
 # description: The resilient backpropagation algorithm.
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.Rprop.html#torch.optim.Rprop
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> torch.optim -> SGD
 # description: The stochastic gradient descent (optionally with momentum).
+# documentation: https://pytorch.org/docs/stable/generated/torch.optim.SGD.html#torch.optim.SGD

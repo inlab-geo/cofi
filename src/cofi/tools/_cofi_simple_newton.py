@@ -106,3 +106,4 @@ class CoFISimpleNewton(BaseInferenceTool):
 
 # CoFI -> Parameter estimation -> Optimization -> Non linear -> cofi.simple_newton -> Newton's method in optimization
 # description: CoFI's own implementation of the Newton's method in optimization with stopping criteria.
+# documentation: https://en.wikipedia.org/wiki/Newton%27s_method_in_optimization
