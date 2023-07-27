@@ -211,7 +211,7 @@ model. As you can see, there are two anomalies, one with lower velocity
     Trying to fix now...
     Execute permission given to fm2dss.o.
 
-    <Axes: >
+    <Axes: xlabel='x (km)', ylabel='y (km)'>
 
 
 
@@ -243,7 +243,11 @@ model. As you can see, there are two anomalies, one with lower velocity
                     'practical grid based method for tracking multiple refraction '
                     'and reflection phases in 3D heterogeneous media, Geophys. J. '
                     'Int., 167, 253-270',
-                    '')],
+                    ''),
+                   ('Saygin, E. 2007. Seismic receiver and noise correlation based '
+                    'studies in Australia, PhD thesis, Australian National '
+                    'University.',
+                    '10.25911/5d7a2d1296f96')],
      'contact_email': 'Malcolm.Sambridge@anu.edu.au',
      'contact_name': 'Malcolm Sambridge',
      'linked_sites': [('Software published on iEarth',
@@ -340,7 +344,7 @@ model. As you can see, there are two anomalies, one with lower velocity
     def gradient(slowness, reg, sigma, reduce_data=None):       # reduce_data=(idx_from, idx_to)
         if reduce_data is None: idx_from, idx_to = (0, fmm.data_size)
         else: idx_from, idx_to = reduce_data
-        ttimes, A = fmm.forward(slowness, with_jacobian=True)
+        ttimes, A = fmm.forward(slowness, return_jacobian=True)
         ttimes = ttimes[idx_from:idx_to]
         A = A[idx_from:idx_to]
         data_misfit_grad = -2 * A.T @ (fmm.data[idx_from:idx_to] - ttimes) / sigma**2
@@ -503,21 +507,21 @@ Review what’s been defined for the inversion we are about to run:
 
  .. code-block:: none
 
-    Iteration #0, objective function value: 110298.7001724638
-    Iteration #1, objective function value: 1787.0459655957825
-    Iteration #2, objective function value: 121.09918298452581
-    Iteration #3, objective function value: 5.805217146094518
-    Iteration #4, objective function value: 3.853291569236922
-    Iteration #5, objective function value: 1.6509714163979023
+    Iteration #0, updated objective function value: 1787.077540309464
+    Iteration #1, updated objective function value: 121.06987606708292
+    Iteration #2, updated objective function value: 5.825780480486444
+    Iteration #3, updated objective function value: 3.671788666778372
+    Iteration #4, updated objective function value: 1.607554713000219
+    Iteration #5, updated objective function value: 2.7445114317373114
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00048363 0.0004817  0.00048005 ... 0.00050727 0.00050677 0.00050617]
+    model: [0.00048381 0.00048191 0.00048029 ... 0.00050748 0.00050694 0.00050628]
     num_iterations: 5
-    objective_val: 2.717895837439228
-    n_obj_evaluations: 6
+    objective_val: 2.7445114317373114
+    n_obj_evaluations: 7
     n_grad_evaluations: 6
     n_hess_evaluations: 6
 
@@ -564,7 +568,7 @@ Review what’s been defined for the inversion we are about to run:
  .. code-block:: none
 
 
-    <Axes: >
+    <Axes: xlabel='x (km)', ylabel='y (km)'>
 
 
 
@@ -602,8 +606,8 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.0
-    espresso 0.3.7
+    cofi 0.2.2+21.gca0ed7d.dirty
+    espresso 0.3.10
     numpy 1.24.3
     matplotlib 3.7.1
 
@@ -617,7 +621,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  8.938 seconds)
+   **Total running time of the script:** ( 3 minutes  45.736 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography.py:

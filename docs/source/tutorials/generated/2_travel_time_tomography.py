@@ -492,7 +492,7 @@ def objective_func(slowness, reg, sigma, data_subset=None):
 def gradient(slowness, reg, sigma, data_subset=None):
     if data_subset is None: 
         data_subset = np.arange(0, nonlinear_tomo_example.data_size)
-    ttimes, A = nonlinear_tomo_example.forward(slowness, with_jacobian=True)
+    ttimes, A = nonlinear_tomo_example.forward(slowness, return_jacobian=True)
     ttimes = ttimes[data_subset]
     A = A[data_subset]
     data_misfit_grad = -2 * A.T @ (nonlinear_tomo_example.data[data_subset] - ttimes) / sigma**2
