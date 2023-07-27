@@ -207,7 +207,7 @@ def objective_func(slowness, reg, sigma, reduce_data=None):  # reduce_data=(idx_
 def gradient(slowness, reg, sigma, reduce_data=None):       # reduce_data=(idx_from, idx_to)
     if reduce_data is None: idx_from, idx_to = (0, fmm.data_size)
     else: idx_from, idx_to = reduce_data
-    ttimes, A = fmm.forward(slowness, with_jacobian=True)
+    ttimes, A = fmm.forward(slowness, return_jacobian=True)
     ttimes = ttimes[idx_from:idx_to]
     A = A[idx_from:idx_to]
     data_misfit_grad = -2 * A.T @ (fmm.data[idx_from:idx_to] - ttimes) / sigma**2

@@ -155,8 +155,6 @@ model. As you can see, there are two anomalies, one with lower velocity
      100  travel times
      Range of travel times:  0.008911182496368759 0.0153757024856463 
      Mean travel time: 0.01085811731230709
-    Trying to fix now...
-    Execute permission given to fm2dss.o.
 
     <Axes: xlabel='x (km)', ylabel='y (km)'>
 
@@ -246,7 +244,7 @@ model. As you can see, there are two anomalies, one with lower velocity
         return  data_misfit + model_reg
 
     def gradient(slowness, reg, sigma):
-        ttimes, A = fmm.forward(slowness, with_jacobian=True)
+        ttimes, A = fmm.forward(slowness, return_jacobian=True)
         data_misfit_grad = -2 * A.T @ (fmm.data - ttimes) / sigma**2
         model_reg_grad = reg.gradient(slowness)
         return  data_misfit_grad + model_reg_grad
@@ -688,8 +686,8 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.2
-    espresso 0.3.9
+    cofi 0.2.2+21.gca0ed7d.dirty
+    espresso 0.3.10
     numpy 1.24.3
     matplotlib 3.7.1
 
@@ -703,7 +701,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  52.563 seconds)
+   **Total running time of the script:** ( 3 minutes  6.855 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography_regularization_discussion.py:
