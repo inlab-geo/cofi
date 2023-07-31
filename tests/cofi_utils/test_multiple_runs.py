@@ -36,7 +36,7 @@ def problems_and_options():
 
 def test_run_multiple_sequential(problems_and_options):
     problems, inv_options = problems_and_options
-    my_ensemble = cofi.utils.EnsembleOfInversions(
+    my_ensemble = cofi.utils.InversionPool(
         problems,
         inv_options, 
         callback, 
@@ -51,7 +51,7 @@ def test_run_multiple_sequential(problems_and_options):
 
 def test_run_multiple_parallel(problems_and_options):
     problems, inv_options = problems_and_options
-    my_ensemble = cofi.utils.EnsembleOfInversions(
+    my_ensemble = cofi.utils.InversionPool(
         problems, 
         inv_options, 
         callback, 
@@ -67,14 +67,14 @@ def test_run_multiple_parallel(problems_and_options):
 def test_empty_list(problems_and_options):
     problems, inv_options = problems_and_options
     with pytest.raises(ValueError, match=r".*empty list detected.*"):
-        cofi.utils.EnsembleOfInversions([], inv_options)
+        cofi.utils.InversionPool([], inv_options)
     with pytest.raises(ValueError, match=r".*empty list detected.*"):
-        cofi.utils.EnsembleOfInversions(problems, [])
+        cofi.utils.InversionPool(problems, [])
 
 def test_unmatching_list_length(problems_and_options):
     problems, inv_options = problems_and_options
     with pytest.raises(ValueError, match=r".*mismatch in lengths.*"):
-        cofi.utils.EnsembleOfInversions(
+        cofi.utils.InversionPool(
             problems, 
             [inv_options, inv_options, inv_options]
         )

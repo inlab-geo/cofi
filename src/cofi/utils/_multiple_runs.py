@@ -7,7 +7,7 @@ from .._inversion_options import InversionOptions
 from .._inversion import Inversion, InversionResult
 
 
-class EnsembleOfInversions:
+class InversionPool:
     """This class manages an ensemble of inversions and allows them to be run in parallel or sequentially.
 
     Parameters
@@ -52,7 +52,7 @@ class EnsembleOfInversions:
     ...     model_norm = numpy.linalg.norm(m)
     ...     return data_misfit, model_norm
     ...
-    >>> my_ensemble_of_inversions = cofi.utils.EnsembleOfInversions(my_problems, my_options, my_callback, False)
+    >>> my_ensemble_of_inversions = cofi.utils.InversionPool(my_problems, my_options, my_callback, False)
     >>> all_results, all_cb_returns = my_ensemble_of_inversions.run()
     >>> l_curve_points = list(zip(*all_cb_returns))
     >>> plt.plot(l_curve_points)
@@ -108,11 +108,6 @@ class EnsembleOfInversions:
         Tuple[List[InversionResult], List]
             A tuple containing two lists - the first list contains the results of the inversions (as InversionResult objects) for each problem in the same order as the input problems list. The second list contains the results returned by the callback function for each problem in the same order as the input problems list.
         """
-        if not self.problems:
-            raise ValueError(
-                "empty list detected, please pass in a concrete list of BaseProblem "
-                "instances"
-            )
         if self.parallel:
             return self._run_multiple_inversions_parallel(
                 self.problems, self.options, self.callback
