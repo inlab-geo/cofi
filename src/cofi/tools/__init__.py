@@ -53,3 +53,9 @@ solving_methods = set(inference_tools_table.keys())
 
 # alias for deprecated API
 BaseSolver = BaseInferenceTool
+
+
+
+#Visualisation override:
+# LinkDoc : CoFI -> https://www.google.com
+# LinkGit : CoFI -> https://www.google.com
