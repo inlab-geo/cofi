@@ -1,0 +1,19 @@
+Lexicon: 
+  CoFI:
+    - Ensemble methods
+    - Parameter estimation
+  Ensemble methods:
+    - Bayesian sampling
+  Parameter estimation:
+    - Optimization
+    - Matrix based solvers
+  Bayesian sampling:
+    - McMC samplers
+  Matrix based solvers:
+    - Linear system solvers
+  Optimization:
+    - Non linear
+
+Documentation:
+  CoFI:
+    https://www.google.com.au
