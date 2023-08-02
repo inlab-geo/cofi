@@ -56,7 +56,7 @@ BaseSolver = BaseInferenceTool
 
 
 
-#Visualisation override ()
+# Extra information for InLab Explorer
 # LinkDoc : CoFI -> https://www.google.com
 # LinkGit : CoFI -> https://www.google.com
 # Description : CoFI -> anyDescriptionHere
