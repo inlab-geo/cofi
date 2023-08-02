@@ -56,6 +56,8 @@ BaseSolver = BaseInferenceTool
 
 
 
-#Visualisation override:
+#Visualisation override ()
 # LinkDoc : CoFI -> https://www.google.com
 # LinkGit : CoFI -> https://www.google.com
+# Description : CoFI -> anyDescriptionHere
+# Description : Ensemble methods -> ni ni ni ni yao tiao wu ma!
