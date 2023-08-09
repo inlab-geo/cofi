@@ -328,7 +328,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 198-224
+.. GENERATED FROM PYTHON SOURCE LINES 198-226
 
 .. code-block:: default
 
@@ -341,6 +341,7 @@ model. As you can see, there are two anomalies, one with lower velocity
         data_misfit = residual.T @ residual / sigma**2
         model_reg = reg(slowness)
         return  data_misfit + model_reg
+
     def gradient(slowness, reg, sigma, reduce_data=None):       # reduce_data=(idx_from, idx_to)
         if reduce_data is None: idx_from, idx_to = (0, fmm.data_size)
         else: idx_from, idx_to = reduce_data
@@ -350,6 +351,7 @@ model. As you can see, there are two anomalies, one with lower velocity
         data_misfit_grad = -2 * A.T @ (fmm.data[idx_from:idx_to] - ttimes) / sigma**2
         model_reg_grad = reg.gradient(slowness)
         return  data_misfit_grad + model_reg_grad
+
     def hessian(slowness, reg, sigma, reduce_data=None):        # reduce_data=(idx_from, idx_to)
         if reduce_data is None: idx_from, idx_to = (0, fmm.data_size)
         else: idx_from, idx_to = reduce_data
@@ -365,7 +367,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 226-233
+.. GENERATED FROM PYTHON SOURCE LINES 228-235
 
 .. code-block:: default
 
@@ -383,12 +385,12 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 238-240
+.. GENERATED FROM PYTHON SOURCE LINES 240-242
 
 Review what information is included in the ``BaseProblem`` object:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 240-243
+.. GENERATED FROM PYTHON SOURCE LINES 242-245
 
 .. code-block:: default
 
@@ -421,13 +423,13 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 248-251
+.. GENERATED FROM PYTHON SOURCE LINES 250-253
 
 2. Define the inversion options
 -------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 251-258
+.. GENERATED FROM PYTHON SOURCE LINES 253-260
 
 .. code-block:: default
 
@@ -436,7 +438,7 @@ Review what information is included in the ``BaseProblem`` object:
 
     # cofi's own simple newton's matrix-based optimization solver
     my_options.set_tool("cofi.simple_newton")
-    my_options.set_params(num_iterations=6, step_length=1, verbose=True)
+    my_options.set_params(num_iterations=5, step_length=1, verbose=True)
 
 
 
@@ -445,12 +447,12 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 263-265
+.. GENERATED FROM PYTHON SOURCE LINES 265-267
 
 Review what’s been defined for the inversion we are about to run:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-268
+.. GENERATED FROM PYTHON SOURCE LINES 267-270
 
 .. code-block:: default
 
@@ -476,7 +478,7 @@ Review what’s been defined for the inversion we are about to run:
     Use `suggest_tools()` to check available backend tools.
     -----------------------------
     Solver-specific parameters: 
-    num_iterations = 6
+    num_iterations = 5
     step_length = 1
     verbose = True
     Use `suggest_solver_params()` to check required/optional solver-specific parameters.
@@ -484,13 +486,13 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 273-276
+.. GENERATED FROM PYTHON SOURCE LINES 275-278
 
 3. Start an inversion
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 276-281
+.. GENERATED FROM PYTHON SOURCE LINES 278-283
 
 .. code-block:: default
 
@@ -512,29 +514,28 @@ Review what’s been defined for the inversion we are about to run:
     Iteration #2, updated objective function value: 5.825780480486444
     Iteration #3, updated objective function value: 3.671788666778372
     Iteration #4, updated objective function value: 1.607554713000219
-    Iteration #5, updated objective function value: 2.7445114317373114
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00048381 0.00048191 0.00048029 ... 0.00050748 0.00050694 0.00050628]
-    num_iterations: 5
-    objective_val: 2.7445114317373114
-    n_obj_evaluations: 7
-    n_grad_evaluations: 6
-    n_hess_evaluations: 6
+    model: [0.00048285 0.00048069 0.00047884 ... 0.00050868 0.000508   0.00050718]
+    num_iterations: 4
+    objective_val: 1.607554713000219
+    n_obj_evaluations: 6
+    n_grad_evaluations: 5
+    n_hess_evaluations: 5
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 286-289
+.. GENERATED FROM PYTHON SOURCE LINES 288-291
 
 4. Plotting
 -----------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 289-293
+.. GENERATED FROM PYTHON SOURCE LINES 291-295
 
 .. code-block:: default
 
@@ -572,7 +573,7 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 298-311
+.. GENERATED FROM PYTHON SOURCE LINES 300-313
 
 --------------
 
@@ -588,7 +589,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 311-317
+.. GENERATED FROM PYTHON SOURCE LINES 313-319
 
 .. code-block:: default
 
@@ -606,22 +607,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.2+21.gca0ed7d.dirty
-    espresso 0.3.10
+    cofi 0.2.3
+    espresso 0.3.11
     numpy 1.24.3
     matplotlib 3.7.1
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 318-318
+.. GENERATED FROM PYTHON SOURCE LINES 320-320
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 3 minutes  45.736 seconds)
+   **Total running time of the script:** ( 0 minutes  8.474 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography.py:

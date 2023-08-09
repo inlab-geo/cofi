@@ -204,6 +204,7 @@ def objective_func(slowness, reg, sigma, reduce_data=None):  # reduce_data=(idx_
     data_misfit = residual.T @ residual / sigma**2
     model_reg = reg(slowness)
     return  data_misfit + model_reg
+
 def gradient(slowness, reg, sigma, reduce_data=None):       # reduce_data=(idx_from, idx_to)
     if reduce_data is None: idx_from, idx_to = (0, fmm.data_size)
     else: idx_from, idx_to = reduce_data
@@ -213,6 +214,7 @@ def gradient(slowness, reg, sigma, reduce_data=None):       # reduce_data=(idx_f
     data_misfit_grad = -2 * A.T @ (fmm.data[idx_from:idx_to] - ttimes) / sigma**2
     model_reg_grad = reg.gradient(slowness)
     return  data_misfit_grad + model_reg_grad
+
 def hessian(slowness, reg, sigma, reduce_data=None):        # reduce_data=(idx_from, idx_to)
     if reduce_data is None: idx_from, idx_to = (0, fmm.data_size)
     else: idx_from, idx_to = reduce_data
@@ -253,7 +255,7 @@ my_options = cofi.InversionOptions()
 
 # cofi's own simple newton's matrix-based optimization solver
 my_options.set_tool("cofi.simple_newton")
-my_options.set_params(num_iterations=6, step_length=1, verbose=True)
+my_options.set_params(num_iterations=5, step_length=1, verbose=True)
 
 ######################################################################
 #

@@ -31,7 +31,7 @@ Synthetic Examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Seismic Wave Tomography via Fast Marching - Regularization Demo">
+    <div class="sphx-glr-thumbcontainer" tooltip="Seismic Wave Tomography via Fast Marching - Demo on switching regularization and L-curve">
 
 .. only:: html
 
@@ -42,7 +42,7 @@ Synthetic Examples
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Seismic Wave Tomography via Fast Marching - Regularization Demo</div>
+      <div class="sphx-glr-thumbnail-title">Seismic Wave Tomography via Fast Marching - Demo on switching regularization and L-curve</div>
     </div>
 
 

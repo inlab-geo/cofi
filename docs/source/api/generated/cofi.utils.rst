@@ -23,6 +23,8 @@ cofi.utils
 
   cofi.utils.GaussianPrior
 
+  cofi.utils.InversionPool
+
   cofi.utils.LpNormRegularization
 
   cofi.utils.ModelCovariance
@@ -33,14 +35,6 @@ cofi.utils
 
 
 
-
-
-.. rubric:: Functions
-
-.. autosummary::
-  :toctree: ./
-
-  cofi.utils.run_multiple_inversions
 
 
 
