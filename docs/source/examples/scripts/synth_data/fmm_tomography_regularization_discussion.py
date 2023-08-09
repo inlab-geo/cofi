@@ -1,6 +1,6 @@
 """
-Seismic Wave Tomography via Fast Marching - Regularization Demo
-===============================================================
+Seismic Wave Tomography via Fast Marching - Demo on switching regularization and L-curve
+========================================================================================
 
 """
 
@@ -119,22 +119,22 @@ ref_start_slowness = fmm.starting_model
 ######################################################################
 #
 
-def objective_func(slowness, reg, sigma):
+def objective_func(slowness, reg):
     ttimes = fmm.forward(slowness)
     residual = fmm.data - ttimes
-    data_misfit = residual.T @ residual / sigma**2
+    data_misfit = residual.T @ residual
     model_reg = reg(slowness)
-    return  data_misfit + model_reg
+    return data_misfit + model_reg
 
-def gradient(slowness, reg, sigma):
+def gradient(slowness, reg):
     ttimes, A = fmm.forward(slowness, return_jacobian=True)
-    data_misfit_grad = -2 * A.T @ (fmm.data - ttimes) / sigma**2
+    data_misfit_grad = -2 * A.T @ (fmm.data - ttimes)
     model_reg_grad = reg.gradient(slowness)
-    return  data_misfit_grad + model_reg_grad
+    return data_misfit_grad + model_reg_grad
 
-def hessian(slowness, reg, sigma):
+def hessian(slowness, reg):
     A = fmm.jacobian(slowness)
-    data_misfit_hess = 2 * A.T @ A / sigma**2 
+    data_misfit_hess = 2 * A.T @ A
     model_reg_hess = reg.hessian(slowness)
     return data_misfit_hess + model_reg_hess
 
@@ -157,28 +157,19 @@ fmm_problem_quadratic_reg.set_initial_model(ref_start_slowness)
 ######################################################################
 #
 
-# add regularization: damping + smoothing
-damping_factor = 50
-smoothing_factor = 5e3
-reg_damping = damping_factor * cofi.utils.QuadraticReg(
-    model_shape=model_shape, 
-    weighting_matrix="damping", 
-    reference_model=ref_start_slowness
-)
+# add regularization: flattening + smoothing
+smoothing_factor = 0.001
 reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
     model_shape=model_shape,
     weighting_matrix="smoothing"
 )
-reg = reg_damping + reg_smoothing
 
 ######################################################################
 #
 
-sigma =  0.00001                   # Noise is 1.0E-4 is ~5% of standard deviation of initial travel time residuals
-
-fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg, sigma])
-fmm_problem_quadratic_reg.set_gradient(gradient, args=[reg, sigma])
-fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg, sigma])
+fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg_smoothing])
+fmm_problem_quadratic_reg.set_gradient(gradient, args=[reg_smoothing])
+fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg_smoothing])
 
 ######################################################################
 #
@@ -191,9 +182,14 @@ fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg, sigma])
 
 my_options = cofi.InversionOptions()
 
-# cofi's own simple newton's matrix-based optimization solver
 my_options.set_tool("cofi.simple_newton")
-my_options.set_params(num_iterations=6, step_length=1, verbose=True)
+my_options.set_params(
+    num_iterations=15, 
+    step_length=1, 
+    obj_tol=1e-16,
+    verbose=True, 
+    hessian_is_symmetric=True
+)
 
 ######################################################################
 #
@@ -217,7 +213,9 @@ inv_result_quadratic_reg.summary()
 # ~~~~~~~~~~~~
 # 
 
-fmm.plot_model(inv_result_quadratic_reg.model);            # inverted model
+clim = (1/np.max(fmm.good_model)-1, 1/np.min(fmm.good_model)+1)
+
+fmm.plot_model(inv_result_quadratic_reg.model, clim=clim);            # inverted model
 fmm.plot_model(fmm.good_model);       # true model
 
 ######################################################################
@@ -254,7 +252,7 @@ fmm_problem_gaussian_prior.set_initial_model(ref_start_slowness)
 # add regularization: Gaussian prior
 corrx = 3.0
 corry = 3.0
-sigma_slowness = 0.002
+sigma_slowness = 0.5
 gaussian_prior = cofi.utils.GaussianPrior(
     model_covariance_inv=((corrx, corry), sigma_slowness),
     mean_model=ref_start_slowness.reshape(model_shape)
@@ -263,9 +261,9 @@ gaussian_prior = cofi.utils.GaussianPrior(
 ######################################################################
 #
 
-fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior, sigma])
-fmm_problem_gaussian_prior.set_gradient(gradient, args=[gaussian_prior, sigma])
-fmm_problem_gaussian_prior.set_hessian(hessian, args=[gaussian_prior, sigma])
+fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior])
+fmm_problem_gaussian_prior.set_gradient(gradient, args=[gaussian_prior])
+fmm_problem_gaussian_prior.set_hessian(hessian, args=[gaussian_prior])
 
 ######################################################################
 #
@@ -290,7 +288,7 @@ inv_result_gaussian_prior.summary()
 # ~~~~~~~~~~~~
 # 
 
-fmm.plot_model(inv_result_gaussian_prior.model);            # inverted model
+fmm.plot_model(inv_result_gaussian_prior.model, clim=clim);            # gaussian prior
 fmm.plot_model(fmm.good_model);       # true model
 
 ######################################################################
@@ -298,14 +296,60 @@ fmm.plot_model(fmm.good_model);       # true model
 
 
 ######################################################################
-# 4. Comparison and discussion
-# ----------------------------
+# 4. L-curve
+# ----------
 # 
-# #TODO
+# Now we plot an L-curve for the smoothing regularization case.
 # 
 
-fmm.plot_model(inv_result_quadratic_reg.model);
-fmm.plot_model(inv_result_gaussian_prior.model);
+lambdas = np.logspace(-4, 4, 15)
+
+my_lcurve_problems = []
+for lamb in lambdas:
+    my_reg = lamb * reg_smoothing
+    my_problem = cofi.BaseProblem()
+    my_problem.set_objective(objective_func, args=[my_reg])
+    my_problem.set_gradient(gradient, args=[my_reg])
+    my_problem.set_hessian(hessian, args=[my_reg])
+    my_problem.set_initial_model(ref_start_slowness)
+    my_lcurve_problems.append(my_problem)
+
+my_options.set_params(verbose=False)
+
+def my_callback(inv_result, i):
+    m = inv_result.model
+    res_norm = np.linalg.norm(fmm.forward(m) - fmm.data)
+    reg_norm = np.sqrt(reg_smoothing(m))
+    print(f"Finished inversion with lambda={lambdas[i]}: {res_norm}, {reg_norm}")
+    return res_norm, reg_norm
+
+my_inversion_pool = cofi.utils.InversionPool(
+    my_lcurve_problems, 
+    my_options, 
+    my_callback, 
+    True
+)
+all_res, all_cb_returns = my_inversion_pool.run()
+
+l_curve_points = list(zip(*all_cb_returns))
+
+######################################################################
+#
+
+# plot the L-curve
+res_norm, reg_norm = l_curve_points
+plt.plot(reg_norm, res_norm, '.-')
+plt.xlabel(r'Norm of regularization term $||Wm||_2$')
+plt.ylabel(r'Norm of residual $||g(m)-d||_2$')
+for i in range(len(lambdas)):
+    plt.annotate(f'{lambdas[i]:.1e}', (reg_norm[i], res_norm[i]), fontsize=8)
+
+# plot the previously solved model
+my_inverted_model = inv_result_quadratic_reg.model
+my_reg_norm = np.sqrt(reg_smoothing(my_inverted_model))
+my_residual_norm = np.linalg.norm(fmm.forward(my_inverted_model) - fmm.data)
+plt.plot(my_reg_norm, my_residual_norm, "x")
+plt.annotate(f"{smoothing_factor:.1e}", (my_reg_norm, my_residual_norm), fontsize=8);
 
 ######################################################################
 #

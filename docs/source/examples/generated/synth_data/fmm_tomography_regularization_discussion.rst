@@ -18,8 +18,8 @@
 .. _sphx_glr_examples_generated_synth_data_fmm_tomography_regularization_discussion.py:
 
 
-Seismic Wave Tomography via Fast Marching - Regularization Demo
-===============================================================
+Seismic Wave Tomography via Fast Marching - Demo on switching regularization and L-curve
+========================================================================================
 
 .. GENERATED FROM PYTHON SOURCE LINES 9-14
 
@@ -236,22 +236,22 @@ model. As you can see, there are two anomalies, one with lower velocity
 .. code-block:: default
 
 
-    def objective_func(slowness, reg, sigma):
+    def objective_func(slowness, reg):
         ttimes = fmm.forward(slowness)
         residual = fmm.data - ttimes
-        data_misfit = residual.T @ residual / sigma**2
+        data_misfit = residual.T @ residual
         model_reg = reg(slowness)
-        return  data_misfit + model_reg
+        return data_misfit + model_reg
 
-    def gradient(slowness, reg, sigma):
+    def gradient(slowness, reg):
         ttimes, A = fmm.forward(slowness, return_jacobian=True)
-        data_misfit_grad = -2 * A.T @ (fmm.data - ttimes) / sigma**2
+        data_misfit_grad = -2 * A.T @ (fmm.data - ttimes)
         model_reg_grad = reg.gradient(slowness)
-        return  data_misfit_grad + model_reg_grad
+        return data_misfit_grad + model_reg_grad
 
-    def hessian(slowness, reg, sigma):
+    def hessian(slowness, reg):
         A = fmm.jacobian(slowness)
-        data_misfit_hess = 2 * A.T @ A / sigma**2 
+        data_misfit_hess = 2 * A.T @ A
         model_reg_hess = reg.hessian(slowness)
         return data_misfit_hess + model_reg_hess
 
@@ -287,24 +287,17 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 159-174
+.. GENERATED FROM PYTHON SOURCE LINES 159-167
 
 .. code-block:: default
 
 
-    # add regularization: damping + smoothing
-    damping_factor = 50
-    smoothing_factor = 5e3
-    reg_damping = damping_factor * cofi.utils.QuadraticReg(
-        model_shape=model_shape, 
-        weighting_matrix="damping", 
-        reference_model=ref_start_slowness
-    )
+    # add regularization: flattening + smoothing
+    smoothing_factor = 0.001
     reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
         model_shape=model_shape,
         weighting_matrix="smoothing"
     )
-    reg = reg_damping + reg_smoothing
 
 
 
@@ -313,16 +306,14 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 176-183
+.. GENERATED FROM PYTHON SOURCE LINES 169-174
 
 .. code-block:: default
 
 
-    sigma =  0.00001                   # Noise is 1.0E-4 is ~5% of standard deviation of initial travel time residuals
-
-    fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg, sigma])
-    fmm_problem_quadratic_reg.set_gradient(gradient, args=[reg, sigma])
-    fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg, sigma])
+    fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg_smoothing])
+    fmm_problem_quadratic_reg.set_gradient(gradient, args=[reg_smoothing])
+    fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg_smoothing])
 
 
 
@@ -331,22 +322,27 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 188-191
+.. GENERATED FROM PYTHON SOURCE LINES 179-182
 
 2.2 Define InversionOptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 191-198
+.. GENERATED FROM PYTHON SOURCE LINES 182-194
 
 .. code-block:: default
 
 
     my_options = cofi.InversionOptions()
 
-    # cofi's own simple newton's matrix-based optimization solver
     my_options.set_tool("cofi.simple_newton")
-    my_options.set_params(num_iterations=6, step_length=1, verbose=True)
+    my_options.set_params(
+        num_iterations=15, 
+        step_length=1, 
+        obj_tol=1e-16,
+        verbose=True, 
+        hessian_is_symmetric=True
+    )
 
 
 
@@ -355,13 +351,13 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 203-206
+.. GENERATED FROM PYTHON SOURCE LINES 199-202
 
 2.3 Start an inversion
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 206-211
+.. GENERATED FROM PYTHON SOURCE LINES 202-207
 
 .. code-block:: default
 
@@ -378,39 +374,50 @@ model. As you can see, there are two anomalies, one with lower velocity
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 1787.077540309464
-    Iteration #1, updated objective function value: 121.06987606708292
-    Iteration #2, updated objective function value: 5.825780480486444
-    Iteration #3, updated objective function value: 3.671788666778372
-    Iteration #4, updated objective function value: 1.607554713000219
-    Iteration #5, updated objective function value: 2.7445114317373114
+    Iteration #0, updated objective function value: 1.733350359903498e-07
+    Iteration #1, updated objective function value: 2.4528941433689466e-09
+    Iteration #2, updated objective function value: 1.6667499773269517e-10
+    Iteration #3, updated objective function value: 3.3183038228463554e-11
+    Iteration #4, updated objective function value: 3.8531578708747634e-11
+    Iteration #5, updated objective function value: 1.9386143575359088e-11
+    Iteration #6, updated objective function value: 3.2610301145716735e-11
+    Iteration #7, updated objective function value: 1.6209545072977018e-11
+    Iteration #8, updated objective function value: 2.8940439339590962e-11
+    Iteration #9, updated objective function value: 1.504739631713362e-11
+    Iteration #10, updated objective function value: 2.703178700016917e-11
+    Iteration #11, updated objective function value: 1.4195102480742004e-11
+    Iteration #12, updated objective function value: 2.5989058410062935e-11
+    Iteration #13, updated objective function value: 1.3980620229249818e-11
+    Iteration #14, updated objective function value: 2.5341981735230692e-11
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00048381 0.00048191 0.00048029 ... 0.00050748 0.00050694 0.00050628]
-    num_iterations: 5
-    objective_val: 2.7445114317373114
-    n_obj_evaluations: 7
-    n_grad_evaluations: 6
-    n_hess_evaluations: 6
+    model: [0.00050485 0.00049715 0.00048991 ... 0.00050558 0.00050199 0.00049801]
+    num_iterations: 14
+    objective_val: 2.5341981735230692e-11
+    n_obj_evaluations: 16
+    n_grad_evaluations: 15
+    n_hess_evaluations: 15
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 216-219
+.. GENERATED FROM PYTHON SOURCE LINES 212-215
 
 2.4 Plotting
 ~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-223
+.. GENERATED FROM PYTHON SOURCE LINES 215-221
 
 .. code-block:: default
 
 
-    fmm.plot_model(inv_result_quadratic_reg.model);            # inverted model
+    clim = (1/np.max(fmm.good_model)-1, 1/np.min(fmm.good_model)+1)
+
+    fmm.plot_model(inv_result_quadratic_reg.model, clim=clim);            # inverted model
     fmm.plot_model(fmm.good_model);       # true model
 
 
@@ -443,7 +450,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 228-246
+.. GENERATED FROM PYTHON SOURCE LINES 226-244
 
 --------------
 
@@ -464,7 +471,7 @@ prior term.
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 246-251
+.. GENERATED FROM PYTHON SOURCE LINES 244-249
 
 .. code-block:: default
 
@@ -480,7 +487,7 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 253-263
+.. GENERATED FROM PYTHON SOURCE LINES 251-261
 
 .. code-block:: default
 
@@ -488,7 +495,7 @@ prior term.
     # add regularization: Gaussian prior
     corrx = 3.0
     corry = 3.0
-    sigma_slowness = 0.002
+    sigma_slowness = 0.5
     gaussian_prior = cofi.utils.GaussianPrior(
         model_covariance_inv=((corrx, corry), sigma_slowness),
         mean_model=ref_start_slowness.reshape(model_shape)
@@ -501,14 +508,14 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 265-270
+.. GENERATED FROM PYTHON SOURCE LINES 263-268
 
 .. code-block:: default
 
 
-    fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior, sigma])
-    fmm_problem_gaussian_prior.set_gradient(gradient, args=[gaussian_prior, sigma])
-    fmm_problem_gaussian_prior.set_hessian(hessian, args=[gaussian_prior, sigma])
+    fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior])
+    fmm_problem_gaussian_prior.set_gradient(gradient, args=[gaussian_prior])
+    fmm_problem_gaussian_prior.set_hessian(hessian, args=[gaussian_prior])
 
 
 
@@ -517,13 +524,13 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 275-278
+.. GENERATED FROM PYTHON SOURCE LINES 273-276
 
 3.2 Start an inversion
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 278-284
+.. GENERATED FROM PYTHON SOURCE LINES 276-282
 
 .. code-block:: default
 
@@ -541,39 +548,39 @@ prior term.
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 2506.4853690587847
-    Iteration #1, updated objective function value: 1024.9309152365797
-    Iteration #2, updated objective function value: 977.4811110047494
-    Iteration #3, updated objective function value: 976.6662653781226
-    Iteration #4, updated objective function value: 975.999885790021
-    Iteration #5, updated objective function value: 976.2098353866515
+    Iteration #0, updated objective function value: 3.633219726912791e-07
+    Iteration #1, updated objective function value: 2.350718903302728e-07
+    Iteration #2, updated objective function value: 2.3157837862854732e-07
+    Iteration #3, updated objective function value: 2.3147517909945304e-07
+    Iteration #4, updated objective function value: 2.3140410377488268e-07
+    Change in model parameters below tolerance, stopping.
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00049665 0.00049542 0.00049382 ... 0.00050314 0.0005023  0.00050166]
-    num_iterations: 5
-    objective_val: 976.2098353866515
-    n_obj_evaluations: 7
-    n_grad_evaluations: 6
-    n_hess_evaluations: 6
+    model: [0.00049703 0.00049595 0.00049451 ... 0.000503   0.00050221 0.00050161]
+    num_iterations: 4
+    objective_val: 2.3140410377488268e-07
+    n_obj_evaluations: 6
+    n_grad_evaluations: 5
+    n_hess_evaluations: 5
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 289-292
+.. GENERATED FROM PYTHON SOURCE LINES 287-290
 
 3.3 Plotting
 ~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 292-296
+.. GENERATED FROM PYTHON SOURCE LINES 290-294
 
 .. code-block:: default
 
 
-    fmm.plot_model(inv_result_gaussian_prior.model);            # inverted model
+    fmm.plot_model(inv_result_gaussian_prior.model, clim=clim);            # gaussian prior
     fmm.plot_model(fmm.good_model);       # true model
 
 
@@ -606,41 +613,84 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 301-306
+.. GENERATED FROM PYTHON SOURCE LINES 299-304
 
-4. Comparison and discussion
-----------------------------
+4. L-curve
+----------
 
-#TODO
+Now we plot an L-curve for the smoothing regularization case.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 306-310
+.. GENERATED FROM PYTHON SOURCE LINES 304-336
 
 .. code-block:: default
 
 
-    fmm.plot_model(inv_result_quadratic_reg.model);
-    fmm.plot_model(inv_result_gaussian_prior.model);
+    lambdas = np.logspace(-4, 4, 15)
+
+    my_lcurve_problems = []
+    for lamb in lambdas:
+        my_reg = lamb * reg_smoothing
+        my_problem = cofi.BaseProblem()
+        my_problem.set_objective(objective_func, args=[my_reg])
+        my_problem.set_gradient(gradient, args=[my_reg])
+        my_problem.set_hessian(hessian, args=[my_reg])
+        my_problem.set_initial_model(ref_start_slowness)
+        my_lcurve_problems.append(my_problem)
+
+    my_options.set_params(verbose=False)
+
+    def my_callback(inv_result, i):
+        m = inv_result.model
+        res_norm = np.linalg.norm(fmm.forward(m) - fmm.data)
+        reg_norm = np.sqrt(reg_smoothing(m))
+        print(f"Finished inversion with lambda={lambdas[i]}: {res_norm}, {reg_norm}")
+        return res_norm, reg_norm
+
+    my_inversion_pool = cofi.utils.InversionPool(
+        my_lcurve_problems, 
+        my_options, 
+        my_callback, 
+        True
+    )
+    all_res, all_cb_returns = my_inversion_pool.run()
+
+    l_curve_points = list(zip(*all_cb_returns))
 
 
 
 
-.. rst-class:: sphx-glr-horizontal
 
 
-    *
 
-      .. image-sg:: /examples/generated/synth_data/images/sphx_glr_fmm_tomography_regularization_discussion_006.png
-         :alt: fmm tomography regularization discussion
-         :srcset: /examples/generated/synth_data/images/sphx_glr_fmm_tomography_regularization_discussion_006.png
-         :class: sphx-glr-multi-img
 
-    *
+.. GENERATED FROM PYTHON SOURCE LINES 338-354
 
-      .. image-sg:: /examples/generated/synth_data/images/sphx_glr_fmm_tomography_regularization_discussion_007.png
-         :alt: fmm tomography regularization discussion
-         :srcset: /examples/generated/synth_data/images/sphx_glr_fmm_tomography_regularization_discussion_007.png
-         :class: sphx-glr-multi-img
+.. code-block:: default
+
+
+    # plot the L-curve
+    res_norm, reg_norm = l_curve_points
+    plt.plot(reg_norm, res_norm, '.-')
+    plt.xlabel(r'Norm of regularization term $||Wm||_2$')
+    plt.ylabel(r'Norm of residual $||g(m)-d||_2$')
+    for i in range(len(lambdas)):
+        plt.annotate(f'{lambdas[i]:.1e}', (reg_norm[i], res_norm[i]), fontsize=8)
+
+    # plot the previously solved model
+    my_inverted_model = inv_result_quadratic_reg.model
+    my_reg_norm = np.sqrt(reg_smoothing(my_inverted_model))
+    my_residual_norm = np.linalg.norm(fmm.forward(my_inverted_model) - fmm.data)
+    plt.plot(my_reg_norm, my_residual_norm, "x")
+    plt.annotate(f"{smoothing_factor:.1e}", (my_reg_norm, my_residual_norm), fontsize=8);
+
+
+
+
+.. image-sg:: /examples/generated/synth_data/images/sphx_glr_fmm_tomography_regularization_discussion_006.png
+   :alt: fmm tomography regularization discussion
+   :srcset: /examples/generated/synth_data/images/sphx_glr_fmm_tomography_regularization_discussion_006.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -648,11 +698,11 @@ prior term.
  .. code-block:: none
 
 
-    <Axes: xlabel='x (km)', ylabel='y (km)'>
+    Text(2.7724031859576007e-06, 4.201876046449114e-06, '1.0e-03')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 315-328
+.. GENERATED FROM PYTHON SOURCE LINES 359-372
 
 --------------
 
@@ -668,7 +718,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 328-334
+.. GENERATED FROM PYTHON SOURCE LINES 372-378
 
 .. code-block:: default
 
@@ -686,22 +736,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.2+21.gca0ed7d.dirty
-    espresso 0.3.10
+    cofi 0.2.3
+    espresso 0.3.11
     numpy 1.24.3
     matplotlib 3.7.1
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 335-335
+.. GENERATED FROM PYTHON SOURCE LINES 379-379
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 3 minutes  6.855 seconds)
+   **Total running time of the script:** ( 1 minutes  10.353 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography_regularization_discussion.py:
