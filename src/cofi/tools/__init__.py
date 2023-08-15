@@ -57,7 +57,8 @@ BaseSolver = BaseInferenceTool
 
 
 # Extra information for InLab Explorer
-# LinkDoc : CoFI -> https://www.google.com
-# LinkGit : CoFI -> https://www.google.com
-# Description : CoFI -> anyDescriptionHere
-# Description : Ensemble methods -> ni ni ni ni yao tiao wu ma!
+# LinkDoc: CoFI -> https://cofi.readthedocs.io
+# LinkGit: CoFI -> https://github.com/inlab-geo/cofi
+# Description: CoFI -> Common Framework for Inference
+# Description: Parameter estimation -> Parameter estimation is the process of determining the specific numerical values that define a statistical model, often using methods like Maximum Likelihood Estimation or Least Squares to best fit the observed data.
+# Description: Ensemble methods -> Ensemble methods combine multiple predictive models to achieve greater predictive accuracy and robustness than a single model, using techniques like bagging, boosting, or stacking.
