@@ -62,3 +62,14 @@ BaseSolver = BaseInferenceTool
 # description: CoFI -> Common Framework for Inference
 # description: Parameter estimation -> Parameter estimation is the process of determining the specific numerical values that define a statistical model, often using methods like Maximum Likelihood Estimation or Least Squares to best fit the observed data.
 # description: Ensemble methods -> Ensemble methods combine multiple predictive models to achieve greater predictive accuracy and robustness than a single model, using techniques like bagging, boosting, or stacking.
+# description: Optimization -> Optimization involves finding the best solution from a set of possible solutions, usually by minimizing or maximizing a certain function.
+# description: Matrix-based solvers -> Matrix-based solvers are computational algorithms that solve systems of equations, which often arise in parameter estimation problems.
+# description: Bayesian sampling -> Bayesian sampling is a technique for estimating the probability distribution of unknown parameters based on observed data and prior beliefs.
+# description: Non linear -> Non-linear optimization focuses on finding the maximum or minimum of a function that is not necessarily linear over its parameters.
+# description: Linear -> Optimization on linear problems involves finding the best solution from a set of possible solutions, where the function to be optimized is linear.
+# description: Linear system solvers -> Linear system solvers are algorithms designed to find the values of unknowns in a set of linear equations.
+# description: McMC samplers -> Markov chain Monte Carlo (McMC) samplers are algorithms for generating samples from complex probability distributions, often used in Bayesian inference.
+# description: Direct search -> In the context of ensemble methods, direct search involves a straightforward exploration of the parameter space without requiring gradient information.
+# description: Monte Carlo -> Monte Carlo methods use random sampling to obtain numerical results for problems that might be deterministic in principle.
+# description: Deterministic -> Deterministic methods in direct search use specific rules, rather than randomness, to explore the parameter space for the best solution.
+# description: Trans-D McMC -> Trans-Dimensional Markov chain Monte Carlo (Trans-D McMC) is a specialized form of McMC that allows for model selection by transitioning between different dimensional spaces.
