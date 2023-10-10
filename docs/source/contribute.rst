@@ -224,7 +224,7 @@ To get started, run the helper script:
 
 .. code-block:: console
 
-  $ python scripts/new_inference_tool.py <new_tool_name>
+  $ python tools/new_inference_tool.py <new_tool_name>
 
 To define and plug in your own inference tool backend, you minimally have to create a
 subclass of :class:`tools.BaseInferenceTool` and implement two methods: 
