@@ -10,7 +10,7 @@ import pathlib
 current_dir = pathlib.Path(__file__).resolve().parent
 root_dir = current_dir.parent
 INFTOOL_FOLDER = str(root_dir / "src/cofi/tools")
-TEMPLATE_FILE = str(root_dir / "scripts/_template/template_tool.py")
+TEMPLATE_FILE = str(root_dir / "tools/_template/template_tool.py")
 
 
 def main():
