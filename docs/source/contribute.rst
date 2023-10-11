@@ -119,13 +119,12 @@ The environment setup is different depending on your purpose:
     $ conda activate cofi_dev
     $ pip install -e .
 - If you'd like to :ref:`edit the documentation <doc>`, then get the dependencies listed in this
-  `environment.yml <https://github.com/inlab-geo/cofi/blob/main/docs/environment.yml>`_
-  file. Similarly, set up this with ``conda``:
+  `requirements.txt <https://github.com/inlab-geo/cofi/blob/main/docs/requirements.txt>`_
+  file. Set up this with ``pip``:
 
   .. code-block:: console
 
-    $ conda env create -f docs/environment.yml
-    $ conda activate readthedocs
+    $ pip install -r docs/requirements.txt  # in a virtual environment
     $ pip install -e .
 
 
@@ -427,3 +426,37 @@ To **test** the changes, go to ``docs`` directory, run ``make html`` and open th
 .. ├── searchindex.js
 .. └── tutorial.html
 
+
+Testing in CoFI
+---------------
+
+When you submit a pull request, an automatic testing job will be triggered on GitHub.
+
+If you'd like to test your changes locally, 
+
+1. Follow :ref:`instructions here to set up environment <env_setup>` if you haven't 
+   done so yet.
+2. Run all the tests with
+   
+   .. code:: console
+
+    $ pytest tests
+  
+3. Check the test coverage with
+
+   .. code:: console
+
+    $ coverage -m pytest tests; coverage report; coverage xml
+
+   If possible, write tests for your new code to ensure a good coverage.
+
+4. To generate and check documentation locally, 
+
+   .. code:: console
+
+    $ cd docs
+    $ make html
+    $ python -m http.server -d build/html
+
+   Put ``localhost:8000`` into your browser address bar to read the generated 
+   documentation.
