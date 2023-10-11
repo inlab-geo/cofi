@@ -42,7 +42,7 @@ jobs:
       - name: Create Pull Request
         run: |
           if [[ "${{ steps.commit.outputs.committed }}" == 'true' ]]; then
-            gh pr create --title "Update submodules" --body "This PR updates the submodules. Please run `make html` from `docs/` before merging." --head update-submodules --base main --repo ${{ github.repository }}
+            gh pr create --title "Update submodules" --body "This PR updates the submodules. Please run \`make html\` from \`docs/\` before merging." --head update-submodules --base main --repo ${{ github.repository }}
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
