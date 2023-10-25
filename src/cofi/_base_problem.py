@@ -11,6 +11,7 @@ from ._exceptions import (
     InvocationError,
     NotDefinedError,
 )
+from .utils._parameterisation import Parameterisation
 
 
 class BaseProblem:
@@ -1064,6 +1065,31 @@ class BaseProblem:
             extra dict of keyword arguments for forward function
         """
         self.forward = _FunctionWrapper("forward", forward, args, kwargs)
+        self._update_autogen("forward")
+
+    def set_parameterisation(
+        self,
+        parameterisation: Parameterisation,
+        args: list = None,
+        kwargs: dict = None,
+    ):
+        r"""Sets the parameterisation to be used for this problem
+
+        Parameters
+        ----------
+        parameterisation : Parameterisation
+            the parameterisation to be used for this problem
+        args : list, optional
+            extra list of positional arguments for parameterisation
+        kwargs : dict, optional
+            extra dict of keyword arguments for parameterisation
+        """
+        self.parameterisation = _FunctionWrapper(
+            "parameterisation", parameterisation, args, kwargs
+        )
+        self.forward = _FunctionWrapper(
+            "forward", lambda model: self.forward(self.parameterisation(model))
+        )  # assumes self.forward has been set
         self._update_autogen("forward")
 
     def set_data(
