@@ -11,7 +11,6 @@ from ._exceptions import (
     InvocationError,
     NotDefinedError,
 )
-from .utils._parameterisation import Parameterisation
 
 
 class BaseProblem:
@@ -1069,7 +1068,7 @@ class BaseProblem:
 
     def set_parameterisation(
         self,
-        parameterisation: Parameterisation,
+        parameterisation: Callable[[np.ndarray], np.ndarray],
         args: list = None,
         kwargs: dict = None,
     ):
