@@ -149,6 +149,7 @@ class BaseProblem:
         BaseProblem.set_data_misfit
         BaseProblem.set_regularization
         BaseProblem.set_forward
+        BaseProblem.set_parameterisation
         BaseProblem.set_data
         BaseProblem.set_data_covariance
         BaseProblem.set_data_covariance_inv
@@ -198,6 +199,7 @@ class BaseProblem:
         BaseProblem.regularization
         BaseProblem.regularization_matrix
         BaseProblem.forward
+        BaseProblem.parameterisation
         BaseProblem.name
         BaseProblem.data
         BaseProblem.data_covariance
@@ -230,6 +232,7 @@ class BaseProblem:
         "regularization",
         "regularization_matrix",
         "forward",
+        "parameterisation",
         "data",
         "data_covariance",
         "data_covariance_inv",
@@ -572,11 +575,31 @@ class BaseProblem:
         """
         raise NotDefinedError(needs="forward")
 
+    def parameterisation(self, model: np.ndarray, *args, **kwargs) -> np.ndarray:
+        """Method to map model parameters to a model
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a set of model coefficients/parameters
+
+        Returns
+        -------
+        np.ndarray
+            the model image
+
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set and cannot be generated from known information
+        """
+        raise NotDefinedError(needs="parameterisation")
+
     # TO ADD a set method, remember to do the following:
     # - def set_something(self, something)
     # - def something(self), this is a property / function
     # - def something_defined(self) -> bool
-    # - add checking to self.dall_components
+    # - add checking to self.all_components
     # - add `set_something` and `something` to documentation list on top of this file
     # - check if there's anything to add to autogen_table
     # - add tests in tests/test_base_problem.py ("test_non_set", etc.)
@@ -1512,6 +1535,11 @@ class BaseProblem:
     def forward_defined(self) -> bool:
         r"""indicates whether :meth:`forward` has been defined"""
         return self._check_defined(self.forward)
+
+    @property
+    def parameterisation_defined(self) -> bool:
+        r"""indicates whether :meth:`parameterisation` has been defined"""
+        return self._check_defined(self.parameterisation)
 
     @property
     def data_defined(self) -> bool:
