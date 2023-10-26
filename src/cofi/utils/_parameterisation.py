@@ -2,6 +2,7 @@
 # and allow for easy switching between them.
 
 import numpy as np
+from octo.basis import CosineBasis2D as OctoCosineBasis2D
 
 
 class Parameterisation:
@@ -28,3 +29,28 @@ class Parameterisation:
         :param i: index of basis function
         """
         return self.basis[:, i]
+
+
+class Identity(Parameterisation):
+    def __init__(self, N: int) -> None:
+        """
+        Identity parameterisation
+
+        :param N: number of basis functions
+        """
+        super().__init__()
+        self.basis = np.eye(N)
+
+
+class CosineBasis2D(OctoCosineBasis2D, Parameterisation):
+    # Inheritence order important here.
+    # super will prioritise features of OctoCosineBasis2D over Parameterisation
+    def __init__(self, Nx, Ny: int) -> None:
+        """
+        Cosine basis parameterisation
+
+        :param Nx: number of basis functions in x
+        :param Ny: number of basis functions in y
+        """
+        super().__init__(Nx, Ny)
+        self._create_basis()
