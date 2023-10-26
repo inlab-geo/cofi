@@ -33,6 +33,8 @@ def test_default_not_defined_error(empty_problem):
     with pytest.raises(NotDefinedError):
         empty_problem.forward(1)
     with pytest.raises(NotDefinedError):
+        empty_problem.parameterisation(1)
+    with pytest.raises(NotDefinedError):
         empty_problem.data
     with pytest.raises(NotDefinedError):
         empty_problem.data_covariance
@@ -70,6 +72,7 @@ def test_default_not_defined_properties(empty_problem):
     assert not empty_problem.regularization_defined
     assert not empty_problem.regularization_matrix_defined
     assert not empty_problem.forward_defined
+    assert not empty_problem.parameterisation_defined
     assert not empty_problem.data_defined
     assert not empty_problem.data_covariance_defined
     assert not empty_problem.data_covariance_inv_defined
