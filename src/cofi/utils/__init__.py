@@ -18,6 +18,8 @@ from ._reg_model_cov import ModelCovariance, GaussianPrior
 
 from ._multiple_runs import InversionPool
 
+from ._parameterisation import BaseParameterisation, Identity, CosineBasis2D
+
 
 __all__ = [
     "BaseRegularization",
@@ -26,4 +28,7 @@ __all__ = [
     "ModelCovariance",
     "GaussianPrior",
     "InversionPool",
+    "BaseParameterisation",
+    "Identity",
+    "CosineBasis2D",
 ]
