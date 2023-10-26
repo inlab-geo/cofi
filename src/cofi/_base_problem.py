@@ -1108,7 +1108,7 @@ class BaseProblem:
         kwargs : dict, optional
             extra dict of keyword arguments for parameterisation
         """
-        self.parameterisation = parameterisation
+        self.parameterisation = _FunctionWrapper("parameterisation", parameterisation, args, kwargs)
         _fwd = copy(self.forward.func)
         self.forward = _FunctionWrapper(
             "forward", lambda model: _fwd(self.parameterisation(model))
