@@ -1095,6 +1095,8 @@ class BaseProblem:
         args: list = None,
         kwargs: dict = None,
     ):
+        from copy import copy
+
         r"""Sets the parameterisation to be used for this problem
 
         Parameters
@@ -1106,11 +1108,10 @@ class BaseProblem:
         kwargs : dict, optional
             extra dict of keyword arguments for parameterisation
         """
-        self.parameterisation = _FunctionWrapper(
-            "parameterisation", parameterisation, args, kwargs
-        )
+        self.parameterisation = parameterisation
+        _fwd = copy(self.forward.func)
         self.forward = _FunctionWrapper(
-            "forward", lambda model: self.forward(self.parameterisation(model))
+            "forward", lambda model: _fwd(self.parameterisation(model))
         )  # assumes self.forward has been set
         self._update_autogen("forward")
 

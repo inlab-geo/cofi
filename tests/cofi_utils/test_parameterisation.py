@@ -13,7 +13,7 @@ def test_usage_in_BaseProblem():
     # This test checks that the output for BaseProblem.forward is the same with and
     # without the Identity parameterisation
 
-    model = rng.random(10)
+    model = rng.random(N)
     inv_problem = BaseProblem()
     inv_problem.set_forward(lambda x: x**2)
 
