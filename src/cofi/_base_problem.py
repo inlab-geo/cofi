@@ -1086,7 +1086,12 @@ class BaseProblem:
         kwargs : dict, optional
             extra dict of keyword arguments for forward function
         """
-        self.forward = _FunctionWrapper("forward", forward, args, kwargs)
+        if self.parameterisation_defined:
+            self.forward = _FunctionWrapper(
+                "forward", lambda model: forward(self.parameterisation(model))
+            )
+        else:
+            self.forward = _FunctionWrapper("forward", forward, args, kwargs)
         self._update_autogen("forward")
 
     def set_parameterisation(
@@ -1108,12 +1113,15 @@ class BaseProblem:
         kwargs : dict, optional
             extra dict of keyword arguments for parameterisation
         """
-        self.parameterisation = _FunctionWrapper("parameterisation", parameterisation, args, kwargs)
-        _fwd = copy(self.forward.func)
-        self.forward = _FunctionWrapper(
-            "forward", lambda model: _fwd(self.parameterisation(model))
-        )  # assumes self.forward has been set
-        self._update_autogen("forward")
+        self.parameterisation = _FunctionWrapper(
+            "parameterisation", parameterisation, args, kwargs
+        )
+        if self.forward_defined:
+            _fwd = copy(self.forward.func)
+            self.forward = _FunctionWrapper(
+                "forward", lambda model: _fwd(self.parameterisation(model))
+            )
+            self._update_autogen("forward")
 
     def set_data(
         self,
