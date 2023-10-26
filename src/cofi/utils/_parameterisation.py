@@ -5,7 +5,7 @@ import numpy as np
 from octo.basis import CosineBasis2D as OctoCosineBasis2D
 
 
-class Parameterisation:
+class BaseParameterisation:
     def __init__(self) -> None:
         self.basis = None  # Matrix of basis functions. Each column is a basis function
 
@@ -31,7 +31,7 @@ class Parameterisation:
         return self.basis[:, i]
 
 
-class Identity(Parameterisation):
+class Identity(BaseParameterisation):
     def __init__(self, N: int) -> None:
         """
         Identity parameterisation
@@ -42,9 +42,9 @@ class Identity(Parameterisation):
         self.basis = np.eye(N)
 
 
-class CosineBasis2D(OctoCosineBasis2D, Parameterisation):
+class CosineBasis2D(OctoCosineBasis2D, BaseParameterisation):
     # Inheritence order important here.
-    # super will prioritise features of OctoCosineBasis2D over Parameterisation
+    # super will prioritise features of OctoCosineBasis2D over BaseParameterisation
     def __init__(self, Nx, Ny: int) -> None:
         """
         Cosine basis parameterisation
