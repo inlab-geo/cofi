@@ -1,5 +1,5 @@
 # Helper script to link a new inference tool:
-# $ python scripts/new_inference_tool.py <inference-tool-name>
+# $ python tools/new_inference_tool.py <inference_tool_name>
 # Replacing <inference-tool-name> with the new tool name.
 
 import glob
