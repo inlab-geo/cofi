@@ -6,6 +6,7 @@ from ._scipy_lstsq import ScipyLstSq
 from ._emcee import Emcee
 from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
+from ._bayes_bridge import BayesBridge
 
 
 __all__ = [
@@ -16,6 +17,7 @@ __all__ = [
     "Emcee",
     "CoFISimpleNewton",
     "PyTorchOptim",
+    "BayesBridge", 
 ]
 
 # inference tools table grouped by method:
@@ -30,7 +32,10 @@ inference_tools_table = {
         "scipy.linalg.lstsq": ScipyLstSq,
         "cofi.simple_newton": CoFISimpleNewton,
     },
-    "sampling": {"emcee": Emcee},
+    "sampling": {
+        "emcee": Emcee, 
+        "bayesbridge": BayesBridge, 
+    },
 }
 
 # inference tools suggest table grouped by method: {inv_options.method -> inv_options.tool}
