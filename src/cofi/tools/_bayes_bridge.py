@@ -10,34 +10,34 @@ class BayesBridge(BaseInferenceTool):
 
     FIXME Any extra information about the tool
     """
-    documentation_links = []        # FIXME required
-    short_description = []          # FIXME required
+    documentation_links = []  # FIXME required
+    short_description = []  # FIXME required
 
     @classmethod
-    def required_in_problem(cls) -> set:        # FIXME implementation required
+    def required_in_problem(cls) -> set:  # FIXME implementation required
         return {"log_posterior"}
-    
+
     @classmethod
-    def optional_in_problem(cls) -> dict:       # FIXME implementation required
+    def optional_in_problem(cls) -> dict:  # FIXME implementation required
         return dict()
 
     @classmethod
-    def required_in_options(cls) -> set:        # FIXME implementation required
+    def required_in_options(cls) -> set:  # FIXME implementation required
         return {"perturbations"}
 
     @classmethod
-    def optional_in_options(cls) -> dict:       # FIXME implementation required
+    def optional_in_options(cls) -> dict:  # FIXME implementation required
         raise NotImplementedError
 
     @classmethod
-    def available_algorithms(cls) -> set:       # FIXME optional (delete it if not needed)
+    def available_algorithms(cls) -> set:  # FIXME optional (delete it if not needed)
         raise NotImplementedError
-    
-    def __init__(self, inv_problem, inv_options):       # FIXME implementation required
+
+    def __init__(self, inv_problem, inv_options):  # FIXME implementation required
         super().__init__(inv_problem, inv_options)
         self._components_used = list(self.required_in_problem())
-    
-    def __call__(self) -> dict:                         # FIXME implementation required
+
+    def __call__(self) -> dict:  # FIXME implementation required
         raw_results = self._call_backend_tool()
         res = {
             "success": "TODO",
@@ -45,12 +45,12 @@ class BayesBridge(BaseInferenceTool):
             # FIXME add more information if there's more in raw_results
         }
         return res
-    
+
     @error_handler(
         when="FIXME (e.g. when solving / calling ...)",
         context="FIXME (e.g. in the process of solving / preparing)",
     )
-    def _call_backend_tool(self):                       # FIXME implementation required
+    def _call_backend_tool(self):  # FIXME implementation required
         raise NotImplementedError
 
 

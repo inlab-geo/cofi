@@ -17,7 +17,7 @@ __all__ = [
     "Emcee",
     "CoFISimpleNewton",
     "PyTorchOptim",
-    "BayesBridge", 
+    "BayesBridge",
 ]
 
 # inference tools table grouped by method:
@@ -33,8 +33,8 @@ inference_tools_table = {
         "cofi.simple_newton": CoFISimpleNewton,
     },
     "sampling": {
-        "emcee": Emcee, 
-        "bayesbridge": BayesBridge, 
+        "emcee": Emcee,
+        "bayesbridge": BayesBridge,
     },
 }
 
