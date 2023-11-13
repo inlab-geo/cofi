@@ -2,21 +2,13 @@ import numpy as np
 
 from . import BaseInferenceTool, error_handler
 
-
-# Add CoFIBorderCollieOptimization class into src/cofi/tools/__init__.py
-# FIXME 1. "from _cofi_border_collie_optimization import CoFIBorderCollieOptimization"
-# FIXME 2. add "CoFIBorderCollieOptimization" to "__all__" list
-# FIXME 3. add "CoFIBorderCollieOptimization" to "inference_tools_table" dictionary
-# FIXME Remove above comments lines after completed
-
 import random
 
 class CoFIBorderCollieOptimization(BaseInferenceTool):
-    r"""Implentation of a naive Border Collie Optimization
+    r"""Implentation of a Border Collie Optimization Algorithm
 
-    T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
+	Based on the Matlab code provided by T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
 
-    FIXME Any extra information about the tool
     """
     documentation_links = []        # FIXME required
     short_description = (
@@ -45,9 +37,11 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         # self model size
         self.mod_size=np.prod(inv_problem.model_shape)
         # lower and upper boundaries
+        self.lower_bounds=[]
+        self.upper_bounds=[]
         for i in range(self.mod_size):
-            self.lower_bounds=inv_problem.bounds[i][0]
-            self.upper_bounds=inv_problem.bounds[i][1]
+            self.lower_bounds.append(inv_problem.bounds[i][0])
+            self.upper_bounds.append(inv_problem.bounds[i][1])
         self.initial_model=inv_problem.initial_model
         
         print(inv_problem.model_shape)
@@ -68,7 +62,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             fit,fit_max_val,fit_max_idx = self.fitness(pop)
             
             res = {
-            "model": pop[max_idx,:],
+            "model": pop[fit_max_idx,:],
         	}
 
             
@@ -88,9 +82,9 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                         k=0
             
             fit,pop,vel,acc,tim=self.herd(fit,pop,vel,acc,tim)
-            vel_next,acc_next,tim_next=update_velocity_acceleration_and_time(fit,pop,vel,acc,tim)
-            pop= update_positons(pop,vel,acc,tim)
-            pop,acc,tim=check_positions
+            vel_next,acc_next,tim_next=self.update_velocity_acceleration_and_time(fit,pop,vel,acc,tim)
+            pop= self.update_positons(pop,vel,acc,tim)
+            pop,acc,tim=self.check_positions(pop,vel,acc,tim)
             
   
         return res
@@ -121,7 +115,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
  
         vel = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size,self.mod_size))
         acc = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size,self.mod_size))
-        tim = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size,self.mod_size))
+        tim = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size))
 
         self.fit_opt=[]
 
@@ -137,8 +131,8 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         for i in range(self.pack_size+self.flock_size):
             fit[i]=self.inv_problem.objective(pop[i,:])
 
-        max_idx=np.argmin(fit)
-        max_val=fit[max_idx]
+        fit_max_idx=np.argmin(fit)
+        fit_max_val=fit[fit_max_idx]
 
         return fit,fit_max_val,fit_max_idx
 
@@ -149,14 +143,14 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         pop_next= np.zeros([self.pack_size+self.flock_size,self.mod_size])   
         vel_next=np.zeros([self.pack_size+self.flock_size,self.mod_size])
         acc_next=np.zeros([self.pack_size+self.flock_size,self.mod_size])
-        tim_next=np.zeros([self.pack_size+self.flock_size,1])
+        tim_next=np.zeros([self.pack_size+self.flock_size])
         fit_next=np.copy(fit)
         fit_next.sort()
-        for j in range(np):
+        for j in range(self.pack_size+self.flock_size):
             pop_next[j,:]=pop[idx[j],:]
-            vel_next[j,:]=v[idx[j],:]
-            acc_next[j,:]=a[j,:]
-            tim_next[j]=t[j]
+            vel_next[j,:]=vel[idx[j],:]
+            acc_next[j,:]=acc[j,:]
+            tim_next[j]=tim[j]
 
         return fit_next,pop_next,vel_next,acc_next,tim_next
 
@@ -181,10 +175,10 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
         if self.eye==1:
             if fit[r1]<fit[l1]:
-                acc_next[l1,:]=(-1)*a[l1,:]
+                acc_next[l1,:]=(-1)*acc[l1,:]
                 f=l1;
             else:
-                acc_next[r1,:]=(-1)*a[r1,:];
+                acc_next[r1,:]=(-1)*acc[r1,:];
                 f=r1;
         
         for i in range(self.pack_size+self.flock_size):
@@ -203,7 +197,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
                         # Velocity updation of stalked sheep
                         if f1-fit[i]<=f2-fit[i]:
-                            vel_next[i,j]=np.sqrt((v_next[1,j]*np.tan(np.random.randint(1,high=90))**2)+2.0*a[r1,j]*pop[r1,j])+np.sqrt((v_next[l1,j]*np.tan(np.random.randint(91,high=180))**2)+2.0*a[l1,j]*pop[l1,j])
+                            vel_next[i,j]=np.sqrt((vel_next[1,j]*np.tan(np.random.randint(1,high=90))**2)+2.0*acc[r1,j]*pop[r1,j])+np.sqrt((vel_next[l1,j]*np.tan(np.random.randint(91,high=180))**2)+2.0*acc[l1,j]*pop[l1,j])
                             vel_next[i,j]=vel_next[i,j]/2.0;
         # Updating of time and acceleration
 
@@ -211,15 +205,16 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             s=0;
             for j in range(self.mod_size):
                 acc_next[i,j]=np.abs(vel_next[i,j]-vel[i,j])/tim[i];
-                s=s+(vel_next[i,j]-v[i,j]/acc_next[i,j]);
+                if acc_next[i,j]!=0.0:            
+	                s=s+(vel_next[i,j]-vel[i,j]/acc_next[i,j]);
             tim_next[i]=np.abs(s);
     
         return vel_next,acc_next,tim_next
 
     def update_positons(self,pop,vel,acc,tim):
-        pop_next= np.zeros([np,nd])   
-        for i in range(np):
-            for j in range(nd):
+        pop_next= np.zeros([self.pack_size+self.flock_size,self.mod_size])   
+        for i in range(self.pack_size+self.flock_size):
+            for j in range(self.mod_size):
             # Updating the position of dogs
                 if(i<=2):
                     pop_next[i,j]=vel[i,j]*tim[i]+(1./2.)*acc[i,j]*(tim[i]**2);
@@ -232,7 +227,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
         return pop_next
 
-    def check_positions(self,pop,acc,tim):
+    def check_positions(self,pop,vel,acc,tim):
 
         pop_next=np.copy(pop)
         acc_next=np.copy(acc)
@@ -240,20 +235,20 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
    
         for i in range(self.pack_size+self.flock_size):
             for j in range(self.mod_size):
-                if pop[i,j]>=m_ub[j] or pop[i,j]<=m_lb[j] or pop[i,j]==0 :
-                    pop_next[i,j]=np.random.rand(self.pack_size+self.flock_size,self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+                if pop[i,j]>=self.upper_bounds[j] or pop[i,j]<=self.lower_bounds[j] or pop[i,j]==0 :
+                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
                     acc_next[i,j]=np.random.rand()
                     tim_next[i]=np.random.rand()
                 if np.isnan(acc[i,j]) or acc[i,j]==0:
-                    pop_next[i,j]=np.random.rand(self.pack_size+self.flock_size,self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
                     acc_next[i,j]=np.random.rand()
                     t_next[i]=np.random.rand();
-                if np.isnan(v[i,j]) or vel[i,j]==0:
-                    pop_next[i,j]=np.random.rand(self.pack_size+self.flock_size,self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+                if np.isnan(vel[i,j]) or vel[i,j]==0:
+                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
                     acc_next[i,j]=np.random.rand()
                     tim_next[i]=np.random.rand();
-                if np.isnan(t_next[i]) or tim_next[i]==0:
-                    pop_next[i,j]=np.random.rand(self.pack_size+self.flock_size,self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+                if np.isnan(tim_next[i]) or tim_next[i]==0:
+                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
                     acc_next[i,j]=np.random.rand()
                     tim_next[i]=np.random.rand();
         return pop_next,acc_next,tim_next
