@@ -15,13 +15,13 @@ def problem_setup():
     inv_problem = BaseProblem()
     inv_problem.name = "Rosenbrock Function"
     inv_problem.set_objective(rosen)
-    inv_problem.set_initial_model([0,0])
+    #inv_problem.set_initial_model([0,0])
     inv_problem.set_model_shape((2))
 
     bounds= ((-1.0,3.0),(-1.0,3.0))
     inv_problem.set_bounds(bounds)
     inv_options = InversionOptions()
-    inv_options.set_params(number_of_iterations=3)
+    inv_options.set_params(number_of_iterations=200)
     inv_options.set_tool("cofi.border_collie_optimization")
     return inv_problem, inv_options
 
@@ -29,6 +29,7 @@ def test_run(problem_setup):
     inv_problem, inv_options = problem_setup
     solver = CoFIBorderCollieOptimization(inv_problem, inv_options)
     res = solver()
+    print(res)
     #assert res["model"][0] == 3.0
     #assert inv_problem.initial_model[0] == 9.
 

@@ -10,28 +10,28 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 	Based on the Matlab code provided by T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
 
     """
-    documentation_links = []        # FIXME required
+    documentation_links = []        
     short_description = (
         "CoFI's implemntation of Border Collie Optimization"
-            )          # FIXME required
+            )       
 
     @classmethod
-    def required_in_problem(cls) -> set:        # FIXME implementation required
+    def required_in_problem(cls) -> set: 
         return {"objective","bounds","model_shape"}
     
     @classmethod
-    def optional_in_problem(cls) -> dict:       # FIXME implementation required
+    def optional_in_problem(cls) -> dict:
         return {"initial_model":[]}
 
     @classmethod
-    def required_in_options(cls) -> set:        # FIXME implementation required
+    def required_in_options(cls) -> set:
         return set()
 
     @classmethod
-    def optional_in_options(cls) -> dict:       # FIXME implementation required
+    def optional_in_options(cls) -> dict:
         return {"number_of_iterations":50,"flock_size":50,"seed":42}
 
-    def __init__(self, inv_problem, inv_options):       # FIXME implementation required
+    def __init__(self, inv_problem, inv_options):  
         super().__init__(inv_problem, inv_options)
         self._components_used = list(self.required_in_problem())
         # self model size
@@ -42,12 +42,17 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         for i in range(self.mod_size):
             self.lower_bounds.append(inv_problem.bounds[i][0])
             self.upper_bounds.append(inv_problem.bounds[i][1])
-        self.initial_model=inv_problem.initial_model
         
-        print(inv_problem.model_shape)
+        self.lower_bounds=np.array(self.lower_bounds)
+        self.upper_bounds=np.array(self.upper_bounds)
 
+        try:
+            self.initial_model = inv_problem.initial_model
+        except:
+            self.initial_model = self.optional_in_problem()["initial_model"]
+		        
 
-    def __call__(self) -> dict:                         # FIXME implementation required
+    def __call__(self) -> dict:    
 
         
         # number of iterations
