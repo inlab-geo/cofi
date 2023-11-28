@@ -14,11 +14,11 @@ class BayesBridge(BaseInferenceTool):
 
     @classmethod
     def required_in_problem(cls) -> set:
-        return {"log_posterior"}
+        return set()
 
     @classmethod
     def optional_in_problem(cls) -> dict:
-        return dict()
+        return {"log_likelihood", "log_prior"}
 
     @classmethod
     def required_in_options(cls) -> set:
@@ -54,12 +54,20 @@ class BayesBridge(BaseInferenceTool):
         context="in the process of preparing",
     )
     def _initialize_bb_inversion(self):
+        _log_prior_defined = self.inv_problem.log_prior_defined
+        _log_like_defined = self.inv_problem.log_likelihood_defined
+        assert not (not _log_prior_defined and self._params["log_prior_ratio_funcs"] is None)
+        assert not (not _log_like_defined and self._params["log_like_ratio_func"] is None)
+        
         import bayesbridge as bb
 
         self._bb_bayes_inversion = bb.BaseBayesianInversion(
             walkers_starting_models=self._params["walkers_starting_models"],
             perturbation_funcs=self._params["perturbation_funcs"],
-            log_posterior_func=self.inv_problem.log_posterior,
+            log_prior_func=self.inv_problem.log_prior if _log_prior_defined else None, 
+            log_likelihood_func=self.inv_problem.log_likelihood if _log_like_defined else None, 
+            log_prior_ratio_funcs=self._params["log_prior_ratio_funcs"], 
+            log_like_ratio_func=self._params["log_like_ratio_func"], 
             n_chains=self._params["n_chains"],
             n_cpus=self._params["n_cpus"],
         )
@@ -88,7 +96,8 @@ def _inspect_default_options():
     optional_in_options: dict = {
         k: v.default
         for k, v in _bb_inv_init_args.items()
-        if v.default is not inspect._empty
+        if v.default is not inspect._empty and \
+            (k != "log_prior_func" and k != "log_likelihood_func")
     }
     _bb_inv_run_args = dict(inspect.signature(BaseBayesianInversion.run).parameters)
     optional_in_options.update(
