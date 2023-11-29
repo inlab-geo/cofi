@@ -1,4 +1,5 @@
 import numpy as np
+import copy
 
 from . import BaseInferenceTool, error_handler
 
@@ -7,7 +8,7 @@ import random
 class CoFIBorderCollieOptimization(BaseInferenceTool):
     r"""Implentation of a Border Collie Optimization Algorithm
 
-	Based on the Matlab code provided by T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
+	Loosely based on the ideas in T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
 
     """
     documentation_links = []        
@@ -31,7 +32,31 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
     def optional_in_options(cls) -> dict:
         return {"number_of_iterations":50,"flock_size":50,"seed":42}
 
-    def __init__(self, inv_problem, inv_options):  
+
+
+    ### inner classes for dog and sheep
+    
+    class dog:
+        def __init__(self,dim):
+            self.pos=np.zeros(dim)
+            self.vel=np.zeros(dim)
+            self.acc=np.zeros(dim)
+            self.tim=np.zeros(dim)
+            self.fit=0
+            pass
+    
+    class sheep:
+        def __init__(self,dim):
+            self.pos=np.zeros(dim)
+            self.vel=np.zeros(dim)
+            self.acc=np.zeros(dim)
+            self.tim=np.zeros(dim)
+            self.eyed=0
+            self.fit=0
+            pass
+
+
+    def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self._components_used = list(self.required_in_problem())
         # self model size
@@ -50,48 +75,50 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.initial_model = inv_problem.initial_model
         except:
             self.initial_model = self.optional_in_problem()["initial_model"]
-		        
-
-    def __call__(self) -> dict:    
-
-        
+        np.random.seed(self._params["seed"])
         # number of iterations
         self.number_of_iterations = self._params["number_of_iterations"]
-         # number of sheep - there are always three dogs
+
+    def __call__(self) -> dict:
+        
+
+        
         self.pack_size=3
-        self.flock_size = self._params["flock_size"]
+        self.pack=[self.dog(self.mod_size)]*self.pack_size
+        self.flock_size=self._params["flock_size"]
+        self.flock=[self.sheep(self.mod_size)]*self.flock_size
         self.seed = self._params["seed"]
-        pop,vel,acc,tim=self.initialise()
+        self.initialise()
 
         for itr in range(self.number_of_iterations):
-            fit,fit_max_val,fit_max_idx = self.fitness(pop)
-            
-            res = {
-            "model": pop[fit_max_idx,:],
-        	}
+            self.update_fitness()
+            print( self.itr_min_pos,"|",self.itr_min_fit)
 
-            
-            self.eye=0
             if itr==0:
-                fit_opt=fit_max_val
-            if fit_opt>fit_max_val:
-                fit_fopt=fit_max_val
+                fit_min=self.itr_min_fit
+                res = {
+                        "success": "maybe",
+                        "model": self.itr_min_pos,
+                      }
 
-            self.fit_opt.append(fit_opt)
+            if fit_min>self.itr_min_fit:
+                fit_min=self.itr_min_fit
+                res = {
+                        "success": "maybe",
+                        "model": self.itr_min_pos,
+                      }
+                      
+            # determin if a sheep needs eyeing
 
             if itr>0:
-                if self.fit_opt[-1]>self.fit_opt[-2]:
-                    k=k+1
-                    if (k>5):
-                        self.eye=0
-                        k=0
-            
-            fit,pop,vel,acc,tim=self.herd(fit,pop,vel,acc,tim)
-            vel_next,acc_next,tim_next=self.update_velocity_acceleration_and_time(fit,pop,vel,acc,tim)
-            pop= self.update_positons(pop,vel,acc,tim)
-            pop,acc,tim=self.check_positions(pop,vel,acc,tim)
-            
-  
+                for idx,sheep in enumerate(self.flock):
+                    if self.flock_fit[idx]>self.flock_fit_prev[idx]:
+                        sheep.eyed+=1
+
+            self.dog2sheep2dog()
+            self.update_movement()
+            self.check_positions()
+
         return res
     
     @error_handler(
@@ -107,155 +134,181 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
 
     def initialise(self):
-        pop = np.zeros([self.pack_size+self.flock_size,self.mod_size])
-        print(self.mod_size)
+        for i,dog in enumerate(self.pack):
+            if self.initial_model!=[]:
+                self.pack[i].pos=self.initial_model
+            else:
+                self.pack[i].pos=np.random.rand(self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+            self.pack[i].vel = np.random.default_rng().uniform(size=self.mod_size)
+            self.pack[i].acc = np.random.default_rng().uniform(size=self.mod_size)
+            self.pack[i].tim = np.random.default_rng().uniform(size=self.mod_size)
 
-        # if an intial model has been provided everyone starts there
-        if self.initial_model!=[]:
-            # there is probably a short hand way to do this...
-            for i in range(self.pack_size+self.flock_size):
-                pop[i,:] = self.initial_model
-        else:
-            pop=np.random.rand(self.pack_size+self.flock_size,self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
- 
-        vel = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size,self.mod_size))
-        acc = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size,self.mod_size))
-        tim = np.random.default_rng().uniform(size=(self.pack_size+self.flock_size))
+        for i,sheep in enumerate(self.flock):
+            if self.initial_model!=[]:
+                self.flock[i].pos=self.initial_model
+            else:
+                self.flock[i].pos=np.random.rand(self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+            self.flock[i].vel = np.random.default_rng().uniform(size=self.mod_size)
+            self.flock[i].acc = np.random.default_rng().uniform(size=self.mod_size)
+            self.flock[i].tim = np.random.default_rng().uniform(size=self.mod_size)
 
-        self.fit_opt=[]
+            self.pack_fit=np.zeros(self.pack_size)
+            self.flock_fit=np.zeros(self.flock_size)
+            self.pop_fit=np.zeros(self.pack_size+self.flock_size)
+
+        self.pack_fit_hist=[]
+        self.flock_fit_hist=[]
+        return
 
 
-        return pop,vel,acc,tim
-
-
-    def fitness(self,pop):
-
-        fit=np.zeros([self.pack_size+self.flock_size,1])
+    def update_fitness(self):
 
         # could be done parallel
-        for i in range(self.pack_size+self.flock_size):
-            fit[i]=self.inv_problem.objective(pop[i,:])
+        self.flock_fit_prev=copy.copy(self.flock_fit)
+        
+        for i,dog in enumerate(self.pack):
+            self.pack_fit[i]=self.inv_problem.objective(self.pack[i].pos)
+            self.pack[i].fit=self.pack_fit[i]
+            self.pop_fit[i]=self.pack_fit[i]
+        for i,sheep in enumerate(self.flock):
+            self.flock_fit[i]=self.inv_problem.objective(self.flock[i].pos)
+            self.flock[i].fit=self.flock_fit[i]
+            self.pop_fit[i+self.pack_size]=self.flock_fit[i]
 
-        fit_max_idx=np.argmin(fit)
-        fit_max_val=fit[fit_max_idx]
+        self.pack_fit_min_idx=np.argmin(self.pack_fit)
+        self.pack_fit_min_val=self.pack_fit[self.pack_fit_min_idx]
 
-        return fit,fit_max_val,fit_max_idx
+        self.flock_fit_min_idx=np.argmin(self.flock_fit)
+        self.flock_fit_min_val=self.flock_fit[self.flock_fit_min_idx]
 
-    def herd(self,fit,pop,vel,acc,tim):
-        fit1=fit.sort(axis=1)
-        idx=fit.argsort(axis=1)
+        self.pack_fit_hist.append(self.pack_fit)
 
-        pop_next= np.zeros([self.pack_size+self.flock_size,self.mod_size])   
-        vel_next=np.zeros([self.pack_size+self.flock_size,self.mod_size])
-        acc_next=np.zeros([self.pack_size+self.flock_size,self.mod_size])
-        tim_next=np.zeros([self.pack_size+self.flock_size])
-        fit_next=np.copy(fit)
-        fit_next.sort()
-        for j in range(self.pack_size+self.flock_size):
-            pop_next[j,:]=pop[idx[j],:]
-            vel_next[j,:]=vel[idx[j],:]
-            acc_next[j,:]=acc[j,:]
-            tim_next[j]=tim[j]
+        if self.flock_fit_min_val<self.pack_fit_min_val:
+            self.itr_min_pos=self.flock[self.flock_fit_min_idx].pos
+            self.itr_min_fit=self.flock_fit_min_val
+        else:
+            self.itr_min_pos=self.pack[self.pack_fit_min_idx].pos
+            self.itr_min_fit=self.pack_fit_min_val
 
-        return fit_next,pop_next,vel_next,acc_next,tim_next
+        return
 
-    def update_velocity_acceleration_and_time(self,fit,pop,vel,acc,tim):
+    def dog2sheep2dog(self):
+    
+        fit=self.pop_fit.sort()
+        idx=self.pop_fit.argsort()
+        popl=self.pack+self.flock
 
-        vel_next = np.zeros([self.pack_size+self.flock_size,self.mod_size])   
-        vel_next=np.copy(vel)
-        acc_next= np.zeros([self.pack_size+self.flock_size,self.mod_size])   
-        tim_next= np.zeros([self.pack_size+self.flock_size,self.mod_size])   
+
+        for i,dog in enumerate(self.pack):
+            self.pack[i].pos=popl[idx[i]].pos
+            self.pack[i].vel=popl[idx[i]].vel
+            self.pack[i].acc=popl[idx[i]].acc
+            self.pack[i].tim=popl[idx[i]].tim
+            self.pack[i].fit=popl[idx[i]].fit
+
+        for i,sheep in enumerate(self.flock):
+            self.flock[i].pos=popl[idx[i+self.pack_size]].pos
+            self.flock[i].vel=popl[idx[i+self.pack_size]].vel
+            self.flock[i].acc=popl[idx[i+self.pack_size]].acc
+            self.flock[i].tim=popl[idx[i+self.pack_size]].tim
+            self.flock[i].fit=popl[idx[i+self.pack_size]].fit
+
+        return
+
+    def update_movement(self):
 
         # tournament selection for choosing left and right dogs
-        r1=np.random.randint(1,high=3)
-        if r1==1:
-            l1=2;
-        else:
-            l1=1; 
-
-        # finding the dog values to choose which sheepe to gather and which to stalk
-        f1=fit[0]
-        f2=(fit[1]+fit[2])/2.0;
-        f=0;
-
-        if self.eye==1:
-            if fit[r1]<fit[l1]:
-                acc_next[l1,:]=(-1)*acc[l1,:]
-                f=l1;
-            else:
-                acc_next[r1,:]=(-1)*acc[r1,:];
-                f=r1;
+        if(np.random.randint(1,high=3)==1):
+            dog=copy.copy(self.pack[1])
+            self.pack[2]=copy.copy(self.pack[1])
+            self.pack[1]=copy.copy(dog)
         
-        for i in range(self.pack_size+self.flock_size):
-            for j in range(self.mod_size):
-            #    velocity updates of dogs
-                if (i<self.pack_size):
-                    vel_next[i,j]=np.sqrt(vel[i,j]**2+2.0*acc[i,j]*pop[i,j])
-                # velcoity update of sheep
-                if (i>self.pack_size):
-                    if (self.eye==1):
-                        vel_next[i,j]=np.sqrt(vel[f,j]**2+2.0*acc[f,j]*pop[i,j])
+        # update dog velocity and time
+        for i,dog in enumerate(self.pack):
+            v0=self.pack[i].vel
+            self.pack[i].vel=self.pack[i].vel+self.pack[i].acc
+            self.pack[i].tim=np.mean(self.pack[i].vel-v0/self.pack[i].tim)
+            
+            
+        # update sheep velocity acceleration and time
+        for i,sheep in enumerate(self.flock):
+            dg=(self.pack[0].fit-self.flock[i].fit)-(((self.pack[1].fit+self.pack[2].fit)/2.0)-self.flock[i].fit)
+            v0=self.flock[i].vel
+            if dg>=0.0: # sheep is gathered
+                self.flock[i].vel=self.pack[0].vel+self.pack[0].acc/self.pack[0].tim
+                
+            if dg<0.0:
+                if self.flock[i].eyed<5:
+                    tan_theta=np.tan(np.random.randint(1,high=90))
+                    vl = self.pack[1].vel*tan_theta+self.pack[1].acc
+                    tan_theta=np.tan(np.random.randint(91,high=180))
+                    vr = self.pack[2].vel*tan_theta+self.pack[2].acc
+                    vs=(vl+vr)/2.0
+                    self.flock[i].vel=vs
+                else:
+                    self.flock[i].eyed=0
+                    if self.pack[1].fit<self.pack[2].fit:
+                        self.flock[i].vel=self.pack[2].vel-self.pack[2].acc/self.pack[2].tim
                     else:
-                        # Velocity updation of gathered sheep
-                        if f1-fit[i]>f2-fit[i]:
-                            vel_next[i,j]=np.sqrt(vel[1,j]**2+2.0*acc[1,j]*pop[i,j])
+                        self.flock[i].vel=self.pack[1].vel-self.pack[1].acc/self.pack[2].tim
+        
+            # update acceleration
+            self.flock[i].acc=(self.flock[i].vel-v0)/self.flock[i].tim
 
-                        # Velocity updation of stalked sheep
-                        if f1-fit[i]<=f2-fit[i]:
-                            vel_next[i,j]=np.sqrt((vel_next[1,j]*np.tan(np.random.randint(1,high=90))**2)+2.0*acc[r1,j]*pop[r1,j])+np.sqrt((vel_next[l1,j]*np.tan(np.random.randint(91,high=180))**2)+2.0*acc[l1,j]*pop[l1,j])
-                            vel_next[i,j]=vel_next[i,j]/2.0;
-        # Updating of time and acceleration
+            # update time
+            self.flock[i].tim=np.mean((self.flock[i].vel-v0)/self.flock[i].acc)
 
-        for i in range(self.pack_size+self.flock_size):
-            s=0;
-            for j in range(self.mod_size):
-                acc_next[i,j]=np.abs(vel_next[i,j]-vel[i,j])/tim[i];
-                if acc_next[i,j]!=0.0:            
-	                s=s+(vel_next[i,j]-vel[i,j]/acc_next[i,j]);
-            tim_next[i]=np.abs(s);
+
+
+    def update_positon(self):
     
-        return vel_next,acc_next,tim_next
+        # update dog velocity and time
+        for i,dog in enumerate(self.pack):
+            self.pack[i].pos=self.pack[i].pos+self.pack[i].vel
+    
+        # update sheep velocity acceleration and time
+        for i,sheep in enumerate(self.flock):
+            self.flock[i].pos=self.flock[i].pos+self.flock[i].vel
+            
+        return
 
-    def update_positons(self,pop,vel,acc,tim):
-        pop_next= np.zeros([self.pack_size+self.flock_size,self.mod_size])   
-        for i in range(self.pack_size+self.flock_size):
+    def check_positions(self):
+
+        for i in range(self.pack_size):
             for j in range(self.mod_size):
-            # Updating the position of dogs
-                if(i<=2):
-                    pop_next[i,j]=vel[i,j]*tim[i]+(1./2.)*acc[i,j]*(tim[i]**2);
-            # Updating position of sheep
-                if(i>3):
-                    if self.eye==1:
-                        pop_next[i,j]=vel[i,j]*tim[i]-(1./2.)*acc[i,j]*(tim[i]**2);
-                    else:
-                        pop_next[i,j]=vel[i,j]*tim[i]+(1./2.)*acc[i,j]*(tim[i]**2);
+                if self.pack[i].pos[j]>=self.upper_bounds[j] or self.pack[i].pos[j]<=self.lower_bounds[j]:
+                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=np.random.rand()
+                    self.pack[i].tim=np.random.rand()
+                if np.isnan(self.pack[i].acc[j]) or self.pack[i].acc[j]==0:
+                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=np.random.rand()
+                    self.pack[i].tim=np.random.rand()
+                if np.isnan(self.pack[i].vel[j]) or self.pack[i].vel[j]==0:
+                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=np.random.rand()
+                    self.pack[i].tim=np.random.rand()
+                if np.isnan(self.pack[i].tim) or self.pack[i].tim==0:
+                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=np.random.rand()
+                    self.pack[i].tim=np.random.rand()
 
-        return pop_next
-
-    def check_positions(self,pop,vel,acc,tim):
-
-        pop_next=np.copy(pop)
-        acc_next=np.copy(acc)
-        tim_next=np.copy(tim)
-   
-        for i in range(self.pack_size+self.flock_size):
+        for i in range(self.flock_size):
             for j in range(self.mod_size):
-                if pop[i,j]>=self.upper_bounds[j] or pop[i,j]<=self.lower_bounds[j] or pop[i,j]==0 :
-                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    acc_next[i,j]=np.random.rand()
-                    tim_next[i]=np.random.rand()
-                if np.isnan(acc[i,j]) or acc[i,j]==0:
-                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    acc_next[i,j]=np.random.rand()
-                    t_next[i]=np.random.rand();
-                if np.isnan(vel[i,j]) or vel[i,j]==0:
-                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    acc_next[i,j]=np.random.rand()
-                    tim_next[i]=np.random.rand();
-                if np.isnan(tim_next[i]) or tim_next[i]==0:
-                    pop_next[i,j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    acc_next[i,j]=np.random.rand()
-                    tim_next[i]=np.random.rand();
-        return pop_next,acc_next,tim_next
-
-
+                if self.flock[i].pos[j]>=self.upper_bounds[j] or self.flock[i].pos[j]<=self.lower_bounds[j]:
+                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=np.random.rand()
+                    self.flock[i].tim=np.random.rand()
+                if np.isnan(self.flock[i].acc[j]) or self.flock[i].acc[j]==0:
+                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=np.random.rand()
+                    self.flock[i].tim=np.random.rand()
+                if np.isnan(self.flock[i].vel[j]) or self.flock[i].vel[j]==0:
+                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=np.random.rand()
+                    self.flock[i].tim=np.random.rand()
+                if np.isnan(self.flock[i].tim) or self.flock[i].tim==0:
+                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=np.random.rand()
+                    self.flock[i].tim=np.random.rand()
+        return
