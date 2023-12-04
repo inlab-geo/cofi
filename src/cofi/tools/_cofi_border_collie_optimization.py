@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+np.seterr(divide='ignore', invalid='ignore')
 
 from . import BaseInferenceTool, error_handler
 
@@ -8,7 +9,7 @@ import random
 class CoFIBorderCollieOptimization(BaseInferenceTool):
     r"""Implentation of a Border Collie Optimization Algorithm
 
-	Loosely based on the ideas in T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
+    Loosely based on the ideas in T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
 
     """
     documentation_links = []        
@@ -84,21 +85,24 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
         
         self.pack_size=3
-        self.pack=[self.dog(self.mod_size)]*self.pack_size
+        self.pack=[]
         self.flock_size=self._params["flock_size"]
-        self.flock=[self.sheep(self.mod_size)]*self.flock_size
+        self.flock=[]
         self.seed = self._params["seed"]
         self.initialise()
-
         for itr in range(self.number_of_iterations):
             self.update_fitness()
-            print( self.itr_min_pos,"|",self.itr_min_fit)
+            #print( self.itr_min_pos,"|",self.itr_min_fit)
 
             if itr==0:
                 fit_min=self.itr_min_fit
                 res = {
                         "success": "maybe",
                         "model": self.itr_min_pos,
+                        "pack_fitness_history":self.pack_fit_hist,
+                        "flock_fitness_history":self.flock_fit_hist,
+                        "pack_position_history":self.pack_pos_hist,
+                        "flock_position_history":self.flock_pos_hist
                       }
 
             if fit_min>self.itr_min_fit:
@@ -106,6 +110,10 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                 res = {
                         "success": "maybe",
                         "model": self.itr_min_pos,
+                        "pack_fitness_history":self.pack_fit_hist,
+                        "flock_fitness_history":self.flock_fit_hist,
+                        "pack_position_history":self.pack_pos_hist,
+                        "flock_position_history":self.flock_pos_hist
                       }
                       
             # determin if a sheep needs eyeing
@@ -115,10 +123,21 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                     if self.flock_fit[idx]>self.flock_fit_prev[idx]:
                         sheep.eyed+=1
 
+    
+            dpos=[]            
+            for dog in self.pack:
+                dpos.append(dog.pos)
+            self.pack_pos_hist.append(dpos)
+            spos=[]
+    
+            for sheep in self.flock:
+                spos.append(sheep.pos)
+            self.flock_pos_hist.append(spos)
+
             self.dog2sheep2dog()
             self.update_movement()
             self.check_positions()
-
+            
         return res
     
     @error_handler(
@@ -134,7 +153,8 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
 
     def initialise(self):
-        for i,dog in enumerate(self.pack):
+        for i in range(self.pack_size):
+            self.pack.append(self.dog(self.mod_size))
             if self.initial_model!=[]:
                 self.pack[i].pos=self.initial_model
             else:
@@ -142,8 +162,8 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.pack[i].vel = np.random.default_rng().uniform(size=self.mod_size)
             self.pack[i].acc = np.random.default_rng().uniform(size=self.mod_size)
             self.pack[i].tim = np.random.default_rng().uniform(size=self.mod_size)
-
-        for i,sheep in enumerate(self.flock):
+        for i in range(self.flock_size):
+            self.flock.append(self.sheep(self.mod_size))
             if self.initial_model!=[]:
                 self.flock[i].pos=self.initial_model
             else:
@@ -151,13 +171,18 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.flock[i].vel = np.random.default_rng().uniform(size=self.mod_size)
             self.flock[i].acc = np.random.default_rng().uniform(size=self.mod_size)
             self.flock[i].tim = np.random.default_rng().uniform(size=self.mod_size)
-
-            self.pack_fit=np.zeros(self.pack_size)
-            self.flock_fit=np.zeros(self.flock_size)
-            self.pop_fit=np.zeros(self.pack_size+self.flock_size)
+            #print(self.flock[i].pos)
+        
+        self.pack_fit=np.zeros(self.pack_size)
+        self.flock_fit=np.zeros(self.flock_size)
+        self.pop_fit=np.zeros(self.pack_size+self.flock_size)
 
         self.pack_fit_hist=[]
         self.flock_fit_hist=[]
+        
+        self.pack_pos_hist=[]
+        self.flock_pos_hist=[]
+        
         return
 
 
@@ -168,6 +193,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         
         for i,dog in enumerate(self.pack):
             self.pack_fit[i]=self.inv_problem.objective(self.pack[i].pos)
+            #print(i,self.pack_fit[i],self.pack[i].pos)
             self.pack[i].fit=self.pack_fit[i]
             self.pop_fit[i]=self.pack_fit[i]
         for i,sheep in enumerate(self.flock):
@@ -196,9 +222,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
     
         fit=self.pop_fit.sort()
         idx=self.pop_fit.argsort()
-        popl=self.pack+self.flock
-
-
+        popl=copy.copy(self.pack+self.flock)
         for i,dog in enumerate(self.pack):
             self.pack[i].pos=popl[idx[i]].pos
             self.pack[i].vel=popl[idx[i]].vel
@@ -212,7 +236,6 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.flock[i].acc=popl[idx[i+self.pack_size]].acc
             self.flock[i].tim=popl[idx[i+self.pack_size]].tim
             self.flock[i].fit=popl[idx[i+self.pack_size]].fit
-
         return
 
     def update_movement(self):
@@ -223,53 +246,63 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.pack[2]=copy.copy(self.pack[1])
             self.pack[1]=copy.copy(dog)
         
-        # update dog velocity and time
+        # update dog velocity, acceleration and time
         for i,dog in enumerate(self.pack):
             v0=self.pack[i].vel
-            self.pack[i].vel=self.pack[i].vel+self.pack[i].acc
-            self.pack[i].tim=np.mean(self.pack[i].vel-v0/self.pack[i].tim)
+            ## self.pack[i].vel=self.pack[i].vel+self.pack[i].acc
+            try:  
+                self.pack[i].vel=np.sqrt(self.pack[i].vel**2+2.0*self.pack[i].acc*self.pack[i].pos)
+            except:
+                self.pack[i].vel=0.0
+            self.pack[i].acc=(self.flock[i].vel-v0)/self.pack[i].tim
+            self.pack[i].tim=np.mean((self.pack[i].vel-v0)/self.pack[i].tim)
             
-            
+        # update dog position
+        for i,dog in enumerate(self.pack):
+            ## self.pack[i].pos=self.pack[i].pos+self.pack[i].vel
+            self.pack[i].pos=self.pack[i].vel*self.pack[i].tim+0.5*self.pack[i].acc*self.pack[i].tim**2
+
+
         # update sheep velocity acceleration and time
         for i,sheep in enumerate(self.flock):
             dg=(self.pack[0].fit-self.flock[i].fit)-(((self.pack[1].fit+self.pack[2].fit)/2.0)-self.flock[i].fit)
             v0=self.flock[i].vel
             if dg>=0.0: # sheep is gathered
-                self.flock[i].vel=self.pack[0].vel+self.pack[0].acc/self.pack[0].tim
-                
+                ## self.flock[i].vel=self.pack[0].vel+self.pack[0].acc/self.pack[0].tim
+                try:
+                    self.flock[i].vel=np.sqrt(self.flock[i].vel+2.0*self.flock[i].acc*self.flock[i].pos)
+                except:
+                    sefl.flock[i].vel=0.0
+
             if dg<0.0:
                 if self.flock[i].eyed<5:
                     tan_theta=np.tan(np.random.randint(1,high=90))
-                    vl = self.pack[1].vel*tan_theta+self.pack[1].acc
+                    ##vl = self.pack[1].vel*tan_theta+self.pack[1].acc
+                    vl = np.sqrt((self.pack[1].vel*tan_theta)**2+2.0*self.pack[1].acc*self.pack[1].pos)
                     tan_theta=np.tan(np.random.randint(91,high=180))
-                    vr = self.pack[2].vel*tan_theta+self.pack[2].acc
+                    ##vr = self.pack[2].vel*tan_theta+self.pack[2].acc
+                    vr = np.sqrt((self.pack[2].vel*tan_theta)**2+2.0*self.pack[2].acc*self.pack[2].pos)
                     vs=(vl+vr)/2.0
                     self.flock[i].vel=vs
+                    
+                    
                 else:
                     self.flock[i].eyed=0
                     if self.pack[1].fit<self.pack[2].fit:
-                        self.flock[i].vel=self.pack[2].vel-self.pack[2].acc/self.pack[2].tim
+                        ## self.flock[i].vel=self.pack[2].vel-self.pack[2].acc/self.pack[2].tim
+                        self.flock[i].vel=np.sqrt(self.pack[2].vel**2-2.0*self.pack[2].acc*self.pack[2].pos)
                     else:
-                        self.flock[i].vel=self.pack[1].vel-self.pack[1].acc/self.pack[2].tim
-        
-            # update acceleration
+                        ## self.flock[i].vel=self.pack[1].vel-self.pack[1].acc/self.pack[1].tim
+                        self.flock[i].vel=np.sqrt(self.pack[1].vel**2-2.0*self.pack[1].acc*self.pack[1].pos)
             self.flock[i].acc=(self.flock[i].vel-v0)/self.flock[i].tim
-
-            # update time
             self.flock[i].tim=np.mean((self.flock[i].vel-v0)/self.flock[i].acc)
 
-
-
-    def update_positon(self):
-    
-        # update dog velocity and time
-        for i,dog in enumerate(self.pack):
-            self.pack[i].pos=self.pack[i].pos+self.pack[i].vel
-    
-        # update sheep velocity acceleration and time
-        for i,sheep in enumerate(self.flock):
-            self.flock[i].pos=self.flock[i].pos+self.flock[i].vel
-            
+            if dg>=0.0:
+                self.flock[i].pos=self.flock[i].vel*self.flock[i].tim+0.5*self.flock[i].acc*self.flock[i].tim**2
+            if dg<0.0:
+                self.flock[i].pos=self.flock[i].vel*self.flock[i].tim-0.5*self.flock[i].acc*self.flock[i].tim**2
+                if self.flock[i].eyed>=5:
+                    self.flock[i].eyed=0
         return
 
     def check_positions(self):
