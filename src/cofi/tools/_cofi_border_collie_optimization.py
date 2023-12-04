@@ -76,7 +76,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.initial_model = inv_problem.initial_model
         except:
             self.initial_model = self.optional_in_problem()["initial_model"]
-        np.random.seed(self._params["seed"])
+        self.rng=np.random.default_rng(self._params["seed"])
         # number of iterations
         self.number_of_iterations = self._params["number_of_iterations"]
 
@@ -88,24 +88,21 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         self.pack=[]
         self.flock_size=self._params["flock_size"]
         self.flock=[]
-        self.seed = self._params["seed"]
         self.initialise()
         for itr in range(self.number_of_iterations):
             self.update_fitness()
             #print( self.itr_min_pos,"|",self.itr_min_fit)
+            # determin if a sheep needs eyeing
+            if itr>0:
+                for idx,sheep in enumerate(self.flock):
+                    if self.flock_fit[idx]>self.flock_fit_prev[idx]:
+                        sheep.eyed+=1
 
-            if itr==0:
-                fit_min=self.itr_min_fit
-                res = {
-                        "success": "maybe",
-                        "model": self.itr_min_pos,
-                        "pack_fitness_history":self.pack_fit_hist,
-                        "flock_fitness_history":self.flock_fit_hist,
-                        "pack_position_history":self.pack_pos_hist,
-                        "flock_position_history":self.flock_pos_hist
-                      }
 
-            if fit_min>self.itr_min_fit:
+            self.dog2sheep2dog()
+            
+            
+            if itr==0 or fit_min>self.itr_min_fit:
                 fit_min=self.itr_min_fit
                 res = {
                         "success": "maybe",
@@ -116,25 +113,16 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                         "flock_position_history":self.flock_pos_hist
                       }
                       
-            # determin if a sheep needs eyeing
-
-            if itr>0:
-                for idx,sheep in enumerate(self.flock):
-                    if self.flock_fit[idx]>self.flock_fit_prev[idx]:
-                        sheep.eyed+=1
-
+                dpos=[]
+                for dog in self.pack:
+                    dpos.append(dog.pos)
+                self.pack_pos_hist.append(dpos)
+                spos=[]
     
-            dpos=[]            
-            for dog in self.pack:
-                dpos.append(dog.pos)
-            self.pack_pos_hist.append(dpos)
-            spos=[]
-    
-            for sheep in self.flock:
-                spos.append(sheep.pos)
-            self.flock_pos_hist.append(spos)
-
-            self.dog2sheep2dog()
+                for sheep in self.flock:
+                    spos.append(sheep.pos)
+                self.flock_pos_hist.append(spos)
+             
             self.update_movement()
             self.check_positions()
             
@@ -158,19 +146,19 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             if self.initial_model!=[]:
                 self.pack[i].pos=self.initial_model
             else:
-                self.pack[i].pos=np.random.rand(self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
-            self.pack[i].vel = np.random.default_rng().uniform(size=self.mod_size)
-            self.pack[i].acc = np.random.default_rng().uniform(size=self.mod_size)
-            self.pack[i].tim = np.random.default_rng().uniform(size=self.mod_size)
+                self.pack[i].pos=self.rng.uniform(size=self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
+            self.pack[i].vel =  self.rng.uniform(size=self.mod_size)
+            self.pack[i].acc =  self.rng.uniform(size=self.mod_size)
+            self.pack[i].tim =  self.rng.uniform(size=self.mod_size)
         for i in range(self.flock_size):
             self.flock.append(self.sheep(self.mod_size))
             if self.initial_model!=[]:
                 self.flock[i].pos=self.initial_model
             else:
                 self.flock[i].pos=np.random.rand(self.mod_size)*(self.upper_bounds-self.lower_bounds)+self.lower_bounds
-            self.flock[i].vel = np.random.default_rng().uniform(size=self.mod_size)
-            self.flock[i].acc = np.random.default_rng().uniform(size=self.mod_size)
-            self.flock[i].tim = np.random.default_rng().uniform(size=self.mod_size)
+            self.flock[i].vel =  self.rng.uniform(size=self.mod_size)
+            self.flock[i].acc =  self.rng.uniform(size=self.mod_size)
+            self.flock[i].tim =  self.rng.uniform(size=self.mod_size)
             #print(self.flock[i].pos)
         
         self.pack_fit=np.zeros(self.pack_size)
@@ -276,10 +264,10 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
             if dg<0.0:
                 if self.flock[i].eyed<5:
-                    tan_theta=np.tan(np.random.randint(1,high=90))
+                    tan_theta=np.tan(self.rng.integers(1,high=90))
                     ##vl = self.pack[1].vel*tan_theta+self.pack[1].acc
                     vl = np.sqrt((self.pack[1].vel*tan_theta)**2+2.0*self.pack[1].acc*self.pack[1].pos)
-                    tan_theta=np.tan(np.random.randint(91,high=180))
+                    tan_theta=np.tan(self.rng.integers(91,high=180))
                     ##vr = self.pack[2].vel*tan_theta+self.pack[2].acc
                     vr = np.sqrt((self.pack[2].vel*tan_theta)**2+2.0*self.pack[2].acc*self.pack[2].pos)
                     vs=(vl+vr)/2.0
@@ -310,38 +298,38 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
         for i in range(self.pack_size):
             for j in range(self.mod_size):
                 if self.pack[i].pos[j]>=self.upper_bounds[j] or self.pack[i].pos[j]<=self.lower_bounds[j]:
-                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.pack[i].acc[j]=np.random.rand()
-                    self.pack[i].tim=np.random.rand()
+                    self.pack[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=self.rng.uniform()
+                    self.pack[i].tim=self.rng.uniform()
                 if np.isnan(self.pack[i].acc[j]) or self.pack[i].acc[j]==0:
-                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.pack[i].acc[j]=np.random.rand()
-                    self.pack[i].tim=np.random.rand()
+                    self.pack[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=self.rng.uniform()
+                    self.pack[i].tim=self.rng.uniform()
                 if np.isnan(self.pack[i].vel[j]) or self.pack[i].vel[j]==0:
-                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.pack[i].acc[j]=np.random.rand()
-                    self.pack[i].tim=np.random.rand()
+                    self.pack[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=self.rng.uniform()
+                    self.pack[i].tim=self.rng.uniform()
                 if np.isnan(self.pack[i].tim) or self.pack[i].tim==0:
-                    self.pack[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.pack[i].acc[j]=np.random.rand()
-                    self.pack[i].tim=np.random.rand()
+                    self.pack[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.pack[i].acc[j]=self.rng.uniform()
+                    self.pack[i].tim=self.rng.uniform()
 
         for i in range(self.flock_size):
             for j in range(self.mod_size):
                 if self.flock[i].pos[j]>=self.upper_bounds[j] or self.flock[i].pos[j]<=self.lower_bounds[j]:
-                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.flock[i].acc[j]=np.random.rand()
-                    self.flock[i].tim=np.random.rand()
+                    self.flock[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=self.rng.uniform()
+                    self.flock[i].tim=self.rng.uniform()
                 if np.isnan(self.flock[i].acc[j]) or self.flock[i].acc[j]==0:
-                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.flock[i].acc[j]=np.random.rand()
-                    self.flock[i].tim=np.random.rand()
+                    self.flock[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=self.rng.uniform()
+                    self.flock[i].tim=self.rng.uniform()
                 if np.isnan(self.flock[i].vel[j]) or self.flock[i].vel[j]==0:
-                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.flock[i].acc[j]=np.random.rand()
-                    self.flock[i].tim=np.random.rand()
+                    self.flock[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=self.rng.uniform()
+                    self.flock[i].tim=self.rng.uniform()
                 if np.isnan(self.flock[i].tim) or self.flock[i].tim==0:
-                    self.flock[i].pos[j]=np.random.rand()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
-                    self.flock[i].acc[j]=np.random.rand()
-                    self.flock[i].tim=np.random.rand()
+                    self.flock[i].pos[j]=self.rng.uniform()*(self.upper_bounds[j]-self.lower_bounds[j])+self.lower_bounds[j]
+                    self.flock[i].acc[j]=self.rng.uniform()
+                    self.flock[i].tim=self.rng.uniform()
         return
