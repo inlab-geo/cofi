@@ -9,7 +9,8 @@ import random
 class CoFIBorderCollieOptimization(BaseInferenceTool):
     r"""Implentation of a Border Collie Optimization Algorithm
 
-    Loosely based on the ideas in T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
+    Based on the ideas in T. Dutta, S. Bhattacharyya, S. Dey and J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 2020, doi: 10.1109/ACCESS.2020.2999540
+    https://ieeexplore.ieee.org/document/9106341
 
     """
     documentation_links = []        
