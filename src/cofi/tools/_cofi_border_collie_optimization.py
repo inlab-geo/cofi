@@ -98,12 +98,11 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                     if self.flock_fit[idx]>self.flock_fit_prev[idx]:
                         sheep.eyed+=1
 
-
-            self.dog2sheep2dog()
-            
-            
             if itr==0 or fit_min>self.itr_min_fit:
                 fit_min=self.itr_min_fit
+                
+                
+                
                 res = {
                         "success": "maybe",
                         "model": self.itr_min_pos,
@@ -122,7 +121,22 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                 for sheep in self.flock:
                     spos.append(sheep.pos)
                 self.flock_pos_hist.append(spos)
-             
+            
+                self.dog2sheep2dog()
+            
+                dpos=[]
+                for dog in self.pack:
+                    dpos.append(dog.pos)
+                self.pack_pos_hist.append(dpos)
+                spos=[]
+    
+                for sheep in self.flock:
+                    spos.append(sheep.pos)
+                self.flock_pos_hist.append(spos)
+            
+            else:
+                self.dog2sheep2dog()
+
             self.update_movement()
             self.check_positions()
             
@@ -208,22 +222,22 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
     def dog2sheep2dog(self):
     
-        fit=self.pop_fit.sort()
         idx=self.pop_fit.argsort()
         popl=copy.copy(self.pack+self.flock)
+        
         for i,dog in enumerate(self.pack):
-            self.pack[i].pos=popl[idx[i]].pos
-            self.pack[i].vel=popl[idx[i]].vel
-            self.pack[i].acc=popl[idx[i]].acc
-            self.pack[i].tim=popl[idx[i]].tim
-            self.pack[i].fit=popl[idx[i]].fit
+            self.pack[i].pos=copy.copy(popl[idx[i]].pos)
+            self.pack[i].vel=copy.copy(popl[idx[i]].vel)
+            self.pack[i].acc=copy.copy(popl[idx[i]].acc)
+            self.pack[i].tim=copy.copy(popl[idx[i]].tim)
+            self.pack[i].fit=copy.copy(popl[idx[i]].fit)
 
         for i,sheep in enumerate(self.flock):
-            self.flock[i].pos=popl[idx[i+self.pack_size]].pos
-            self.flock[i].vel=popl[idx[i+self.pack_size]].vel
-            self.flock[i].acc=popl[idx[i+self.pack_size]].acc
-            self.flock[i].tim=popl[idx[i+self.pack_size]].tim
-            self.flock[i].fit=popl[idx[i+self.pack_size]].fit
+            self.flock[i].pos=copy.copy(popl[idx[i+self.pack_size]].pos)
+            self.flock[i].vel=copy.copy(popl[idx[i+self.pack_size]].vel)
+            self.flock[i].acc=copy.copy(popl[idx[i+self.pack_size]].acc)
+            self.flock[i].tim=copy.copy(popl[idx[i+self.pack_size]].tim)
+            self.flock[i].fit=copy.copy(popl[idx[i+self.pack_size]].fit)
         return
 
     def update_movement(self):
