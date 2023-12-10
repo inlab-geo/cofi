@@ -57,7 +57,6 @@ solving_methods = set(inference_tools_table.keys())
 BaseSolver = BaseInferenceTool
 
 
-
 # Extra information for InLab Explorer
 # link_doc: CoFI -> https://cofi.readthedocs.io
 # link_git: CoFI -> https://github.com/inlab-geo/cofi
