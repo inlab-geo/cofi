@@ -3,6 +3,8 @@ matplotlib>=3.5
 arviz>=0.10.0
 emcee
 findiff
+pytorch
+bayesbay
 pytest
 coverage[toml]
 sphinx==4.5.0
@@ -18,3 +20,4 @@ papermill
 jupyterlab
 versioningit==2.1.0
 seislib>=0.6.10
+git+https://github.com/miili/pysurf96.git

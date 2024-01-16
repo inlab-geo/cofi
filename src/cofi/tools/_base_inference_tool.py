@@ -310,8 +310,10 @@ def error_handler(when, context):
                 return func(*args, **kwargs)
             except Exception as e:
                 raise CofiError(
-                    f"error ocurred {when} ({context}). Check exception details "
-                    "from message above.",
+                    (
+                        f"error ocurred {when} ({context}). Check exception details "
+                        "from message above."
+                    ),
                 ) from e
 
         return wrapped_func

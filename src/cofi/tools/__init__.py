@@ -18,7 +18,7 @@ __all__ = [
     "Emcee",
     "CoFISimpleNewton",
     "PyTorchOptim",
-    "BayesBridge",
+    "BayesBay",
     "CoFIBorderCollieOptimization",
 ]
 

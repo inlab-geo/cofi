@@ -3,14 +3,17 @@ import functools
 from . import BaseInferenceTool, error_handler
 
 
-class BayesBridge(BaseInferenceTool):
-    r"""Wrapper for the tool Bayes Bridge, a trans-dimensional reversible jump Bayesian
+class BayesBay(BaseInferenceTool):
+    r"""Wrapper for the tool BayesBay, a trans-dimensional reversible jump Bayesian
     sampling framework
-
-    FIXME Any extra information about the tool
     """
-    documentation_links = []  # FIXME required
-    short_description = []  # FIXME required
+    documentation_links = [
+        "https://bayes-bay.readthedocs.io/en/latest/api/generated/bayesbay.BaseBayesianInversion.html#bayesbay.BaseBayesianInversion"
+    ]
+    short_description = [
+        "Wrapper for BayesBay, a trans-dimensional reversible jump Bayesian sampling"
+        "framework"
+    ]
 
     @classmethod
     def required_in_problem(cls) -> set:
@@ -18,7 +21,7 @@ class BayesBridge(BaseInferenceTool):
 
     @classmethod
     def optional_in_problem(cls) -> dict:
-        return {"log_likelihood", "log_prior"}
+        return {"log_likelihood": None}
 
     @classmethod
     def required_in_options(cls) -> set:
@@ -30,7 +33,7 @@ class BayesBridge(BaseInferenceTool):
 
     @classmethod
     def available_algorithms(cls) -> set:
-        import bayesbridge as bb
+        import bayesbay as bb
 
         return {s for s in bb.samplers.__all__ if s != "Sampler"}
 
@@ -50,36 +53,29 @@ class BayesBridge(BaseInferenceTool):
         return res
 
     @error_handler(
-        when="when initializating bayesbridge.BaseBayesianInversion",
+        when="when initializating bayesbay.BaseBayesianInversion",
         context="in the process of preparing",
     )
     def _initialize_bb_inversion(self):
-        _log_prior_defined = self.inv_problem.log_prior_defined
         _log_like_defined = self.inv_problem.log_likelihood_defined
         assert not (
-            not _log_prior_defined and self._params["log_prior_ratio_funcs"] is None
-        )
-        assert not (
             not _log_like_defined and self._params["log_like_ratio_func"] is None
-        )
+        ), "at least one of `log_likelihood` and `log_like_ratio_func` to be defined"
 
-        import bayesbridge as bb
+        import bayesbay as bb
 
         self._bb_bayes_inversion = bb.BaseBayesianInversion(
             walkers_starting_models=self._params["walkers_starting_models"],
             perturbation_funcs=self._params["perturbation_funcs"],
-            log_prior_func=self.inv_problem.log_prior if _log_prior_defined else None,
-            log_likelihood_func=self.inv_problem.log_likelihood
-            if _log_like_defined
-            else None,
-            log_prior_ratio_funcs=self._params["log_prior_ratio_funcs"],
+            log_likelihood_func=self.inv_problem.log_likelihood if _log_like_defined \
+                else None,
             log_like_ratio_func=self._params["log_like_ratio_func"],
             n_chains=self._params["n_chains"],
             n_cpus=self._params["n_cpus"],
         )
 
     @error_handler(
-        when="when calling bayesbridge.BaseBayesianInversion.run method",
+        when="when calling bayesbay.BaseBayesianInversion.run method",
         context="in the process of solving",
     )
     def _call_backend_tool(self):
@@ -96,14 +92,13 @@ class BayesBridge(BaseInferenceTool):
 @functools.lru_cache(maxsize=None)
 def _inspect_default_options():
     import inspect
-    from bayesbridge import BaseBayesianInversion
+    from bayesbay import BaseBayesianInversion
 
     _bb_inv_init_args = dict(inspect.signature(BaseBayesianInversion).parameters)
     optional_in_options: dict = {
         k: v.default
         for k, v in _bb_inv_init_args.items()
-        if v.default is not inspect._empty
-        and (k != "log_prior_func" and k != "log_likelihood_func")
+        if v.default is not inspect._empty and k != "log_likelihood_func"
     }
     _bb_inv_run_args = dict(inspect.signature(BaseBayesianInversion.run).parameters)
     optional_in_options.update(
@@ -116,6 +111,6 @@ def _inspect_default_options():
     return optional_in_options
 
 
-# CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> bayesbridge -> Reversible Jump Bayesian Sampling
-# description: Reversible Jump Bayesian Inference with trans-dimensional and hierarchical features.
-# documentation: TBD
+# CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> BayesBay -> Reversible Jump Bayesian Sampling
+# description: Reversible Jump Bayesian Inference with trans-dimensional and hierarchical features
+# documentation: https://bayes-bay.readthedocs.io
