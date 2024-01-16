@@ -6,12 +6,14 @@
 
 Computation times
 =================
-**01:18.826** total execution time for **examples_generated_synth_data** files:
+**00:06.487** total execution time for **examples_generated_synth_data** files:
 
 +---------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography_regularization_discussion.py` (``fmm_tomography_regularization_discussion.py``) | 01:10.353 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_synth_data_modified_himmelblau.py` (``modified_himmelblau.py``)                                           | 00:06.487 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``fmm_tomography.py``)                                                     | 00:08.474 | 0.0 MB |
+| :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``fmm_tomography.py``)                                                     | 00:00.000 | 0.0 MB |
++---------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography_regularization_discussion.py` (``fmm_tomography_regularization_discussion.py``) | 00:00.000 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
 | :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py` (``linear_regression.py``)                                               | 00:00.000 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------------------------------------+-----------+--------+
