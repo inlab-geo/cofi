@@ -7,8 +7,8 @@ from . import BaseInferenceTool, error_handler
 class CoFIBorderCollieOptimization(BaseInferenceTool):
     r"""Implentation of a Border Collie Optimization Algorithm
 
-    Based on the concepts and equations given in T. Dutta, S. Bhattacharyya, S. Dey and 
-    J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197, 
+    Based on the concepts and equations given in T. Dutta, S. Bhattacharyya, S. Dey and
+    J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197,
     2020, doi: 10.1109/ACCESS.2020.2999540 https://ieeexplore.ieee.org/document/9106341
     """
     documentation_links = []
@@ -132,7 +132,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
         return res
 
-    # The following are useful functions used by the main optimiser but it makes sense 
+    # The following are useful functions used by the main optimiser but it makes sense
     # to keep them seperate
 
     def initialise(self):
