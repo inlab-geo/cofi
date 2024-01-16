@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from cofi.tools import CoFIBorderCollieOptimization
-from cofi import BaseProblem, InversionOptions, Inversion
+from cofi import BaseProblem, InversionOptions
 
 def rosen(x):
     a=1.0
@@ -32,3 +32,12 @@ def test_run(problem_setup):
     d=np.sqrt((1-res["model"][0])**2+(1-res["model"][1])**2)
     assert d<0.2
 
+def test_run_initial_model(problem_setup):
+    inv_problem, inv_options = problem_setup
+    inv_problem.set_initial_model(-10*np.ones((2,)))
+    solver = CoFIBorderCollieOptimization(inv_problem, inv_options)
+    res = solver()
+    # test if we are somewhat close to the global minimum
+    print(res["model"])
+    d=np.sqrt((1-res["model"][0])**2+(1-res["model"][1])**2)
+    assert d<0.2

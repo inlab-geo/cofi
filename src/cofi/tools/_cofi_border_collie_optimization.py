@@ -132,20 +132,13 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
 
         return res
 
-    @error_handler(
-        when="FIXME (e.g. when solving / calling ...)",
-        context="FIXME (e.g. in the process of solving / preparing)",
-    )
-    def _call_backend_tool(self):  # FIXME implementation required
-        raise NotImplementedError
-
-    # The following are useful functions used by the main optimiser but it makes sense to keep them
-    # seperate
+    # The following are useful functions used by the main optimiser but it makes sense 
+    # to keep them seperate
 
     def initialise(self):
         for i in range(self.pack_size):
             self.pack.append(self.dog(self.mod_size))
-            if self.initial_model != []:
+            if isinstance(self.initial_model, np.ndarray) or self.initial_model:
                 self.pack[i].pos = self.initial_model
             else:
                 self.pack[i].pos = (
@@ -158,7 +151,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
             self.pack[i].tim = self.rng.uniform(size=self.mod_size)
         for i in range(self.flock_size):
             self.flock.append(self.sheep(self.mod_size))
-            if self.initial_model != []:
+            if isinstance(self.initial_model, np.ndarray) or self.initial_model:
                 self.flock[i].pos = self.initial_model
             else:
                 self.flock[i].pos = (
@@ -248,8 +241,9 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                 self.pack[i].vel = np.sqrt(
                     self.pack[i].vel ** 2 + 2.0 * self.pack[i].acc * self.pack[i].pos
                 )
+                assert not np.any(np.isnan(self.pack[i].vel))
             except:
-                self.pack[i].vel = 0.0
+                self.pack[i].vel = np.zeros(np.shape(self.pack[i].pos))
             self.pack[i].acc = (self.flock[i].vel - v0) / self.pack[i].tim
             self.pack[i].tim = np.mean((self.pack[i].vel - v0) / self.pack[i].tim)
 
@@ -273,8 +267,9 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                     self.flock[i].vel = np.sqrt(
                         self.flock[i].vel + 2.0 * self.flock[i].acc * self.flock[i].pos
                     )
+                    assert not np.any(np.isnan(self.flock[i].vel))
                 except:
-                    sefl.flock[i].vel = 0.0
+                    self.flock[i].vel = np.zeros(np.shape(self.flock[i].pos))
 
             if dg < 0.0:
                 if self.flock[i].eyed < 5:
@@ -321,7 +316,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                     - 0.5 * self.flock[i].acc * self.flock[i].tim ** 2
                 )
                 if self.flock[i].eyed >= 5:
-                    self.flock[i].eyed = 0
+                    self.flock[i].eyed = 0.0
         return
 
     def check_positions(self):
