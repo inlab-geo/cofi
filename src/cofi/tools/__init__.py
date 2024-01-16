@@ -7,6 +7,8 @@ from ._emcee import Emcee
 from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
 from ._cofi_border_collie_optimization import CoFIBorderCollieOptimization
+from ._bayes_bay import BayesBay
+
 
 __all__ = [
     "BaseInferenceTool",  # public API, for advanced usage (own solver)
@@ -16,6 +18,7 @@ __all__ = [
     "Emcee",
     "CoFISimpleNewton",
     "PyTorchOptim",
+    "BayesBay",
     "CoFIBorderCollieOptimization",
 ]
 
@@ -32,7 +35,10 @@ inference_tools_table = {
         "scipy.linalg.lstsq": ScipyLstSq,
         "cofi.simple_newton": CoFISimpleNewton,
     },
-    "sampling": {"emcee": Emcee},
+    "sampling": {
+        "emcee": Emcee,
+        "bayesbay": BayesBay,
+    },
 }
 
 # inference tools suggest table grouped by method: {inv_options.method -> inv_options.tool}

@@ -2,6 +2,18 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.5 (16/01/2024)
+
+### CoFI Tools
+
+- New tool: BayesBay
+
+## v0.2.4 (16/01/2024)
+
+### CoFI Tools
+
+- New tool: CoFI's implementation of the Border Collie Optimization algorithm
+
 ## v0.2.3 (31/07/2023)
 
 ### CoFI Utils
