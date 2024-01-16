@@ -6,7 +6,7 @@ from ._scipy_lstsq import ScipyLstSq
 from ._emcee import Emcee
 from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
-
+from ._cofi_border_collie_optimization import CoFIBorderCollieOptimization
 
 __all__ = [
     "BaseInferenceTool",  # public API, for advanced usage (own solver)
@@ -16,6 +16,7 @@ __all__ = [
     "Emcee",
     "CoFISimpleNewton",
     "PyTorchOptim",
+    "CoFIBorderCollieOptimization",
 ]
 
 # inference tools table grouped by method:
@@ -25,6 +26,7 @@ inference_tools_table = {
         "scipy.optimize.minimize": ScipyOptMin,
         "scipy.optimize.least_squares": ScipyOptLstSq,
         "torch.optim": PyTorchOptim,
+        "cofi.border_collie_optimization": CoFIBorderCollieOptimization,
     },
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSq,
