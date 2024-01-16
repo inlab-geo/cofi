@@ -315,8 +315,6 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                     self.flock[i].vel * self.flock[i].tim
                     - 0.5 * self.flock[i].acc * self.flock[i].tim ** 2
                 )
-                if self.flock[i].eyed >= 5:
-                    self.flock[i].eyed = 0.0
         return
 
     def check_positions(self):
