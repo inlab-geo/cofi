@@ -65,6 +65,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Modified Himmelblau function">
+
+.. only:: html
+
+  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_modified_himmelblau_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_synth_data_modified_himmelblau.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Modified Himmelblau function</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Non-linear Curve Fitting">
 
 .. only:: html
@@ -159,6 +176,7 @@ Synthetic Examples
    /examples/generated/synth_data/fmm_tomography
    /examples/generated/synth_data/fmm_tomography_regularization_discussion
    /examples/generated/synth_data/linear_regression
+   /examples/generated/synth_data/modified_himmelblau
    /examples/generated/synth_data/nonlinear_curve_fitting
    /examples/generated/synth_data/pygimli_dcip
    /examples/generated/synth_data/pygimli_ert
