@@ -20,7 +20,7 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
     .. tab-item:: venv
 
-      Ensure you have `python>=3.7`. Then, you can create a new virtual environment by 
+      Ensure you have `python>=3.8`. Then, you can create a new virtual environment by 
       running the command:
 
       .. code-block:: console

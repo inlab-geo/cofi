@@ -6,7 +6,8 @@ from ._scipy_lstsq import ScipyLstSq
 from ._emcee import Emcee
 from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
-from ._bayes_bridge import BayesBridge
+from ._cofi_border_collie_optimization import CoFIBorderCollieOptimization
+from ._bayes_bay import BayesBay
 
 
 __all__ = [
@@ -18,6 +19,7 @@ __all__ = [
     "CoFISimpleNewton",
     "PyTorchOptim",
     "BayesBridge",
+    "CoFIBorderCollieOptimization",
 ]
 
 # inference tools table grouped by method:
@@ -27,6 +29,7 @@ inference_tools_table = {
         "scipy.optimize.minimize": ScipyOptMin,
         "scipy.optimize.least_squares": ScipyOptLstSq,
         "torch.optim": PyTorchOptim,
+        "cofi.border_collie_optimization": CoFIBorderCollieOptimization,
     },
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSq,
@@ -34,7 +37,7 @@ inference_tools_table = {
     },
     "sampling": {
         "emcee": Emcee,
-        "bayesbridge": BayesBridge,
+        "bayesbay": BayesBay,
     },
 }
 
