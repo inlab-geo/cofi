@@ -394,3 +394,8 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
                     self.flock[i].acc[j] = self.rng.uniform()
                     self.flock[i].tim = self.rng.uniform()
         return
+
+
+# CoFI -> Ensemble methods -> Direct search -> Monte Carlo -> cofi.border_collie_optimization -> Border Collie Optimization Algorithm
+# description: Implementation of a Border Collie Optimization Algorithm, based on the concepts and equations given in Dutta et al., IEEE Access, 2020.
+# documentation: https://ieeexplore.ieee.org/document/9106341

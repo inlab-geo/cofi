@@ -112,6 +112,14 @@ def _inspect_default_options():
     return optional_in_options
 
 
-# CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> BayesBay -> Reversible Jump Bayesian Sampling
-# description: Reversible Jump Bayesian Inference with trans-dimensional and hierarchical features
-# documentation: https://bayes-bay.readthedocs.io
+# CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> bayesbay -> VanillaSampler
+# description: Sampling the posterior by means of reversible-jump Markov chain Monte Carlo.
+# documentation: https://bayes-bay.readthedocs.io/en/latest/api/generated/bayesbay.samplers.VanillaSampler.html
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> bayesbay -> ParallelTempering
+# description: Sampling the posterior by means of reversible-jump Markov chain Monte Carlo accelerated with parallel tempering.
+# documentation: https://bayes-bay.readthedocs.io/en/latest/api/generated/bayesbay.samplers.ParallelTempering.html
+
+# CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> bayesbay -> SimulatedAnnealing
+# description: Sampling the posterior by means of reversible-jump Markov chain Monte Carlo accelerated with simulated annealing.
+# documentation: https://bayes-bay.readthedocs.io/en/latest/api/generated/bayesbay.samplers.SimulatedAnnealing.html

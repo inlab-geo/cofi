@@ -36,14 +36,14 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
         ensemble_methods(Ensemble methods):::cls_ensemble_methods;
         direct_search(Direct Search):::cls_ensemble_methods;
         amc(Monte Carlo):::cls_ensemble_methods;
-        amc_solverlist(Neighbourhood Algorithm <br> Bayesian Optimization <br> Slime mold algorithm<br>...):::cls_solvers;
+        amc_solverlist(Neighbourhood Algorithm <br> Bayesian Optimization <br> Slime mold algorithm <br> Border Collie Optimization <br> ...):::cls_solvers;
         ng(Deterministic):::cls_ensemble_methods;
         ng_solverlist(Nested grids <br> Hilbert Curves<br>...):::cls_solvers;
         bs(Bayesian Sampling):::cls_ensemble_methods;
         mcmc(McMC samplers):::cls_ensemble_methods;
         mcmc_solverlist(Basic metropolis<br>Affine Invariance sampler<br>emcee <br> pyMC <br> ...):::cls_solvers;
         rjmcmc(Trans-D McMC):::cls_ensemble_methods;
-        rjmcmc_solverlist(Basic Trans-D <br> RJ-mcmc):::cls_solvers;
+        rjmcmc_solverlist(Basic Trans-D <br> BayesBay <br> RJ-mcmc):::cls_solvers;
 
         cofi --> parameter_estimation;
         parameter_estimation --> linear;
