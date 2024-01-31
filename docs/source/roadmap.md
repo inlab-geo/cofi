@@ -64,7 +64,7 @@ The following documentation pages are planned to be written or expanded:
 
 ## Education materials
 
-***Workshops and talks*** are to be arranged ideally more often in 2023, once we have a 
+***Workshops and talks*** are to be arranged ideally more often in 2024, once we have a 
 relatively stable API and richer set of examples established. These will be in the
 field of both geoscience and more general scientific open source community.
 
