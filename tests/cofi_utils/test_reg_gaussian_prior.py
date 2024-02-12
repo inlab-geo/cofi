@@ -20,7 +20,7 @@ def test_byo_matrix():
 
 def test_matrix_construction_1D():
     corr_lengths = (1.0,)
-    sigma = 0.01
+    sigma = 0.01**2
     gp = GaussianPrior((corr_lengths, sigma), numpy.zeros((5,)))
     model = numpy.ones(5)
     # check regularization term
@@ -39,7 +39,7 @@ def test_matrix_construction_1D():
 
 def test_matrix_construction_2D():
     corr_lengths = (1.0, 1.0)
-    sigma = 0.01
+    sigma = 0.01**2
     gp = GaussianPrior((corr_lengths, sigma), numpy.zeros((3,3)))
     model = numpy.ones(9)
     # check regularization term
