@@ -83,9 +83,9 @@ class ScipyOptMin(BaseInferenceTool):
                 )
                 self._components_used.append(component)
             else:  # default
-                self._params[
-                    _optional_in_problem_map[component]
-                ] = self.optional_in_problem()[component]
+                self._params[_optional_in_problem_map[component]] = (
+                    self.optional_in_problem()[component]
+                )
 
     def __call__(self) -> dict:
         opt_result = self._call_np_minimize()

@@ -47,9 +47,9 @@ class PyTorchOptim(BaseInferenceTool):
                 param not in self.optional_in_options()
                 and param not in self.required_in_options()
             ):
-                inv_options.hyper_params["algorithm_params"][
-                    param
-                ] = inv_options.hyper_params.pop(param)
+                inv_options.hyper_params["algorithm_params"][param] = (
+                    inv_options.hyper_params.pop(param)
+                )
 
         # initialisation, validation
         super().__init__(inv_problem, inv_options)

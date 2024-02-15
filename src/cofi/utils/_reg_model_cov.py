@@ -132,12 +132,10 @@ class GaussianPrior(ModelCovariance):
         # generate grid of points for each dimension
         grids = np.meshgrid(*[np.arange(dim) for dim in model_shape], indexing="ij")
         # calculate distances between points for each pair of dimensions
-        d_squared = sum(
-            [
-                (grid.ravel()[None, :] - grid.ravel()[:, None]) ** 2 / corr_length**2
-                for grid, corr_length in zip(grids, corr_lengths)
-            ]
-        )
+        d_squared = sum([
+            (grid.ravel()[None, :] - grid.ravel()[:, None]) ** 2 / corr_length**2
+            for grid, corr_length in zip(grids, corr_lengths)
+        ])
         # construct correlation matrix
         Cp = np.exp(-np.sqrt(d_squared))
         # construct variance matrix

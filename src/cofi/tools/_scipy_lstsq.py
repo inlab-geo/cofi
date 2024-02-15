@@ -27,6 +27,7 @@ class ScipyLstSq(BaseInferenceTool):
       damping (zeroth order Tikhonov), roughening (first order Tikhonov), or smoothing
       (second order Tikhonov).
     """
+
     documentation_links = [
         "https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.lstsq.html",
         "https://www.netlib.org/lapack/lug/node27.html",
