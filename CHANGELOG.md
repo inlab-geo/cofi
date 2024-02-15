@@ -2,6 +2,17 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.6 (xx/02/2024)
+
+### CoFI Utils
+
+- `cofi.utils.GaussianPrior` matrix generation aligned with textbook
+  - sigma, instead of the square root of it is taken in now
+
+### CoFI Tools
+
+- BayesBay adjusted according to API change
+
 ## v0.2.5 (16/01/2024)
 
 ### CoFI Tools

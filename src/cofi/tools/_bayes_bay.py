@@ -25,7 +25,7 @@ class BayesBay(BaseInferenceTool):
 
     @classmethod
     def required_in_options(cls) -> set:
-        return {"perturbation_funcs", "walkers_starting_models"}
+        return {"perturbation_funcs", "walkers_starting_states"}
 
     @classmethod
     def optional_in_options(cls) -> dict:
@@ -65,9 +65,9 @@ class BayesBay(BaseInferenceTool):
         import bayesbay as bb
 
         self._bb_bayes_inversion = bb.BaseBayesianInversion(
-            walkers_starting_models=self._params["walkers_starting_models"],
+            walkers_starting_states=self._params["walkers_starting_states"],
             perturbation_funcs=self._params["perturbation_funcs"],
-            log_likelihood_func=self.inv_problem.log_likelihood
+            log_like_func=self.inv_problem.log_likelihood
             if _log_like_defined
             else None,
             log_like_ratio_func=self._params["log_like_ratio_func"],
