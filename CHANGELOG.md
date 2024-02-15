@@ -2,7 +2,7 @@
 
 <!--next-version-placeholder-->
 
-## v0.2.6 (xx/02/2024)
+## v0.2.6 (15/02/2024)
 
 ### CoFI Utils
 
