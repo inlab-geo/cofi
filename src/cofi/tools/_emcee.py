@@ -135,13 +135,11 @@ def _init_class_methods():
         for k, v in _emcee_EnsembleSampler_args.items()
         if k not in {"nwalkers", "ndim", "log_prob_fn", "self", "args", "kwargs"}
     }
-    optional_in_options.update(
-        {
-            k: v.default
-            for k, v in _emcee_EnsembleSampler_sample_args.items()
-            if k not in {"iterations", "self"}
-        }
-    )
+    optional_in_options.update({
+        k: v.default
+        for k, v in _emcee_EnsembleSampler_sample_args.items()
+        if k not in {"iterations", "self"}
+    })
     return (
         required_in_problem,
         optional_in_problem,

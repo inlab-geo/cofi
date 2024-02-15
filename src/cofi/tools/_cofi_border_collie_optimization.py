@@ -11,6 +11,7 @@ class CoFIBorderCollieOptimization(BaseInferenceTool):
     J. Platos, "Border Collie Optimization," in IEEE Access, vol. 8, pp. 109177-109197,
     2020, doi: 10.1109/ACCESS.2020.2999540 https://ieeexplore.ieee.org/document/9106341
     """
+
     documentation_links = []
     short_description = "CoFI's implemntation of Border Collie Optimization"
 

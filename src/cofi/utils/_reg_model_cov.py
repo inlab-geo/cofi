@@ -53,14 +53,14 @@ class GaussianPrior(ModelCovariance):
     --------
 
     Generate a Gaussian Prior term for models of size (4,4), with correlation lengths
-    of (2,2), and sigma of 0.002:
+    of (2,2), and sigma of 0.5:
 
     >>> from cofi.utils import GaussianPrior
     >>> import numpy as np
     >>> my_prior_model = np.array([[1,2],[3,4]])
     >>> my_reg = GaussianPrior(model_covariance_inv=((2,2), 0.5), mean_model=my_prior_model)
     >>> my_reg(np.array([[0,2],[1,0]]))
-    406.1521980321913
+    101.53804950804782
 
     To use together with :class:`cofi.BaseProblem`:
 
@@ -132,17 +132,15 @@ class GaussianPrior(ModelCovariance):
         # generate grid of points for each dimension
         grids = np.meshgrid(*[np.arange(dim) for dim in model_shape], indexing="ij")
         # calculate distances between points for each pair of dimensions
-        d_squared = sum(
-            [
-                (grid.ravel()[None, :] - grid.ravel()[:, None]) ** 2 / corr_length**2
-                for grid, corr_length in zip(grids, corr_lengths)
-            ]
-        )
+        d_squared = sum([
+            (grid.ravel()[None, :] - grid.ravel()[:, None]) ** 2 / corr_length**2
+            for grid, corr_length in zip(grids, corr_lengths)
+        ])
         # construct correlation matrix
         Cp = np.exp(-np.sqrt(d_squared))
         # construct variance matrix
         Sc = np.zeros((np.prod(model_shape), np.prod(model_shape)))
-        np.fill_diagonal(Sc, sigma**2)
+        np.fill_diagonal(Sc, sigma)
         # calculate covariance matrix
         covariance_matrix = Sc @ Cp @ Sc
         # calculate inverse covariance matrix

@@ -7,6 +7,7 @@ class BayesBay(BaseInferenceTool):
     r"""Wrapper for the tool BayesBay, a trans-dimensional reversible jump Bayesian
     sampling framework
     """
+
     documentation_links = [
         "https://bayes-bay.readthedocs.io/en/latest/api/generated/bayesbay.BaseBayesianInversion.html#bayesbay.BaseBayesianInversion"
     ]
@@ -25,7 +26,7 @@ class BayesBay(BaseInferenceTool):
 
     @classmethod
     def required_in_options(cls) -> set:
-        return {"perturbation_funcs", "walkers_starting_models"}
+        return {"perturbation_funcs", "walkers_starting_states"}
 
     @classmethod
     def optional_in_options(cls) -> dict:
@@ -65,11 +66,11 @@ class BayesBay(BaseInferenceTool):
         import bayesbay as bb
 
         self._bb_bayes_inversion = bb.BaseBayesianInversion(
-            walkers_starting_models=self._params["walkers_starting_models"],
+            walkers_starting_states=self._params["walkers_starting_states"],
             perturbation_funcs=self._params["perturbation_funcs"],
-            log_likelihood_func=self.inv_problem.log_likelihood
-            if _log_like_defined
-            else None,
+            log_like_func=(
+                self.inv_problem.log_likelihood if _log_like_defined else None
+            ),
             log_like_ratio_func=self._params["log_like_ratio_func"],
             n_chains=self._params["n_chains"],
             n_cpus=self._params["n_cpus"],
@@ -102,13 +103,11 @@ def _inspect_default_options():
         if v.default is not inspect._empty and k != "log_likelihood_func"
     }
     _bb_inv_run_args = dict(inspect.signature(BaseBayesianInversion.run).parameters)
-    optional_in_options.update(
-        {
-            k: v.default
-            for k, v in _bb_inv_run_args.items()
-            if v.default is not inspect._empty
-        }
-    )
+    optional_in_options.update({
+        k: v.default
+        for k, v in _bb_inv_run_args.items()
+        if v.default is not inspect._empty
+    })
     return optional_in_options
 
 
