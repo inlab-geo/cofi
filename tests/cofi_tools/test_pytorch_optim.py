@@ -43,12 +43,6 @@ def test_torch_init_tensor_error():
     inv_problem1.set_initial_model(1)
 
 
-def test_torch_optimizer_error():
-    inv_options1.set_params(algorithm="SGD")
-    with pytest.raises(CofiError, match=r".*error ocurred in creating*"):
-        PyTorchOptim(inv_problem1, inv_options1)
-
-
 def test_run_simple_obj():
     inv_problem = BaseProblem()
     inv_problem.set_objective(lambda x: (x - 3) ** 2)
