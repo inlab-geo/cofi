@@ -8,6 +8,7 @@ from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
 from ._cofi_border_collie_optimization import CoFIBorderCollieOptimization
 from ._bayes_bay import BayesBay
+from ._neighpy import Neighpy
 
 
 __all__ = [
@@ -20,6 +21,7 @@ __all__ = [
     "PyTorchOptim",
     "BayesBay",
     "CoFIBorderCollieOptimization",
+    "Neighpy",
 ]
 
 # inference tools table grouped by method:
@@ -38,6 +40,7 @@ inference_tools_table = {
     "sampling": {
         "emcee": Emcee,
         "bayesbay": BayesBay,
+        "neighpy": Neighpy,
     },
 }
 
