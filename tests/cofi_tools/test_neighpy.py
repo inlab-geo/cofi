@@ -50,6 +50,7 @@ def test_validate():
         direct_search_n=direct_search_n,
         appraisal_n_resample=appraisal_n_resample,
         appraisal_n_walkers=appraisal_n_walkers,
+        bounds=bounds,
     )
     neighpy_solver = Neighpy(inv_problem, inv_options)
     assert neighpy_solver._params["ndim"] == 4
