@@ -21,3 +21,4 @@ jupyterlab
 versioningit==2.1.0
 seislib>=0.6.10
 git+https://github.com/miili/pysurf96.git
+neighpy>=0.1.1

@@ -36,3 +36,4 @@ dependencies:
     - seislib>=0.6.7
     - bayesbay
     - git+https://github.com/miili/pysurf96.git
+    - neighpy
