@@ -14,7 +14,7 @@ class Neighpy(BaseInferenceTool):
 
     @classmethod
     def required_in_problem(cls) -> set:
-        return set("objective")
+        return {"objective"}
 
     @classmethod
     def optional_in_problem(cls) -> dict:
@@ -22,7 +22,7 @@ class Neighpy(BaseInferenceTool):
 
     @classmethod
     def required_in_options(cls) -> set:
-        return set(
+        return {
             "bounds",
             "direct_search_ns",
             "direct_search_nr",
@@ -30,7 +30,7 @@ class Neighpy(BaseInferenceTool):
             "direct_search_n",
             "appraisal_n_resample",
             "appraisal_n_walkers",
-        )
+        }
 
     @classmethod
     def optional_in_options(cls) -> dict:
@@ -38,6 +38,7 @@ class Neighpy(BaseInferenceTool):
 
     def __init__(self, inv_problem, inv_options):  # FIXME implementation required
         super().__init__(inv_problem, inv_options)
+        self._params["ndim"] = len(self._params["bounds"])
         self._components_used = list(self.required_in_problem())
 
     def __call__(self) -> dict:  # FIXME implementation required
@@ -60,7 +61,7 @@ class Neighpy(BaseInferenceTool):
         appraiser = self._initalise_appraiser(
             direct_search_samples, direct_search_objectives
         )
-        appraisal_samples = appraiser.run()
+        appraisal_samples = self._call_appriaser(appraiser)
 
         return {
             "direct_search_samples": direct_search_samples,
@@ -68,6 +69,7 @@ class Neighpy(BaseInferenceTool):
             "appraisal_samples": appraisal_samples,
         }
 
+    @staticmethod
     @error_handler(
         when="in calling neighpy.search.NASearcher instance",
         context="for the direct search phase",
@@ -76,6 +78,7 @@ class Neighpy(BaseInferenceTool):
         searcher.run()
         return searcher.samples, searcher.objectives
 
+    @staticmethod
     @error_handler(
         when="in calling neighpy.appraise.NAAppraiser instance",
         context="for the appraisal phase",
@@ -107,9 +110,9 @@ class Neighpy(BaseInferenceTool):
     def _initalise_appraiser(self, samples, objectives):
         from neighpy import NAAppraiser
 
-        self._appraiser = NAAppraiser(
+        return NAAppraiser(
             samples,
-            exp(-objectives),
+            objectives,
             bounds=self._params["bounds"],
             n_resample=self._params["appraisal_n_resample"],
             n_walkers=self._params["appraisal_n_walkers"],
