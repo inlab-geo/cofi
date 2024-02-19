@@ -20,7 +20,7 @@ _Cdinv = np.eye(len(_y)) / (_sigma**2)  # Inverse data covariance matrix
 def _objective(model, data_observed, Cdinv):
     data_predicted = _forward(model)
     residual = data_observed - data_predicted
-    return np.linalg.norm(residual @ (Cdinv @ residual).T)
+    return residual @ (Cdinv @ residual).T
 
 
 objective = lambda m: _objective(m, _y, _Cdinv)
