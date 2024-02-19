@@ -1,4 +1,4 @@
-from numpy import exp, argmin
+from numpy import argmin
 
 from . import BaseInferenceTool, error_handler
 
@@ -112,7 +112,7 @@ class Neighpy(BaseInferenceTool):
 
         return NAAppraiser(
             samples,
-            objectives,
+            -objectives,
             bounds=self._params["bounds"],
             n_resample=self._params["appraisal_n_resample"],
             n_walkers=self._params["appraisal_n_walkers"],
