@@ -6,7 +6,8 @@ Adapted from source gist link below:
 https://gist.github.com/chsasank/7218ca16f8d022e02a9c0deb94a310fe
 """
 
-import sys
+import os
+import hashlib
 from glob import glob
 from shutil import copyfile
 from pathlib import Path
@@ -33,10 +34,53 @@ FIELD_DATA_EXAMPLES = []
 with open(current_dir / "real_data_examples.txt", "r") as f:
     FIELD_DATA_EXAMPLES = f.read().splitlines() 
 
-def convert_ipynb_to_gallery(file_name, dst_folder):
+
+def calculate_md5(file_path):
+    hash_md5 = hashlib.md5()
+    with open(file_path, "rb") as file:
+        for chunk in iter(lambda: file.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+def check_md_file(md_file_path, original_file_path):
+    original_file_md5 = calculate_md5(original_file_path)
+    if not os.path.isfile(md_file_path):
+        return False, original_file_md5
+    with open(md_file_path, "r") as md_file:
+        md_file_content = md_file.read().strip()
+    return md_file_content == original_file_md5, original_file_md5
+
+def convert_ipynb_to_gallery(full_file_name, dst_folder):
+    # split full file path into example name with/without suffix
+    file_name, example_name = file_name_without_path(full_file_name)
+    
+    # get the final script file path
+    if dst_folder == TUTORIALS_SCRIPTS:
+        script_file_folder = f"{dst_folder}"
+    elif example_name in FIELD_DATA_EXAMPLES:
+        script_file_folder = f"{dst_folder}/{FIELD_DATA}"
+    else:
+        script_file_folder = f"{dst_folder}/{SYNTH_DATA}"
+    script_file_path = f"{script_file_folder}/{file_name}"
+    script_file_path = script_file_path.replace(".ipynb", ".py")
+    
+    # calculate md5 hash and check whether file needs to be updated
+    md_file = script_file_path.replace(".py", ".md5")
+    cached, new_md5 = check_md_file(md_file, full_file_name)
+    
+    # convert ipynb to gallery script if needed
+    if cached:
+        print(f"File cached: {full_file_name}")
+    else:
+        print(f"Converting file: {full_file_name}")
+        _convert_ipynb_to_gallery(full_file_name, script_file_path)
+        with open(md_file, "w") as file:
+            file.write(new_md5)
+
+def _convert_ipynb_to_gallery(full_file_name, script_file_path):
     python_file = ""
 
-    nb_dict = json.load(open(file_name))
+    nb_dict = json.load(open(full_file_name))
     cells = nb_dict['cells']
 
     for i, cell in enumerate(cells):
@@ -70,14 +114,6 @@ def convert_ipynb_to_gallery(file_name, dst_folder):
     python_file = python_file.replace("\n!", "\n# !")
     python_file += "\n# sphinx_gallery_thumbnail_number = -1"
 
-    _file_name, _example_name = file_name_without_path(file_name)
-    if dst_folder == TUTORIALS_SCRIPTS:
-        script_file_path = f"{dst_folder}/{_file_name}"
-    elif _example_name in FIELD_DATA_EXAMPLES:
-        script_file_path = f"{dst_folder}/{FIELD_DATA}/{_file_name}"
-    else:
-        script_file_path = f"{dst_folder}/{SYNTH_DATA}/{_file_name}"
-    script_file_path = script_file_path.replace(".ipynb", ".py")
     open(script_file_path, 'w').write(python_file)
 
 def file_name_without_path(file_path):
@@ -103,6 +139,7 @@ def move_data_files(src_folder, dst_folder):
     for data_file in all_data:
         data_filename_without_path = data_file.split("/")[-1]
         dest_file_path = f"{dst_folder}/{data_filename_without_path}"
+        print(f"Date file from {data_file} to {dest_file_path}")
         copyfile(data_file, dest_file_path)
 
 def gen_scripts_all(_):
@@ -113,7 +150,6 @@ def gen_scripts_all(_):
     # convert
     print("Converting tutorial files...")
     for script in all_tutorials_scripts:
-        print(f"file: {script}")
         convert_ipynb_to_gallery(script, TUTORIALS_SCRIPTS)
     # collect all data and library files to move to scripts/
     move_data_files(TUTORIALS_SRC_DIR, TUTORIALS_SCRIPTS)
@@ -125,7 +161,6 @@ def gen_scripts_all(_):
     # convert
     print("Converting example files...")
     for script in all_examples_scripts:
-        print(f"file: {script}")
         convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
     # collect all data and library files to move to scripts/field_data
     move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}/{FIELD_DATA}")
@@ -141,26 +176,4 @@ def setup(app):
 
 
 if __name__ == '__main__':
-    # collect examples to convert to sphinx gallery scripts
-    if sys.argv[-1] == "all":
-        all_scripts = glob(f"{EXAMPLES_SRC_DIR}/*/*.ipynb")
-        all_scripts = [name for name in all_scripts if "lab" not in name]
-    else:
-        all_scripts = [sys.argv[-1]]
-    # convert
-    print("Converting files...")
-    for script in all_scripts:
-        print(f"file: {script}")
-        convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
-    # collect all data and library files to move to scripts/
-    all_data = glob(f"{EXAMPLES_SRC_DIR}/*/*.npz")
-    all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*.dat"))
-    all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*.csv"))
-    all_data.extend(glob(f"{EXAMPLES_SRC_DIR}/*/*_lib.py"))
-    # move
-    print("\nMoving data files...")
-    for data_file in all_data:
-        data_filename_without_path = data_file.split("/")[-1]
-        dest_file_path = f"{EXAMPLES_SCRIPTS}/{data_filename_without_path}"
-        copyfile(data_file, dest_file_path)
-    print("\nOK.")
+    gen_scripts_all(None)
