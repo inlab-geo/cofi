@@ -252,7 +252,7 @@ fmm_problem_gaussian_prior.set_initial_model(ref_start_slowness)
 # add regularization: Gaussian prior
 corrx = 3.0
 corry = 3.0
-sigma_slowness = 0.5
+sigma_slowness = 0.5**2
 gaussian_prior = cofi.utils.GaussianPrior(
     model_covariance_inv=((corrx, corry), sigma_slowness),
     mean_model=ref_start_slowness.reshape(model_shape)

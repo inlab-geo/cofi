@@ -132,7 +132,8 @@ my_receiver_function = espresso.ReceiverFunctionInversion(example_number=4)
 
 
 ######################################################################
-# .. figure:: https://github.com/inlab-geo/cofi-examples/blob/main/examples/receiver_function/depth_layer3_anim4.gif?raw=true
+# .. figure::
+#    https://github.com/inlab-geo/cofi-examples/blob/main/examples/receiver_function/depth_layer3_anim4.gif?raw=true
 #    :alt: depth_layer3_anim4.gif
 # 
 #    depth_layer3_anim4.gif
@@ -140,7 +141,8 @@ my_receiver_function = espresso.ReceiverFunctionInversion(example_number=4)
 
 
 ######################################################################
-# .. figure:: https://github.com/inlab-geo/cofi-examples/blob/main/examples/receiver_function/vel_layer3_anim4_400f.gif?raw=true
+# .. figure::
+#    https://github.com/inlab-geo/cofi-examples/blob/main/examples/receiver_function/vel_layer3_anim4_400f.gif?raw=true
 #    :alt: vel_layer3_anim4_400f.gif
 # 
 #    vel_layer3_anim4_400f.gif
@@ -151,7 +153,8 @@ my_receiver_function = espresso.ReceiverFunctionInversion(example_number=4)
 # This is a non-linear problem which can be highly sensitive to the
 # starting model.
 # 
-# .. figure:: https://github.com/inlab-geo/cofi-examples/blob/main/examples/receiver_function/3Dsurf_x40y10_v55_l270_35.png?raw=true
+# .. figure::
+#    https://github.com/inlab-geo/cofi-examples/blob/main/examples/receiver_function/3Dsurf_x40y10_v55_l270_35.png?raw=true
 #    :alt: 3Dsurf_x40y10_v55_l270_35
 # 
 #    3Dsurf_x40y10_v55_l270_35
@@ -300,7 +303,7 @@ plt.legend();
 def my_log_likelihood(model):
     data1 = my_receiver_function.data
     data2 = my_receiver_function.forward(model)
-    log_likelihood = my_receiver_function.log_likelihood(data1, data2)
+    log_likelihood = my_receiver_function.log_likelihood(data1, data2) / 20 # temper the likelihood
     return log_likelihood
 
 def my_log_prior(model):
@@ -320,7 +323,7 @@ my_problem.summary()
 
 nwalkers = 12
 nsteps = 25000
-walkers_start = null_model + 1e-1 * np.random.randn(nwalkers, ndim)
+walkers_start = my_result_optimiser.model + 1e-1 * np.random.randn(nwalkers, ndim)
 
 ######################################################################
 #

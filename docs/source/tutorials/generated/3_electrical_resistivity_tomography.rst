@@ -56,7 +56,7 @@ Learning outcomes
 
 .. GENERATED FROM PYTHON SOURCE LINES 39-49
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Environment setup (uncomment code lines below)
@@ -75,22 +75,24 @@ Learning outcomes
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-64
+.. GENERATED FROM PYTHON SOURCE LINES 54-66
 
 If you see a warning message from Colab - don’t worry, this is expected.
 This happens when we’ve successfully installed a package manager
 (“mamba”) so that we can then install PyGIMLi (from conda channel
 “gimli”).
 
-.. image:: https://i.imgur.com/TKAXUoA.png
+|image1|
 
 Remember to uncomment and run the code cell below as well, as we are
 going to load some data from GitHub.
 
+.. |image1| image:: https://i.imgur.com/TKAXUoA.png
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-68
 
-.. code-block:: default
+.. GENERATED FROM PYTHON SOURCE LINES 66-70
+
+.. code-block:: Python
 
 
     # !git clone https://github.com/inlab-geo/cofi-examples.git
@@ -103,7 +105,7 @@ going to load some data from GitHub.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-140
+.. GENERATED FROM PYTHON SOURCE LINES 75-142
 
 Problem description
 -------------------
@@ -173,7 +175,7 @@ Further reading
    https://doi.org/10.1093/GJI/GGV107
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-163
+.. GENERATED FROM PYTHON SOURCE LINES 145-165
 
 Interfacing to PyGIMLi
 ----------------------
@@ -196,9 +198,9 @@ Jacobian, the regularization matrix and the model prediction. This makes
 for a minimal interface.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-175
+.. GENERATED FROM PYTHON SOURCE LINES 165-177
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import numpy as np
@@ -219,9 +221,9 @@ for a minimal interface.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-313
+.. GENERATED FROM PYTHON SOURCE LINES 179-315
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title utility functions (hidden)
@@ -366,7 +368,7 @@ for a minimal interface.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 318-330
+.. GENERATED FROM PYTHON SOURCE LINES 320-332
 
 True model
 ~~~~~~~~~~
@@ -381,9 +383,9 @@ Further reading
 https://www.agiusa.com/dipole-dipole%E2%80%8B-%E2%80%8Barray%E2%80%8B
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 330-345
+.. GENERATED FROM PYTHON SOURCE LINES 332-347
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # PyGIMLi - define measuring scheme, geometry, forward mesh and true model
@@ -412,7 +414,7 @@ https://www.agiusa.com/dipole-dipole%E2%80%8B-%E2%80%8Barray%E2%80%8B
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 350-356
+.. GENERATED FROM PYTHON SOURCE LINES 352-358
 
 ERT measurements consist of the apparent resistivity measured between
 multiple electrode pairs and they are commonly plotted as
@@ -421,9 +423,9 @@ previously computed with PyGIMLi and noise has been added with the
 magnitude of the noise depending on the dipole dipole separation.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 356-364
+.. GENERATED FROM PYTHON SOURCE LINES 358-366
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # load data and covariance matrix
@@ -440,9 +442,9 @@ magnitude of the noise depending on the dipole dipole separation.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 366-376
+.. GENERATED FROM PYTHON SOURCE LINES 368-378
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # plot data
@@ -466,7 +468,7 @@ magnitude of the noise depending on the dipole dipole separation.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 381-390
+.. GENERATED FROM PYTHON SOURCE LINES 383-392
 
 Forward operator
 ~~~~~~~~~~~~~~~~
@@ -478,9 +480,9 @@ Gmsh and the model vector for the purpose of the inversion are the cells
 plotted in yellow.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 390-398
+.. GENERATED FROM PYTHON SOURCE LINES 392-400
 
-.. code-block:: default
+.. code-block:: Python
 
 
     inv_mesh = inversion_mesh(ert_mgr)
@@ -503,14 +505,16 @@ plotted in yellow.
 
  .. code-block:: none
 
+    15/02/24 - 19:47:27 - pyGIMLi - INFO - Found 2 regions.
+    15/02/24 - 19:47:27 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
 
     Text(71.47222222222221, 0.5, 'Elevation (m)')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 400-416
+.. GENERATED FROM PYTHON SOURCE LINES 402-418
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # PyGIMLi's forward operator (ERTModelling)
@@ -537,10 +541,18 @@ plotted in yellow.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    15/02/24 - 19:47:27 - pyGIMLi - INFO - Creating forward mesh from region infos.
+    15/02/24 - 19:47:27 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
+    15/02/24 - 19:47:27 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 2198 Cells: 4124 Boundaries: 3228
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 421-426
+
+.. GENERATED FROM PYTHON SOURCE LINES 423-428
 
 The next step is to define the functions for CoFI. Typically, a given
 inversion solver will only require a subset of the functions we define
@@ -548,9 +560,9 @@ in the following but in this example we would like to explore a wide
 range of solvers.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 426-492
+.. GENERATED FROM PYTHON SOURCE LINES 428-494
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title additional utility functions (hidden)
@@ -625,7 +637,7 @@ range of solvers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 497-503
+.. GENERATED FROM PYTHON SOURCE LINES 499-505
 
 CoFI BaseProblem
 ----------------
@@ -634,9 +646,9 @@ As in the traveltime tomography example, we now use these functions to
 define our ``BaseProblem``.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 503-519
+.. GENERATED FROM PYTHON SOURCE LINES 505-521
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # hyperparameters
@@ -661,15 +673,15 @@ define our ``BaseProblem``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 524-527
+.. GENERATED FROM PYTHON SOURCE LINES 526-529
 
 With the ``BaseProblem`` defined, we can ask CoFI to list the solver
 libraries we can use for our problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 527-530
+.. GENERATED FROM PYTHON SOURCE LINES 529-532
 
-.. code-block:: default
+.. code-block:: Python
 
 
     ert_problem.suggest_tools();
@@ -692,20 +704,22 @@ libraries we can use for our problem.
         "matrix solvers": [
             "cofi.simple_newton"
         ],
-        "sampling": []
+        "sampling": [
+            "bayesbay"
+        ]
     }
 
-    {'optimization': ['scipy.optimize.minimize', 'scipy.optimize.least_squares', 'torch.optim'], 'matrix solvers': ['cofi.simple_newton'], 'sampling': []}
+    {'optimization': ['scipy.optimize.minimize', 'scipy.optimize.least_squares', 'torch.optim'], 'matrix solvers': ['cofi.simple_newton'], 'sampling': ['bayesbay']}
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 535-538
+.. GENERATED FROM PYTHON SOURCE LINES 537-540
 
 From the traveltime tomography example we know that the
 ``cofi.simple_newton`` solver worked well so we will try it.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 541-555
+.. GENERATED FROM PYTHON SOURCE LINES 543-557
 
 Newton step
 -----------
@@ -722,9 +736,9 @@ model update. In practice:
    needed to reach convergence
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 555-569
+.. GENERATED FROM PYTHON SOURCE LINES 557-571
 
-.. code-block:: default
+.. code-block:: Python
 
 
     inv_options_newton = InversionOptions()
@@ -765,20 +779,21 @@ model update. In practice:
 
  .. code-block:: none
 
-    Iteration #0, objective function value: 229.71418345445022
-    Iteration #1, objective function value: 224.7987515141377
-    Iteration #2, objective function value: 220.36237268797268
-    Iteration #3, objective function value: 215.90570020911395
-    Iteration #4, objective function value: 211.61775613255435
+    15/02/24 - 19:47:27 - Core - WARNING -  data contains no K-factors but we calculate them  analytically for the response call
+    Iteration #0, updated objective function value: 224.79875151413344
+    Iteration #1, updated objective function value: 220.36237268797748
+    Iteration #2, updated objective function value: 215.90570020911247
+    Iteration #3, updated objective function value: 211.61775613255298
+    Iteration #4, updated objective function value: 207.38256930187475
 
-    Number of objective function evaluations: 5
+    Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
     Number of hessian function evaluations: 5
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 574-593
+.. GENERATED FROM PYTHON SOURCE LINES 576-595
 
 Convergence of Newton’s Method - A pathological example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -800,9 +815,9 @@ Further reading
 https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 593-599
+.. GENERATED FROM PYTHON SOURCE LINES 595-601
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import scipy
@@ -820,14 +835,15 @@ https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04
 
 
     (-1.7692923542386314,       converged: True
-               flag: 'converged'
+               flag: converged
      function_calls: 39
          iterations: 13
-               root: -1.7692923542386314)
+               root: -1.7692923542386314
+             method: halley)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 604-618
+.. GENERATED FROM PYTHON SOURCE LINES 606-620
 
 PyGIMLi uses a line search to determine the optimal step length, that
 means the descent direction is given by the full Newton Step with the
@@ -844,7 +860,7 @@ Further reading
 https://medium.com/intro-to-artificial-intelligence/line-search-and-trust-region-optimisation-strategies-638a4a7490ca
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 621-653
+.. GENERATED FROM PYTHON SOURCE LINES 623-655
 
 First challenge
 ---------------
@@ -879,9 +895,9 @@ https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
    :target: https://jamboard.google.com/d/1d-xjFfSi-TiQC64OOchgzmlhx5f4axtC7QZwGSbjyL4/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 653-669
+.. GENERATED FROM PYTHON SOURCE LINES 655-671
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title RUN ME - Utility Callback Function (hidden, no need to change)
@@ -906,7 +922,7 @@ https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 674-692
+.. GENERATED FROM PYTHON SOURCE LINES 676-694
 
 You may start from the following template:
 
@@ -927,9 +943,9 @@ You may start from the following template:
    plot_result(inv_result, "CHANGE ME")
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 692-697
+.. GENERATED FROM PYTHON SOURCE LINES 694-699
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Copy the template above, Replace <CHANGE ME> with your answer
@@ -943,9 +959,9 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 699-716
+.. GENERATED FROM PYTHON SOURCE LINES 701-718
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title Solution: scipy.optimize.minimize 'newton-cg' 
@@ -990,19 +1006,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 69.4123275390053
+      objective value: 69.41232753900498
     Iteration #2
-      model change: 1.9521920346072341
-      objective value: 32.31371502910786
+      model change: 1.952192034607239
+      objective value: 32.31371502910797
     Iteration #3
-      model change: 2.0050005049882893
-      objective value: 31.17194038522148
+      model change: 2.0050005049883053
+      objective value: 31.171940385221042
     Iteration #4
-      model change: 0.3774794758899083
-      objective value: 27.46044538043943
+      model change: 0.3774794758899175
+      objective value: 27.460445380439133
     Iteration #5
-      model change: 1.2758048177901025
-      objective value: 17.691012544394344
+      model change: 1.2758048177901216
+      objective value: 17.69101254439412
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
@@ -1011,9 +1027,9 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 718-734
+.. GENERATED FROM PYTHON SOURCE LINES 720-736
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title Solution: scipy.optimize.minimize 'dogleg' 
@@ -1056,22 +1072,20 @@ You may start from the following template:
 
  .. code-block:: none
 
-    /home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.9/site-packages/scipy/optimize/_minimize.py:560: RuntimeWarning: Method dogleg does not use Hessian-vector product information (hessp).
-      warn('Method %s does not use Hessian-vector product '
     Iteration #1
-      objective value: 157.50708172346924
+      objective value: 157.50708172346913
     Iteration #2
-      model change: 2.0000000000000004
-      objective value: 68.94013122104855
+      model change: 2.0
+      objective value: 68.94013122104839
     Iteration #3
       model change: 3.9999999999999987
-      objective value: 34.902640908745205
+      objective value: 34.90264090874827
     Iteration #4
       model change: 0.0
-      objective value: 34.902640908745205
+      objective value: 34.90264090874827
     Iteration #5
-      model change: 2.0000000000000004
-      objective value: 22.814718920593325
+      model change: 1.9999999999999996
+      objective value: 22.81471892053149
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -1080,9 +1094,9 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 736-752
+.. GENERATED FROM PYTHON SOURCE LINES 738-754
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title Solution: scipy.optimize.minimize 'trust-krylov' 
@@ -1126,19 +1140,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 157.50708172346924
+      objective value: 157.5070817234691
     Iteration #2
-      model change: 2.0
-      objective value: 68.94013122104852
+      model change: 1.9999999999999998
+      objective value: 68.9401312210484
     Iteration #3
-      model change: 2.088598198678242
-      objective value: 51.74447637863951
+      model change: 2.088598198678245
+      objective value: 51.744476378639135
     Iteration #4
-      model change: 2.235768382076445
-      objective value: 32.60775764541853
+      model change: 2.2357683820764533
+      objective value: 32.607757645418445
     Iteration #5
-      model change: 1.7295706120906618
-      objective value: 29.213175185119823
+      model change: 1.729570612090676
+      objective value: 29.21317518511959
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
@@ -1147,7 +1161,7 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 757-802
+.. GENERATED FROM PYTHON SOURCE LINES 759-804
 
 Second challenge
 ----------------
@@ -1195,9 +1209,9 @@ You may start from this template:
    :target: https://jamboard.google.com/d/13DkBtGDD2DQZWz9XqFgdx9PPpZJ91ZZcOOhTdITEvHY/edit?usp=sharing
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 802-807
+.. GENERATED FROM PYTHON SOURCE LINES 804-809
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # Copy the template above, Replace <CHANGE ME> with your answer
@@ -1211,9 +1225,9 @@ You may start from this template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 809-823
+.. GENERATED FROM PYTHON SOURCE LINES 811-825
 
-.. code-block:: default
+.. code-block:: Python
 
 
     #@title Solution: torch.optim 'RAdam' 
@@ -1254,16 +1268,16 @@ You may start from this template:
 
  .. code-block:: none
 
-    Iteration #0, objective value: 229.71418345445022
-    Iteration #1, objective value: 156.90464922477352
-    Iteration #2, objective value: 107.129503120462
-    Iteration #3, objective value: 76.24719314426025
-    Iteration #4, objective value: 59.930960142833776
-    Iteration #5, objective value: 53.93390880663936
-    Iteration #6, objective value: 53.88443707299647
-    Iteration #7, objective value: 53.81331650273624
-    Iteration #8, objective value: 53.72275180400693
-    Iteration #9, objective value: 53.61502389632332
+    Iteration #0, objective value: 229.71418345444994
+    Iteration #1, objective value: 156.9046492247734
+    Iteration #2, objective value: 107.12950312046189
+    Iteration #3, objective value: 76.24719314426018
+    Iteration #4, objective value: 59.930960142833655
+    Iteration #5, objective value: 53.93390880663924
+    Iteration #6, objective value: 53.884437072996356
+    Iteration #7, objective value: 53.813316502736114
+    Iteration #8, objective value: 53.722751804006805
+    Iteration #9, objective value: 53.615023896323194
 
     Number of objective function evaluations: 10
     Number of gradient function evaluations: 10
@@ -1271,7 +1285,7 @@ You may start from this template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 828-838
+.. GENERATED FROM PYTHON SOURCE LINES 830-840
 
 A word about convergence criteria…
 ----------------------------------
@@ -1284,7 +1298,7 @@ minimum update to the model or minimum increase in fit to the data is
 achieved between subsequent iterations.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 841-847
+.. GENERATED FROM PYTHON SOURCE LINES 843-849
 
 Where to next?
 --------------
@@ -1293,15 +1307,15 @@ Where to next?
    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 850-853
+.. GENERATED FROM PYTHON SOURCE LINES 852-855
 
 Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 853-859
+.. GENERATED FROM PYTHON SOURCE LINES 855-861
 
-.. code-block:: default
+.. code-block:: Python
 
 
     watermark_list = ["cofi", "numpy", "scipy", "pygimli", "torch", "matplotlib"]
@@ -1317,24 +1331,24 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.0
-    numpy 1.20.3
-    scipy 1.10.1
-    pygimli 1.4.1
-    torch 1.13.1
-    matplotlib 3.5.1
+    cofi 0.2.5+13.g30a313b
+    numpy 1.23.5
+    scipy 1.12.0
+    pygimli 1.4.0
+    torch 2.1.2.post101
+    matplotlib 3.8.2
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 860-860
+.. GENERATED FROM PYTHON SOURCE LINES 862-862
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  6.081 seconds)
+   **Total running time of the script:** (1 minutes 5.047 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_3_electrical_resistivity_tomography.py:
@@ -1343,16 +1357,13 @@ sphinx_gallery_thumbnail_number = -1
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: 3_electrical_resistivity_tomography.ipynb <3_electrical_resistivity_tomography.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: 3_electrical_resistivity_tomography.py <3_electrical_resistivity_tomography.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: 3_electrical_resistivity_tomography.ipynb <3_electrical_resistivity_tomography.ipynb>`
 
 
 .. only:: html

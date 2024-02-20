@@ -77,7 +77,7 @@ further theretical details.
 
 .. GENERATED FROM PYTHON SOURCE LINES 60-69
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # -------------------------------------------------------- #
@@ -97,7 +97,7 @@ further theretical details.
 
 .. GENERATED FROM PYTHON SOURCE LINES 71-79
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import numpy as np
@@ -129,7 +129,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 94-99
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fmm = espresso.FmmTomography()
@@ -155,6 +155,8 @@ model. As you can see, there are two anomalies, one with lower velocity
      100  travel times
      Range of travel times:  0.008911182496368759 0.0153757024856463 
      Mean travel time: 0.01085811731230709
+    Trying to fix now...
+    Execute permission given to fm2dss.o.
 
     <Axes: xlabel='x (km)', ylabel='y (km)'>
 
@@ -162,7 +164,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 101-104
 
-.. code-block:: default
+.. code-block:: Python
 
 
     pprint.pprint(fmm.metadata)
@@ -215,7 +217,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 112-119
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # get problem information from  espresso FmmTomography
@@ -233,7 +235,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 121-141
 
-.. code-block:: default
+.. code-block:: Python
 
 
     def objective_func(slowness, reg):
@@ -273,7 +275,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 152-157
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # define CoFI BaseProblem
@@ -289,7 +291,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 159-167
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # add regularization: flattening + smoothing
@@ -308,7 +310,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 169-174
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg_smoothing])
@@ -330,7 +332,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 182-194
 
-.. code-block:: default
+.. code-block:: Python
 
 
     my_options = cofi.InversionOptions()
@@ -359,7 +361,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 202-207
 
-.. code-block:: default
+.. code-block:: Python
 
 
     inv = cofi.Inversion(fmm_problem_quadratic_reg, my_options)
@@ -412,7 +414,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 .. GENERATED FROM PYTHON SOURCE LINES 215-221
 
-.. code-block:: default
+.. code-block:: Python
 
 
     clim = (1/np.max(fmm.good_model)-1, 1/np.min(fmm.good_model)+1)
@@ -473,7 +475,7 @@ prior term.
 
 .. GENERATED FROM PYTHON SOURCE LINES 244-249
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # define CoFI BaseProblem
@@ -489,13 +491,13 @@ prior term.
 
 .. GENERATED FROM PYTHON SOURCE LINES 251-261
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # add regularization: Gaussian prior
     corrx = 3.0
     corry = 3.0
-    sigma_slowness = 0.5
+    sigma_slowness = 0.5**2
     gaussian_prior = cofi.utils.GaussianPrior(
         model_covariance_inv=((corrx, corry), sigma_slowness),
         mean_model=ref_start_slowness.reshape(model_shape)
@@ -510,7 +512,7 @@ prior term.
 
 .. GENERATED FROM PYTHON SOURCE LINES 263-268
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior])
@@ -532,7 +534,7 @@ prior term.
 
 .. GENERATED FROM PYTHON SOURCE LINES 276-282
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # reuse the previously defined InversionOptions object
@@ -577,7 +579,7 @@ prior term.
 
 .. GENERATED FROM PYTHON SOURCE LINES 290-294
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fmm.plot_model(inv_result_gaussian_prior.model, clim=clim);            # gaussian prior
@@ -623,7 +625,7 @@ Now we plot an L-curve for the smoothing regularization case.
 
 .. GENERATED FROM PYTHON SOURCE LINES 304-336
 
-.. code-block:: default
+.. code-block:: Python
 
 
     lambdas = np.logspace(-4, 4, 15)
@@ -666,7 +668,7 @@ Now we plot an L-curve for the smoothing regularization case.
 
 .. GENERATED FROM PYTHON SOURCE LINES 338-354
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # plot the L-curve
@@ -720,7 +722,7 @@ Watermark
 
 .. GENERATED FROM PYTHON SOURCE LINES 372-378
 
-.. code-block:: default
+.. code-block:: Python
 
 
     watermark_list = ["cofi", "espresso", "numpy", "matplotlib"]
@@ -736,10 +738,10 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.3
+    cofi 0.2.5+13.g30a313b
     espresso 0.3.11
-    numpy 1.24.3
-    matplotlib 3.7.1
+    numpy 1.23.5
+    matplotlib 3.8.2
 
 
 
@@ -751,7 +753,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  10.353 seconds)
+   **Total running time of the script:** (1 minutes 17.126 seconds)
 
 
 .. _sphx_glr_download_examples_generated_synth_data_fmm_tomography_regularization_discussion.py:
@@ -760,16 +762,13 @@ sphinx_gallery_thumbnail_number = -1
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: fmm_tomography_regularization_discussion.ipynb <fmm_tomography_regularization_discussion.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: fmm_tomography_regularization_discussion.py <fmm_tomography_regularization_discussion.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: fmm_tomography_regularization_discussion.ipynb <fmm_tomography_regularization_discussion.ipynb>`
 
 
 .. only:: html
