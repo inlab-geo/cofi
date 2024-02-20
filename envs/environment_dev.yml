@@ -4,7 +4,7 @@ channels:
   - defaults
   - gimli
 dependencies:
-  - python=3.9
+  - python>=3.10
   - scipy>=1.0.0
   - arviz>=0.10.0
   - emcee
@@ -26,7 +26,7 @@ dependencies:
   - jupyterlab>=3
   - matplotlib>=3.5.0
   - nodejs>=12
-  - pygimli==1.4.0
+  - pygimli>=1.4.6
   - simpeg
   - cython
   - cartopy
@@ -34,5 +34,5 @@ dependencies:
   - pip
   - pip:
     - seislib>=0.6.7
-    - bayesbay
+    - bayesbay>=0.2.0
     - git+https://github.com/miili/pysurf96.git

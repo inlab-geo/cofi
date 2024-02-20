@@ -56,10 +56,12 @@
 # (“mamba”) so that we can then install PyGIMLi (from conda channel
 # “gimli”).
 # 
-# .. image:: https://i.imgur.com/TKAXUoA.png
+# |image1|
 # 
 # Remember to uncomment and run the code cell below as well, as we are
 # going to load some data from GitHub.
+# 
+# .. |image1| image:: https://i.imgur.com/TKAXUoA.png
 # 
 
 # !git clone https://github.com/inlab-geo/cofi-examples.git

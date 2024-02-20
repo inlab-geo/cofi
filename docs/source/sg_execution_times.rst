@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.000** total execution time for 15 files **from all galleries**:
+**04:12.076** total execution time for 15 files **from all galleries**:
 
 .. container::
 
@@ -32,6 +32,9 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py` (``examples/scripts/synth_data/receiver_function_inversion.py``)
+     - 04:12.076
+     - 0.0
    * - :ref:`sphx_glr_examples_generated_field_data_linear_regression_sealevel.py` (``examples/scripts/field_data/linear_regression_sealevel.py``)
      - 00:00.000
      - 0.0
@@ -60,9 +63,6 @@ Computation times
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_synth_data_pygimli_ert.py` (``examples/scripts/synth_data/pygimli_ert.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py` (``examples/scripts/synth_data/receiver_function_inversion.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py` (``examples/scripts/synth_data/xray_tomography.py``)

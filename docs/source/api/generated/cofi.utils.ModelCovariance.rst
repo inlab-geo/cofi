@@ -20,6 +20,9 @@ cofi.utils.ModelCovariance
 
 
 
+
+
+
     .. automethod:: ModelCovariance.__call__
 
 

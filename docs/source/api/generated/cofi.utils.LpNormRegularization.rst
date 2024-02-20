@@ -20,6 +20,9 @@ cofi.utils.LpNormRegularization
 
 
 
+
+
+
     .. automethod:: LpNormRegularization.__call__
 
 

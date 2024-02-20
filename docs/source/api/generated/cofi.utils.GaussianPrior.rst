@@ -20,6 +20,9 @@ cofi.utils.GaussianPrior
 
 
 
+
+
+
     .. automethod:: GaussianPrior.__call__
 
 
