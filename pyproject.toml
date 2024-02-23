@@ -48,7 +48,7 @@ dependencies = [
     "findiff>=0.7.0",
     "torch>=1.10",
     "bayesbay>=0.2.0",
-    "neighpy>=0.1.0",
+    "neighpy>=0.1.2",
 ]
 dynamic = ["version"]
 
