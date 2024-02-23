@@ -59,7 +59,7 @@ class Neighpy(BaseInferenceTool):
         direct_search_samples, direct_search_objectives = self._call_searcher(searcher)
 
         appraiser = self._initalise_appraiser(
-            direct_search_samples, direct_search_objectives
+            searcher
         )
         appraisal_samples = self._call_appriaser(appraiser)
 
@@ -107,13 +107,11 @@ class Neighpy(BaseInferenceTool):
         when="in creating neighpy.appraise.NAAppraiser object",
         context="at initialisation, after running NASearcher",
     )
-    def _initalise_appraiser(self, samples, objectives):
+    def _initalise_appraiser(self, searcher):
         from neighpy import NAAppraiser
 
         return NAAppraiser(
-            samples,
-            -objectives,
-            bounds=self._params["bounds"],
+            searcher=searcher,
             n_resample=self._params["appraisal_n_resample"],
             n_walkers=self._params["appraisal_n_walkers"],
         )
