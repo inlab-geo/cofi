@@ -36,13 +36,12 @@ class Neighpy(BaseInferenceTool):
     def optional_in_options(cls) -> dict:
         return {}
 
-    def __init__(self, inv_problem, inv_options):  # FIXME implementation required
+    def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
         self._params["ndim"] = len(self._params["bounds"])
         self._components_used = list(self.required_in_problem())
 
-    def __call__(self) -> dict:  # FIXME implementation required
-
+    def __call__(self) -> dict:
         raw_results = self._call_backend_tool()
         _best = raw_results["direct_search_samples"][
             argmin(raw_results["direct_search_objectives"])
@@ -54,13 +53,11 @@ class Neighpy(BaseInferenceTool):
         when="at some point in the Neighbourhood Algorithm",
         context="",
     )
-    def _call_backend_tool(self):  # FIXME implementation required
+    def _call_backend_tool(self):
         searcher = self._initialise_searcher()
         direct_search_samples, direct_search_objectives = self._call_searcher(searcher)
 
-        appraiser = self._initalise_appraiser(
-            searcher
-        )
+        appraiser = self._initalise_appraiser(searcher)
         appraisal_samples = self._call_appriaser(appraiser)
 
         return {
@@ -115,3 +112,8 @@ class Neighpy(BaseInferenceTool):
             n_resample=self._params["appraisal_n_resample"],
             n_walkers=self._params["appraisal_n_walkers"],
         )
+
+
+# CoFI -> Ensemble methods -> Direct search -> Monte Carlo -> Neighpy -> Neighbourhood Algorithm
+# description: Wrapper for the tool Neighpy, implementing the Neighbourhood Algorithm
+# documentation: https://neighpy.readthedocs.io/en/latest/
