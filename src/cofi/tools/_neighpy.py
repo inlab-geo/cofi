@@ -4,13 +4,15 @@ from . import BaseInferenceTool, error_handler
 
 
 class Neighpy(BaseInferenceTool):
-    r"""Wrapper for the tool <FILL IN HERE>
+    r"""Wrapper for the tool :code:`neighpy`, a Python implementation of the Neighbourhood Algorithm.
 
-    FIXME Any extra information about the tool
+    The Neighbourhood Algorithm is a direct search method that uses a set of points in the parameter space to explore the objective function. It is a derivative-free method that is particularly useful for high-dimensional problems.
+
+    Split into two phases, the direct search phase and the appraisal phase, this wrapper runs both phases consecutively.
     """
 
-    documentation_links = []  # FIXME required
-    short_description = []  # FIXME required
+    documentation_links = ["https://neighpy.readthedocs.io/en/latest/index.html"]
+    short_description = ["Wrapper for Neighpy, a Python implementation of the Neighbourhood Algorithm"]
 
     @classmethod
     def required_in_problem(cls) -> set:
