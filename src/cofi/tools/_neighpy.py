@@ -12,7 +12,9 @@ class Neighpy(BaseInferenceTool):
     """
 
     documentation_links = ["https://neighpy.readthedocs.io/en/latest/index.html"]
-    short_description = ["Wrapper for Neighpy, a Python implementation of the Neighbourhood Algorithm"]
+    short_description = [
+        "Wrapper for Neighpy, a Python implementation of the Neighbourhood Algorithm"
+    ]
 
     @classmethod
     def required_in_problem(cls) -> set:
