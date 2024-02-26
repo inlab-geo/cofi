@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.7 (26/02/2024)
+
+### CoFI Tools
+
+- New tool: Neighpy
+
 ## v0.2.6 (15/02/2024)
 
 ### CoFI Utils
