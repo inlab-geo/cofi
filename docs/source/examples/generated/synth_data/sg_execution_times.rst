@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**04:12.076** total execution time for 9 files **from examples/generated/synth_data**:
+**04:46.263** total execution time for 9 files **from examples/generated/synth_data**:
 
 .. container::
 
@@ -33,7 +33,7 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py` (``receiver_function_inversion.py``)
-     - 04:12.076
+     - 04:46.263
      - 0.0
    * - :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``fmm_tomography.py``)
      - 00:00.000

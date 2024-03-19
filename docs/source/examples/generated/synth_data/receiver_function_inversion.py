@@ -106,7 +106,7 @@ np.random.seed(42)
 # backend.
 # 
 
-my_receiver_function = espresso.ReceiverFunctionInversion(example_number=4)
+my_receiver_function = espresso.ReceiverFunctionInversionShibutani(example_number=4)
 
 ######################################################################
 #
