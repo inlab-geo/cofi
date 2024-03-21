@@ -2,6 +2,12 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.8 (21/03/2024)
+
+### CoFI Tools
+
+- Adapt CoFI to new BayesBay API
+
 ## v0.2.7 (26/02/2024)
 
 ### CoFI Tools

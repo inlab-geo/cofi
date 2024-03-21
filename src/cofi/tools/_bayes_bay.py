@@ -68,12 +68,13 @@ class BayesBay(BaseInferenceTool):
         self._bb_bayes_inversion = bb.BaseBayesianInversion(
             walkers_starting_states=self._params["walkers_starting_states"],
             perturbation_funcs=self._params["perturbation_funcs"],
+            perturbation_weights=self._params["perturbation_weights"], 
+            log_like_ratio_func=self._params["log_like_ratio_func"],
             log_like_func=(
                 self.inv_problem.log_likelihood if _log_like_defined else None
             ),
-            log_like_ratio_func=self._params["log_like_ratio_func"],
             n_chains=self._params["n_chains"],
-            n_cpus=self._params["n_cpus"],
+            save_dpred=self._params["save_dpred"]
         )
 
     @error_handler(
@@ -88,6 +89,7 @@ class BayesBay(BaseInferenceTool):
             save_every=self._params["save_every"],
             verbose=self._params["verbose"],
             print_every=self._params["print_every"],
+            parallel_config=self._params["parallel_config"],
         )
 
 
