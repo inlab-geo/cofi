@@ -8,7 +8,7 @@ class Neighpy(BaseInferenceTool):
 
     The Neighbourhood Algorithm is a direct search method that uses a set of points in the parameter space to explore the objective function. It is a derivative-free method that is particularly useful for high-dimensional problems.
 
-    Split into two phases, the direct search phase and the appraisal phase, this wrapper runs both phases consecutively.
+    Split into two phases, the direct search phase and the appraisal phase, this wrapper by default will only run the direct search phase.  To also run the appraisal phase, set the parameter `appraisal_n_resample` to a value greater than 0.
     """
 
     documentation_links = ["https://neighpy.readthedocs.io/en/latest/index.html"]
