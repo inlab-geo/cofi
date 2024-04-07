@@ -32,13 +32,11 @@ class Neighpy(BaseInferenceTool):
             "direct_search_nr",
             "direct_search_ni",
             "direct_search_n",
-            "appraisal_n_resample",
-            "appraisal_n_walkers",
         }
 
     @classmethod
     def optional_in_options(cls) -> dict:
-        return {}
+        return {"appraisal_n_resample": 1, "appraisal_n_walkers": 1}
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -60,15 +58,20 @@ class Neighpy(BaseInferenceTool):
     def _call_backend_tool(self):
         searcher = self._initialise_searcher()
         direct_search_samples, direct_search_objectives = self._call_searcher(searcher)
-
-        appraiser = self._initalise_appraiser(searcher)
-        appraisal_samples = self._call_appriaser(appraiser)
-
-        return {
+        result = {
             "direct_search_samples": direct_search_samples,
-            "direct_search_objectives": direct_search_objectives,
-            "appraisal_samples": appraisal_samples,
+            "direct_search_objectives": direct_search_objectives
         }
+
+        try:
+            appraiser = self._initalise_appraiser(searcher)
+        except KeyError:  # appraisal options not set so assume no appraisal
+            pass
+        else:
+            appraisal_samples = self._call_appriaser(appraiser)
+            result["appraisal_samples"] = appraisal_samples
+
+        return result
 
     @staticmethod
     @error_handler(
