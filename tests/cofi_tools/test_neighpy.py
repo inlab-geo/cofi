@@ -10,9 +10,7 @@ _sample_size = 20
 _ndim = 4
 _x = np.random.choice(np.linspace(-3.5, 2.5), size=_sample_size)
 _forward = lambda model: np.vander(_x, N=_ndim, increasing=True) @ model
-_y = _forward(np.random.randint(-5, 5, _ndim)) + np.random.normal(
-    0, 1, _sample_size
-)
+_y = _forward(np.random.randint(-5, 5, _ndim)) + np.random.normal(0, 1, _sample_size)
 _sigma = 1.0  # common noise standard deviation
 _Cdinv = np.eye(len(_y)) / (_sigma**2)  # Inverse data covariance matrix
 
@@ -86,3 +84,22 @@ def test_call(neighpy_inversion):
     assert res.direct_search_samples.shape == (_direct_search_total, _ndim)
     assert res.direct_search_objectives.shape == (_direct_search_total,)
     assert res.appraisal_samples.shape == (appraisal_n_resample, _ndim)
+
+
+def test_call_no_appraisal():
+    inv_options = InversionOptions()
+    inv_options.set_params(
+        direct_search_ns=direct_search_ns,
+        direct_search_nr=direct_search_nr,
+        direct_search_ni=direct_search_ni,
+        direct_search_n=direct_search_n,
+        bounds=bounds,
+    )
+    neighpy_solver = Neighpy(inv_problem, inv_options)
+    res = neighpy_solver()
+    assert res["success"] is True
+    assert res["model"].shape == (_ndim,)
+    _direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
+    assert res["direct_search_samples"].shape == (_direct_search_total, _ndim)
+    assert res["direct_search_objectives"].shape == (_direct_search_total,)
+    assert "appraisal_samples" not in res
