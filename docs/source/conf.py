@@ -136,7 +136,7 @@ html_context = {
 
 # -- Sphinx Gallery settings --------------------------------------------------
 sphinx_gallery_conf = {
-    "examples_dirs": ["examples/scripts", "tutorials/scripts"],
+    "examples_dirs": ["examples", "tutorials/scripts"],
     "gallery_dirs": ["examples/generated", "tutorials/generated"],
     "within_subsection_order": FileNameSortKey,
     "filename_pattern": ".",

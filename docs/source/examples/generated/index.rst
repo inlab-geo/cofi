@@ -58,10 +58,10 @@ Data Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
+  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_linear_regression_sealevel_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_field_data_linear_regression_sealevel.py`
+  :ref:`sphx_glr_examples_generated_scripts_field_data_linear_regression_sealevel.py`
 
 .. raw:: html
 
@@ -75,10 +75,10 @@ Data Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
+  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_pygimli_dcip_century_tri_mesh_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_field_data_pygimli_dcip_century_tri_mesh.py`
+  :ref:`sphx_glr_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py`
 
 .. raw:: html
 
@@ -88,14 +88,31 @@ Data Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Surface wave and receiver function - joint inversion (field data)">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_surface_wave_receiver_function_joint_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_scripts_field_data_surface_wave_receiver_function_joint.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Surface wave and receiver function - joint inversion (field data)</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Surface-Wave Tomography">
 
 .. only:: html
 
-  .. image:: /examples/generated/field_data/images/thumb/sphx_glr_sw_tomography_thumb.png
+  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_sw_tomography_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_field_data_sw_tomography.py`
+  :ref:`sphx_glr_examples_generated_scripts_field_data_sw_tomography.py`
 
 .. raw:: html
 
@@ -123,10 +140,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_fmm_tomography_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_fmm_tomography_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_fmm_tomography.py`
 
 .. raw:: html
 
@@ -140,10 +157,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_fmm_tomography_regularization_discussion_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_fmm_tomography_regularization_discussion_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography_regularization_discussion.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_fmm_tomography_regularization_discussion.py`
 
 .. raw:: html
 
@@ -157,10 +174,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_linear_regression_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_linear_regression_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_linear_regression.py`
 
 .. raw:: html
 
@@ -174,10 +191,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_modified_himmelblau_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_modified_himmelblau_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_modified_himmelblau.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_modified_himmelblau.py`
 
 .. raw:: html
 
@@ -191,10 +208,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_nonlinear_curve_fitting_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_nonlinear_curve_fitting_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py`
 
 .. raw:: html
 
@@ -208,10 +225,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_dcip_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_pygimli_dcip_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_pygimli_dcip.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py`
 
 .. raw:: html
 
@@ -225,10 +242,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_pygimli_ert_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_pygimli_ert_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_pygimli_ert.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py`
 
 .. raw:: html
 
@@ -242,10 +259,10 @@ Synthetic Examples
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_receiver_function_inversion_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_receiver_function_inversion_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_inversion.py`
 
 .. raw:: html
 
@@ -255,14 +272,31 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Surface wave and receiver function - joint inversion (synthetic data)">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_sw_rf_joint_synthetic_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Surface wave and receiver function - joint inversion (synthetic data)</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Xray Tomography">
 
 .. only:: html
 
-  .. image:: /examples/generated/synth_data/images/thumb/sphx_glr_xray_tomography_thumb.png
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_xray_tomography_thumb.png
     :alt:
 
-  :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py`
+  :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py`
 
 .. raw:: html
 
@@ -280,8 +314,8 @@ Synthetic Examples
    :includehidden:
 
 
-   /examples/generated/field_data/index.rst
-   /examples/generated/synth_data/index.rst
+   /examples/generated/scripts_field_data/index.rst
+   /examples/generated/scripts_synth_data/index.rst
 
 
 
