@@ -9,7 +9,7 @@ https://gist.github.com/chsasank/7218ca16f8d022e02a9c0deb94a310fe
 import os
 import hashlib
 from glob import glob
-from shutil import copyfile
+from shutil import copyfile, copytree, rmtree
 from pathlib import Path
 import json
 import pypandoc
@@ -58,9 +58,9 @@ def convert_ipynb_to_gallery(full_file_name, dst_folder):
     if dst_folder == TUTORIALS_SCRIPTS:
         script_file_folder = f"{dst_folder}"
     elif example_name in FIELD_DATA_EXAMPLES:
-        script_file_folder = f"{dst_folder}/{FIELD_DATA}"
+        script_file_folder = f"{dst_folder}_{FIELD_DATA}"
     else:
-        script_file_folder = f"{dst_folder}/{SYNTH_DATA}"
+        script_file_folder = f"{dst_folder}_{SYNTH_DATA}"
     script_file_path = f"{script_file_folder}/{file_name}"
     script_file_path = script_file_path.replace(".ipynb", ".py")
     
@@ -141,18 +141,29 @@ def move_data_files(src_folder, dst_folder):
         dest_file_path = f"{dst_folder}/{data_filename_without_path}"
         print(f"Date file from {data_file} to {dest_file_path}")
         copyfile(data_file, dest_file_path)
+    # move illustrations folder
+    if os.path.exists(f"{src_folder}/illustrations"):
+        copy_and_overwrite(
+            f"{src_folder}/illustrations", f"{dst_folder}/illustrations"
+        )
+
+def copy_and_overwrite(from_path, to_path):
+    if os.path.exists(to_path):
+        rmtree(to_path)
+    copytree(from_path, to_path)
+    print(f"Folder from {from_path} to {to_path}")
 
 def gen_scripts_all(_):
     # #### TUTORIALS ####
     print("Generating tutorials gallery scripts...")
     # collect tutorials to convert to sphinx gallery scripts
-    all_tutorials_scripts = glob(f"{TUTORIALS_SRC_DIR}/*.ipynb")
+    all_tutorials_scripts = glob(f"{TUTORIALS_SRC_DIR}/*/*.ipynb")
     # convert
     print("Converting tutorial files...")
     for script in all_tutorials_scripts:
         convert_ipynb_to_gallery(script, TUTORIALS_SCRIPTS)
     # collect all data and library files to move to scripts/
-    move_data_files(TUTORIALS_SRC_DIR, TUTORIALS_SCRIPTS)
+    move_data_files(f"{TUTORIALS_SRC_DIR}/*", TUTORIALS_SCRIPTS)
     # #### EXAMPLES ####
     print("Generating examples gallery scripts...")
     # collect examples to convert to sphinx gallery scripts
@@ -163,7 +174,11 @@ def gen_scripts_all(_):
     for script in all_examples_scripts:
         convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
     # collect all data and library files to move to scripts/field_data
-    move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}/{FIELD_DATA}")
+    move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{FIELD_DATA}")
+    # #### DATA & THEORY ####
+    print("\nCopying data and theory files...")
+    copy_and_overwrite(f"{cofi_examples_dir}/data", f"{docs_src}/data")
+    copy_and_overwrite(f"{cofi_examples_dir}/theory", f"{docs_src}/theory")
     print("\nOK.")
 
 def setup(app):

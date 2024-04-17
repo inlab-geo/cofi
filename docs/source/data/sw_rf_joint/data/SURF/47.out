@@ -1,0 +1,23 @@
+Inversion controls for surf96
+Cmd   Value   Description
+        1       1 Variance based residual of fit
+                0 Variance based on observed std observation
+        0       Maximum number of Love     modes to use
+        1       Maximum number of Rayleigh modes to use
+       30       Current iteration
+       -1       Number of receiver functions to be inverted
+        2       2 last inversion for Vs
+                3 last inversion for Q inverse
+                4 last inversion for Vs-Q inverse
+  5     1       0 Layer thickness  inversion
+                1 Layer velocity/Q inversion
+ 32   0.500     Damping value    (default value 1.0)
+ 35     0       0 non-causal Vs - Q relation (default)
+                1 Decoupled causal
+                2 Fully coupled causal
+ 36     1       0 No smoothing constraint
+                1 Differential smoothing constraint
+ 40   0.0500   Std error of fit floor for velocity disp
+ 41  0.500E-04  Std error of fit floor for gamma disp
+--------------------------------------------------------------------------------
+ Use menu command cmd to change value
