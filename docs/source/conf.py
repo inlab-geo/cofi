@@ -54,10 +54,15 @@ exclude_patterns = [
     "README.md",
     "cofi-examples/**",
     "cofi-gallery/**",
-    "**/scripts/**README.rst",
+    "examples/README.rst", 
+    "examples/scripts_field_data/README.rst", 
+    "examples/scripts_synth_data/README.rst", 
+    "tutorials/scripts/README.rst", 
     "**/generated/**.md5",
     "**/generated/**.py",
     "**/generated/**.ipynb",
+    "data/**",
+    "theory/**",
 ]
 
 source_suffix = ".rst"

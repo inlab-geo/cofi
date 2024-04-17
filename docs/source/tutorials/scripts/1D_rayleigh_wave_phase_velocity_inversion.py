@@ -877,7 +877,8 @@ for i, axes_pair in enumerate(axes):
 # On a seperate experiment, we ran 200_000 steps instead and produced the
 # following samples plot.
 # 
-# .. figure:: illustrations/emcee_200_000_iterations.png
+# .. figure::
+#    https://raw.githubusercontent.com/inlab-geo/cofi-examples/main/tutorials/rayleigh_wave_phase_velocity/illustrations/emcee_200_000_iterations.png?raw=true
 #    :alt: Fixed-dimensional sampling results with 200_000 steps
 # 
 #    Fixed-dimensional sampling results with 200_000 steps
@@ -1504,7 +1505,8 @@ axes[1].legend(loc="lower center", bbox_to_anchor=(0.5, -0.46));
 # On a seperate experiment, we ran 200_000 steps and produced the
 # following samples plot.
 # 
-# .. figure:: illustrations/emcee_200_000_iterations_field.png
+# .. figure::
+#    https://raw.githubusercontent.com/inlab-geo/cofi-examples/main/tutorials/rayleigh_wave_phase_velocity/illustrations/emcee_200_000_iterations_field.png?raw=true
 #    :alt: Fixed-dimensional sampling results on field data with 200_000
 #    steps
 # 

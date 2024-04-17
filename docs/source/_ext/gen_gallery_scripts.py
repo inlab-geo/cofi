@@ -141,6 +141,11 @@ def move_data_files(src_folder, dst_folder):
         dest_file_path = f"{dst_folder}/{data_filename_without_path}"
         print(f"Date file from {data_file} to {dest_file_path}")
         copyfile(data_file, dest_file_path)
+    # move illustrations folder
+    if os.path.exists(f"{src_folder}/illustrations"):
+        copy_and_overwrite(
+            f"{src_folder}/illustrations", f"{dst_folder}/illustrations"
+        )
 
 def copy_and_overwrite(from_path, to_path):
     if os.path.exists(to_path):

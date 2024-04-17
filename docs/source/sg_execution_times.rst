@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:17.867** total execution time for 18 files **from all galleries**:
+**03:19.858** total execution time for 18 files **from all galleries**:
 
 .. container::
 
@@ -32,8 +32,8 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``examples/scripts_synth_data/pygimli_ert.py``)
-     - 00:17.867
+   * - :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py` (``tutorials/scripts/1D_rayleigh_wave_phase_velocity_inversion.py``)
+     - 03:19.858
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_field_data_linear_regression_sealevel.py` (``examples/scripts_field_data/linear_regression_sealevel.py``)
      - 00:00.000
@@ -65,6 +65,9 @@ Computation times
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``examples/scripts_synth_data/pygimli_dcip.py``)
      - 00:00.000
      - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``examples/scripts_synth_data/pygimli_ert.py``)
+     - 00:00.000
+     - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_inversion.py` (``examples/scripts_synth_data/receiver_function_inversion.py``)
      - 00:00.000
      - 0.0
@@ -72,9 +75,6 @@ Computation times
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``examples/scripts_synth_data/xray_tomography.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py` (``tutorials/scripts/1D_rayleigh_wave_phase_velocity_inversion.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py` (``tutorials/scripts/electrical_resistivity_tomography.py``)
