@@ -85,7 +85,7 @@ Below is an ordered list of tutorials.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="2 - linear &amp; non-linear travel time tomography">
+    <div class="sphx-glr-thumbcontainer" tooltip="Linear &amp; non-linear travel time tomography">
 
 .. only:: html
 
@@ -96,7 +96,7 @@ Below is an ordered list of tutorials.
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">2 - linear & non-linear travel time tomography</div>
+      <div class="sphx-glr-thumbnail-title">Linear & non-linear travel time tomography</div>
     </div>
 
 

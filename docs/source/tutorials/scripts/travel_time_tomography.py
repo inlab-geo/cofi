@@ -1,6 +1,6 @@
 """
-2 - linear & non-linear travel time tomography
-==============================================
+Linear & non-linear travel time tomography
+==========================================
 
 """
 

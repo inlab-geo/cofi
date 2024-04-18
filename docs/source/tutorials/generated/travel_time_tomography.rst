@@ -18,8 +18,8 @@
 .. _sphx_glr_tutorials_generated_travel_time_tomography.py:
 
 
-2 - linear & non-linear travel time tomography
-==============================================
+Linear & non-linear travel time tomography
+==========================================
 
 .. GENERATED FROM PYTHON SOURCE LINES 9-14
 
@@ -250,7 +250,7 @@ the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|▊         | 857/10416 [00:00<00:01, 8563.17it/s]    Evaluating paths:  17%|█▋        | 1736/10416 [00:00<00:00, 8692.61it/s]    Evaluating paths:  25%|██▌       | 2606/10416 [00:00<00:00, 8662.39it/s]    Evaluating paths:  33%|███▎      | 3473/10416 [00:00<00:00, 8527.72it/s]    Evaluating paths:  42%|████▏     | 4327/10416 [00:00<00:00, 8473.24it/s]    Evaluating paths:  50%|████▉     | 5175/10416 [00:00<00:00, 8398.12it/s]    Evaluating paths:  58%|█████▊    | 6015/10416 [00:00<00:00, 8338.04it/s]    Evaluating paths:  66%|██████▌   | 6855/10416 [00:00<00:00, 8356.92it/s]    Evaluating paths:  74%|███████▍  | 7691/10416 [00:00<00:00, 8303.12it/s]    Evaluating paths:  82%|████████▏ | 8522/10416 [00:01<00:00, 8283.00it/s]    Evaluating paths:  90%|████████▉ | 9363/10416 [00:01<00:00, 8320.28it/s]    Evaluating paths:  98%|█████████▊| 10196/10416 [00:01<00:00, 8311.69it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8398.24it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|▊         | 883/10416 [00:00<00:01, 8829.76it/s]    Evaluating paths:  17%|█▋        | 1795/10416 [00:00<00:00, 8996.20it/s]    Evaluating paths:  26%|██▌       | 2695/10416 [00:00<00:00, 8928.29it/s]    Evaluating paths:  34%|███▍      | 3590/10416 [00:00<00:00, 8935.83it/s]    Evaluating paths:  43%|████▎     | 4491/10416 [00:00<00:00, 8961.00it/s]    Evaluating paths:  52%|█████▏    | 5388/10416 [00:00<00:00, 8918.97it/s]    Evaluating paths:  60%|██████    | 6301/10416 [00:00<00:00, 8985.76it/s]    Evaluating paths:  69%|██████▉   | 7200/10416 [00:00<00:00, 8948.43it/s]    Evaluating paths:  78%|███████▊  | 8095/10416 [00:00<00:00, 8905.91it/s]    Evaluating paths:  86%|████████▋ | 8997/10416 [00:01<00:00, 8939.01it/s]    Evaluating paths:  95%|█████████▍| 9891/10416 [00:01<00:00, 8920.57it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8959.48it/s]
 
 
 
@@ -554,7 +554,7 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|▊         | 832/10416 [00:00<00:01, 8312.02it/s]    Evaluating paths:  16%|█▌        | 1684/10416 [00:00<00:01, 8432.32it/s]    Evaluating paths:  24%|██▍       | 2528/10416 [00:00<00:00, 8362.94it/s]    Evaluating paths:  32%|███▏      | 3365/10416 [00:00<00:00, 8348.26it/s]    Evaluating paths:  40%|████      | 4217/10416 [00:00<00:00, 8405.09it/s]    Evaluating paths:  49%|████▊     | 5058/10416 [00:00<00:00, 8375.81it/s]    Evaluating paths:  57%|█████▋    | 5896/10416 [00:00<00:00, 8349.22it/s]    Evaluating paths:  65%|██████▍   | 6745/10416 [00:00<00:00, 8392.32it/s]    Evaluating paths:  73%|███████▎  | 7585/10416 [00:00<00:00, 8363.64it/s]    Evaluating paths:  81%|████████  | 8422/10416 [00:01<00:00, 8357.32it/s]    Evaluating paths:  89%|████████▉ | 9265/10416 [00:01<00:00, 8376.40it/s]    Evaluating paths:  97%|█████████▋| 10112/10416 [00:01<00:00, 8404.25it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8392.33it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   9%|▊         | 887/10416 [00:00<00:01, 8863.67it/s]    Evaluating paths:  17%|█▋        | 1791/10416 [00:00<00:00, 8962.44it/s]    Evaluating paths:  26%|██▌       | 2688/10416 [00:00<00:00, 8890.29it/s]    Evaluating paths:  34%|███▍      | 3581/10416 [00:00<00:00, 8902.22it/s]    Evaluating paths:  43%|████▎     | 4477/10416 [00:00<00:00, 8922.03it/s]    Evaluating paths:  52%|█████▏    | 5370/10416 [00:00<00:00, 8895.76it/s]    Evaluating paths:  60%|██████    | 6262/10416 [00:00<00:00, 8901.13it/s]    Evaluating paths:  69%|██████▉   | 7166/10416 [00:00<00:00, 8942.25it/s]    Evaluating paths:  77%|███████▋  | 8061/10416 [00:00<00:00, 8869.54it/s]    Evaluating paths:  86%|████████▌ | 8963/10416 [00:01<00:00, 8914.40it/s]    Evaluating paths:  95%|█████████▍| 9855/10416 [00:01<00:00, 8909.52it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8910.81it/s]
 
 
 
@@ -904,10 +904,10 @@ Step 3. Define CoFI ``Inversion`` and run
  .. code-block:: none
 
     Iteration #0, updated objective function value: 1787.077540309464
-    Iteration #1, updated objective function value: 121.06987606708411
-    Iteration #2, updated objective function value: 5.825780480485424
-    Iteration #3, updated objective function value: 3.671788666773696
-    Iteration #4, updated objective function value: 1.6075547129972418
+    Iteration #1, updated objective function value: 121.06987606708292
+    Iteration #2, updated objective function value: 5.825780480486444
+    Iteration #3, updated objective function value: 3.671788666778372
+    Iteration #4, updated objective function value: 1.607554713000219
 
     <Axes: xlabel='x (km)', ylabel='y (km)'>
 
@@ -1052,10 +1052,10 @@ Start from the code template below:
  .. code-block:: none
 
     Iteration #0, updated objective function value: 133.40921131094794
-    Iteration #1, updated objective function value: 2.573229408670313
-    Iteration #2, updated objective function value: 0.4155731243675017
-    Iteration #3, updated objective function value: 0.004472195534613596
-    Iteration #4, updated objective function value: 0.00049125446880602
+    Iteration #1, updated objective function value: 2.5732294086703247
+    Iteration #2, updated objective function value: 0.4155731243675164
+    Iteration #3, updated objective function value: 0.0044721955346204685
+    Iteration #4, updated objective function value: 0.0004912544688082658
     Change in model parameters below tolerance, stopping.
     ============================
     Summary for inversion result
@@ -1064,7 +1064,7 @@ Start from the code template below:
     ----------------------------
     model: [0.00050057 0.00050052 0.00050046 ... 0.00051289 0.00051088 0.00050873]
     num_iterations: 4
-    objective_val: 0.00049125446880602
+    objective_val: 0.0004912544688082658
     n_obj_evaluations: 6
     n_grad_evaluations: 5
     n_hess_evaluations: 5
@@ -1214,10 +1214,10 @@ You can start from the template below:
  .. code-block:: none
 
     Iteration #0, updated objective function value: 1697.7749129381455
-    Iteration #1, updated objective function value: 1645.62682553794
-    Iteration #2, updated objective function value: 710.1208786960935
-    Iteration #3, updated objective function value: 715.5012424997499
-    Iteration #4, updated objective function value: 685.509442111526
+    Iteration #1, updated objective function value: 1645.6268255379405
+    Iteration #2, updated objective function value: 710.1208786960945
+    Iteration #3, updated objective function value: 715.5022745101638
+    Iteration #4, updated objective function value: 685.5111622410774
 
     Text(0.5, 0.98, 'Damping 100, Flattening 100, Smoothing 0')
 
@@ -1265,7 +1265,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 27.608 seconds)
+   **Total running time of the script:** (0 minutes 32.668 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_travel_time_tomography.py:
