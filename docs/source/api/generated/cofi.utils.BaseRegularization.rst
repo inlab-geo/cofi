@@ -91,6 +91,9 @@ cofi.utils.BaseRegularization
 
 
 
+
+
+
     .. automethod:: BaseRegularization.__rmul__
 
 

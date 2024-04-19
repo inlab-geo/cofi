@@ -147,6 +147,9 @@ cofi.tools.BaseInferenceTool
 
 
 
+
+
+
     .. automethod:: BaseInferenceTool.__init__
 
 

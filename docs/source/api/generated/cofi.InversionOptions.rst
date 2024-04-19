@@ -143,6 +143,9 @@ cofi.InversionOptions
 
 
 
+
+
+
     .. automethod:: InversionOptions.get_default_tool
 
 

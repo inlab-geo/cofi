@@ -113,6 +113,9 @@ cofi.InversionResult
 
 
 
+
+
+
     .. automethod:: InversionResult.summary
 
 

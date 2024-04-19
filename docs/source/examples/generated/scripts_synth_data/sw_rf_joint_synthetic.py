@@ -60,7 +60,7 @@ Surface wave and receiver function - joint inversion (synthetic data)
 # -------------------------------------------------------- #
 
 # !pip install -U cofi 
-# !pip install git+https://github.com/miili/pysurf96.git
+# !pip install git+https://github.com/inlab-geo/pysurf96.git
 # !git clone https://github.com/inlab-geo/cofi-examples.git
 # %cd cofi-examples/examples/sw_rf_joint
 
