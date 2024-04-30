@@ -151,9 +151,6 @@ cofi.utils.GaussianPrior
 
 
 
-
-
-
     .. automethod:: GaussianPrior.gradient
 
 

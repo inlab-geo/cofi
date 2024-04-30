@@ -15,13 +15,12 @@ List of functions and classes (API)
 APIs for Basic Usage
 --------------------
 
-.. mermaid::
+.. figure:: ../_static/cofi_workflow.jpeg
+    :align: center
+    :width: 80%
+    :alt: Workflow of a typical inversion run in CoFI
 
-    %%{init: {'theme':'neutral'}}%%
-        flowchart TB
-        base_problem(BaseProblem object)-->inversion(Inversion object)
-        inversion_options(InversionOptions object)-->inversion(Inversion object)
-        inversion--".run()"-->inversion_result(InversionResult object)
+    Workflow of a typical inversion run in CoFI
 
 
 A typical inversion run in :code:`cofi` involves the following four objects:

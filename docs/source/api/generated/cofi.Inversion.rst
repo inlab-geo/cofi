@@ -113,9 +113,6 @@ cofi.Inversion
 
 
 
-
-
-
     .. automethod:: Inversion.run
 
 
