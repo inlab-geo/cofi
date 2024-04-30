@@ -26,7 +26,7 @@ class InversionOptions:
 
 
     .. admonition:: Example usage of InversionOptions
-        :class: dropdown, attention
+        :class: dropdown, tip
 
         >>> from cofi import InversionOptions
         >>> inv_options = InversionOptions()
@@ -69,13 +69,6 @@ class InversionOptions:
         -----------------------------
         Solver-specific parameters: None set
         Use `suggest_solver_params()` to check required/optional solver-specific parameters.
-
-    .. warning::
-        Methods that guide users through available **solvers tree** is still under consideration -
-        we are working on deciding how such APIs are named and used. Ideally, we have a
-        tree in the backend, with the root level branching into ``sampling``, ``direct search``
-        and ``optimization`` and further categorisations that lead to lists of backend tools
-        as the leaves.
 
     .. _guide:
 

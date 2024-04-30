@@ -105,13 +105,11 @@ def _inspect_default_options():
         if v.default is not inspect._empty and k != "log_likelihood_func"
     }
     _bb_inv_run_args = dict(inspect.signature(BaseBayesianInversion.run).parameters)
-    optional_in_options.update(
-        {
-            k: v.default
-            for k, v in _bb_inv_run_args.items()
-            if v.default is not inspect._empty
-        }
-    )
+    optional_in_options.update({
+        k: v.default
+        for k, v in _bb_inv_run_args.items()
+        if v.default is not inspect._empty
+    })
     return optional_in_options
 
 
