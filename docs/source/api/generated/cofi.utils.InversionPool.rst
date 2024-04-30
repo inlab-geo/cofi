@@ -116,9 +116,6 @@ cofi.utils.InversionPool
 
 
 
-
-
-
     .. automethod:: InversionPool.run
 
 
