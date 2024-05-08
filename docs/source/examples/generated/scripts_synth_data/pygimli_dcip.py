@@ -95,12 +95,7 @@ DCIP with PyGIMLi (Synthetic example)
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi
-
-# !pip install -q condacolab
-# import condacolab
-# condacolab.install()
-# !mamba install -c gimli pygimli=1.3
+# !pip install -U cofi pygimli tetgen
 
 ######################################################################
 #
@@ -509,11 +504,6 @@ dcip_problem.set_initial_model(start_model_log_real)
 # 3.1. SciPy’s optimizer (trust-ncg)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
-
-dcip_problem.suggest_tools();
-
-######################################################################
-#
 
 inv_options_scipy = cofi.InversionOptions()
 inv_options_scipy.set_tool("scipy.optimize.minimize")

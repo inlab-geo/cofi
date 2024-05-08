@@ -116,7 +116,7 @@ We’ll do the following: 1. Install PyGIMLi (if on CoLab) 2. Download
 processed dataset (if on CoLab) 3. Import modules
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 101-115
+.. GENERATED FROM PYTHON SOURCE LINES 101-110
 
 .. code-block:: Python
 
@@ -127,12 +127,7 @@ processed dataset (if on CoLab) 3. Import modules
     #                                                          #
     # -------------------------------------------------------- #
 
-    # !pip install -U cofi
-
-    # !pip install -q condacolab
-    # import condacolab
-    # condacolab.install()
-    # !mamba install -c gimli pygimli=1.3
+    # !pip install -U cofi pygimli tetgen
 
 
 
@@ -141,7 +136,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-127
+.. GENERATED FROM PYTHON SOURCE LINES 112-122
 
 .. code-block:: Python
 
@@ -162,7 +157,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-140
+.. GENERATED FROM PYTHON SOURCE LINES 127-135
 
 We will need the following packages:
 
@@ -173,7 +168,7 @@ We will need the following packages:
 -  ``cofi`` for accessing different inference solvers
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-148
+.. GENERATED FROM PYTHON SOURCE LINES 135-143
 
 .. code-block:: Python
 
@@ -192,7 +187,7 @@ We will need the following packages:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 153-160
+.. GENERATED FROM PYTHON SOURCE LINES 148-155
 
 2. Load the data 
 -----------------
@@ -202,7 +197,7 @@ We will need to download the preprocessed dataset first. This notebook
 contains the code for data preprocessing.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-164
+.. GENERATED FROM PYTHON SOURCE LINES 155-159
 
 .. code-block:: Python
 
@@ -217,7 +212,7 @@ contains the code for data preprocessing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 169-175
+.. GENERATED FROM PYTHON SOURCE LINES 164-170
 
 Converting measurements of chargeability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -226,7 +221,7 @@ PyGIMLi expresses chargeability in :math:`\mathrm{radians}` and we
 convert the apparent chargeabilites as we load the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 175-193
+.. GENERATED FROM PYTHON SOURCE LINES 170-188
 
 .. code-block:: Python
 
@@ -261,7 +256,7 @@ convert the apparent chargeabilites as we load the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 195-215
+.. GENERATED FROM PYTHON SOURCE LINES 190-210
 
 .. code-block:: Python
 
@@ -292,7 +287,7 @@ convert the apparent chargeabilites as we load the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-227
+.. GENERATED FROM PYTHON SOURCE LINES 215-222
 
 3. Utility wrappers to PyGIMLi functions 
 -----------------------------------------
@@ -302,13 +297,13 @@ generating data and making plots. Feel free to skip reading the details
 of these utility functions and come back later if you want.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 230-233
+.. GENERATED FROM PYTHON SOURCE LINES 225-228
 
 3.1. Helper functions for complex numbers 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 233-246
+.. GENERATED FROM PYTHON SOURCE LINES 228-241
 
 .. code-block:: Python
 
@@ -332,13 +327,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 251-254
+.. GENERATED FROM PYTHON SOURCE LINES 246-249
 
 3.2. Helper functions for PyGIMLi modelling 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 254-353
+.. GENERATED FROM PYTHON SOURCE LINES 249-348
 
 .. code-block:: Python
 
@@ -448,7 +443,7 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 358-364
+.. GENERATED FROM PYTHON SOURCE LINES 353-359
 
 3.3. Plotting utilities 
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -457,7 +452,7 @@ Note: We lifted out the plotting of colorbars only for Colab
 compatibility.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 364-446
+.. GENERATED FROM PYTHON SOURCE LINES 359-441
 
 .. code-block:: Python
 
@@ -550,7 +545,7 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 451-457
+.. GENERATED FROM PYTHON SOURCE LINES 446-452
 
 4. PyGIMLi problem setup 
 -------------------------
@@ -559,7 +554,7 @@ compatibility.
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 457-461
+.. GENERATED FROM PYTHON SOURCE LINES 452-456
 
 .. code-block:: Python
 
@@ -575,15 +570,15 @@ compatibility.
 
  .. code-block:: none
 
-    17/04/24 - 16:10:38 - pyGIMLi - INFO - Create default mesh for geometric factor calculation.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Save RVector binary
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Cache stored: /home/jiawen/.cache/pygimli/303729043524732118
+    07/05/24 - 16:39:38 - pyGIMLi - INFO - Create default mesh for geometric factor calculation.
+    07/05/24 - 16:39:40 - pyGIMLi - INFO - Save RVector binary
+    07/05/24 - 16:39:40 - pyGIMLi - INFO - Cache stored: /home/jiawen/.cache/pygimli/14947696433024386225
 
     Data: Sensors: 33 data: 151, nonzero entries: ['a', 'b', 'err', 'iperr', 'k', 'm', 'n', 'phia', 'rhoa', 'valid']
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 463-468
+.. GENERATED FROM PYTHON SOURCE LINES 458-463
 
 .. code-block:: Python
 
@@ -616,13 +611,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 473-476
+.. GENERATED FROM PYTHON SOURCE LINES 468-471
 
 4.2. ERT manager 
 ~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 476-479
+.. GENERATED FROM PYTHON SOURCE LINES 471-474
 
 .. code-block:: Python
 
@@ -636,13 +631,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 484-487
+.. GENERATED FROM PYTHON SOURCE LINES 479-482
 
 4.3. Inversion mesh 
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 487-493
+.. GENERATED FROM PYTHON SOURCE LINES 482-488
 
 .. code-block:: Python
 
@@ -665,25 +660,25 @@ compatibility.
 
  .. code-block:: none
 
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Found 2 regions.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Found 2 regions.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Creating forward mesh from region infos.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
-    17/04/24 - 16:10:40 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 5657 Cells: 10912 Boundaries: 8384
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - Found 2 regions.
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - Found 2 regions.
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - (ERTModelling) Region with smallest marker (1) set to background.
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - Creating forward mesh from region infos.
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
+    07/05/24 - 16:39:41 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 5657 Cells: 10912 Boundaries: 8384
     model size 1912
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 498-501
+.. GENERATED FROM PYTHON SOURCE LINES 493-496
 
 4.4. Forward operator 
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 501-504
+.. GENERATED FROM PYTHON SOURCE LINES 496-499
 
 .. code-block:: Python
 
@@ -697,13 +692,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 509-512
+.. GENERATED FROM PYTHON SOURCE LINES 504-507
 
 4.5. Regularization matrix 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 512-515
+.. GENERATED FROM PYTHON SOURCE LINES 507-510
 
 .. code-block:: Python
 
@@ -718,19 +713,19 @@ compatibility.
 
  .. code-block:: none
 
-    17/04/24 - 16:10:41 - Core - INFO - More than 50 regions, so we assume single regions only.
-    17/04/24 - 16:10:41 - Core - INFO - Applying *:* interregion constraints.
+    07/05/24 - 16:39:41 - Core - INFO - More than 50 regions, so we assume single regions only.
+    07/05/24 - 16:39:41 - Core - INFO - Applying *:* interregion constraints.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 520-523
+.. GENERATED FROM PYTHON SOURCE LINES 515-518
 
 4.6. Starting model 
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 523-528
+.. GENERATED FROM PYTHON SOURCE LINES 518-523
 
 .. code-block:: Python
 
@@ -751,7 +746,7 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 533-550
+.. GENERATED FROM PYTHON SOURCE LINES 528-545
 
 5. Create utility functions to pass to CoFI 
 --------------------------------------------
@@ -771,7 +766,7 @@ you want to understand more. These functions are:
 -  ``get_hessian``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 550-637
+.. GENERATED FROM PYTHON SOURCE LINES 545-632
 
 .. code-block:: Python
 
@@ -869,7 +864,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 639-647
+.. GENERATED FROM PYTHON SOURCE LINES 634-642
 
 .. code-block:: Python
 
@@ -894,7 +889,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 649-654
+.. GENERATED FROM PYTHON SOURCE LINES 644-649
 
 .. code-block:: Python
 
@@ -917,7 +912,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 656-661
+.. GENERATED FROM PYTHON SOURCE LINES 651-656
 
 .. code-block:: Python
 
@@ -939,7 +934,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 663-668
+.. GENERATED FROM PYTHON SOURCE LINES 658-663
 
 .. code-block:: Python
 
@@ -973,14 +968,14 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 673-677
+.. GENERATED FROM PYTHON SOURCE LINES 668-672
 
 With all the above forward operations set up with PyGIMLi, we now define
 the problem in ``cofi`` by setting the problem information for a
 ``BaseProblem`` object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 677-689
+.. GENERATED FROM PYTHON SOURCE LINES 672-684
 
 .. code-block:: Python
 
@@ -1003,41 +998,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 691-694
-
-.. code-block:: Python
-
-
-    dcip_problem.suggest_tools();
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Based on what you've provided so far, here are possible tools:
-    {
-        "optimization": [
-            "scipy.optimize.minimize",
-            "torch.optim"
-        ],
-        "matrix solvers": [
-            "cofi.simple_newton"
-        ],
-        "sampling": [
-            "bayesbay",
-            "neighpy"
-        ]
-    }
-
-    {'optimization': ['scipy.optimize.minimize', 'torch.optim'], 'matrix solvers': ['cofi.simple_newton'], 'sampling': ['bayesbay', 'neighpy']}
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 699-704
+.. GENERATED FROM PYTHON SOURCE LINES 689-694
 
 6. Define the inversion options and run 
 ----------------------------------------
@@ -1045,7 +1006,7 @@ the problem in ``cofi`` by setting the problem information for a
 Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 704-717
+.. GENERATED FROM PYTHON SOURCE LINES 694-707
 
 .. code-block:: Python
 
@@ -1069,7 +1030,7 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 719-724
+.. GENERATED FROM PYTHON SOURCE LINES 709-714
 
 .. code-block:: Python
 
@@ -1123,7 +1084,7 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 726-733
+.. GENERATED FROM PYTHON SOURCE LINES 716-723
 
 .. code-block:: Python
 
@@ -1141,13 +1102,13 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 738-741
+.. GENERATED FROM PYTHON SOURCE LINES 728-731
 
 Comparison with published results 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 741-760
+.. GENERATED FROM PYTHON SOURCE LINES 731-750
 
 .. code-block:: Python
 
@@ -1182,7 +1143,7 @@ Comparison with published results
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 765-773
+.. GENERATED FROM PYTHON SOURCE LINES 755-763
 
 The use of an adaptive triangular mesh means that we use fewer model
 parameters when compared with the original example and that our mesh is
@@ -1193,7 +1154,7 @@ sufficient to obtain a result that compares favorably with the original
 solution.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 773-777
+.. GENERATED FROM PYTHON SOURCE LINES 763-767
 
 .. code-block:: Python
 
@@ -1215,7 +1176,7 @@ solution.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 782-787
+.. GENERATED FROM PYTHON SOURCE LINES 772-777
 
 --------------
 
@@ -1223,7 +1184,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 787-793
+.. GENERATED FROM PYTHON SOURCE LINES 777-783
 
 .. code-block:: Python
 
@@ -1244,21 +1205,21 @@ Watermark
     cofi 0.2.7
     numpy 1.24.4
     scipy 1.12.0
-    pygimli 1.4.6
+    pygimli 1.5.0
     torch 2.1.2.post101
     matplotlib 3.8.3
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 794-794
+.. GENERATED FROM PYTHON SOURCE LINES 784-784
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 56.132 seconds)
+   **Total running time of the script:** (1 minutes 56.586 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py:

@@ -39,33 +39,13 @@ Electrical resistivity tomography
 
 # Environment setup (uncomment code lines below)
 
-# !pip install -U cofi geo-espresso
-
-# !pip install -q condacolab
-# import condacolab
-# condacolab.install()
-# !mamba install -c gimli pygimli=1.3
+# !pip install -U cofi geo-espresso pygimli tetgen
 
 ######################################################################
 #
 
-
-######################################################################
-# If you see a warning message from Colab - don’t worry, this is expected.
-# This happens when we’ve successfully installed a package manager
-# (“mamba”) so that we can then install PyGIMLi (from conda channel
-# “gimli”).
-# 
-# |image1|
-# 
-# Remember to uncomment and run the code cell below as well, as we are
-# going to load some data from GitHub.
-# 
-# .. |image1| image:: https://i.imgur.com/TKAXUoA.png
-# 
-
 # !git clone https://github.com/inlab-geo/cofi-examples.git
-# %cd cofi-examples/tutorials/
+# %cd cofi-examples/tutorials/electrical_resistivity_tomography/
 
 ######################################################################
 #
