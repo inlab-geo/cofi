@@ -105,12 +105,7 @@ Century DCIP Inversion with a Triangular Mesh
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi
-
-# !pip install -q condacolab
-# import condacolab
-# condacolab.install()
-# !mamba install -c gimli pygimli=1.3
+# !pip install -U cofi pygimli tetgen
 
 ######################################################################
 #
@@ -685,11 +680,6 @@ dcip_problem.set_objective(get_objective, args=[data_log_complex, forward_oprt, 
 dcip_problem.set_gradient(get_gradient, args=[data_log_complex, forward_oprt, lamda, Wm, Cd_inv])
 dcip_problem.set_hessian(get_hessian, args=[data_log_complex, forward_oprt, lamda, Wm, Cd_inv])
 dcip_problem.set_initial_model(start_model_log_real)
-
-######################################################################
-#
-
-dcip_problem.suggest_tools();
 
 ######################################################################
 #

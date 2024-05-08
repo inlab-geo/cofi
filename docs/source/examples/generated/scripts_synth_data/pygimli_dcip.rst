@@ -106,7 +106,7 @@ See https://ijpam.eu/contents/2012-76-1/11/11.pdf for more details.
 -----------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-105
+.. GENERATED FROM PYTHON SOURCE LINES 91-100
 
 .. code-block:: Python
 
@@ -117,12 +117,7 @@ See https://ijpam.eu/contents/2012-76-1/11/11.pdf for more details.
     #                                                          #
     # -------------------------------------------------------- #
 
-    # !pip install -U cofi
-
-    # !pip install -q condacolab
-    # import condacolab
-    # condacolab.install()
-    # !mamba install -c gimli pygimli=1.3
+    # !pip install -U cofi pygimli tetgen
 
 
 
@@ -131,7 +126,7 @@ See https://ijpam.eu/contents/2012-76-1/11/11.pdf for more details.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-117
+.. GENERATED FROM PYTHON SOURCE LINES 105-112
 
 We will need the following packages:
 
@@ -141,7 +136,7 @@ We will need the following packages:
 -  ``cofi`` for accessing different inference solvers
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-125
+.. GENERATED FROM PYTHON SOURCE LINES 112-120
 
 .. code-block:: Python
 
@@ -160,20 +155,20 @@ We will need the following packages:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-134
+.. GENERATED FROM PYTHON SOURCE LINES 125-129
 
 Below we define a set of utility functions that help define the problem,
 generating data and making plots. Feel free to skip reading the details
 of these utility functions and come back later if you want.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-140
+.. GENERATED FROM PYTHON SOURCE LINES 132-135
 
 1.1. Helper functions for complex numbers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-153
+.. GENERATED FROM PYTHON SOURCE LINES 135-148
 
 .. code-block:: Python
 
@@ -197,13 +192,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-161
+.. GENERATED FROM PYTHON SOURCE LINES 153-156
 
 1.2. Helper functions for PyGIMLi modelling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-237
+.. GENERATED FROM PYTHON SOURCE LINES 156-232
 
 .. code-block:: Python
 
@@ -290,13 +285,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 242-245
+.. GENERATED FROM PYTHON SOURCE LINES 237-240
 
 1.3. Helper functions for plotting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 245-268
+.. GENERATED FROM PYTHON SOURCE LINES 240-263
 
 .. code-block:: Python
 
@@ -330,25 +325,25 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 273-276
+.. GENERATED FROM PYTHON SOURCE LINES 268-271
 
 2. Define the problem
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 279-282
+.. GENERATED FROM PYTHON SOURCE LINES 274-277
 
 We first define the true model, the survey and map it on a computational
 mesh designed for the survey and true anomaly.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 285-288
+.. GENERATED FROM PYTHON SOURCE LINES 280-283
 
 2.1. True model
 ~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 288-296
+.. GENERATED FROM PYTHON SOURCE LINES 283-291
 
 .. code-block:: Python
 
@@ -372,7 +367,7 @@ mesh designed for the survey and true anomaly.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 301-307
+.. GENERATED FROM PYTHON SOURCE LINES 296-302
 
 2.2. Generate synthetic data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -381,7 +376,7 @@ Generate the synthetic data as a container with all the necessary
 information for plotting:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 307-312
+.. GENERATED FROM PYTHON SOURCE LINES 302-307
 
 .. code-block:: Python
 
@@ -409,7 +404,7 @@ information for plotting:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 317-324
+.. GENERATED FROM PYTHON SOURCE LINES 312-319
 
 2.3. ERTManager
 ~~~~~~~~~~~~~~~
@@ -419,7 +414,7 @@ of problem-specific information like the inversion mesh, and to perform
 forward operation for the inversion solvers.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 324-328
+.. GENERATED FROM PYTHON SOURCE LINES 319-323
 
 .. code-block:: Python
 
@@ -434,7 +429,7 @@ forward operation for the inversion solvers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 333-341
+.. GENERATED FROM PYTHON SOURCE LINES 328-336
 
 2.4. Inversion mesh
 ~~~~~~~~~~~~~~~~~~~
@@ -445,7 +440,7 @@ Here we first use a triangular mesh for the inversion, which makes the
 problem underdetermined.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 341-347
+.. GENERATED FROM PYTHON SOURCE LINES 336-342
 
 .. code-block:: Python
 
@@ -473,7 +468,7 @@ problem underdetermined.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 352-361
+.. GENERATED FROM PYTHON SOURCE LINES 347-356
 
 2.5. Forward operator, regularization matrix
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -485,7 +480,7 @@ Our model will be in log space when we perform inversion (for numerical
 stability purposes).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 361-372
+.. GENERATED FROM PYTHON SOURCE LINES 356-367
 
 .. code-block:: Python
 
@@ -512,7 +507,7 @@ stability purposes).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 377-394
+.. GENERATED FROM PYTHON SOURCE LINES 372-389
 
 2.6. Utility functions to pass to CoFI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -532,7 +527,7 @@ you want to understand more. These functions are:
 -  ``get_hessian``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 394-480
+.. GENERATED FROM PYTHON SOURCE LINES 389-475
 
 .. code-block:: Python
 
@@ -629,14 +624,14 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 485-489
+.. GENERATED FROM PYTHON SOURCE LINES 480-484
 
 With all the above forward operations set up with PyGIMLi, we now define
 the problem in ``cofi`` by setting the problem information for a
 ``BaseProblem`` object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 489-501
+.. GENERATED FROM PYTHON SOURCE LINES 484-496
 
 .. code-block:: Python
 
@@ -659,7 +654,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 506-512
+.. GENERATED FROM PYTHON SOURCE LINES 501-507
 
 3. Define the inversion options and run
 ---------------------------------------
@@ -668,41 +663,7 @@ the problem in ``cofi`` by setting the problem information for a
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 512-515
-
-.. code-block:: Python
-
-
-    dcip_problem.suggest_tools();
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Based on what you've provided so far, here are possible tools:
-    {
-        "optimization": [
-            "scipy.optimize.minimize",
-            "torch.optim"
-        ],
-        "matrix solvers": [
-            "cofi.simple_newton"
-        ],
-        "sampling": [
-            "bayesbay",
-            "neighpy"
-        ]
-    }
-
-    {'optimization': ['scipy.optimize.minimize', 'torch.optim'], 'matrix solvers': ['cofi.simple_newton'], 'sampling': ['bayesbay', 'neighpy']}
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 517-522
+.. GENERATED FROM PYTHON SOURCE LINES 507-512
 
 .. code-block:: Python
 
@@ -718,7 +679,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 524-529
+.. GENERATED FROM PYTHON SOURCE LINES 514-519
 
 .. code-block:: Python
 
@@ -741,7 +702,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 531-538
+.. GENERATED FROM PYTHON SOURCE LINES 521-528
 
 .. code-block:: Python
 
@@ -776,13 +737,13 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 543-546
+.. GENERATED FROM PYTHON SOURCE LINES 533-536
 
 3.2. PyTorch’s optimizer (RAdam)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 546-551
+.. GENERATED FROM PYTHON SOURCE LINES 536-541
 
 .. code-block:: Python
 
@@ -798,7 +759,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 553-557
+.. GENERATED FROM PYTHON SOURCE LINES 543-547
 
 .. code-block:: Python
 
@@ -814,31 +775,31 @@ the problem in ``cofi`` by setting the problem information for a
 
  .. code-block:: none
 
-    Iteration #0, objective value: 40.45486222394138
-    Iteration #1, objective value: 32.66647384877092
-    Iteration #2, objective value: 27.255098186704533
-    Iteration #3, objective value: 23.616898709394736
-    Iteration #4, objective value: 21.250039852018595
-    Iteration #5, objective value: 19.754375173835047
-    Iteration #6, objective value: 19.664967415508343
-    Iteration #7, objective value: 19.546714992374785
-    Iteration #8, objective value: 19.404993594348355
-    Iteration #9, objective value: 19.244973185523822
-    Iteration #10, objective value: 19.07158854847276
-    Iteration #11, objective value: 18.888839174555393
-    Iteration #12, objective value: 18.699874814641333
-    Iteration #13, objective value: 18.508109556512483
-    Iteration #14, objective value: 18.317770581716896
-    Iteration #15, objective value: 18.13326509047591
-    Iteration #16, objective value: 17.95822138072281
-    Iteration #17, objective value: 17.79495112868809
-    Iteration #18, objective value: 17.644666903626334
-    Iteration #19, objective value: 17.50809850311941
+    Iteration #0, objective value: 40.45486222394683
+    Iteration #1, objective value: 32.66647384877725
+    Iteration #2, objective value: 27.255098186711464
+    Iteration #3, objective value: 23.616898709400605
+    Iteration #4, objective value: 21.250039852018393
+    Iteration #5, objective value: 19.754375173838827
+    Iteration #6, objective value: 19.66496741551024
+    Iteration #7, objective value: 19.54671499238202
+    Iteration #8, objective value: 19.404993594344617
+    Iteration #9, objective value: 19.244973185518358
+    Iteration #10, objective value: 19.071588548466256
+    Iteration #11, objective value: 18.888839174554576
+    Iteration #12, objective value: 18.69987481463772
+    Iteration #13, objective value: 18.508109556516274
+    Iteration #14, objective value: 18.317770581714917
+    Iteration #15, objective value: 18.133265090479224
+    Iteration #16, objective value: 17.958221380720765
+    Iteration #17, objective value: 17.794951128697964
+    Iteration #18, objective value: 17.644666903620408
+    Iteration #19, objective value: 17.508098503110492
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 559-566
+.. GENERATED FROM PYTHON SOURCE LINES 549-556
 
 .. code-block:: Python
 
@@ -873,7 +834,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 571-576
+.. GENERATED FROM PYTHON SOURCE LINES 561-566
 
 --------------
 
@@ -881,7 +842,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 576-582
+.. GENERATED FROM PYTHON SOURCE LINES 566-572
 
 .. code-block:: Python
 
@@ -902,21 +863,21 @@ Watermark
     cofi 0.2.7
     numpy 1.24.4
     scipy 1.12.0
-    pygimli 1.4.6
+    pygimli 1.5.0
     torch 2.1.2.post101
     matplotlib 3.8.3
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 583-583
+.. GENERATED FROM PYTHON SOURCE LINES 573-573
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 57.844 seconds)
+   **Total running time of the script:** (2 minutes 46.759 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_pygimli_dcip.py:

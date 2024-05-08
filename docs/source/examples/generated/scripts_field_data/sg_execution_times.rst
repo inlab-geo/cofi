@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**02:23.430** total execution time for 4 files **from examples/generated/scripts_field_data**:
+**01:56.586** total execution time for 4 files **from examples/generated/scripts_field_data**:
 
 .. container::
 
@@ -32,13 +32,13 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_examples_generated_scripts_field_data_surface_wave_receiver_function_joint.py` (``surface_wave_receiver_function_joint.py``)
-     - 02:23.430
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py` (``pygimli_dcip_century_tri_mesh.py``)
+     - 01:56.586
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_field_data_linear_regression_sealevel.py` (``linear_regression_sealevel.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py` (``pygimli_dcip_century_tri_mesh.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_surface_wave_receiver_function_joint.py` (``surface_wave_receiver_function_joint.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_field_data_sw_tomography.py` (``sw_tomography.py``)

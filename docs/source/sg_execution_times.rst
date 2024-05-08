@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**07:06.682** total execution time for 18 files **from all galleries**:
+**46:00.505** total execution time for 18 files **from all galleries**:
 
 .. container::
 
@@ -33,18 +33,24 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py` (``tutorials/scripts/1D_rayleigh_wave_phase_velocity_inversion.py``)
-     - 03:13.920
+     - 39:56.661
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_field_data_surface_wave_receiver_function_joint.py` (``examples/scripts_field_data/surface_wave_receiver_function_joint.py``)
-     - 02:23.430
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``examples/scripts_synth_data/pygimli_dcip.py``)
+     - 02:46.759
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py` (``examples/scripts_synth_data/sw_rf_joint_synthetic.py``)
-     - 01:29.331
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py` (``examples/scripts_field_data/pygimli_dcip_century_tri_mesh.py``)
+     - 01:56.586
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py` (``tutorials/scripts/electrical_resistivity_tomography.py``)
+     - 01:02.984
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``examples/scripts_synth_data/pygimli_ert.py``)
+     - 00:17.514
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_field_data_linear_regression_sealevel.py` (``examples/scripts_field_data/linear_regression_sealevel.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py` (``examples/scripts_field_data/pygimli_dcip_century_tri_mesh.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_surface_wave_receiver_function_joint.py` (``examples/scripts_field_data/surface_wave_receiver_function_joint.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_field_data_sw_tomography.py` (``examples/scripts_field_data/sw_tomography.py``)
@@ -65,19 +71,13 @@ Computation times
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py` (``examples/scripts_synth_data/nonlinear_curve_fitting.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``examples/scripts_synth_data/pygimli_dcip.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``examples/scripts_synth_data/pygimli_ert.py``)
-     - 00:00.000
-     - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_inversion.py` (``examples/scripts_synth_data/receiver_function_inversion.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``examples/scripts_synth_data/xray_tomography.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py` (``examples/scripts_synth_data/sw_rf_joint_synthetic.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py` (``tutorials/scripts/electrical_resistivity_tomography.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``examples/scripts_synth_data/xray_tomography.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_linear_regression.py` (``tutorials/scripts/linear_regression.py``)

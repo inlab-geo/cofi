@@ -57,12 +57,7 @@ Electrical Resistivity Tomography with PyGIMLi
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi
-
-# !pip install -q condacolab
-# import condacolab
-# condacolab.install()
-# !mamba install -c gimli pygimli=1.3
+# !pip install -U cofi pygimli tetgen
 
 ######################################################################
 #
@@ -278,11 +273,6 @@ ert_problem.summary()
 # SciPy’s optimizer (`trust-exact <https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustexact.html#optimize-minimize-trustexact>`__)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # 
-
-ert_problem.suggest_tools();
-
-######################################################################
-#
 
 inv_options_scipy = InversionOptions()
 inv_options_scipy.set_tool("scipy.optimize.minimize")

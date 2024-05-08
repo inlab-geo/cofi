@@ -49,7 +49,7 @@
 
 # !pip install -U cofi git+https://github.com/inlab-geo/pysurf96.git
 # !git clone https://github.com/inlab-geo/cofi-examples.git
-# %cd cofi-examples/examples/sw_rf_joint
+# %cd cofi-examples/tutorials/rayleigh_wave_phase_velocity
 
 ######################################################################
 #

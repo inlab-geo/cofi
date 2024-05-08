@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:29.331** total execution time for 10 files **from examples/generated/scripts_synth_data**:
+**03:04.274** total execution time for 10 files **from examples/generated/scripts_synth_data**:
 
 .. container::
 
@@ -32,8 +32,11 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py` (``sw_rf_joint_synthetic.py``)
-     - 01:29.331
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``pygimli_dcip.py``)
+     - 02:46.759
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``pygimli_ert.py``)
+     - 00:17.514
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_fmm_tomography.py` (``fmm_tomography.py``)
      - 00:00.000
@@ -50,13 +53,10 @@ Computation times
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py` (``nonlinear_curve_fitting.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``pygimli_dcip.py``)
-     - 00:00.000
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``pygimli_ert.py``)
-     - 00:00.000
-     - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_inversion.py` (``receiver_function_inversion.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py` (``sw_rf_joint_synthetic.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``xray_tomography.py``)
