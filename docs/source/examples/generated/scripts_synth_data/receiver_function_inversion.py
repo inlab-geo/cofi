@@ -328,21 +328,21 @@ inv_result_sampler.summary()
 # ~~~~~~~~~~~~
 # 
 
-var_names = (
+var_names = [
     "depth1 (km)", 
     "velocity1 (km/s)", 
     "depth2 (km)", 
     "velocity2 (km/s)", 
     "depth3 (km)", 
     "velocity3 (km/s)", 
-)
+]
 az_inf_data = inv_result_sampler.to_arviz(var_names=var_names)
 az_inf_data
 
 ######################################################################
 #
 
-arviz.plot_trace(az_inf_data);
+arviz.plot_trace(az_inf_data, var_names=var_names);
 plt.tight_layout();
 
 ######################################################################
@@ -377,6 +377,7 @@ az_inf_data_after_300 = az_inf_data.sel(draw=slice(300,None))
 arviz.plot_pair(
     az_inf_data_after_300, 
     marginals=True, 
+    var_names=var_names
 )
 
 print("Reference good model:", my_receiver_function.good_model)
@@ -385,8 +386,8 @@ print("Reference good model:", my_receiver_function.good_model)
 #
 
 true_model = my_receiver_function.good_model
-mean_sample = np.array(az_inf_data["posterior"].mean().to_array())
-median_sample = np.array(az_inf_data["posterior"].median().to_array())
+mean_sample = np.array(az_inf_data["posterior"][var_names].mean().to_array())
+median_sample = np.array(az_inf_data["posterior"][var_names].median().to_array())
 
 print("Mean of samples:     ", mean_sample)
 print("Reference good model:", true_model)
