@@ -12,7 +12,7 @@ Welcome to CoFI!
    We assume that each 'index.rst' document defines its own toctree that can be incorporated.
 
 .. toctree::
-    :caption: Guides
+    :caption: User guides
     :hidden: 
     :maxdepth: 1
 
@@ -23,7 +23,7 @@ Welcome to CoFI!
     gallery/generated/index.rst
 
 .. toctree::
-    :caption: Reference
+    :caption: User reference
     :hidden: 
     :maxdepth: 1
 
@@ -33,12 +33,15 @@ Welcome to CoFI!
     licence.rst
 
 .. toctree::
-    :caption: Development
+    :caption: Developer guides
     :hidden: 
     :maxdepth: 1
 
     contribute.rst
-
+    developer/new_example
+    developer/new_tool
+    developer/cofi_core
+    developer/docs
 
 
 Welcome to the CoFI Documentation! CoFI, the Common Framework for Inference, is an 
