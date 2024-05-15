@@ -3,11 +3,44 @@ New inversion tool
 
 Thank you for your attempt in enriching ``cofi``'s library pool.
 
+Below is a checklist for quick reference throughout the process of adding a new 
+inversion tool. Read on the rest of this page for detailed instructions.
+
+.. admonition:: Checklist
+   :class: tip
+
+   #. Run the helper script ``tools/new_inference_tool.py`` to generate a new tool file.
+   #. Implement ``__init__`` and ``__call__`` methods at least.
+   #. Define class variables ``required_in_problems``, ``optional_in_problem``,
+      ``required_in_options`` and ``optional_in_options`` for input validation.
+   #. Define class variables ``short_description`` and ``documentation_links`` for
+      displaying tool related information.
+   #. Import and add the tool subclass name to ``src/cofi/tools/__init__.py``.
+   #. Add tool name and class reference to the ``inference_tools_table`` in file
+      ``src/cofi/tools/__init__.py``.
+   #. Write tests for your new inference tool under ``tests/cofi_tools``.
+   #. Prepare a relevant example under CoFI examples and raise a pull request in the
+      ``cofi-examples`` repository.
+
+
+1. Prerequisites
+----------------
+
+Follow the :ref:`environment setup section <env_setup>` to set up the package
+and :ref:`commit, push and pull request section <commit_push_pr>` to raise a pull 
+request.
+
+2. Generate a new inversion tool file
+-------------------------------------
+
 To get started, run the helper script:
 
 .. code-block:: console
 
   $ python tools/new_inference_tool.py <new_tool_name>
+
+3. Code up the new inversion tool
+---------------------------------
 
 To define and plug in your own inference tool backend, you minimally have to create a
 subclass of :class:`tools.BaseInferenceTool` and implement two methods: 
@@ -19,25 +52,18 @@ Documentation
 `API reference - BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_ provides
 further details and examples.
 
-Follow the :ref:`environment setup section <env_setup>` to set up the package
-and :ref:`commit, push and pull request section <commit_push_pr>` to raise a pull 
-request.
+4. Write tests
+--------------
 
-We would also appreciate it if you write tests that ensure a good coverage under the
-file path ``tests``.
+We need you to write tests that ensure a good coverage under the file path ``tests``.
+Place the test file under ``tests/cofi_tools`` and name it as ``test_<new_tool_name>.py``.
+You can refer to the existing test files for guidance, and copy the test template from
+``tests/cofi_tools/_template.py`` as a starting point.
 
-.. admonition:: Checklist
-  :class: tip, dropdown
+5. Add a relevant example
+-------------------------
 
-  1. Have you added a new file with a proper name under ``src/cofi/tools/``?
-  2. Have you declared the tool class as a subclass of :class:`tools.BaseInferenceTool`?
-  3. Have you implemented ``__init__`` and ``__call__`` methods minimally? 
-  4. If you'd like us to do input validation, have you defined class variables
-     ``required_in_problems``, ``optional_in_problem``, ``required_in_options`` and
-     ``optional_in_options``?
-  5. If you'd like us to display the tool related information properly, have you 
-     defined class variables ``short_description`` and ``documentation_links``?
-  6. Have you imported and added the tool subclass name to ``src/cofi/tools/__init__.py``?
-  7. Have you added tool name and class reference to the ``inference_tools_table`` in file
-     ``src/cofi/tools/__init__.py``?
-  8. Have you written tests for your new inference tool under ``tests/cofi_tools``?
+Once the above has been done, please add a relevant example under CoFI examples and raise a
+pull request in the ``cofi-examples`` repository. You may refer to the
+`Contributor Guide for CoFI Examples <https://github.com/inlab-geo/cofi-examples/blob/main/CONTRIBUTING.md#to-add-a-domain-specific-eg-geoscience-example>`_
+to get started.

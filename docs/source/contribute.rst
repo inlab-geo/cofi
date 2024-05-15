@@ -14,7 +14,7 @@ our Github `repository`_.
 
 Code contribution
 =================
-  
+
 Thanks for making ``cofi`` better through coding! You don't have to know all the details
 in order to contribute. If you feel confused and are unsure where to start, don't
 hesitate to contact us via `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_
