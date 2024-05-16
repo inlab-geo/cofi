@@ -60,3 +60,12 @@ class TemplateTool(BaseInferenceTool):
     )
     def _call_backend_tool(self):                       # FIXME implementation required
         raise NotImplementedError
+
+
+# FIXME fill in the following information, taking the following link as a reference:
+# https://cofi.readthedocs.io/en/latest/developer/new_tool.html
+# FIXME remove this line and previous comments after completed
+
+# CoFI -> BRANCH_1 -> BRANCH_2 -> BRANCH_3 -> TOOL_NAME -> ALGORITHM_NAME
+# description: FIXME
+# documentation: FIXME

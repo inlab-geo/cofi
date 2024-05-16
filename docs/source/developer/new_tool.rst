@@ -18,6 +18,8 @@ inversion tool. Read on the rest of this page for detailed instructions.
    #. Import and add the tool subclass name to ``src/cofi/tools/__init__.py``.
    #. Add tool name and class reference to the ``inference_tools_table`` in file
       ``src/cofi/tools/__init__.py``.
+   #. Fill in the last few lines of the tool file so that your new tool is registered
+      in the inference tools tree.
    #. Write tests for your new inference tool under ``tests/cofi_tools``.
    #. Prepare a relevant example under CoFI examples and raise a pull request in the
       ``cofi-examples`` repository.
@@ -51,6 +53,22 @@ find the class from the name specified in an :class:`InversionOptions` instance.
 Documentation 
 `API reference - BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_ provides
 further details and examples.
+
+4. Register the new tool under CoFI tree
+----------------------------------------
+
+In the tool file, fill in the last few lines so that your new tool is registered in the
+inference tools tree. The following is an example of how to register a new tool:
+
+.. code-block:: python
+
+   # CoFI -> Ensemble methods -> Bayesian sampling -> Trans-D McMC -> bayesbay -> VanillaSampler
+   # description: Sampling the posterior by means of reversible-jump Markov chain Monte Carlo.
+   # documentation: https://bayes-bay.readthedocs.io/en/latest/api/generated/bayesbay.samplers.VanillaSampler.html
+
+Feel free to browse the existing tools in the ``cofi`` library for reference.
+`InLab Explorer <https://inlab.au/inlab-explorer/>`_ provides a visual representation of
+eligible branches in the inference tools tree.
 
 4. Write tests
 --------------

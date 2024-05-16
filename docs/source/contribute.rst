@@ -127,6 +127,7 @@ submitting stages:
   - :doc:`developer/new_tool`
   - :doc:`developer/cofi_core`
   - :doc:`developer/docs`
+  - :doc:`developer/release`
 
   Again, don't hesitate to ask us whenever you feel confused. Contact us
   via `GitHub issues <https://github.com/inlab-geo/cofi/issues/new/choose>`_

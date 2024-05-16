@@ -42,6 +42,7 @@ Welcome to CoFI!
     developer/new_tool
     developer/cofi_core
     developer/docs
+    developer/release
 
 
 Welcome to the CoFI Documentation! CoFI, the Common Framework for Inference, is an 
