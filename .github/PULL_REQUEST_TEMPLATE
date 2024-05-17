@@ -1,12 +1,19 @@
-# CoFI New Inversion Tool
+# CoFI Pull Request Template
 
 ## Description
 
-Please provide a clear and concise description of the new inversion tool you've added to CoFI.
+Please provide a clear and concise description of the changes you've made.
 
-## Checklist
+## Type of Change
 
-Please confirm that you have completed the following steps:
+Please indicate the type of change this pull request represents:
+
+- [ ] New inference tool
+- [ ] CoFI core / utils
+- [ ] Documentation
+- [ ] Others (please specify here)
+
+## Checklist for new inference tool (remove me if not applicable)
 
 - [ ] Run the helper script `tools/new_inference_tool.py` to generate a new tool file
 - [ ] Implement `__init__` and `__call__` methods
@@ -16,10 +23,26 @@ Please confirm that you have completed the following steps:
 - [ ] Add tool name and class reference to the `inference_tools_table` in file `src/cofi/tools/__init__.py`
 - [ ] Fill in the last few lines of the tool file so that your new tool is registered in the inference tools tree
 - [ ] Write tests for your new inference tool under `tests/cofi_tools`
+- [ ] Format the code with `black` using the default project setting (in `pyproject.toml`)
 - [ ] Prepare a relevant example under CoFI examples and raise a pull request in the `cofi-examples` repository
       https://github.com/inlab-geo/cofi-examples
 
 If unsure, refer to the detailed instructions here: https://cofi.readthedocs.io/en/latest/developer/new_tool.html.
+
+## Checklist for CoFI core / utils (remove me if not applicable)
+
+- [ ] Update tests to cover the new functionalities
+- [ ] Update the documentation that reflects the change
+- [ ] Format the code with `black` using the default project setting (in `pyproject.toml`)
+
+If unsure, refer to the detailed instructions here: https://cofi.readthedocs.io/en/latest/developer/cofi_core.html
+
+## Checklist for CoFI documentation (remove me if not applicable)
+
+- [ ] Run `make html` in the `docs` directory and open `docs/_build/html/index.html` in my browser 
+      to see the changes
+
+If unsure, refer to the detailed instructions here: https://cofi.readthedocs.io/en/latest/developer/docs.html
 
 ## Additional Information
 
