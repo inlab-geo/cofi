@@ -1,13 +1,25 @@
 *************
-Intro to CoFI
+What is CoFI?
 *************
 
-With a mission to bridge the gap between the domain expertise and the 
-inference expertise, ``cofi`` provides an interface across a 
-wide range of inference algorithms from different sources, underpinned by a rich set 
-of domain relevant `examples <examples/generated/index.html>`_.
+CoFI's mission is to provide a flexible and accessible platform that enables users to 
+switch seamlessly between different algorithms and problems, with minimal changes.
+CoFI provides an interface across a wide range of inference algorithms from different 
+sources, underpinned by a rich set of domain relevant 
+`examples <examples/generated/index.html>`_.
 
-This page contains explanation about the basic concepts of this package.
+Whether you're a student seeking to deepen your understanding of geoscience, an 
+educator aiming to provide practical and hands-on experiences, or an industry 
+professional looking for a robust and adaptable tool, CoFI is designed with you in 
+mind. It allows for a wide range of applications, from academic research and teaching 
+to solving real-world geoscience problems in the industry. 
+
+.. figure:: _static/cofi_workflow.jpeg
+    :alt: CoFI Workflow
+    :align: center
+  
+    CoFI Workflow
+
 
 In the workflow of :code:`cofi`, there are three main
 components: :code:`BaseProblem`, :code:`InversionOptions`, and :code:`Inversion`.
@@ -23,6 +35,7 @@ components: :code:`BaseProblem`, :code:`InversionOptions`, and :code:`Inversion`
     inv_problem.set_initial_model(a_starting_point)   # if needed
     # more could be set here
     # choose depending on the problem and how you want to solve it
+    inv_problem.summary()
 
 - :code:`InversionOptions` describes details about how one wants to run the inversion, including the backend
   tool and solver-specific parameters. It is based on the concept of a method and tool.
@@ -42,13 +55,8 @@ components: :code:`BaseProblem`, :code:`InversionOptions`, and :code:`Inversion`
   .. code::
     
     inv = Inversion(inv_problem, inv_options)
-    result = inv.run()
-
-Internally CoFI decides the nature of the problem from the quantities set by the user and performs
-internal checks to ensure it has all that it needs to solve a problem.
-
-For each of the above components, there's an associated :code:`summary()` method to check the 
-current status.
+    inv_result = inv.run()
+    inv_result.summary()
 
 
 .. hint::

@@ -1,0 +1,21 @@
+%%{init: {'theme':'base'}}%%
+flowchart LR
+    subgraph PREPARATION [ ]
+        direction TB
+        fork(fork repository)-->clone(create local clone)
+        clone-->env_setup(environment setup)
+    end
+    subgraph EDIT [ ]
+        direction TB
+        code(start coding)-->commit(commit as needed)
+        commit-->push(push to your own fork)
+    end
+    subgraph SUBMIT [ ]
+        direction TB
+        pr(create pull request)-->modify(edit based on our comments)
+        modify-->commit_push(commit and push)
+        commit_push-->merge(we merge it once ready)
+        pr-->merge
+    end
+    PREPARATION-->EDIT
+    EDIT-->SUBMIT

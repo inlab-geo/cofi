@@ -979,13 +979,10 @@ class BaseProblem:
         order of the norm. We use :func:`numpy.linalg.norm` as our backend
         implementation, so the order can be chosen from:
 
-        { ``None``, ``"fro"``, ``"nuc"``, ``numpy.inf``, ``-numpy.inf`` } :math:`\cup\;\mathbb{R}^*`
-
         Parameters
         ----------
-        regularization : str or (function - np.ndarray -> Number)
-            either a string from pre-built functions above, or a regularization function that
-            matches :meth:`regularization` in signature.
+        regularization : function - np.ndarray -> Number
+            a regularization function that matches :meth:`regularization` in signature.
         regularization_matrix : np.ndarray or (function - np.ndarray -> np.ndarray)
             a matrix of shape ``(model_size, model_size)``, or a function that takes in
             a model and calculates the (weighting) matrix.

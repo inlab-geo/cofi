@@ -3,11 +3,15 @@ import numpy as np
 from . import BaseInferenceTool, error_handler
 
 
-# Add TemplateTool class into src/cofi/tools/__init__.py
-# FIXME 1. "from _template_tool import TemplateTool"
-# FIXME 2. add "TemplateTool" to "__all__" list
-# FIXME 3. add "TemplateTool" to "inference_tools_table" dictionary
-# FIXME Remove above comments lines after completed
+# FIXME 1. Add TemplateTool class into src/cofi/tools/__init__.py
+# FIXME     1.1 "from _template_tool import TemplateTool"
+# FIXME     1.2 add "TemplateTool" to "__all__" list
+# FIXME     1.3 add "TemplateTool" to "inference_tools_table" dictionary
+# 
+# FIXME 2. Write tests for TemplateTool in tests/cofi_tools/test_template_tool.py
+#           take tests/cofi_tools/_template.py as a reference
+# 
+# FIXME 3. Remove above comments lines after completed
 
 class TemplateTool(BaseInferenceTool):
     r"""Wrapper for the tool <FILL IN HERE>
@@ -56,3 +60,12 @@ class TemplateTool(BaseInferenceTool):
     )
     def _call_backend_tool(self):                       # FIXME implementation required
         raise NotImplementedError
+
+
+# FIXME fill in the following information, taking the following link as a reference:
+# https://cofi.readthedocs.io/en/latest/developer/new_tool.html
+# FIXME remove this line and previous comments after completed
+
+# CoFI -> BRANCH_1 -> BRANCH_2 -> BRANCH_3 -> TOOL_NAME -> ALGORITHM_NAME
+# description: FIXME
+# documentation: FIXME
