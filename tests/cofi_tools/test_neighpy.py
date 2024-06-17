@@ -22,32 +22,33 @@ def _objective(model, data_observed, Cdinv):
 
 
 objective = lambda m: _objective(m, _y, _Cdinv)
+inv_problem = BaseProblem(objective=objective)
+
 bounds = [(-10.0, 10.0)] * _ndim
 direct_search_ns = 100
 direct_search_nr = 10
 direct_search_ni = 100
 direct_search_n = 10
+direct_search_serial = False
 appraisal_n_resample = 1000
 appraisal_n_walkers = 5
 
 
-inv_problem = BaseProblem(objective=objective)
-inv_options = InversionOptions()
-inv_options.set_tool("neighpy")
-inv_options.set_params(
-    bounds=bounds,
-    direct_search_ns=direct_search_ns,
-    direct_search_nr=direct_search_nr,
-    direct_search_ni=direct_search_ni,
-    direct_search_n=direct_search_n,
-    appraisal_n_resample=appraisal_n_resample,
-    appraisal_n_walkers=appraisal_n_walkers,
-)
-
-
 @pytest.fixture(scope="module")
-def neighpy_inversion():
-    return Inversion(inv_problem, inv_options)
+def inversion_options(request):
+    inv_options = InversionOptions()
+    inv_options.set_tool("neighpy")
+    inv_options.set_params(
+        bounds=bounds,
+        direct_search_ns=direct_search_ns,
+        direct_search_nr=direct_search_nr,
+        direct_search_ni=direct_search_ni,
+        direct_search_n=direct_search_n,
+        direct_search_serial=request.param,
+        appraisal_n_resample=appraisal_n_resample,
+        appraisal_n_walkers=appraisal_n_walkers,
+    )
+    return inv_options
 
 
 ############### Begin testing #########################################################
@@ -73,10 +74,20 @@ def test_validate():
         bounds=bounds,
     )
     neighpy_solver = Neighpy(inv_problem, inv_options)
+    assert neighpy_solver._params["direct_search_ns"] == direct_search_ns
+    assert neighpy_solver._params["direct_search_nr"] == direct_search_nr
+    assert neighpy_solver._params["direct_search_ni"] == direct_search_ni
+    assert neighpy_solver._params["direct_search_n"] == direct_search_n
+    assert neighpy_solver._params["appraisal_n_resample"] == appraisal_n_resample
+    assert neighpy_solver._params["appraisal_n_walkers"] == appraisal_n_walkers
+    assert neighpy_solver._params["bounds"] == bounds
     assert neighpy_solver._params["ndim"] == _ndim
 
 
-def test_call(neighpy_inversion):
+# parameterisation to test both parallel and serial direct search
+@pytest.mark.parametrize("inversion_options", [True, False], indirect=True)
+def test_call(inversion_options):
+    neighpy_inversion = Inversion(inv_problem, inversion_options)
     res = neighpy_inversion.run()
     assert res.success is True
     assert res.model.shape == (_ndim,)
