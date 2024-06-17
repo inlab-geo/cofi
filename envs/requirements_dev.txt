@@ -6,6 +6,7 @@ findiff
 pytorch
 bayesbay
 pytest
+pytest-lazy-fixture
 coverage[toml]
 sphinx==4.5.0
 sphinx-book-theme>=1.0.1

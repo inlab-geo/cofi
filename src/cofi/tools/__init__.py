@@ -22,6 +22,8 @@ __all__ = [
     "BayesBay",
     "CoFIBorderCollieOptimization",
     "Neighpy",
+    "NeighpyI",
+    "NeighpyII",
 ]
 
 # inference tools table grouped by method:
@@ -32,6 +34,7 @@ inference_tools_table = {
         "scipy.optimize.least_squares": ScipyOptLstSq,
         "torch.optim": PyTorchOptim,
         "cofi.border_collie_optimization": CoFIBorderCollieOptimization,
+        "neighpyI": NeighpyI,
     },
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSq,
@@ -41,6 +44,7 @@ inference_tools_table = {
         "emcee": Emcee,
         "bayesbay": BayesBay,
         "neighpy": Neighpy,
+        "neighpyII": NeighpyII,
     },
 }
 

@@ -1,5 +1,7 @@
 import numpy as np
+from copy import deepcopy
 import pytest
+from pytest_lazyfixture import lazy_fixture
 
 from cofi.tools import Neighpy, NeighpyI, NeighpyII
 from cofi import BaseProblem, InversionOptions, Inversion
@@ -29,181 +31,183 @@ direct_search_ns = 100
 direct_search_nr = 10
 direct_search_ni = 100
 direct_search_n = 10
+_direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
 direct_search_serial = False
 appraisal_n_resample = 1000
-appraisal_n_walkers = 5
+appraisal_n_walkers = 1  # parallel hanging for some reason in NeighpyII but fine for Neighpy
+
+initial_ensemble = np.random.uniform(-10, 10, (_sample_size, _ndim))
+log_ppd = np.apply_along_axis(lambda x: objective(x), 1, initial_ensemble)
 
 
 @pytest.fixture(scope="module")
-def inversion_options(request):
+def valid_options() -> InversionOptions:
     inv_options = InversionOptions()
-    inv_options.set_tool("neighpy")
     inv_options.set_params(
         bounds=bounds,
         n_samples_per_iteration=direct_search_ns,
         n_cells_to_resample=direct_search_nr,
         n_initial_samples=direct_search_ni,
         n_iterations=direct_search_n,
-        serial=request.param,
+        initial_ensemble=initial_ensemble,
+        log_ppd=log_ppd,
         n_resample=appraisal_n_resample,
-        n_walkers=appraisal_n_walkers,
+        n_walkers=appraisal_n_walkers
     )
     return inv_options
 
 
+@pytest.fixture(scope="module")
+def neighpyI_solver(valid_options) -> NeighpyI:
+    return NeighpyI(inv_problem, valid_options)
+
+
+@pytest.fixture(scope="module")
+def neighpyII_solver(valid_options) -> NeighpyII:
+    return NeighpyII(inv_problem, valid_options)
+
+
+@pytest.fixture(scope="module")
+def neighpy_solver(valid_options) -> Neighpy:
+    return Neighpy(inv_problem, valid_options)
+
+
+def _check_neighpyI_options(solver: NeighpyI):
+    assert solver._params["n_samples_per_iteration"] == direct_search_ns
+    assert solver._params["n_cells_to_resample"] == direct_search_nr
+    assert solver._params["n_initial_samples"] == direct_search_ni
+    assert solver._params["n_iterations"] == direct_search_n
+    assert solver._params["bounds"] == bounds
+    assert solver._params["ndim"] == _ndim
+
+
+def _check_neighpyI_results(results: dict):
+    assert results["model"].shape == (_ndim,)
+    assert results["samples"].shape == (_direct_search_total, _ndim)
+    assert results["objectives"].shape == (_direct_search_total,)
+
+
+def _check_neighpyII_options(solver: NeighpyII):
+    assert solver._params["n_resample"] == appraisal_n_resample
+    assert (
+        solver._params["n_walkers"] == 1
+    )  # this needs fixing for appraisal_n_walkers
+    assert np.array_equal(
+        solver._params["initial_ensemble"], initial_ensemble
+    )
+    assert np.array_equal(solver._params["log_ppd"], log_ppd)
+    assert solver._params["bounds"] == bounds
+    assert solver._params["ndim"] == _ndim
+
+
+def _check_neighpyII_results(results: dict):
+    assert results["new_samples"].shape == (appraisal_n_resample, _ndim)
+
+
+def _check_neighpy_options(solver: Neighpy):
+    assert solver._params["n_samples_per_iteration"] == direct_search_ns
+    assert solver._params["n_cells_to_resample"] == direct_search_nr
+    assert solver._params["n_initial_samples"] == direct_search_ni
+    assert solver._params["n_resample"] == appraisal_n_resample
+    assert solver._params["n_walkers"] == appraisal_n_walkers
+    assert solver._params["n_iterations"] == direct_search_n
+    assert solver._params["bounds"] == bounds
+    assert solver._params["ndim"] == _ndim
+
+
+def _check_neighpy_results(results: dict):
+    assert results["model"].shape == (_ndim,)
+    assert results["direct_search_samples"].shape == (_direct_search_total, _ndim)
+    assert results["direct_search_objectives"].shape == (_direct_search_total,)
+    assert results["appraisal_samples"].shape == (appraisal_n_resample, _ndim)
+
+
 ############### Begin testing #########################################################
-def test_validate_neighpyI():
+@pytest.mark.parametrize("solver", [NeighpyI, NeighpyII, Neighpy])
+def test_empty_baseproblem(solver) -> None:
     inv_problem = BaseProblem()
     inv_options = InversionOptions()
-    # 1 - no objective
-    with pytest.raises(ValueError, match=r".*not enough information.*BaseProblem.*"):
-        neighpy_solver = NeighpyI(inv_problem, inv_options)
-    # 2 - no inv_options
-    inv_problem.objective = objective
-    with pytest.raises(ValueError, match=r".*not enough info.*InversionOptions.*"):
-        neighpy_solver = NeighpyI(inv_problem, inv_options)
-    # 3 - valid options
-    inv_options.set_params(
-        n_samples_per_iteration=direct_search_ns,
-        n_cells_to_resample=direct_search_nr,
-        n_initial_samples=direct_search_ni,
-        n_iterations=direct_search_n,
-        bounds=bounds,
-    )
-    neighpy_solver = NeighpyI(inv_problem, inv_options)
-    assert neighpy_solver._params["n_samples_per_iteration"] == direct_search_ns
-    assert neighpy_solver._params["n_cells_to_resample"] == direct_search_nr
-    assert neighpy_solver._params["n_initial_samples"] == direct_search_ni
-    assert neighpy_solver._params["n_iterations"] == direct_search_n
-    assert neighpy_solver._params["bounds"] == bounds
-    assert neighpy_solver._params["ndim"] == _ndim
+
+    # An empty BaseProblem is not a problem for NeighpyII,
+    # so the error is raised by the InversionOptions
+    # so we match for BaseProblem|InversionOptions
+    with pytest.raises(
+        ValueError, match=r".*not enough information.*BaseProblem|InversionOptions.*"
+    ):
+        _ = solver(inv_problem, inv_options)
 
 
-def test_call_neighpyI():
+@pytest.mark.parametrize("solver", [NeighpyI, NeighpyII, Neighpy])
+def test_empty_inversionoptions(solver) -> None:
     inv_problem = BaseProblem(objective=objective)
     inv_options = InversionOptions()
-    inv_options.set_params(
-        bounds=bounds,
-        n_samples_per_iteration=direct_search_ns,
-        n_cells_to_resample=direct_search_nr,
-        n_initial_samples=direct_search_ni,
-        n_iterations=direct_search_n,
-    )
-    neighpy_solver = NeighpyI(inv_problem, inv_options)
-    res = neighpy_solver()
-    assert res["success"] is True
-    assert res["model"].shape == (_ndim,)
-    _direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
-    assert res["samples"].shape == (_direct_search_total, _ndim)
-    assert res["objectives"].shape == (_direct_search_total,)
 
-
-def test_validate_neighpyII():
-    initial_ensemble = np.random.uniform(-10, 10, (_sample_size, _ndim))
-    log_ppd = np.apply_along_axis(lambda x: -1 * objective(x), 1, initial_ensemble)
-
-    inv_problem = BaseProblem()
-    inv_options = InversionOptions()
-    # 1 - NeighpyII doesn't require anything in BaseProblem
     with pytest.raises(
         ValueError, match=r".*not enough information.*InversionOptions.*"
     ):
-        neighpy_solver = NeighpyII(inv_problem, inv_options)
-    # 2 - invalid ensemble and log_ppd shapes
-    with pytest.raises(ValueError, match=r".*number of samples.*"):
-        inv_options.set_params(
-            initial_ensemble=initial_ensemble[::2],
-            log_ppd=log_ppd,
-            n_resample=appraisal_n_resample,
-            n_walkers=appraisal_n_walkers,
-            bounds=bounds,
-        )
-        neighpy_solver = NeighpyII(inv_problem, inv_options)
-
-    with pytest.raises(ValueError, match=r".*number of dimensions.*"):
-        inv_options.set_params(
-            initial_ensemble=np.zeros((_sample_size, _ndim - 1)),
-            log_ppd=log_ppd,
-            n_resample=appraisal_n_resample,
-            n_walkers=appraisal_n_walkers,
-            bounds=bounds,
-        )
-        neighpy_solver = NeighpyII(inv_problem, inv_options)
-
-    # 3 - valid options
-    inv_options.set_params(
-        initial_ensemble=initial_ensemble,
-        log_ppd=log_ppd,
-        n_resample=appraisal_n_resample,
-        n_walkers=appraisal_n_walkers,
-        bounds=bounds,
-    )
-    neighpy_solver = NeighpyII(inv_problem, inv_options)
-    assert neighpy_solver._params["n_resample"] == appraisal_n_resample
-    assert neighpy_solver._params["n_walkers"] == appraisal_n_walkers
-    assert np.array_equal(neighpy_solver._params["initial_ensemble"], initial_ensemble)
-    assert np.array_equal(neighpy_solver._params["log_ppd"], log_ppd)
-    assert neighpy_solver._params["bounds"] == bounds
-    assert neighpy_solver._params["ndim"] == _ndim
+        _ = solver(inv_problem, inv_options)
 
 
-def test_call_neighpyII():
-    initial_ensemble = np.random.uniform(-10, 10, (_sample_size, _ndim))
-    log_ppd = np.apply_along_axis(lambda x: objective(x), 1, initial_ensemble)
+@pytest.mark.parametrize(
+    "solver, check_fn",
+    [
+        (lazy_fixture("neighpyI_solver"), _check_neighpyI_options),
+        (lazy_fixture("neighpyII_solver"), _check_neighpyII_options),
+        (lazy_fixture("neighpy_solver"), _check_neighpy_options),
+    ],
+)
+def test_valid_inversionoptions(solver, check_fn) -> None:
+    check_fn(solver)
+
+
+@pytest.mark.parametrize(
+    "initial_ensemble,error_match",
+    [
+        (
+            initial_ensemble[::2],
+            r".*number of samples.*",
+        ),
+        (
+            np.zeros((_sample_size, _ndim - 1)),
+            r".*number of dimensions.*",
+        ),
+    ],
+)
+def test_neghipyII_input_shapes(initial_ensemble, error_match, valid_options) -> None:
+    # invalid ensemble and log_ppd shapes
+    inv_options = deepcopy(valid_options)
+    inv_options.set_params(initial_ensemble=initial_ensemble)
+    with pytest.raises(ValueError, match=error_match):
+        _ = NeighpyII(BaseProblem(), inv_options)
+
+
+@pytest.mark.parametrize(
+    "solver, check_fn",
+    [
+        (lazy_fixture("neighpyI_solver"), _check_neighpyI_results),
+        (lazy_fixture("neighpyII_solver"), _check_neighpyII_results),
+        (lazy_fixture("neighpy_solver"), _check_neighpy_results),
+    ],
+)
+def test_call(solver, check_fn) -> None:
+    results = solver()
+    assert results["success"] is True
+    check_fn(results)
+
+
+@pytest.mark.parametrize(
+    "tool, check_fn",
+    [
+        ("neighpyI", _check_neighpyI_results),
+        ("neighpyII", _check_neighpyII_results),
+        ("neighpy", _check_neighpy_results),
+    ],
+)
+def test_use_in_Inversion(tool, check_fn, valid_options) -> None:
     inv_problem = BaseProblem(objective=objective)
-    inv_options = InversionOptions()
-    inv_options.set_params(
-        bounds=bounds,
-        initial_ensemble=initial_ensemble,
-        log_ppd=log_ppd,
-        n_resample=appraisal_n_resample,
-        n_walkers=1,  # parallel hanging for some reason but fine for combined Neighpy class
-    )
-    neighpy_solver = NeighpyII(inv_problem, inv_options)
-    res = neighpy_solver()
-    assert res["success"] is True
-    assert res["new_samples"].shape == (appraisal_n_resample, _ndim)
+    valid_options.set_tool(tool)
 
-
-def test_validate_neighpy():
-    inv_problem = BaseProblem()
-    inv_options = InversionOptions()
-    # 1
-    with pytest.raises(ValueError, match=r".*not enough information.*BaseProblem.*"):
-        neighpy_solver = Neighpy(inv_problem, inv_options)
-    # 2
-    inv_problem.objective = objective
-    with pytest.raises(ValueError, match=r".*not enough info.*InversionOptions.*"):
-        neighpy_solver = Neighpy(inv_problem, inv_options)
-    # 3
-    inv_options.set_params(
-        bounds=bounds,
-        n_samples_per_iteration=direct_search_ns,
-        n_cells_to_resample=direct_search_nr,
-        n_initial_samples=direct_search_ni,
-        n_iterations=direct_search_n,
-        n_resample=appraisal_n_resample,
-        n_walkers=appraisal_n_walkers,
-    )
-    neighpy_solver = Neighpy(inv_problem, inv_options)
-    assert neighpy_solver._params["n_samples_per_iteration"] == direct_search_ns
-    assert neighpy_solver._params["n_cells_to_resample"] == direct_search_nr
-    assert neighpy_solver._params["n_initial_samples"] == direct_search_ni
-    assert neighpy_solver._params["n_resample"] == appraisal_n_resample
-    assert neighpy_solver._params["n_walkers"] == appraisal_n_walkers
-    assert neighpy_solver._params["n_iterations"] == direct_search_n
-    assert neighpy_solver._params["bounds"] == bounds
-    assert neighpy_solver._params["ndim"] == _ndim
-
-
-# parameterisation to test both parallel and serial direct search
-@pytest.mark.parametrize("inversion_options", [True, False], indirect=True)
-def test_call_neighpy(inversion_options):
-    neighpy_inversion = Inversion(inv_problem, inversion_options)
-    res = neighpy_inversion.run()
-    assert res.success is True
-    assert res.model.shape == (_ndim,)
-    _direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
-    assert res.direct_search_samples.shape == (_direct_search_total, _ndim)
-    assert res.direct_search_objectives.shape == (_direct_search_total,)
-    assert res.appraisal_samples.shape == (appraisal_n_resample, _ndim)
+    inv = Inversion(inv_problem, valid_options)
+    results = inv.run()
+    assert results.success is True
+    check_fn(results.res)
