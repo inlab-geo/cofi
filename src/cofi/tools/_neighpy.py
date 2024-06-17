@@ -36,7 +36,11 @@ class Neighpy(BaseInferenceTool):
 
     @classmethod
     def optional_in_options(cls) -> dict:
-        return {"appraisal_n_resample": 0, "appraisal_n_walkers": 1}
+        return {
+            "appraisal_n_resample": 0,
+            "appraisal_n_walkers": 1,
+            "direct_search_serial": False,
+        }
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -57,10 +61,12 @@ class Neighpy(BaseInferenceTool):
     )
     def _call_backend_tool(self):
         searcher = self._initialise_searcher()
-        direct_search_samples, direct_search_objectives = self._call_searcher(searcher)
+        direct_search_samples, direct_search_objectives = self._call_searcher(
+            searcher, parallel=not self._params["direct_search_serial"]
+        )
         result = {
             "direct_search_samples": direct_search_samples,
-            "direct_search_objectives": direct_search_objectives
+            "direct_search_objectives": direct_search_objectives,
         }
 
         if self._params["appraisal_n_resample"] != 0:  # perform appraisal
@@ -75,8 +81,8 @@ class Neighpy(BaseInferenceTool):
         when="in calling neighpy.search.NASearcher instance",
         context="for the direct search phase",
     )
-    def _call_searcher(searcher):
-        searcher.run()
+    def _call_searcher(searcher, parallel=True):
+        searcher.run(parallel=parallel)
         return searcher.samples, searcher.objectives
 
     @staticmethod
