@@ -8,7 +8,7 @@ from ._cofi_simple_newton import CoFISimpleNewton
 from ._pytorch_optim import PyTorchOptim
 from ._cofi_border_collie_optimization import CoFIBorderCollieOptimization
 from ._bayes_bay import BayesBay
-from ._neighpy import Neighpy
+from ._neighpy import Neighpy, NeighpyI, NeighpyII
 
 
 __all__ = [
