@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**04:46.263** total execution time for 15 files **from all galleries**:
+**04:53.873** total execution time for 18 files **from all galleries**:
 
 .. container::
 
@@ -32,48 +32,57 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_examples_generated_synth_data_receiver_function_inversion.py` (``examples/scripts/synth_data/receiver_function_inversion.py``)
-     - 04:46.263
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_inversion.py` (``examples/scripts_synth_data/receiver_function_inversion.py``)
+     - 04:53.873
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_field_data_linear_regression_sealevel.py` (``examples/scripts/field_data/linear_regression_sealevel.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_linear_regression_sealevel.py` (``examples/scripts_field_data/linear_regression_sealevel.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_field_data_pygimli_dcip_century_tri_mesh.py` (``examples/scripts/field_data/pygimli_dcip_century_tri_mesh.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py` (``examples/scripts_field_data/pygimli_dcip_century_tri_mesh.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_field_data_sw_tomography.py` (``examples/scripts/field_data/sw_tomography.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_surface_wave_receiver_function_joint.py` (``examples/scripts_field_data/surface_wave_receiver_function_joint.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography.py` (``examples/scripts/synth_data/fmm_tomography.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_field_data_sw_tomography.py` (``examples/scripts_field_data/sw_tomography.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_fmm_tomography_regularization_discussion.py` (``examples/scripts/synth_data/fmm_tomography_regularization_discussion.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_fmm_tomography.py` (``examples/scripts_synth_data/fmm_tomography.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_linear_regression.py` (``examples/scripts/synth_data/linear_regression.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_fmm_tomography_regularization_discussion.py` (``examples/scripts_synth_data/fmm_tomography_regularization_discussion.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_modified_himmelblau.py` (``examples/scripts/synth_data/modified_himmelblau.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_linear_regression.py` (``examples/scripts_synth_data/linear_regression.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_nonlinear_curve_fitting.py` (``examples/scripts/synth_data/nonlinear_curve_fitting.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_modified_himmelblau.py` (``examples/scripts_synth_data/modified_himmelblau.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_pygimli_dcip.py` (``examples/scripts/synth_data/pygimli_dcip.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py` (``examples/scripts_synth_data/nonlinear_curve_fitting.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_pygimli_ert.py` (``examples/scripts/synth_data/pygimli_ert.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``examples/scripts_synth_data/pygimli_dcip.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_synth_data_xray_tomography.py` (``examples/scripts/synth_data/xray_tomography.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``examples/scripts_synth_data/pygimli_ert.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_1_linear_regression.py` (``tutorials/scripts/1_linear_regression.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py` (``examples/scripts_synth_data/sw_rf_joint_synthetic.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_2_travel_time_tomography.py` (``tutorials/scripts/2_travel_time_tomography.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``examples/scripts_synth_data/xray_tomography.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_3_electrical_resistivity_tomography.py` (``tutorials/scripts/3_electrical_resistivity_tomography.py``)
+   * - :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py` (``tutorials/scripts/1D_rayleigh_wave_phase_velocity_inversion.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py` (``tutorials/scripts/electrical_resistivity_tomography.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_linear_regression.py` (``tutorials/scripts/linear_regression.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_travel_time_tomography.py` (``tutorials/scripts/travel_time_tomography.py``)
      - 00:00.000
      - 0.0

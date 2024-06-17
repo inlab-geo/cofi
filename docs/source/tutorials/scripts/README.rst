@@ -1,5 +1,5 @@
-Tutorials
-=========
+Tutorials Gallery
+=================
 
 |Open In Colab| |Download from GitHub|
 

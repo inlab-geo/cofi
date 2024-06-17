@@ -1,0 +1,28 @@
+graph TD;
+    base_problem_details(inv_problem = BaseProblem#40;#41;\ninv_problem.set_objective#40;DEFINE ME#41;\ninv_problem.set_jacobian#40;DEFINE ME#41;\ninv_problem.set_initial_model#40;DEFINE ME#41;):::cls_code_block
+    inversion_options_details(inv_options = InversionOptions#40;#41;\ninv_options.set_tool#40;#34;scipy.linalg.lstsq#34;#41;):::cls_code_block
+    inversion_details(inv=Inversion#40;inv_problem, inv_options#41;\nresult = inv.run#40;#41;):::cls_code_block
+
+    subgraph base_problem ["Base Problem"]
+        base_problem_details
+    end
+
+    subgraph inversion_options ["Inversion Options"]
+        inversion_options_details
+    end
+
+    subgraph inversion ["Inversion"]
+        inversion_details
+    end
+
+    base_problem --> inversion;
+    inversion_options --> inversion;
+
+    classDef cls_base_problem fill: oldlace, stroke-width: 0;
+    classDef cls_inversion_options fill: oldlace, stroke-width: 0;
+    classDef cls_inversion fill: lavender, stroke-width: 0;
+    classDef cls_code_block fill: lightgrey, stroke-width: 0, text-align: left;
+
+    class base_problem cls_base_problem;
+    class inversion_options cls_inversion_options;
+    class inversion cls_inversion;

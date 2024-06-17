@@ -3,123 +3,16 @@
 
 .. title:: Home
 
-================================
-Welcome to CoFI's documentation!
-================================
+================
+Welcome to CoFI!
+================
 
-.. What CoFI is
-
-CoFI (**Co**\ mmon **F**\ ramework for **I**\ nference) is an open-source 
-initiative for interfacing between generic inference algorithms and specific 
-geoscience problems.
-
-This project is led by `InLab <http://www.inlab.edu.au/>`_.
-
-.. With a mission to bridge the gap between the domain expertise and the 
-.. inference expertise, this Python package provides an interface across a 
-.. wide range of inference algorithms from different sources, as well as ways 
-.. of defining inverse problems with examples included.
-
-
-.. mermaid::
-
-    graph TD;
-        cofi(CoFI - Common Framework for Inference):::cls_cofi;
-        parameter_estimation(Parameter estimation):::cls_parameter_estimation;
-        linear(Matrix based solvers):::cls_parameter_estimation;
-        non_linear(Optimization):::cls_parameter_estimation;
-        linear_system_solvers(Linear system solvers):::cls_parameter_estimation;
-        linear_solverlist(scipy.linalg.lstsq <br>...):::cls_solvers;
-        optimization(Non linear):::cls_parameter_estimation;
-        optimization2(Linear):::cls_parameter_estimation;
-        opt_solverlist(scipy.optimize.minimize <br> torch.optim <br> ROL <br>...):::cls_solvers;
-        ensemble_methods(Ensemble methods):::cls_ensemble_methods;
-        direct_search(Direct Search):::cls_ensemble_methods;
-        amc(Monte Carlo):::cls_ensemble_methods;
-        amc_solverlist(Neighbourhood Algorithm <br> Bayesian Optimization <br> Slime mold algorithm <br> Border Collie Optimization <br> ...):::cls_solvers;
-        ng(Deterministic):::cls_ensemble_methods;
-        ng_solverlist(Nested grids <br> Hilbert Curves<br>...):::cls_solvers;
-        bs(Bayesian Sampling):::cls_ensemble_methods;
-        mcmc(McMC samplers):::cls_ensemble_methods;
-        mcmc_solverlist(Basic metropolis<br>Affine Invariance sampler<br>emcee <br> pyMC <br> ...):::cls_solvers;
-        rjmcmc(Trans-D McMC):::cls_ensemble_methods;
-        rjmcmc_solverlist(Basic Trans-D <br> BayesBay <br> RJ-mcmc):::cls_solvers;
-
-        cofi --> parameter_estimation;
-        parameter_estimation --> linear;
-        linear --> linear_system_solvers;
-        linear_system_solvers -.- linear_solverlist;
-        parameter_estimation --> non_linear;
-        non_linear --> optimization;
-        non_linear --> optimization2;
-        optimization -.- opt_solverlist;
-        optimization2 -.- opt_solverlist;
-
-        cofi --> ensemble_methods;
-        ensemble_methods --> direct_search;
-        direct_search --> amc;
-        amc -.- amc_solverlist;
-        direct_search --> ng;
-        ng -.- ng_solverlist;
-        ensemble_methods --> bs;  
-        bs --> mcmc;
-        mcmc -.- mcmc_solverlist;
-        bs --> rjmcmc;
-        rjmcmc -.- rjmcmc_solverlist;
-
-    classDef cls_cofi fill: #d4a373, stroke-width:0;
-    classDef cls_parameter_estimation fill: #ccd5ae, stroke-width:0;
-    classDef cls_ensemble_methods fill: #e9edc9, stroke-width:0;
-    classDef cls_solvers fill: #faedcd, stroke-width:0;
-
-
-
-.. grid:: 1 2 2 2
-    :margin: 3
-    :gutter: 4
-
-    .. grid-item-card::
-        :link: installation.html
-        :text-align: center
-        :class-card: card-border
-
-        *New to CoFI?*
-        ^^^^^^^^^^^^^^
-        🐣 Start here
-
-    .. grid-item-card::
-        :link: api/index.html
-        :text-align: center
-        :class-card: card-border
-
-        *Want details?*
-        ^^^^^^^^^^^^^^^
-        📑 API reference
-    
-    .. grid-item-card::
-        :link: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
-        :text-align: center
-        :class-card: card-border
-
-        *Have questions?*
-        ^^^^^^^^^^^^^^^^^
-        💬 Join our Slack workspace
-    
-    .. grid-item-card::
-        :link: contribute.html
-        :text-align: center
-        :class-card: card-border
-
-        *Contributions welcomed!*
-        ^^^^^^^^^^^^^^^^^^^^^^^^^
-        🛠 Developer guide
-
-
-.. Table of contents
-.. -----------------
+.. The following defines the structure of the document. It is hidden so it doesn't
+   render into the html, but it cannot be removed!
+   We assume that each 'index.rst' document defines its own toctree that can be incorporated.
 
 .. toctree::
-    :caption: Guides
+    :caption: User guides
     :hidden: 
     :maxdepth: 1
 
@@ -128,21 +21,130 @@ This project is led by `InLab <http://www.inlab.edu.au/>`_.
     tutorials/generated/index.rst
     examples/generated/index.rst
     gallery/generated/index.rst
-    faq.rst
 
 .. toctree::
-    :caption: Reference
+    :caption: User reference
     :hidden: 
     :maxdepth: 1
 
     api/index.rst
+    faq.rst
     changelog.md
+    licence.rst
 
 .. toctree::
-    :caption: Development
+    :caption: Developer guides
     :hidden: 
     :maxdepth: 1
 
     contribute.rst
-    roadmap.md
-    licence.rst
+    developer/new_example
+    developer/new_tool
+    developer/cofi_core
+    developer/docs
+    developer/release
+
+
+Welcome to the CoFI Documentation! CoFI, the Common Framework for Inference, is an 
+open-source tool that bridges the gap between domain expertise and inference, within 
+and beyond the field of geoscience.
+
+Whether you're a student, an educator, or an industry professional, CoFI is your go-to 
+tool. It simplifies the process of applying inference techniques, allowing for a wide 
+range of applications from academic research and teaching to solving real-world 
+geoscience problems in the industry. With its user-friendly, flexible and accessible
+interface, CoFI empowers you to focus on what truly matters - the science.
+
+.. mermaid:: _static/cofi_tree.mmd
+
+
+.. code-block:: python
+    :linenos:
+    :class: toggle
+
+    # CoFI API has flexible ways of defining an inversion problem. For instance:
+    import cofi
+
+    inv_problem = cofi.BaseProblem()
+    inv_problem.set_objective(my_objective_func)
+    inv_problem.set_initial_model(my_starting_point)
+
+    # Once a problem is defined, `cofi` can tell you what inference tools you can 
+    # use based on what level of information you've provided:
+    inv_problem.suggest_tools()   # a tree will be printed
+
+    # Run an inversion with these lines:
+    inv_options = cofi.InversionOptions()
+    inv_options.set_tool("torch.optim")
+    inv_options.set_params(options={"num_iterations": 50, "algorithm": "Adam"})
+
+    inv = cofi.Inversion(inv_problem, inv_options)
+    result = inv.run()
+    print(result.success)
+    print(result.model)
+
+
+If this looks useful, let's get started!
+
+.. grid:: 1 3 3 3
+    :gutter: 3
+    :padding: 2
+
+    .. grid-item-card::
+        :link: installation.html
+        :text-align: center
+        :class-card: card-border
+
+        *☕️ Installation*
+        ^^^^^^^^^^^^^^^^^
+        Get a CoFI from here
+    
+    .. grid-item-card::
+        :link: tutorials/generated/index.html
+        :text-align: center
+        :class-card: card-border
+
+        *📖 Tutorials*
+        ^^^^^^^^^^^^^^
+        Step-by-step guide on how to use CoFI
+
+    .. grid-item-card::
+        :link: examples/generated/index.html
+        :text-align: center
+        :class-card: card-border
+
+        *🗂️ Examples* 
+        ^^^^^^^^^^^^^
+        Adapt a real-world application to your needs
+
+    .. grid-item-card:: 
+        :link: api/index.html
+        :text-align: center
+        :class-card: card-border
+
+        *📗 API Reference*
+        ^^^^^^^^^^^^^^^^^^
+        Dive into the details
+
+    .. grid-item-card::
+        :link: contribute.html
+        :text-align: center
+        :class-card: card-border
+
+        *🏗️ Development*
+        ^^^^^^^^^^^^^^^^
+        Report issues or contribute with your code
+    
+    .. grid-item-card::
+        :link: https://join.slack.com/t/inlab-community/shared_invite/zt-1ejny069z-v5ZyvP2tDjBR42OAu~TkHg
+        :text-align: center
+        :class-card: card-border
+
+        *💬 Have questions?*
+        ^^^^^^^^^^^^^^^^^^^^
+        Accept this invitation to join the conversation on Slack
+
+
+
+
+CoFI is currently supported and coordinated by `InLab <https://inlab.au>`_.

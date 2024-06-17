@@ -1,0 +1,23 @@
+These are data sets for inversion of surface wave dispersion and receiver functions.
+
+Just read an run the shell script DOIT.deep
+
+Note:
+
+Before you try a receiver function inversion, you must ensure that
+the receiver functions are in the correct format for your machine.
+Do this
+
+cd JOINT
+for i in R*[05]
+do
+saccvt -I < $i > tmp ; mv tmp $i
+done
+cd ..
+
+cd RFTN
+for i in R*[05]
+do
+saccvt -I < $i > tmp ; mv tmp $i
+done
+cd ..

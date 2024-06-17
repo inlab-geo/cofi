@@ -7,13 +7,13 @@ from cofi import BaseProblem, InversionOptions
 ############### Problem setup #########################################################
 _sample_size = 20
 _x = np.random.choice(np.linspace(-3.5, 2.5), size=_sample_size)
-_forward = lambda model: np.vander(_x, N=4, increasing=True) @ model
-_m_true = np.array([-6, -5, 2, 1])
-_sigma = 0.1  # common noise standard deviation
+_forward = lambda model: np.vander(_x, N=3, increasing=True) @ model
+_m_true = np.array([-5, 2, 1])
+_sigma = 0.01  # common noise standard deviation
 _y = _forward(_m_true) + np.random.normal(0, 0.1, _sample_size)
 
 m = bb.prior.UniformPrior("m", -7, 3, 1)
-ps = bb.parameterization.ParameterSpace("ps", 4, parameters=[m])
+ps = bb.parameterization.ParameterSpace("ps", 3, parameters=[m])
 p = bb.parameterization.Parameterization(ps)
 
 def my_fwd(state: bb.State) -> np.ndarray:
@@ -22,7 +22,7 @@ def my_fwd(state: bb.State) -> np.ndarray:
 t = bb.Target("dt", _y, 1/_sigma**2)
 
 n_chains = 1
-ndim = 4
+ndim = 3
 walkers_starting_states = []
 for i in range(n_chains):
     walkers_starting_states.append(p.initialize())
@@ -43,7 +43,6 @@ def test_run():
         perturbation_funcs=perturbation_funcs, 
         walkers_starting_states=walkers_starting_states, 
         n_chains=n_chains, 
-        n_cpus=n_chains, 
         n_iterations=n_iterations, 
         burnin_iterations=burnin_iterations, 
         verbose=False, 
