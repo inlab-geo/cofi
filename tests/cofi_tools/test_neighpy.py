@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.typing import NDArray
 from copy import deepcopy
 import pytest
 from pytest_lazyfixture import lazy_fixture
@@ -8,6 +9,8 @@ from cofi import BaseProblem, InversionOptions, Inversion
 
 
 ############### Problem setup #########################################################
+np.random.seed(0)
+
 _sample_size = 20
 _ndim = 4
 _x = np.random.choice(np.linspace(-3.5, 2.5), size=_sample_size)
@@ -17,13 +20,12 @@ _sigma = 1.0  # common noise standard deviation
 _Cdinv = np.eye(len(_y)) / (_sigma**2)  # Inverse data covariance matrix
 
 
-def _objective(model, data_observed, Cdinv):
-    data_predicted = _forward(model)
-    residual = data_observed - data_predicted
-    return residual @ (Cdinv @ residual).T
+def objective(x: NDArray) -> float:
+    data_predicted = _forward(x)
+    residual = _y - data_predicted
+    return residual @ (_Cdinv @ residual).T
 
 
-objective = lambda m: _objective(m, _y, _Cdinv)
 inv_problem = BaseProblem(objective=objective)
 
 bounds = [(-10.0, 10.0)] * _ndim
@@ -32,12 +34,12 @@ direct_search_nr = 10
 direct_search_ni = 100
 direct_search_n = 10
 _direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
-direct_search_serial = False
+direct_search_serial = True
 appraisal_n_resample = 1000
-appraisal_n_walkers = 1  # parallel hanging for some reason in NeighpyII but fine for Neighpy
+appraisal_n_walkers = 1
 
-initial_ensemble = np.random.uniform(-10, 10, (_sample_size, _ndim))
-log_ppd = np.apply_along_axis(lambda x: objective(x), 1, initial_ensemble)
+initial_ensemble = np.random.uniform(-10, 10, (_direct_search_total, _ndim))
+log_ppd = -1 * np.apply_along_axis(lambda x: objective(x), 1, initial_ensemble)
 
 
 @pytest.fixture(scope="module")
@@ -49,10 +51,11 @@ def valid_options() -> InversionOptions:
         n_cells_to_resample=direct_search_nr,
         n_initial_samples=direct_search_ni,
         n_iterations=direct_search_n,
+        serial=direct_search_serial,
         initial_ensemble=initial_ensemble,
         log_ppd=log_ppd,
         n_resample=appraisal_n_resample,
-        n_walkers=appraisal_n_walkers
+        n_walkers=appraisal_n_walkers,
     )
     return inv_options
 
@@ -89,12 +92,8 @@ def _check_neighpyI_results(results: dict):
 
 def _check_neighpyII_options(solver: NeighpyII):
     assert solver._params["n_resample"] == appraisal_n_resample
-    assert (
-        solver._params["n_walkers"] == 1
-    )  # this needs fixing for appraisal_n_walkers
-    assert np.array_equal(
-        solver._params["initial_ensemble"], initial_ensemble
-    )
+    assert solver._params["n_walkers"] == appraisal_n_walkers
+    assert np.array_equal(solver._params["initial_ensemble"], initial_ensemble)
     assert np.array_equal(solver._params["log_ppd"], log_ppd)
     assert solver._params["bounds"] == bounds
     assert solver._params["ndim"] == _ndim
@@ -168,7 +167,7 @@ def test_valid_inversionoptions(solver, check_fn) -> None:
             r".*number of samples.*",
         ),
         (
-            np.zeros((_sample_size, _ndim - 1)),
+            np.zeros((_direct_search_total, _ndim - 1)),
             r".*number of dimensions.*",
         ),
     ],
