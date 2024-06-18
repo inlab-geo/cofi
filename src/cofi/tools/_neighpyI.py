@@ -55,7 +55,7 @@ class NeighpyI(BaseInferenceTool):
         when="at some point in the Neighbourhood Algorithm Direct Search phase",
         context="",
     )
-    def _call_backend_tool(self) -> dict[str, NDArray[Any]]:
+    def _call_backend_tool(self) -> dict:
         searcher = self._initialise_searcher()
         samples, objectives = self._call_searcher(
             searcher, parallel=not self._params["serial"]
