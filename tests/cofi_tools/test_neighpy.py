@@ -2,7 +2,6 @@ import numpy as np
 from numpy.typing import NDArray
 from copy import deepcopy
 import pytest
-from pytest_lazyfixture import lazy_fixture
 
 from cofi.tools import Neighpy, NeighpyI, NeighpyII
 from cofi import BaseProblem, InversionOptions, Inversion
@@ -150,12 +149,13 @@ def test_empty_inversionoptions(solver) -> None:
 @pytest.mark.parametrize(
     "solver, check_fn",
     [
-        (lazy_fixture("neighpyI_solver"), _check_neighpyI_options),
-        (lazy_fixture("neighpyII_solver"), _check_neighpyII_options),
-        (lazy_fixture("neighpy_solver"), _check_neighpy_options),
+        ("neighpyI_solver", _check_neighpyI_options),
+        ("neighpyII_solver", _check_neighpyII_options),
+        ("neighpy_solver", _check_neighpy_options),
     ],
 )
-def test_valid_inversionoptions(solver, check_fn) -> None:
+def test_valid_inversionoptions(solver, check_fn, request) -> None:
+    solver = request.getfixturevalue(solver)
     check_fn(solver)
 
 
@@ -183,12 +183,13 @@ def test_neghipyII_input_shapes(initial_ensemble, error_match, valid_options) ->
 @pytest.mark.parametrize(
     "solver, check_fn",
     [
-        (lazy_fixture("neighpyI_solver"), _check_neighpyI_results),
-        (lazy_fixture("neighpyII_solver"), _check_neighpyII_results),
-        (lazy_fixture("neighpy_solver"), _check_neighpy_results),
+        ("neighpyI_solver", _check_neighpyI_results),
+        ("neighpyII_solver", _check_neighpyII_results),
+        ("neighpy_solver", _check_neighpy_results),
     ],
 )
-def test_call(solver, check_fn) -> None:
+def test_call(solver, check_fn, request) -> None:
+    solver = request.getfixturevalue(solver)
     results = solver()
     assert results["success"] is True
     check_fn(results)

@@ -11,7 +11,6 @@ dependencies:
   - findiff
   - pytorch
   - pytest
-  - pytest-lazy-fixture
   - coverage[toml]
   - versioningit==2.1.0
   - sphinx=4.5.0
