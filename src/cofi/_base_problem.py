@@ -4,6 +4,7 @@ import functools
 import json
 
 import numpy as np
+import scipy
 
 from ._exceptions import (
     DimensionMismatchError,
@@ -863,7 +864,7 @@ class BaseProblem:
         kwargs : dict, optional
             extra dict of keyword arguments for jacobian function
         """
-        if isinstance(jac_func, np.ndarray):
+        if isinstance(jac_func, np.ndarray) or scipy.sparse.issparse(jac_func):
             self.jacobian = _FunctionWrapper(
                 "jacobian", _matrix_to_func, args=[jac_func]
             )

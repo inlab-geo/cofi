@@ -9,6 +9,7 @@ from ._pytorch_optim import PyTorchOptim
 from ._cofi_border_collie_optimization import CoFIBorderCollieOptimization
 from ._bayes_bay import BayesBay
 from ._neighpy import Neighpy
+from ._scipy_sparse_lstsq import ScipySparseLstSq
 
 
 __all__ = [
@@ -22,6 +23,7 @@ __all__ = [
     "BayesBay",
     "CoFIBorderCollieOptimization",
     "Neighpy",
+    "ScipySparseLstSq",
 ]
 
 # inference tools table grouped by method:
@@ -36,6 +38,7 @@ inference_tools_table = {
     "matrix solvers": {
         "scipy.linalg.lstsq": ScipyLstSq,
         "cofi.simple_newton": CoFISimpleNewton,
+        "scipy.sparse.linalg": ScipySparseLstSq,
     },
     "sampling": {
         "emcee": Emcee,
