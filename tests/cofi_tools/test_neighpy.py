@@ -77,8 +77,8 @@ inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_s
 inv = Inversion(inv_problem, inv_options)
 inv_result = inv.run()
 
-initial_ensemble = inv_result.sampler.get_chain(flat=True)
-log_ppd = inv_result.sampler.get_log_prob(flat=True)
+initial_ensemble = inv_result.sampler.get_chain(flat=True)[-_direct_search_total:]
+log_ppd = inv_result.sampler.get_log_prob(flat=True)[-_direct_search_total:]
 
 
 @pytest.fixture(scope="module")
