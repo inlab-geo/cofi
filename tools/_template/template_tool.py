@@ -19,7 +19,7 @@ class TemplateTool(BaseInferenceTool):
     FIXME Any extra information about the tool
     """
     documentation_links = []        # FIXME required
-    short_description = []          # FIXME required
+    short_description = ""          # FIXME required
 
     @classmethod
     def required_in_problem(cls) -> set:        # FIXME implementation required

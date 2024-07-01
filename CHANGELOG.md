@@ -2,6 +2,16 @@
 
 <!--next-version-placeholder-->
 
+## v0.2.9 (24/06/2024)
+
+### CoFI Tools
+
+- New tool: sparse matrix solvers
+
+### CoFI Core
+
+- Allow sparse matrix input on `BaseProblem.set_jacobian`
+
 ## v0.2.8 (21/03/2024)
 
 ### CoFI Tools
