@@ -20,7 +20,7 @@ def basis_func(x):
 
 _x = np.random.choice(np.linspace(-3.5, 2.5), size=_sample_size)
 _forward = lambda model: basis_func(_x) @ model
-_sigma = 1.0  # common noise standard deviation
+_sigma = 1e-4  # common noise standard deviation
 _true_model = np.random.randint(-5, 5, _ndim)  # don't need to check results
 _y = _forward(_true_model) + np.random.normal(
     0, _sigma, _sample_size
@@ -36,7 +36,7 @@ def objective(x: NDArray) -> float:
 
 inv_problem = BaseProblem(objective=objective)
 
-bounds = [(-10.0, 10.0)] * _ndim
+bounds = [(-5.0, 5.0)] * _ndim
 direct_search_ns = 100
 direct_search_nr = 10
 direct_search_ni = 10
@@ -46,8 +46,39 @@ direct_search_serial = False
 appraisal_n_resample = 1000
 appraisal_n_walkers = 5
 
-initial_ensemble = np.random.uniform(-10, 10, (_direct_search_total, _ndim))
-log_ppd = -1 * np.apply_along_axis(lambda x: objective(x), 1, initial_ensemble)
+# Initial ensemble needs to have some reasonable points
+# to avoid the appraisale getting stuck
+# Might as well test this out on a different solver
+
+# Get initial ensemble from emcee
+
+def log_likelihood(m):
+    return -0.5 * objective(m)
+
+
+def log_prior(m):
+    for _m, (l, u) in zip(m, bounds):
+        if _m < l or _m > u:
+            return -np.inf  # model lies outside bounds -> return log(0)
+    return 0.0  # model lies within bounds -> return log(1)
+
+nwalkers = 8
+nsteps = 5000
+walkers_start = _true_model + 1e-4 * np.random.randn(nwalkers, _ndim)
+
+inv_problem.set_log_prior(log_prior)
+inv_problem.set_log_likelihood(log_likelihood)
+inv_problem.set_model_shape(_ndim)
+
+inv_options = InversionOptions()
+inv_options.set_tool("emcee")
+inv_options.set_params(nwalkers=nwalkers, nsteps=nsteps, initial_state=walkers_start)
+
+inv = Inversion(inv_problem, inv_options)
+inv_result = inv.run()
+
+initial_ensemble = inv_result.sampler.get_chain(flat=True)
+log_ppd = inv_result.sampler.get_log_prob(flat=True)
 
 
 @pytest.fixture(scope="module")
