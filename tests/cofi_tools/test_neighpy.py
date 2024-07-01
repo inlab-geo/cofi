@@ -38,10 +38,10 @@ bounds = [(-5.0, 5.0)] * _ndim
 direct_search_ns = 100
 direct_search_nr = 10
 direct_search_ni = 10
-direct_search_n = 50
+direct_search_n = 10
 _direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
 direct_search_serial = False
-appraisal_n_resample = 1000
+appraisal_n_resample = 100
 appraisal_n_walkers = 1  # only one walker for testing
 
 initial_ensemble = np.random.uniform(-10, 10, (_direct_search_total, _ndim))
