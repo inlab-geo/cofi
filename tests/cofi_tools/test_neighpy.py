@@ -11,11 +11,20 @@ from cofi import BaseProblem, InversionOptions, Inversion
 np.random.seed(0)
 
 _sample_size = 20
-_ndim = 4
+_ndim = 3  # quadratic model
+
+
+def basis_func(x):
+    return np.array([x**i for i in range(_ndim)]).T
+
+
 _x = np.random.choice(np.linspace(-3.5, 2.5), size=_sample_size)
-_forward = lambda model: np.vander(_x, N=_ndim, increasing=True) @ model
-_y = _forward(np.random.randint(-5, 5, _ndim)) + np.random.normal(0, 1, _sample_size)
+_forward = lambda model: basis_func(_x) @ model
 _sigma = 1.0  # common noise standard deviation
+_true_model = np.random.randint(-5, 5, _ndim)  # don't need to check results
+_y = _forward(_true_model) + np.random.normal(
+    0, _sigma, _sample_size
+)
 _Cdinv = np.eye(len(_y)) / (_sigma**2)  # Inverse data covariance matrix
 
 
@@ -30,12 +39,12 @@ inv_problem = BaseProblem(objective=objective)
 bounds = [(-10.0, 10.0)] * _ndim
 direct_search_ns = 100
 direct_search_nr = 10
-direct_search_ni = 100
-direct_search_n = 10
+direct_search_ni = 10
+direct_search_n = 50
 _direct_search_total = direct_search_ni + direct_search_n * direct_search_ns
-direct_search_serial = True
+direct_search_serial = False
 appraisal_n_resample = 1000
-appraisal_n_walkers = 1
+appraisal_n_walkers = 5
 
 initial_ensemble = np.random.uniform(-10, 10, (_direct_search_total, _ndim))
 log_ppd = -1 * np.apply_along_axis(lambda x: objective(x), 1, initial_ensemble)
