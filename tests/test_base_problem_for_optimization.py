@@ -134,6 +134,10 @@ def test_set_regularization_from_utils_gaussian_prior(problem_objective_setup):
     assert numpy.isclose(inv_problem.regularization(numpy.array([2, 1, 1])), 8.2205933)
     assert numpy.isclose(inv_problem.regularization(numpy.array([2, 1, 2])), 16.441187)
 
+def test_set_regularization_both_none():
+    inv_problem = BaseProblem()
+    with pytest.raises(ValueError, match=r".*`regularization` or `regularization_matrix`.*"):
+        inv_problem.set_regularization(None, None)
 
 # ---------------- forward + data -----------------------------------------------------
 def test_set_forward_data(problem_objective_setup):
