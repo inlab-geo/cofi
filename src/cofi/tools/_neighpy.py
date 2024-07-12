@@ -1,6 +1,9 @@
 from numpy import argmin
 
+
 from . import BaseInferenceTool, error_handler
+from ._neighpyI import NeighpyI
+from ._neighpyII import NeighpyII
 
 
 class Neighpy(BaseInferenceTool):
@@ -8,7 +11,7 @@ class Neighpy(BaseInferenceTool):
 
     The Neighbourhood Algorithm is a direct search method that uses a set of points in the parameter space to explore the objective function. It is a derivative-free method that is particularly useful for high-dimensional problems.
 
-    Split into two phases, the direct search phase and the appraisal phase, this wrapper runs both phases consecutively.
+    Split into two phases, the direct search phase and the appraisal phase, this wrapper runs both phases.
     """
 
     documentation_links = ["https://neighpy.readthedocs.io/en/latest/index.html"]
@@ -18,27 +21,23 @@ class Neighpy(BaseInferenceTool):
 
     @classmethod
     def required_in_problem(cls) -> set:
-        return {"objective"}
+        # nothing required in problem from NeighpyII
+        return NeighpyI.required_in_problem()
 
     @classmethod
     def optional_in_problem(cls) -> dict:
-        return {}
+        return {**NeighpyI.optional_in_problem(), **NeighpyII.optional_in_problem()}
 
     @classmethod
     def required_in_options(cls) -> set:
-        return {
-            "bounds",
-            "direct_search_ns",
-            "direct_search_nr",
-            "direct_search_ni",
-            "direct_search_n",
-            "appraisal_n_resample",
-            "appraisal_n_walkers",
-        }
+        # only need n_resample and n_walkers from NeighpyII
+        # as we will use the output of the direct search phase
+        # as the initial ensemble
+        return NeighpyI.required_in_options() | {"n_resample", "n_walkers"}
 
     @classmethod
     def optional_in_options(cls) -> dict:
-        return {}
+        return {**NeighpyI.optional_in_options(), **NeighpyII.optional_in_options()}
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
@@ -58,64 +57,25 @@ class Neighpy(BaseInferenceTool):
         context="",
     )
     def _call_backend_tool(self):
-        searcher = self._initialise_searcher()
-        direct_search_samples, direct_search_objectives = self._call_searcher(searcher)
+        searcher = NeighpyI._initialise_searcher(self)
+        direct_search_samples, direct_search_objectives = NeighpyI._call_searcher(
+            searcher, parallel=not self._params["serial"]
+        )
 
-        appraiser = self._initalise_appraiser(searcher)
-        appraisal_samples = self._call_appriaser(appraiser)
+        # a bit hacky but this is how we pass the results to the appraiser
+        self._params["initial_ensemble"] = direct_search_samples
+        self._params["log_ppd"] = -direct_search_objectives
 
-        return {
+        appraiser = NeighpyII._initalise_appraiser(self)
+        appraisal_samples = NeighpyII._call_appriaser(appraiser)
+
+        result = {
             "direct_search_samples": direct_search_samples,
             "direct_search_objectives": direct_search_objectives,
             "appraisal_samples": appraisal_samples,
         }
 
-    @staticmethod
-    @error_handler(
-        when="in calling neighpy.search.NASearcher instance",
-        context="for the direct search phase",
-    )
-    def _call_searcher(searcher):
-        searcher.run()
-        return searcher.samples, searcher.objectives
-
-    @staticmethod
-    @error_handler(
-        when="in calling neighpy.appraise.NAAppraiser instance",
-        context="for the appraisal phase",
-    )
-    def _call_appriaser(appraiser):
-        appraiser.run()
-        return appraiser.samples
-
-    @error_handler(
-        when="in creating neighpy.search.NASearcher object",
-        context="at initialisation",
-    )
-    def _initialise_searcher(self):
-        from neighpy import NASearcher
-
-        return NASearcher(
-            self.inv_problem.objective,
-            ns=self._params["direct_search_ns"],
-            nr=self._params["direct_search_nr"],
-            ni=self._params["direct_search_ni"],
-            n=self._params["direct_search_n"],
-            bounds=self._params["bounds"],
-        )
-
-    @error_handler(
-        when="in creating neighpy.appraise.NAAppraiser object",
-        context="at initialisation, after running NASearcher",
-    )
-    def _initalise_appraiser(self, searcher):
-        from neighpy import NAAppraiser
-
-        return NAAppraiser(
-            searcher=searcher,
-            n_resample=self._params["appraisal_n_resample"],
-            n_walkers=self._params["appraisal_n_walkers"],
-        )
+        return result
 
 
 # CoFI -> Ensemble methods -> Direct search -> Monte Carlo -> Neighpy -> Neighbourhood Algorithm
