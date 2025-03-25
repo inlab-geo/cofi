@@ -55,6 +55,7 @@ def test_run_simple_obj():
         "Adam": 1,
         "AdamW": 1,
         "SparseAdam": 1,
+        "Adafactor": 0.1,
         "Adamax": 2,
         "ASGD": 0.1,
         "LBFGS": 1,
@@ -129,7 +130,7 @@ def test_run_lin_regression():
     _m_true = np.array([-6, -5, 2, 1])
     sample_size = 20
     x = np.random.choice(np.linspace(-3.5, 2.5), size=sample_size)
-    forward = lambda m: G(x).dot(m)
+    forward = lambda m: np.array(G(x)).dot(np.array(m))
     y_obs = forward(_m_true) + np.random.normal(0, 1, sample_size)
     objective = lambda m: np.sum(np.square(y_obs - forward(m)))
     objective_grad = lambda m: -2 * np.expand_dims(y_obs - forward(m), 1) * G(x)

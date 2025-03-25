@@ -19,7 +19,7 @@ p = bb.parameterization.Parameterization(ps)
 def my_fwd(state: bb.State) -> np.ndarray:
     return _forward(state["ps"]["m"])
 
-t = bb.Target("dt", _y, 1/_sigma**2)
+t = bb.likelihood.Target("dt", _y, 1/_sigma**2)
 
 n_chains = 1
 ndim = 3
@@ -27,8 +27,8 @@ walkers_starting_states = []
 for i in range(n_chains):
     walkers_starting_states.append(p.initialize())
 
-log_like_ratio_func = bb.LogLikelihood([t], [my_fwd])
-perturbation_funcs = p.perturbation_functions
+log_like_ratio_func = bb.likelihood.LogLikelihood([t], [my_fwd])
+perturbation_funcs = p.perturbation_funcs
 n_iterations = 2000
 burnin_iterations = 1500
 

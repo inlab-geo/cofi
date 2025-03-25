@@ -3,7 +3,7 @@ matplotlib>=3.5
 arviz>=0.10.0
 emcee
 findiff
-pytorch
+torch
 bayesbay
 pytest
 coverage[toml]
