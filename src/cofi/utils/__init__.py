@@ -17,14 +17,16 @@ from ._reg_lp_norm import LpNormRegularization, QuadraticReg
 from ._reg_model_cov import ModelCovariance, GaussianPrior
 from ._lik_base import BaseLikelihood
 from ._reduced_likelihood import ReducedLikelihood
+from ._reduced_likelihood_manager import ReducedLikelihoodManager
 
 from ._multiple_runs import InversionPool
 
 
 __all__ = [
     "BaseRegularization",
-    "ReducedLikelihood"
-    "BaseLikelihood"
+    "ReducedLikelihood",
+    "ReducedLikelihoodManager",
+    "BaseLikelihood",
     "LpNormRegularization",
     "QuadraticReg",
     "ModelCovariance",

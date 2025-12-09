@@ -38,7 +38,10 @@ class ReducedLikelihood(BaseLikelihood):
         Jacobian matrix of shape (n_data, n_params). Must be updated
         before each evaluation for non-linear problems.
     Cd_ref : Optional[np.ndarray], default=None
-        Reference covariance matrix for 'none' and 'scaled' cases
+        Reference covariance matrix. Required for 'scaled' case.
+        For 'none' case: if not provided, defaults to identity matrix
+        (assumes uncorrelated, unit-variance noise).
+        Not used for 'spherical', 'diag', or 'full' cases.
     case : str, default='none'
         The covariance case: 'none', 'scaled', 'spherical', 'diag', or 'full'
     eps : float, default=1e-154
@@ -47,7 +50,8 @@ class ReducedLikelihood(BaseLikelihood):
     Raises
     ------
     ValueError
-        If Cd_ref is required but not provided for 'none' or 'scaled' cases
+        If Cd_ref is not provided for 'scaled' case
+        If case is not one of the supported options
         If G is not set before evaluation
 
     Examples
@@ -101,15 +105,27 @@ class ReducedLikelihood(BaseLikelihood):
         self.n_data = self.data.size
         self.forward_func = forward_func
         self.fwd_kwargs = fwd_kwargs if fwd_kwargs is not None else {}
-        self.G = np.asarray(G) if G is not None else None
+        if G is None:
+            self.G = None
+        elif sparse.issparse(G):
+            # keep sparse matrices as-is (so .shape and sparse operations work)
+            self.G = G
+        else:
+            self.G = np.asarray(G)
         self._model_shape = None  # Will be inferred from G when set
         self.Cd_ref = None if Cd_ref is None else np.asarray(Cd_ref)
         self.case = case.lower()
         self.eps = float(eps)
 
-        # Validate inputs
-        if self.case in ['none', 'scaled'] and self.Cd_ref is None:
-            raise ValueError(f"Cd_ref is required for case='{self.case}'")
+        # Validate inputs and set defaults
+        if self.case == 'scaled' and self.Cd_ref is None:
+            raise ValueError(
+                f"Cd_ref is required for case='scaled'. "
+                f"Provide a reference covariance matrix."
+            )
+        elif self.case == 'none' and self.Cd_ref is None:
+            # Default to identity matrix (uncorrelated, unit variance noise)
+            self.Cd_ref = np.eye(self.n_data)
 
         if self.case not in ['none', 'scaled', 'spherical', 'diag', 'full']:
             raise ValueError(
@@ -278,6 +294,10 @@ class ReducedLikelihood(BaseLikelihood):
 
     def _validate_model(self, model):
         flat_m = np.ravel(model)
+        # If G wasn't supplied we cannot infer the expected model shape/size.
+        # Raise a clear error instead of letting model_size trigger a confusing TypeError.
+        if self.model_shape is None:
+            raise ValueError("Jacobian matrix G must be set before evaluation")
         if flat_m.size != self.model_size:
             raise DimensionMismatchError(
                 entered_name="model",
