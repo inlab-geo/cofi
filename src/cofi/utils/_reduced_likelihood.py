@@ -22,7 +22,8 @@ class ReducedLikelihood(BaseLikelihood):
     - **'none'**: Fixed covariance (standard Gaussian likelihood)
     - **'scaled'**: Scaled reference covariance
     - **'spherical'**: Spherical covariance (diagonal with same variance)
-    - **'diag'**: Diagonal covariance with different variances
+    - **'diag'**: Diagonal covariance with Student-t likelihood (robust)
+    - **'diag_legacy'**: Diagonal covariance (legacy, numerically unstable near zero)
     - **'full'**: Full covariance matrix estimation
 
     Parameters
@@ -41,9 +42,17 @@ class ReducedLikelihood(BaseLikelihood):
         Reference covariance matrix. Required for 'scaled' case.
         For 'none' case: if not provided, defaults to identity matrix
         (assumes uncorrelated, unit-variance noise).
-        Not used for 'spherical', 'diag', or 'full' cases.
+        Not used for 'spherical', 'diag', 'diag_legacy', or 'full' cases.
     case : str, default='none'
-        The covariance case: 'none', 'scaled', 'spherical', 'diag', or 'full'
+        The covariance case: 'none', 'scaled', 'spherical', 'diag', 'diag_legacy', or 'full'
+    nu : float, default=4.0
+        Degrees of freedom for Student-t likelihood (used in 'diag' case).
+        Smaller values (e.g., 3-5) give heavier tails and more robustness to outliers.
+        Larger values approach Gaussian behavior.
+    s : float, default=1.0
+        Scale parameter for Student-t likelihood (used in 'diag' case).
+        Controls the width of the distribution. Should be set to approximate
+        the expected noise standard deviation (e.g., via a quick least-squares prefit).
     eps : float, default=1e-154
         Small number for numerical stability
 
@@ -97,6 +106,8 @@ class ReducedLikelihood(BaseLikelihood):
         G: Optional[np.ndarray] = None,
         Cd_ref: Optional[np.ndarray] = None,
         case: str = "none",
+        nu: float = 4.0,
+        s: float = 1.0,
         eps: float = EPS,
     ):
         """Initialize the reduced likelihood."""
@@ -115,6 +126,8 @@ class ReducedLikelihood(BaseLikelihood):
         self._model_shape = None  # Will be inferred from G when set
         self.Cd_ref = None if Cd_ref is None else np.asarray(Cd_ref)
         self.case = case.lower()
+        self.nu = float(nu)  # Student-t degrees of freedom
+        self.s = float(s)    # Student-t scale parameter
         self.eps = float(eps)
 
         # Validate inputs and set defaults
@@ -127,10 +140,10 @@ class ReducedLikelihood(BaseLikelihood):
             # Default to identity matrix (uncorrelated, unit variance noise)
             self.Cd_ref = np.eye(self.n_data)
 
-        if self.case not in ['none', 'scaled', 'spherical', 'diag', 'full']:
+        if self.case not in ['none', 'scaled', 'spherical', 'diag', 'diag_legacy', 'full']:
             raise ValueError(
                 f"Unknown case '{self.case}'. Must be one of: "
-                "'none', 'scaled', 'spherical', 'diag', 'full'"
+                "'none', 'scaled', 'spherical', 'diag', 'diag_legacy', 'full'"
             )
 
         # Cache for evaluation results to avoid redundant computation
@@ -205,6 +218,11 @@ class ReducedLikelihood(BaseLikelihood):
             numerator = G.T.dot(Ctilde_inv_r)
             gradient = (N / a) * numerator
 
+            # NOTE: The exact Hessian below has a positive semi-definite rank-1 term
+            # (2N/a^2 * outer) and a negative semi-definite term (-N/a * GTCtildeG).
+            # This can result in an indefinite Hessian, causing Newton's method to diverge.
+            # POTENTIAL FIX: Use Gauss-Newton approximation: hessian = -(N / a) * GTCtildeG
+            # This drops the outer product term and ensures positive semi-definiteness.
             outer = np.outer(numerator, numerator)
             GTCtildeG = G.T.dot(Ctilde_inv.dot(G))
             hessian = 2.0 * N * outer / (a * a) - N * GTCtildeG / a
@@ -221,6 +239,11 @@ class ReducedLikelihood(BaseLikelihood):
             numerator = G.T.dot(residual)
             gradient = (N / s) * numerator
 
+            # NOTE: The exact Hessian below has a positive semi-definite rank-1 term
+            # (2N/s^2 * outer) and a negative semi-definite term (-(N/s) * GTG).
+            # This can result in an indefinite Hessian, causing Newton's method to diverge.
+            # POTENTIAL FIX: Use Gauss-Newton approximation: hessian = -(N / s) * GTG
+            # This drops the outer product term and ensures positive semi-definiteness.
             outer = np.outer(numerator, numerator)
             GTG = G.T.dot(G)
             hessian = 2.0 * N * outer / (s * s) - (N / s) * GTG
@@ -228,7 +251,65 @@ class ReducedLikelihood(BaseLikelihood):
             Cd_ml = np.eye(N) * (s / N)
 
         elif self.case == "diag":
-            # Diagonal covariance with different variances
+            # Student-t likelihood for robust diagonal covariance estimation
+            # This integrates out per-datum variances with Inverse-Gamma prior,
+            # yielding a Student-t distribution that is robust to outliers.
+            #
+            # Negative log-likelihood:
+            #   L(m) = (nu+1)/2 * sum_i log(1 + r_i^2 / (nu * s^2))
+            #
+            # Gradient: nabla_m L = -G^T w, where w_i = (nu+1) * r_i / (nu*s^2 + r_i^2)
+            #
+            # Hessian: H = G^T D G, where D_ii = (nu+1) * (nu*s^2 - r_i^2) / (nu*s^2 + r_i^2)^2
+            #
+            # Properties:
+            # - For small r_i: behaves like Gaussian (locally convex)
+            # - For large r_i: soft response (heavy tails), reduces outlier influence
+
+            nu = self.nu
+            s = self.s
+            if nu <= 0:
+                raise ValueError("Student-t parameter nu must be > 0.")
+            if s <= 0:
+                raise ValueError("Student-t scale s must be > 0.")
+            a = nu * s * s  # nu * s^2
+            r2 = residual * residual  # r_i^2
+            
+            # Weights for gradient: w_i = (nu+1) * r_i / (a + r_i^2)
+            eps = getattr(self, "eps", 1e-12)
+            denom = a + r2 + eps  # a + r_i^2
+
+            # Negative log-likelihood: L = (nu+1)/2 * sum log(1 + r_i^2 / a)
+            log_likelihood = -0.5 * (nu + 1) * np.sum(np.log(1.0 + r2 / a))
+
+            w = (nu + 1) * residual / denom
+            
+            # Gradient of log-likelihood: ∇_m ℓ = +G^T w
+            gradient = G.T.dot(w) if sparse.issparse(G) else (G.T @ w)
+
+            # Diagonal of Hessian weight matrix: D_ii = (nu+1) * (a - r_i^2) / (a + r_i^2)^2
+            # Note: D_ii can be negative for large residuals (|r_i| > sqrt(a))
+            # This reflects the non-convexity of Student-t for outliers
+            d_diag = (nu + 1) * (a - r2) / (denom * denom)
+
+            # Hessian: H = G^T D G (for negative log-likelihood)
+            # For log-likelihood, hessian = -G^T D G
+            if sparse.issparse(G):
+                D = sparse.diags(d_diag)
+                hessian = -(G.T.dot(D.dot(G))).toarray()
+            else:
+                hessian = -(G.T @(d_diag[:,None]*G))
+                    
+            # Effective variance:
+            #   σ_i,eff^2 = 1/λ_i = (a + r_i^2)/(nu+1)
+            sigma2_eff = denom / (nu + 1)
+            # ML covariance estimate: diagonal with sigma_i^2 = r_i^2
+            Cd_ml = np.diag(sigma2_eff)
+
+        elif self.case == "diag_legacy":
+            # LEGACY: Diagonal covariance with different variances
+            # WARNING: This formulation is numerically unstable near zero residuals
+            # (weights proportional to 1/r_i blow up). Use 'diag' (Student-t) instead.
             r_abs = np.maximum(np.abs(residual), self.eps)
 
             log_likelihood = -np.sum(np.log(r_abs))
