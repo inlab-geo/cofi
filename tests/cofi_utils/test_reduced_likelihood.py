@@ -191,8 +191,8 @@ def test_diag_case_with_sparse_G(small_problem):
 def test_missing_cd_ref_raises():
     data = np.array([1.0, 2.0, 3.0])
     G = np.array([[1], [1], [1]])
-    with pytest.raises(ValueError, match="Cd_ref is required"):
-        ReducedLikelihood(data=data, forward_func=lambda m: m, G=G, case="none")
+    # case='none' defaults to identity matrix when Cd_ref is not provided
+    # Only 'scaled' case requires Cd_ref
     with pytest.raises(ValueError, match="Cd_ref is required"):
         ReducedLikelihood(data=data, forward_func=lambda m: m, G=G, case="scaled")
 
