@@ -28,6 +28,14 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
+      - name: Sanity-check Apptainer image
+        run: |
+          set -euo pipefail
+          echo "Using APPTAINER_IMAGE=$APPTAINER_IMAGE"
+          ls -lh "$APPTAINER_IMAGE"
+          apptainer inspect "$APPTAINER_IMAGE" | sed -n '1,120p'
+          apptainer exec "$APPTAINER_IMAGE" bash -lc 'python -V; conda info --envs | sed -n "1,120p"'    
+
       - name: Build Sphinx docs inside Apptainer
         run: |
           cd docs/source
