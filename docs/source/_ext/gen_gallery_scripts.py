@@ -132,6 +132,7 @@ def move_data_files(src_folder, dst_folder):
         "*.txt",
         "*_lib.py",
         "xrayTomography.py",
+        "neptune_deterministic_methods.py",
     ]
     all_data = []
     for pattern in all_patterns:
@@ -177,6 +178,7 @@ def gen_scripts_all(_):
         convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
     # collect all data and library files to move to scripts/field_data
     move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{FIELD_DATA}")
+    move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{SYNTH_DATA}")
     # #### DATA & THEORY ####
     print("\nCopying data and theory files...")
     copy_and_overwrite(f"{cofi_examples_dir}/data", f"{docs_src}/data")
