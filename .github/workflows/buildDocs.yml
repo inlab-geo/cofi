@@ -19,7 +19,7 @@ jobs:
       contents: write   # required to push to PR branch
 
     env:
-      APPTAINER_IMAGE: /opt/inlab-apptainer/inlab.fedora.sif
+      APPTAINER_IMAGE: /home/kitc/inlab-apptainer/inlab.conda.sif
 
     steps:
       - name: Checkout PR branch
