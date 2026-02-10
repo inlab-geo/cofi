@@ -34,12 +34,18 @@ jobs:
           echo "Using APPTAINER_IMAGE=$APPTAINER_IMAGE"
           ls -lh "$APPTAINER_IMAGE"
           apptainer inspect "$APPTAINER_IMAGE" | sed -n '1,120p'
-          apptainer exec "$APPTAINER_IMAGE" bash -lc 'python -V; conda info --envs | sed -n "1,120p"'
+          apptainer exec "$APPTAINER_IMAGE" bash -c
+          source /opt/miniconda3/etc/profile.d/conda.sh &&
+            conda activate inlab &&
+            python -V &&
+            conda info --envs | sed -n "1,120p"
+          '
 
       - name: Build Sphinx docs inside Apptainer
         run: |
           cd docs/source
-          apptainer exec "$APPTAINER_IMAGE" bash -lc "
+          apptainer exec "$APPTAINER_IMAGE" bash -c "
+            source /opt/miniconda3/etc/profile.d/conda.sh &&
             conda activate inlab &&
             make clean html
           "
