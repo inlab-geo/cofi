@@ -38,7 +38,7 @@ jobs:
 
       - name: Build Sphinx docs inside Apptainer
         run: |
-          cd docs/source
+          cd docs
           apptainer exec "$APPTAINER_IMAGE" bash -c 'source /opt/miniconda3/etc/profile.d/conda.sh && conda activate inlab && make clean html'
 
       - name: Upload built docs (HyperText Markup Language (HTML)) as artifact
