@@ -27,6 +27,7 @@ jobs:
         with:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
+          submodules: recursive
 
       - name: Sanity-check Apptainer image
         run: |
