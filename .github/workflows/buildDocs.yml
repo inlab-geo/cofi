@@ -1,0 +1,56 @@
+name: Build Docs (self-hosted, PR)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "src/**"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on:
+      - self-hosted
+      - ceres-bot
+
+    permissions:
+      contents: write   # required to push to PR branch
+
+    env:
+      APPTAINER_IMAGE: /opt/inlab-apptainer/inlab.fedora.sif
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Build Sphinx docs inside Apptainer
+        run: |
+          cd docs/source
+          apptainer exec "$APPTAINER_IMAGE" bash -lc "
+            conda activate inlab &&
+            make clean html
+          "
+
+      - name: Detect changes
+        id: diff
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit regenerated gallery outputs to PR
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "ceres-bot"
+          git config user.email "ceres-bot@inlab-geo.org"
+
+          git add docs/source/examples/generated docs/source/tutorials/generated
+          git commit -m "docs: regenerate gallery outputs (Apptainer)"
+          git push origin HEAD:${{ github.head_ref }}
