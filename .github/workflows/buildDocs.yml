@@ -34,21 +34,12 @@ jobs:
           echo "Using APPTAINER_IMAGE=$APPTAINER_IMAGE"
           ls -lh "$APPTAINER_IMAGE"
           apptainer inspect "$APPTAINER_IMAGE" | sed -n '1,120p'
-          apptainer exec "$APPTAINER_IMAGE" bash -c
-          source /opt/miniconda3/etc/profile.d/conda.sh &&
-            conda activate inlab &&
-            python -V &&
-            conda info --envs | sed -n "1,120p"
-          '
+          apptainer exec "$APPTAINER_IMAGE" bash -c 'source /opt/miniconda3/etc/profile.d/conda.sh && conda activate inlab && python -V && conda info --envs'
 
       - name: Build Sphinx docs inside Apptainer
         run: |
           cd docs/source
-          apptainer exec "$APPTAINER_IMAGE" bash -c "
-            source /opt/miniconda3/etc/profile.d/conda.sh &&
-            conda activate inlab &&
-            make clean html
-          "
+          apptainer exec "$APPTAINER_IMAGE" bash -c 'source /opt/miniconda3/etc/profile.d/conda.sh && conda activate inlab && make clean html'
 
       - name: Upload built docs (HyperText Markup Language (HTML)) as artifact
         if: always()
