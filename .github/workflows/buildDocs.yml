@@ -25,7 +25,7 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
 
       - name: Sanity-check Apptainer image
@@ -34,7 +34,7 @@ jobs:
           echo "Using APPTAINER_IMAGE=$APPTAINER_IMAGE"
           ls -lh "$APPTAINER_IMAGE"
           apptainer inspect "$APPTAINER_IMAGE" | sed -n '1,120p'
-          apptainer exec "$APPTAINER_IMAGE" bash -lc 'python -V; conda info --envs | sed -n "1,120p"'    
+          apptainer exec "$APPTAINER_IMAGE" bash -lc 'python -V; conda info --envs | sed -n "1,120p"'
 
       - name: Build Sphinx docs inside Apptainer
         run: |
@@ -43,7 +43,8 @@ jobs:
             conda activate inlab &&
             make clean html
           "
-      - name: Upload built docs (HTML) as artifact
+
+      - name: Upload built docs (HyperText Markup Language (HTML)) as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -56,13 +57,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: docs-build-${{ github.sha }}
-          path: |
-            docs/source/_build
+          path: docs/source/_build
 
       - name: Detect changes
         id: diff
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          if [ -n "$(git status --porcelain docs/source/examples/generated docs/source/tutorials/generated)" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
@@ -71,8 +71,8 @@ jobs:
       - name: Commit regenerated gallery outputs to PR
         if: steps.diff.outputs.changed == 'true'
         run: |
-          git config user.name "ceres-bot"
-          git config user.email "ceres-bot@inlab-geo.org"
+          git config --local user.name "ceres-bot"
+          git config --local user.email "ceres-bot@inlab-geo.org"
 
           git add docs/source/examples/generated docs/source/tutorials/generated
           git commit -m "docs: regenerate gallery outputs (Apptainer)"
