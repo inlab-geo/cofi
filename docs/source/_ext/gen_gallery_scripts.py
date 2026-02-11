@@ -199,7 +199,37 @@ def find_ipynb_files(parent_dir):
         if current_depth - base_depth >= 1:
             dirnames[:] = []
     return result
-    
+
+def write_ordering_file(script_paths, dst_folder, filter_func=None):
+    """
+    Write an _ordering.txt into dst_folder listing converted script names
+    in dependency order. The custom DependencySortKey class in conf.py reads
+    this file to control Sphinx Gallery's execution order.
+
+    Parameters
+    ----------
+    script_paths : list of str
+        Ordered list of original .ipynb paths (already dependency-sorted).
+    dst_folder : str
+        The destination script folder (e.g. examples/scripts_synth_data).
+    filter_func : callable, optional
+        If provided, only include scripts where filter_func(example_name)
+        is True. Used to split field_data vs synth_data ordering.
+    """
+    os.makedirs(dst_folder, exist_ok=True)
+    names = []
+    for p in script_paths:
+        file_name, example_name = file_name_without_path(p)
+        if filter_func and not filter_func(example_name):
+            continue
+        script_name = file_name.replace(".ipynb", ".py")
+        if script_name not in names:
+            names.append(script_name)
+    ordering_path = os.path.join(dst_folder, "_ordering.txt")
+    with open(ordering_path, "w") as f:
+        f.write("\n".join(names))
+    print(f"Wrote ordering file: {ordering_path} ({len(names)} scripts)")
+
 # main entry
 def gen_scripts_all(_):
     # #### TUTORIALS ####
