@@ -157,12 +157,55 @@ def copy_and_overwrite(from_path, to_path):
         rmtree(to_path)
     copytree(from_path, to_path)
     print(f"Folder from {from_path} to {to_path}")
+    
+# order notebook processing from run_notebooks.py
+def get_ordered_ipynbs_in_dir(dirpath):
+    """
+    Returns a list of .ipynb files in dirpath, with those listed in
+    dependencies.txt first (preserving declared order), followed by any
+    remaining notebooks in filesystem order.
+    """
+    result = []
+    dependencies_path = os.path.join(dirpath, "dependencies.txt")
+    dependencies = []
+    if os.path.isfile(dependencies_path):
+        with open(dependencies_path) as f:
+            dependencies = [line.strip() for line in f if line.strip()]
+        for dep in dependencies:
+            dep_path = os.path.join(dirpath, dep)
+            if dep.endswith(".ipynb") and os.path.isfile(dep_path):
+                result.append(dep_path)
+    already = set(dependencies)
+    for f in sorted(os.listdir(dirpath)):
+        if f.endswith(".ipynb") and f not in already:
+            f_path = os.path.join(dirpath, f)
+            if os.path.isfile(f_path):
+                result.append(f_path)
+    return result
 
+
+def find_ipynb_files(parent_dir):
+    """
+    Returns a list of .ipynb files exactly one directory below parent_dir,
+    with dependencies.txt ordering applied within each subdirectory.
+    """
+    result = []
+    parent_dir = os.path.abspath(parent_dir)
+    base_depth = parent_dir.rstrip(os.sep).count(os.sep)
+    for dirpath, dirnames, filenames in os.walk(parent_dir):
+        current_depth = dirpath.rstrip(os.sep).count(os.sep)
+        if current_depth - base_depth == 1:
+            result.extend(get_ordered_ipynbs_in_dir(dirpath))
+        if current_depth - base_depth >= 1:
+            dirnames[:] = []
+    return result
+    
+# main entry
 def gen_scripts_all(_):
     # #### TUTORIALS ####
     print("Generating tutorials gallery scripts...")
-    # collect tutorials to convert to sphinx gallery scripts
-    all_tutorials_scripts = glob(f"{TUTORIALS_SRC_DIR}/*/*.ipynb")
+    # collect tutorials to convert to sphinx gallery scripts (ordered)
+    all_tutorials_scripts = find_ipynb_files(TUTORIALS_SRC_DIR)
     # convert
     print("Converting tutorial files...")
     for script in all_tutorials_scripts:
@@ -171,9 +214,11 @@ def gen_scripts_all(_):
     move_data_files(f"{TUTORIALS_SRC_DIR}/*", TUTORIALS_SCRIPTS)
     # #### EXAMPLES ####
     print("Generating examples gallery scripts...")
-    # collect examples to convert to sphinx gallery scripts
-    all_examples_scripts = glob(f"{EXAMPLES_SRC_DIR}/*/*.ipynb")
-    all_examples_scripts = [name for name in all_examples_scripts if "lab" not in name]
+    # collect examples to convert to sphinx gallery scripts (ordered)
+    all_examples_scripts = [
+        name for name in find_ipynb_files(EXAMPLES_SRC_DIR)
+        if "lab" not in name
+    ]
     # convert
     print("Converting example files...")
     for script in all_examples_scripts:
