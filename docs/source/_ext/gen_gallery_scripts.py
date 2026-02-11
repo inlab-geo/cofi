@@ -131,7 +131,9 @@ def move_data_files(src_folder, dst_folder):
         "*.vtk",
         "*.txt",
         "*_lib.py",
+        "*.pkl",
         "xrayTomography.py",
+        "setup_inversion.py",
         "neptune_deterministic_methods.py",
     ]
     all_data = []
