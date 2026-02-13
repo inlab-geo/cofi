@@ -171,6 +171,18 @@ html_context = {
     "conf_py_path": "/source/", # Path in the checkout to the docs root
 }
 
+# -- Patch faulthandler for Sphinx Gallery compatibility with pyfm2d --------
+# pyfm2d calls faulthandler.enable() at import time, which requires a real
+# file descriptor on stderr. Sphinx Gallery replaces stderr with a StringIO
+# that lacks fileno(), causing an UnsupportedOperation error.
+import faulthandler
+_original_fh_enable = faulthandler.enable
+def _safe_faulthandler_enable(*args, **kwargs):
+    try:
+        return _original_fh_enable(*args, **kwargs)
+    except Exception:
+        pass
+faulthandler.enable = _safe_faulthandler_enable
 
 # -- Sphinx Gallery settings --------------------------------------------------
 # Sphinx Gallery settings (only when not on RTD)
