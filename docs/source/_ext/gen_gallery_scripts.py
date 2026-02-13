@@ -135,6 +135,7 @@ def move_data_files(src_folder, dst_folder):
         "xrayTomography.py",
         "setup_inversion.py",
         "neptune_deterministic_methods.py",
+        "neptune_bayesian_methods.py",
     ]
     all_data = []
     for pattern in all_patterns:
@@ -234,28 +235,35 @@ def write_ordering_file(script_paths, dst_folder, filter_func=None):
 def gen_scripts_all(_):
     # #### TUTORIALS ####
     print("Generating tutorials gallery scripts...")
-    # collect tutorials to convert to sphinx gallery scripts (ordered)
     all_tutorials_scripts = find_ipynb_files(TUTORIALS_SRC_DIR)
-    # convert
     print("Converting tutorial files...")
     for script in all_tutorials_scripts:
         convert_ipynb_to_gallery(script, TUTORIALS_SCRIPTS)
-    # collect all data and library files to move to scripts/
     move_data_files(f"{TUTORIALS_SRC_DIR}/*", TUTORIALS_SCRIPTS)
+    write_ordering_file(all_tutorials_scripts, TUTORIALS_SCRIPTS)          # <-- HERE
+
     # #### EXAMPLES ####
     print("Generating examples gallery scripts...")
-    # collect examples to convert to sphinx gallery scripts (ordered)
     all_examples_scripts = [
         name for name in find_ipynb_files(EXAMPLES_SRC_DIR)
         if "lab" not in name
     ]
-    # convert
     print("Converting example files...")
     for script in all_examples_scripts:
         convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
-    # collect all data and library files to move to scripts/field_data
     move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{FIELD_DATA}")
     move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{SYNTH_DATA}")
+    write_ordering_file(                                                   # <-- HERE
+        all_examples_scripts,
+        f"{EXAMPLES_SCRIPTS}_{SYNTH_DATA}",
+        filter_func=lambda name: name not in FIELD_DATA_EXAMPLES,
+    )
+    write_ordering_file(                                                   # <-- HERE
+        all_examples_scripts,
+        f"{EXAMPLES_SCRIPTS}_{FIELD_DATA}",
+        filter_func=lambda name: name in FIELD_DATA_EXAMPLES,
+    )
+
     # #### DATA & THEORY ####
     print("\nCopying data and theory files...")
     copy_and_overwrite(f"{cofi_examples_dir}/data", f"{docs_src}/data")
