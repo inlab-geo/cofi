@@ -75,4 +75,4 @@ jobs:
 
           git add docs/source/examples/generated docs/source/tutorials/generated
           git commit -m "docs: regenerate gallery outputs (Apptainer)"
-          git push origin HEAD:${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref || github.ref_name }}
