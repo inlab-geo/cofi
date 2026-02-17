@@ -25,12 +25,17 @@ class ReducedLikelihoodManager:
         Should return Jacobian matrix of shape (n_data, n_params)
     cases : Union[str, List[str]], default='none'
         Covariance case(s). Either a single string applied to all, or a list
-        with one case per dataset. Options: 'none', 'scaled', 'spherical', 'diag', 'full'
+        with one case per dataset. Options: 'none', 'scaled', 'kernel',
+        'spherical', 'diag', 'full'
     Cd_refs : Optional[Union[np.ndarray, List[np.ndarray]]], default=None
         Reference covariance matrix(ces). Either a single matrix applied to all,
         or a list with one per dataset. Required for 'scaled' case.
         For 'none' case: defaults to identity matrix if not provided.
         Not used for 'spherical', 'diag', or 'full' cases.
+    kernels : optional
+        Kernel instance(s) for 'kernel' case. Either a single kernel
+        applied to all datasets using 'kernel', or a list with one per
+        dataset. Required for datasets with ``case='kernel'``.
     copy_G : bool, default=False
         If True, copy Jacobian matrices before assigning to ReducedLikelihood.G.
         Use if jacobian_fn returns views that may be mutated.
@@ -91,6 +96,7 @@ class ReducedLikelihoodManager:
         jacobian_fn: Callable,
         cases: Union[str, List[str]] = 'none',
         Cd_refs: Optional[Union[np.ndarray, List[np.ndarray]]] = None,
+        kernels=None,
         copy_G: bool = False,
         track_stats: bool = False,
     ):
@@ -134,20 +140,37 @@ class ReducedLikelihoodManager:
                     f"number of datasets {n_datasets}"
                 )
             
-        # Validate that 'scaled' case has Cd_ref (error early before creating RLs)
-        # Note: 'none' case defaults to identity if Cd_ref is None (handled by ReducedLikelihood)
+        # Handle kernels parameter (single, list, or None)
+        if kernels is None:
+            kernels_list = [None] * n_datasets
+        elif isinstance(kernels, list):
+            kernels_list = kernels
+            if len(kernels_list) != n_datasets:
+                raise ValueError(
+                    f"kernels list length {len(kernels_list)} does not match "
+                    f"number of datasets {n_datasets}"
+                )
+        else:
+            # Single kernel instance applied to all kernel datasets
+            kernels_list = [kernels] * n_datasets
+
+        # Validate that 'scaled' case has Cd_ref and 'kernel' has kernel
         for i, case in enumerate(cases_list):
             if case == 'scaled' and Cd_refs_list[i] is None:
                 raise ValueError(
                     f"Case 'scaled' for dataset {i} requires a Cd_ref. "
                     f"Pass Cd_refs argument with a reference covariance matrix."
                 )
-
+            if case == 'kernel' and kernels_list[i] is None:
+                raise ValueError(
+                    f"Case 'kernel' for dataset {i} requires a kernel. "
+                    f"Pass kernels argument with a kernel instance."
+                )
 
         # Create ReducedLikelihood instances
         self.reduced_likelihoods = []
-        for (fwd, fwd_kwargs), d_obs, case, Cd_ref in zip(
-            fwd_funcs, d_obs_list, cases_list, Cd_refs_list
+        for (fwd, fwd_kwargs), d_obs, case, Cd_ref, kernel in zip(
+            fwd_funcs, d_obs_list, cases_list, Cd_refs_list, kernels_list
         ):
             rl = ReducedLikelihood(
                 data=d_obs,
@@ -156,8 +179,17 @@ class ReducedLikelihoodManager:
                 G=None,  # Will be set by _ensure_jacobians
                 Cd_ref=Cd_ref,
                 case=case,
+                kernel=kernel,
             )
             self.reduced_likelihoods.append(rl)
+
+        # Precompute total kernel hyperparameters for model slicing
+        self._n_eta = sum(
+            getattr(rl.kernel, 'n_params', 0)
+            for rl in self.reduced_likelihoods
+            if rl.case == 'kernel'
+        )
+        self._has_kernel = self._n_eta > 0
 
         # Cache management
         self._cache_valid = False
@@ -176,6 +208,19 @@ class ReducedLikelihoodManager:
             return False
         return np.array_equal(m1, m2)
 
+    def _get_m_phys(self, m):
+        """Return the physical model parameters (strip kernel hyperparameters)."""
+        if self._has_kernel:
+            return m[:len(m) - self._n_eta]
+        return m
+
+    def _get_model_for_rl(self, m, rl):
+        """Return the appropriate model slice for a given ReducedLikelihood."""
+        if rl.case == 'kernel':
+            return m  # full [m_phys, eta]
+        else:
+            return self._get_m_phys(m)  # physical model only
+
     def _ensure_jacobians(self, model):
         """Ensure Jacobian matrices are computed and cached for the given model.
 
@@ -191,13 +236,16 @@ class ReducedLikelihoodManager:
                 self.stats['n_cache_hits'] += 1
             return
 
+        # Jacobian is computed w.r.t. physical model only (not kernel hyperparams)
+        m_phys = self._get_m_phys(m)
+
         # Compute all Jacobians first (collect before assigning to protect cache)
         computed = []
         for i,(rl, (fwd, fwd_kwargs), d_obs) in enumerate(zip(
             self.reduced_likelihoods, self.fwd_funcs, self.d_obs_list
         )):
             try:
-                G = self.jacobian_fn(m, len(d_obs), fwd, fwd_kwargs)
+                G = self.jacobian_fn(m_phys, len(d_obs), fwd, fwd_kwargs)
             except Exception as e:
                 raise RuntimeError(f"Jacobian failed for dataset {i}: {e}") from e
             computed.append((rl, G))
@@ -226,7 +274,7 @@ class ReducedLikelihoodManager:
         Parameters
         ----------
         model : np.ndarray
-            Model parameters
+            Model parameters (``[m_phys, eta]`` when using ``kernel``)
 
         Returns
         -------
@@ -234,9 +282,10 @@ class ReducedLikelihoodManager:
             Negative log-likelihood value
         """
         self._ensure_jacobians(model)
+        m = np.asarray(model).ravel()
         neg_log_like = 0.0
         for rl in self.reduced_likelihoods:
-            neg_log_like += -rl.log_likelihood(model)
+            neg_log_like += -rl.log_likelihood(self._get_model_for_rl(m, rl))
         return neg_log_like
 
     def gradient(self, model: np.ndarray) -> np.ndarray:
@@ -245,7 +294,7 @@ class ReducedLikelihoodManager:
         Parameters
         ----------
         model : np.ndarray
-            Model parameters
+            Model parameters (``[m_phys, eta]`` when using ``kernel``)
 
         Returns
         -------
@@ -253,11 +302,17 @@ class ReducedLikelihoodManager:
             Gradient vector
         """
         self._ensure_jacobians(model)
-        # initialize accumulator with correct shape
-        n_params = int(np.ravel(model).size)
-        g = np.zeros(n_params, dtype=float)
+        m = np.asarray(model).ravel()
+        n_total = m.size
+        g = np.zeros(n_total, dtype=float)
         for rl in self.reduced_likelihoods:
-            g += -rl.gradient(model)
+            m_rl = self._get_model_for_rl(m, rl)
+            grad_rl = -rl.gradient(m_rl)
+            if grad_rl.size < n_total:
+                # Non-kernel dataset: contributes only to m_phys part
+                g[:grad_rl.size] += grad_rl
+            else:
+                g += grad_rl
         return g
 
     def hessian(self, model: np.ndarray) -> np.ndarray:
@@ -266,7 +321,7 @@ class ReducedLikelihoodManager:
         Parameters
         ----------
         model : np.ndarray
-            Model parameters
+            Model parameters (``[m_phys, eta]`` when using ``kernel``)
 
         Returns
         -------
@@ -274,10 +329,18 @@ class ReducedLikelihoodManager:
             Hessian matrix
         """
         self._ensure_jacobians(model)
-        n_params = int(np.ravel(model).size)
-        H = np.zeros((n_params, n_params), dtype=float)
+        m = np.asarray(model).ravel()
+        n_total = m.size
+        H = np.zeros((n_total, n_total), dtype=float)
         for rl in self.reduced_likelihoods:
-            H += -rl.hessian(model)
+            m_rl = self._get_model_for_rl(m, rl)
+            hess_rl = -rl.hessian(m_rl)
+            n_rl = hess_rl.shape[0]
+            if n_rl < n_total:
+                # Non-kernel dataset: contributes only to m_phys block
+                H[:n_rl, :n_rl] += hess_rl
+            else:
+                H += hess_rl
         return H
 
     def get_ml_covs(self, model: np.ndarray) -> List[Optional[np.ndarray]]:
@@ -286,7 +349,7 @@ class ReducedLikelihoodManager:
         Parameters
         ----------
         model : np.ndarray
-            Model parameters
+            Model parameters (``[m_phys, eta]`` when using ``kernel``)
 
         Returns
         -------
@@ -294,7 +357,9 @@ class ReducedLikelihoodManager:
             List of covariance matrices, one per dataset
         """
         self._ensure_jacobians(model)
-        return [rl.get_ml_cov(model) for rl in self.reduced_likelihoods]
+        m = np.asarray(model).ravel()
+        return [rl.get_ml_cov(self._get_model_for_rl(m, rl))
+                for rl in self.reduced_likelihoods]
 
     def invalidate_cache(self):
         """Manually invalidate the Jacobian cache.
