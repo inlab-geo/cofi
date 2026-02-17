@@ -20,7 +20,7 @@ jobs:
       contents: write   # required to push to PR branch
 
     env:
-      APPTAINER_IMAGE: /home/kitc/inlab-apptainer/inlab.conda.sif
+      APPTAINER_IMAGE: /home/kitc/inlab-apptainer/inlab.sif
 
     steps:
       - name: Checkout PR branch
