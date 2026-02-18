@@ -197,6 +197,7 @@ if not on_rtd:
         "download_all_examples": False,
         "doc_module": "cofi",
         "run_stale_examples": False,
+        "execution_timeout": 1200,
     }
 
 
