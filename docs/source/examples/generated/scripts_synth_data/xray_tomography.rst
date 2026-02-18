@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_examples_generated_scripts_synth_data_xray_tomography.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -50,15 +50,16 @@ Tomography. We will use ``cofi`` to run a linear system solver
 problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-43
+.. GENERATED FROM PYTHON SOURCE LINES 38-44
 
 0. Import modules
 -----------------
 
-The package ``geo-espresso`` contains the forward code for this problem.
+The file ``xrt_tomography.py`` contains the forward code for this
+problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-54
+.. GENERATED FROM PYTHON SOURCE LINES 44-55
 
 .. code-block:: Python
 
@@ -69,7 +70,7 @@ The package ``geo-espresso`` contains the forward code for this problem.
     #                                                          #
     # -------------------------------------------------------- #
 
-    # !pip install -U cofi geo-espresso
+    # !pip install -U cofi 
     # !git clone https://github.com/inlab-geo/cofi-examples.git
     # %cd cofi-examples/examples/xray_tomography
 
@@ -80,15 +81,17 @@ The package ``geo-espresso`` contains the forward code for this problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-62
+.. GENERATED FROM PYTHON SOURCE LINES 57-65
 
 .. code-block:: Python
 
 
     import numpy as np
+    import matplotlib.pyplot as plt
+
     from cofi import BaseProblem, InversionOptions, Inversion
     from cofi.utils import QuadraticReg
-    from espresso import XrayTomography
+    import xrayTomography as xrt # import linear travel time forward model package
 
 
 
@@ -97,13 +100,13 @@ The package ``geo-espresso`` contains the forward code for this problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 67-70
+.. GENERATED FROM PYTHON SOURCE LINES 70-73
 
 1. Define the problem
 ---------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-79
+.. GENERATED FROM PYTHON SOURCE LINES 73-82
 
 .. code-block:: Python
 
@@ -129,37 +132,45 @@ The package ``geo-espresso`` contains the forward code for this problem.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-90
+.. GENERATED FROM PYTHON SOURCE LINES 87-92
 
-Firstly, we get some information from the ``geo-espresso`` module. These
-include the dataset and the Jacobian matrix. In the Xray Tomography
-example, the Jacobian matrix is related to the lengths of paths within
-each grid. Since the paths are fixed, the Jacobian matrix stays
-constant.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 90-93
-
-.. code-block:: Python
+Firstly, we get some set up information for the problem. These include
+the dataset and the Jacobian matrix. In the Xray Tomography example, the
+Jacobian matrix is related to the lengths of paths within each grid.
+Since the paths are fixed, the Jacobian matrix stays constant.
 
 
-    xrt = XrayTomography()
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 95-100
+.. GENERATED FROM PYTHON SOURCE LINES 92-99
 
 .. code-block:: Python
 
 
-    xrt_problem = BaseProblem()
-    xrt_problem.set_data(xrt.data)
-    xrt_problem.set_jacobian(xrt.jacobian(xrt.starting_model))
+    #xrt = XrayTomography()
+    # load data example
+    loaded_dict = np.load("../../data/travel_time_tomography/linear_tomo_example.npz")
+    linear_tomo_example = dict(loaded_dict)
+    loaded_dict.close()
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-111
+
+.. code-block:: Python
+
+
+    # linear tomography problem set up
+    paths = linear_tomo_example["_paths"]
+    data = linear_tomo_example["_attns"]
+    data_size = len(data)
+    starting_model = linear_tomo_example["_start"]
+    model_size,model_shape = starting_model.size,starting_model.shape
+    good_model = linear_tomo_example["_true"]
+    attns, jacobian = xrt.tracer(starting_model,paths)
 
 
 
@@ -169,25 +180,42 @@ constant.
 
  .. code-block:: none
 
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|▊         | 834/10416 [00:00<00:01, 8328.81it/s]    Evaluating paths:  16%|█▌        | 1692/10416 [00:00<00:01, 8469.66it/s]    Evaluating paths:  24%|██▍       | 2539/10416 [00:00<00:00, 8431.87it/s]    Evaluating paths:  32%|███▏      | 3383/10416 [00:00<00:00, 8413.22it/s]    Evaluating paths:  41%|████      | 4231/10416 [00:00<00:00, 8433.66it/s]    Evaluating paths:  49%|████▊     | 5075/10416 [00:00<00:00, 8425.36it/s]    Evaluating paths:  57%|█████▋    | 5926/10416 [00:00<00:00, 8450.00it/s]    Evaluating paths:  65%|██████▌   | 6789/10416 [00:00<00:00, 8505.75it/s]    Evaluating paths:  73%|███████▎  | 7640/10416 [00:00<00:00, 8415.00it/s]    Evaluating paths:  81%|████████▏ | 8489/10416 [00:01<00:00, 8437.50it/s]    Evaluating paths:  90%|████████▉ | 9346/10416 [00:01<00:00, 8476.52it/s]    Evaluating paths:  98%|█████████▊| 10198/10416 [00:01<00:00, 8488.91it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8468.34it/s]
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   9%|▉         | 918/10416 [00:00<00:01, 9168.64it/s]    Evaluating paths:  18%|█▊        | 1848/10416 [00:00<00:00, 9243.75it/s]    Evaluating paths:  27%|██▋       | 2773/10416 [00:00<00:00, 9160.29it/s]    Evaluating paths:  36%|███▌      | 3698/10416 [00:00<00:00, 9191.66it/s]    Evaluating paths:  44%|████▍     | 4624/10416 [00:00<00:00, 9213.29it/s]    Evaluating paths:  53%|█████▎    | 5546/10416 [00:00<00:00, 9186.60it/s]    Evaluating paths:  62%|██████▏   | 6473/10416 [00:00<00:00, 9212.43it/s]    Evaluating paths:  71%|███████   | 7398/10416 [00:00<00:00, 9222.99it/s]    Evaluating paths:  80%|███████▉  | 8321/10416 [00:00<00:00, 9162.90it/s]    Evaluating paths:  89%|████████▉ | 9255/10416 [00:01<00:00, 9214.58it/s]    Evaluating paths:  98%|█████████▊| 10183/10416 [00:01<00:00, 9234.03it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 9215.58it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-108
+.. GENERATED FROM PYTHON SOURCE LINES 113-118
+
+.. code-block:: Python
+
+
+    xrt_problem = BaseProblem()
+    xrt_problem.set_data(data)
+    xrt_problem.set_jacobian(jacobian)
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 123-126
 
 We do some estimation on data noise and further perform a
 regularization.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-113
+.. GENERATED FROM PYTHON SOURCE LINES 126-132
 
 .. code-block:: Python
 
 
     sigma = 0.002
+    #sigma = 0.1
     lamda = 50
-    data_cov_inv = np.identity(xrt.data_size) * (1/sigma**2)
+    data_cov_inv = np.identity(data_size) * (1/sigma**2)
 
 
 
@@ -196,13 +224,13 @@ regularization.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-119
+.. GENERATED FROM PYTHON SOURCE LINES 134-138
 
 .. code-block:: Python
 
 
     xrt_problem.set_data_covariance_inv(data_cov_inv)
-    xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(xrt.model_size,)))
+    xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(model_size,)))
 
 
 
@@ -211,12 +239,12 @@ regularization.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-126
+.. GENERATED FROM PYTHON SOURCE LINES 143-145
 
 Review what information is included in the ``BaseProblem`` object:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-129
+.. GENERATED FROM PYTHON SOURCE LINES 145-148
 
 .. code-block:: Python
 
@@ -249,13 +277,13 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-137
+.. GENERATED FROM PYTHON SOURCE LINES 153-156
 
 2. Define the inversion options
 -------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-141
+.. GENERATED FROM PYTHON SOURCE LINES 156-160
 
 .. code-block:: Python
 
@@ -270,12 +298,12 @@ Review what information is included in the ``BaseProblem`` object:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-148
+.. GENERATED FROM PYTHON SOURCE LINES 165-167
 
 Review what’s been defined for the inversion we are about to run:
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-151
+.. GENERATED FROM PYTHON SOURCE LINES 167-170
 
 .. code-block:: Python
 
@@ -306,7 +334,7 @@ Review what’s been defined for the inversion we are about to run:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 156-170
+.. GENERATED FROM PYTHON SOURCE LINES 175-189
 
 3. Start an inversion
 ---------------------
@@ -323,7 +351,7 @@ For this dataset, we’ve taken :math:`\sigma = 0.002`\ s and chosen
 :math:`\epsilon^2 = 50`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 170-175
+.. GENERATED FROM PYTHON SOURCE LINES 189-194
 
 .. code-block:: Python
 
@@ -367,7 +395,7 @@ For this dataset, we’ve taken :math:`\sigma = 0.002`\ s and chosen
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 180-186
+.. GENERATED FROM PYTHON SOURCE LINES 199-205
 
 4. Plotting
 -----------
@@ -376,13 +404,13 @@ Below the two figures refers to the inferred model and true model
 respectively.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 186-190
+.. GENERATED FROM PYTHON SOURCE LINES 205-209
 
 .. code-block:: Python
 
 
-    xrt.plot_model(inv_result.model, clim=(1, 1.5));       # inferred model
-    xrt.plot_model(xrt.good_model, clim=(1, 1.5));          # true model
+    xrt.displayModel(inv_result.model.reshape(model_shape),clim=(1, 1.5),cmap=plt.cm.Blues); # inferred model
+    xrt.displayModel(good_model,clim=(1, 1.5),cmap=plt.cm.Blues); # true model
 
 
 
@@ -405,16 +433,10 @@ respectively.
          :class: sphx-glr-multi-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <Axes: >
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 195-212
+.. GENERATED FROM PYTHON SOURCE LINES 214-231
 
 5. Estimated uncertainties
 --------------------------
@@ -434,7 +456,7 @@ square roots of the diagonal entries of this matrix are the
 :math:`\sigma` errors in the slowness in each cell.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 212-215
+.. GENERATED FROM PYTHON SOURCE LINES 231-234
 
 .. code-block:: Python
 
@@ -448,38 +470,33 @@ square roots of the diagonal entries of this matrix are the
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-223
+.. GENERATED FROM PYTHON SOURCE LINES 239-242
 
 Lets plot the slowness uncertainties as a function of position across
 the cellular model.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 223-226
+.. GENERATED FROM PYTHON SOURCE LINES 242-246
 
 .. code-block:: Python
 
 
-    xrt.plot_model(np.sqrt(np.diag(Cm)));
+    slow_uncert = np.sqrt(np.diag(Cm)).reshape(model_shape)
+    xrt.displayModel(slow_uncert,title='Slowness uncertainty',cmap=plt.cm.Greens)
 
 
 
 
 .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_xray_tomography_003.png
-   :alt: xray tomography
+   :alt: Slowness uncertainty
    :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_xray_tomography_003.png
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <Axes: >
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-245
+.. GENERATED FROM PYTHON SOURCE LINES 251-265
 
 Uncertainty is uniformly low across the entire model and only
 significant near the corners where there are few ray paths.
@@ -496,39 +513,33 @@ and since :math:`s = 1/v` we get
 which gives the uncertainty image on velocity, which looks very similar.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 245-248
+.. GENERATED FROM PYTHON SOURCE LINES 265-268
 
 .. code-block:: Python
 
 
-    xrt.plot_model(np.sqrt(np.diag(Cm)) * inv_result.model);
+    xrt.displayModel(slow_uncert * inv_result.model.reshape(model_shape),title='Velocity uncertainty',cmap=plt.cm.Blues);
 
 
 
 
 .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_xray_tomography_004.png
-   :alt: xray tomography
+   :alt: Velocity uncertainty
    :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_xray_tomography_004.png
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <Axes: >
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 253-257
+.. GENERATED FROM PYTHON SOURCE LINES 273-277
 
 By clipping the colour range you can see an imprint of the true image,
 indicating that high slowness/low velcoity areas have slightly higher
 uncertainty.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 260-273
+.. GENERATED FROM PYTHON SOURCE LINES 280-293
 
 --------------
 
@@ -544,12 +555,12 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 273-279
+.. GENERATED FROM PYTHON SOURCE LINES 293-299
 
 .. code-block:: Python
 
 
-    watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
+    watermark_list = ["cofi", "numpy", "scipy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -562,23 +573,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.7
-    espresso 0.3.13
-    numpy 1.24.4
-    scipy 1.12.0
-    matplotlib 3.8.3
+    cofi 0.2.11
+    numpy 2.3.5
+    scipy 1.17.0
+    matplotlib 3.10.8
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 280-280
+.. GENERATED FROM PYTHON SOURCE LINES 305-305
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.051 seconds)
+   **Total running time of the script:** (0 minutes 3.596 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_xray_tomography.py:
@@ -594,6 +604,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: xray_tomography.py <xray_tomography.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: xray_tomography.zip <xray_tomography.zip>`
 
 
 .. only:: html
