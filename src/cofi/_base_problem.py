@@ -1635,13 +1635,23 @@ class BaseProblem:
         try:
             res = self.residual(model)
             if self.data_covariance_inv_defined:
-                if _is_diag(self.data_covariance_inv):
-                    weighted_res = np.diag(self.data_covariance_inv) * res
+                Cdinv = self.data_covariance_inv
+                if _is_diag(Cdinv):
+                    if scipy.sparse.issparse(Cdinv):
+                        diag = Cdinv.diagonal()
+                    else:
+                        diag = np.diag(Cdinv)
+                    weighted_res = diag * res
                     return res @ weighted_res
                 else:
-                    return res.T @ self.data_covariance_inv @ res
+                    return res.T @ Cdinv @ res
             elif self.data_covariance_defined and _is_diag(self.data_covariance):
-                weighted_res = res / np.diag(self.data_covariance)
+                Cd = self.data_covariance
+                if scipy.sparse.issparse(Cd):
+                    diag = Cd.diagonal()
+                else:
+                    diag = np.diag(Cd)
+                weighted_res = res / diag
                 return res @ weighted_res
             else:
                 return np.sum(np.square(res))
@@ -1819,11 +1829,17 @@ def _matrix_to_func(_, matrix):
 
 
 def _is_diag(matrix):
-    diag_elem = np.diag(matrix).copy()
-    np.fill_diagonal(matrix, 0)
-    out = (matrix == 0).all()
-    np.fill_diagonal(matrix, diag_elem)
-    return out
+    if scipy.sparse.issparse(matrix):
+        if not isinstance(matrix, scipy.sparse.dia_matrix):
+            matrix = matrix.tocsr()
+        diag = matrix.diagonal()
+        return matrix.nnz == np.count_nonzero(diag)
+    else:
+        diag_elem = np.diag(matrix).copy()
+        np.fill_diagonal(matrix, 0)
+        out = (matrix == 0).all()
+        np.fill_diagonal(matrix, diag_elem)
+        return out
 
 
 # ---------- function wrapper to help make things pickleable --------------------------

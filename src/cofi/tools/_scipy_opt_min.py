@@ -1,6 +1,11 @@
 import functools
 
+import scipy.sparse
+
 from . import BaseInferenceTool, error_handler
+
+# Methods where scipy internally requires a dense hessian (calls np.linalg.eigh etc.)
+_DENSE_HESSIAN_METHODS = {"trust-exact", "dogleg"}
 
 
 # Official documentation for scipy.optimize.minimize
@@ -86,6 +91,18 @@ class ScipyOptMin(BaseInferenceTool):
                 self._params[_optional_in_problem_map[component]] = (
                     self.optional_in_problem()[component]
                 )
+
+        # Wrap hessian callable to densify output for methods that require dense input
+        method = (self._params.get("method") or "").lower()
+        hess_func = self._params.get("hess")
+        if callable(hess_func) and method in _DENSE_HESSIAN_METHODS:
+            original_hess = hess_func
+            def _densifying_hess(x):
+                H = original_hess(x)
+                if scipy.sparse.issparse(H):
+                    return H.toarray()
+                return H
+            self._params["hess"] = _densifying_hess
 
     def __call__(self) -> dict:
         opt_result = self._call_np_minimize()

@@ -1,5 +1,6 @@
 import functools
 import numpy as np
+import scipy.sparse
 
 from . import BaseInferenceTool, error_handler
 
@@ -99,12 +100,19 @@ class ScipyLstSq(BaseInferenceTool):
                 self._Cd_inv = inv_problem.data_covariance_inv
                 self._components_used.append("data_covariance_inv")
             # check diagonal (for potential shortcut in computation)
-            diag_elem = np.diag(self._Cd_inv).copy()
-            np.fill_diagonal(self._Cd_inv, 0)
-            is_diagonal = (self._Cd_inv == 0).all()
-            np.fill_diagonal(self._Cd_inv, diag_elem)
+            if scipy.sparse.issparse(self._Cd_inv):
+                diag_elem = self._Cd_inv.diagonal()
+                is_diagonal = (self._Cd_inv.nnz == np.count_nonzero(diag_elem))
+            else:
+                diag_elem = np.diag(self._Cd_inv).copy()
+                np.fill_diagonal(self._Cd_inv, 0)
+                is_diagonal = (self._Cd_inv == 0).all()
+                np.fill_diagonal(self._Cd_inv, diag_elem)
             if is_diagonal:
-                _gt_cdinv = self._G.T * diag_elem
+                if scipy.sparse.issparse(self._G):
+                    _gt_cdinv = self._G.T @ scipy.sparse.diags(diag_elem)
+                else:
+                    _gt_cdinv = self._G.T * diag_elem
             else:
                 _gt_cdinv = self._G.T @ self._Cd_inv
             self._a = _gt_cdinv @ self._G
