@@ -379,7 +379,7 @@ measurement, which we will be inverting.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f3fcac6a690>
+    <matplotlib.legend.Legend object at 0x7f02cafc0e10>
 
 
 
@@ -617,22 +617,22 @@ Plot the misfit and gradient as a function of the plate dip
 
  .. code-block:: none
 
-    pdip: [40], data misfit: 231.708835656254, gradient: [-8.38525334]
-    pdip: [45], data misfit: 161.52059630302878, gradient: [-5.17711959]
-    pdip: [50], data misfit: 115.89689554155724, gradient: [-3.41393833]
-    pdip: [55], data misfit: 91.08438559558219, gradient: [-1.79238028]
-    pdip: [60], data misfit: 78.13208270691166, gradient: [-0.40612889]
-    pdip: [65], data misfit: 79.47542276986738, gradient: [0.60701868]
-    pdip: [70], data misfit: 86.57794284916835, gradient: [0.77951888]
-    pdip: [75], data misfit: 99.82377503892143, gradient: [1.04776418]
-    pdip: [80], data misfit: 114.82121927725917, gradient: [1.88028555]
-    pdip: [85], data misfit: 135.80364266137616, gradient: [1.99672184]
-    pdip: [90], data misfit: 158.91312196239573, gradient: [2.12201565]
-    pdip: [95], data misfit: 190.36506697630017, gradient: [1.90338506]
-    pdip: [100], data misfit: 211.34574782298415, gradient: [3.0843773]
-    pdip: [105], data misfit: 248.95857134110955, gradient: [3.54243063]
-    pdip: [110], data misfit: 283.9454162116735, gradient: [3.73187192]
-    pdip: [115], data misfit: 338.73968428973234, gradient: [3.35857177]
+    pdip: [40], data misfit: 229.3294718916669, gradient: [-8.52874601]
+    pdip: [45], data misfit: 156.85538461731218, gradient: [-4.83483189]
+    pdip: [50], data misfit: 112.52181526233785, gradient: [-3.09309441]
+    pdip: [55], data misfit: 88.33347709866956, gradient: [-1.39771343]
+    pdip: [60], data misfit: 78.13208270691166, gradient: [-0.40324488]
+    pdip: [65], data misfit: 77.94389054095724, gradient: [0.40742188]
+    pdip: [70], data misfit: 85.6075194431707, gradient: [0.99216025]
+    pdip: [75], data misfit: 98.65473215121658, gradient: [1.18372005]
+    pdip: [80], data misfit: 113.24196078419779, gradient: [1.53128849]
+    pdip: [85], data misfit: 129.2495930619363, gradient: [1.68544725]
+    pdip: [90], data misfit: 149.50543170426604, gradient: [1.92828613]
+    pdip: [95], data misfit: 170.32280998716743, gradient: [1.88546256]
+    pdip: [100], data misfit: 193.51978165760536, gradient: [2.25368056]
+    pdip: [105], data misfit: 215.84170808408683, gradient: [2.42662451]
+    pdip: [110], data misfit: 243.19621367797384, gradient: [2.67847232]
+    pdip: [115], data misfit: 271.7811759511678, gradient: [3.03876865]
 
 
 
@@ -759,15 +759,15 @@ CoFI inversion
  .. code-block:: none
 
     Iteration #1
-      objective value: 77.89136366904665
+      objective value: 77.81667956389185
     Iteration #2
-      objective value: 77.67785905000744
+      objective value: 77.56821742478712
 
-    Number of objective function evaluations: 30
-    Number of gradient function evaluations: 11
+    Number of objective function evaluations: 65
+    Number of gradient function evaluations: 53
     Number of hessian function evaluations: 3
     Solution vector:
-     [59.18480808]
+     [62.52345268]
 
 
 
@@ -866,7 +866,7 @@ Model
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f3fc22f2690>
+    <matplotlib.legend.Legend object at 0x7f02cafc2d50>
 
 
 
@@ -1058,7 +1058,7 @@ CoFI Inversion
 
  .. code-block:: none
 
-      0%|          | 0/50 [00:00<?, ?it/s]      2%|▏         | 1/50 [00:00<00:14,  3.40it/s]      4%|▍         | 2/50 [00:00<00:13,  3.48it/s]      6%|▌         | 3/50 [00:00<00:13,  3.48it/s]      8%|▊         | 4/50 [00:01<00:13,  3.50it/s]     10%|█         | 5/50 [00:01<00:12,  3.51it/s]     12%|█▏        | 6/50 [00:01<00:12,  3.53it/s]     14%|█▍        | 7/50 [00:01<00:12,  3.54it/s]     16%|█▌        | 8/50 [00:02<00:11,  3.55it/s]     18%|█▊        | 9/50 [00:02<00:11,  3.56it/s]     20%|██        | 10/50 [00:02<00:11,  3.57it/s]     22%|██▏       | 11/50 [00:03<00:10,  3.57it/s]     24%|██▍       | 12/50 [00:03<00:10,  3.58it/s]     26%|██▌       | 13/50 [00:03<00:10,  3.58it/s]     28%|██▊       | 14/50 [00:03<00:10,  3.58it/s]     30%|███       | 15/50 [00:04<00:09,  3.59it/s]     32%|███▏      | 16/50 [00:04<00:09,  3.51it/s]     34%|███▍      | 17/50 [00:04<00:09,  3.53it/s]     36%|███▌      | 18/50 [00:05<00:09,  3.54it/s]     38%|███▊      | 19/50 [00:05<00:08,  3.55it/s]     40%|████      | 20/50 [00:05<00:08,  3.56it/s]     42%|████▏     | 21/50 [00:05<00:08,  3.57it/s]     44%|████▍     | 22/50 [00:06<00:07,  3.57it/s]     46%|████▌     | 23/50 [00:06<00:07,  3.58it/s]     48%|████▊     | 24/50 [00:06<00:07,  3.58it/s]     50%|█████     | 25/50 [00:07<00:06,  3.58it/s]     52%|█████▏    | 26/50 [00:07<00:06,  3.58it/s]     54%|█████▍    | 27/50 [00:07<00:06,  3.58it/s]     56%|█████▌    | 28/50 [00:07<00:06,  3.58it/s]     58%|█████▊    | 29/50 [00:08<00:05,  3.59it/s]     60%|██████    | 30/50 [00:08<00:05,  3.57it/s]     62%|██████▏   | 31/50 [00:08<00:05,  3.58it/s]     64%|██████▍   | 32/50 [00:08<00:05,  3.58it/s]     66%|██████▌   | 33/50 [00:09<00:04,  3.58it/s]     68%|██████▊   | 34/50 [00:09<00:04,  3.59it/s]     70%|███████   | 35/50 [00:09<00:04,  3.57it/s]     72%|███████▏  | 36/50 [00:10<00:03,  3.57it/s]     74%|███████▍  | 37/50 [00:10<00:03,  3.58it/s]     76%|███████▌  | 38/50 [00:10<00:03,  3.59it/s]     78%|███████▊  | 39/50 [00:10<00:03,  3.59it/s]     80%|████████  | 40/50 [00:11<00:02,  3.59it/s]     82%|████████▏ | 41/50 [00:11<00:02,  3.59it/s]     84%|████████▍ | 42/50 [00:11<00:02,  3.60it/s]     86%|████████▌ | 43/50 [00:12<00:01,  3.60it/s]     88%|████████▊ | 44/50 [00:12<00:01,  3.60it/s]     90%|█████████ | 45/50 [00:12<00:01,  3.61it/s]     92%|█████████▏| 46/50 [00:12<00:01,  3.61it/s]     94%|█████████▍| 47/50 [00:13<00:00,  3.61it/s]     96%|█████████▌| 48/50 [00:13<00:00,  3.61it/s]     98%|█████████▊| 49/50 [00:13<00:00,  3.61it/s]    100%|██████████| 50/50 [00:14<00:00,  3.57it/s]    100%|██████████| 50/50 [00:14<00:00,  3.57it/s]
+      0%|          | 0/50 [00:00<?, ?it/s]      2%|▏         | 1/50 [00:00<00:08,  5.84it/s]      4%|▍         | 2/50 [00:00<00:08,  5.85it/s]      6%|▌         | 3/50 [00:00<00:08,  5.84it/s]      8%|▊         | 4/50 [00:00<00:07,  5.84it/s]     10%|█         | 5/50 [00:00<00:07,  5.84it/s]     12%|█▏        | 6/50 [00:01<00:07,  5.84it/s]     14%|█▍        | 7/50 [00:01<00:07,  5.84it/s]     16%|█▌        | 8/50 [00:01<00:07,  5.84it/s]     18%|█▊        | 9/50 [00:01<00:07,  5.84it/s]     20%|██        | 10/50 [00:01<00:06,  5.84it/s]     22%|██▏       | 11/50 [00:01<00:06,  5.84it/s]     24%|██▍       | 12/50 [00:02<00:06,  5.84it/s]     26%|██▌       | 13/50 [00:02<00:06,  5.84it/s]     28%|██▊       | 14/50 [00:02<00:06,  5.84it/s]     30%|███       | 15/50 [00:02<00:05,  5.84it/s]     32%|███▏      | 16/50 [00:02<00:05,  5.85it/s]     34%|███▍      | 17/50 [00:02<00:05,  5.85it/s]     36%|███▌      | 18/50 [00:03<00:05,  5.85it/s]     38%|███▊      | 19/50 [00:03<00:05,  5.85it/s]     40%|████      | 20/50 [00:03<00:05,  5.86it/s]     42%|████▏     | 21/50 [00:03<00:04,  5.86it/s]     44%|████▍     | 22/50 [00:03<00:04,  5.86it/s]     46%|████▌     | 23/50 [00:03<00:04,  5.86it/s]     48%|████▊     | 24/50 [00:04<00:04,  5.86it/s]     50%|█████     | 25/50 [00:04<00:04,  5.86it/s]     52%|█████▏    | 26/50 [00:04<00:04,  5.85it/s]     54%|█████▍    | 27/50 [00:04<00:03,  5.85it/s]     56%|█████▌    | 28/50 [00:04<00:03,  5.85it/s]     58%|█████▊    | 29/50 [00:04<00:03,  5.86it/s]     60%|██████    | 30/50 [00:05<00:03,  5.85it/s]     62%|██████▏   | 31/50 [00:05<00:03,  5.85it/s]     64%|██████▍   | 32/50 [00:05<00:03,  5.86it/s]     66%|██████▌   | 33/50 [00:05<00:02,  5.86it/s]     68%|██████▊   | 34/50 [00:05<00:02,  5.86it/s]     70%|███████   | 35/50 [00:05<00:02,  5.86it/s]     72%|███████▏  | 36/50 [00:06<00:02,  5.86it/s]     74%|███████▍  | 37/50 [00:06<00:02,  5.86it/s]     76%|███████▌  | 38/50 [00:06<00:02,  5.86it/s]     78%|███████▊  | 39/50 [00:06<00:01,  5.87it/s]     80%|████████  | 40/50 [00:06<00:01,  5.87it/s]     82%|████████▏ | 41/50 [00:07<00:01,  5.87it/s]     84%|████████▍ | 42/50 [00:07<00:01,  5.87it/s]     86%|████████▌ | 43/50 [00:07<00:01,  5.88it/s]     88%|████████▊ | 44/50 [00:07<00:01,  5.87it/s]     90%|█████████ | 45/50 [00:07<00:00,  5.87it/s]     92%|█████████▏| 46/50 [00:07<00:00,  5.88it/s]     94%|█████████▍| 47/50 [00:08<00:00,  5.88it/s]     96%|█████████▌| 48/50 [00:08<00:00,  5.87it/s]     98%|█████████▊| 49/50 [00:08<00:00,  5.87it/s]    100%|██████████| 50/50 [00:08<00:00,  5.87it/s]    100%|██████████| 50/50 [00:08<00:00,  5.86it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1158,10 +1158,8 @@ sampling <https://en.wikipedia.org/wiki/Latin_hypercube_sampling>`__.
 
  .. code-block:: none
 
-    /home/jrh/workspace/csiro/research/inlab/cofi/docs/source/tutorials/scripts/thin_plate_inversion.py:810: DeprecationWarning: Passing a seed or integer to random_state is deprecated and will raise an error in a future version. Please use seed parameter
-      sampling = smt.sampling_methods.LHS(xlimits=xlimits,random_state=42)
-      0%|          | 0/25 [00:00<?, ?it/s]      4%|▍         | 1/25 [00:00<00:03,  7.47it/s]      8%|▊         | 2/25 [00:00<00:03,  7.45it/s]     12%|█▏        | 3/25 [00:00<00:02,  7.49it/s]     16%|█▌        | 4/25 [00:00<00:02,  7.51it/s]     20%|██        | 5/25 [00:00<00:02,  7.46it/s]     24%|██▍       | 6/25 [00:00<00:02,  7.48it/s]     28%|██▊       | 7/25 [00:00<00:02,  7.40it/s]     32%|███▏      | 8/25 [00:01<00:02,  7.41it/s]     36%|███▌      | 9/25 [00:01<00:02,  7.40it/s]     40%|████      | 10/25 [00:01<00:02,  7.38it/s]     44%|████▍     | 11/25 [00:01<00:01,  7.44it/s]     48%|████▊     | 12/25 [00:01<00:01,  7.40it/s]     52%|█████▏    | 13/25 [00:01<00:01,  7.33it/s]     56%|█████▌    | 14/25 [00:01<00:01,  7.38it/s]     60%|██████    | 15/25 [00:02<00:01,  7.39it/s]     64%|██████▍   | 16/25 [00:02<00:01,  7.44it/s]     68%|██████▊   | 17/25 [00:02<00:01,  7.38it/s]     72%|███████▏  | 18/25 [00:02<00:00,  7.42it/s]     76%|███████▌  | 19/25 [00:02<00:00,  7.44it/s]     80%|████████  | 20/25 [00:02<00:00,  7.47it/s]     84%|████████▍ | 21/25 [00:02<00:00,  7.47it/s]     88%|████████▊ | 22/25 [00:02<00:00,  7.39it/s]     92%|█████████▏| 23/25 [00:03<00:00,  7.30it/s]     96%|█████████▌| 24/25 [00:03<00:00,  7.30it/s]    100%|██████████| 25/25 [00:03<00:00,  7.36it/s]    100%|██████████| 25/25 [00:03<00:00,  7.40it/s]
-      0%|          | 0/5 [00:00<?, ?it/s]     20%|██        | 1/5 [00:00<00:00,  7.53it/s]     40%|████      | 2/5 [00:00<00:00,  7.35it/s]     60%|██████    | 3/5 [00:00<00:00,  7.36it/s]     80%|████████  | 4/5 [00:00<00:00,  7.43it/s]    100%|██████████| 5/5 [00:00<00:00,  7.44it/s]    100%|██████████| 5/5 [00:00<00:00,  7.42it/s]
+      0%|          | 0/25 [00:00<?, ?it/s]      8%|▊         | 2/25 [00:00<00:01, 11.72it/s]     16%|█▌        | 4/25 [00:00<00:01, 11.78it/s]     24%|██▍       | 6/25 [00:00<00:01, 11.75it/s]     32%|███▏      | 8/25 [00:00<00:01, 11.77it/s]     40%|████      | 10/25 [00:00<00:01, 11.72it/s]     48%|████▊     | 12/25 [00:01<00:01, 11.71it/s]     56%|█████▌    | 14/25 [00:01<00:00, 11.67it/s]     64%|██████▍   | 16/25 [00:01<00:00, 11.69it/s]     72%|███████▏  | 18/25 [00:01<00:00, 11.68it/s]     80%|████████  | 20/25 [00:01<00:00, 11.72it/s]     88%|████████▊ | 22/25 [00:01<00:00, 11.67it/s]     96%|█████████▌| 24/25 [00:02<00:00, 11.59it/s]    100%|██████████| 25/25 [00:02<00:00, 11.68it/s]
+      0%|          | 0/5 [00:00<?, ?it/s]     40%|████      | 2/5 [00:00<00:00, 11.63it/s]     80%|████████  | 4/5 [00:00<00:00, 11.70it/s]    100%|██████████| 5/5 [00:00<00:00, 11.70it/s]
 
 
 
@@ -1203,7 +1201,7 @@ of a response surface using Kriging.
      Training
    
        Training ...
-       Training - done. Time (sec):  0.1737509
+       Training - done. Time (sec):  0.2824416
 
 
 
@@ -1322,7 +1320,7 @@ declared model parameters.
 
  .. code-block:: none
 
-      0%|          | 0/500 [00:00<?, ?it/s]     41%|████      | 204/500 [00:00<00:00, 2031.57it/s]     85%|████████▍ | 424/500 [00:00<00:00, 2126.39it/s]    100%|██████████| 500/500 [00:00<00:00, 2123.32it/s]
+      0%|          | 0/500 [00:00<?, ?it/s]     20%|██        | 101/500 [00:00<00:00, 1009.92it/s]     42%|████▏     | 210/500 [00:00<00:00, 1052.45it/s]     64%|██████▎   | 318/500 [00:00<00:00, 1064.33it/s]     85%|████████▌ | 427/500 [00:00<00:00, 1071.33it/s]    100%|██████████| 500/500 [00:00<00:00, 1065.43it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1593,7 +1591,7 @@ setup we do not invert for plate length.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f3fc12a72d0>
+    <matplotlib.legend.Legend object at 0x7f02c01665d0>
 
 
 
@@ -1899,25 +1897,25 @@ Use the template below and set the CoFI tool to ``newton-cg`` or
  .. code-block:: none
 
     Iteration #1
-      objective value: 81782.04921558508
+      objective value: 72634.55061476903
     Iteration #2
-      objective value: 69010.633094678
+      objective value: 61004.49809243162
     Iteration #3
-      objective value: 49533.378705146664
+      objective value: 43307.2936365902
     Iteration #4
-      objective value: 27942.11053150754
+      objective value: 24292.684094930162
     Iteration #5
-      objective value: 13528.041271687489
+      objective value: 11507.731095245315
     Iteration #6
-      objective value: 8778.078343428213
+      objective value: 7728.471754744907
     Iteration #7
-      objective value: 3911.5922949643805
+      objective value: 3481.699758803225
     Iteration #8
-      objective value: 2327.8705674034018
+      objective value: 2097.082824963296
     Iteration #9
-      objective value: 1993.8758204382211
+      objective value: 1836.0053664379384
     Iteration #10
-      objective value: 1691.8527784558464
+      objective value: 1631.574644639748
 
 
 
@@ -2021,7 +2019,7 @@ Model
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f3feab7df90>
+    <matplotlib.legend.Legend object at 0x7f02c8c09d10>
 
 
 
@@ -2096,7 +2094,7 @@ creation <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max
      Training
    
        Training ...
-       Training - done. Time (sec):  1.3785744
+       Training - done. Time (sec):  5.9321184
 
 
 
@@ -2306,7 +2304,7 @@ Use the template below and set the CoFI tool to ``emcee``
 
  .. code-block:: none
 
-      0%|          | 0/5000 [00:00<?, ?it/s]      2%|▏         | 97/5000 [00:00<00:05, 967.72it/s]      4%|▍         | 194/5000 [00:00<00:05, 943.45it/s]      6%|▌         | 289/5000 [00:00<00:05, 938.44it/s]      8%|▊         | 383/5000 [00:00<00:05, 877.05it/s]      9%|▉         | 472/5000 [00:00<00:05, 859.19it/s]     12%|█▏        | 575/5000 [00:00<00:04, 913.65it/s]     14%|█▎        | 678/5000 [00:00<00:04, 948.53it/s]     16%|█▌        | 781/5000 [00:00<00:04, 972.12it/s]     18%|█▊        | 884/5000 [00:00<00:04, 988.38it/s]     20%|█▉        | 993/5000 [00:01<00:03, 1017.81it/s]     22%|██▏       | 1102/5000 [00:01<00:03, 1039.34it/s]     24%|██▍       | 1215/5000 [00:01<00:03, 1065.88it/s]     26%|██▋       | 1325/5000 [00:01<00:03, 1074.25it/s]     29%|██▊       | 1436/5000 [00:01<00:03, 1084.00it/s]     31%|███       | 1547/5000 [00:01<00:03, 1089.75it/s]     33%|███▎      | 1662/5000 [00:01<00:03, 1105.49it/s]     35%|███▌      | 1774/5000 [00:01<00:02, 1108.73it/s]     38%|███▊      | 1885/5000 [00:01<00:02, 1107.16it/s]     40%|███▉      | 1996/5000 [00:01<00:02, 1107.96it/s]     42%|████▏     | 2109/5000 [00:02<00:02, 1112.95it/s]     44%|████▍     | 2221/5000 [00:02<00:02, 1113.31it/s]     47%|████▋     | 2333/5000 [00:02<00:02, 1111.89it/s]     49%|████▉     | 2445/5000 [00:02<00:02, 1108.03it/s]     51%|█████     | 2558/5000 [00:02<00:02, 1111.74it/s]     53%|█████▎    | 2670/5000 [00:02<00:02, 1111.56it/s]     56%|█████▌    | 2782/5000 [00:02<00:01, 1113.85it/s]     58%|█████▊    | 2900/5000 [00:02<00:01, 1132.60it/s]     60%|██████    | 3014/5000 [00:02<00:01, 1129.96it/s]     63%|██████▎   | 3128/5000 [00:02<00:01, 1129.77it/s]     65%|██████▍   | 3241/5000 [00:03<00:01, 1124.06it/s]     67%|██████▋   | 3354/5000 [00:03<00:01, 1118.82it/s]     69%|██████▉   | 3467/5000 [00:03<00:01, 1119.51it/s]     72%|███████▏  | 3579/5000 [00:03<00:01, 1112.54it/s]     74%|███████▍  | 3692/5000 [00:03<00:01, 1117.14it/s]     76%|███████▌  | 3804/5000 [00:03<00:01, 1115.52it/s]     78%|███████▊  | 3916/5000 [00:03<00:00, 1104.35it/s]     81%|████████  | 4031/5000 [00:03<00:00, 1115.46it/s]     83%|████████▎ | 4143/5000 [00:03<00:00, 1114.91it/s]     85%|████████▌ | 4255/5000 [00:03<00:00, 1114.00it/s]     87%|████████▋ | 4370/5000 [00:04<00:00, 1122.53it/s]     90%|████████▉ | 4490/5000 [00:04<00:00, 1144.86it/s]     92%|█████████▏| 4605/5000 [00:04<00:00, 1142.96it/s]     94%|█████████▍| 4721/5000 [00:04<00:00, 1147.74it/s]     97%|█████████▋| 4836/5000 [00:04<00:00, 1144.88it/s]     99%|█████████▉| 4952/5000 [00:04<00:00, 1147.65it/s]    100%|██████████| 5000/5000 [00:04<00:00, 1085.63it/s]
+      0%|          | 0/5000 [00:00<?, ?it/s]      1%|          | 34/5000 [00:00<00:14, 335.32it/s]      2%|▏         | 89/5000 [00:00<00:10, 460.59it/s]      3%|▎         | 141/5000 [00:00<00:09, 486.04it/s]      4%|▍         | 193/5000 [00:00<00:09, 497.70it/s]      5%|▍         | 245/5000 [00:00<00:09, 503.71it/s]      6%|▌         | 297/5000 [00:00<00:09, 507.41it/s]      7%|▋         | 349/5000 [00:00<00:09, 510.97it/s]      8%|▊         | 401/5000 [00:00<00:08, 511.68it/s]      9%|▉         | 454/5000 [00:00<00:08, 514.61it/s]     10%|█         | 506/5000 [00:01<00:08, 515.51it/s]     11%|█         | 558/5000 [00:01<00:08, 514.49it/s]     12%|█▏        | 610/5000 [00:01<00:08, 514.08it/s]     13%|█▎        | 662/5000 [00:01<00:08, 513.47it/s]     14%|█▍        | 714/5000 [00:01<00:08, 513.53it/s]     15%|█▌        | 766/5000 [00:01<00:08, 513.20it/s]     16%|█▋        | 818/5000 [00:01<00:08, 513.31it/s]     17%|█▋        | 870/5000 [00:01<00:08, 513.25it/s]     18%|█▊        | 923/5000 [00:01<00:07, 515.88it/s]     20%|█▉        | 978/5000 [00:01<00:07, 525.46it/s]     21%|██        | 1033/5000 [00:02<00:07, 530.53it/s]     22%|██▏       | 1088/5000 [00:02<00:07, 534.69it/s]     23%|██▎       | 1145/5000 [00:02<00:07, 543.92it/s]     24%|██▍       | 1201/5000 [00:02<00:06, 547.97it/s]     25%|██▌       | 1256/5000 [00:02<00:06, 545.52it/s]     26%|██▌       | 1312/5000 [00:02<00:06, 547.39it/s]     27%|██▋       | 1367/5000 [00:02<00:06, 546.80it/s]     28%|██▊       | 1423/5000 [00:02<00:06, 548.46it/s]     30%|██▉       | 1478/5000 [00:02<00:06, 548.19it/s]     31%|███       | 1534/5000 [00:02<00:06, 550.06it/s]     32%|███▏      | 1592/5000 [00:03<00:06, 558.41it/s]     33%|███▎      | 1648/5000 [00:03<00:06, 557.18it/s]     34%|███▍      | 1705/5000 [00:03<00:05, 558.29it/s]     35%|███▌      | 1761/5000 [00:03<00:05, 558.71it/s]     36%|███▋      | 1817/5000 [00:03<00:05, 555.52it/s]     37%|███▋      | 1873/5000 [00:03<00:05, 550.77it/s]     39%|███▊      | 1929/5000 [00:03<00:05, 550.22it/s]     40%|███▉      | 1985/5000 [00:03<00:05, 552.56it/s]     41%|████      | 2041/5000 [00:03<00:05, 553.31it/s]     42%|████▏     | 2098/5000 [00:03<00:05, 556.43it/s]     43%|████▎     | 2154/5000 [00:04<00:05, 554.07it/s]     44%|████▍     | 2211/5000 [00:04<00:05, 555.84it/s]     45%|████▌     | 2268/5000 [00:04<00:04, 558.42it/s]     46%|████▋     | 2324/5000 [00:04<00:04, 553.82it/s]     48%|████▊     | 2380/5000 [00:04<00:04, 548.13it/s]     49%|████▊     | 2437/5000 [00:04<00:04, 551.91it/s]     50%|████▉     | 2493/5000 [00:04<00:04, 552.74it/s]     51%|█████     | 2550/5000 [00:04<00:04, 555.83it/s]     52%|█████▏    | 2606/5000 [00:04<00:04, 554.25it/s]     53%|█████▎    | 2662/5000 [00:04<00:04, 553.61it/s]     54%|█████▍    | 2718/5000 [00:05<00:04, 550.80it/s]     56%|█████▌    | 2775/5000 [00:05<00:04, 553.99it/s]     57%|█████▋    | 2834/5000 [00:05<00:03, 564.44it/s]     58%|█████▊    | 2892/5000 [00:05<00:03, 566.57it/s]     59%|█████▉    | 2949/5000 [00:05<00:03, 565.76it/s]     60%|██████    | 3006/5000 [00:05<00:03, 563.69it/s]     61%|██████▏   | 3063/5000 [00:05<00:03, 560.51it/s]     62%|██████▏   | 3120/5000 [00:05<00:03, 561.45it/s]     64%|██████▎   | 3177/5000 [00:05<00:03, 560.05it/s]     65%|██████▍   | 3234/5000 [00:05<00:03, 555.31it/s]     66%|██████▌   | 3290/5000 [00:06<00:03, 553.79it/s]     67%|██████▋   | 3346/5000 [00:06<00:02, 551.44it/s]     68%|██████▊   | 3403/5000 [00:06<00:02, 555.54it/s]     69%|██████▉   | 3459/5000 [00:06<00:02, 553.24it/s]     70%|███████   | 3515/5000 [00:06<00:02, 552.18it/s]     71%|███████▏  | 3571/5000 [00:06<00:02, 547.74it/s]     73%|███████▎  | 3627/5000 [00:06<00:02, 551.13it/s]     74%|███████▎  | 3683/5000 [00:06<00:02, 552.73it/s]     75%|███████▍  | 3739/5000 [00:06<00:02, 552.65it/s]     76%|███████▌  | 3795/5000 [00:07<00:02, 549.65it/s]     77%|███████▋  | 3853/5000 [00:07<00:02, 556.69it/s]     78%|███████▊  | 3909/5000 [00:07<00:01, 557.02it/s]     79%|███████▉  | 3966/5000 [00:07<00:01, 560.30it/s]     80%|████████  | 4023/5000 [00:07<00:01, 560.20it/s]     82%|████████▏ | 4080/5000 [00:07<00:01, 556.28it/s]     83%|████████▎ | 4136/5000 [00:07<00:01, 554.54it/s]     84%|████████▍ | 4192/5000 [00:07<00:01, 553.92it/s]     85%|████████▍ | 4248/5000 [00:07<00:01, 551.29it/s]     86%|████████▌ | 4306/5000 [00:07<00:01, 557.95it/s]     87%|████████▋ | 4362/5000 [00:08<00:01, 556.38it/s]     88%|████████▊ | 4423/5000 [00:08<00:01, 569.60it/s]     90%|████████▉ | 4482/5000 [00:08<00:00, 574.33it/s]     91%|█████████ | 4540/5000 [00:08<00:00, 572.51it/s]     92%|█████████▏| 4598/5000 [00:08<00:00, 566.70it/s]     93%|█████████▎| 4656/5000 [00:08<00:00, 568.34it/s]     94%|█████████▍| 4714/5000 [00:08<00:00, 569.88it/s]     95%|█████████▌| 4771/5000 [00:08<00:00, 565.91it/s]     97%|█████████▋| 4829/5000 [00:08<00:00, 567.96it/s]     98%|█████████▊| 4886/5000 [00:08<00:00, 567.72it/s]     99%|█████████▉| 4943/5000 [00:09<00:00, 568.04it/s]    100%|██████████| 5000/5000 [00:09<00:00, 568.40it/s]    100%|██████████| 5000/5000 [00:09<00:00, 547.30it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -2566,7 +2564,7 @@ Using the template below set the CoFI tool to ``neighpy``
 
     Current backend tool neighpy has the following solver-specific parameters:
     Required parameters:
-    {'n_resample', 'n_walkers', 'bounds', 'n_initial_samples', 'n_iterations', 'n_samples_per_iteration', 'n_cells_to_resample'}
+    {'n_iterations', 'n_samples_per_iteration', 'n_cells_to_resample', 'n_resample', 'bounds', 'n_initial_samples', 'n_walkers'}
     Optional parameters & default settings:
     {'serial': False}
 
@@ -2598,23 +2596,37 @@ Using the template below set the CoFI tool to ``neighpy``
 
 
 
+
+
 .. rst-class:: sphx-glr-script-out
 
-.. code-block:: pytb
+ .. code-block:: none
 
-    Traceback (most recent call last):
-      File "/home/jrh/workspace/csiro/research/inlab/cofi/docs/source/tutorials/scripts/thin_plate_inversion.py", line 1729, in <module>
-        my_result = inv.run()
-                    ^^^^^^^^^
-      File "/opt/miniconda3/envs/inlab/lib/python3.11/site-packages/cofi/_inversion.py", line 211, in run
-        res_dict = self.inv_solve()
-                   ^^^^^^^^^^^^^^^^
-      File "/opt/miniconda3/envs/inlab/lib/python3.11/site-packages/cofi/tools/_neighpy.py", line 48, in __call__
-        raw_results = self._call_backend_tool()
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^
-      File "/opt/miniconda3/envs/inlab/lib/python3.11/site-packages/cofi/tools/_base_inference_tool.py", line 312, in wrapped_func
-        raise CofiError(
-    cofi._exceptions.CofiError: error ocurred at some point in the Neighbourhood Algorithm (). Check exception details from message above.
+    NAI - Initial Random Search
+    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:02<04:31,  2.75s/it]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:02<01:13,  1.31it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:02<00:37,  2.50it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:03<00:23,  3.92it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:03<00:16,  5.53it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:03<00:12,  7.06it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:03<00:10,  8.53it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:03<00:08,  9.83it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:03<00:07, 10.95it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:03<00:06, 11.85it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:04<00:06, 12.56it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:04<00:05, 13.09it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:04<00:05, 13.48it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:04<00:05, 13.76it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:04<00:05, 13.96it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:04<00:04, 14.10it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:04<00:04, 14.19it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:05<00:04, 14.26it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:05<00:04, 14.28it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:05<00:04, 14.27it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:05<00:04, 14.30it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:05<00:03, 14.31it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:05<00:03, 14.31it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:05<00:03, 14.30it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:05<00:03, 14.48it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:06<00:03, 14.41it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:06<00:03, 14.56it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:06<00:03, 14.44it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:06<00:02, 14.38it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:06<00:02, 14.31it/s]    NAI - Optimisation Loop:  61%|██████    | 61/100 [00:06<00:02, 14.31it/s]    NAI - Optimisation Loop:  63%|██████▎   | 63/100 [00:06<00:02, 14.27it/s]    NAI - Optimisation Loop:  65%|██████▌   | 65/100 [00:07<00:02, 14.21it/s]    NAI - Optimisation Loop:  67%|██████▋   | 67/100 [00:07<00:02, 14.05it/s]    NAI - Optimisation Loop:  69%|██████▉   | 69/100 [00:07<00:02, 14.03it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:07<00:02, 14.03it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:07<00:01, 14.04it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:07<00:01, 14.02it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:07<00:01, 14.04it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:08<00:01, 14.01it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:08<00:01, 13.98it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:08<00:01, 13.91it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:08<00:01, 13.94it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:08<00:00, 13.92it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:08<00:00, 13.95it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:08<00:00, 13.92it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:09<00:00, 13.94it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:09<00:00, 14.03it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:09<00:00, 14.01it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:09<00:00, 14.03it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:09<00:00, 10.39it/s]
+    The inversion result from `neighpy`:
+    ============================
+    Summary for inversion result
+    ============================
+    SUCCESS
+    ----------------------------
+    model: [ 57.11813619  66.8392679  182.70337399  38.61582867 104.45287136]
+    direct_search_samples: [[ 52.1916133  126.2160533  181.19845212  37.3108892   96.28835044]
+     [ 33.91287522  56.8102908  184.09361941  36.53961479 109.71946258]
+     [ 52.86975402 135.58339465 162.90716946  37.33717762  68.86352767]
+     ...
+     [ 57.11785217  66.84760475 182.63649209  38.61658817 104.44276152]
+     [ 57.11751592  66.84760511 182.63651556  38.61658789 104.44276268]
+     [ 57.11776557  66.84759141 182.63649715  38.61660461 104.44275953]]
+    direct_search_objectives: [4.18006146e+04 6.40588752e+04 5.66104878e+04 ... 1.00000000e-03
+     1.00000000e-03 1.00000000e-03]
+    appraisal_samples: [[ 48.77539158  71.54598971 167.55427416  37.16605155 106.22523364]
+     [ 54.09005981  87.08225348 171.63661219  35.83031891 104.62102762]
+     [ 50.77776725  87.63939151 172.6754682   39.10894653  96.25008532]
+     ...
+     [ 47.9593729   84.1088433  176.44462411  38.59983624  97.73631372]
+     [ 56.2808576   61.45536285 181.39007332  38.33851134 102.51160405]
+     [ 46.00471079  56.922463   168.03498628  37.2501801   99.59096922]]
 
 
 
@@ -2648,6 +2660,17 @@ Using the template below set the CoFI tool to ``neighpy``
     plt.tight_layout()
 
 
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_thin_plate_inversion_014.png
+   :alt: Dip (°), Dip (°), Dip azimuth (°), Dip azimuth (°), Easting (m), Easting (m), Depth (m), Depth (m), Width (m), Width (m)
+   :srcset: /tutorials/generated/images/sphx_glr_thin_plate_inversion_014.png
+   :class: sphx-glr-single-img
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1763-1776
 
 .. code-block:: Python
@@ -2664,6 +2687,17 @@ Using the template below set the CoFI tool to ``neighpy``
         ax = axes
     )
     plt.tight_layout()
+
+
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_thin_plate_inversion_015.png
+   :alt: thin plate inversion
+   :srcset: /tutorials/generated/images/sphx_glr_thin_plate_inversion_015.png
+   :class: sphx-glr-single-img
+
+
+
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 1778-1835
@@ -2728,6 +2762,17 @@ Using the template below set the CoFI tool to ``neighpy``
 
 
 
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_thin_plate_inversion_016.png
+   :alt: thin plate inversion
+   :srcset: /tutorials/generated/images/sphx_glr_thin_plate_inversion_016.png
+   :class: sphx-glr-single-img
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1840-1862
 
 Metropolis Hastings algorithm
@@ -2783,6 +2828,12 @@ trans-dimensional inverse problem is given
     parameterization = bayesbay.parameterization.Parameterization(param_space)
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1889-1900
 
 .. code-block:: Python
@@ -2799,6 +2850,12 @@ trans-dimensional inverse problem is given
     #log_likelihood = bayesbay.LogLikelihood(log_like_func=my_log_likelihood)  # BayesBay pre version 3.1 
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1902-1911
 
 .. code-block:: Python
@@ -2811,6 +2868,12 @@ trans-dimensional inverse problem is given
         walkers_start.append(
             parameterization.initialize()
         )  # A bayesbay.State is appended to walkers_start for each chain
+
+
+
+
+
+
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 1916-1934
@@ -2842,6 +2905,12 @@ Using the template below set the CoFI tool to ``bayesbay``
     # Copy the template above, Replace <DEFINE ME> with your answer
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1939-1955
 
 .. code-block:: Python
@@ -2863,6 +2932,12 @@ Using the template below set the CoFI tool to ``bayesbay``
     )
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1957-1961
 
 .. code-block:: Python
@@ -2872,12 +2947,24 @@ Using the template below set the CoFI tool to ``bayesbay``
     my_result = inv.run()
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 1963-1966
 
 .. code-block:: Python
 
 
     results = my_result.models
+
+
+
+
+
+
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 1968-2015
@@ -2930,6 +3017,17 @@ Using the template below set the CoFI tool to ``bayesbay``
         axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
 
     plt.show()
+
+
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_thin_plate_inversion_017.png
+   :alt: thin plate inversion
+   :srcset: /tutorials/generated/images/sphx_glr_thin_plate_inversion_017.png
+   :class: sphx-glr-single-img
+
+
+
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 2017-2093
@@ -3013,6 +3111,17 @@ Using the template below set the CoFI tool to ``bayesbay``
         )
 
 
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_thin_plate_inversion_018.png
+   :alt: thin plate inversion
+   :srcset: /tutorials/generated/images/sphx_glr_thin_plate_inversion_018.png
+   :class: sphx-glr-single-img
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 2098-2113
 
 Where to next?
@@ -3058,6 +3167,24 @@ Watermark
         print(pkg, getattr(pkg_var, "__version__"))
 
 
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    cofi 0.2.11
+    numpy 2.3.5
+    scipy 1.17.0
+    matplotlib 3.10.8
+    bayesbay 0.3.7
+    smt 2.10.1
+    neighpy 0.1.9
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 2136-2136
 
 sphinx_gallery_thumbnail_number = -1
@@ -3065,7 +3192,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (7 minutes 37.755 seconds)
+   **Total running time of the script:** (8 minutes 16.832 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_thin_plate_inversion.py:

@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -52,10 +52,10 @@ inversion where we also account for receiver functions.
 
 **Learning outcomes**
 
--  A demonstration of CoFI’s ability to switch between parameter
-   estimation and ensemble methods.
--  An application of CoFI for a joint inversion, here of Rayleigh wave
-   pahse velocity and receiver function data, to a synthetic dataset
+- A demonstration of CoFI’s ability to switch between parameter
+  estimation and ensemble methods.
+- An application of CoFI for a joint inversion, here of Rayleigh wave
+  pahse velocity and receiver function data, to a synthetic dataset
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 46-55
@@ -67,7 +67,7 @@ In this example, we look at a joint inversion problem of surface wave
 and receiver function.
 
 We use ``pysurf96`` for computing the forward step of surface wave, and
-use ``espresso`` for receiver function calculations.
+use ``pyhk`` for receiver function calculations.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 55-67
@@ -93,7 +93,23 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-81
+.. GENERATED FROM PYTHON SOURCE LINES 69-74
+
+.. code-block:: Python
+
+
+    # If this notebook is run locally pysurf96 needs to be installed separately by uncommenting the following line, 
+    # that is by removing the # and the white space between it and the exclammation mark.
+    # !pip install -U cofi git+https://github.com/inlab-geo/pysurf96.git@ctypes
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 76-88
 
 .. code-block:: Python
 
@@ -107,7 +123,7 @@ use ``espresso`` for receiver function calculations.
     import pysurf96
     import bayesbay
     import cofi
-    import espresso
+    import pyhk
 
 
 
@@ -116,7 +132,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-86
+.. GENERATED FROM PYTHON SOURCE LINES 90-93
 
 .. code-block:: Python
 
@@ -136,12 +152,12 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-93
+.. GENERATED FROM PYTHON SOURCE LINES 98-100
 
 **Model vector**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-102
+.. GENERATED FROM PYTHON SOURCE LINES 100-109
 
 .. code-block:: Python
 
@@ -167,7 +183,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-117
+.. GENERATED FROM PYTHON SOURCE LINES 111-124
 
 .. code-block:: Python
 
@@ -191,7 +207,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-129
+.. GENERATED FROM PYTHON SOURCE LINES 126-136
 
 .. code-block:: Python
 
@@ -212,7 +228,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-154
+.. GENERATED FROM PYTHON SOURCE LINES 138-161
 
 .. code-block:: Python
 
@@ -246,12 +262,12 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 159-161
+.. GENERATED FROM PYTHON SOURCE LINES 166-168
 
 **Interfacing to pysurf96**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-168
+.. GENERATED FROM PYTHON SOURCE LINES 168-175
 
 .. code-block:: Python
 
@@ -275,7 +291,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 170-176
+.. GENERATED FROM PYTHON SOURCE LINES 177-183
 
 .. code-block:: Python
 
@@ -292,7 +308,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 178-197
+.. GENERATED FROM PYTHON SOURCE LINES 185-204
 
 .. code-block:: Python
 
@@ -322,27 +338,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 202-204
-
-**Interfacing to Espresso**
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 204-208
-
-.. code-block:: Python
-
-
-    # obtain the receiver function library
-    rf_lib = espresso.ReceiverFunctionInversionKnt().rf
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 210-217
+.. GENERATED FROM PYTHON SOURCE LINES 206-213
 
 .. code-block:: Python
 
@@ -360,12 +356,12 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 219-239
+.. GENERATED FROM PYTHON SOURCE LINES 215-235
 
 .. code-block:: Python
 
 
-    # forward through rf in espresso
+    # forward through rf in pyhk
     def forward_rf(
         model, 
         t_shift=t_shift, 
@@ -376,7 +372,7 @@ use ``espresso`` for receiver function calculations.
         return_times=False
     ):
         h, vs = split_layercake_model(model)
-        data = rf_lib.rf_calc(ps=0, thik=h, beta=vs, kapa=np.ones((len(vs),))*VP_VS, p=ray_param_s_km, 
+        data = pyhk.rfcalc(ps=0, thik=h, beta=vs, kapa=np.ones((len(vs),))*VP_VS, p=ray_param_s_km, 
                           duration=t_duration, dt=t_sampling_interval, shft=t_shift, gauss=gauss)
         if return_times:
             times = np.arange(len(data)) * t_sampling_interval - t_shift
@@ -391,12 +387,12 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 244-246
+.. GENERATED FROM PYTHON SOURCE LINES 240-242
 
 **Numerical Jacobian**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 246-259
+.. GENERATED FROM PYTHON SOURCE LINES 242-255
 
 .. code-block:: Python
 
@@ -420,12 +416,12 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 264-266
+.. GENERATED FROM PYTHON SOURCE LINES 260-262
 
 **Plotting**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 266-291
+.. GENERATED FROM PYTHON SOURCE LINES 262-287
 
 .. code-block:: Python
 
@@ -461,7 +457,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 293-313
+.. GENERATED FROM PYTHON SOURCE LINES 289-309
 
 .. code-block:: Python
 
@@ -492,7 +488,7 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 315-338
+.. GENERATED FROM PYTHON SOURCE LINES 311-334
 
 .. code-block:: Python
 
@@ -526,13 +522,13 @@ use ``espresso`` for receiver function calculations.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 343-346
+.. GENERATED FROM PYTHON SOURCE LINES 339-342
 
 Generate synthetic data
 -----------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 346-352
+.. GENERATED FROM PYTHON SOURCE LINES 342-348
 
 .. code-block:: Python
 
@@ -549,7 +545,7 @@ Generate synthetic data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 354-358
+.. GENERATED FROM PYTHON SOURCE LINES 350-354
 
 .. code-block:: Python
 
@@ -564,7 +560,7 @@ Generate synthetic data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 360-367
+.. GENERATED FROM PYTHON SOURCE LINES 356-363
 
 .. code-block:: Python
 
@@ -582,7 +578,7 @@ Generate synthetic data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 369-394
+.. GENERATED FROM PYTHON SOURCE LINES 365-390
 
 .. code-block:: Python
 
@@ -623,18 +619,18 @@ Generate synthetic data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 399-402
+.. GENERATED FROM PYTHON SOURCE LINES 395-398
 
 Optimisation
 ------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 405-407
+.. GENERATED FROM PYTHON SOURCE LINES 401-403
 
 **Prepare ``BaseProblem`` for optimisation**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 407-414
+.. GENERATED FROM PYTHON SOURCE LINES 403-410
 
 .. code-block:: Python
 
@@ -652,7 +648,7 @@ Optimisation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 416-444
+.. GENERATED FROM PYTHON SOURCE LINES 412-440
 
 .. code-block:: Python
 
@@ -696,7 +692,7 @@ Optimisation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 446-453
+.. GENERATED FROM PYTHON SOURCE LINES 442-449
 
 .. code-block:: Python
 
@@ -714,7 +710,7 @@ Optimisation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 455-481
+.. GENERATED FROM PYTHON SOURCE LINES 451-477
 
 .. code-block:: Python
 
@@ -751,7 +747,7 @@ Optimisation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 483-497
+.. GENERATED FROM PYTHON SOURCE LINES 479-493
 
 .. code-block:: Python
 
@@ -776,13 +772,13 @@ Optimisation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 502-505
+.. GENERATED FROM PYTHON SOURCE LINES 498-501
 
 Optimisation with no damping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 505-519
+.. GENERATED FROM PYTHON SOURCE LINES 501-515
 
 .. code-block:: Python
 
@@ -807,12 +803,12 @@ Optimisation with no damping
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 524-526
+.. GENERATED FROM PYTHON SOURCE LINES 520-522
 
 **Define ``InversionOptions``**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 526-531
+.. GENERATED FROM PYTHON SOURCE LINES 522-527
 
 .. code-block:: Python
 
@@ -828,12 +824,12 @@ Optimisation with no damping
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 536-538
+.. GENERATED FROM PYTHON SOURCE LINES 532-534
 
 **Define ``Inversion`` and run**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 538-542
+.. GENERATED FROM PYTHON SOURCE LINES 534-538
 
 .. code-block:: Python
 
@@ -845,15 +841,22 @@ Optimisation with no damping
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /usr/local/lib/python3.13/site-packages/cofi/tools/_scipy_opt_min.py:103: RuntimeWarning: Method trust-exact does not use Hessian-vector product information (hessp).
+      return minimize(
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 547-549
+
+.. GENERATED FROM PYTHON SOURCE LINES 543-545
 
 **Plot results**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 549-580
+.. GENERATED FROM PYTHON SOURCE LINES 545-576
 
 .. code-block:: Python
 
@@ -900,7 +903,7 @@ Optimisation with no damping
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 585-596
+.. GENERATED FROM PYTHON SOURCE LINES 581-592
 
 Optimal damping
 ~~~~~~~~~~~~~~~
@@ -914,7 +917,7 @@ how can we determine a good damping factor?
 The ``InversionPool`` in CoFI can help you answer it.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 596-633
+.. GENERATED FROM PYTHON SOURCE LINES 592-629
 
 .. code-block:: Python
 
@@ -963,26 +966,26 @@ The ``InversionPool`` in CoFI can help you answer it.
 
  .. code-block:: none
 
-    Finished inversion with lambda=1e-06: 0.04520739446856946, 6.90707116167134
-    Finished inversion with lambda=7.196856730011514e-06: 0.04522718798587734, 6.360633520548262
-    Finished inversion with lambda=5.1794746792312125e-05: 0.04552497636462737, 5.009349361022729
-    Finished inversion with lambda=0.0003727593720314938: 0.04659449350775741, 4.1587131261737165
-    Finished inversion with lambda=0.0026826957952797246: 0.05292808006469342, 3.4623278161634596
-    Finished inversion with lambda=0.019306977288832496: 0.14459133826420748, 1.4196948655389219
-    Finished inversion with lambda=0.1389495494373136: 0.18703847430755832, 1.01540069556926
-    Finished inversion with lambda=1.0: 0.4475333284066435, 0.6491293172967686
-    Finished inversion with lambda=7.196856730011514: 1.366404791820631, 0.30436493811913745
-    Finished inversion with lambda=51.79474679231202: 2.7231174034586134, 0.06710141486808427
-    Finished inversion with lambda=372.7593720314938: 3.1382540203146867, 0.010094079042583812
-    Finished inversion with lambda=2682.6957952797275: 3.204302099415446, 0.0014182699553374812
-    Finished inversion with lambda=19306.977288832455: 3.2136675737206035, 0.00019739826915063293
-    Finished inversion with lambda=138949.5494373136: 3.2149867541680957, 2.7434652358831138e-05
-    Finished inversion with lambda=1000000.0: 3.215168621677044, 3.8121139706656857e-06
+    Finished inversion with lambda=1e-06: 0.06024396795404337, 16.8680325114639
+    Finished inversion with lambda=7.196856730011514e-06: 0.06085032262806263, 10.64255143796607
+    Finished inversion with lambda=5.1794746792312125e-05: 0.061625011087437884, 7.411747054176142
+    Finished inversion with lambda=0.0003727593720314938: 0.06670056727681227, 4.400043180173762
+    Finished inversion with lambda=0.0026826957952797246: 0.07494788988727337, 3.3947493777844158
+    Finished inversion with lambda=0.019306977288832496: 0.14336993410821744, 1.3960466414010857
+    Finished inversion with lambda=0.1389495494373136: 0.18349762561746333, 1.0520447818420429
+    Finished inversion with lambda=1.0: 0.4657150099024403, 0.6699560969255706
+    Finished inversion with lambda=7.196856730011514: 1.4449448234289446, 0.3135773708507754
+    Finished inversion with lambda=51.79474679231202: 2.8842263380804565, 0.06896924224807946
+    Finished inversion with lambda=372.7593720314938: 3.322755696459293, 0.010370908282125479
+    Finished inversion with lambda=2682.6957952797275: 3.392480442299332, 0.001457356907278879
+    Finished inversion with lambda=19306.977288832455: 3.4023600693202103, 0.00020279348168334698
+    Finished inversion with lambda=138949.5494373136: 3.403755084609433, 2.8185178993492034e-05
+    Finished inversion with lambda=1000000.0: 3.4039434290429638, 3.916455352653268e-06
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 635-639
+.. GENERATED FROM PYTHON SOURCE LINES 631-635
 
 .. code-block:: Python
 
@@ -1006,12 +1009,12 @@ The ``InversionPool`` in CoFI can help you answer it.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 644-646
+.. GENERATED FROM PYTHON SOURCE LINES 640-642
 
 **Plot L-curve**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 646-655
+.. GENERATED FROM PYTHON SOURCE LINES 642-651
 
 .. code-block:: Python
 
@@ -1036,19 +1039,19 @@ The ``InversionPool`` in CoFI can help you answer it.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 660-663
+.. GENERATED FROM PYTHON SOURCE LINES 656-659
 
 Optimisation with damping
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 666-669
+.. GENERATED FROM PYTHON SOURCE LINES 662-665
 
 From the L-curve plot above, it seems that a damping factor of around
 0.14 would be good.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 669-683
+.. GENERATED FROM PYTHON SOURCE LINES 665-679
 
 .. code-block:: Python
 
@@ -1073,12 +1076,12 @@ From the L-curve plot above, it seems that a damping factor of around
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 688-690
+.. GENERATED FROM PYTHON SOURCE LINES 684-686
 
 **Define ``Inversion`` and run**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 690-694
+.. GENERATED FROM PYTHON SOURCE LINES 686-690
 
 .. code-block:: Python
 
@@ -1093,12 +1096,12 @@ From the L-curve plot above, it seems that a damping factor of around
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 699-701
+.. GENERATED FROM PYTHON SOURCE LINES 695-697
 
 **Plot results**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 701-732
+.. GENERATED FROM PYTHON SOURCE LINES 697-728
 
 .. code-block:: Python
 
@@ -1145,18 +1148,18 @@ From the L-curve plot above, it seems that a damping factor of around
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 737-740
+.. GENERATED FROM PYTHON SOURCE LINES 733-736
 
 Fixed-dimensional sampling
 --------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 743-745
+.. GENERATED FROM PYTHON SOURCE LINES 739-741
 
 **Prepare ``BaseProblem`` for fixed-dimensional sampling**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 745-761
+.. GENERATED FROM PYTHON SOURCE LINES 741-757
 
 .. code-block:: Python
 
@@ -1183,7 +1186,7 @@ Fixed-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 763-785
+.. GENERATED FROM PYTHON SOURCE LINES 759-781
 
 .. code-block:: Python
 
@@ -1216,7 +1219,7 @@ Fixed-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 787-794
+.. GENERATED FROM PYTHON SOURCE LINES 783-790
 
 .. code-block:: Python
 
@@ -1234,7 +1237,7 @@ Fixed-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 796-800
+.. GENERATED FROM PYTHON SOURCE LINES 792-796
 
 .. code-block:: Python
 
@@ -1249,12 +1252,12 @@ Fixed-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 805-807
+.. GENERATED FROM PYTHON SOURCE LINES 801-803
 
 **Define ``InversionOptions``**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 807-818
+.. GENERATED FROM PYTHON SOURCE LINES 803-814
 
 .. code-block:: Python
 
@@ -1276,18 +1279,18 @@ Fixed-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 823-825
+.. GENERATED FROM PYTHON SOURCE LINES 819-821
 
 **Define ``Inversion`` and run**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 828-831
+.. GENERATED FROM PYTHON SOURCE LINES 824-827
 
 Sample the prior
 ~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 831-838
+.. GENERATED FROM PYTHON SOURCE LINES 827-834
 
 .. code-block:: Python
 
@@ -1306,12 +1309,12 @@ Sample the prior
 
  .. code-block:: none
 
-      0%|          | 0/2000 [00:00<?, ?it/s]      5%|▌         | 101/2000 [00:00<00:01, 1005.32it/s]     10%|█         | 203/2000 [00:00<00:01, 1013.63it/s]     15%|█▌        | 305/2000 [00:00<00:01, 1013.61it/s]     20%|██        | 407/2000 [00:00<00:01, 1007.48it/s]     26%|██▌       | 513/2000 [00:00<00:01, 1024.92it/s]     31%|███       | 616/2000 [00:00<00:01, 1025.36it/s]     36%|███▌      | 723/2000 [00:00<00:01, 1039.76it/s]     42%|████▏     | 830/2000 [00:00<00:01, 1049.34it/s]     47%|████▋     | 936/2000 [00:00<00:01, 1050.95it/s]     52%|█████▏    | 1042/2000 [00:01<00:00, 1052.62it/s]     57%|█████▋    | 1148/2000 [00:01<00:00, 1047.93it/s]     63%|██████▎   | 1253/2000 [00:01<00:00, 1034.44it/s]     68%|██████▊   | 1357/2000 [00:01<00:00, 1028.20it/s]     73%|███████▎  | 1461/2000 [00:01<00:00, 1031.27it/s]     79%|███████▊  | 1571/2000 [00:01<00:00, 1051.34it/s]     84%|████████▍ | 1678/2000 [00:01<00:00, 1055.65it/s]     90%|████████▉ | 1790/2000 [00:01<00:00, 1074.38it/s]     95%|█████████▍| 1899/2000 [00:01<00:00, 1076.20it/s]    100%|██████████| 2000/2000 [00:01<00:00, 1047.42it/s]
+      0%|          | 0/2000 [00:00<?, ?it/s]      6%|▌         | 122/2000 [00:00<00:01, 1211.08it/s]     12%|█▏        | 245/2000 [00:00<00:01, 1218.09it/s]     18%|█▊        | 367/2000 [00:00<00:01, 1218.46it/s]     24%|██▍       | 490/2000 [00:00<00:01, 1220.42it/s]     31%|███       | 613/2000 [00:00<00:01, 1222.22it/s]     37%|███▋      | 736/2000 [00:00<00:01, 1224.63it/s]     43%|████▎     | 860/2000 [00:00<00:00, 1226.96it/s]     49%|████▉     | 984/2000 [00:00<00:00, 1230.20it/s]     55%|█████▌    | 1108/2000 [00:00<00:00, 1233.04it/s]     62%|██████▏   | 1233/2000 [00:01<00:00, 1236.43it/s]     68%|██████▊   | 1358/2000 [00:01<00:00, 1240.19it/s]     74%|███████▍  | 1484/2000 [00:01<00:00, 1243.68it/s]     80%|████████  | 1610/2000 [00:01<00:00, 1246.57it/s]     87%|████████▋ | 1737/2000 [00:01<00:00, 1252.39it/s]     93%|█████████▎| 1864/2000 [00:01<00:00, 1256.35it/s]    100%|█████████▉| 1992/2000 [00:01<00:00, 1261.13it/s]    100%|██████████| 2000/2000 [00:01<00:00, 1240.02it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 840-862
+.. GENERATED FROM PYTHON SOURCE LINES 836-858
 
 .. code-block:: Python
 
@@ -1341,7 +1344,7 @@ Sample the prior
 
 
 .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_sw_rf_joint_synthetic_006.png
-   :alt: t0, t0, t1, t1, t2, t2, t3, t3, t4, t4, t5, t5, t6, t6, t7, t7, v0, v0, v1, v1, v2, v2, v3, v3, v4, v4, v5, v5, v6, v6, v7, v7, v8, v8
+   :alt: v0, v0, t0, t0, v1, v1, t1, t1, v2, v2, t2, t2, v3, v3, t3, t3, v4, v4, t4, t4, v5, v5, t5, t5, v6, v6, t6, t6, v7, v7, t7, t7, v8, v8
    :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_sw_rf_joint_synthetic_006.png
    :class: sphx-glr-single-img
 
@@ -1349,13 +1352,13 @@ Sample the prior
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 867-870
+.. GENERATED FROM PYTHON SOURCE LINES 863-866
 
 Sample the posterior
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 870-874
+.. GENERATED FROM PYTHON SOURCE LINES 866-870
 
 .. code-block:: Python
 
@@ -1371,12 +1374,12 @@ Sample the posterior
 
  .. code-block:: none
 
-      0%|          | 0/2000 [00:00<?, ?it/s]      0%|          | 5/2000 [00:00<00:47, 41.88it/s]      0%|          | 10/2000 [00:00<00:57, 34.89it/s]      1%|          | 14/2000 [00:00<01:05, 30.55it/s]      1%|          | 18/2000 [00:00<01:09, 28.57it/s]      1%|          | 21/2000 [00:00<01:11, 27.73it/s]      1%|          | 24/2000 [00:00<01:13, 26.96it/s]      1%|▏         | 27/2000 [00:00<01:14, 26.53it/s]      2%|▏         | 30/2000 [00:01<01:15, 26.16it/s]      2%|▏         | 33/2000 [00:01<01:15, 25.90it/s]      2%|▏         | 36/2000 [00:01<01:16, 25.72it/s]      2%|▏         | 39/2000 [00:01<01:16, 25.79it/s]      2%|▏         | 42/2000 [00:01<01:15, 25.80it/s]      2%|▏         | 45/2000 [00:01<01:16, 25.65it/s]      2%|▏         | 48/2000 [00:01<01:15, 25.71it/s]      3%|▎         | 51/2000 [00:01<01:16, 25.63it/s]      3%|▎         | 54/2000 [00:01<01:15, 25.71it/s]      3%|▎         | 57/2000 [00:02<01:15, 25.61it/s]      3%|▎         | 60/2000 [00:02<01:15, 25.57it/s]      3%|▎         | 63/2000 [00:02<01:15, 25.76it/s]      3%|▎         | 66/2000 [00:02<01:15, 25.70it/s]      3%|▎         | 69/2000 [00:02<01:15, 25.63it/s]      4%|▎         | 72/2000 [00:02<01:15, 25.62it/s]      4%|▍         | 75/2000 [00:02<01:15, 25.63it/s]      4%|▍         | 78/2000 [00:02<01:14, 25.66it/s]      4%|▍         | 81/2000 [00:03<01:15, 25.35it/s]      4%|▍         | 84/2000 [00:03<01:16, 25.12it/s]      4%|▍         | 87/2000 [00:03<01:17, 24.68it/s]      4%|▍         | 90/2000 [00:03<01:17, 24.55it/s]      5%|▍         | 93/2000 [00:03<01:16, 24.86it/s]      5%|▍         | 96/2000 [00:03<01:18, 24.30it/s]      5%|▍         | 99/2000 [00:03<01:18, 24.33it/s]      5%|▌         | 102/2000 [00:03<01:17, 24.44it/s]      5%|▌         | 105/2000 [00:04<01:17, 24.56it/s]      5%|▌         | 108/2000 [00:04<01:16, 24.64it/s]      6%|▌         | 111/2000 [00:04<01:16, 24.75it/s]      6%|▌         | 114/2000 [00:04<01:15, 25.05it/s]      6%|▌         | 117/2000 [00:04<01:15, 25.05it/s]      6%|▌         | 120/2000 [00:04<01:16, 24.64it/s]      6%|▌         | 123/2000 [00:04<01:15, 24.83it/s]      6%|▋         | 126/2000 [00:04<01:15, 24.78it/s]      6%|▋         | 129/2000 [00:05<01:15, 24.68it/s]      7%|▋         | 132/2000 [00:05<01:15, 24.69it/s]      7%|▋         | 135/2000 [00:05<01:15, 24.77it/s]      7%|▋         | 138/2000 [00:05<01:15, 24.67it/s]      7%|▋         | 141/2000 [00:05<01:15, 24.62it/s]      7%|▋         | 144/2000 [00:05<01:14, 24.90it/s]      7%|▋         | 147/2000 [00:05<01:14, 24.84it/s]      8%|▊         | 150/2000 [00:05<01:14, 24.88it/s]      8%|▊         | 153/2000 [00:05<01:13, 24.99it/s]      8%|▊         | 156/2000 [00:06<01:13, 25.08it/s]      8%|▊         | 159/2000 [00:06<01:13, 25.11it/s]      8%|▊         | 162/2000 [00:06<01:12, 25.22it/s]      8%|▊         | 165/2000 [00:06<01:12, 25.31it/s]      8%|▊         | 168/2000 [00:06<01:11, 25.54it/s]      9%|▊         | 171/2000 [00:06<01:11, 25.54it/s]      9%|▊         | 174/2000 [00:06<01:11, 25.54it/s]      9%|▉         | 177/2000 [00:06<01:11, 25.63it/s]      9%|▉         | 180/2000 [00:07<01:10, 25.65it/s]      9%|▉         | 183/2000 [00:07<01:10, 25.75it/s]      9%|▉         | 186/2000 [00:07<01:10, 25.78it/s]      9%|▉         | 189/2000 [00:07<01:10, 25.85it/s]     10%|▉         | 192/2000 [00:07<01:09, 25.92it/s]     10%|▉         | 195/2000 [00:07<01:09, 25.94it/s]     10%|▉         | 198/2000 [00:07<01:09, 25.93it/s]     10%|█         | 201/2000 [00:07<01:09, 25.87it/s]     10%|█         | 204/2000 [00:07<01:09, 25.91it/s]     10%|█         | 207/2000 [00:08<01:09, 25.77it/s]     10%|█         | 210/2000 [00:08<01:09, 25.78it/s]     11%|█         | 213/2000 [00:08<01:09, 25.69it/s]     11%|█         | 216/2000 [00:08<01:09, 25.71it/s]     11%|█         | 219/2000 [00:08<01:09, 25.70it/s]     11%|█         | 222/2000 [00:08<01:09, 25.63it/s]     11%|█▏        | 225/2000 [00:08<01:09, 25.70it/s]     11%|█▏        | 228/2000 [00:08<01:08, 25.77it/s]     12%|█▏        | 231/2000 [00:09<01:08, 25.78it/s]     12%|█▏        | 234/2000 [00:09<01:08, 25.74it/s]     12%|█▏        | 237/2000 [00:09<01:08, 25.73it/s]     12%|█▏        | 240/2000 [00:09<01:08, 25.61it/s]     12%|█▏        | 243/2000 [00:09<01:08, 25.54it/s]     12%|█▏        | 246/2000 [00:09<01:08, 25.55it/s]     12%|█▏        | 249/2000 [00:09<01:08, 25.65it/s]     13%|█▎        | 252/2000 [00:09<01:08, 25.62it/s]     13%|█▎        | 255/2000 [00:09<01:08, 25.57it/s]     13%|█▎        | 258/2000 [00:10<01:08, 25.37it/s]     13%|█▎        | 261/2000 [00:10<01:08, 25.48it/s]     13%|█▎        | 264/2000 [00:10<01:07, 25.61it/s]     13%|█▎        | 267/2000 [00:10<01:07, 25.58it/s]     14%|█▎        | 270/2000 [00:10<01:07, 25.64it/s]     14%|█▎        | 273/2000 [00:10<01:07, 25.52it/s]     14%|█▍        | 276/2000 [00:10<01:07, 25.62it/s]     14%|█▍        | 279/2000 [00:10<01:07, 25.64it/s]     14%|█▍        | 282/2000 [00:11<01:07, 25.38it/s]     14%|█▍        | 285/2000 [00:11<01:07, 25.39it/s]     14%|█▍        | 288/2000 [00:11<01:08, 25.07it/s]     15%|█▍        | 291/2000 [00:11<01:08, 25.04it/s]     15%|█▍        | 294/2000 [00:11<01:08, 24.86it/s]     15%|█▍        | 297/2000 [00:11<01:08, 24.93it/s]     15%|█▌        | 300/2000 [00:11<01:07, 25.00it/s]     15%|█▌        | 303/2000 [00:11<01:08, 24.68it/s]     15%|█▌        | 306/2000 [00:11<01:08, 24.82it/s]     15%|█▌        | 309/2000 [00:12<01:08, 24.80it/s]     16%|█▌        | 312/2000 [00:12<01:07, 25.09it/s]     16%|█▌        | 315/2000 [00:12<01:07, 24.79it/s]     16%|█▌        | 318/2000 [00:12<01:08, 24.72it/s]     16%|█▌        | 321/2000 [00:12<01:07, 24.99it/s]     16%|█▌        | 324/2000 [00:12<01:06, 25.19it/s]     16%|█▋        | 327/2000 [00:12<01:06, 25.27it/s]     16%|█▋        | 330/2000 [00:12<01:06, 25.26it/s]     17%|█▋        | 333/2000 [00:13<01:05, 25.40it/s]     17%|█▋        | 336/2000 [00:13<01:05, 25.50it/s]     17%|█▋        | 339/2000 [00:13<01:04, 25.61it/s]     17%|█▋        | 342/2000 [00:13<01:04, 25.66it/s]     17%|█▋        | 345/2000 [00:13<01:05, 25.41it/s]     17%|█▋        | 348/2000 [00:13<01:04, 25.49it/s]     18%|█▊        | 351/2000 [00:13<01:04, 25.53it/s]     18%|█▊        | 354/2000 [00:13<01:04, 25.47it/s]     18%|█▊        | 357/2000 [00:13<01:04, 25.59it/s]     18%|█▊        | 360/2000 [00:14<01:04, 25.51it/s]     18%|█▊        | 363/2000 [00:14<01:04, 25.34it/s]     18%|█▊        | 366/2000 [00:14<01:04, 25.48it/s]     18%|█▊        | 369/2000 [00:14<01:04, 25.19it/s]     19%|█▊        | 372/2000 [00:14<01:04, 25.34it/s]     19%|█▉        | 375/2000 [00:14<01:04, 25.37it/s]     19%|█▉        | 378/2000 [00:14<01:03, 25.38it/s]     19%|█▉        | 381/2000 [00:14<01:03, 25.47it/s]     19%|█▉        | 384/2000 [00:15<01:03, 25.52it/s]     19%|█▉        | 387/2000 [00:15<01:02, 25.63it/s]     20%|█▉        | 390/2000 [00:15<01:02, 25.71it/s]     20%|█▉        | 393/2000 [00:15<01:02, 25.58it/s]     20%|█▉        | 396/2000 [00:15<01:03, 25.28it/s]     20%|█▉        | 399/2000 [00:15<01:04, 25.00it/s]     20%|██        | 402/2000 [00:15<01:03, 25.13it/s]     20%|██        | 405/2000 [00:15<01:03, 25.24it/s]     20%|██        | 408/2000 [00:15<01:02, 25.39it/s]     21%|██        | 411/2000 [00:16<01:02, 25.39it/s]     21%|██        | 414/2000 [00:16<01:02, 25.42it/s]     21%|██        | 417/2000 [00:16<01:01, 25.62it/s]     21%|██        | 420/2000 [00:16<01:01, 25.75it/s]     21%|██        | 423/2000 [00:16<01:01, 25.58it/s]     21%|██▏       | 426/2000 [00:16<01:02, 25.33it/s]     21%|██▏       | 429/2000 [00:16<01:02, 25.12it/s]     22%|██▏       | 432/2000 [00:16<01:02, 24.96it/s]     22%|██▏       | 435/2000 [00:17<01:02, 24.86it/s]     22%|██▏       | 438/2000 [00:17<01:02, 25.03it/s]     22%|██▏       | 441/2000 [00:17<01:02, 25.10it/s]     22%|██▏       | 444/2000 [00:17<01:01, 25.49it/s]     22%|██▏       | 447/2000 [00:17<01:00, 25.68it/s]     22%|██▎       | 450/2000 [00:17<00:59, 26.10it/s]     23%|██▎       | 453/2000 [00:17<00:58, 26.29it/s]     23%|██▎       | 456/2000 [00:17<00:58, 26.30it/s]     23%|██▎       | 459/2000 [00:17<00:58, 26.14it/s]     23%|██▎       | 462/2000 [00:18<00:58, 26.19it/s]     23%|██▎       | 465/2000 [00:18<00:58, 26.30it/s]     23%|██▎       | 468/2000 [00:18<00:57, 26.56it/s]     24%|██▎       | 471/2000 [00:18<00:56, 26.88it/s]     24%|██▎       | 474/2000 [00:18<00:57, 26.72it/s]     24%|██▍       | 477/2000 [00:18<00:57, 26.58it/s]     24%|██▍       | 480/2000 [00:18<00:56, 26.78it/s]     24%|██▍       | 483/2000 [00:18<00:56, 27.02it/s]     24%|██▍       | 486/2000 [00:18<00:55, 27.37it/s]     24%|██▍       | 490/2000 [00:19<00:53, 28.47it/s]     25%|██▍       | 493/2000 [00:19<00:53, 28.40it/s]     25%|██▍       | 496/2000 [00:19<00:53, 28.27it/s]     25%|██▍       | 499/2000 [00:19<00:53, 28.01it/s]     25%|██▌       | 502/2000 [00:19<00:53, 28.11it/s]     25%|██▌       | 505/2000 [00:19<00:52, 28.30it/s]     25%|██▌       | 508/2000 [00:19<00:52, 28.18it/s]     26%|██▌       | 511/2000 [00:19<00:52, 28.56it/s]     26%|██▌       | 514/2000 [00:19<00:52, 28.09it/s]     26%|██▌       | 517/2000 [00:20<00:52, 28.46it/s]     26%|██▌       | 520/2000 [00:20<00:51, 28.81it/s]     26%|██▌       | 523/2000 [00:20<00:50, 29.08it/s]     26%|██▋       | 526/2000 [00:20<00:51, 28.85it/s]     26%|██▋       | 529/2000 [00:20<00:51, 28.82it/s]     27%|██▋       | 532/2000 [00:20<00:51, 28.60it/s]     27%|██▋       | 535/2000 [00:20<00:51, 28.50it/s]     27%|██▋       | 538/2000 [00:20<00:51, 28.51it/s]     27%|██▋       | 541/2000 [00:20<00:53, 27.44it/s]     27%|██▋       | 544/2000 [00:21<00:52, 27.50it/s]     27%|██▋       | 547/2000 [00:21<00:51, 28.13it/s]     28%|██▊       | 551/2000 [00:21<00:49, 29.15it/s]     28%|██▊       | 555/2000 [00:21<00:48, 29.82it/s]     28%|██▊       | 558/2000 [00:21<00:49, 29.13it/s]     28%|██▊       | 561/2000 [00:21<00:50, 28.75it/s]     28%|██▊       | 564/2000 [00:21<00:49, 28.97it/s]     28%|██▊       | 567/2000 [00:21<00:50, 28.30it/s]     28%|██▊       | 570/2000 [00:21<00:50, 28.12it/s]     29%|██▊       | 573/2000 [00:22<00:50, 28.10it/s]     29%|██▉       | 577/2000 [00:22<00:48, 29.19it/s]     29%|██▉       | 581/2000 [00:22<00:47, 29.83it/s]     29%|██▉       | 584/2000 [00:22<00:47, 29.62it/s]     29%|██▉       | 587/2000 [00:22<00:48, 29.12it/s]     30%|██▉       | 590/2000 [00:22<00:49, 28.47it/s]     30%|██▉       | 593/2000 [00:22<00:49, 28.59it/s]     30%|██▉       | 596/2000 [00:22<00:48, 28.89it/s]     30%|██▉       | 599/2000 [00:22<00:49, 28.47it/s]     30%|███       | 602/2000 [00:23<00:49, 28.04it/s]     30%|███       | 605/2000 [00:23<00:50, 27.43it/s]     30%|███       | 608/2000 [00:23<00:50, 27.57it/s]     31%|███       | 611/2000 [00:23<00:49, 27.85it/s]     31%|███       | 614/2000 [00:23<00:50, 27.44it/s]     31%|███       | 617/2000 [00:23<00:49, 27.80it/s]     31%|███       | 620/2000 [00:23<00:50, 27.36it/s]     31%|███       | 623/2000 [00:23<00:50, 27.04it/s]     31%|███▏      | 626/2000 [00:23<00:50, 26.96it/s]     31%|███▏      | 629/2000 [00:24<00:50, 27.19it/s]     32%|███▏      | 632/2000 [00:24<00:50, 26.97it/s]     32%|███▏      | 635/2000 [00:24<00:50, 26.98it/s]     32%|███▏      | 638/2000 [00:24<00:50, 27.01it/s]     32%|███▏      | 641/2000 [00:24<00:50, 27.07it/s]     32%|███▏      | 644/2000 [00:24<00:51, 26.31it/s]     32%|███▏      | 647/2000 [00:24<00:51, 26.21it/s]     32%|███▎      | 650/2000 [00:24<00:50, 26.60it/s]     33%|███▎      | 653/2000 [00:24<00:49, 27.17it/s]     33%|███▎      | 656/2000 [00:25<00:48, 27.73it/s]     33%|███▎      | 659/2000 [00:25<00:47, 28.19it/s]     33%|███▎      | 662/2000 [00:25<00:48, 27.86it/s]     33%|███▎      | 665/2000 [00:25<00:47, 28.06it/s]     33%|███▎      | 668/2000 [00:25<00:46, 28.36it/s]     34%|███▎      | 672/2000 [00:25<00:45, 29.15it/s]     34%|███▍      | 675/2000 [00:25<00:45, 29.24it/s]     34%|███▍      | 678/2000 [00:25<00:45, 29.05it/s]     34%|███▍      | 681/2000 [00:25<00:45, 29.05it/s]     34%|███▍      | 684/2000 [00:25<00:45, 29.09it/s]     34%|███▍      | 687/2000 [00:26<00:45, 29.10it/s]     34%|███▍      | 690/2000 [00:26<00:45, 29.11it/s]     35%|███▍      | 693/2000 [00:26<00:44, 29.29it/s]     35%|███▍      | 696/2000 [00:26<00:44, 29.43it/s]     35%|███▍      | 699/2000 [00:26<00:44, 29.15it/s]     35%|███▌      | 702/2000 [00:26<00:44, 29.25it/s]     35%|███▌      | 705/2000 [00:26<00:44, 28.84it/s]     35%|███▌      | 708/2000 [00:26<00:44, 28.83it/s]     36%|███▌      | 711/2000 [00:26<00:44, 28.89it/s]     36%|███▌      | 714/2000 [00:27<00:44, 28.88it/s]     36%|███▌      | 718/2000 [00:27<00:43, 29.56it/s]     36%|███▌      | 721/2000 [00:27<00:44, 28.67it/s]     36%|███▌      | 724/2000 [00:27<00:44, 28.89it/s]     36%|███▋      | 727/2000 [00:27<00:44, 28.75it/s]     36%|███▋      | 730/2000 [00:27<00:44, 28.57it/s]     37%|███▋      | 733/2000 [00:27<00:44, 28.75it/s]     37%|███▋      | 736/2000 [00:27<00:44, 28.21it/s]     37%|███▋      | 739/2000 [00:27<00:44, 28.48it/s]     37%|███▋      | 742/2000 [00:28<00:44, 28.10it/s]     37%|███▋      | 745/2000 [00:28<00:45, 27.45it/s]     37%|███▋      | 748/2000 [00:28<00:45, 27.25it/s]     38%|███▊      | 751/2000 [00:28<00:44, 27.83it/s]     38%|███▊      | 754/2000 [00:28<00:45, 27.21it/s]     38%|███▊      | 758/2000 [00:28<00:44, 28.03it/s]     38%|███▊      | 762/2000 [00:28<00:43, 28.77it/s]     38%|███▊      | 765/2000 [00:28<00:42, 29.03it/s]     38%|███▊      | 768/2000 [00:28<00:42, 29.18it/s]     39%|███▊      | 771/2000 [00:29<00:41, 29.38it/s]     39%|███▉      | 775/2000 [00:29<00:40, 30.09it/s]     39%|███▉      | 779/2000 [00:29<00:40, 30.17it/s]     39%|███▉      | 783/2000 [00:29<00:41, 29.50it/s]     39%|███▉      | 786/2000 [00:29<00:41, 29.26it/s]     39%|███▉      | 789/2000 [00:29<00:41, 29.39it/s]     40%|███▉      | 793/2000 [00:29<00:40, 29.80it/s]     40%|███▉      | 796/2000 [00:29<00:41, 29.29it/s]     40%|███▉      | 799/2000 [00:29<00:40, 29.34it/s]     40%|████      | 802/2000 [00:30<00:41, 28.53it/s]     40%|████      | 805/2000 [00:30<00:41, 28.78it/s]     40%|████      | 808/2000 [00:30<00:42, 27.88it/s]     41%|████      | 811/2000 [00:30<00:42, 28.09it/s]     41%|████      | 814/2000 [00:30<00:41, 28.61it/s]     41%|████      | 817/2000 [00:30<00:41, 28.84it/s]     41%|████      | 821/2000 [00:30<00:39, 29.65it/s]     41%|████▏     | 825/2000 [00:30<00:39, 30.00it/s]     41%|████▏     | 829/2000 [00:30<00:38, 30.33it/s]     42%|████▏     | 833/2000 [00:31<00:38, 30.18it/s]     42%|████▏     | 837/2000 [00:31<00:39, 29.55it/s]     42%|████▏     | 841/2000 [00:31<00:38, 30.25it/s]     42%|████▏     | 845/2000 [00:31<00:37, 30.83it/s]     42%|████▏     | 849/2000 [00:31<00:36, 31.27it/s]     43%|████▎     | 853/2000 [00:31<00:36, 31.79it/s]     43%|████▎     | 857/2000 [00:31<00:35, 31.91it/s]     43%|████▎     | 861/2000 [00:32<00:36, 31.26it/s]     43%|████▎     | 865/2000 [00:32<00:36, 31.07it/s]     43%|████▎     | 869/2000 [00:32<00:35, 31.46it/s]     44%|████▎     | 873/2000 [00:32<00:35, 32.00it/s]     44%|████▍     | 877/2000 [00:32<00:35, 31.67it/s]     44%|████▍     | 881/2000 [00:32<00:35, 31.42it/s]     44%|████▍     | 885/2000 [00:32<00:35, 31.16it/s]     44%|████▍     | 889/2000 [00:32<00:35, 31.53it/s]     45%|████▍     | 893/2000 [00:33<00:35, 31.37it/s]     45%|████▍     | 897/2000 [00:33<00:35, 31.35it/s]     45%|████▌     | 901/2000 [00:33<00:35, 31.35it/s]     45%|████▌     | 905/2000 [00:33<00:34, 32.02it/s]     45%|████▌     | 909/2000 [00:33<00:34, 31.72it/s]     46%|████▌     | 913/2000 [00:33<00:33, 32.01it/s]     46%|████▌     | 917/2000 [00:33<00:33, 31.96it/s]     46%|████▌     | 921/2000 [00:33<00:33, 32.26it/s]     46%|████▋     | 925/2000 [00:34<00:33, 31.68it/s]     46%|████▋     | 929/2000 [00:34<00:34, 30.68it/s]     47%|████▋     | 933/2000 [00:34<00:34, 31.03it/s]     47%|████▋     | 937/2000 [00:34<00:34, 31.09it/s]     47%|████▋     | 941/2000 [00:34<00:33, 31.68it/s]     47%|████▋     | 945/2000 [00:34<00:33, 31.07it/s]     47%|████▋     | 949/2000 [00:34<00:33, 31.45it/s]     48%|████▊     | 953/2000 [00:34<00:32, 32.41it/s]     48%|████▊     | 957/2000 [00:35<00:32, 31.80it/s]     48%|████▊     | 961/2000 [00:35<00:32, 31.82it/s]     48%|████▊     | 965/2000 [00:35<00:32, 31.83it/s]     48%|████▊     | 969/2000 [00:35<00:32, 31.75it/s]     49%|████▊     | 973/2000 [00:35<00:32, 31.36it/s]     49%|████▉     | 977/2000 [00:35<00:32, 31.75it/s]     49%|████▉     | 981/2000 [00:35<00:31, 32.27it/s]     49%|████▉     | 985/2000 [00:35<00:31, 31.74it/s]     49%|████▉     | 989/2000 [00:36<00:31, 31.83it/s]     50%|████▉     | 993/2000 [00:36<00:31, 31.56it/s]     50%|████▉     | 997/2000 [00:36<00:31, 31.56it/s]     50%|█████     | 1001/2000 [00:36<00:31, 31.74it/s]     50%|█████     | 1005/2000 [00:36<00:32, 30.59it/s]     50%|█████     | 1009/2000 [00:36<00:32, 30.59it/s]     51%|█████     | 1013/2000 [00:36<00:33, 29.54it/s]     51%|█████     | 1017/2000 [00:36<00:32, 30.31it/s]     51%|█████     | 1021/2000 [00:37<00:31, 31.03it/s]     51%|█████▏    | 1025/2000 [00:37<00:30, 31.68it/s]     51%|█████▏    | 1029/2000 [00:37<00:30, 31.69it/s]     52%|█████▏    | 1033/2000 [00:37<00:30, 32.07it/s]     52%|█████▏    | 1037/2000 [00:37<00:29, 32.18it/s]     52%|█████▏    | 1041/2000 [00:37<00:30, 31.91it/s]     52%|█████▏    | 1045/2000 [00:37<00:30, 31.42it/s]     52%|█████▏    | 1049/2000 [00:37<00:30, 31.17it/s]     53%|█████▎    | 1053/2000 [00:38<00:29, 31.83it/s]     53%|█████▎    | 1057/2000 [00:38<00:29, 31.95it/s]     53%|█████▎    | 1061/2000 [00:38<00:28, 32.66it/s]     53%|█████▎    | 1065/2000 [00:38<00:28, 32.52it/s]     53%|█████▎    | 1069/2000 [00:38<00:28, 32.66it/s]     54%|█████▎    | 1073/2000 [00:38<00:28, 32.38it/s]     54%|█████▍    | 1077/2000 [00:38<00:28, 32.06it/s]     54%|█████▍    | 1081/2000 [00:38<00:28, 32.31it/s]     54%|█████▍    | 1085/2000 [00:39<00:27, 33.09it/s]     54%|█████▍    | 1089/2000 [00:39<00:27, 33.70it/s]     55%|█████▍    | 1093/2000 [00:39<00:26, 33.68it/s]     55%|█████▍    | 1097/2000 [00:39<00:26, 33.99it/s]     55%|█████▌    | 1101/2000 [00:39<00:25, 35.01it/s]     55%|█████▌    | 1105/2000 [00:39<00:25, 35.12it/s]     55%|█████▌    | 1109/2000 [00:39<00:25, 35.34it/s]     56%|█████▌    | 1113/2000 [00:39<00:24, 35.98it/s]     56%|█████▌    | 1117/2000 [00:39<00:24, 35.66it/s]     56%|█████▌    | 1121/2000 [00:40<00:24, 35.91it/s]     56%|█████▋    | 1125/2000 [00:40<00:24, 35.78it/s]     56%|█████▋    | 1129/2000 [00:40<00:24, 35.63it/s]     57%|█████▋    | 1133/2000 [00:40<00:24, 34.82it/s]     57%|█████▋    | 1137/2000 [00:40<00:24, 35.17it/s]     57%|█████▋    | 1141/2000 [00:40<00:24, 35.73it/s]     57%|█████▋    | 1145/2000 [00:40<00:23, 36.03it/s]     57%|█████▋    | 1149/2000 [00:40<00:23, 36.87it/s]     58%|█████▊    | 1154/2000 [00:40<00:22, 37.86it/s]     58%|█████▊    | 1159/2000 [00:41<00:21, 38.47it/s]     58%|█████▊    | 1163/2000 [00:41<00:21, 38.71it/s]     58%|█████▊    | 1168/2000 [00:41<00:21, 39.31it/s]     59%|█████▊    | 1172/2000 [00:41<00:21, 38.81it/s]     59%|█████▉    | 1176/2000 [00:41<00:21, 38.52it/s]     59%|█████▉    | 1180/2000 [00:41<00:21, 37.49it/s]     59%|█████▉    | 1184/2000 [00:41<00:22, 36.66it/s]     59%|█████▉    | 1188/2000 [00:41<00:21, 36.93it/s]     60%|█████▉    | 1192/2000 [00:42<00:22, 35.69it/s]     60%|█████▉    | 1196/2000 [00:42<00:22, 35.18it/s]     60%|██████    | 1200/2000 [00:42<00:22, 34.92it/s]     60%|██████    | 1204/2000 [00:42<00:22, 34.97it/s]     60%|██████    | 1208/2000 [00:42<00:21, 36.12it/s]     61%|██████    | 1212/2000 [00:42<00:21, 36.53it/s]     61%|██████    | 1216/2000 [00:42<00:21, 36.84it/s]     61%|██████    | 1220/2000 [00:42<00:21, 36.03it/s]     61%|██████    | 1224/2000 [00:42<00:20, 37.05it/s]     61%|██████▏   | 1228/2000 [00:43<00:20, 36.87it/s]     62%|██████▏   | 1232/2000 [00:43<00:20, 36.81it/s]     62%|██████▏   | 1236/2000 [00:43<00:20, 36.53it/s]     62%|██████▏   | 1240/2000 [00:43<00:20, 36.68it/s]     62%|██████▏   | 1244/2000 [00:43<00:21, 35.97it/s]     62%|██████▏   | 1248/2000 [00:43<00:20, 36.03it/s]     63%|██████▎   | 1252/2000 [00:43<00:20, 36.09it/s]     63%|██████▎   | 1256/2000 [00:43<00:20, 36.61it/s]     63%|██████▎   | 1260/2000 [00:43<00:20, 36.50it/s]     63%|██████▎   | 1264/2000 [00:43<00:19, 37.12it/s]     63%|██████▎   | 1268/2000 [00:44<00:19, 37.27it/s]     64%|██████▎   | 1272/2000 [00:44<00:19, 37.46it/s]     64%|██████▍   | 1276/2000 [00:44<00:19, 37.19it/s]     64%|██████▍   | 1280/2000 [00:44<00:19, 37.70it/s]     64%|██████▍   | 1284/2000 [00:44<00:18, 38.12it/s]     64%|██████▍   | 1288/2000 [00:44<00:18, 37.89it/s]     65%|██████▍   | 1293/2000 [00:44<00:18, 39.17it/s]     65%|██████▍   | 1297/2000 [00:44<00:18, 38.55it/s]     65%|██████▌   | 1301/2000 [00:44<00:18, 37.39it/s]     65%|██████▌   | 1305/2000 [00:45<00:18, 38.09it/s]     66%|██████▌   | 1310/2000 [00:45<00:17, 38.57it/s]     66%|██████▌   | 1314/2000 [00:45<00:17, 38.49it/s]     66%|██████▌   | 1318/2000 [00:45<00:18, 37.84it/s]     66%|██████▌   | 1322/2000 [00:45<00:18, 37.29it/s]     66%|██████▋   | 1326/2000 [00:45<00:17, 37.89it/s]     66%|██████▋   | 1330/2000 [00:45<00:17, 38.35it/s]     67%|██████▋   | 1334/2000 [00:45<00:17, 38.06it/s]     67%|██████▋   | 1338/2000 [00:45<00:17, 37.96it/s]     67%|██████▋   | 1342/2000 [00:46<00:17, 37.37it/s]     67%|██████▋   | 1346/2000 [00:46<00:17, 36.87it/s]     68%|██████▊   | 1350/2000 [00:46<00:17, 37.21it/s]     68%|██████▊   | 1354/2000 [00:46<00:17, 37.45it/s]     68%|██████▊   | 1358/2000 [00:46<00:17, 37.24it/s]     68%|██████▊   | 1362/2000 [00:46<00:17, 37.16it/s]     68%|██████▊   | 1366/2000 [00:46<00:17, 36.15it/s]     68%|██████▊   | 1370/2000 [00:46<00:17, 35.10it/s]     69%|██████▊   | 1374/2000 [00:46<00:17, 35.77it/s]     69%|██████▉   | 1378/2000 [00:47<00:16, 36.81it/s]     69%|██████▉   | 1382/2000 [00:47<00:16, 36.46it/s]     69%|██████▉   | 1386/2000 [00:47<00:16, 36.44it/s]     70%|██████▉   | 1390/2000 [00:47<00:16, 36.41it/s]     70%|██████▉   | 1394/2000 [00:47<00:16, 36.69it/s]     70%|██████▉   | 1398/2000 [00:47<00:16, 37.02it/s]     70%|███████   | 1403/2000 [00:47<00:15, 37.76it/s]     70%|███████   | 1407/2000 [00:47<00:15, 37.56it/s]     71%|███████   | 1411/2000 [00:47<00:15, 37.95it/s]     71%|███████   | 1415/2000 [00:48<00:15, 37.34it/s]     71%|███████   | 1419/2000 [00:48<00:15, 37.38it/s]     71%|███████   | 1424/2000 [00:48<00:15, 38.19it/s]     71%|███████▏  | 1428/2000 [00:48<00:15, 37.63it/s]     72%|███████▏  | 1433/2000 [00:48<00:14, 38.96it/s]     72%|███████▏  | 1437/2000 [00:48<00:14, 38.74it/s]     72%|███████▏  | 1442/2000 [00:48<00:14, 39.45it/s]     72%|███████▏  | 1446/2000 [00:48<00:14, 39.18it/s]     72%|███████▎  | 1450/2000 [00:48<00:14, 39.17it/s]     73%|███████▎  | 1454/2000 [00:49<00:14, 38.95it/s]     73%|███████▎  | 1459/2000 [00:49<00:13, 39.22it/s]     73%|███████▎  | 1463/2000 [00:49<00:13, 39.15it/s]     73%|███████▎  | 1467/2000 [00:49<00:13, 39.21it/s]     74%|███████▎  | 1472/2000 [00:49<00:13, 39.91it/s]     74%|███████▍  | 1477/2000 [00:49<00:12, 40.39it/s]     74%|███████▍  | 1482/2000 [00:49<00:12, 40.51it/s]     74%|███████▍  | 1487/2000 [00:49<00:12, 40.44it/s]     75%|███████▍  | 1492/2000 [00:49<00:12, 41.89it/s]     75%|███████▍  | 1497/2000 [00:50<00:12, 41.63it/s]     75%|███████▌  | 1502/2000 [00:50<00:12, 41.34it/s]     75%|███████▌  | 1507/2000 [00:50<00:12, 40.91it/s]     76%|███████▌  | 1512/2000 [00:50<00:11, 41.27it/s]     76%|███████▌  | 1517/2000 [00:50<00:11, 40.27it/s]     76%|███████▌  | 1522/2000 [00:50<00:11, 39.93it/s]     76%|███████▋  | 1527/2000 [00:50<00:11, 40.08it/s]     77%|███████▋  | 1532/2000 [00:50<00:11, 39.58it/s]     77%|███████▋  | 1536/2000 [00:51<00:11, 39.35it/s]     77%|███████▋  | 1541/2000 [00:51<00:11, 39.51it/s]     77%|███████▋  | 1545/2000 [00:51<00:11, 38.34it/s]     77%|███████▋  | 1549/2000 [00:51<00:11, 37.93it/s]     78%|███████▊  | 1553/2000 [00:51<00:11, 38.27it/s]     78%|███████▊  | 1557/2000 [00:51<00:11, 38.53it/s]     78%|███████▊  | 1561/2000 [00:51<00:11, 38.63it/s]     78%|███████▊  | 1565/2000 [00:51<00:11, 38.71it/s]     78%|███████▊  | 1569/2000 [00:51<00:11, 38.99it/s]     79%|███████▊  | 1573/2000 [00:52<00:11, 38.15it/s]     79%|███████▉  | 1577/2000 [00:52<00:11, 37.97it/s]     79%|███████▉  | 1581/2000 [00:52<00:10, 38.32it/s]     79%|███████▉  | 1586/2000 [00:52<00:10, 39.96it/s]     80%|███████▉  | 1591/2000 [00:52<00:09, 41.71it/s]     80%|███████▉  | 1596/2000 [00:52<00:09, 42.95it/s]     80%|████████  | 1601/2000 [00:52<00:09, 42.72it/s]     80%|████████  | 1606/2000 [00:52<00:08, 43.85it/s]     81%|████████  | 1611/2000 [00:52<00:09, 42.83it/s]     81%|████████  | 1616/2000 [00:53<00:09, 42.49it/s]     81%|████████  | 1621/2000 [00:53<00:09, 41.44it/s]     81%|████████▏ | 1626/2000 [00:53<00:09, 40.97it/s]     82%|████████▏ | 1631/2000 [00:53<00:09, 40.21it/s]     82%|████████▏ | 1636/2000 [00:53<00:09, 40.27it/s]     82%|████████▏ | 1641/2000 [00:53<00:08, 40.67it/s]     82%|████████▏ | 1646/2000 [00:53<00:08, 41.15it/s]     83%|████████▎ | 1651/2000 [00:53<00:08, 40.60it/s]     83%|████████▎ | 1656/2000 [00:54<00:08, 40.92it/s]     83%|████████▎ | 1661/2000 [00:54<00:08, 41.53it/s]     83%|████████▎ | 1666/2000 [00:54<00:08, 41.71it/s]     84%|████████▎ | 1671/2000 [00:54<00:07, 41.66it/s]     84%|████████▍ | 1676/2000 [00:54<00:08, 40.26it/s]     84%|████████▍ | 1681/2000 [00:54<00:07, 41.44it/s]     84%|████████▍ | 1686/2000 [00:54<00:07, 41.34it/s]     85%|████████▍ | 1691/2000 [00:54<00:07, 42.20it/s]     85%|████████▍ | 1696/2000 [00:54<00:07, 41.30it/s]     85%|████████▌ | 1701/2000 [00:55<00:07, 41.04it/s]     85%|████████▌ | 1706/2000 [00:55<00:07, 41.55it/s]     86%|████████▌ | 1711/2000 [00:55<00:07, 40.67it/s]     86%|████████▌ | 1716/2000 [00:55<00:07, 40.53it/s]     86%|████████▌ | 1721/2000 [00:55<00:06, 40.34it/s]     86%|████████▋ | 1726/2000 [00:55<00:06, 40.02it/s]     87%|████████▋ | 1731/2000 [00:55<00:07, 38.29it/s]     87%|████████▋ | 1735/2000 [00:55<00:06, 38.39it/s]     87%|████████▋ | 1740/2000 [00:56<00:06, 39.04it/s]     87%|████████▋ | 1745/2000 [00:56<00:06, 39.43it/s]     87%|████████▋ | 1749/2000 [00:56<00:06, 38.73it/s]     88%|████████▊ | 1753/2000 [00:56<00:06, 38.80it/s]     88%|████████▊ | 1758/2000 [00:56<00:06, 40.31it/s]     88%|████████▊ | 1763/2000 [00:56<00:05, 41.38it/s]     88%|████████▊ | 1768/2000 [00:56<00:05, 40.44it/s]     89%|████████▊ | 1773/2000 [00:56<00:05, 41.37it/s]     89%|████████▉ | 1778/2000 [00:57<00:05, 41.50it/s]     89%|████████▉ | 1783/2000 [00:57<00:05, 40.65it/s]     89%|████████▉ | 1788/2000 [00:57<00:05, 40.83it/s]     90%|████████▉ | 1793/2000 [00:57<00:05, 41.29it/s]     90%|████████▉ | 1798/2000 [00:57<00:04, 41.44it/s]     90%|█████████ | 1803/2000 [00:57<00:04, 42.40it/s]     90%|█████████ | 1808/2000 [00:57<00:04, 42.41it/s]     91%|█████████ | 1813/2000 [00:57<00:04, 42.27it/s]     91%|█████████ | 1818/2000 [00:57<00:04, 43.04it/s]     91%|█████████ | 1823/2000 [00:58<00:04, 42.54it/s]     91%|█████████▏| 1828/2000 [00:58<00:04, 42.14it/s]     92%|█████████▏| 1833/2000 [00:58<00:03, 43.17it/s]     92%|█████████▏| 1838/2000 [00:58<00:03, 42.49it/s]     92%|█████████▏| 1843/2000 [00:58<00:03, 42.84it/s]     92%|█████████▏| 1848/2000 [00:58<00:03, 43.32it/s]     93%|█████████▎| 1853/2000 [00:58<00:03, 43.42it/s]     93%|█████████▎| 1858/2000 [00:58<00:03, 44.38it/s]     93%|█████████▎| 1863/2000 [00:59<00:03, 43.69it/s]     93%|█████████▎| 1868/2000 [00:59<00:03, 42.36it/s]     94%|█████████▎| 1873/2000 [00:59<00:03, 41.28it/s]     94%|█████████▍| 1878/2000 [00:59<00:02, 41.73it/s]     94%|█████████▍| 1883/2000 [00:59<00:02, 41.09it/s]     94%|█████████▍| 1888/2000 [00:59<00:02, 40.17it/s]     95%|█████████▍| 1893/2000 [00:59<00:02, 39.44it/s]     95%|█████████▍| 1898/2000 [00:59<00:02, 40.58it/s]     95%|█████████▌| 1903/2000 [01:00<00:02, 41.65it/s]     95%|█████████▌| 1908/2000 [01:00<00:02, 42.12it/s]     96%|█████████▌| 1913/2000 [01:00<00:02, 41.75it/s]     96%|█████████▌| 1918/2000 [01:00<00:02, 40.33it/s]     96%|█████████▌| 1923/2000 [01:00<00:01, 40.42it/s]     96%|█████████▋| 1928/2000 [01:00<00:01, 40.74it/s]     97%|█████████▋| 1933/2000 [01:00<00:01, 41.31it/s]     97%|█████████▋| 1938/2000 [01:00<00:01, 41.50it/s]     97%|█████████▋| 1943/2000 [01:00<00:01, 42.08it/s]     97%|█████████▋| 1949/2000 [01:01<00:01, 44.47it/s]     98%|█████████▊| 1954/2000 [01:01<00:01, 44.18it/s]     98%|█████████▊| 1959/2000 [01:01<00:00, 43.45it/s]     98%|█████████▊| 1965/2000 [01:01<00:00, 44.84it/s]     98%|█████████▊| 1970/2000 [01:01<00:00, 44.43it/s]     99%|█████████▉| 1975/2000 [01:01<00:00, 44.05it/s]     99%|█████████▉| 1980/2000 [01:01<00:00, 43.77it/s]     99%|█████████▉| 1985/2000 [01:01<00:00, 43.18it/s]    100%|█████████▉| 1990/2000 [01:02<00:00, 42.16it/s]    100%|█████████▉| 1995/2000 [01:02<00:00, 42.36it/s]    100%|██████████| 2000/2000 [01:02<00:00, 43.67it/s]    100%|██████████| 2000/2000 [01:02<00:00, 32.12it/s]
+      0%|          | 0/2000 [00:00<?, ?it/s]      0%|          | 5/2000 [00:00<00:41, 48.11it/s]      0%|          | 10/2000 [00:00<00:52, 38.07it/s]      1%|          | 14/2000 [00:00<00:59, 33.54it/s]      1%|          | 18/2000 [00:00<01:03, 31.14it/s]      1%|          | 22/2000 [00:00<01:06, 29.93it/s]      1%|▏         | 26/2000 [00:00<01:07, 29.12it/s]      1%|▏         | 29/2000 [00:00<01:08, 28.84it/s]      2%|▏         | 32/2000 [00:01<01:08, 28.52it/s]      2%|▏         | 35/2000 [00:01<01:09, 28.25it/s]      2%|▏         | 38/2000 [00:01<01:09, 28.13it/s]      2%|▏         | 41/2000 [00:01<01:10, 27.73it/s]      2%|▏         | 44/2000 [00:01<01:10, 27.72it/s]      2%|▏         | 47/2000 [00:01<01:10, 27.78it/s]      2%|▎         | 50/2000 [00:01<01:09, 27.91it/s]      3%|▎         | 53/2000 [00:01<01:09, 27.91it/s]      3%|▎         | 56/2000 [00:01<01:09, 27.81it/s]      3%|▎         | 59/2000 [00:02<01:09, 27.83it/s]      3%|▎         | 62/2000 [00:02<01:09, 27.85it/s]      3%|▎         | 65/2000 [00:02<01:09, 27.95it/s]      3%|▎         | 68/2000 [00:02<01:09, 27.90it/s]      4%|▎         | 71/2000 [00:02<01:08, 28.01it/s]      4%|▎         | 74/2000 [00:02<01:08, 27.96it/s]      4%|▍         | 77/2000 [00:02<01:08, 27.90it/s]      4%|▍         | 80/2000 [00:02<01:08, 27.93it/s]      4%|▍         | 83/2000 [00:02<01:08, 27.81it/s]      4%|▍         | 86/2000 [00:02<01:09, 27.66it/s]      4%|▍         | 89/2000 [00:03<01:09, 27.67it/s]      5%|▍         | 92/2000 [00:03<01:08, 27.74it/s]      5%|▍         | 95/2000 [00:03<01:08, 27.82it/s]      5%|▍         | 98/2000 [00:03<01:08, 27.89it/s]      5%|▌         | 101/2000 [00:03<01:08, 27.78it/s]      5%|▌         | 104/2000 [00:03<01:07, 27.94it/s]      5%|▌         | 107/2000 [00:03<01:07, 27.97it/s]      6%|▌         | 110/2000 [00:03<01:07, 28.05it/s]      6%|▌         | 113/2000 [00:03<01:07, 27.91it/s]      6%|▌         | 116/2000 [00:04<01:07, 27.88it/s]      6%|▌         | 119/2000 [00:04<01:07, 27.93it/s]      6%|▌         | 122/2000 [00:04<01:07, 27.96it/s]      6%|▋         | 125/2000 [00:04<01:07, 27.97it/s]      6%|▋         | 128/2000 [00:04<01:06, 27.99it/s]      7%|▋         | 131/2000 [00:04<01:06, 28.01it/s]      7%|▋         | 134/2000 [00:04<01:06, 28.00it/s]      7%|▋         | 137/2000 [00:04<01:06, 27.86it/s]      7%|▋         | 140/2000 [00:04<01:06, 27.86it/s]      7%|▋         | 143/2000 [00:05<01:06, 27.78it/s]      7%|▋         | 146/2000 [00:05<01:06, 27.81it/s]      7%|▋         | 149/2000 [00:05<01:06, 27.90it/s]      8%|▊         | 152/2000 [00:05<01:06, 27.84it/s]      8%|▊         | 155/2000 [00:05<01:06, 27.85it/s]      8%|▊         | 158/2000 [00:05<01:06, 27.89it/s]      8%|▊         | 161/2000 [00:05<01:06, 27.80it/s]      8%|▊         | 164/2000 [00:05<01:05, 27.94it/s]      8%|▊         | 167/2000 [00:05<01:05, 27.83it/s]      8%|▊         | 170/2000 [00:05<01:05, 27.85it/s]      9%|▊         | 173/2000 [00:06<01:05, 27.92it/s]      9%|▉         | 176/2000 [00:06<01:05, 27.97it/s]      9%|▉         | 179/2000 [00:06<01:04, 28.06it/s]      9%|▉         | 182/2000 [00:06<01:04, 28.04it/s]      9%|▉         | 185/2000 [00:06<01:04, 28.04it/s]      9%|▉         | 188/2000 [00:06<01:04, 28.04it/s]     10%|▉         | 191/2000 [00:06<01:04, 27.89it/s]     10%|▉         | 194/2000 [00:06<01:04, 27.86it/s]     10%|▉         | 197/2000 [00:06<01:04, 27.90it/s]     10%|█         | 200/2000 [00:07<01:04, 27.94it/s]     10%|█         | 203/2000 [00:07<01:04, 27.95it/s]     10%|█         | 206/2000 [00:07<01:03, 28.04it/s]     10%|█         | 209/2000 [00:07<01:03, 28.01it/s]     11%|█         | 212/2000 [00:07<01:03, 27.98it/s]     11%|█         | 215/2000 [00:07<01:03, 27.90it/s]     11%|█         | 218/2000 [00:07<01:03, 27.94it/s]     11%|█         | 221/2000 [00:07<01:03, 27.92it/s]     11%|█         | 224/2000 [00:07<01:03, 27.91it/s]     11%|█▏        | 227/2000 [00:08<01:03, 27.91it/s]     12%|█▏        | 230/2000 [00:08<01:03, 28.01it/s]     12%|█▏        | 233/2000 [00:08<01:03, 28.02it/s]     12%|█▏        | 236/2000 [00:08<01:02, 28.18it/s]     12%|█▏        | 239/2000 [00:08<01:02, 28.01it/s]     12%|█▏        | 242/2000 [00:08<01:02, 27.93it/s]     12%|█▏        | 245/2000 [00:08<01:02, 28.04it/s]     12%|█▏        | 248/2000 [00:08<01:02, 28.05it/s]     13%|█▎        | 251/2000 [00:08<01:01, 28.21it/s]     13%|█▎        | 254/2000 [00:08<01:02, 28.04it/s]     13%|█▎        | 257/2000 [00:09<01:02, 27.98it/s]     13%|█▎        | 260/2000 [00:09<01:02, 27.96it/s]     13%|█▎        | 263/2000 [00:09<01:01, 28.02it/s]     13%|█▎        | 266/2000 [00:09<01:02, 27.92it/s]     13%|█▎        | 269/2000 [00:09<01:01, 27.95it/s]     14%|█▎        | 272/2000 [00:09<01:01, 27.99it/s]     14%|█▍        | 275/2000 [00:09<01:01, 27.91it/s]     14%|█▍        | 278/2000 [00:09<01:01, 28.02it/s]     14%|█▍        | 281/2000 [00:09<01:01, 27.99it/s]     14%|█▍        | 284/2000 [00:10<01:01, 27.91it/s]     14%|█▍        | 287/2000 [00:10<01:01, 27.84it/s]     14%|█▍        | 290/2000 [00:10<01:01, 27.87it/s]     15%|█▍        | 293/2000 [00:10<01:01, 27.94it/s]     15%|█▍        | 296/2000 [00:10<01:00, 27.99it/s]     15%|█▍        | 299/2000 [00:10<01:00, 28.03it/s]     15%|█▌        | 302/2000 [00:10<01:00, 28.07it/s]     15%|█▌        | 305/2000 [00:10<01:00, 28.03it/s]     15%|█▌        | 308/2000 [00:10<01:00, 28.07it/s]     16%|█▌        | 311/2000 [00:11<01:00, 28.05it/s]     16%|█▌        | 314/2000 [00:11<00:59, 28.31it/s]     16%|█▌        | 317/2000 [00:11<00:59, 28.31it/s]     16%|█▌        | 320/2000 [00:11<00:59, 28.25it/s]     16%|█▌        | 323/2000 [00:11<00:59, 28.23it/s]     16%|█▋        | 326/2000 [00:11<00:59, 28.26it/s]     16%|█▋        | 329/2000 [00:11<00:59, 28.24it/s]     17%|█▋        | 332/2000 [00:11<00:58, 28.35it/s]     17%|█▋        | 335/2000 [00:11<00:59, 28.17it/s]     17%|█▋        | 338/2000 [00:11<00:58, 28.18it/s]     17%|█▋        | 341/2000 [00:12<00:58, 28.20it/s]     17%|█▋        | 344/2000 [00:12<00:58, 28.26it/s]     17%|█▋        | 347/2000 [00:12<00:58, 28.41it/s]     18%|█▊        | 350/2000 [00:12<00:57, 28.56it/s]     18%|█▊        | 353/2000 [00:12<00:57, 28.64it/s]     18%|█▊        | 356/2000 [00:12<00:57, 28.58it/s]     18%|█▊        | 359/2000 [00:12<00:57, 28.58it/s]     18%|█▊        | 362/2000 [00:12<00:57, 28.50it/s]     18%|█▊        | 365/2000 [00:12<00:56, 28.69it/s]     18%|█▊        | 368/2000 [00:13<00:56, 28.92it/s]     19%|█▊        | 371/2000 [00:13<00:56, 28.91it/s]     19%|█▊        | 374/2000 [00:13<00:56, 29.02it/s]     19%|█▉        | 377/2000 [00:13<00:55, 29.18it/s]     19%|█▉        | 380/2000 [00:13<00:55, 29.40it/s]     19%|█▉        | 383/2000 [00:13<00:54, 29.47it/s]     19%|█▉        | 387/2000 [00:13<00:54, 29.81it/s]     20%|█▉        | 391/2000 [00:13<00:53, 30.21it/s]     20%|█▉        | 395/2000 [00:13<00:52, 30.54it/s]     20%|█▉        | 399/2000 [00:14<00:52, 30.39it/s]     20%|██        | 403/2000 [00:14<00:53, 30.13it/s]     20%|██        | 407/2000 [00:14<00:52, 30.50it/s]     21%|██        | 411/2000 [00:14<00:52, 30.42it/s]     21%|██        | 415/2000 [00:14<00:52, 30.32it/s]     21%|██        | 419/2000 [00:14<00:52, 30.33it/s]     21%|██        | 423/2000 [00:14<00:51, 30.85it/s]     21%|██▏       | 427/2000 [00:14<00:50, 30.87it/s]     22%|██▏       | 431/2000 [00:15<00:50, 30.94it/s]     22%|██▏       | 435/2000 [00:15<00:50, 31.16it/s]     22%|██▏       | 439/2000 [00:15<00:49, 31.56it/s]     22%|██▏       | 443/2000 [00:15<00:49, 31.58it/s]     22%|██▏       | 447/2000 [00:15<00:48, 31.70it/s]     23%|██▎       | 451/2000 [00:15<00:48, 32.13it/s]     23%|██▎       | 455/2000 [00:15<00:48, 31.97it/s]     23%|██▎       | 459/2000 [00:15<00:48, 31.54it/s]     23%|██▎       | 463/2000 [00:16<00:48, 31.68it/s]     23%|██▎       | 467/2000 [00:16<00:47, 32.05it/s]     24%|██▎       | 471/2000 [00:16<00:47, 32.27it/s]     24%|██▍       | 475/2000 [00:16<00:47, 32.13it/s]     24%|██▍       | 479/2000 [00:16<00:47, 32.23it/s]     24%|██▍       | 483/2000 [00:16<00:46, 32.51it/s]     24%|██▍       | 487/2000 [00:16<00:46, 32.23it/s]     25%|██▍       | 491/2000 [00:16<00:47, 32.01it/s]     25%|██▍       | 495/2000 [00:17<00:46, 32.03it/s]     25%|██▍       | 499/2000 [00:17<00:47, 31.50it/s]     25%|██▌       | 503/2000 [00:17<00:47, 31.72it/s]     25%|██▌       | 507/2000 [00:17<00:46, 32.06it/s]     26%|██▌       | 511/2000 [00:17<00:46, 32.06it/s]     26%|██▌       | 515/2000 [00:17<00:45, 32.75it/s]     26%|██▌       | 519/2000 [00:17<00:45, 32.75it/s]     26%|██▌       | 523/2000 [00:17<00:45, 32.56it/s]     26%|██▋       | 527/2000 [00:18<00:45, 32.39it/s]     27%|██▋       | 531/2000 [00:18<00:45, 32.40it/s]     27%|██▋       | 535/2000 [00:18<00:45, 32.10it/s]     27%|██▋       | 539/2000 [00:18<00:45, 32.06it/s]     27%|██▋       | 543/2000 [00:18<00:45, 32.11it/s]     27%|██▋       | 547/2000 [00:18<00:45, 32.26it/s]     28%|██▊       | 551/2000 [00:18<00:43, 32.96it/s]     28%|██▊       | 555/2000 [00:18<00:44, 32.62it/s]     28%|██▊       | 559/2000 [00:19<00:44, 32.48it/s]     28%|██▊       | 563/2000 [00:19<00:44, 32.21it/s]     28%|██▊       | 567/2000 [00:19<00:44, 32.50it/s]     29%|██▊       | 571/2000 [00:19<00:43, 32.64it/s]     29%|██▉       | 575/2000 [00:19<00:43, 32.71it/s]     29%|██▉       | 579/2000 [00:19<00:43, 32.79it/s]     29%|██▉       | 583/2000 [00:19<00:43, 32.41it/s]     29%|██▉       | 587/2000 [00:19<00:43, 32.28it/s]     30%|██▉       | 591/2000 [00:20<00:43, 32.74it/s]     30%|██▉       | 595/2000 [00:20<00:43, 32.30it/s]     30%|██▉       | 599/2000 [00:20<00:43, 32.55it/s]     30%|███       | 603/2000 [00:20<00:42, 32.90it/s]     30%|███       | 607/2000 [00:20<00:42, 32.80it/s]     31%|███       | 611/2000 [00:20<00:41, 33.80it/s]     31%|███       | 615/2000 [00:20<00:41, 33.62it/s]     31%|███       | 619/2000 [00:20<00:41, 32.92it/s]     31%|███       | 623/2000 [00:21<00:41, 33.15it/s]     31%|███▏      | 627/2000 [00:21<00:42, 32.51it/s]     32%|███▏      | 631/2000 [00:21<00:42, 32.39it/s]     32%|███▏      | 635/2000 [00:21<00:42, 32.47it/s]     32%|███▏      | 639/2000 [00:21<00:41, 32.65it/s]     32%|███▏      | 643/2000 [00:21<00:41, 32.78it/s]     32%|███▏      | 647/2000 [00:21<00:41, 32.52it/s]     33%|███▎      | 651/2000 [00:21<00:40, 33.05it/s]     33%|███▎      | 655/2000 [00:22<00:40, 33.14it/s]     33%|███▎      | 659/2000 [00:22<00:40, 33.13it/s]     33%|███▎      | 663/2000 [00:22<00:40, 33.30it/s]     33%|███▎      | 667/2000 [00:22<00:40, 33.03it/s]     34%|███▎      | 671/2000 [00:22<00:40, 33.05it/s]     34%|███▍      | 675/2000 [00:22<00:39, 33.56it/s]     34%|███▍      | 679/2000 [00:22<00:39, 33.13it/s]     34%|███▍      | 683/2000 [00:22<00:39, 32.97it/s]     34%|███▍      | 687/2000 [00:22<00:39, 33.50it/s]     35%|███▍      | 691/2000 [00:23<00:38, 33.90it/s]     35%|███▍      | 695/2000 [00:23<00:38, 33.98it/s]     35%|███▍      | 699/2000 [00:23<00:37, 34.25it/s]     35%|███▌      | 703/2000 [00:23<00:37, 34.30it/s]     35%|███▌      | 707/2000 [00:23<00:37, 34.19it/s]     36%|███▌      | 711/2000 [00:23<00:38, 33.91it/s]     36%|███▌      | 715/2000 [00:23<00:37, 33.98it/s]     36%|███▌      | 719/2000 [00:23<00:36, 34.83it/s]     36%|███▌      | 723/2000 [00:24<00:37, 34.16it/s]     36%|███▋      | 727/2000 [00:24<00:37, 34.21it/s]     37%|███▋      | 731/2000 [00:24<00:37, 33.96it/s]     37%|███▋      | 735/2000 [00:24<00:37, 34.04it/s]     37%|███▋      | 739/2000 [00:24<00:37, 34.05it/s]     37%|███▋      | 743/2000 [00:24<00:36, 34.22it/s]     37%|███▋      | 747/2000 [00:24<00:37, 33.59it/s]     38%|███▊      | 751/2000 [00:24<00:37, 33.64it/s]     38%|███▊      | 755/2000 [00:24<00:36, 33.85it/s]     38%|███▊      | 759/2000 [00:25<00:37, 33.53it/s]     38%|███▊      | 763/2000 [00:25<00:36, 33.71it/s]     38%|███▊      | 767/2000 [00:25<00:36, 33.93it/s]     39%|███▊      | 771/2000 [00:25<00:36, 33.89it/s]     39%|███▉      | 775/2000 [00:25<00:36, 33.63it/s]     39%|███▉      | 779/2000 [00:25<00:35, 33.97it/s]     39%|███▉      | 783/2000 [00:25<00:36, 33.36it/s]     39%|███▉      | 787/2000 [00:25<00:36, 33.25it/s]     40%|███▉      | 791/2000 [00:26<00:35, 33.80it/s]     40%|███▉      | 795/2000 [00:26<00:35, 33.59it/s]     40%|███▉      | 799/2000 [00:26<00:35, 33.82it/s]     40%|████      | 803/2000 [00:26<00:36, 33.02it/s]     40%|████      | 807/2000 [00:26<00:36, 32.77it/s]     41%|████      | 811/2000 [00:26<00:35, 33.25it/s]     41%|████      | 815/2000 [00:26<00:35, 33.45it/s]     41%|████      | 819/2000 [00:26<00:34, 34.07it/s]     41%|████      | 823/2000 [00:26<00:35, 33.52it/s]     41%|████▏     | 827/2000 [00:27<00:34, 34.23it/s]     42%|████▏     | 831/2000 [00:27<00:34, 34.14it/s]     42%|████▏     | 835/2000 [00:27<00:34, 33.70it/s]     42%|████▏     | 839/2000 [00:27<00:33, 34.47it/s]     42%|████▏     | 843/2000 [00:27<00:34, 34.01it/s]     42%|████▏     | 847/2000 [00:27<00:33, 34.05it/s]     43%|████▎     | 851/2000 [00:27<00:33, 34.55it/s]     43%|████▎     | 855/2000 [00:27<00:33, 34.58it/s]     43%|████▎     | 859/2000 [00:28<00:32, 35.31it/s]     43%|████▎     | 863/2000 [00:28<00:32, 34.90it/s]     43%|████▎     | 867/2000 [00:28<00:32, 34.34it/s]     44%|████▎     | 871/2000 [00:28<00:33, 33.96it/s]     44%|████▍     | 875/2000 [00:28<00:33, 33.96it/s]     44%|████▍     | 879/2000 [00:28<00:32, 34.23it/s]     44%|████▍     | 883/2000 [00:28<00:32, 34.64it/s]     44%|████▍     | 887/2000 [00:28<00:32, 34.19it/s]     45%|████▍     | 891/2000 [00:28<00:32, 34.16it/s]     45%|████▍     | 895/2000 [00:29<00:31, 34.74it/s]     45%|████▍     | 899/2000 [00:29<00:31, 34.93it/s]     45%|████▌     | 903/2000 [00:29<00:31, 34.73it/s]     45%|████▌     | 907/2000 [00:29<00:31, 34.33it/s]     46%|████▌     | 911/2000 [00:29<00:32, 33.63it/s]     46%|████▌     | 915/2000 [00:29<00:32, 33.88it/s]     46%|████▌     | 919/2000 [00:29<00:32, 33.68it/s]     46%|████▌     | 923/2000 [00:29<00:32, 33.39it/s]     46%|████▋     | 927/2000 [00:30<00:32, 33.18it/s]     47%|████▋     | 931/2000 [00:30<00:31, 33.41it/s]     47%|████▋     | 935/2000 [00:30<00:31, 33.71it/s]     47%|████▋     | 939/2000 [00:30<00:31, 33.27it/s]     47%|████▋     | 943/2000 [00:30<00:31, 33.73it/s]     47%|████▋     | 947/2000 [00:30<00:31, 33.48it/s]     48%|████▊     | 951/2000 [00:30<00:32, 32.65it/s]     48%|████▊     | 955/2000 [00:30<00:32, 32.65it/s]     48%|████▊     | 959/2000 [00:30<00:31, 32.81it/s]     48%|████▊     | 963/2000 [00:31<00:31, 32.95it/s]     48%|████▊     | 967/2000 [00:31<00:31, 33.31it/s]     49%|████▊     | 971/2000 [00:31<00:30, 33.93it/s]     49%|████▉     | 975/2000 [00:31<00:29, 34.24it/s]     49%|████▉     | 979/2000 [00:31<00:29, 34.78it/s]     49%|████▉     | 983/2000 [00:31<00:29, 34.54it/s]     49%|████▉     | 987/2000 [00:31<00:29, 34.09it/s]     50%|████▉     | 991/2000 [00:31<00:30, 33.47it/s]     50%|████▉     | 995/2000 [00:32<00:29, 33.92it/s]     50%|████▉     | 999/2000 [00:32<00:29, 33.64it/s]     50%|█████     | 1003/2000 [00:32<00:29, 34.34it/s]     50%|█████     | 1007/2000 [00:32<00:28, 34.59it/s]     51%|█████     | 1011/2000 [00:32<00:28, 34.52it/s]     51%|█████     | 1015/2000 [00:32<00:29, 33.93it/s]     51%|█████     | 1019/2000 [00:32<00:28, 34.14it/s]     51%|█████     | 1023/2000 [00:32<00:28, 34.00it/s]     51%|█████▏    | 1027/2000 [00:32<00:28, 33.86it/s]     52%|█████▏    | 1031/2000 [00:33<00:28, 33.67it/s]     52%|█████▏    | 1035/2000 [00:33<00:28, 34.37it/s]     52%|█████▏    | 1039/2000 [00:33<00:27, 34.34it/s]     52%|█████▏    | 1043/2000 [00:33<00:28, 33.98it/s]     52%|█████▏    | 1047/2000 [00:33<00:27, 34.48it/s]     53%|█████▎    | 1051/2000 [00:33<00:27, 34.55it/s]     53%|█████▎    | 1055/2000 [00:33<00:26, 35.00it/s]     53%|█████▎    | 1059/2000 [00:33<00:27, 34.84it/s]     53%|█████▎    | 1063/2000 [00:34<00:26, 34.75it/s]     53%|█████▎    | 1067/2000 [00:34<00:27, 34.49it/s]     54%|█████▎    | 1071/2000 [00:34<00:27, 34.38it/s]     54%|█████▍    | 1075/2000 [00:34<00:26, 34.41it/s]     54%|█████▍    | 1079/2000 [00:34<00:26, 34.28it/s]     54%|█████▍    | 1083/2000 [00:34<00:25, 35.46it/s]     54%|█████▍    | 1087/2000 [00:34<00:26, 35.00it/s]     55%|█████▍    | 1091/2000 [00:34<00:25, 35.41it/s]     55%|█████▍    | 1095/2000 [00:34<00:25, 35.52it/s]     55%|█████▍    | 1099/2000 [00:35<00:25, 35.05it/s]     55%|█████▌    | 1103/2000 [00:35<00:25, 35.19it/s]     55%|█████▌    | 1107/2000 [00:35<00:25, 35.27it/s]     56%|█████▌    | 1111/2000 [00:35<00:24, 35.92it/s]     56%|█████▌    | 1115/2000 [00:35<00:24, 36.75it/s]     56%|█████▌    | 1120/2000 [00:35<00:23, 37.68it/s]     56%|█████▌    | 1124/2000 [00:35<00:23, 36.55it/s]     56%|█████▋    | 1128/2000 [00:35<00:24, 35.88it/s]     57%|█████▋    | 1132/2000 [00:35<00:24, 35.92it/s]     57%|█████▋    | 1136/2000 [00:36<00:23, 36.81it/s]     57%|█████▋    | 1140/2000 [00:36<00:23, 37.23it/s]     57%|█████▋    | 1144/2000 [00:36<00:23, 36.72it/s]     57%|█████▋    | 1148/2000 [00:36<00:23, 36.25it/s]     58%|█████▊    | 1152/2000 [00:36<00:23, 36.30it/s]     58%|█████▊    | 1156/2000 [00:36<00:23, 35.90it/s]     58%|█████▊    | 1160/2000 [00:36<00:23, 36.41it/s]     58%|█████▊    | 1164/2000 [00:36<00:22, 36.41it/s]     58%|█████▊    | 1168/2000 [00:36<00:22, 37.32it/s]     59%|█████▊    | 1172/2000 [00:37<00:22, 36.01it/s]     59%|█████▉    | 1176/2000 [00:37<00:22, 36.63it/s]     59%|█████▉    | 1180/2000 [00:37<00:22, 36.20it/s]     59%|█████▉    | 1184/2000 [00:37<00:22, 36.19it/s]     59%|█████▉    | 1188/2000 [00:37<00:21, 37.23it/s]     60%|█████▉    | 1192/2000 [00:37<00:21, 37.54it/s]     60%|█████▉    | 1196/2000 [00:37<00:21, 37.41it/s]     60%|██████    | 1200/2000 [00:37<00:22, 36.20it/s]     60%|██████    | 1204/2000 [00:37<00:22, 35.59it/s]     60%|██████    | 1208/2000 [00:38<00:22, 35.15it/s]     61%|██████    | 1212/2000 [00:38<00:22, 35.67it/s]     61%|██████    | 1216/2000 [00:38<00:21, 35.99it/s]     61%|██████    | 1220/2000 [00:38<00:21, 36.40it/s]     61%|██████    | 1224/2000 [00:38<00:21, 36.87it/s]     61%|██████▏   | 1228/2000 [00:38<00:20, 37.37it/s]     62%|██████▏   | 1232/2000 [00:38<00:21, 36.40it/s]     62%|██████▏   | 1236/2000 [00:38<00:21, 36.23it/s]     62%|██████▏   | 1240/2000 [00:38<00:21, 36.10it/s]     62%|██████▏   | 1244/2000 [00:39<00:20, 36.14it/s]     62%|██████▏   | 1248/2000 [00:39<00:20, 35.89it/s]     63%|██████▎   | 1252/2000 [00:39<00:20, 35.71it/s]     63%|██████▎   | 1256/2000 [00:39<00:21, 35.41it/s]     63%|██████▎   | 1260/2000 [00:39<00:20, 35.61it/s]     63%|██████▎   | 1264/2000 [00:39<00:20, 35.70it/s]     63%|██████▎   | 1268/2000 [00:39<00:20, 35.24it/s]     64%|██████▎   | 1272/2000 [00:39<00:20, 35.54it/s]     64%|██████▍   | 1276/2000 [00:39<00:20, 35.88it/s]     64%|██████▍   | 1280/2000 [00:40<00:19, 36.92it/s]     64%|██████▍   | 1284/2000 [00:40<00:19, 36.39it/s]     64%|██████▍   | 1289/2000 [00:40<00:19, 37.18it/s]     65%|██████▍   | 1293/2000 [00:40<00:19, 36.70it/s]     65%|██████▍   | 1297/2000 [00:40<00:19, 35.72it/s]     65%|██████▌   | 1301/2000 [00:40<00:19, 36.30it/s]     65%|██████▌   | 1305/2000 [00:40<00:19, 36.19it/s]     65%|██████▌   | 1309/2000 [00:40<00:18, 36.58it/s]     66%|██████▌   | 1313/2000 [00:40<00:18, 36.22it/s]     66%|██████▌   | 1317/2000 [00:41<00:18, 36.11it/s]     66%|██████▌   | 1321/2000 [00:41<00:18, 36.63it/s]     66%|██████▋   | 1325/2000 [00:41<00:18, 35.68it/s]     66%|██████▋   | 1329/2000 [00:41<00:19, 35.23it/s]     67%|██████▋   | 1333/2000 [00:41<00:18, 36.09it/s]     67%|██████▋   | 1337/2000 [00:41<00:18, 36.65it/s]     67%|██████▋   | 1341/2000 [00:41<00:18, 35.81it/s]     67%|██████▋   | 1345/2000 [00:41<00:18, 36.27it/s]     67%|██████▋   | 1349/2000 [00:41<00:18, 36.10it/s]     68%|██████▊   | 1353/2000 [00:42<00:17, 36.06it/s]     68%|██████▊   | 1357/2000 [00:42<00:17, 36.08it/s]     68%|██████▊   | 1361/2000 [00:42<00:17, 35.87it/s]     68%|██████▊   | 1365/2000 [00:42<00:17, 35.34it/s]     68%|██████▊   | 1369/2000 [00:42<00:17, 35.61it/s]     69%|██████▊   | 1373/2000 [00:42<00:17, 35.79it/s]     69%|██████▉   | 1377/2000 [00:42<00:17, 35.16it/s]     69%|██████▉   | 1381/2000 [00:42<00:17, 36.01it/s]     69%|██████▉   | 1385/2000 [00:42<00:17, 36.05it/s]     69%|██████▉   | 1389/2000 [00:43<00:17, 35.40it/s]     70%|██████▉   | 1393/2000 [00:43<00:16, 36.04it/s]     70%|██████▉   | 1397/2000 [00:43<00:16, 36.46it/s]     70%|███████   | 1401/2000 [00:43<00:16, 36.17it/s]     70%|███████   | 1405/2000 [00:43<00:16, 36.32it/s]     70%|███████   | 1409/2000 [00:43<00:15, 36.96it/s]     71%|███████   | 1413/2000 [00:43<00:16, 36.45it/s]     71%|███████   | 1417/2000 [00:43<00:15, 36.90it/s]     71%|███████   | 1421/2000 [00:43<00:15, 36.55it/s]     71%|███████▏  | 1425/2000 [00:44<00:15, 36.07it/s]     72%|███████▏  | 1430/2000 [00:44<00:15, 37.28it/s]     72%|███████▏  | 1434/2000 [00:44<00:15, 36.90it/s]     72%|███████▏  | 1438/2000 [00:44<00:15, 36.29it/s]     72%|███████▏  | 1442/2000 [00:44<00:15, 36.67it/s]     72%|███████▏  | 1446/2000 [00:44<00:14, 37.05it/s]     72%|███████▎  | 1450/2000 [00:44<00:14, 36.87it/s]     73%|███████▎  | 1454/2000 [00:44<00:14, 36.64it/s]     73%|███████▎  | 1458/2000 [00:44<00:14, 37.19it/s]     73%|███████▎  | 1462/2000 [00:45<00:14, 36.60it/s]     73%|███████▎  | 1466/2000 [00:45<00:14, 36.63it/s]     74%|███████▎  | 1470/2000 [00:45<00:14, 36.89it/s]     74%|███████▎  | 1474/2000 [00:45<00:14, 36.65it/s]     74%|███████▍  | 1478/2000 [00:45<00:14, 36.59it/s]     74%|███████▍  | 1482/2000 [00:45<00:13, 37.31it/s]     74%|███████▍  | 1486/2000 [00:45<00:13, 36.96it/s]     74%|███████▍  | 1490/2000 [00:45<00:13, 36.73it/s]     75%|███████▍  | 1494/2000 [00:45<00:14, 36.03it/s]     75%|███████▍  | 1498/2000 [00:46<00:13, 36.93it/s]     75%|███████▌  | 1502/2000 [00:46<00:13, 37.07it/s]     75%|███████▌  | 1506/2000 [00:46<00:13, 37.37it/s]     76%|███████▌  | 1510/2000 [00:46<00:13, 37.53it/s]     76%|███████▌  | 1514/2000 [00:46<00:12, 37.93it/s]     76%|███████▌  | 1518/2000 [00:46<00:12, 38.33it/s]     76%|███████▌  | 1522/2000 [00:46<00:12, 37.83it/s]     76%|███████▋  | 1526/2000 [00:46<00:12, 37.12it/s]     76%|███████▋  | 1530/2000 [00:46<00:12, 36.84it/s]     77%|███████▋  | 1534/2000 [00:46<00:12, 37.22it/s]     77%|███████▋  | 1538/2000 [00:47<00:12, 36.62it/s]     77%|███████▋  | 1542/2000 [00:47<00:12, 37.02it/s]     77%|███████▋  | 1546/2000 [00:47<00:12, 36.91it/s]     78%|███████▊  | 1550/2000 [00:47<00:11, 37.72it/s]     78%|███████▊  | 1554/2000 [00:47<00:11, 38.18it/s]     78%|███████▊  | 1558/2000 [00:47<00:11, 38.38it/s]     78%|███████▊  | 1562/2000 [00:47<00:11, 38.65it/s]     78%|███████▊  | 1566/2000 [00:47<00:11, 38.56it/s]     78%|███████▊  | 1570/2000 [00:47<00:11, 38.25it/s]     79%|███████▊  | 1574/2000 [00:48<00:11, 38.17it/s]     79%|███████▉  | 1578/2000 [00:48<00:11, 37.00it/s]     79%|███████▉  | 1582/2000 [00:48<00:11, 37.45it/s]     79%|███████▉  | 1586/2000 [00:48<00:10, 37.66it/s]     80%|███████▉  | 1590/2000 [00:48<00:10, 37.87it/s]     80%|███████▉  | 1594/2000 [00:48<00:10, 37.81it/s]     80%|███████▉  | 1598/2000 [00:48<00:10, 37.77it/s]     80%|████████  | 1602/2000 [00:48<00:10, 36.87it/s]     80%|████████  | 1606/2000 [00:48<00:10, 37.13it/s]     80%|████████  | 1610/2000 [00:49<00:10, 36.95it/s]     81%|████████  | 1614/2000 [00:49<00:10, 37.23it/s]     81%|████████  | 1618/2000 [00:49<00:10, 37.92it/s]     81%|████████  | 1622/2000 [00:49<00:09, 37.92it/s]     81%|████████▏ | 1626/2000 [00:49<00:09, 38.03it/s]     82%|████████▏ | 1630/2000 [00:49<00:09, 38.49it/s]     82%|████████▏ | 1634/2000 [00:49<00:09, 38.26it/s]     82%|████████▏ | 1639/2000 [00:49<00:09, 39.53it/s]     82%|████████▏ | 1643/2000 [00:49<00:09, 38.97it/s]     82%|████████▏ | 1647/2000 [00:49<00:09, 38.59it/s]     83%|████████▎ | 1652/2000 [00:50<00:08, 39.20it/s]     83%|████████▎ | 1656/2000 [00:50<00:08, 38.29it/s]     83%|████████▎ | 1661/2000 [00:50<00:08, 39.09it/s]     83%|████████▎ | 1665/2000 [00:50<00:08, 38.42it/s]     83%|████████▎ | 1669/2000 [00:50<00:08, 37.77it/s]     84%|████████▎ | 1673/2000 [00:50<00:08, 37.56it/s]     84%|████████▍ | 1677/2000 [00:50<00:08, 37.14it/s]     84%|████████▍ | 1681/2000 [00:50<00:08, 37.49it/s]     84%|████████▍ | 1685/2000 [00:50<00:08, 37.15it/s]     84%|████████▍ | 1689/2000 [00:51<00:08, 37.38it/s]     85%|████████▍ | 1693/2000 [00:51<00:08, 37.20it/s]     85%|████████▍ | 1697/2000 [00:51<00:08, 36.69it/s]     85%|████████▌ | 1701/2000 [00:51<00:08, 37.18it/s]     85%|████████▌ | 1705/2000 [00:51<00:07, 37.53it/s]     85%|████████▌ | 1709/2000 [00:51<00:07, 37.48it/s]     86%|████████▌ | 1713/2000 [00:51<00:07, 37.62it/s]     86%|████████▌ | 1717/2000 [00:51<00:07, 38.22it/s]     86%|████████▌ | 1721/2000 [00:51<00:07, 37.60it/s]     86%|████████▋ | 1725/2000 [00:52<00:07, 37.41it/s]     86%|████████▋ | 1729/2000 [00:52<00:07, 37.07it/s]     87%|████████▋ | 1733/2000 [00:52<00:07, 36.69it/s]     87%|████████▋ | 1737/2000 [00:52<00:07, 36.62it/s]     87%|████████▋ | 1741/2000 [00:52<00:07, 36.40it/s]     87%|████████▋ | 1745/2000 [00:52<00:06, 37.02it/s]     87%|████████▋ | 1749/2000 [00:52<00:06, 37.10it/s]     88%|████████▊ | 1753/2000 [00:52<00:06, 37.16it/s]     88%|████████▊ | 1757/2000 [00:52<00:06, 36.76it/s]     88%|████████▊ | 1761/2000 [00:53<00:06, 36.01it/s]     88%|████████▊ | 1765/2000 [00:53<00:06, 36.50it/s]     88%|████████▊ | 1769/2000 [00:53<00:06, 36.22it/s]     89%|████████▊ | 1773/2000 [00:53<00:06, 36.45it/s]     89%|████████▉ | 1777/2000 [00:53<00:06, 36.69it/s]     89%|████████▉ | 1781/2000 [00:53<00:05, 37.08it/s]     89%|████████▉ | 1785/2000 [00:53<00:05, 36.24it/s]     89%|████████▉ | 1789/2000 [00:53<00:05, 36.11it/s]     90%|████████▉ | 1793/2000 [00:53<00:05, 36.27it/s]     90%|████████▉ | 1797/2000 [00:54<00:05, 36.23it/s]     90%|█████████ | 1801/2000 [00:54<00:05, 36.71it/s]     90%|█████████ | 1805/2000 [00:54<00:05, 35.69it/s]     90%|█████████ | 1809/2000 [00:54<00:05, 35.83it/s]     91%|█████████ | 1813/2000 [00:54<00:05, 35.32it/s]     91%|█████████ | 1817/2000 [00:54<00:05, 35.08it/s]     91%|█████████ | 1821/2000 [00:54<00:05, 35.11it/s]     91%|█████████▏| 1825/2000 [00:54<00:04, 35.50it/s]     91%|█████████▏| 1829/2000 [00:54<00:04, 35.70it/s]     92%|█████████▏| 1833/2000 [00:55<00:04, 36.22it/s]     92%|█████████▏| 1837/2000 [00:55<00:04, 36.69it/s]     92%|█████████▏| 1841/2000 [00:55<00:04, 37.14it/s]     92%|█████████▏| 1845/2000 [00:55<00:04, 37.86it/s]     92%|█████████▎| 1850/2000 [00:55<00:03, 38.95it/s]     93%|█████████▎| 1854/2000 [00:55<00:03, 38.39it/s]     93%|█████████▎| 1858/2000 [00:55<00:03, 37.54it/s]     93%|█████████▎| 1862/2000 [00:55<00:03, 36.42it/s]     93%|█████████▎| 1866/2000 [00:55<00:03, 35.75it/s]     94%|█████████▎| 1870/2000 [00:56<00:03, 36.77it/s]     94%|█████████▎| 1874/2000 [00:56<00:03, 37.19it/s]     94%|█████████▍| 1878/2000 [00:56<00:03, 37.69it/s]     94%|█████████▍| 1882/2000 [00:56<00:03, 38.18it/s]     94%|█████████▍| 1886/2000 [00:56<00:03, 37.92it/s]     94%|█████████▍| 1890/2000 [00:56<00:02, 38.33it/s]     95%|█████████▍| 1895/2000 [00:56<00:02, 38.68it/s]     95%|█████████▍| 1899/2000 [00:56<00:02, 37.02it/s]     95%|█████████▌| 1903/2000 [00:56<00:02, 36.83it/s]     95%|█████████▌| 1907/2000 [00:57<00:02, 36.98it/s]     96%|█████████▌| 1911/2000 [00:57<00:02, 37.08it/s]     96%|█████████▌| 1915/2000 [00:57<00:02, 36.71it/s]     96%|█████████▌| 1919/2000 [00:57<00:02, 36.30it/s]     96%|█████████▌| 1923/2000 [00:57<00:02, 36.00it/s]     96%|█████████▋| 1927/2000 [00:57<00:02, 36.36it/s]     97%|█████████▋| 1931/2000 [00:57<00:01, 36.57it/s]     97%|█████████▋| 1935/2000 [00:57<00:01, 36.39it/s]     97%|█████████▋| 1939/2000 [00:57<00:01, 36.87it/s]     97%|█████████▋| 1943/2000 [00:57<00:01, 36.51it/s]     97%|█████████▋| 1947/2000 [00:58<00:01, 36.22it/s]     98%|█████████▊| 1951/2000 [00:58<00:01, 36.22it/s]     98%|█████████▊| 1955/2000 [00:58<00:01, 36.53it/s]     98%|█████████▊| 1959/2000 [00:58<00:01, 37.01it/s]     98%|█████████▊| 1963/2000 [00:58<00:00, 37.13it/s]     98%|█████████▊| 1967/2000 [00:58<00:00, 37.83it/s]     99%|█████████▊| 1972/2000 [00:58<00:00, 39.11it/s]     99%|█████████▉| 1976/2000 [00:58<00:00, 38.63it/s]     99%|█████████▉| 1981/2000 [00:58<00:00, 39.76it/s]     99%|█████████▉| 1985/2000 [00:59<00:00, 39.53it/s]     99%|█████████▉| 1989/2000 [00:59<00:00, 39.17it/s]    100%|█████████▉| 1993/2000 [00:59<00:00, 39.10it/s]    100%|█████████▉| 1998/2000 [00:59<00:00, 39.29it/s]    100%|██████████| 2000/2000 [00:59<00:00, 33.63it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 876-880
+.. GENERATED FROM PYTHON SOURCE LINES 872-876
 
 .. code-block:: Python
 
@@ -1391,7 +1394,7 @@ Sample the posterior
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 882-885
+.. GENERATED FROM PYTHON SOURCE LINES 878-881
 
 .. code-block:: Python
 
@@ -1421,38 +1424,87 @@ Sample the posterior
     </symbol>
     </defs>
     </svg>
-    <style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
-     *
-     */
+    <style>/* CSS stylesheet for displaying xarray objects in notebooks */
 
     :root {
-      --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-      --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-      --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-      --xr-border-color: var(--jp-border-color2, #e0e0e0);
-      --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-      --xr-background-color: var(--jp-layout-color0, white);
-      --xr-background-color-row-even: var(--jp-layout-color1, white);
-      --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+      --xr-font-color0: var(
+        --jp-content-font-color0,
+        var(--pst-color-text-base rgba(0, 0, 0, 1))
+      );
+      --xr-font-color2: var(
+        --jp-content-font-color2,
+        var(--pst-color-text-base, rgba(0, 0, 0, 0.54))
+      );
+      --xr-font-color3: var(
+        --jp-content-font-color3,
+        var(--pst-color-text-base, rgba(0, 0, 0, 0.38))
+      );
+      --xr-border-color: var(
+        --jp-border-color2,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 10))
+      );
+      --xr-disabled-color: var(
+        --jp-layout-color3,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 40))
+      );
+      --xr-background-color: var(
+        --jp-layout-color0,
+        var(--pst-color-on-background, white)
+      );
+      --xr-background-color-row-even: var(
+        --jp-layout-color1,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 5))
+      );
+      --xr-background-color-row-odd: var(
+        --jp-layout-color2,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 15))
+      );
     }
 
-    html[theme=dark],
-    body[data-theme=dark],
+    html[theme="dark"],
+    html[data-theme="dark"],
+    body[data-theme="dark"],
     body.vscode-dark {
-      --xr-font-color0: rgba(255, 255, 255, 1);
-      --xr-font-color2: rgba(255, 255, 255, 0.54);
-      --xr-font-color3: rgba(255, 255, 255, 0.38);
-      --xr-border-color: #1F1F1F;
-      --xr-disabled-color: #515151;
-      --xr-background-color: #111111;
-      --xr-background-color-row-even: #111111;
-      --xr-background-color-row-odd: #313131;
+      --xr-font-color0: var(
+        --jp-content-font-color0,
+        var(--pst-color-text-base, rgba(255, 255, 255, 1))
+      );
+      --xr-font-color2: var(
+        --jp-content-font-color2,
+        var(--pst-color-text-base, rgba(255, 255, 255, 0.54))
+      );
+      --xr-font-color3: var(
+        --jp-content-font-color3,
+        var(--pst-color-text-base, rgba(255, 255, 255, 0.38))
+      );
+      --xr-border-color: var(
+        --jp-border-color2,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 10))
+      );
+      --xr-disabled-color: var(
+        --jp-layout-color3,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 40))
+      );
+      --xr-background-color: var(
+        --jp-layout-color0,
+        var(--pst-color-on-background, #111111)
+      );
+      --xr-background-color-row-even: var(
+        --jp-layout-color1,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 5))
+      );
+      --xr-background-color-row-odd: var(
+        --jp-layout-color2,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 15))
+      );
     }
 
     .xr-wrap {
       display: block !important;
       min-width: 300px;
       max-width: 700px;
+      line-height: 1.6;
+      padding-bottom: 4px;
     }
 
     .xr-text-repr-fallback {
@@ -1463,8 +1515,11 @@ Sample the posterior
     .xr-header {
       padding-top: 6px;
       padding-bottom: 6px;
-      margin-bottom: 4px;
+    }
+
+    .xr-header {
       border-bottom: solid 1px var(--xr-border-color);
+      margin-bottom: 4px;
     }
 
     .xr-header > div,
@@ -1475,39 +1530,62 @@ Sample the posterior
     }
 
     .xr-obj-type,
-    .xr-array-name {
+    .xr-obj-name {
       margin-left: 2px;
       margin-right: 10px;
     }
 
-    .xr-obj-type {
+    .xr-obj-type,
+    .xr-group-box-contents > label {
       color: var(--xr-font-color2);
+      display: block;
     }
 
     .xr-sections {
       padding-left: 0 !important;
       display: grid;
-      grid-template-columns: 150px auto auto 1fr 20px 20px;
+      grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+      margin-block-start: 0;
+      margin-block-end: 0;
     }
 
     .xr-section-item {
       display: contents;
     }
 
-    .xr-section-item input {
-      display: none;
+    .xr-section-item > input,
+    .xr-group-box-contents > input,
+    .xr-array-wrap > input {
+      display: block;
+      opacity: 0;
+      height: 0;
+      margin: 0;
     }
 
-    .xr-section-item input + label {
+    .xr-section-item > input + label,
+    .xr-var-item > input + label {
       color: var(--xr-disabled-color);
     }
 
-    .xr-section-item input:enabled + label {
+    .xr-section-item > input:enabled + label,
+    .xr-var-item > input:enabled + label,
+    .xr-array-wrap > input:enabled + label,
+    .xr-group-box-contents > input:enabled + label {
       cursor: pointer;
       color: var(--xr-font-color2);
     }
 
-    .xr-section-item input:enabled + label:hover {
+    .xr-section-item > input:focus-visible + label,
+    .xr-var-item > input:focus-visible + label,
+    .xr-array-wrap > input:focus-visible + label,
+    .xr-group-box-contents > input:focus-visible + label {
+      outline: auto;
+    }
+
+    .xr-section-item > input:enabled + label:hover,
+    .xr-var-item > input:enabled + label:hover,
+    .xr-array-wrap > input:enabled + label:hover,
+    .xr-group-box-contents > input:enabled + label:hover {
       color: var(--xr-font-color0);
     }
 
@@ -1515,11 +1593,25 @@ Sample the posterior
       grid-column: 1;
       color: var(--xr-font-color2);
       font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .xr-section-summary > em {
+      font-weight: normal;
+    }
+
+    .xr-span-grid {
+      grid-column-end: -1;
     }
 
     .xr-section-summary > span {
       display: inline-block;
-      padding-left: 0.5em;
+      padding-left: 0.3em;
+    }
+
+    .xr-group-box-contents > input:checked + label > span {
+      display: inline-block;
+      padding-left: 0.6em;
     }
 
     .xr-section-summary-in:disabled + label {
@@ -1528,7 +1620,7 @@ Sample the posterior
 
     .xr-section-summary-in + label:before {
       display: inline-block;
-      content: '►';
+      content: "►";
       font-size: 11px;
       width: 15px;
       text-align: center;
@@ -1539,7 +1631,7 @@ Sample the posterior
     }
 
     .xr-section-summary-in:checked + label:before {
-      content: '▼';
+      content: "▼";
     }
 
     .xr-section-summary-in:checked + label > span {
@@ -1547,9 +1639,9 @@ Sample the posterior
     }
 
     .xr-section-summary,
-    .xr-section-inline-details {
+    .xr-section-inline-details,
+    .xr-group-box-contents > label {
       padding-top: 4px;
-      padding-bottom: 4px;
     }
 
     .xr-section-inline-details {
@@ -1557,13 +1649,79 @@ Sample the posterior
     }
 
     .xr-section-details {
-      display: none;
       grid-column: 1 / -1;
+      margin-top: 4px;
       margin-bottom: 5px;
+    }
+
+    .xr-section-summary-in ~ .xr-section-details {
+      display: none;
     }
 
     .xr-section-summary-in:checked ~ .xr-section-details {
       display: contents;
+    }
+
+    .xr-children {
+      display: inline-grid;
+      grid-template-columns: 100%;
+      grid-column: 1 / -1;
+      padding-top: 4px;
+    }
+
+    .xr-group-box {
+      display: inline-grid;
+      grid-template-columns: 0px 30px auto;
+    }
+
+    .xr-group-box-vline {
+      grid-column-start: 1;
+      border-right: 0.2em solid;
+      border-color: var(--xr-border-color);
+      width: 0px;
+    }
+
+    .xr-group-box-hline {
+      grid-column-start: 2;
+      grid-row-start: 1;
+      height: 1em;
+      width: 26px;
+      border-bottom: 0.2em solid;
+      border-color: var(--xr-border-color);
+    }
+
+    .xr-group-box-contents {
+      grid-column-start: 3;
+      padding-bottom: 4px;
+    }
+
+    .xr-group-box-contents > label::before {
+      content: "📂";
+      padding-right: 0.3em;
+    }
+
+    .xr-group-box-contents > input:checked + label::before {
+      content: "📁";
+    }
+
+    .xr-group-box-contents > input:checked + label {
+      padding-bottom: 0px;
+    }
+
+    .xr-group-box-contents > input:checked ~ .xr-sections {
+      display: none;
+    }
+
+    .xr-group-box-contents > input + label > span {
+      display: none;
+    }
+
+    .xr-group-box-ellipsis {
+      font-size: 1.4em;
+      font-weight: 900;
+      color: var(--xr-font-color2);
+      letter-spacing: 0.15em;
+      cursor: default;
     }
 
     .xr-array-wrap {
@@ -1611,15 +1769,15 @@ Sample the posterior
     }
 
     .xr-dim-list:before {
-      content: '(';
+      content: "(";
     }
 
     .xr-dim-list:after {
-      content: ')';
+      content: ")";
     }
 
     .xr-dim-list li:not(:last-child):after {
-      content: ',';
+      content: ",";
       padding-right: 5px;
     }
 
@@ -1636,7 +1794,9 @@ Sample the posterior
     .xr-var-item label,
     .xr-var-item > .xr-var-name span {
       background-color: var(--xr-background-color-row-even);
+      border-color: var(--xr-background-color-row-odd);
       margin-bottom: 0;
+      padding-top: 2px;
     }
 
     .xr-var-item > .xr-var-name:hover span {
@@ -1647,6 +1807,7 @@ Sample the posterior
     .xr-var-list > li:nth-child(odd) > label,
     .xr-var-list > li:nth-child(odd) > .xr-var-name span {
       background-color: var(--xr-background-color-row-odd);
+      border-color: var(--xr-background-color-row-even);
     }
 
     .xr-var-name {
@@ -1696,8 +1857,15 @@ Sample the posterior
     .xr-var-data,
     .xr-index-data {
       display: none;
-      background-color: var(--xr-background-color) !important;
-      padding-bottom: 5px !important;
+      border-top: 2px dotted var(--xr-background-color);
+      padding-bottom: 20px !important;
+      padding-top: 10px !important;
+    }
+
+    .xr-var-attrs-in + label,
+    .xr-var-data-in + label,
+    .xr-index-data-in + label {
+      padding: 0 1px;
     }
 
     .xr-var-attrs-in:checked ~ .xr-var-attrs,
@@ -1708,6 +1876,12 @@ Sample the posterior
 
     .xr-var-data > table {
       float: right;
+    }
+
+    .xr-var-data > pre,
+    .xr-index-data > pre,
+    .xr-var-data > table > tbody > tr {
+      background-color: transparent !important;
     }
 
     .xr-var-name span,
@@ -1769,247 +1943,249 @@ Sample the posterior
       stroke: currentColor;
       fill: currentColor;
     }
+
+    .xr-var-attrs-in:checked + label > .xr-icon-file-text2,
+    .xr-var-data-in:checked + label > .xr-icon-database,
+    .xr-index-data-in:checked + label > .xr-icon-database {
+      color: var(--xr-font-color0);
+      filter: drop-shadow(1px 1px 5px var(--xr-font-color2));
+      stroke-width: 0.8px;
+    }
     </style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 11MB
     Dimensions:  (chain: 40, draw: 2000)
     Coordinates:
       * chain    (chain) int64 320B 0 1 2 3 4 5 6 7 8 ... 31 32 33 34 35 36 37 38 39
       * draw     (draw) int64 16kB 0 1 2 3 4 5 6 ... 1994 1995 1996 1997 1998 1999
     Data variables: (12/17)
-        t0       (chain, draw) float64 640kB 14.98 14.98 14.98 ... 19.64 19.64 19.64
-        t1       (chain, draw) float64 640kB 15.58 15.58 15.58 ... 15.32 15.32 15.32
-        t2       (chain, draw) float64 640kB 14.37 14.37 14.37 ... 7.025 7.025 7.025
-        t3       (chain, draw) float64 640kB 15.57 15.57 15.57 ... 16.38 16.38 16.38
-        t4       (chain, draw) float64 640kB 14.97 14.97 14.97 ... 17.39 17.39 17.39
-        t5       (chain, draw) float64 640kB 14.84 14.84 14.84 ... 21.26 21.26 21.26
+        v0       (chain, draw) float64 640kB 3.501 3.501 3.501 ... 3.393 3.393 3.393
+        t0       (chain, draw) float64 640kB 14.65 14.65 14.65 ... 20.65 20.65 20.65
+        v1       (chain, draw) float64 640kB 3.464 3.464 3.464 ... 3.677 3.677 3.677
+        t1       (chain, draw) float64 640kB 14.48 14.48 14.48 ... 13.88 13.88 13.88
+        v2       (chain, draw) float64 640kB 3.684 3.684 3.684 ... 4.269 4.269 4.269
+        t2       (chain, draw) float64 640kB 15.68 15.68 15.68 ... 14.39 14.39 14.39
         ...       ...
-        v3       (chain, draw) float64 640kB 4.327 4.327 4.327 ... 4.326 4.326 4.326
-        v4       (chain, draw) float64 640kB 4.081 4.081 4.081 ... 4.392 4.392 4.392
-        v5       (chain, draw) float64 640kB 4.884 4.884 4.884 ... 4.264 4.264 4.264
-        v6       (chain, draw) float64 640kB 4.007 4.007 4.007 ... 4.299 4.299 4.299
-        v7       (chain, draw) float64 640kB 4.69 4.69 4.69 ... 4.343 4.343 4.343
-        v8       (chain, draw) float64 640kB 4.741 4.741 4.741 ... 4.562 4.562 4.562
+        t5       (chain, draw) float64 640kB 14.53 14.53 14.53 ... 5.191 5.191 5.191
+        v6       (chain, draw) float64 640kB 4.244 4.244 4.244 ... 4.307 4.307 4.307
+        t6       (chain, draw) float64 640kB 14.66 14.66 14.66 ... 6.788 6.788 6.788
+        v7       (chain, draw) float64 640kB 4.889 4.889 4.889 ... 4.384 4.384 4.384
+        t7       (chain, draw) float64 640kB 13.97 13.97 13.97 ... 11.55 11.55 11.55
+        v8       (chain, draw) float64 640kB 4.712 4.712 4.712 ... 4.535 4.535 4.535
     Attributes:
-        created_at:                 2024-04-19T05:03:16.440166+00:00
-        arviz_version:              0.18.0
+        created_at:                 2026-02-18T00:37:58.141866+00:00
+        arviz_version:              0.23.4
         inference_library:          emcee
-        inference_library_version:  3.1.5</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-c5fbfc1f-cff6-4793-81e4-110c806589cc' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-c5fbfc1f-cff6-4793-81e4-110c806589cc' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 40</li><li><span class='xr-has-index'>draw</span>: 2000</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-4a0c2fa3-fd76-4926-8eba-5a705fb79d1a' class='xr-section-summary-in' type='checkbox'  checked><label for='section-4a0c2fa3-fd76-4926-8eba-5a705fb79d1a' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 34 35 36 37 38 39</div><input id='attrs-4f9fc907-f30e-43c8-bc65-affc05036496' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4f9fc907-f30e-43c8-bc65-affc05036496' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b5948722-a520-45ed-9b73-3dcfbaf86e0f' class='xr-var-data-in' type='checkbox'><label for='data-b5948722-a520-45ed-9b73-3dcfbaf86e0f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+        inference_library_version:  3.1.6</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-4433e234-1082-41d7-b272-e0034752d304' class='xr-section-summary-in' type='checkbox' disabled /><label for='section-4433e234-1082-41d7-b272-e0034752d304' class='xr-section-summary'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 40</li><li><span class='xr-has-index'>draw</span>: 2000</li></ul></div></li><li class='xr-section-item'><input id='section-93c785eb-c51b-45a6-8e68-0972fc0de7ea' class='xr-section-summary-in' type='checkbox' checked /><label for='section-93c785eb-c51b-45a6-8e68-0972fc0de7ea' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 34 35 36 37 38 39</div><input id='attrs-a5eac4e9-c2c0-4e56-9dbb-7d0967b9bdaa' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a5eac4e9-c2c0-4e56-9dbb-7d0967b9bdaa' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-eb2295c4-1f9b-4729-b62c-557afd7da022' class='xr-var-data-in' type='checkbox'><label for='data-eb2295c4-1f9b-4729-b62c-557afd7da022' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
            18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
-           36, 37, 38, 39])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 1996 1997 1998 1999</div><input id='attrs-c1846ec7-101b-439b-820f-75490cd10ae8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c1846ec7-101b-439b-820f-75490cd10ae8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-993b002f-a95b-46e0-8d27-6e2b4f56ae8a' class='xr-var-data-in' type='checkbox'><label for='data-993b002f-a95b-46e0-8d27-6e2b4f56ae8a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 1997, 1998, 1999])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-98fe6b18-3973-43dd-8706-0137c4d075b5' class='xr-section-summary-in' type='checkbox'  ><label for='section-98fe6b18-3973-43dd-8706-0137c4d075b5' class='xr-section-summary' >Data variables: <span>(17)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>t0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.98 14.98 14.98 ... 19.64 19.64</div><input id='attrs-811c94fe-e943-4402-902a-171bbfeab7f4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-811c94fe-e943-4402-902a-171bbfeab7f4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d248b3ac-912e-4e42-bfa7-d9ef3d55220b' class='xr-var-data-in' type='checkbox'><label for='data-d248b3ac-912e-4e42-bfa7-d9ef3d55220b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.98442642, 14.98442642, 14.98442642, ..., 19.73098397,
-            19.73098397, 19.73098397],
-           [14.88699623, 14.94224314, 14.94224314, ..., 20.1608261 ,
-            20.1608261 , 19.91064418],
-           [14.97423085, 14.97423085, 14.97423085, ..., 19.36075128,
-            19.36075128, 19.36075128],
+           36, 37, 38, 39])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 1996 1997 1998 1999</div><input id='attrs-ef4025d5-aea8-4f67-be4d-a77c5fe185b5' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ef4025d5-aea8-4f67-be4d-a77c5fe185b5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-31604259-ec3b-4b55-9624-9fe843311dc0' class='xr-var-data-in' type='checkbox'><label for='data-31604259-ec3b-4b55-9624-9fe843311dc0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 1997, 1998, 1999], shape=(2000,))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-1a9e265a-cdc1-4c3a-a908-da2aa0ecadee' class='xr-section-summary-in' type='checkbox' /><label for='section-1a9e265a-cdc1-4c3a-a908-da2aa0ecadee' class='xr-section-summary' title='Expand/collapse section'>Data variables: <span>(17)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>v0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.501 3.501 3.501 ... 3.393 3.393</div><input id='attrs-ccd4b3c0-4548-4fc7-9031-eb16c70595d8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ccd4b3c0-4548-4fc7-9031-eb16c70595d8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a473027d-09c6-40d1-a8c2-bdd3d897aa05' class='xr-var-data-in' type='checkbox'><label for='data-a473027d-09c6-40d1-a8c2-bdd3d897aa05' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[3.50115607, 3.50115607, 3.50115607, ..., 3.34288268, 3.34288268,
+            3.34312258],
+           [3.96442853, 3.96442853, 3.96442853, ..., 3.40433656, 3.40433656,
+            3.40433656],
+           [3.36502532, 3.36891987, 3.36891987, ..., 3.34418755, 3.34418755,
+            3.34336903],
            ...,
-           [15.14639485, 15.14639485, 15.14639485, ..., 19.09604347,
-            19.09604347, 19.09604347],
-           [14.6694021 , 14.7612607 , 14.84087634, ..., 18.71947141,
-            18.71947141, 18.71947141],
-           [14.37518253, 14.37221377, 14.60063557, ..., 19.63760946,
-            19.63760946, 19.63760946]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>15.58 15.58 15.58 ... 15.32 15.32</div><input id='attrs-4a8c887d-2c9c-42b9-8e0e-ea903e0aa6ee' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4a8c887d-2c9c-42b9-8e0e-ea903e0aa6ee' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1d8691d6-f3ca-48f7-b9e3-0d5598014e1f' class='xr-var-data-in' type='checkbox'><label for='data-1d8691d6-f3ca-48f7-b9e3-0d5598014e1f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[15.58466209, 15.58466209, 15.58466209, ..., 15.15402696,
-            15.15402696, 15.15402696],
-           [14.90405279, 15.05404652, 15.05404652, ..., 14.87736328,
-            14.87736328, 15.14833258],
-           [15.77117159, 15.77117159, 15.77117159, ..., 15.74949713,
-            15.74949713, 15.74949713],
+           [3.67156164, 3.67156164, 3.37928255, ..., 3.41204515, 3.41204515,
+            3.41204515],
+           [4.01371796, 4.01371796, 4.01371796, ..., 3.39119582, 3.39119582,
+            3.39119582],
+           [3.61378494, 3.61378494, 3.61378494, ..., 3.39325447, 3.39325447,
+            3.39325447]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.65 14.65 14.65 ... 20.65 20.65</div><input id='attrs-52e5695d-9768-4771-bb77-4b53a4cce06d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-52e5695d-9768-4771-bb77-4b53a4cce06d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a0a78a6d-150e-42d2-a885-87af2e988e02' class='xr-var-data-in' type='checkbox'><label for='data-a0a78a6d-150e-42d2-a885-87af2e988e02' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.65387917, 14.65387917, 14.65387917, ...,  9.4085584 ,
+             9.4085584 ,  9.388816  ],
+           [14.70333675, 14.70333675, 14.70333675, ..., 20.23813381,
+            20.23813381, 20.23813381],
+           [15.61768916, 15.60262187, 15.60262187, ...,  9.3470674 ,
+             9.3470674 ,  9.4264462 ],
            ...,
-           [15.46839775, 15.46839775, 15.46839775, ..., 16.10522016,
-            16.10522016, 16.10522016],
-           [15.52229972, 15.21516307, 15.34698394, ..., 16.51620802,
-            16.51620802, 16.51620802],
-           [15.49761225, 15.51033798, 15.38670277, ..., 15.32485307,
-            15.32485307, 15.32485307]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.37 14.37 14.37 ... 7.025 7.025</div><input id='attrs-89d0dcea-742c-4ce9-8c46-81840aa4895c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-89d0dcea-742c-4ce9-8c46-81840aa4895c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bc87a40c-b772-4458-9abe-3917486dd07f' class='xr-var-data-in' type='checkbox'><label for='data-bc87a40c-b772-4458-9abe-3917486dd07f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.3694676 , 14.3694676 , 14.3694676 , ..., 23.38248648,
-            23.38248648, 23.38248648],
-           [15.00154664, 15.03639315, 15.03639315, ..., 17.11007272,
-            17.11007272, 18.70813726],
-           [14.9831645 , 14.9831645 , 14.9831645 , ...,  9.04940573,
-             9.04940573,  9.04940573],
+           [14.43175784, 14.43175784, 14.56610122, ..., 20.39964886,
+            20.39964886, 20.39964886],
+           [15.1709013 , 15.1709013 , 15.1709013 , ..., 19.70518068,
+            19.70518068, 19.70518068],
+           [14.92418673, 14.92418673, 14.92418673, ..., 20.6530936 ,
+            20.6530936 , 20.6530936 ]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.464 3.464 3.464 ... 3.677 3.677</div><input id='attrs-e6daa923-4cd2-44a5-b96b-46051504f6d9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e6daa923-4cd2-44a5-b96b-46051504f6d9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5c71fbcd-d6a7-4aa2-b2ec-69f5a0291f52' class='xr-var-data-in' type='checkbox'><label for='data-5c71fbcd-d6a7-4aa2-b2ec-69f5a0291f52' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[3.46393725, 3.46393725, 3.46393725, ..., 3.55917797, 3.55917797,
+            3.55906832],
+           [2.31250359, 2.31250359, 2.31250359, ..., 3.64391525, 3.64391525,
+            3.64391525],
+           [3.40304698, 3.41197261, 3.41197261, ..., 3.55152352, 3.55152352,
+            3.55179581],
            ...,
-           [15.1070572 , 15.1070572 , 15.1070572 , ..., 17.40974862,
-            17.40974862, 17.40974862],
-           [14.78455516, 14.9009158 , 14.71131863, ..., 22.6486932 ,
-            22.6486932 , 22.6486932 ],
-           [14.90694626, 14.82112999, 14.80599521, ...,  7.02465335,
-             7.02465335,  7.02465335]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>15.57 15.57 15.57 ... 16.38 16.38</div><input id='attrs-7275010a-4fc3-4ac7-9b7e-6d15701601f9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7275010a-4fc3-4ac7-9b7e-6d15701601f9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d9516d16-aea0-49c8-a499-7403e007f553' class='xr-var-data-in' type='checkbox'><label for='data-d9516d16-aea0-49c8-a499-7403e007f553' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[15.57391976, 15.57391976, 15.57391976, ..., 17.2995705 ,
-            17.2995705 , 17.2995705 ],
-           [15.70006665, 15.45932677, 15.45932677, ...,  5.2525911 ,
-             5.2525911 ,  5.21729725],
-           [14.71431489, 14.71431489, 14.71431489, ...,  8.48024693,
-             8.48024693,  8.48024693],
+           [4.10557432, 4.10557432, 3.99236885, ..., 3.62833484, 3.62833484,
+            3.62833484],
+           [3.82579771, 3.82579771, 3.82579771, ..., 3.63993325, 3.63993325,
+            3.63993325],
+           [3.00757588, 3.00757588, 3.00757588, ..., 3.67658661, 3.67658661,
+            3.67658661]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.48 14.48 14.48 ... 13.88 13.88</div><input id='attrs-6b1b363b-6a84-4978-add9-17e8a2d76f21' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6b1b363b-6a84-4978-add9-17e8a2d76f21' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bd2cde4f-aefd-4d93-b00a-c904624299fc' class='xr-var-data-in' type='checkbox'><label for='data-bd2cde4f-aefd-4d93-b00a-c904624299fc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.48233229, 14.48233229, 14.48233229, ..., 26.03902865,
+            26.03902865, 26.04151905],
+           [15.08835057, 15.08835057, 15.08835057, ..., 15.04344658,
+            15.04344658, 15.04344658],
+           [14.5628576 , 14.5661058 , 14.5661058 , ..., 25.79760595,
+            25.79760595, 25.72960968],
            ...,
-           [15.4092381 , 15.4092381 , 15.4092381 , ..., 19.27441019,
-            19.27441019, 19.27441019],
-           [14.56923251, 14.5499715 , 14.91527087, ..., 13.88894872,
-            13.88894872, 13.88894872],
-           [15.40519489, 15.36915985, 15.41184127, ..., 16.38020153,
-            16.38020153, 16.38020153]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t4</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.97 14.97 14.97 ... 17.39 17.39</div><input id='attrs-915b0d4b-3762-4ac0-a01f-76b145f4919d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-915b0d4b-3762-4ac0-a01f-76b145f4919d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-22210ddf-652d-40e1-b20d-cb13deb38d7c' class='xr-var-data-in' type='checkbox'><label for='data-22210ddf-652d-40e1-b20d-cb13deb38d7c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.96934023, 14.96934023, 14.96934023, ..., 28.23203187,
-            28.23203187, 28.23203187],
-           [15.15834694, 15.16204045, 15.16204045, ..., 12.3002217 ,
-            12.3002217 , 12.55551986],
-           [14.65206068, 14.65206068, 14.65206068, ..., 17.362706  ,
-            17.362706  , 17.362706  ],
+           [14.81852031, 14.81852031, 15.10241765, ..., 14.6305381 ,
+            14.6305381 , 14.6305381 ],
+           [15.11463132, 15.11463132, 15.11463132, ..., 15.11644575,
+            15.11644575, 15.11644575],
+           [16.064453  , 16.064453  , 16.064453  , ..., 13.87526445,
+            13.87526445, 13.87526445]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.684 3.684 3.684 ... 4.269 4.269</div><input id='attrs-43d4ccca-56ac-4a52-82a0-7b0b21bfdde4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-43d4ccca-56ac-4a52-82a0-7b0b21bfdde4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0cb390a6-5bca-43fc-8da2-e343978a8b62' class='xr-var-data-in' type='checkbox'><label for='data-0cb390a6-5bca-43fc-8da2-e343978a8b62' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[3.68443526, 3.68443526, 3.68443526, ..., 4.17881931, 4.17881931,
+            4.18152037],
+           [4.51958246, 4.51958246, 4.51958246, ..., 4.23749108, 4.23749108,
+            4.23749108],
+           [4.22940028, 4.23303052, 4.23303052, ..., 4.18932409, 4.18932409,
+            4.19048738],
            ...,
-           [14.10221767, 14.10221767, 14.10221767, ..., 22.87145009,
-            22.87145009, 22.87145009],
-           [14.28820605, 14.56596937, 14.70987422, ..., 11.91254598,
-            11.91254598, 11.91254598],
-           [15.36935261, 15.32558235, 15.1832564 , ..., 17.39041212,
-            17.39041212, 17.39041212]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t5</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.84 14.84 14.84 ... 21.26 21.26</div><input id='attrs-6bf03551-6b70-4245-94ee-fac7ca55254b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6bf03551-6b70-4245-94ee-fac7ca55254b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7838bcc9-4517-4a52-a090-362a8faabcc8' class='xr-var-data-in' type='checkbox'><label for='data-7838bcc9-4517-4a52-a090-362a8faabcc8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.83752739, 14.83752739, 14.83752739, ..., 29.38973142,
-            29.38973142, 29.38973142],
-           [14.96596921, 15.27685613, 15.27685613, ..., 23.93052247,
-            23.93052247, 22.73021811],
-           [14.9175715 , 14.9175715 , 14.9175715 , ..., 13.29012157,
-            13.29012157, 13.29012157],
+           [4.51513281, 4.51513281, 4.28212677, ..., 4.26651224, 4.26651224,
+            4.26651224],
+           [4.11153617, 4.11153617, 4.11153617, ..., 4.22551433, 4.22551433,
+            4.22551433],
+           [3.80296694, 3.80296694, 3.80296694, ..., 4.26852682, 4.26852682,
+            4.26852682]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>15.68 15.68 15.68 ... 14.39 14.39</div><input id='attrs-d32b4f0a-0e30-4ae6-9632-5c5dc7c7b596' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d32b4f0a-0e30-4ae6-9632-5c5dc7c7b596' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3048e37c-cc21-4b09-aa5d-c0513cca67f4' class='xr-var-data-in' type='checkbox'><label for='data-3048e37c-cc21-4b09-aa5d-c0513cca67f4' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[15.67761323, 15.67761323, 15.67761323, ..., 17.12028375,
+            17.12028375, 17.11412415],
+           [14.79158746, 14.79158746, 14.79158746, ..., 10.12351229,
+            10.12351229, 10.12351229],
+           [14.46398836, 14.47615495, 14.47615495, ..., 17.34631936,
+            17.34631936, 17.38897942],
            ...,
-           [15.06556229, 15.06556229, 15.06556229, ..., 28.70695179,
-            28.70695179, 28.70695179],
-           [14.69025542, 14.7386487 , 14.77392424, ..., 11.51980734,
-            11.51980734, 11.51980734],
-           [14.20473708, 14.30792195, 14.33259656, ..., 21.25695477,
-            21.25695477, 21.25695477]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t6</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>15.11 15.11 15.11 ... 15.78 15.78</div><input id='attrs-60f6fcff-abdc-4632-8663-38f4c5ef1629' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-60f6fcff-abdc-4632-8663-38f4c5ef1629' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1b323791-583a-49d8-af27-5713ca306b63' class='xr-var-data-in' type='checkbox'><label for='data-1b323791-583a-49d8-af27-5713ca306b63' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[15.10806811, 15.10806811, 15.10806811, ...,  8.927445  ,
-             8.927445  ,  8.927445  ],
-           [16.3057818 , 16.01648753, 16.01648753, ..., 11.65234848,
-            11.65234848, 10.63431938],
-           [15.2429446 , 15.2429446 , 15.2429446 , ..., 21.48946674,
-            21.48946674, 21.48946674],
+           [15.42160846, 15.42160846, 15.21521271, ..., 11.15313698,
+            11.15313698, 11.15313698],
+           [15.33739774, 15.33739774, 15.33739774, ..., 12.24680967,
+            12.24680967, 12.24680967],
+           [14.45757901, 14.45757901, 14.45757901, ..., 14.39321379,
+            14.39321379, 14.39321379]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.928 3.928 3.928 ... 4.329 4.329</div><input id='attrs-bc4d48ae-9ae8-44d7-8764-17be9582b4ef' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bc4d48ae-9ae8-44d7-8764-17be9582b4ef' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-efe64f4a-b640-4948-8c13-e4b9124af1d8' class='xr-var-data-in' type='checkbox'><label for='data-efe64f4a-b640-4948-8c13-e4b9124af1d8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[3.92848233, 3.92848233, 3.92848233, ..., 4.33904491, 4.33904491,
+            4.34145655],
+           [3.75245776, 3.75245776, 3.75245776, ..., 4.26706292, 4.26706292,
+            4.26706292],
+           [4.91150762, 4.89297677, 4.89297677, ..., 4.34040809, 4.34040809,
+            4.34038449],
            ...,
-           [14.82196376, 14.82196376, 14.82196376, ..., 20.77708795,
-            20.77708795, 20.77708795],
-           [15.35509961, 15.26342824, 15.20800263, ..., 17.19155297,
-            17.19155297, 17.19155297],
-           [15.17261593, 15.00321347, 14.90116811, ..., 15.78181194,
-            15.78181194, 15.78181194]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t7</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.64 14.64 14.64 ... 28.92 28.92</div><input id='attrs-71ca12e0-e11a-4e68-8fc0-75ab7fe5b9ac' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-71ca12e0-e11a-4e68-8fc0-75ab7fe5b9ac' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-440e479e-a1b1-48c3-8406-899e0fedced0' class='xr-var-data-in' type='checkbox'><label for='data-440e479e-a1b1-48c3-8406-899e0fedced0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.64133167, 14.64133167, 14.64133167, ..., 12.15079246,
-            12.15079246, 12.15079246],
-           [14.37905597, 14.65830631, 14.65830631, ..., 26.66967448,
-            26.66967448, 23.8275788 ],
-           [15.55962808, 15.55962808, 15.55962808, ..., 29.48620199,
-            29.48620199, 29.48620199],
+           [3.45296204, 3.45296204, 3.77767274, ..., 4.32783245, 4.32783245,
+            4.32783245],
+           [4.18563969, 4.18563969, 4.18563969, ..., 4.28108513, 4.28108513,
+            4.28108513],
+           [3.34971594, 3.34971594, 3.34971594, ..., 4.32853335, 4.32853335,
+            4.32853335]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>15.04 15.04 15.04 ... 27.3 27.3</div><input id='attrs-44969bb5-f320-48dc-8067-cdac5c34370f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-44969bb5-f320-48dc-8067-cdac5c34370f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ceee9922-7fab-4c1b-a8f8-49cd76568f68' class='xr-var-data-in' type='checkbox'><label for='data-ceee9922-7fab-4c1b-a8f8-49cd76568f68' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[15.03891886, 15.03891886, 15.03891886, ..., 21.55368285,
+            21.55368285, 21.47838008],
+           [14.33600776, 14.33600776, 14.33600776, ...,  7.87643921,
+             7.87643921,  7.87643921],
+           [14.1466305 , 14.15626029, 14.15626029, ..., 21.88722673,
+            21.88722673, 21.94047019],
            ...,
-           [14.93806613, 14.93806613, 14.93806613, ..., 22.66584612,
-            22.66584612, 22.66584612],
-           [14.01139739, 14.06936767, 14.27341908, ...,  5.43376192,
-             5.43376192,  5.43376192],
-           [14.78492064, 14.81041999, 14.75552912, ..., 28.92000262,
-            28.92000262, 28.92000262]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.291 4.291 4.291 ... 3.401 3.401</div><input id='attrs-5fe85526-2b46-4a2c-b15c-237511ca7c66' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5fe85526-2b46-4a2c-b15c-237511ca7c66' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-cbb4422f-ebaa-4d3f-b4ff-51561d804099' class='xr-var-data-in' type='checkbox'><label for='data-cbb4422f-ebaa-4d3f-b4ff-51561d804099' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.29063863, 4.29063863, 4.29063863, ..., 3.40836087, 3.40836087,
-            3.40836087],
-           [4.22283581, 4.01040998, 4.01040998, ..., 3.43035245, 3.43035245,
-            3.42351803],
-           [3.38506206, 3.38506206, 3.38506206, ..., 3.42553822, 3.42553822,
-            3.42553822],
+           [14.90458153, 14.90458153, 15.19729781, ..., 20.07127364,
+            20.07127364, 20.07127364],
+           [14.73162855, 14.73162855, 14.73162855, ...,  8.93758019,
+             8.93758019,  8.93758019],
+           [15.45912778, 15.45912778, 15.45912778, ..., 27.30096192,
+            27.30096192, 27.30096192]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v4</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.876 4.876 4.876 ... 4.266 4.266</div><input id='attrs-e427cb83-686b-429d-acc0-f1143628e17a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e427cb83-686b-429d-acc0-f1143628e17a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f94bb182-07e0-417d-b111-7c20cc7d85ce' class='xr-var-data-in' type='checkbox'><label for='data-f94bb182-07e0-417d-b111-7c20cc7d85ce' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.87582181, 4.87582181, 4.87582181, ..., 4.46875918, 4.46875918,
+            4.4685012 ],
+           [3.72040742, 3.72040742, 3.72040742, ..., 4.35430369, 4.35430369,
+            4.35430369],
+           [4.28890933, 4.29454103, 4.29454103, ..., 4.48296501, 4.48296501,
+            4.48681019],
            ...,
-           [3.30399862, 3.30399862, 3.30399862, ..., 3.41584737, 3.41584737,
-            3.41584737],
-           [2.69430891, 2.83446614, 3.35396396, ..., 3.4106994 , 3.4106994 ,
-            3.4106994 ],
-           [3.41436285, 3.46607313, 3.46968569, ..., 3.40059935, 3.40059935,
-            3.40059935]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.919 3.919 3.919 ... 3.679 3.679</div><input id='attrs-46c8222f-9c4b-4cac-be98-4416ecd439ea' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-46c8222f-9c4b-4cac-be98-4416ecd439ea' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bca3cf12-b154-4f6c-abe2-42c26ccf4da3' class='xr-var-data-in' type='checkbox'><label for='data-bca3cf12-b154-4f6c-abe2-42c26ccf4da3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[3.9192816 , 3.9192816 , 3.9192816 , ..., 3.64762995, 3.64762995,
-            3.64762995],
-           [4.07576909, 3.9642066 , 3.9642066 , ..., 3.6555445 , 3.6555445 ,
-            3.65624068],
-           [3.75955417, 3.75955417, 3.75955417, ..., 3.64833873, 3.64833873,
-            3.64833873],
+           [4.73217489, 4.73217489, 4.4869595 , ..., 4.33876927, 4.33876927,
+            4.33876927],
+           [4.64786636, 4.64786636, 4.64786636, ..., 4.34298694, 4.34298694,
+            4.34298694],
+           [3.79938649, 3.79938649, 3.79938649, ..., 4.26605729, 4.26605729,
+            4.26605729]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t4</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.76 14.76 14.76 ... 24.86 24.86</div><input id='attrs-499b3e1d-29c0-476b-86a6-1ffe03651cd5' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-499b3e1d-29c0-476b-86a6-1ffe03651cd5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f181b10f-45c1-46ba-9523-00847a927a53' class='xr-var-data-in' type='checkbox'><label for='data-f181b10f-45c1-46ba-9523-00847a927a53' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.7628693 , 14.7628693 , 14.7628693 , ..., 12.24367607,
+            12.24367607, 12.36079748],
+           [14.63770784, 14.63770784, 14.63770784, ..., 10.79104802,
+            10.79104802, 10.79104802],
+           [15.11168735, 15.10771614, 15.10771614, ..., 13.27694747,
+            13.27694747, 13.25365456],
            ...,
-           [3.41684779, 3.41684779, 3.41684779, ..., 3.6314226 , 3.6314226 ,
-            3.6314226 ],
-           [3.7683612 , 3.82681198, 3.85980104, ..., 3.67808146, 3.67808146,
-            3.67808146],
-           [2.53404253, 2.54816831, 2.75402162, ..., 3.67940059, 3.67940059,
-            3.67940059]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.841 3.841 3.841 ... 4.334 4.334</div><input id='attrs-631910cd-c7ff-42f0-bf23-bc5b18a48b12' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-631910cd-c7ff-42f0-bf23-bc5b18a48b12' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f558277e-2f58-4302-be58-e27f8f9ec760' class='xr-var-data-in' type='checkbox'><label for='data-f558277e-2f58-4302-be58-e27f8f9ec760' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[3.84126352, 3.84126352, 3.84126352, ..., 4.30984727, 4.30984727,
-            4.30984727],
-           [4.52893128, 4.51253352, 4.51253352, ..., 4.30206655, 4.30206655,
-            4.31025635],
-           [3.61979643, 3.61979643, 3.61979643, ..., 4.28875132, 4.28875132,
-            4.28875132],
+           [14.79911713, 14.79911713, 14.77610403, ..., 22.91256954,
+            22.91256954, 22.91256954],
+           [15.27188344, 15.27188344, 15.27188344, ..., 11.88649655,
+            11.88649655, 11.88649655],
+           [15.02868812, 15.02868812, 15.02868812, ..., 24.85656917,
+            24.85656917, 24.85656917]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v5</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.408 4.408 4.408 ... 4.221 4.221</div><input id='attrs-f4d4892c-a803-4fdd-9aaa-8d005992d295' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f4d4892c-a803-4fdd-9aaa-8d005992d295' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a9f6c197-10d6-49a2-b378-0b7c36cb9397' class='xr-var-data-in' type='checkbox'><label for='data-a9f6c197-10d6-49a2-b378-0b7c36cb9397' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.40760912, 4.40760912, 4.40760912, ..., 4.6330424 , 4.6330424 ,
+            4.62488288],
+           [4.50642362, 4.50642362, 4.50642362, ..., 4.30868157, 4.30868157,
+            4.30868157],
+           [4.09233172, 4.09767581, 4.09767581, ..., 4.56135543, 4.56135543,
+            4.55864242],
            ...,
-           [3.95242126, 3.95242126, 3.95242126, ..., 4.30499252, 4.30499252,
-            4.30499252],
-           [4.43535468, 4.51076291, 4.27191519, ..., 4.32518966, 4.32518966,
-            4.32518966],
-           [4.63175093, 4.57292615, 4.44576453, ..., 4.33355875, 4.33355875,
-            4.33355875]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.327 4.327 4.327 ... 4.326 4.326</div><input id='attrs-23dc7860-fb94-4cf1-a0b3-18c2f792015f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-23dc7860-fb94-4cf1-a0b3-18c2f792015f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-68bcf7f5-1183-4b7a-9e34-eac48d0f035b' class='xr-var-data-in' type='checkbox'><label for='data-68bcf7f5-1183-4b7a-9e34-eac48d0f035b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.32680082, 4.32680082, 4.32680082, ..., 4.38749645, 4.38749645,
-            4.38749645],
-           [3.90384423, 4.07214949, 4.07214949, ..., 4.36629388, 4.36629388,
-            4.38967114],
-           [4.44355007, 4.44355007, 4.44355007, ..., 4.30951596, 4.30951596,
-            4.30951596],
+           [4.51295933, 4.51295933, 4.34345633, ..., 4.56915899, 4.56915899,
+            4.56915899],
+           [4.02109114, 4.02109114, 4.02109114, ..., 4.370173  , 4.370173  ,
+            4.370173  ],
+           [4.69639542, 4.69639542, 4.69639542, ..., 4.22064735, 4.22064735,
+            4.22064735]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t5</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.53 14.53 14.53 ... 5.191 5.191</div><input id='attrs-74b2bbfc-a39c-4d71-9d33-fbf0f60ad50b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-74b2bbfc-a39c-4d71-9d33-fbf0f60ad50b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1eaac5fd-9908-4993-9871-a3950f4c075c' class='xr-var-data-in' type='checkbox'><label for='data-1eaac5fd-9908-4993-9871-a3950f4c075c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.5314705 , 14.5314705 , 14.5314705 , ..., 15.1511158 ,
+            15.1511158 , 15.19738382],
+           [14.91955773, 14.91955773, 14.91955773, ..., 17.7467184 ,
+            17.7467184 , 17.7467184 ],
+           [15.32234787, 15.32145991, 15.32145991, ..., 14.47411674,
+            14.47411674, 14.46029794],
            ...,
-           [3.68775608, 3.68775608, 3.68775608, ..., 4.35881469, 4.35881469,
-            4.35881469],
-           [4.29456845, 4.14613   , 4.21058534, ..., 4.36152721, 4.36152721,
-            4.36152721],
-           [4.28939738, 4.39617906, 4.29206306, ..., 4.32554094, 4.32554094,
-            4.32554094]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v4</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.081 4.081 4.081 ... 4.392 4.392</div><input id='attrs-3e3b37f1-d3b7-4c54-81ab-7a790000d2c7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3e3b37f1-d3b7-4c54-81ab-7a790000d2c7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-985466e3-4e43-4494-a0ef-5e433584f53f' class='xr-var-data-in' type='checkbox'><label for='data-985466e3-4e43-4494-a0ef-5e433584f53f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.08057452, 4.08057452, 4.08057452, ..., 4.33830459, 4.33830459,
-            4.33830459],
-           [3.82165378, 3.75411991, 3.75411991, ..., 4.41725245, 4.41725245,
-            4.38717678],
-           [3.47041285, 3.47041285, 3.47041285, ..., 4.37856915, 4.37856915,
-            4.37856915],
+           [15.252457  , 15.252457  , 14.98666488, ...,  9.61264296,
+             9.61264296,  9.61264296],
+           [14.86542385, 14.86542385, 14.86542385, ..., 19.48297992,
+            19.48297992, 19.48297992],
+           [14.1763871 , 14.1763871 , 14.1763871 , ...,  5.19141185,
+             5.19141185,  5.19141185]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v6</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.244 4.244 4.244 ... 4.307 4.307</div><input id='attrs-4bb79cdc-d44b-4afc-835f-81488b91d9aa' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4bb79cdc-d44b-4afc-835f-81488b91d9aa' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-5d811ff5-a6ca-4849-8769-f02ab7355866' class='xr-var-data-in' type='checkbox'><label for='data-5d811ff5-a6ca-4849-8769-f02ab7355866' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.24391713, 4.24391713, 4.24391713, ..., 4.520533  , 4.520533  ,
+            4.51051203],
+           [5.52340241, 5.52340241, 5.52340241, ..., 4.30158552, 4.30158552,
+            4.30158552],
+           [3.62812815, 3.63862878, 3.63862878, ..., 4.46729871, 4.46729871,
+            4.46528663],
            ...,
-           [4.35621947, 4.35621947, 4.35621947, ..., 4.28586219, 4.28586219,
-            4.28586219],
-           [3.45246842, 3.94106639, 3.99083671, ..., 4.18720667, 4.18720667,
-            4.18720667],
-           [4.48002059, 4.41933317, 4.43022662, ..., 4.39156336, 4.39156336,
-            4.39156336]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v5</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.884 4.884 4.884 ... 4.264 4.264</div><input id='attrs-1bfecc40-e2df-4050-9f19-7f9981afdad3' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-1bfecc40-e2df-4050-9f19-7f9981afdad3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ca4414b8-0c11-4101-a25f-a510885604cd' class='xr-var-data-in' type='checkbox'><label for='data-ca4414b8-0c11-4101-a25f-a510885604cd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.88406537, 4.88406537, 4.88406537, ..., 4.37896473, 4.37896473,
-            4.37896473],
-           [3.67584932, 3.85313782, 3.85313782, ..., 4.32549536, 4.32549536,
-            4.31813816],
-           [4.17042982, 4.17042982, 4.17042982, ..., 4.28325465, 4.28325465,
-            4.28325465],
+           [4.45462224, 4.45462224, 4.13392584, ..., 4.37725794, 4.37725794,
+            4.37725794],
+           [3.85663205, 3.85663205, 3.85663205, ..., 4.39704457, 4.39704457,
+            4.39704457],
+           [4.57468225, 4.57468225, 4.57468225, ..., 4.30670864, 4.30670864,
+            4.30670864]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t6</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>14.66 14.66 14.66 ... 6.788 6.788</div><input id='attrs-5266b7d0-f6af-4c29-835a-876f89284bc3' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5266b7d0-f6af-4c29-835a-876f89284bc3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-043bb5d9-203c-444a-960d-7f87a1bcaeb4' class='xr-var-data-in' type='checkbox'><label for='data-043bb5d9-203c-444a-960d-7f87a1bcaeb4' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[14.66371799, 14.66371799, 14.66371799, ...,  9.71231284,
+             9.71231284,  9.52435675],
+           [15.22166622, 15.22166622, 15.22166622, ..., 25.24854709,
+            25.24854709, 25.24854709],
+           [15.27679944, 15.28229328, 15.28229328, ...,  8.71302523,
+             8.71302523,  8.98095811],
            ...,
-           [4.58472174, 4.58472174, 4.58472174, ..., 4.35239343, 4.35239343,
-            4.35239343],
-           [4.28452514, 4.47276927, 4.61950149, ..., 4.19946532, 4.19946532,
-            4.19946532],
-           [3.96140004, 3.95171658, 4.02792434, ..., 4.26360905, 4.26360905,
-            4.26360905]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v6</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.007 4.007 4.007 ... 4.299 4.299</div><input id='attrs-ca80d57b-8b2a-45ac-bd24-69808966508f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ca80d57b-8b2a-45ac-bd24-69808966508f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b661ad53-f70f-40bc-8157-1827e3ccf306' class='xr-var-data-in' type='checkbox'><label for='data-b661ad53-f70f-40bc-8157-1827e3ccf306' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.00712235, 4.00712235, 4.00712235, ..., 4.43426982, 4.43426982,
-            4.43426982],
-           [4.30662336, 4.1315536 , 4.1315536 , ..., 4.34417476, 4.34417476,
-            4.3504196 ],
-           [4.91616693, 4.91616693, 4.91616693, ..., 4.29463794, 4.29463794,
-            4.29463794],
+           [15.70921384, 15.70921384, 15.38103658, ...,  6.16012777,
+             6.16012777,  6.16012777],
+           [15.02830884, 15.02830884, 15.02830884, ..., 26.36524283,
+            26.36524283, 26.36524283],
+           [15.89778344, 15.89778344, 15.89778344, ...,  6.78831963,
+             6.78831963,  6.78831963]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v7</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.889 4.889 4.889 ... 4.384 4.384</div><input id='attrs-e419ac3a-3337-4206-aeb8-0767862aac8b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e419ac3a-3337-4206-aeb8-0767862aac8b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ebe162ce-e7ec-48f0-af78-188c9a093b8b' class='xr-var-data-in' type='checkbox'><label for='data-ebe162ce-e7ec-48f0-af78-188c9a093b8b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.88945501, 4.88945501, 4.88945501, ..., 4.65596643, 4.65596643,
+            4.64457849],
+           [3.65153414, 3.65153414, 3.65153414, ..., 4.37268398, 4.37268398,
+            4.37268398],
+           [3.35841394, 3.36917491, 3.36917491, ..., 4.54758226, 4.54758226,
+            4.5454999 ],
            ...,
-           [4.29451154, 4.29451154, 4.29451154, ..., 4.36183868, 4.36183868,
-            4.36183868],
-           [4.68838554, 4.78677078, 4.50862677, ..., 4.25645861, 4.25645861,
-            4.25645861],
-           [4.12174241, 4.15845507, 4.216761  , ..., 4.2988169 , 4.2988169 ,
-            4.2988169 ]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v7</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.69 4.69 4.69 ... 4.343 4.343</div><input id='attrs-ec1ddbc8-3452-4893-9c6e-8f80c1749244' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ec1ddbc8-3452-4893-9c6e-8f80c1749244' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-879fbd1d-b185-4e54-9f64-faf35a1a0a44' class='xr-var-data-in' type='checkbox'><label for='data-879fbd1d-b185-4e54-9f64-faf35a1a0a44' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.69037749, 4.69037749, 4.69037749, ..., 4.39899246, 4.39899246,
-            4.39899246],
-           [4.53652175, 4.49054763, 4.49054763, ..., 4.37268766, 4.37268766,
-            4.36769247],
-           [4.50059542, 4.50059542, 4.50059542, ..., 4.32401372, 4.32401372,
-            4.32401372],
+           [4.20539915, 4.20539915, 3.88018063, ..., 4.48117364, 4.48117364,
+            4.48117364],
+           [3.9509655 , 3.9509655 , 3.9509655 , ..., 4.5049467 , 4.5049467 ,
+            4.5049467 ],
+           [5.24160382, 5.24160382, 5.24160382, ..., 4.38376585, 4.38376585,
+            4.38376585]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>t7</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>13.97 13.97 13.97 ... 11.55 11.55</div><input id='attrs-2026af51-571e-44d7-8abf-6eb898da232f' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2026af51-571e-44d7-8abf-6eb898da232f' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-0b27a316-cc7f-4c00-8a92-d3cfc7b44b41' class='xr-var-data-in' type='checkbox'><label for='data-0b27a316-cc7f-4c00-8a92-d3cfc7b44b41' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[13.97478541, 13.97478541, 13.97478541, ..., 14.79098718,
+            14.79098718, 14.70249577],
+           [15.32261062, 15.32261062, 15.32261062, ..., 21.06984342,
+            21.06984342, 21.06984342],
+           [15.31393552, 15.31414022, 15.31414022, ..., 14.03100796,
+            14.03100796, 14.01110424],
            ...,
-           [4.84657351, 4.84657351, 4.84657351, ..., 4.34287775, 4.34287775,
-            4.34287775],
-           [3.40556533, 3.55439145, 3.95966093, ..., 4.3038637 , 4.3038637 ,
-            4.3038637 ],
-           [4.16524087, 4.17322577, 4.18571049, ..., 4.34346975, 4.34346975,
-            4.34346975]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v8</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.741 4.741 4.741 ... 4.562 4.562</div><input id='attrs-d4adaa15-1e3c-456d-ac3a-4b24acf30913' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d4adaa15-1e3c-456d-ac3a-4b24acf30913' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ee388a04-80ce-4389-af3b-81423024876d' class='xr-var-data-in' type='checkbox'><label for='data-ee388a04-80ce-4389-af3b-81423024876d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.74108521, 4.74108521, 4.74108521, ..., 4.4943749 , 4.4943749 ,
-            4.4943749 ],
-           [4.03224298, 4.32929565, 4.32929565, ..., 4.41938932, 4.41938932,
-            4.4194157 ],
-           [4.13010986, 4.13010986, 4.13010986, ..., 4.56788118, 4.56788118,
-            4.56788118],
+           [15.33004752, 15.33004752, 14.89698443, ..., 15.70706049,
+            15.70706049, 15.70706049],
+           [13.63169324, 13.63169324, 13.63169324, ..., 18.7899507 ,
+            18.7899507 , 18.7899507 ],
+           [14.44180553, 14.44180553, 14.44180553, ..., 11.55184323,
+            11.55184323, 11.55184323]], shape=(40, 2000))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>v8</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.712 4.712 4.712 ... 4.535 4.535</div><input id='attrs-2c710e8c-f1e0-4385-96f8-2aec2a9d5445' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2c710e8c-f1e0-4385-96f8-2aec2a9d5445' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b66ad379-7b8b-48ca-9ad9-ab569e3797ad' class='xr-var-data-in' type='checkbox'><label for='data-b66ad379-7b8b-48ca-9ad9-ab569e3797ad' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[4.71177102, 4.71177102, 4.71177102, ..., 4.302488  , 4.302488  ,
+            4.3093936 ],
+           [5.57101903, 5.57101903, 5.57101903, ..., 4.52375083, 4.52375083,
+            4.52375083],
+           [4.59171152, 4.59796944, 4.59796944, ..., 4.41897177, 4.41897177,
+            4.423196  ],
            ...,
-           [4.86568335, 4.86568335, 4.86568335, ..., 4.58488676, 4.58488676,
-            4.58488676],
-           [4.54944164, 4.40899558, 4.52747045, ..., 4.48260502, 4.48260502,
-            4.48260502],
-           [4.98066516, 4.90617144, 4.76703763, ..., 4.5624087 , 4.5624087 ,
-            4.5624087 ]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-3baca8a8-8ab0-49d9-9489-df28dc51058c' class='xr-section-summary-in' type='checkbox'  ><label for='section-3baca8a8-8ab0-49d9-9489-df28dc51058c' class='xr-section-summary' >Indexes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>chain</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-98ce0499-a266-489c-83be-a8673fcab952' class='xr-index-data-in' type='checkbox'/><label for='index-98ce0499-a266-489c-83be-a8673fcab952' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
-           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
-           36, 37, 38, 39],
-          dtype=&#x27;int64&#x27;, name=&#x27;chain&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>draw</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-4a945948-8d06-4777-b1de-e369c1552e91' class='xr-index-data-in' type='checkbox'/><label for='index-4a945948-8d06-4777-b1de-e369c1552e91' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([   0,    1,    2,    3,    4,    5,    6,    7,    8,    9,
-           ...
-           1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
-          dtype=&#x27;int64&#x27;, name=&#x27;draw&#x27;, length=2000))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-62740cb1-48df-4133-816c-941f773128e2' class='xr-section-summary-in' type='checkbox'  checked><label for='section-62740cb1-48df-4133-816c-941f773128e2' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2024-04-19T05:03:16.440166+00:00</dd><dt><span>arviz_version :</span></dt><dd>0.18.0</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.5</dd></dl></div></li></ul></div></div>
+           [5.08426637, 5.08426637, 4.98678865, ..., 4.36941008, 4.36941008,
+            4.36941008],
+           [4.05537996, 4.05537996, 4.05537996, ..., 4.43795159, 4.43795159,
+            4.43795159],
+           [5.27734758, 5.27734758, 5.27734758, ..., 4.5351903 , 4.5351903 ,
+            4.5351903 ]], shape=(40, 2000))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-e8dd5481-f144-4233-95a0-d579d3a496ba' class='xr-section-summary-in' type='checkbox' checked /><label for='section-e8dd5481-f144-4233-95a0-d579d3a496ba' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2026-02-18T00:37:58.141866+00:00</dd><dt><span>arviz_version :</span></dt><dd>0.23.4</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.6</dd></dl></div></li></ul></div></div>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 887-946
+.. GENERATED FROM PYTHON SOURCE LINES 883-942
 
 .. code-block:: Python
 
@@ -2084,7 +2260,7 @@ Sample the posterior
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 948-964
+.. GENERATED FROM PYTHON SOURCE LINES 944-960
 
 .. code-block:: Python
 
@@ -2108,7 +2284,7 @@ Sample the posterior
 
 
 .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_sw_rf_joint_synthetic_008.png
-   :alt: t0, t0, t1, t1, t2, t2, t3, t3, t4, t4, t5, t5, t6, t6, t7, t7, v0, v0, v1, v1, v2, v2, v3, v3, v4, v4, v5, v5, v6, v6, v7, v7, v8, v8
+   :alt: v0, v0, t0, t0, v1, v1, t1, t1, v2, v2, t2, t2, v3, v3, t3, t3, v4, v4, t4, t4, v5, v5, t5, t5, v6, v6, t6, t6, v7, v7, t7, t7, v8, v8
    :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_sw_rf_joint_synthetic_008.png
    :class: sphx-glr-single-img
 
@@ -2116,18 +2292,18 @@ Sample the posterior
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 969-972
+.. GENERATED FROM PYTHON SOURCE LINES 965-968
 
 Trans-dimensional sampling
 --------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 975-977
+.. GENERATED FROM PYTHON SOURCE LINES 971-973
 
 **Prepare utilities for trans-d sampling**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 977-994
+.. GENERATED FROM PYTHON SOURCE LINES 973-990
 
 .. code-block:: Python
 
@@ -2155,7 +2331,7 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 996-1005
+.. GENERATED FROM PYTHON SOURCE LINES 992-1001
 
 .. code-block:: Python
 
@@ -2172,10 +2348,21 @@ Trans-dimensional sampling
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /home/kitc/actions-runner/_work/cofi-chai-test/cofi-chai-test/docs/source/examples/scripts_synth_data/sw_rf_joint_synthetic.py:994: DeprecationWarning: The 'Target' class has been moved to the 'likelihood' module. Please use 'from bayesbay.likelihood import Target' instead.
+      bayesbay.Target("rayleigh", rayleigh_dobs, covariance_mat_inv=1 / RAYLEIGH_STD**2),
+    /home/kitc/actions-runner/_work/cofi-chai-test/cofi-chai-test/docs/source/examples/scripts_synth_data/sw_rf_joint_synthetic.py:995: DeprecationWarning: The 'Target' class has been moved to the 'likelihood' module. Please use 'from bayesbay.likelihood import Target' instead.
+      bayesbay.Target("rf", rf_dobs, covariance_mat_inv=1 / RF_STD**2),
+    /home/kitc/actions-runner/_work/cofi-chai-test/cofi-chai-test/docs/source/examples/scripts_synth_data/sw_rf_joint_synthetic.py:999: DeprecationWarning: The 'LogLikelihood' class has been moved to the 'likelihood' module. Please use 'from bayesbay.likelihood import LogLikelihood' instead.
+      my_log_likelihood = bayesbay.LogLikelihood(targets, forward_funcs)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1007-1030
+
+.. GENERATED FROM PYTHON SOURCE LINES 1003-1026
 
 .. code-block:: Python
 
@@ -2209,7 +2396,7 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1032-1047
+.. GENERATED FROM PYTHON SOURCE LINES 1028-1043
 
 .. code-block:: Python
 
@@ -2226,7 +2413,7 @@ Trans-dimensional sampling
             parameters=[param_vs], 
         )
     )
-    my_perturbation_funcs = parameterization.perturbation_functions
+    my_perturbation_funcs = parameterization.perturbation_funcs
 
 
 
@@ -2235,7 +2422,7 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1049-1055
+.. GENERATED FROM PYTHON SOURCE LINES 1045-1051
 
 .. code-block:: Python
 
@@ -2252,12 +2439,12 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1060-1062
+.. GENERATED FROM PYTHON SOURCE LINES 1056-1058
 
 **Define ``InversionOptions``**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1062-1076
+.. GENERATED FROM PYTHON SOURCE LINES 1058-1072
 
 .. code-block:: Python
 
@@ -2282,12 +2469,12 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1081-1083
+.. GENERATED FROM PYTHON SOURCE LINES 1077-1079
 
 **Define ``Inversion`` and run**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1083-1087
+.. GENERATED FROM PYTHON SOURCE LINES 1079-1083
 
 .. code-block:: Python
 
@@ -2302,7 +2489,7 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1089-1095
+.. GENERATED FROM PYTHON SOURCE LINES 1085-1091
 
 .. code-block:: Python
 
@@ -2319,7 +2506,7 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1097-1157
+.. GENERATED FROM PYTHON SOURCE LINES 1093-1153
 
 .. code-block:: Python
 
@@ -2395,7 +2582,7 @@ Trans-dimensional sampling
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1162-1167
+.. GENERATED FROM PYTHON SOURCE LINES 1158-1163
 
 --------------
 
@@ -2403,12 +2590,12 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1167-1173
+.. GENERATED FROM PYTHON SOURCE LINES 1163-1169
 
 .. code-block:: Python
 
 
-    watermark_list = ["cofi", "espresso", "numpy", "matplotlib", "scipy", "bayesbay"]
+    watermark_list = ["cofi", "numpy", "matplotlib", "scipy", "bayesbay"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -2421,24 +2608,23 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.8
-    espresso 0.3.13
-    numpy 1.26.4
-    matplotlib 3.8.3
-    scipy 1.12.0
-    bayesbay 0.3.0
+    cofi 0.2.11
+    numpy 2.3.5
+    matplotlib 3.10.8
+    scipy 1.17.0
+    bayesbay 0.3.7
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1174-1174
+.. GENERATED FROM PYTHON SOURCE LINES 1170-1170
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 29.331 seconds)
+   **Total running time of the script:** (1 minutes 25.944 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py:
@@ -2454,6 +2640,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: sw_rf_joint_synthetic.py <sw_rf_joint_synthetic.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: sw_rf_joint_synthetic.zip <sw_rf_joint_synthetic.zip>`
 
 
 .. only:: html

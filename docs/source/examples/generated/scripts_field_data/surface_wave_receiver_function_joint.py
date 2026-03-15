@@ -40,10 +40,10 @@ Surface wave and receiver function - joint inversion (field data)
 # 
 # **Learning outcomes**
 # 
-# -  A demonstration of CoFI’s ability to switch between parameter
-#    estimation and ensemble methods.
-# -  An application of CoFI for a joint inversion, here of Rayleigh wave
-#    pahse velocity and receiver function data, to a field dataset
+# - A demonstration of CoFI’s ability to switch between parameter
+#   estimation and ensemble methods.
+# - An application of CoFI for a joint inversion, here of Rayleigh wave
+#   pahse velocity and receiver function data, to a field dataset
 # 
 
 
@@ -55,7 +55,7 @@ Surface wave and receiver function - joint inversion (field data)
 # and receiver function.
 # 
 # We use ``pysurf96`` for computing the forward step of surface wave, and
-# use ``espresso`` for receiver function calculations.
+# use ``pyhk`` for receiver function calculations.
 # 
 
 # -------------------------------------------------------- #
@@ -64,10 +64,17 @@ Surface wave and receiver function - joint inversion (field data)
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi geo-espresso
+# !pip install -U cofi 
 # !pip install git+https://github.com/inlab-geo/pysurf96.git
 # !git clone https://github.com/inlab-geo/cofi-examples.git
 # %cd cofi-examples/examples/sw_rf_joint
+
+######################################################################
+#
+
+# If this notebook is run locally pysurf96 needs to be installed separately by uncommenting the following line, 
+# that is by removing the # and the white space between it and the exclammation mark.
+# !pip install -U cofi git+https://github.com/inlab-geo/pysurf96.git@ctypes
 
 ######################################################################
 #
@@ -82,7 +89,7 @@ import arviz as az
 import pysurf96
 import bayesbay
 import cofi
-import espresso
+import pyhk
 
 ######################################################################
 #
@@ -219,17 +226,6 @@ def forward_sw_interp(model, periods):
 ######################################################################
 #
 
-
-######################################################################
-# **Interfacing to Espresso**
-# 
-
-# obtain the receiver function library
-rf_lib = espresso.ReceiverFunctionInversionKnt().rf
-
-######################################################################
-#
-
 t_shift = 5
 t_duration = 25
 t_sampling_interval = 0.1
@@ -239,7 +235,7 @@ ray_param_s_km = 0.07
 ######################################################################
 #
 
-# forward through rf in espresso
+# forward through rf in pyhf
 def forward_rf(
     model, 
     t_shift=t_shift, 
@@ -250,7 +246,7 @@ def forward_rf(
     return_times=False
 ):
     h, vs = split_layercake_model(model)
-    data = rf_lib.rf_calc(ps=0, thik=h, beta=vs, kapa=np.ones((len(vs),))*VP_VS, p=ray_param_s_km, 
+    data = pyhk.rfcalc(ps=0, thik=h, beta=vs, kapa=np.ones((len(vs),))*VP_VS, p=ray_param_s_km, 
                       duration=t_duration, dt=t_sampling_interval, shft=t_shift, gauss=gauss)
     if return_times:
         times = np.arange(len(data)) * t_sampling_interval - t_shift
@@ -1164,7 +1160,7 @@ parameterization = bayesbay.parameterization.Parameterization(
         parameters=[param_vs], 
     )
 )
-my_perturbation_funcs = parameterization.perturbation_functions
+my_perturbation_funcs = parameterization.perturbation_funcs
 
 ######################################################################
 #
@@ -1315,7 +1311,7 @@ plt.tight_layout()
 # ---------
 # 
 
-watermark_list = ["cofi", "espresso", "numpy", "matplotlib", "scipy", "bayesbay"]
+watermark_list = ["cofi", "numpy", "matplotlib", "scipy", "bayesbay"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))

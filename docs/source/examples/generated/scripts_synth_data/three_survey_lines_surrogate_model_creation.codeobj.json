@@ -1,0 +1,739 @@
+{
+ "f": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_io",
+   "module_short": "_io",
+   "name": "BufferedWriter"
+  }
+ ],
+ "fig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure"
+  }
+ ],
+ "filename": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "ndim": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "numpy.load": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "load"
+  }
+ ],
+ "numpy.random.seed": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_cython_3_2_1",
+   "module_short": "_cython_3_2_1",
+   "name": "cython_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "seed"
+  }
+ ],
+ "numpy.set_printoptions": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "set_printoptions"
+  }
+ ],
+ "numpy.sqrt": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "sqrt"
+  }
+ ],
+ "numpy.squeeze": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "squeeze"
+  }
+ ],
+ "pickle.dump": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pickle",
+   "module_short": "pickle",
+   "name": "dump"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
+  }
+ ],
+ "plt.errorbar": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "errorbar"
+  }
+ ],
+ "plt.figure": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "figure"
+  }
+ ],
+ "plt.legend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "legend"
+  }
+ ],
+ "plt.plot": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "plot"
+  }
+ ],
+ "plt.show": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "show"
+  }
+ ],
+ "plt.title": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "title"
+  }
+ ],
+ "plt.xlabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "xlabel"
+  }
+ ],
+ "plt.ylabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "ylabel"
+  }
+ ],
+ "s2": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "smt.surrogate_models.KRG": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg_based",
+   "module_short": "smt.surrogate_models.krg_based",
+   "name": "KrgBased"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KrgBased"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KrgBased"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.surrogate_model",
+   "module_short": "smt.surrogate_models.surrogate_model",
+   "name": "SurrogateModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "SurrogateModel"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "SurrogateModel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  }
+ ],
+ "t": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG"
+  }
+ ],
+ "t.predict_values": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg_based",
+   "module_short": "smt.surrogate_models.krg_based",
+   "name": "KrgBased.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KrgBased.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KrgBased.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.surrogate_model",
+   "module_short": "smt.surrogate_models.surrogate_model",
+   "name": "SurrogateModel.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "SurrogateModel.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "SurrogateModel.predict_values"
+  }
+ ],
+ "t.predict_variances": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg_based",
+   "module_short": "smt.surrogate_models.krg_based",
+   "name": "KrgBased.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KrgBased.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KrgBased.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.surrogate_model",
+   "module_short": "smt.surrogate_models.surrogate_model",
+   "name": "SurrogateModel.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "SurrogateModel.predict_variances"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "SurrogateModel.predict_variances"
+  }
+ ],
+ "t.set_training_values": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg_based",
+   "module_short": "smt.surrogate_models.krg_based",
+   "name": "KrgBased.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KrgBased.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KrgBased.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.surrogate_model",
+   "module_short": "smt.surrogate_models.surrogate_model",
+   "name": "SurrogateModel.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "SurrogateModel.set_training_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "SurrogateModel.set_training_values"
+  }
+ ],
+ "t.train": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg_based",
+   "module_short": "smt.surrogate_models.krg_based",
+   "name": "KrgBased.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KrgBased.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KrgBased.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.surrogate_model",
+   "module_short": "smt.surrogate_models.surrogate_model",
+   "name": "SurrogateModel.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "SurrogateModel.train"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "SurrogateModel.train"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "xlimits": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "xlimits.astype": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "xtest": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "xtrain": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "y": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "yerr": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ytest": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ytrain": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ]
+}

@@ -50,6 +50,13 @@ Electrical Resistivity Tomography with PyGIMLi
 # 0. Import modules
 # -----------------
 # 
+#    | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
+#      (pygimli)**.
+#    | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
+#      for **Python 3.13**, so this notebook won’t run on 3.13 unless you
+#      build from source.
+#    | **Use Python 3.12 (recommended) or 3.11** for install.
+# 
 
 # -------------------------------------------------------- #
 #                                                          #
@@ -58,6 +65,8 @@ Electrical Resistivity Tomography with PyGIMLi
 # -------------------------------------------------------- #
 
 # !pip install -U cofi pygimli tetgen
+
+
 
 ######################################################################
 #
@@ -72,10 +81,10 @@ Electrical Resistivity Tomography with PyGIMLi
 ######################################################################
 # We will need the following packages:
 # 
-# -  ``numpy`` for matrices and matrix-related functions
-# -  ``matplotlib`` for plotting
-# -  ``pygimli`` for forward modelling of the problem
-# -  ``cofi`` for accessing different inference solvers
+# - ``numpy`` for matrices and matrix-related functions
+# - ``matplotlib`` for plotting
+# - ``pygimli`` for forward modelling of the problem
+# - ``cofi`` for accessing different inference solvers
 # 
 # Additionally, we wrap some ``pygimli`` code in file
 # ``pygimli_ert_lib.py`` and import it here for conciseness.
@@ -112,8 +121,11 @@ np.random.seed(42)
 scheme = survey_scheme()
 mesh, rhomap = model_true(scheme)
 
+# convert rhomap to actual model vector for plotting
+rho_true = model_vec(rhomap, mesh)
+
 # plot the true model
-ax = pygimli.show(mesh, data=rhomap, label="$\Omega m$", showMesh=True)
+ax = pygimli.show(mesh, data=rho_true, label="$\Omega m$", showMesh=True)
 ax[0].set_title("True model")
 
 ######################################################################
@@ -221,13 +233,13 @@ ax[0].set_title("Starting model")
 # file ``pygimli_ert_lib.py``, so open this file if you’d like to find out
 # the details. These functions are:
 # 
-# -  ``get_response``
-# -  ``get_jacobian``
-# -  ``get_residuals``
-# -  ``get_data_misfit``
-# -  ``get_regularization``
-# -  ``get_gradient``
-# -  ``get_hessian``
+# - ``get_response``
+# - ``get_jacobian``
+# - ``get_residuals``
+# - ``get_data_misfit``
+# - ``get_regularization``
+# - ``get_gradient``
+# - ``get_hessian``
 # 
 
 
