@@ -16,6 +16,23 @@ Data Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Surface wave and receiver function - joint inversion (field data)">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_surface_wave_receiver_function_joint_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_field_data/surface_wave_receiver_function_joint`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Surface wave and receiver function - joint inversion (field data)</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Linear regression with Eustatic Sea-level data">
 
 .. only:: html
@@ -48,40 +65,6 @@ Data Examples
     </div>
 
 
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="Surface wave and receiver function - joint inversion (field data)">
-
-.. only:: html
-
-  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_surface_wave_receiver_function_joint_thumb.png
-    :alt:
-
-  :doc:`/examples/generated/scripts_field_data/surface_wave_receiver_function_joint`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Surface wave and receiver function - joint inversion (field data)</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="Surface-Wave Tomography">
-
-.. only:: html
-
-  .. image:: /examples/generated/scripts_field_data/images/thumb/sphx_glr_sw_tomography_thumb.png
-    :alt:
-
-  :doc:`/examples/generated/scripts_field_data/sw_tomography`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Surface-Wave Tomography</div>
-    </div>
-
-
 .. thumbnail-parent-div-close
 
 .. raw:: html
@@ -92,8 +75,7 @@ Data Examples
 .. toctree::
    :hidden:
 
+   /examples/generated/scripts_field_data/surface_wave_receiver_function_joint
    /examples/generated/scripts_field_data/linear_regression_sealevel
    /examples/generated/scripts_field_data/pygimli_dcip_century_tri_mesh
-   /examples/generated/scripts_field_data/surface_wave_receiver_function_joint
-   /examples/generated/scripts_field_data/sw_tomography
 

@@ -26,6 +26,13 @@ Century DCIP Inversion with a Triangular Mesh
 # 
 # ..
 # 
+#    | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
+#      (pygimli)**.
+#    | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
+#      for **Python 3.13**, so this notebook won’t run on 3.13 unless you
+#      build from source.
+#    | **Use Python 3.12 (recommended) or 3.11** for install.
+# 
 #    If you are running this notebook locally, make sure you’ve followed
 #    `steps
 #    here <https://github.com/inlab-geo/cofi-examples#run-the-examples-with-cofi-locally>`__
@@ -126,11 +133,11 @@ Century DCIP Inversion with a Triangular Mesh
 ######################################################################
 # We will need the following packages:
 # 
-# -  ``os`` to list and load dataset
-# -  ``numpy`` for matrices and matrix-related functions
-# -  ``matplotlib`` for plotting
-# -  ``pygimli`` for forward modelling of the problem
-# -  ``cofi`` for accessing different inference solvers
+# - ``os`` to list and load dataset
+# - ``numpy`` for matrices and matrix-related functions
+# - ``matplotlib`` for plotting
+# - ``pygimli`` for forward modelling of the problem
+# - ``cofi`` for accessing different inference solvers
 # 
 
 import os
@@ -534,13 +541,13 @@ plot_model(ert_mgr.paraDomain, start_model_complex, "Starting model")
 # additional utility functions, so feel free to read them into details if
 # you want to understand more. These functions are:
 # 
-# -  ``get_response``
-# -  ``get_jacobian``
-# -  ``get_residuals``
-# -  ``get_data_misfit``
-# -  ``get_regularization``
-# -  ``get_gradient``
-# -  ``get_hessian``
+# - ``get_response``
+# - ``get_jacobian``
+# - ``get_residuals``
+# - ``get_data_misfit``
+# - ``get_regularization``
+# - ``get_gradient``
+# - ``get_hessian``
 # 
 
 # Utility Functions (additional)

@@ -33,15 +33,17 @@ Linear regression with Eustatic Sea-level data
 # problem, where we fit a polynomial function to Eustatic Sea-level
 # heights.
 # 
-# -  by solution of a linear system of equations,
-# -  by optimization of a data misfit function
-# -  by Bayesian sampling of a Likelihood multiplied by a prior.
+# - by solution of a linear system of equations,
+# - by optimization of a data misfit function
+# - by Bayesian sampling of a Likelihood multiplied by a prior.
 # 
 # --------------
 # 
-# Data set is from “Sea level and global ice volumes from the Last Glacial
-# Maximum to the Holocene” K. Lambeck, H. Rouby, A. Purcell, Y. Sun, and
-# M. Sambridge, 2014. Proc. Nat. Acad. Sci., 111, no. 43, 15296-15303,
+# Data set is from
+# 
+# **Sea level and global ice volumes from the Last Glacial Maximum to the
+# Holocene**, K. Lambeck, H. Rouby, A. Purcell, Y. Sun, and M. Sambridge,
+# 2014. Proc. Nat. Acad. Sci., 111, no. 43, 15296-15303,
 # doi:10.1073/pnas.1411762111.
 # 
 
@@ -69,26 +71,11 @@ import matplotlib.pyplot as plt
 #
 
 #
+# load x,y data
 def load_data_xy(filename):
-
-    f = open(filename, 'r')
-    header = f.readline()
-    lines = f.readlines()
-
-    x = np.array([])
-    y = np.array([])
-    sx = np.array([])
-    sy = np.array([])
-    for line in lines:
-        columns = line.split()
-        x = np.append(x,float(columns[0]))
-        y = np.append(y,float(columns[1]))
-        sx = np.append(sx,float(columns[2])/2.0)
-        sy = np.append(sy,float(columns[3])/2.0)
-
-    d = x,y, sy                                   # Combine into a single data structure
-
-    return d
+    x, y, sx, sy = np.loadtxt(filename, skiprows=1).T
+    sy /= 2  # input data are 2 sigma and we require sigma
+    return x, y, sy
 
 def load_data_ref(filename):
 
@@ -140,47 +127,16 @@ plot_data(title='Eustatic sea-level')
 ######################################################################
 #
 
+# display theory on travel time tomography
+from IPython.display import display, Markdown
+
+with open("../../theory/linear_regression.md", "r") as f:
+    content = f.read()
+
+display(Markdown(content))
 
 ######################################################################
-# Problem description
-# -------------------
-# 
-# To begin with, we will work with polynomial curves,
-# 
-# .. math:: y(x) = \sum_{j=0}^M m_j x^j\,.
-# 
-# Here, :math:`M` is the ‘order’ of the polynomial: if :math:`M=1` we have
-# a straight line with 2 parameters, if :math:`M=2` it will be a quadratic
-# with 3 parameters, and so on. The :math:`m_j, (j=0,\dots M)` are the
-# ‘model coefficients’ that we seek to constrain from the data.
-# 
-# For this class of problem the forward operator takes the following form:
-# 
-# .. math::  \left(\begin{array}{c}y_0\\y_1\\\vdots\\y_N\end{array}\right) = \left(\begin{array}{ccc}1&x_0&x_0^2&x_0^3\\1&x_1&x_1^2&x_1^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)\left(\begin{array}{c}m_0\\m_1\\m_2\end{array}\right)
-# 
-# This clearly has the required general form,
-# :math:`\mathbf{d} =G{\mathbf m}`.
-# 
-# where:
-# 
-# -  :math:`\textbf{d}` is the vector of data values,
-#    (:math:`y_0,y_1,\dots,y_N`);
-# -  :math:`\textbf{m}` is the vector of model parameters,
-#    (:math:`m_0,m_1,m_2`);
-# -  :math:`G` is the basis matrix (or design matrix) of this linear
-#    regression problem (also called the **Jacobian** matrix for this
-#    linear problem).
-# 
-# We have a set of noisy data values, :math:`y_i (i=0,\dots,N)`, measured
-# at known locations, :math:`x_i (i=0,\dots,N)`, and wish to find the best
-# fit degree 3 polynomial.
-# 
-# The function that generated our data is assumed to have independent
-# Gaussian random noise, :math:`{\cal N}(0,\Sigma)`, with
-# :math:`(\Sigma)_{ij} = \delta_{ij}/\sigma_i^2`, where the variance of
-# the noise on each datum, :math:`\sigma_i^2 (i=1,\dots,N)`, differs
-# between observations and is given.
-# 
+#
 
 
 ######################################################################
@@ -259,36 +215,36 @@ plot_model(ref_x,ref_y, "Reference model")
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 # 
-# -  ``BaseProblem`` defines the inverse problem including any user
-#    supplied quantities such as data vector, number of model parameters
-#    and measure of fit between model predictions and data.
-#    ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_jacobian(some_function_here)     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
+# - ``BaseProblem`` defines the inverse problem including any user
+#   supplied quantities such as data vector, number of model parameters
+#   and measure of fit between model predictions and data.
+#   ``python   inv_problem = BaseProblem()   inv_problem.set_objective(some_function_here)   inv_problem.set_jacobian(some_function_here)   inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
 # 
-#     
+#    
 # 
-# -  ``InversionOptions`` describes details about how one wants to run the
-#    inversion, including the backend tool and solver-specific parameters.
-#    It is based on the concept of a ``method`` and ``tool``.
+# - ``InversionOptions`` describes details about how one wants to run the
+#   inversion, including the backend tool and solver-specific parameters.
+#   It is based on the concept of a ``method`` and ``tool``.
 # 
-#    .. code:: python
+#   .. code:: python
 # 
-#       inv_options = InversionOptions()
-#       inv_options.suggest_solving_methods()
-#       inv_options.set_solving_method("matrix solvers")
-#       inv_options.suggest_tools()
-#       inv_options.set_tool("scipy.linalg.lstsq")
-#       inv_options.summary()
+#      inv_options = InversionOptions()
+#      inv_options.suggest_solving_methods()
+#      inv_options.set_solving_method("matrix solvers")
+#      inv_options.suggest_tools()
+#      inv_options.set_tool("scipy.linalg.lstsq")
+#      inv_options.summary()
 # 
-#     
+#    
 # 
-# -  ``Inversion`` can be seen as an inversion engine that takes in the
-#    above two as information, and will produce an ``InversionResult``
-#    upon running.
+# - ``Inversion`` can be seen as an inversion engine that takes in the
+#   above two as information, and will produce an ``InversionResult`` upon
+#   running.
 # 
-#    .. code:: python
+#   .. code:: python
 # 
-#       inv = Inversion(inv_problem, inv_options)
-#       result = inv.run()
+#      inv = Inversion(inv_problem, inv_options)
+#      result = inv.run()
 # 
 # Internally CoFI decides the nature of the problem from the quantities
 # set by the user and performs internal checks to ensure it has all that
@@ -929,6 +885,21 @@ plot_model(ref_x, ref_y, "Reference model", color="darkorange")
 
 ######################################################################
 # Is there much change to the posterior distribution?
+# 
+
+
+######################################################################
+# Trans-dimensional partition modelling
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# 
+
+
+######################################################################
+# A separate CoFI example notebook that performs trans-dimensional
+# partition modelling on the same dataset with is also available.
+# 
+# This is called ``Partition_modelling_sealevel_bayesbay.ipynb`` and is
+# available in the directory ``examples/partition_modelling``
 # 
 
 
