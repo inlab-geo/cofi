@@ -1,0 +1,33 @@
+# GitHub Actions workflow for CoFI notebook validation
+# Place this file at: .github/workflows/validate-notebooks.yml in the cofi repo
+#
+# Triggers:
+#   - Manual dispatch (workflow_dispatch)
+#   - Weekly schedule (every Monday at 02:00 UTC)
+#
+# Requirements:
+#   - A self-hosted GitHub Actions runner registered on Ceres
+#   - cofi_bootstrap.sh present at /home/kitc/validation/cofi_bootstrap.sh
+#     (put there by a prior clone of inlab-geo/validation)
+
+name: CoFI Notebook Validation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1'  # Every Monday at 02:00 UTC
+    - cron: '0 0 * * 3'
+
+jobs:
+  validate:
+    name: Run notebook validation on Ceres
+    runs-on: [self-hosted, ceres-bot]
+    
+    timeout-minutes: 720  # 12 hours — matches the timeout inside the container run
+
+    steps:
+      - name: Run validation bootstrap
+        run: |
+          export REPO_SSH="git@github.com:inlab-geo/validation.git"
+          export BRANCH="main"
+          bash /home/kitc/validation/cofi_bootstrap.sh
