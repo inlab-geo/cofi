@@ -21,7 +21,7 @@ on:
 jobs:
   validate:
     name: Run notebook validation on Ceres
-    runs-on: [self-hosted, ceres-bot]
+    runs-on: self-hosted
     timeout-minutes: 720
 
     steps:
