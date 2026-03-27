@@ -1,5 +1,7 @@
 from typing import Type
 
+import numpy as np
+
 from . import BaseProblem, InversionOptions
 from .tools import tool_dispatch_table, BaseInferenceTool
 
@@ -136,6 +138,13 @@ class SamplingResult(InversionResult):
                     )
             else:
                 self.arviz_inference_data = arviz.from_emcee(sampler, **kwargs)
+            return self.arviz_inference_data
+        elif sampler.__class__.__name__ == "VISampler":
+            num_samples = kwargs.pop("num_samples", 1000)
+            samples = sampler.sample(num_samples)
+            self.arviz_inference_data = arviz.from_dict(
+                posterior={"model": samples[np.newaxis, ...]}, **kwargs
+            )
             return self.arviz_inference_data
         else:
             raise NotImplementedError(

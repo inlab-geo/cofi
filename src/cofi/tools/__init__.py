@@ -11,6 +11,7 @@ from ._bayes_bay import BayesBay
 from ._neighpy import Neighpy, NeighpyI, NeighpyII
 from ._scipy_sparse_lstsq import ScipySparseLstSq
 from ._mealpy_sma import MealpySma
+from ._cofi_gaussian_vi import CoFIGaussianVI
 
 
 __all__ = [
@@ -28,6 +29,7 @@ __all__ = [
     "NeighpyII",
     "ScipySparseLstSq",
     "MealpySma",
+    "CoFIGaussianVI",
 ]
 
 # inference tools table grouped by method:
@@ -52,6 +54,9 @@ inference_tools_table = {
         "bayesbay": BayesBay,
         "neighpy": Neighpy,
         "neighpyII": NeighpyII,
+    },
+    "variational inference": {
+        "cofi.gaussian_vi": CoFIGaussianVI,
     },
 }
 
@@ -94,3 +99,4 @@ BaseSolver = BaseInferenceTool
 # description: Monte Carlo -> Monte Carlo methods use random sampling to obtain numerical results for problems that might be deterministic in principle.
 # description: Deterministic -> Deterministic methods in direct search use specific rules, rather than randomness, to explore the parameter space for the best solution.
 # description: Trans-D McMC -> Trans-Dimensional Markov chain Monte Carlo (Trans-D McMC) is a specialized form of McMC that allows for model selection by transitioning between different dimensional spaces.
+# description: Variational inference -> Variational inference approximates the posterior distribution by optimising a parametric family to minimise KL divergence, offering a middle ground between point estimation and full MCMC sampling.
