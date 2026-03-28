@@ -1,6 +1,8 @@
 import functools
 import numpy as np
+import scipy.linalg
 import scipy.sparse
+import scipy.sparse.linalg
 
 from . import BaseInferenceTool, error_handler
 
@@ -94,29 +96,28 @@ class ScipyLstSq(BaseInferenceTool):
         # get Cd_inv if needed
         if self._params["with_uncertainty"]:
             if not inv_problem.data_covariance_inv_defined:
-                self._Cd_inv = np.linalg.inv(inv_problem.data_covariance)
+                self._Cd = inv_problem.data_covariance
                 self._components_used.append("data_covariance")
+                diag_elem, is_diagonal = _diag_and_is_diagonal(self._Cd)
+                if is_diagonal:
+                    inv_diag_elem = 1.0 / diag_elem
+                    weighted_G = _left_multiply_by_diag(inv_diag_elem, self._G)
+                    weighted_d = inv_diag_elem * self._d
+                else:
+                    weighted_G = _solve_linear_system(self._Cd, self._G)
+                    weighted_d = _solve_linear_system(self._Cd, self._d)
             else:
                 self._Cd_inv = inv_problem.data_covariance_inv
                 self._components_used.append("data_covariance_inv")
-            # check diagonal (for potential shortcut in computation)
-            if scipy.sparse.issparse(self._Cd_inv):
-                diag_elem = self._Cd_inv.diagonal()
-                is_diagonal = (self._Cd_inv.nnz == np.count_nonzero(diag_elem))
-            else:
-                diag_elem = np.diag(self._Cd_inv).copy()
-                np.fill_diagonal(self._Cd_inv, 0)
-                is_diagonal = (self._Cd_inv == 0).all()
-                np.fill_diagonal(self._Cd_inv, diag_elem)
-            if is_diagonal:
-                if scipy.sparse.issparse(self._G):
-                    _gt_cdinv = self._G.T @ scipy.sparse.diags(diag_elem)
+                diag_elem, is_diagonal = _diag_and_is_diagonal(self._Cd_inv)
+                if is_diagonal:
+                    weighted_G = _left_multiply_by_diag(diag_elem, self._G)
+                    weighted_d = diag_elem * self._d
                 else:
-                    _gt_cdinv = self._G.T * diag_elem
-            else:
-                _gt_cdinv = self._G.T @ self._Cd_inv
-            self._a = _gt_cdinv @ self._G
-            self._b = _gt_cdinv @ self._d
+                    weighted_G = self._Cd_inv @ self._G
+                    weighted_d = self._Cd_inv @ self._d
+            self._a = self._G.T @ weighted_G
+            self._b = self._G.T @ weighted_d
         else:
             self._a = self._G.T @ self._G
             self._b = self._G.T @ self._d
@@ -178,7 +179,33 @@ class ScipyLstSq(BaseInferenceTool):
         context="after the solving process",
     )
     def _calculate_model_covariance(self):
-        return np.linalg.inv(self._a)
+        identity = np.eye(self._a.shape[0])
+        return scipy.linalg.solve(self._a, identity, assume_a="sym")
+
+
+def _diag_and_is_diagonal(matrix):
+    diag_elem = matrix.diagonal() if scipy.sparse.issparse(matrix) else np.diag(matrix)
+    if scipy.sparse.issparse(matrix):
+        is_diagonal = matrix.count_nonzero() == np.count_nonzero(diag_elem)
+    else:
+        is_diagonal = np.count_nonzero(matrix) == np.count_nonzero(diag_elem)
+    return diag_elem, is_diagonal
+
+
+def _left_multiply_by_diag(diag_elem, rhs):
+    if scipy.sparse.issparse(rhs):
+        return scipy.sparse.diags(diag_elem) @ rhs
+    rhs = np.asarray(rhs)
+    if rhs.ndim == 1:
+        return diag_elem * rhs
+    return diag_elem[:, np.newaxis] * rhs
+
+
+def _solve_linear_system(matrix, rhs):
+    if scipy.sparse.issparse(matrix):
+        return scipy.sparse.linalg.spsolve(matrix, rhs)
+    rhs = rhs.toarray() if scipy.sparse.issparse(rhs) else rhs
+    return scipy.linalg.solve(matrix, rhs, assume_a="sym")
 
 
 @functools.lru_cache(maxsize=None)

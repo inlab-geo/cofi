@@ -52,34 +52,58 @@ def test_run(problem_setup):
 
 def test_uncertainty_cov(problem_setup):
     inv_problem, Cdinv, _, _, _ = problem_setup
-    # 1
     inv_problem.set_data_covariance_inv(Cdinv)
     inv_options = InversionOptions()
     solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
+    _G = inv_problem.jacobian(1)
+    _d = inv_problem.data
     assert res["success"]
     assert "model_covariance" in res
+    assert np.allclose(solver._a, _G.T @ Cdinv @ _G)
+    assert np.allclose(solver._b, _G.T @ Cdinv @ _d)
+    assert np.allclose(res["model_covariance"], np.linalg.inv(solver._a))
     assert res["model"][0] == pytest.approx(0, abs=0.05)
     assert res["model"][1] == pytest.approx(1, abs=0.05)
 
 
 def test_uncertainty_cov_inv(problem_setup):
     inv_problem, Cdinv, _, _, _ = problem_setup
-    # 2
-    inv_problem.set_data_covariance(np.linalg.inv(Cdinv))
+    _G = inv_problem.jacobian(1)
+    _d = inv_problem.data
+
+    Cd = np.linalg.inv(Cdinv)
+    inv_problem.set_data_covariance(Cd)
     inv_options = InversionOptions()
     solver = ScipyLstSq(inv_problem, inv_options)
     res = solver()
     assert res["success"]
     assert "model_covariance" in res
+    assert np.allclose(solver._a, _G.T @ Cdinv @ _G)
+    assert np.allclose(solver._b, _G.T @ Cdinv @ _d)
+    assert np.allclose(res["model_covariance"], np.linalg.inv(solver._a))
     assert res["model"][0] == pytest.approx(0, abs=0.05)
     assert res["model"][1] == pytest.approx(1, abs=0.05)
-    # 3
+
+    full_Cdinv = Cdinv.copy()
+    full_Cdinv[0, 1] = 1
+    full_Cdinv[1, 0] = 1
+    full_Cd = np.linalg.inv(full_Cdinv)
+    inv_problem.set_data_covariance(full_Cd)
+    solver = ScipyLstSq(inv_problem, inv_options)
+    res = solver()
+    assert res["success"]
+    assert "model_covariance" in res
+    assert np.allclose(solver._a, _G.T @ full_Cdinv @ _G)
+    assert np.allclose(solver._b, _G.T @ full_Cdinv @ _d)
+    assert np.allclose(res["model_covariance"], np.linalg.inv(solver._a))
+
     Cdinv[0, 1] = 1
+    Cdinv[1, 0] = 1
     inv_problem.set_data_covariance_inv(Cdinv)
     solver = ScipyLstSq(inv_problem, inv_options)
-    _G = inv_problem.jacobian(1)
-    assert np.array_equal(solver._a, _G.T @ Cdinv @ _G)
+    assert np.allclose(solver._a, _G.T @ Cdinv @ _G)
+    assert np.allclose(solver._b, _G.T @ Cdinv @ _d)
 
 
 def test_tikhonov(problem_setup):

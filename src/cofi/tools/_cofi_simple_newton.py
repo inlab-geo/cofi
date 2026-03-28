@@ -82,9 +82,7 @@ class CoFISimpleNewton(BaseInferenceTool):
         else:
             hess = np.atleast_2d(hess)
             if self._params["hessian_is_symmetric"]:
-                step = scipy.sparse.linalg.minres(
-                    scipy.sparse.csr_matrix(hess), -grad
-                )[0]
+                step = scipy.linalg.solve(hess, -grad, assume_a="sym")
             else:
                 step = scipy.linalg.solve(hess, -grad)
         step = np.squeeze(np.asarray(step))

@@ -1,5 +1,7 @@
 import numpy as np
 import pytest
+import scipy.linalg
+import scipy.sparse.linalg
 
 from cofi.tools import CoFISimpleNewton
 from cofi import BaseProblem, InversionOptions, Inversion
@@ -73,9 +75,35 @@ def test_no_stopping_criteria(problem_setup):
     assert res["n_grad_evaluations"] == 4
     assert res["n_hess_evaluations"] == 4
 
-def test_symmetric_hessian(problem_setup):
-    inv_problem, inv_options = problem_setup
-    inv_options.set_params(hessian_is_symmetric=True)
-    inv_problem.set_initial_model(np.array([[30.0]]))
+def test_symmetric_hessian(monkeypatch):
+    hess = np.array([[4.0, 1.0], [1.0, 3.0]])
+    rhs = np.array([1.0, 2.0])
+    inv_problem = BaseProblem()
+    inv_problem.set_objective(lambda x: 0.5 * x.T @ hess @ x - rhs @ x)
+    inv_problem.set_initial_model(np.array([0.0, 0.0]))
+    inv_problem.set_gradient(lambda x: hess @ x - rhs)
+    inv_problem.set_hessian(lambda x: hess)
+    inv_options = InversionOptions()
+    inv_options.set_tool("cofi.simple_newton")
+    inv_options.set_params(num_iterations=1, hessian_is_symmetric=True)
+
+    solve_kwargs = {}
+    real_solve = scipy.linalg.solve
+
+    def wrapped_solve(*args, **kwargs):
+        solve_kwargs.update(kwargs)
+        return real_solve(*args, **kwargs)
+
+    def fail_minres(*args, **kwargs):
+        raise AssertionError("minres should not be called for dense symmetric Hessians")
+
+    monkeypatch.setattr(scipy.linalg, "solve", wrapped_solve)
+    monkeypatch.setattr(scipy.sparse.linalg, "minres", fail_minres)
+
     solver = CoFISimpleNewton(inv_problem, inv_options)
-    solver()
+    res = solver()
+
+    expected_model = np.linalg.solve(hess, rhs)
+
+    assert solve_kwargs["assume_a"] == "sym"
+    assert np.allclose(res["model"], expected_model)
