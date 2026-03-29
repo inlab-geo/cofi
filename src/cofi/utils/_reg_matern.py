@@ -56,12 +56,12 @@ class SPDEMaternReg(QuadraticReg):
 
         \mathcal{R}(\mathbf{m}) = \|\mathbf{R}(\mathbf{m} - \mathbf{m}_0)\|^2,
         \quad \mathbf{R} = \tau \mathbf{M}^{1/2}(\kappa^2 \mathbf{I} - \mathbf{L}_h),
-        \quad \kappa = \sqrt{8} / \rho,
+        \quad \kappa = \sqrt{2} / \ell,
         \quad \tau = \frac{1}{2 \sqrt{\pi}\,\kappa\,\sigma}
 
     where :math:`\mathbf{L}_h` is the 2D grid-spacing-aware Neumann Laplacian,
-    :math:`\mathbf{M}` is the lumped mass matrix, :math:`\rho` is the Matérn
-    practical range for :math:`\nu = 1`, and :math:`\sigma` is the marginal
+    :math:`\mathbf{M}` is the lumped mass matrix, :math:`\ell` is the Matérn
+    length scale for :math:`\nu = 1`, and :math:`\sigma` is the marginal
     standard deviation in the continuous SPDE model. For the uniform rectangular
     grids implemented here, :math:`\mathbf{M} \approx h_x h_y \mathbf{I}` so
     :math:`\mathbf{R} = \tau \sqrt{h_x h_y}(\kappa^2 \mathbf{I} - \mathbf{L}_h)`.
@@ -79,16 +79,19 @@ class SPDEMaternReg(QuadraticReg):
     is sparse (:math:`O(n)` non-zeros), unlike the dense precision matrix of a
     standard Gaussian prior.
 
+    The Matérn practical range (distance at which correlation drops to ~0.14)
+    is :math:`\rho = 2\ell` for :math:`\nu = 1`.
+
     Parameters
     ----------
     model_shape : tuple of (int, int)
         Shape of the 2D model grid ``(n_lon, n_lat)`` (or equivalently any two
         positive integers whose product is the number of model parameters).
-    rho : float
-        Matérn practical range in the same physical units as ``grid_spacing``.
+    ell : float
+        Matérn length scale in the same physical units as ``grid_spacing``.
         For :math:`\nu=1`, this is related to the SPDE wavenumber by
-        :math:`\kappa = \sqrt{8}/\rho`, so the correlation at distance ``rho`` is
-        approximately 0.14.
+        :math:`\kappa = \sqrt{2}/\ell`. The practical range (correlation ≈ 0.14)
+        is :math:`\rho = 2\ell`.
     sigma : float, optional
         Prior marginal standard deviation of model perturbations. The internal SPDE
         scaling uses :math:`\tau = 1 / (2 \sqrt{\pi}\,\kappa\,\sigma)`.
@@ -117,7 +120,7 @@ class SPDEMaternReg(QuadraticReg):
     --------
     >>> from cofi.utils import SPDEMaternReg
     >>> import numpy as np
-    >>> reg = SPDEMaternReg(model_shape=(10, 8), rho=4.0, sigma=0.02)
+    >>> reg = SPDEMaternReg(model_shape=(10, 8), ell=2.0, sigma=0.02)
     >>> reg(np.zeros((10, 8)))
     0.0
     """
@@ -125,31 +128,33 @@ class SPDEMaternReg(QuadraticReg):
     def __init__(
         self,
         model_shape: tuple,
-        rho: float,
+        ell: float,
         sigma: float = 1.0,
         grid_spacing=1.0,
         reference_model: Optional[np.ndarray] = None,
     ):
         model_shape = _validate_model_shape(model_shape)
-        if rho <= 0:
-            raise ValueError("rho must be positive")
+        if ell <= 0:
+            raise ValueError("ell must be positive")
         if sigma <= 0:
             raise ValueError("sigma must be positive")
 
         n_lon, n_lat = model_shape
         n_params = n_lon * n_lat
         h_lon, h_lat = _normalize_grid_spacing(grid_spacing)
-        kappa = np.sqrt(8.0) / rho
+        kappa = np.sqrt(2.0) / ell
         kappa2 = kappa**2
         tau = 1.0 / (2.0 * np.sqrt(np.pi) * kappa * sigma)
 
+        rho = 2.0 * ell  # practical range (correlation ≈ 0.14)
         max_physical_dim = max(n_lon * h_lon, n_lat * h_lat)
         if rho > 0.5 * max_physical_dim:
             warnings.warn(
-                f"rho={rho} exceeds half the longest physical grid dimension "
-                f"({0.5 * max_physical_dim:.1f}). This heuristic indicates that the "
-                "precision factor will weakly constrain the longest-wavelength modes, "
-                "which may cause solver convergence issues on a finite grid.",
+                f"ell={ell} (practical range rho=2*ell={rho:.1f}) exceeds half the "
+                f"longest physical grid dimension ({0.5 * max_physical_dim:.1f}). "
+                "This heuristic indicates that the precision factor will weakly "
+                "constrain the longest-wavelength modes, which may cause solver "
+                "convergence issues on a finite grid.",
                 UserWarning,
                 stacklevel=2,
             )
@@ -192,7 +197,7 @@ class SPDEMaternReg(QuadraticReg):
         )
 
         # Store parameters for inspection
-        self._rho = float(rho)
+        self._ell = float(ell)
         self._sigma = sigma
         self._tau = tau
         self._kappa2 = kappa2
@@ -200,9 +205,14 @@ class SPDEMaternReg(QuadraticReg):
         self._grid_spacing = (h_lon, h_lat)
 
     @property
+    def ell(self) -> float:
+        """Matérn length scale."""
+        return self._ell
+
+    @property
     def rho(self) -> float:
-        """Matérn practical range."""
-        return self._rho
+        """Matérn practical range (rho = 2 * ell for nu=1)."""
+        return 2.0 * self._ell
 
     @property
     def sigma(self) -> float:
@@ -211,7 +221,7 @@ class SPDEMaternReg(QuadraticReg):
 
     @property
     def kappa(self) -> float:
-        """Wavenumber parameter κ = sqrt(8) / rho for ν = 1."""
+        """Wavenumber parameter κ = sqrt(2) / ell for ν = 1."""
         return np.sqrt(self._kappa2)
 
     @property

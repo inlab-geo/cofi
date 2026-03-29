@@ -24,10 +24,10 @@ def _neumann_laplacian_1d_dense(n):
     return laplacian
 
 
-def _expected_precision_factor(model_shape, rho, sigma, grid_spacing=(1.0, 1.0)):
+def _expected_precision_factor(model_shape, ell, sigma, grid_spacing=(1.0, 1.0)):
     n_lon, n_lat = model_shape
     h_lon, h_lat = grid_spacing
-    kappa = np.sqrt(8.0) / rho
+    kappa = np.sqrt(2.0) / ell
     tau = 1.0 / (2.0 * np.sqrt(np.pi) * kappa * sigma)
     l1d_lon = _neumann_laplacian_1d_dense(n_lon)
     l1d_lat = _neumann_laplacian_1d_dense(n_lat)
@@ -46,42 +46,44 @@ def _index(i, j, n_lat):
 
 
 def test_constructor_and_properties():
-    reg = SPDEMaternReg(model_shape=(4, 3), rho=1.5, sigma=0.2)
-    assert reg.rho == 1.5
+    reg = SPDEMaternReg(model_shape=(4, 3), ell=1.5, sigma=0.2)
+    assert reg.ell == 1.5
+    assert reg.rho == pytest.approx(3.0)
     assert reg.sigma == 0.2
     assert reg.grid_shape == (4, 3)
     assert reg.grid_spacing == (1.0, 1.0)
-    assert reg.kappa == pytest.approx(np.sqrt(8.0) / 1.5)
+    assert reg.kappa == pytest.approx(np.sqrt(2.0) / 1.5)
 
     reg = SPDEMaternReg(
         model_shape=(4, 3),
-        rho=1.75,
+        ell=1.75,
         sigma=0.4,
         grid_spacing=(2.0, 0.5),
     )
-    assert reg.rho == 1.75
+    assert reg.ell == 1.75
+    assert reg.rho == pytest.approx(3.5)
     assert reg.grid_spacing == (2.0, 0.5)
-    assert reg.kappa == pytest.approx(np.sqrt(8.0) / 1.75)
+    assert reg.kappa == pytest.approx(np.sqrt(2.0) / 1.75)
 
 
 def test_invalid_inputs():
     with pytest.raises(ValueError, match=r".*2D model_shape.*"):
-        SPDEMaternReg(model_shape=(4,), rho=5.0)
+        SPDEMaternReg(model_shape=(4,), ell=5.0)
     with pytest.raises(ValueError, match=r".*positive integer.*"):
-        SPDEMaternReg(model_shape=(0, 3), rho=5.0)
-    with pytest.raises(ValueError, match=r".*rho.*positive.*"):
-        SPDEMaternReg(model_shape=(4, 3), rho=0.0)
+        SPDEMaternReg(model_shape=(0, 3), ell=5.0)
+    with pytest.raises(ValueError, match=r".*ell.*positive.*"):
+        SPDEMaternReg(model_shape=(4, 3), ell=0.0)
     with pytest.raises(ValueError, match=r".*sigma.*positive.*"):
-        SPDEMaternReg(model_shape=(4, 3), rho=5.0, sigma=0.0)
+        SPDEMaternReg(model_shape=(4, 3), ell=5.0, sigma=0.0)
     with pytest.raises(ValueError, match=r".*grid_spacing.*positive.*"):
-        SPDEMaternReg(model_shape=(4, 3), rho=5.0, grid_spacing=0.0)
+        SPDEMaternReg(model_shape=(4, 3), ell=5.0, grid_spacing=0.0)
     with pytest.raises(ValueError, match=r".*grid_spacing.*positive.*"):
-        SPDEMaternReg(model_shape=(4, 3), rho=5.0, grid_spacing=(1.0, -1.0))
+        SPDEMaternReg(model_shape=(4, 3), ell=5.0, grid_spacing=(1.0, -1.0))
 
 
 def test_matrix_construction_unit_grid():
-    reg = SPDEMaternReg(model_shape=(2, 3), rho=1.0, sigma=0.5)
-    expected = _expected_precision_factor((2, 3), rho=1.0, sigma=0.5)
+    reg = SPDEMaternReg(model_shape=(2, 3), ell=1.0, sigma=0.5)
+    expected = _expected_precision_factor((2, 3), ell=1.0, sigma=0.5)
     assert sparse.issparse(reg.matrix)
     assert np.allclose(reg.matrix.toarray(), expected)
 
@@ -89,13 +91,13 @@ def test_matrix_construction_unit_grid():
 def test_matrix_construction_anisotropic_spacing():
     reg = SPDEMaternReg(
         model_shape=(2, 3),
-        rho=1.5,
+        ell=1.5,
         sigma=0.75,
         grid_spacing=(2.0, 0.25),
     )
     expected = _expected_precision_factor(
         (2, 3),
-        rho=1.5,
+        ell=1.5,
         sigma=0.75,
         grid_spacing=(2.0, 0.25),
     )
@@ -103,19 +105,19 @@ def test_matrix_construction_anisotropic_spacing():
 
 
 def test_non_unit_grid_spacing_includes_lumped_mass_factor():
-    rho = 1.5
+    ell = 1.5
     sigma = 0.75
     grid_spacing = (2.0, 0.25)
 
     reg = SPDEMaternReg(
         model_shape=(2, 3),
-        rho=rho,
+        ell=ell,
         sigma=sigma,
         grid_spacing=grid_spacing,
     )
     expected = _expected_precision_factor(
         (2, 3),
-        rho=rho,
+        ell=ell,
         sigma=sigma,
         grid_spacing=grid_spacing,
     )
@@ -129,7 +131,7 @@ def test_reference_model_and_quadratic_structure():
     reference_model = np.arange(6.0).reshape(2, 3)
     reg = SPDEMaternReg(
         model_shape=(2, 3),
-        rho=1.0,
+        ell=1.0,
         sigma=0.5,
         reference_model=reference_model,
     )
@@ -148,9 +150,9 @@ def test_reference_model_and_quadratic_structure():
 
 
 def test_empirical_covariance_matches_sigma_and_correlation_shape():
-    rho = 6.0
+    ell = 3.0
     sigma = 0.2
-    reg = SPDEMaternReg(model_shape=(15, 15), rho=rho, sigma=sigma)
+    reg = SPDEMaternReg(model_shape=(15, 15), ell=ell, sigma=sigma)
     q_matrix = (reg.matrix.T @ reg.matrix).toarray()
     covariance = np.linalg.inv(q_matrix)
     center = _index(7, 7, 15)
@@ -166,18 +168,18 @@ def test_empirical_covariance_matches_sigma_and_correlation_shape():
 
 
 def test_physical_covariance_is_consistent_under_grid_refinement():
-    rho = 3.0
+    ell = 1.5
     sigma = 0.2
 
     coarse = SPDEMaternReg(
         model_shape=(9, 9),
-        rho=rho,
+        ell=ell,
         sigma=sigma,
         grid_spacing=1.0,
     )
     fine = SPDEMaternReg(
         model_shape=(17, 17),
-        rho=rho,
+        ell=ell,
         sigma=sigma,
         grid_spacing=0.5,
     )
@@ -204,20 +206,22 @@ def test_physical_covariance_is_consistent_under_grid_refinement():
     assert fine_correlation == pytest.approx(coarse_correlation, abs=0.05)
 
 
-def test_large_rho_warning_uses_physical_grid_extent():
+def test_large_ell_warning_uses_physical_grid_extent():
+    # rho = 2*ell = 6.0 > 0.5 * max(4*2, 10*1) = 5.0 → warns
     with pytest.warns(UserWarning, match=r".*longest physical grid dimension.*"):
         SPDEMaternReg(
             model_shape=(4, 10),
-            rho=6.0,
+            ell=3.0,
             sigma=0.2,
             grid_spacing=(2.0, 1.0),
         )
 
+    # rho = 2*ell = 4.0 < 5.0 → no warning
     with warnings.catch_warnings(record=True) as caught:
         warnings.simplefilter("always")
         SPDEMaternReg(
             model_shape=(4, 10),
-            rho=4.0,
+            ell=2.0,
             sigma=0.2,
             grid_spacing=(2.0, 1.0),
         )
