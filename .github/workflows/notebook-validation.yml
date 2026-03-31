@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Check out cofi repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Run bootstrap and write both logs
         shell: bash
