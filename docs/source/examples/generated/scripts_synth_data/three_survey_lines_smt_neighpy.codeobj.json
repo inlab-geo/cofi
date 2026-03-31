@@ -1,0 +1,1214 @@
+{
+ "ForwardWrapper": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper"
+  }
+ ],
+ "Line2D": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.lines",
+   "module_short": "matplotlib.lines",
+   "name": "Line2D"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Line2D"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.lines",
+   "module_short": "matplotlib.lines",
+   "name": "Line2D"
+  }
+ ],
+ "_": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure"
+  }
+ ],
+ "arviz.convert_to_inference_data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "convert_to_inference_data"
+  }
+ ],
+ "arviz.plot_pair": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "plot_pair"
+  }
+ ],
+ "arviz.plot_trace": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "plot_trace"
+  }
+ ],
+ "arviz.style.use": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.style",
+   "module_short": "arviz.style",
+   "name": "use"
+  }
+ ],
+ "axes": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "az_idata": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data.inference_data",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  }
+ ],
+ "az_idata.posterior": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.dataset",
+   "module_short": "xarray.core.dataset",
+   "name": "Dataset"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "Dataset"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "Dataset"
+  }
+ ],
+ "az_idata.sel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data.inference_data",
+   "module_short": "arviz",
+   "name": "InferenceData.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data",
+   "module_short": "arviz",
+   "name": "InferenceData.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "InferenceData.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Mapping.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Mapping.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Collection.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Collection.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Sized.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Sized.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Iterable.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Iterable.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Container.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Container.sel"
+  }
+ ],
+ "cofi.BaseProblem": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "cofi.Inversion": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "cofi.InversionOptions": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "d": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
+ "f": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_io",
+   "module_short": "_io",
+   "name": "BufferedReader"
+  }
+ ],
+ "fiducial_id": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "filename": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "forward": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper"
+  }
+ ],
+ "forward.params_to_invert": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "handles": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "handles.extend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "i": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ichain": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "idraw": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "init_param_value": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "inv": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "inv.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  }
+ ],
+ "inv_options": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "inv_options.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "inv_options.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "inv_options.suggest_solver_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.suggest_solver_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.suggest_solver_params"
+  }
+ ],
+ "inv_result": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inv_result.appraisal_samples.T": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "inv_result.summary": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  }
+ ],
+ "labels": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "line_id": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "m_max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "m_min": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "my_objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_problem": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "my_problem.set_objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  }
+ ],
+ "n_transmitters": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "numpy.arange": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "arange"
+  }
+ ],
+ "numpy.array": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "array"
+  }
+ ],
+ "numpy.deg2rad": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "deg2rad"
+  }
+ ],
+ "numpy.inf": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "float"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "inf"
+  }
+ ],
+ "numpy.meshgrid": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "meshgrid"
+  }
+ ],
+ "numpy.random.randint": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module.randint"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "randint"
+  }
+ ],
+ "numpy.random.seed": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_cython_3_2_1",
+   "module_short": "_cython_3_2_1",
+   "name": "cython_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "seed"
+  }
+ ],
+ "numpy.zeros": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "zeros"
+  }
+ ],
+ "pickle.load": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pickle",
+   "module_short": "pickle",
+   "name": "load"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
+  }
+ ],
+ "plot_plate_faces": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "plot_plate_faces"
+  }
+ ],
+ "plt.subplots": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "subplots"
+  }
+ ],
+ "plt.tight_layout": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "tight_layout"
+  }
+ ],
+ "point": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.lines",
+   "module_short": "matplotlib.lines",
+   "name": "Line2D"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Line2D"
+  }
+ ],
+ "problem_setup": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "problem_setup"
+  }
+ ],
+ "sample": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "sm": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG"
+  }
+ ],
+ "sm.predict_values": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KRG.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KRG.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.krg_based",
+   "module_short": "smt.surrogate_models.krg_based",
+   "name": "KrgBased.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "KrgBased.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "KrgBased.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models.surrogate_model",
+   "module_short": "smt.surrogate_models.surrogate_model",
+   "name": "SurrogateModel.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt.surrogate_models",
+   "module_short": "smt.surrogate_models",
+   "name": "SurrogateModel.predict_values"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "smt",
+   "module_short": "smt",
+   "name": "SurrogateModel.predict_values"
+  }
+ ],
+ "survey_setup": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "survey_setup"
+  }
+ ],
+ "system_spec": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "system_spec"
+  }
+ ],
+ "true_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
+ "true_param_value": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "tx": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "tx.flatten": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "tx_interval": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "tx_max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "tx_min": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "tx_points": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ty": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ty.flatten": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "ty_interval": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ty_max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ty_min": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ty_points": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "var_lines": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "tuple"
+  }
+ ],
+ "var_names": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ]
+}

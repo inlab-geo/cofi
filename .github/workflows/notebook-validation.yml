@@ -1,0 +1,54 @@
+# GitHub Actions workflow for CoFI notebook validation
+# Place this file at: .github/workflows/validate-notebooks.yml in the cofi repo
+#
+# Triggers:
+#   - Manual dispatch (workflow_dispatch)
+#   - Weekly schedule (every Monday at 02:00 UTC)
+#
+# Requirements:
+#   - A self-hosted GitHub Actions runner registered on Ceres
+#   - cofi_bootstrap.sh present at /home/kitc/validation/cofi_bootstrap.sh
+#     (put there by a prior clone of inlab-geo/validation)
+
+name: CoFI Notebook Validation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1'
+    - cron: '0 0 * * 3'
+
+jobs:
+  validate:
+    name: Run notebook validation on Ceres
+    runs-on: self-hosted
+    timeout-minutes: 720
+
+    steps:
+      - name: Check out cofi repo
+        uses: actions/checkout@v4
+
+      - name: Run bootstrap and write both logs
+        shell: bash
+        run: |
+          set -o pipefail
+
+          mkdir -p "$GITHUB_WORKSPACE/actions-logs"
+
+          export REPO_SSH="git@github.com:inlab-geo/validation.git"
+          export BRANCH="main"
+
+          LOG1=/home/kitc/cofi_cron.log
+          LOG2="$GITHUB_WORKSPACE/actions-logs/cofi_cron.log"
+
+          PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin \
+          /usr/bin/flock -n /tmp/cofi_cron.lock \
+          /usr/bin/env bash -lc '/home/kitc/cofi_bootstrap.sh' \
+          2>&1 | tee -a "$LOG1" "$LOG2"
+
+      - name: Upload GitHub log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cofi-validation-log
+          path: ${{ github.workspace }}/actions-logs/cofi_cron.log

@@ -1,0 +1,1103 @@
+{
+ "Cdinv": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ForwardWrapper": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper"
+  }
+ ],
+ "Line2D": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.lines",
+   "module_short": "matplotlib.lines",
+   "name": "Line2D"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Line2D"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.lines",
+   "module_short": "matplotlib.lines",
+   "name": "Line2D"
+  }
+ ],
+ "PerIterationCallbackFunction": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "__main__",
+   "module_short": "__main__",
+   "name": "PerIterationCallbackFunction"
+  }
+ ],
+ "_": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure"
+  }
+ ],
+ "absolute_noise": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "float"
+  }
+ ],
+ "ax": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes"
+  }
+ ],
+ "ax.legend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.legend"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.legend"
+  }
+ ],
+ "ax.set_title": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_title"
+  }
+ ],
+ "axes": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "cofi.BaseProblem": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "cofi.Inversion": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "cofi.InversionOptions": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "data_obs": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "data_pred_true": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "fiducial_id": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "forward": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper"
+  }
+ ],
+ "forward.jacobian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "ForwardWrapper.jacobian"
+  }
+ ],
+ "forward.params_to_invert": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "handles": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "handles.extend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "i": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "idx_to_plot": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "init_param_value": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "labels": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "line_id": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "my_gradient": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_hessian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_inversion": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "my_inversion.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  }
+ ],
+ "my_objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_options": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "my_options.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "my_options.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "my_problem": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "my_problem.objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi._base_problem",
+   "name": "_FunctionWrapper"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "_FunctionWrapper"
+  }
+ ],
+ "my_problem.set_gradient": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_gradient"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_gradient"
+  }
+ ],
+ "my_problem.set_hessian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_hessian"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_hessian"
+  }
+ ],
+ "my_problem.set_initial_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  }
+ ],
+ "my_problem.set_objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  }
+ ],
+ "my_result": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "my_result.model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "n_transmitters": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "numpy.arange": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "arange"
+  }
+ ],
+ "numpy.array": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "array"
+  }
+ ],
+ "numpy.deg2rad": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "deg2rad"
+  }
+ ],
+ "numpy.identity": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "identity"
+  }
+ ],
+ "numpy.meshgrid": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "meshgrid"
+  }
+ ],
+ "numpy.random.randn": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module.randn"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "randn"
+  }
+ ],
+ "numpy.random.seed": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_cython_3_2_1",
+   "module_short": "_cython_3_2_1",
+   "name": "cython_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "seed"
+  }
+ ],
+ "numpy.zeros": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "zeros"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
+  }
+ ],
+ "plot_plate_faces": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "plot_plate_faces"
+  }
+ ],
+ "plot_predicted_profile": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "plot_predicted_profile"
+  }
+ ],
+ "plot_transient": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "plot_transient"
+  }
+ ],
+ "plt.subplots": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "subplots"
+  }
+ ],
+ "plt.tight_layout": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "tight_layout"
+  }
+ ],
+ "point": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.lines",
+   "module_short": "matplotlib.lines",
+   "name": "Line2D"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Line2D"
+  }
+ ],
+ "problem_setup": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "problem_setup"
+  }
+ ],
+ "sigma": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "float"
+  }
+ ],
+ "survey_setup": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "survey_setup"
+  }
+ ],
+ "system_spec": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "vtem_max_forward_lib",
+   "module_short": "vtem_max_forward_lib",
+   "name": "system_spec"
+  }
+ ],
+ "true_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
+ "true_param_value": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "tx": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "tx.flatten": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "tx_interval": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "tx_max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "tx_min": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "tx_points": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ty": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ty.flatten": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "ty_interval": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ty_max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ty_min": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "ty_points": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ]
+}

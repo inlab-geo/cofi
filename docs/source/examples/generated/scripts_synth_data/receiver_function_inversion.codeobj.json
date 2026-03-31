@@ -1,0 +1,1446 @@
+{
+ "Cdinv": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "Markdown": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core.display",
+   "module_short": "IPython.core.display",
+   "name": "Markdown"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core",
+   "module_short": "IPython.core",
+   "name": "Markdown"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython",
+   "module_short": "IPython",
+   "name": "Markdown"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core.display",
+   "module_short": "IPython.core.display",
+   "name": "TextDisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core",
+   "module_short": "IPython.core",
+   "name": "TextDisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython",
+   "module_short": "IPython",
+   "name": "TextDisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core.display",
+   "module_short": "IPython.core.display",
+   "name": "DisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core",
+   "module_short": "IPython.core",
+   "name": "DisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython",
+   "module_short": "IPython",
+   "name": "DisplayObject"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "IPython.display",
+   "module_short": "IPython.display",
+   "name": "Markdown"
+  }
+ ],
+ "_": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "a": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "arviz.plot_pair": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "plot_pair"
+  }
+ ],
+ "arviz.plot_trace": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "plot_trace"
+  }
+ ],
+ "axes": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "axes.shape": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "tuple"
+  }
+ ],
+ "az_inf_data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data.inference_data",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  }
+ ],
+ "az_inf_data.sel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data.inference_data",
+   "module_short": "arviz",
+   "name": "InferenceData.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data",
+   "module_short": "arviz",
+   "name": "InferenceData.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "InferenceData.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Mapping.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Mapping.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "typing",
+   "module_short": "typing",
+   "name": "Generic.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Collection.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Collection.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Sized.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Sized.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Iterable.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Iterable.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections.abc",
+   "module_short": "collections.abc",
+   "name": "Container.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "collections",
+   "module_short": "collections",
+   "name": "Container.sel"
+  }
+ ],
+ "az_inf_data_after_500": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data.inference_data",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz.data",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz",
+   "module_short": "arviz",
+   "name": "InferenceData"
+  }
+ ],
+ "b": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "cofi.BaseProblem": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "cofi.Inversion": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "cofi.InversionOptions": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "content": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "display": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "IPython.display",
+   "module_short": "IPython.display",
+   "name": "display"
+  }
+ ],
+ "f": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_io",
+   "module_short": "_io",
+   "name": "TextIOWrapper"
+  }
+ ],
+ "f.read": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "fig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure"
+  }
+ ],
+ "get_inversion_parameters": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_model_parameters": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "good_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "i": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "initialmodel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "inv_optimiser": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "inv_optimiser.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  }
+ ],
+ "inv_result_sampler": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "SamplingResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "SamplingResult"
+  }
+ ],
+ "inv_result_sampler.sampler.get_autocorr_time": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "emcee.ensemble",
+   "module_short": "emcee",
+   "name": "EnsembleSampler.get_autocorr_time"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "emcee",
+   "module_short": "emcee",
+   "name": "EnsembleSampler.get_autocorr_time"
+  }
+ ],
+ "inv_result_sampler.summary": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "SamplingResult.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "SamplingResult.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  }
+ ],
+ "inv_result_sampler.to_arviz": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "SamplingResult.to_arviz"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "SamplingResult.to_arviz"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi._inversion",
+   "name": "InversionResult.to_arviz"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult.to_arviz"
+  }
+ ],
+ "inv_sampler": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "inv_sampler.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  }
+ ],
+ "j": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "math.isnan": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "math",
+   "module_short": "math",
+   "name": "isnan"
+  }
+ ],
+ "mean_sample": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "mean_sample_predicted_rf": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "median_sample": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "my_log_likelihood": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_log_prior": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_mean_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "my_misfit": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "my_options_optimiser": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "my_options_optimiser.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "my_options_optimiser.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "my_options_sampler": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "my_options_sampler.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "my_options_sampler.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "my_problem": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "my_problem.set_initial_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  }
+ ],
+ "my_problem.set_log_likelihood": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_log_likelihood"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_log_likelihood"
+  }
+ ],
+ "my_problem.set_log_prior": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_log_prior"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_log_prior"
+  }
+ ],
+ "my_problem.set_model_shape": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_model_shape"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_model_shape"
+  }
+ ],
+ "my_problem.set_objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  }
+ ],
+ "my_problem.summary": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.summary"
+  }
+ ],
+ "my_result_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "my_result_optimiser": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "my_result_optimiser.model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "my_result_optimiser.summary": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  }
+ ],
+ "ndim": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "np.append": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "append"
+  }
+ ],
+ "np.array": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "array"
+  }
+ ],
+ "np.dot": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "dot"
+  }
+ ],
+ "np.log": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "log"
+  }
+ ],
+ "np.ndindex": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndindex"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndindex"
+  }
+ ],
+ "np.random.randn": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module.randn"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "randn"
+  }
+ ],
+ "np.random.seed": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_cython_3_2_1",
+   "module_short": "_cython_3_2_1",
+   "name": "cython_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "seed"
+  }
+ ],
+ "np.transpose": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "transpose"
+  }
+ ],
+ "nsteps": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "nwalkers": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "observed_data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
+  }
+ ],
+ "plt.show": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "show"
+  }
+ ],
+ "plt.subplots": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "subplots"
+  }
+ ],
+ "plt.tight_layout": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "tight_layout"
+  }
+ ],
+ "predicted_data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "pyrf96.InvDataCov": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pyrf96",
+   "module_short": "pyrf96",
+   "name": "InvDataCov"
+  }
+ ],
+ "pyrf96.plotRFm": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pyrf96",
+   "module_short": "pyrf96",
+   "name": "plotRFm"
+  }
+ ],
+ "pyrf96.rfcalc": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pyrf96",
+   "module_short": "pyrf96",
+   "name": "rfcalc"
+  }
+ ],
+ "rfunc": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "rfunc_noise": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "t": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "t2": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "tau": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "tau_ok": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "bool"
+  }
+ ],
+ "true_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "true_model.size": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "true_values": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
+ "var_lines": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "var_names": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "vpvs": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "walkers_start": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "warnings.filterwarnings": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "warnings",
+   "module_short": "warnings",
+   "name": "filterwarnings"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "x_true": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "float64"
+  }
+ ],
+ "xlabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "y_true": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "float64"
+  }
+ ],
+ "ylabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ]
+}

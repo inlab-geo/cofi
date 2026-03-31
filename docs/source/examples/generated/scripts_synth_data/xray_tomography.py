@@ -38,7 +38,8 @@ Xray Tomography
 # 0. Import modules
 # -----------------
 # 
-# The package ``geo-espresso`` contains the forward code for this problem.
+# The file ``xrt_tomography.py`` contains the forward code for this
+# problem.
 # 
 
 # -------------------------------------------------------- #
@@ -47,7 +48,7 @@ Xray Tomography
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi geo-espresso
+# !pip install -U cofi 
 # !git clone https://github.com/inlab-geo/cofi-examples.git
 # %cd cofi-examples/examples/xray_tomography
 
@@ -55,9 +56,11 @@ Xray Tomography
 #
 
 import numpy as np
+import matplotlib.pyplot as plt
+
 from cofi import BaseProblem, InversionOptions, Inversion
 from cofi.utils import QuadraticReg
-from espresso import XrayTomography
+import xrayTomography as xrt # import linear travel time forward model package
 
 ######################################################################
 #
@@ -81,21 +84,36 @@ display(Markdown(content))
 
 
 ######################################################################
-# Firstly, we get some information from the ``geo-espresso`` module. These
-# include the dataset and the Jacobian matrix. In the Xray Tomography
-# example, the Jacobian matrix is related to the lengths of paths within
-# each grid. Since the paths are fixed, the Jacobian matrix stays
-# constant.
+# Firstly, we get some set up information for the problem. These include
+# the dataset and the Jacobian matrix. In the Xray Tomography example, the
+# Jacobian matrix is related to the lengths of paths within each grid.
+# Since the paths are fixed, the Jacobian matrix stays constant.
 # 
 
-xrt = XrayTomography()
+#xrt = XrayTomography()
+# load data example
+loaded_dict = np.load("../../data/travel_time_tomography/linear_tomo_example.npz")
+linear_tomo_example = dict(loaded_dict)
+loaded_dict.close()
+
+######################################################################
+#
+
+# linear tomography problem set up
+paths = linear_tomo_example["_paths"]
+data = linear_tomo_example["_attns"]
+data_size = len(data)
+starting_model = linear_tomo_example["_start"]
+model_size,model_shape = starting_model.size,starting_model.shape
+good_model = linear_tomo_example["_true"]
+attns, jacobian = xrt.tracer(starting_model,paths)
 
 ######################################################################
 #
 
 xrt_problem = BaseProblem()
-xrt_problem.set_data(xrt.data)
-xrt_problem.set_jacobian(xrt.jacobian(xrt.starting_model))
+xrt_problem.set_data(data)
+xrt_problem.set_jacobian(jacobian)
 
 ######################################################################
 #
@@ -107,14 +125,15 @@ xrt_problem.set_jacobian(xrt.jacobian(xrt.starting_model))
 # 
 
 sigma = 0.002
+#sigma = 0.1
 lamda = 50
-data_cov_inv = np.identity(xrt.data_size) * (1/sigma**2)
+data_cov_inv = np.identity(data_size) * (1/sigma**2)
 
 ######################################################################
 #
 
 xrt_problem.set_data_covariance_inv(data_cov_inv)
-xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(xrt.model_size,)))
+xrt_problem.set_regularization(lamda * QuadraticReg(model_shape=(model_size,)))
 
 ######################################################################
 #
@@ -184,8 +203,8 @@ inv_result.summary()
 # respectively.
 # 
 
-xrt.plot_model(inv_result.model, clim=(1, 1.5));       # inferred model
-xrt.plot_model(xrt.good_model, clim=(1, 1.5));          # true model
+xrt.displayModel(inv_result.model.reshape(model_shape),clim=(1, 1.5),cmap=plt.cm.Blues); # inferred model
+xrt.displayModel(good_model,clim=(1, 1.5),cmap=plt.cm.Blues); # true model
 
 ######################################################################
 #
@@ -221,7 +240,8 @@ Cm = inv_result.model_covariance
 # the cellular model.
 # 
 
-xrt.plot_model(np.sqrt(np.diag(Cm)));
+slow_uncert = np.sqrt(np.diag(Cm)).reshape(model_shape)
+xrt.displayModel(slow_uncert,title='Slowness uncertainty',cmap=plt.cm.Greens)
 
 ######################################################################
 #
@@ -243,7 +263,7 @@ xrt.plot_model(np.sqrt(np.diag(Cm)));
 # which gives the uncertainty image on velocity, which looks very similar.
 # 
 
-xrt.plot_model(np.sqrt(np.diag(Cm)) * inv_result.model);
+xrt.displayModel(slow_uncert * inv_result.model.reshape(model_shape),title='Velocity uncertainty',cmap=plt.cm.Blues);
 
 ######################################################################
 #
@@ -271,10 +291,15 @@ xrt.plot_model(np.sqrt(np.diag(Cm)) * inv_result.model);
 #    <!-- Otherwise please leave the below code cell unchanged -->
 # 
 
-watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
+watermark_list = ["cofi", "numpy", "scipy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
+
+######################################################################
+#
+
+
 
 ######################################################################
 #

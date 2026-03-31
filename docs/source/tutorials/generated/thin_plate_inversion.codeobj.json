@@ -1336,6 +1336,24 @@
    "name": "str"
   }
  ],
+ "custom_init": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "functools",
+   "module_short": "functools",
+   "name": "partial"
+  }
+ ],
+ "d": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
  "data_obs": [
   {
    "is_class": false,
@@ -1358,8 +1376,8 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "io",
-   "module_short": "io",
+   "module": "_io",
+   "module_short": "_io",
    "name": "BufferedReader"
   }
  ],
@@ -1524,9 +1542,18 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "int"
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "int64"
+  }
+ ],
+ "idraws": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
   }
  ],
  "idx_to_plot": [
@@ -1554,6 +1581,15 @@
    "module": "builtins",
    "module_short": "builtins",
    "name": "int"
+  }
+ ],
+ "initialize_param": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
   }
  ],
  "inv": [
@@ -1652,6 +1688,15 @@
    "name": "InversionOptions.suggest_solver_params"
   }
  ],
+ "iparam": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
  "j": [
   {
    "is_class": false,
@@ -1677,6 +1722,29 @@
    "module": "numpy",
    "module_short": "numpy",
    "name": "ndarray"
+  }
+ ],
+ "log_likelihood": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.likelihood._log_likelihood",
+   "module_short": "bayesbay.likelihood",
+   "name": "LogLikelihood"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.likelihood",
+   "module_short": "bayesbay.likelihood",
+   "name": "LogLikelihood"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "LogLikelihood"
   }
  ],
  "m_max": [
@@ -2054,16 +2122,9 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "cofi._inversion",
-   "module_short": "cofi",
-   "name": "SamplingResult"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "SamplingResult"
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
   }
  ],
  "my_result.nfev": [
@@ -2118,16 +2179,16 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "emcee.ensemble",
-   "module_short": "emcee",
-   "name": "EnsembleSampler"
+   "module": "bayesbay._bayes_inversion",
+   "module_short": "bayesbay",
+   "name": "BaseBayesianInversion"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "emcee",
-   "module_short": "emcee",
-   "name": "EnsembleSampler"
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "BaseBayesianInversion"
   }
  ],
  "my_result.summary": [
@@ -2188,6 +2249,15 @@
    "module": "cofi",
    "module_short": "cofi",
    "name": "InversionResult.to_arviz"
+  }
+ ],
+ "n_chains": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
   }
  ],
  "n_transmitters": [
@@ -2385,7 +2455,7 @@
    "is_explicit": false,
    "module": "builtins",
    "module_short": "builtins",
-   "name": "builtin_function_or_method"
+   "name": "module.choice"
   },
   {
    "is_class": false,
@@ -2401,7 +2471,7 @@
    "is_explicit": false,
    "module": "builtins",
    "module_short": "builtins",
-   "name": "builtin_function_or_method"
+   "name": "module.randint"
   },
   {
    "is_class": false,
@@ -2417,7 +2487,7 @@
    "is_explicit": false,
    "module": "builtins",
    "module_short": "builtins",
-   "name": "builtin_function_or_method"
+   "name": "module.randn"
   },
   {
    "is_class": false,
@@ -2431,9 +2501,9 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "builtin_function_or_method"
+   "module": "_cython_3_2_1",
+   "module_short": "_cython_3_2_1",
+   "name": "cython_function_or_method"
   },
   {
    "is_class": false,
@@ -2498,6 +2568,208 @@
    "module": "builtins",
    "module_short": "builtins",
    "name": "int"
+  }
+ ],
+ "param_space": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization._parameter_space",
+   "module_short": "bayesbay.parameterization",
+   "name": "ParameterSpace"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "ParameterSpace"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "ParameterSpace"
+  }
+ ],
+ "parameter": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.prior._prior",
+   "module_short": "bayesbay.prior",
+   "name": "UniformPrior"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.prior",
+   "module_short": "bayesbay.prior",
+   "name": "UniformPrior"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "UniformPrior"
+  }
+ ],
+ "parameter.set_custom_initialize": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.prior._prior",
+   "module_short": "bayesbay.prior",
+   "name": "UniformPrior.set_custom_initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.prior",
+   "module_short": "bayesbay.prior",
+   "name": "UniformPrior.set_custom_initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "UniformPrior.set_custom_initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.prior._prior",
+   "module_short": "bayesbay.prior",
+   "name": "Prior.set_custom_initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.prior",
+   "module_short": "bayesbay.prior",
+   "name": "Prior.set_custom_initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "Prior.set_custom_initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "abc",
+   "module_short": "abc",
+   "name": "ABC.set_custom_initialize"
+  }
+ ],
+ "parameterization": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization._parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "Parameterization"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "Parameterization"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "Parameterization"
+  }
+ ],
+ "parameterization.initialize": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization._parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "Parameterization.initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "Parameterization.initialize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "Parameterization.initialize"
+  }
+ ],
+ "parameterization.perturbation_funcs": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization._parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "Parameterization.perturbation_funcs"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay.parameterization",
+   "module_short": "bayesbay.parameterization",
+   "name": "Parameterization.perturbation_funcs"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "bayesbay",
+   "module_short": "bayesbay",
+   "name": "Parameterization.perturbation_funcs"
+  }
+ ],
+ "parameters": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "parameters.append": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
   }
  ],
  "plot_plate_faces": [
@@ -2740,6 +3012,15 @@
    "name": "Line2D"
   }
  ],
+ "posterior_samples": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
  "problem_setup": [
   {
    "is_class": false,
@@ -2754,6 +3035,15 @@
    "module": "vtem_max_forward_lib",
    "module_short": "vtem_max_forward_lib",
    "name": "problem_setup"
+  }
+ ],
+ "results": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
   }
  ],
  "s2": [
@@ -3485,22 +3775,49 @@
    "name": "list"
   }
  ],
- "walkers_start": [
+ "vmax": [
   {
    "is_class": false,
    "is_explicit": false,
    "module": "numpy",
    "module_short": "numpy",
-   "name": "ndarray"
+   "name": "int64"
+  }
+ ],
+ "vmin": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "int64"
+  }
+ ],
+ "walkers_start": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
   }
  ],
  "walkers_start.append": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
   }
  ],
  "x": [

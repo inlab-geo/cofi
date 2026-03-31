@@ -1,10 +1,6 @@
 """
-Receiver Function
-=================
-
-.. raw:: html
-
-   <!-- Please leave the cell below as it is -->
+Receiver Function inversion: optimization and Bayesian sampling
+===============================================================
 
 """
 
@@ -13,7 +9,7 @@ Receiver Function
 # |Open In Colab|
 # 
 # .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
-#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/receiver_function/receiver_function.ipynb
+#    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/receiver_function/receiver_function_inversion.ipynb
 # 
 
 
@@ -40,8 +36,8 @@ Receiver Function
 
 
 ######################################################################
-# In this notebook, we run inversion on a toy model with optimisation and
-# parallel sampling.
+# In this notebook, we run inversion on a receiver function inversion
+# problem with optimisation and sampling.
 # 
 
 
@@ -56,7 +52,14 @@ Receiver Function
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi geo-espresso
+# !pip install -U cofi pyrf96
+
+######################################################################
+#
+
+# If this notebook is run locally pyrf96 needs to be installed separately by uncommenting the following lines, 
+# that is by removing the # and the white space between it and the exclamation mark.
+# !pip install pyrf96
 
 ######################################################################
 #
@@ -70,7 +73,7 @@ import emcee
 import multiprocessing
 
 import cofi
-import espresso
+import pyrf96
 
 ######################################################################
 #
@@ -94,13 +97,68 @@ display(Markdown(content))
 
 
 ######################################################################
-# We are going to use the receiver function kernel wrapped in
-# ```espresso`` <https://geo-espresso.readthedocs.io/en/latest/user_guide/contrib/generated/_receiver_function/index.html>`__,
-# with calls to Fortran routines developed by Takuo Shibutani in the
-# backend.
+# We are going to use the receiver function package in
+# ```pyrf96`` <https://github.com/inlab-geo/pyrf96>`__, with calls to
+# Fortran routines developed by Prof. T. Shibutani in the backend.
 # 
 
-my_receiver_function = espresso.ReceiverFunctionInversionShibutani(example_number=4)
+
+######################################################################
+# The function ``pyrf96.rfcalc()`` computes synthetic receiver functions
+# (using routines developed by Prof. T. Shibutani). It is called as
+# follows:
+# 
+# .. code:: python
+# 
+#    t,rfunc = pyrf96.rfcalc(model)
+# 
+# where ``model`` is a NumPy array of dimension ``[nlayers,3]``.
+# 
+# Model formats
+# ^^^^^^^^^^^^^
+# 
+# Three input model formats are possible depending on optional parameter
+# ``mtype``.
+# 
+# **Voronoi cell mode** (``mtype=0``, default): In this case
+# ``model[:,0]`` are the depths of Voronoi cell nuclei, which each define
+# a layer of constant velocity. Here interfaces are defined implicitely as
+# the mid-points between successive nuclei. For example, the interface at
+# the base of the first layer lies at depth
+# ``0.5*[model[0,0]+model(1,0)]`` The S-wave speeds for each layer are
+# given by ``model[:,1]``, and ``model[:,2]`` are the ratio of P-wave
+# speed to S-wave speed in each layer. This format is convenient as a
+# parameterization for optimization, or Bayesian sampling, since nuclei
+# are independent and can be unordered. See Figure 1 of `Bodin et
+# al. 2012 <https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2011JB008560>`__.
+# 
+# **Layer thickness mode** (``mtype=1``): In this case ``model[:,0]`` are
+# the thicknesses of each layer. Here interfaces are defined implicitely
+# as the sum of successive thicknesses. For example, the interface at the
+# base of the second layer lies at depth ``model[0,0]+model(1,0)``. The
+# S-wave speeds for each layer are given by ``model[:,1]``, and
+# ``model[:,2]`` are the ratio of P-wave speed to S-wave speed in each
+# layer.
+# 
+# **Interface depth mode** (``mtype=2``): In this case the values in
+# ``model[:,0]`` give the depths of discontinuities in the model, while
+# ``model[:,1]`` contains the S-wave speed above the interface.
+# ``model[:,2]`` is the ratio of P-wave speed to S-wave speed. The maximum
+# depth of discontinuity that can be considered is 60km.
+# 
+# For full details see the docstring ``help(pyrf96.rfcalc)``
+# 
+
+
+######################################################################
+# For example, here is the Earth model in interface depth mode
+# (``mtype=0``).
+# 
+
+good_model = np.array([[1,3.0,1.7],
+                  [8.0,3.2,2.0],
+                  [20, 4.0,1.7],
+                  [45,4.2,1.7]])
 
 ######################################################################
 #
@@ -112,50 +170,46 @@ my_receiver_function = espresso.ReceiverFunctionInversionShibutani(example_numbe
 # values in ``model[:,0]`` give the depths of discontinuities in the
 # model, while ``model[:,1]`` contains the S-wave speed above the
 # interface. ``model[:,2]`` is the ratio of S-wave speed to P-wave speed.
-# The maximum depth of discontinuity that can be considered is 60km.
-# 
-# In this example, we fix the ratio of S-wave speed to P-wave speed, and
+# The maximum depth of discontinuity that can be considered is 60km. In
+# this example, we fix the ratio of S-wave speed to P-wave speed, and
 # treat the interface depths and velocities of 3 layers as unknowns.
 # 
 
 
 ######################################################################
-# Here we set a starting model that is reasonably close to the true model,
-# so that the optimisation converges.
+# Here we use the model to calculate the receiver function both with and
+# without correlated noise added, with signal to noise parameter
+# ``sn=0.5``. (The noise here is added in the frequency domain, for
+# details see Shibutani etal. (1996).)
 # 
 
-null_model = my_receiver_function.starting_model 
-
-print(f"Number of model parameters in this example: {null_model.size}")
-my_receiver_function._model_setup(null_model)
+# calculate and plot receiver function
+t,rfunc = pyrf96.rfcalc(good_model)          # Receiver function
+t2,rfunc_noise = pyrf96.rfcalc(good_model,sn=0.5,seed=12345678) # Receiver function with added correlated noise
 
 ######################################################################
 #
 
 
 ######################################################################
-# Let’s plot the starting Earth model.
+# If we had field data we wanted to invert we would load here and simply
+# assign it to ``t2`` and ``rfunc_noise`` that is replace our synthetic
+# data.
 # 
-
-my_receiver_function.plot_model(null_model);
-
-######################################################################
-#
 
 
 ######################################################################
-# Now we calculate the receiver function and plot it
+# Now we plot the model and the receiver function together.
 # 
 
-predicted_data = my_receiver_function.forward(null_model)
-observed_data = my_receiver_function.data 
-my_receiver_function.plot_data(
-    data1=predicted_data, 
-    data2=observed_data, 
-    label="predicted_data", 
-    label2="observed_data", 
-)
-plt.legend();
+# plot RF together with noise 
+a,b = pyrf96.plotRFm(good_model,t2,rfunc_noise,t,rfunc,
+    vmin=2.8,
+    vmax=4.3,
+    dmin=-2.0,
+    dmax=60.0,
+    plotnuclei=True,
+    title="Observed and predicted receiver functions")
 
 ######################################################################
 #
@@ -165,6 +219,72 @@ plt.legend();
 # 1. Solve with an optimiser
 # --------------------------
 # 
+
+
+######################################################################
+# 1.1 Problem set up
+# ~~~~~~~~~~~~~~~~~~
+# 
+
+
+######################################################################
+# Here we decide to only vary the layer velocities and interface depths
+# only, and not the Vp/Vs ratio parameters in the Earth model. So we have
+# to provide a subset of the model vector to the minimization routine. We
+# define a simple conversion between the two with routines
+# ``get_inversion_parameters()`` and its converse
+# ``get_model_parameters()``.
+# 
+
+# conversion routines
+vpvs = good_model[:,2] # fixed vpvs parameters
+def get_inversion_parameters(fullmodel): # convert model to inversion parameters
+    return fullmodel[:,:2].flatten() # remove last column and flatten
+#
+def get_model_parameters(invmodel): # convert inversion parameters to fullmodel
+    return np.append(invmodel.reshape(len(vpvs),-1), vpvs[:,None],axis=1) # reshape and add last column
+
+######################################################################
+#
+
+
+######################################################################
+# In preparation for optimisation we need to measure the fit of this
+# *observed* receiver function to the receiver function predicted by any
+# other model, :math:`{\mathbf d}_{pred}`, we need to compute the negative
+# log of the Likelihood
+# 
+# :raw-latex:`\begin{equation*}
+# -\log (p({\mathbf d}_{obs} | {\mathbf m}) = ({\mathbf d}_{obs}-{\mathbf d}_{pred})^T C_D^{-1} ({\mathbf d}_{obs}-{\mathbf d}_{pred})
+# \end{equation*}`
+# 
+# where :math:`C_D^{-1}` is the inverse data covariance matrix describing
+# correlated noise in the receiver function. You can do this using the
+# supplied routine ``rfcalc.InvDataCov`` which takes arguments
+# (:math:`\sigma_t`,\ :math:`\sigma_a`,\ :math:`n`), and builds an
+# :math:`n\times n` inverse data covariance matrix for a time signal with
+# amplitude variance :math:`\sigma_a^2` and time correlation length
+# :math:`\sigma_t`, for receiver length of :math:`n` time samples. In this
+# example you can use :math:`\sigma_t = 2.5`, :math:`\sigma_a=0.01`.
+# 
+
+observed_data = rfunc_noise                    # Define observed data
+Cdinv = pyrf96.InvDataCov(2.5,0.01,len(rfunc)) # Define inverse data covaraince for the noisy receiver function
+
+######################################################################
+#
+
+def my_misfit(imodel): # misfit function to be minimized
+    model = get_model_parameters(imodel)       # recover full model from inversion parameters
+    t,predicted_data = pyrf96.rfcalc(model)    # predicted data from model
+    res = observed_data-predicted_data         # residual between observed and predicted data
+    misfit_val = np.dot(res,np.transpose(np.dot(Cdinv, res)))/2.0 # data misfit
+    if math.isnan(misfit_val):
+        return float("inf")
+    return misfit_val
+
+######################################################################
+#
 
 
 ######################################################################
@@ -179,18 +299,21 @@ my_problem = cofi.BaseProblem()
 
 
 ######################################################################
-# In preparation for optimisation:
+# Here we set a starting model that is reasonably close to the true model,
+# so that the optimisation converges.
 # 
 
-def my_misfit(model, include_uncertainty=False):
-    predicted_data = my_receiver_function.forward(model)
-    misfit_val = my_receiver_function.misfit(predicted_data, observed_data)
-    if math.isnan(misfit_val):
-        return float("inf")
-    return misfit_val
+initialmodel = np.array([[1.1,3.0,1.7],
+                  [7.0,3.2,2.0],
+                  [18, 4.1,1.7],
+                  [40,4.2,1.7]])
 
+######################################################################
+#
+
+# problem set up in cofi
 my_problem.set_objective(my_misfit)
-my_problem.set_initial_model(null_model)
+my_problem.set_initial_model(get_inversion_parameters(initialmodel))
 
 my_problem.summary()
 
@@ -223,8 +346,9 @@ my_result_optimiser.summary()
 ######################################################################
 #
 
-print("Inversion result:    ", my_result_optimiser.model)
-print("Reference good model:", my_receiver_function.good_model)
+my_result_model = get_model_parameters(my_result_optimiser.model)
+print("Inversion result:    \n", my_result_model)
+print("Reference good model:\n", good_model)
 
 ######################################################################
 #
@@ -235,22 +359,24 @@ print("Reference good model:", my_receiver_function.good_model)
 # ~~~~~~~~~~~~
 # 
 
-predicted_data = my_receiver_function.forward(my_result_optimiser.model)
-my_receiver_function.plot_data(
-    data1=predicted_data, 
-    data2=observed_data, 
-    label="predicted_data", 
-    label2="observed_data", 
-)
-plt.legend();
+t,predicted_data = pyrf96.rfcalc(my_result_model)    # predicted data from model
+a,b = pyrf96.plotRFm(my_result_model,t,observed_data,t,predicted_data,
+    vmin=2.8,
+    vmax=4.5,
+    dmin=-2.0,
+    dmax=60.0,
+    title="Observed and best fit receiver functions",
+    velmod2=good_model,
+    plotnuclei = False,
+    modlabels=['Best fit','True'])
 
 ######################################################################
 #
 
 
 ######################################################################
-# 2. Solve with a sampler
-# -----------------------
+# 2. Bayesian sampling
+# --------------------
 # 
 # 2.1 Enrich BaseProblem
 # ~~~~~~~~~~~~~~~~~~~~~~
@@ -261,17 +387,19 @@ plt.legend();
 # In preparation for sampling:
 # 
 
-def my_log_likelihood(model):
-    data1 = my_receiver_function.data
-    data2 = my_receiver_function.forward(model)
-    log_likelihood = my_receiver_function.log_likelihood(data1, data2) / 20 # temper the likelihood
-    return log_likelihood
+def my_log_likelihood(model): # log-likelihood of negative of our misfit
+    return -my_misfit(model)
 
-def my_log_prior(model):
-    log_prior = my_receiver_function.log_prior(model)
-    return log_prior
+def my_log_prior(model): # define a uniform prior between bounds on interface depths and S-velocity
 
-ndim = my_receiver_function.model_size
+    real_model = get_model_parameters(model) # recover full model from inversion parameters 
+    depths_in_0_60 = all([m_p < 60 and m_p > 0 for m_p in good_model[:,0]]) # are all interface depths between 0,60km? 
+    veloc_in_range = all([m_p < 4.5 and m_p > 2 for m_p in good_model[:,1]]) # are all velocities depths between 2,4.5km/s?
+    if depths_in_0_60 and veloc_in_range: # return log of prior normalization
+        return (-np.log(60.)-np.log(2.5)).item()
+    return float("-inf")
+
+ndim = len(get_inversion_parameters(good_model))
 
 my_problem.set_model_shape(ndim)
 my_problem.set_log_likelihood(my_log_likelihood)
@@ -282,7 +410,7 @@ my_problem.summary()
 ######################################################################
 #
 
-nwalkers = 12
+nwalkers = 32
 nsteps = 25000
 walkers_start = my_result_optimiser.model + 1e-1 * np.random.randn(nwalkers, ndim)
 
@@ -335,14 +463,18 @@ var_names = [
     "velocity2 (km/s)", 
     "depth3 (km)", 
     "velocity3 (km/s)", 
+    "depth4 (km)", 
+    "velocity4 (km/s)", 
 ]
+true_model = get_inversion_parameters(good_model)
+var_lines = [(var_names[i],{}, true_model[i]) for i in range(len(var_names))]
 az_inf_data = inv_result_sampler.to_arviz(var_names=var_names)
 az_inf_data
 
 ######################################################################
 #
 
-arviz.plot_trace(az_inf_data, var_names=var_names);
+arviz.plot_trace(az_inf_data, var_names=var_names,lines=var_lines);
 plt.tight_layout();
 
 ######################################################################
@@ -358,54 +490,75 @@ plt.tight_layout();
 # autocorrelation time (see Emcee’s package the -`Autocorrelation analysis
 # & convergence
 # tutorial <https://emcee.readthedocs.io/en/stable/tutorials/autocorr/>`__
-# for more details):
+# for more details). Usually for reliability we want the length of the
+# chains to be greater that fifty times the largest autocorrelation time
+# of any parameter.
 # 
 
 tau = inv_result_sampler.sampler.get_autocorr_time()
-print(f"autocorrelation time: {tau}")
+print(f"autocorrelation times for each parameter:\n {tau}")
+tau_ok = all([tcorr < 50*nsteps for tcorr in tau]) # were the chains long enough?
+if(tau_ok): 
+    print("All autocorrelation times OK")
+else:
+    print("Autocorrelation unreliable. Increase length of chains and rerun")
 
 ######################################################################
 #
 
 
 ######################################################################
-# Let’s discard the initial 300 steps and make a corner plot:
+# Let’s discard the initial 500 steps and make a corner plot:
 # 
 
-az_inf_data_after_300 = az_inf_data.sel(draw=slice(300,None))
+az_inf_data_after_500 = az_inf_data.sel(draw=slice(300,None))
 
-arviz.plot_pair(
-    az_inf_data_after_300, 
-    marginals=True, 
-    var_names=var_names
+true_values = {
+    f"{var_names[i]}": true_model[i] for i in range(true_model.size)
+}
+
+fig, axes = plt.subplots(8, 8, figsize=(12, 10))
+_ = arviz.plot_pair(
+    az_inf_data_after_500,
+    marginals=True,
+    ax=axes,
+    textsize=8,
 )
 
-print("Reference good model:", my_receiver_function.good_model)
+for i, j in np.ndindex(axes.shape):
+    if i == j:
+        continue
+    xlabel = axes[-1, j].get_xlabel()
+    ylabel = axes[i, 0].get_ylabel()
+    x_true = true_values[xlabel]
+    y_true = true_values[ylabel]
+    axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=5, markeredgecolor="k")
+
+plt.show()
+
 
 ######################################################################
 #
 
-true_model = my_receiver_function.good_model
+
+######################################################################
+# Now examine the mean model of the posterior ensemble.
+# 
+
 mean_sample = np.array(az_inf_data["posterior"][var_names].mean().to_array())
 median_sample = np.array(az_inf_data["posterior"][var_names].median().to_array())
 
-print("Mean of samples:     ", mean_sample)
-print("Reference good model:", true_model)
+my_mean_model = get_model_parameters(mean_sample)
 
-my_receiver_function.plot_model(true_model, mean_sample, "true_model", "mean_sample")
-plt.legend();
+t,mean_sample_predicted_rf = pyrf96.rfcalc(my_mean_model)          # Receiver function
 
-######################################################################
-#
+a,b = pyrf96.plotRFm(my_mean_model,t,observed_data,t,mean_sample_predicted_rf,
+    vmin=2.8, vmax=4.5, dmin=-2.0,dmax=48.0,
+    title="Observed and best fit receiver functions",
+    velmod2=good_model,modlabels=['Sample mean','True'])
 
-mean_sample_predicted_data = my_receiver_function.forward(mean_sample)
-my_receiver_function.plot_data(
-    observed_data, 
-    mean_sample_predicted_data,
-    "observed_data",
-    "mean_sample_predicted_data",
-);
-plt.legend();
+print("Mean of samples:\n     ", mean_sample)
+print("Reference good model:\n", true_model)
 
 ######################################################################
 #
@@ -426,10 +579,15 @@ plt.legend();
 #    <!-- Otherwise please leave the below code cell unchanged -->
 # 
 
-watermark_list = ["cofi", "espresso", "numpy", "matplotlib", "emcee", "arviz"]
+watermark_list = ["cofi", "numpy", "matplotlib", "emcee", "arviz"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
+
+######################################################################
+#
+
+
 
 ######################################################################
 #

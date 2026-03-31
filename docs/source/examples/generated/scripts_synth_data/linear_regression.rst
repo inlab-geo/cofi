@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_examples_generated_scripts_synth_data_linear_regression.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -72,17 +72,17 @@ Introduction
 In the workflow of ``cofi``, there are three main components:
 ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 
--  ``BaseProblem`` defines three things: 1) the forward problem; 2)
-   model parameter space (the unknowns); and 3) other information about
-   the inverse problem we are solving, such as the jacobian matrix
-   (i.e. design matrix for our linear problem) for the least squares
-   solver we will be using initially in the following
--  ``InversionOptions`` describes details about how one wants to run the
-   inversion, including the inversion approach, backend tool and
-   solver-specific parameters.
--  ``Inversion`` can be seen as an inversion engine that takes in the
-   above two as information, and will produce an ``InversionResult``
-   upon running.
+- ``BaseProblem`` defines three things: 1) the forward problem; 2) model
+  parameter space (the unknowns); and 3) other information about the
+  inverse problem we are solving, such as the jacobian matrix
+  (i.e. design matrix for our linear problem) for the least squares
+  solver we will be using initially in the following
+- ``InversionOptions`` describes details about how one wants to run the
+  inversion, including the inversion approach, backend tool and
+  solver-specific parameters.
+- ``Inversion`` can be seen as an inversion engine that takes in the
+  above two as information, and will produce an ``InversionResult`` upon
+  running.
 
 For each of the above components, there’s a ``summary()`` method to
 check the current status.
@@ -91,14 +91,14 @@ So a common workflow includes 4 steps:
 
 1. we begin by defining the ``BaseProblem``. This can be done through a
    series of set functions
-   ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_initial_model(a_starting_point)``
+   ``python  inv_problem = BaseProblem()  inv_problem.set_objective(some_function_here)  inv_problem.set_initial_model(a_starting_point)``
 
 2. define ``InversionOptions``. Some useful methods include:
 
-   -  ``set_solving_method()`` and ``suggest_tools()``. Once you’ve set
-      a solving method (from “least squares” and “optimization”, more
-      will be supported), you can use ``suggest_tools()`` to see a list
-      of backend tools to choose from.
+   - ``set_solving_method()`` and ``suggest_tools()``. Once you’ve set a
+     solving method (from “least squares” and “optimization”, more will
+     be supported), you can use ``suggest_tools()`` to see a list of
+     backend tools to choose from.
 
 3. start an ``Inversion``. This step is common:
 
@@ -189,15 +189,15 @@ generate some random data points as our dataset.
 
 where:
 
--  :math:`\text{forward}` is the forward function that takes in a model
-   and produces synthetic data,
--  :math:`\textbf{m}` is the model vector,
--  :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
-   linear regression problem and looks like the following:
+- :math:`\text{forward}` is the forward function that takes in a model
+  and produces synthetic data,
+- :math:`\textbf{m}` is the model vector,
+- :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
+  linear regression problem and looks like the following:
 
-   .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
--  :math:`\text{basis\_func}` is the basis function that converts
-   :math:`\textbf{x}` into :math:`\textbf{G}`
+  .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
+- :math:`\text{basis\_func}` is the basis function that converts
+  :math:`\textbf{x}` into :math:`\textbf{G}`
 
 Recall that the function we are going to fit is:
 :math:`y=-6-5x+2x^2+x^3`
@@ -243,7 +243,7 @@ Recall that the function we are going to fit is:
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f82506af940>
+    <matplotlib.legend.Legend object at 0x7f047d8ccf50>
 
 
 
@@ -259,9 +259,9 @@ you’ll see a list of functions/properties that can be set to
 
 Other helper methods for ``BaseProblem`` include:
 
--  ``defined_components()`` (review what have been set)
--  ``summary()`` (better displayed information)
--  ``suggest_tools()``
+- ``defined_components()`` (review what have been set)
+- ``summary()`` (better displayed information)
+- ``suggest_tools()``
 
 We refer readers to `cofi’s API reference
 page <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html>`__
@@ -397,16 +397,21 @@ categories of inversion approaches you’d like to use.
             "scipy.optimize.minimize",
             "scipy.optimize.least_squares",
             "torch.optim",
-            "cofi.border_collie_optimization"
+            "cofi.border_collie_optimization",
+            "neighpyI",
+            "mealpy.sma",
+            "mealpy.slime_mould"
         ],
         "matrix solvers": [
             "scipy.linalg.lstsq",
-            "cofi.simple_newton"
+            "cofi.simple_newton",
+            "scipy.sparse.linalg"
         ],
         "sampling": [
             "emcee",
             "bayesbay",
-            "neighpy"
+            "neighpy",
+            "neighpyII"
         ]
     }
 
@@ -478,7 +483,7 @@ function shows available options and set your desired backend solver.
  .. code-block:: none
 
     Based on the solving method you've set, the following tools are suggested:
-    ['scipy.linalg.lstsq', 'cofi.simple_newton']
+    ['scipy.linalg.lstsq', 'cofi.simple_newton', 'scipy.sparse.linalg']
 
     Use `InversionOptions.set_tool(tool_name)` to set a specific tool from above
     Use `InversionOptions.set_solving_method(method_name)` to change solving method
@@ -770,7 +775,7 @@ ground truth.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f824b6473d0>
+    <matplotlib.legend.Legend object at 0x7f02ca6a2850>
 
 
 
@@ -918,25 +923,25 @@ CoFI.
 
  .. code-block:: none
 
-    The inversion result from `scipy.optimize.minimize`: [-5.68862266 -5.09203993  1.81066089  0.96922711]
+    The inversion result from `scipy.optimize.minimize`: [-5.68862271 -5.09203997  1.81066092  0.96922712]
 
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    fun: 16.217557592947745
-    jac: [ 0.00000000e+00  2.38418579e-07 -4.76837158e-07 -2.38418579e-07]
-    hess_inv: [[ 0.09466099  0.02886397 -0.0406164  -0.01267773]
-     [ 0.02886397  0.04324386 -0.01646474 -0.00902502]
-     [-0.0406164  -0.01646474  0.0258144   0.00848302]
-     [-0.01267773 -0.00902502  0.00848302  0.00336663]]
+    fun: 16.217557592947006
+    jac: [ 2.38418579e-07  4.76837158e-07 -9.53674316e-07 -2.38418579e-07]
+    hess_inv: [[ 0.09467028  0.02887107 -0.04062166 -0.01267988]
+     [ 0.02887107  0.04324626 -0.01646809 -0.00902617]
+     [-0.04062166 -0.01646809  0.02581724  0.00848412]
+     [-0.01267988 -0.00902617  0.00848412  0.00336705]]
     nfev: 55
     njev: 11
     status: 0
     message: Optimization terminated successfully.
     nit: 8
-    model: [-5.68862266 -5.09203993  1.81066089  0.96922711]
+    model: [-5.68862271 -5.09203997  1.81066092  0.96922712]
 
 
 
@@ -975,7 +980,7 @@ CoFI.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f842e261330>
+    <matplotlib.legend.Legend object at 0x7f02c8ef7c50>
 
 
 
@@ -1042,12 +1047,12 @@ relationship:
 
 where:
 
--  :math:`p(\textbf{m}|\textbf{d})` (posterior) is the probability of a
-   model given data observations
--  :math:`p(\textbf{d}|\textbf{m})` (likelihood) is the probability of
-   which data is observed given a certain model
--  :math:`p(\textbf{m})` (prior) is the probability of a certain model
-   and reflects your belief / domain knowledge on the model
+- :math:`p(\textbf{m}|\textbf{d})` (posterior) is the probability of a
+  model given data observations
+- :math:`p(\textbf{d}|\textbf{m})` (likelihood) is the probability of
+  which data is observed given a certain model
+- :math:`p(\textbf{m})` (prior) is the probability of a certain model
+  and reflects your belief / domain knowledge on the model
 
 Coding
 ^^^^^^
@@ -1061,14 +1066,14 @@ Most sampler tools require the logarithm of the probability.
 
 So in ``cofi``, you can either define:
 
--  log of the posterior, using ``BaseProblem.set_log_posterior``
-   (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_posterior>`__),
-   or
--  log of prior and log of likelihood, using
-   ``BaseProblem.set_log_prior()``
-   (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_prior>`__)
-   and ``BaseProblem.set_log_likelihood()``
-   (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_likelihood>`__)
+- log of the posterior, using ``BaseProblem.set_log_posterior``
+  (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_posterior>`__),
+  or
+- log of prior and log of likelihood, using
+  ``BaseProblem.set_log_prior()``
+  (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_prior>`__)
+  and ``BaseProblem.set_log_likelihood()``
+  (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_likelihood>`__)
 
 We use the second option in this demo.
 
@@ -1484,7 +1489,7 @@ posterior ensemble and compare to the data.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f8250f75120>
+    <matplotlib.legend.Legend object at 0x7f02c81b4a50>
 
 
 
@@ -1640,12 +1645,12 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.7
-    numpy 1.24.4
-    scipy 1.12.0
-    matplotlib 3.8.3
-    emcee 3.1.4
-    arviz 0.17.0
+    cofi 0.2.11
+    numpy 2.3.5
+    scipy 1.17.0
+    matplotlib 3.10.8
+    emcee 3.1.6
+    arviz 0.23.4
 
 
 
@@ -1657,7 +1662,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.790 seconds)
+   **Total running time of the script:** (0 minutes 6.443 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_linear_regression.py:
@@ -1673,6 +1678,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: linear_regression.py <linear_regression.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: linear_regression.zip <linear_regression.zip>`
 
 
 .. only:: html

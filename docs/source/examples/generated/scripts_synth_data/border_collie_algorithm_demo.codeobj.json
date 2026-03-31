@@ -1,0 +1,1061 @@
+{
+ "BaseProblem": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "Inversion": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "InversionOptions": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "Markdown": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core.display",
+   "module_short": "IPython.core.display",
+   "name": "Markdown"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core",
+   "module_short": "IPython.core",
+   "name": "Markdown"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython",
+   "module_short": "IPython",
+   "name": "Markdown"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core.display",
+   "module_short": "IPython.core.display",
+   "name": "TextDisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core",
+   "module_short": "IPython.core",
+   "name": "TextDisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython",
+   "module_short": "IPython",
+   "name": "TextDisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core.display",
+   "module_short": "IPython.core.display",
+   "name": "DisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython.core",
+   "module_short": "IPython.core",
+   "name": "DisplayObject"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "IPython",
+   "module_short": "IPython",
+   "name": "DisplayObject"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "IPython.display",
+   "module_short": "IPython.display",
+   "name": "Markdown"
+  }
+ ],
+ "X": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "Y": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "Z": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "Z.max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
+ "ax": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ax.legend": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ax.pcolor": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ax.scatter": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "bounds": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "tuple"
+  }
+ ],
+ "colors.LogNorm": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.colors",
+   "module_short": "matplotlib.colors",
+   "name": "LogNorm"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "LogNorm"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.colors",
+   "module_short": "matplotlib.colors",
+   "name": "Normalize"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Normalize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.colors",
+   "module_short": "matplotlib.colors",
+   "name": "LogNorm"
+  }
+ ],
+ "content": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "display": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "IPython.display",
+   "module_short": "IPython.display",
+   "name": "display"
+  }
+ ],
+ "dlabels": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "dmarkers": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "dog": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "f": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core.add",
+   "module_short": "sympy",
+   "name": "Add"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core",
+   "module_short": "sympy",
+   "name": "Add"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "Add"
+  }
+ ],
+ "f.read": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core.add",
+   "module_short": "sympy",
+   "name": "Add"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core",
+   "module_short": "sympy",
+   "name": "Add"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "Add"
+  }
+ ],
+ "fig": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure"
+  }
+ ],
+ "fig.colorbar": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure.colorbar"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure.colorbar"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "FigureBase.colorbar"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "FigureBase.colorbar"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.colorbar"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.colorbar"
+  }
+ ],
+ "fig.gca": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure.gca"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure.gca"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "FigureBase.gca"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "FigureBase.gca"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.gca"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.gca"
+  }
+ ],
+ "fig.set_size_inches": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure.set_size_inches"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure.set_size_inches"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "FigureBase.set_size_inches"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "FigureBase.set_size_inches"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_size_inches"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_size_inches"
+  }
+ ],
+ "flock": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "gradient": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.tensor.array.dense_ndim_array",
+   "module_short": "sympy",
+   "name": "ImmutableDenseNDimArray"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.tensor.array",
+   "module_short": "sympy",
+   "name": "ImmutableDenseNDimArray"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.tensor",
+   "module_short": "sympy",
+   "name": "ImmutableDenseNDimArray"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "ImmutableDenseNDimArray"
+  }
+ ],
+ "i": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "im": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.collections",
+   "module_short": "matplotlib.collections",
+   "name": "PathCollection"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "PathCollection"
+  }
+ ],
+ "inv": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "inv.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  }
+ ],
+ "inv_options": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "inv_options.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "inv_options.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "inv_problem": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "inv_problem.name": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.name"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.name"
+  }
+ ],
+ "inv_problem.set_bounds": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_bounds"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_bounds"
+  }
+ ],
+ "inv_problem.set_initial_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  }
+ ],
+ "inv_problem.set_model_shape": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_model_shape"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_model_shape"
+  }
+ ],
+ "inv_problem.set_objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_objective"
+  }
+ ],
+ "inv_result": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inv_result.flock_position_history": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "inv_result.model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "inv_result.pack_position_history": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "inv_result.summary": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult.summary"
+  }
+ ],
+ "j": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "modified_himmelblau": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "n": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "np.arange": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "arange"
+  }
+ ],
+ "np.meshgrid": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "meshgrid"
+  }
+ ],
+ "np.random.seed": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "_cython_3_2_1",
+   "module_short": "_cython_3_2_1",
+   "name": "cython_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "seed"
+  }
+ ],
+ "pack": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
+  }
+ ],
+ "plt.figure": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "figure"
+  }
+ ],
+ "plt.subplots": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "subplots"
+  }
+ ],
+ "sheep": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "stationary_points": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "sympy.derive_by_array": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "derive_by_array"
+  }
+ ],
+ "sympy.solve": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "solve"
+  }
+ ],
+ "sympy.symbols": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "symbols"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "x": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core.symbol",
+   "module_short": "sympy",
+   "name": "Symbol"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core",
+   "module_short": "sympy",
+   "name": "Symbol"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "Symbol"
+  }
+ ],
+ "y": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core.symbol",
+   "module_short": "sympy",
+   "name": "Symbol"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy.core",
+   "module_short": "sympy",
+   "name": "Symbol"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "sympy",
+   "module_short": "sympy",
+   "name": "Symbol"
+  }
+ ]
+}

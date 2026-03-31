@@ -131,7 +131,11 @@ def move_data_files(src_folder, dst_folder):
         "*.vtk",
         "*.txt",
         "*_lib.py",
+        "*.pkl",
         "xrayTomography.py",
+        "setup_inversion.py",
+        "neptune_deterministic_methods.py",
+        "neptune_bayesian_methods.py",
     ]
     all_data = []
     for pattern in all_patterns:
@@ -154,29 +158,112 @@ def copy_and_overwrite(from_path, to_path):
         rmtree(to_path)
     copytree(from_path, to_path)
     print(f"Folder from {from_path} to {to_path}")
+    
+# order notebook processing from run_notebooks.py
+def get_ordered_ipynbs_in_dir(dirpath):
+    """
+    Returns a list of .ipynb files in dirpath, with those listed in
+    dependencies.txt first (preserving declared order), followed by any
+    remaining notebooks in filesystem order.
+    """
+    result = []
+    dependencies_path = os.path.join(dirpath, "dependencies.txt")
+    dependencies = []
+    if os.path.isfile(dependencies_path):
+        with open(dependencies_path) as f:
+            dependencies = [line.strip() for line in f if line.strip()]
+        for dep in dependencies:
+            dep_path = os.path.join(dirpath, dep)
+            if dep.endswith(".ipynb") and os.path.isfile(dep_path):
+                result.append(dep_path)
+    already = set(dependencies)
+    for f in sorted(os.listdir(dirpath)):
+        if f.endswith(".ipynb") and f not in already:
+            f_path = os.path.join(dirpath, f)
+            if os.path.isfile(f_path):
+                result.append(f_path)
+    return result
 
+
+def find_ipynb_files(parent_dir):
+    """
+    Returns a list of .ipynb files exactly one directory below parent_dir,
+    with dependencies.txt ordering applied within each subdirectory.
+    """
+    result = []
+    parent_dir = os.path.abspath(parent_dir)
+    base_depth = parent_dir.rstrip(os.sep).count(os.sep)
+    for dirpath, dirnames, filenames in os.walk(parent_dir):
+        current_depth = dirpath.rstrip(os.sep).count(os.sep)
+        if current_depth - base_depth == 1:
+            result.extend(get_ordered_ipynbs_in_dir(dirpath))
+        if current_depth - base_depth >= 1:
+            dirnames[:] = []
+    return result
+
+def write_ordering_file(script_paths, dst_folder, filter_func=None):
+    """
+    Write an _ordering.txt into dst_folder listing converted script names
+    in dependency order. The custom DependencySortKey class in conf.py reads
+    this file to control Sphinx Gallery's execution order.
+
+    Parameters
+    ----------
+    script_paths : list of str
+        Ordered list of original .ipynb paths (already dependency-sorted).
+    dst_folder : str
+        The destination script folder (e.g. examples/scripts_synth_data).
+    filter_func : callable, optional
+        If provided, only include scripts where filter_func(example_name)
+        is True. Used to split field_data vs synth_data ordering.
+    """
+    os.makedirs(dst_folder, exist_ok=True)
+    names = []
+    for p in script_paths:
+        file_name, example_name = file_name_without_path(p)
+        if filter_func and not filter_func(example_name):
+            continue
+        script_name = file_name.replace(".ipynb", ".py")
+        if script_name not in names:
+            names.append(script_name)
+    ordering_path = os.path.join(dst_folder, "_ordering.txt")
+    with open(ordering_path, "w") as f:
+        f.write("\n".join(names))
+    print(f"Wrote ordering file: {ordering_path} ({len(names)} scripts)")
+
+# main entry
 def gen_scripts_all(_):
     # #### TUTORIALS ####
     print("Generating tutorials gallery scripts...")
-    # collect tutorials to convert to sphinx gallery scripts
-    all_tutorials_scripts = glob(f"{TUTORIALS_SRC_DIR}/*/*.ipynb")
-    # convert
+    all_tutorials_scripts = find_ipynb_files(TUTORIALS_SRC_DIR)
     print("Converting tutorial files...")
     for script in all_tutorials_scripts:
         convert_ipynb_to_gallery(script, TUTORIALS_SCRIPTS)
-    # collect all data and library files to move to scripts/
     move_data_files(f"{TUTORIALS_SRC_DIR}/*", TUTORIALS_SCRIPTS)
+    write_ordering_file(all_tutorials_scripts, TUTORIALS_SCRIPTS)          # <-- HERE
+
     # #### EXAMPLES ####
     print("Generating examples gallery scripts...")
-    # collect examples to convert to sphinx gallery scripts
-    all_examples_scripts = glob(f"{EXAMPLES_SRC_DIR}/*/*.ipynb")
-    all_examples_scripts = [name for name in all_examples_scripts if "lab" not in name]
-    # convert
+    all_examples_scripts = [
+        name for name in find_ipynb_files(EXAMPLES_SRC_DIR)
+        if "lab" not in name
+    ]
     print("Converting example files...")
     for script in all_examples_scripts:
         convert_ipynb_to_gallery(script, EXAMPLES_SCRIPTS)
-    # collect all data and library files to move to scripts/field_data
     move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{FIELD_DATA}")
+    move_data_files(f"{EXAMPLES_SRC_DIR}/*", f"{EXAMPLES_SCRIPTS}_{SYNTH_DATA}")
+    write_ordering_file(                                                   # <-- HERE
+        all_examples_scripts,
+        f"{EXAMPLES_SCRIPTS}_{SYNTH_DATA}",
+        filter_func=lambda name: name not in FIELD_DATA_EXAMPLES,
+    )
+    write_ordering_file(                                                   # <-- HERE
+        all_examples_scripts,
+        f"{EXAMPLES_SCRIPTS}_{FIELD_DATA}",
+        filter_func=lambda name: name in FIELD_DATA_EXAMPLES,
+    )
+
     # #### DATA & THEORY ####
     print("\nCopying data and theory files...")
     copy_and_overwrite(f"{cofi_examples_dir}/data", f"{docs_src}/data")
