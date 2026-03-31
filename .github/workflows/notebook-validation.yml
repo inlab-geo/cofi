@@ -40,15 +40,13 @@ jobs:
 
           export REPO_SSH="git@github.com:inlab-geo/validation.git"
           export BRANCH="main"
-          export COFI_SRC="$GITHUB_WORKSPACE"                                 
-          export COFI_REF="${GITHUB_REF_NAME}"  
 
           LOG1=/home/kitc/cofi_cron.log
           LOG2="$GITHUB_WORKSPACE/actions-logs/cofi_cron.log"
 
           PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin \
           /usr/bin/flock -n /tmp/cofi_cron.lock \
-          /usr/bin/env bash -lc '/home/kitc/cofi_bootstrap.sh' \
+          /usr/bin/env bash -lc "COFI_SRC='$GITHUB_WORKSPACE' COFI_REF='${GITHUB_REF_NAME}' /home/kitc/cofi_bootstrap.sh" \
           2>&1 | tee -a "$LOG1" "$LOG2"
 
       - name: Upload GitHub log
