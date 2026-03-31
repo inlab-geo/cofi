@@ -27,6 +27,9 @@ jobs:
     steps:
       - name: Check out cofi repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Run bootstrap and write both logs
         shell: bash
@@ -37,6 +40,8 @@ jobs:
 
           export REPO_SSH="git@github.com:inlab-geo/validation.git"
           export BRANCH="main"
+          echo "COFI_SRC=$GITHUB_WORKSPACE" > /tmp/cofi_ci_env                                                                  
+          echo "COFI_REF=${GITHUB_REF_NAME}" >> /tmp/cofi_ci_env    
 
           LOG1=/home/kitc/cofi_cron.log
           LOG2="$GITHUB_WORKSPACE/actions-logs/cofi_cron.log"
@@ -45,7 +50,7 @@ jobs:
           /usr/bin/flock -n /tmp/cofi_cron.lock \
           /usr/bin/env bash -lc '/home/kitc/cofi_bootstrap.sh' \
           2>&1 | tee -a "$LOG1" "$LOG2"
-
+          
       - name: Upload GitHub log
         if: always()
         uses: actions/upload-artifact@v4
