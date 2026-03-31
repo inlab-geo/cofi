@@ -35,12 +35,12 @@ jobs:
 
           mkdir -p "$GITHUB_WORKSPACE/actions-logs"
 
-          export REPO_SSH="git@github.com:inlab-geo/validation.git"
-          export BRANCH="main"
+          export REPO_SSH="git@github.com:inlab-geo/validation.git"           
+          export BRANCH="main"                                                
           export COFI_SRC="$GITHUB_WORKSPACE"                                 
-          export COFI_REF="${GITHUB_REF_NAME}"  
-
-          LOG1=/home/kitc/cofi_cron.log
+          export COFI_REF="${GITHUB_REF_NAME}"                                
+                                                                                
+          LOG1=/home/kitc/cofi_cron.log 
           LOG2="$GITHUB_WORKSPACE/actions-logs/cofi_cron.log"
 
           PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin \

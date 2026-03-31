@@ -26,6 +26,28 @@ def test_validate_algorithm(problem_setup):
     with pytest.raises(ValueError, match=".*algorithm_params.*"):
         solver = ScipySparseLstSq(problem_setup, inv_options)
 
+
+def test_constructor_evaluates_jacobian_once():
+    call_count = 0
+    A = scipy.sparse.csr_matrix([[3, 0, 0], [1, -1, 0], [2, 0, 1]], dtype=float)
+    b = np.array([2.0, 4.0, -1.0])
+
+    def jacobian(_):
+        nonlocal call_count
+        call_count += 1
+        return A
+
+    inv_problem = BaseProblem()
+    inv_problem.set_jacobian(jacobian)
+    inv_problem.set_data(b)
+    inv_options = InversionOptions()
+    inv_options.set_tool("scipy.sparse.linalg")
+
+    ScipySparseLstSq(inv_problem, inv_options)
+
+    assert call_count == 1
+
+
 def test_run_all_algorithms(problem_setup):
     for algorithm in ScipySparseLstSq.available_algorithms():
         inv_options = InversionOptions()

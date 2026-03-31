@@ -72,13 +72,19 @@ class CoFISimpleNewton(BaseInferenceTool):
     def _calculate_step(self, m):
         grad = self.inv_problem.gradient(m)
         self._n_grad_evaluations += 1
-        hess = np.atleast_2d((self.inv_problem.hessian(m)))
+        hess = self.inv_problem.hessian(m)
         self._n_hess_evaluations += 1
-        if self._params["hessian_is_symmetric"]:
-            hess = scipy.sparse.csr_matrix(hess)
-            step = scipy.sparse.linalg.minres(hess, -grad)[0]
+        if scipy.sparse.issparse(hess):
+            if self._params["hessian_is_symmetric"]:
+                step = scipy.sparse.linalg.minres(hess, -grad)[0]
+            else:
+                step = scipy.sparse.linalg.spsolve(hess, -grad)
         else:
-            step = scipy.linalg.solve(hess, -grad)
+            hess = np.atleast_2d(hess)
+            if self._params["hessian_is_symmetric"]:
+                step = scipy.linalg.solve(hess, -grad, assume_a="sym")
+            else:
+                step = scipy.linalg.solve(hess, -grad)
         step = np.squeeze(np.asarray(step))
         step *= self._params["step_length"]
         return step

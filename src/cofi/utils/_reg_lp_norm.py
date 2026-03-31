@@ -151,7 +151,10 @@ class LpNormRegularization(BaseRegularization):
         diff_m = self._model_diff_to_ref(flat_m)
         weighted_diff_m = W @ diff_m
         hess_lp_norm = self._lp_norm_hessian(weighted_diff_m)
-        return W.T @ np.diag(hess_lp_norm) @ W
+        if sparse.issparse(W):
+            return W.T @ sparse.diags(hess_lp_norm) @ W
+        else:
+            return W.T @ np.diag(hess_lp_norm) @ W
 
     @property
     def model_shape(self) -> tuple:
@@ -202,8 +205,8 @@ class LpNormRegularization(BaseRegularization):
                     d_dy = findiff.FinDiff(1, 1, order)  # y direction
                     matx = d_dx.matrix((nx, ny))  # scipy sparse matrix
                     maty = d_dy.matrix((nx, ny))  # scipy sparse matrix
-                    self._weighting_matrix = np.vstack(
-                        (matx.toarray(), maty.toarray())
+                    self._weighting_matrix = sparse.vstack(
+                        [matx, maty], format="csr"
                     )  # combine above
                 else:
                     raise NotImplementedError(
