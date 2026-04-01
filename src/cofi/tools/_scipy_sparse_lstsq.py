@@ -101,8 +101,6 @@ class ScipySparseLstSq(ScipyLstSq):
 
     def __init__(self, inv_problem, inv_options):
         super().__init__(inv_problem, inv_options)
-        self._components_used = list(self.required_in_problem())
-        self._assign_args()  # defined in super class (_scipy_lstsq.ScipyLstSq)
         self._assign_args_without_reg_or_noise()
         self._assign_atol()
         self._validate_algorithm()

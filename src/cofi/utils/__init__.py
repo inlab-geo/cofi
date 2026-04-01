@@ -7,6 +7,7 @@ The class inheritance of regularization classes:
     graph TD;
     BaseRegularization --> LpNormRegularization;
     LpNormRegularization --> QuadraticReg;
+    QuadraticReg --> SPDEMaternReg;
     BaseRegularization --> ModelCovariance;
     ModelCovariance --> GaussianPrior;
 
@@ -15,6 +16,7 @@ The class inheritance of regularization classes:
 from ._reg_base import BaseRegularization
 from ._reg_lp_norm import LpNormRegularization, QuadraticReg
 from ._reg_model_cov import ModelCovariance, GaussianPrior
+from ._reg_matern import SPDEMaternReg
 
 from ._multiple_runs import InversionPool
 
@@ -23,6 +25,7 @@ __all__ = [
     "BaseRegularization",
     "LpNormRegularization",
     "QuadraticReg",
+    "SPDEMaternReg",
     "ModelCovariance",
     "GaussianPrior",
     "InversionPool",

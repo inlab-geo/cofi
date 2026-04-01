@@ -1,8 +1,13 @@
 import pytest
 import numpy as np
+from scipy import sparse
 
 from cofi.utils import BaseRegularization, QuadraticReg
 from cofi._exceptions import DimensionMismatchError
+
+
+def _to_dense(x):
+    return x.toarray() if sparse.issparse(x) else np.asarray(x)
 
 
 def test_base_reg():
@@ -39,7 +44,7 @@ def test_add_regs():
     test_model = np.array([[1,2,3],[1,2,3],[2,3,4]])
     assert reg1(test_model) + reg2(test_model) == reg3(test_model)
     assert np.array_equal(reg1.gradient(test_model) + reg2.gradient(test_model), reg3.gradient(test_model))
-    assert np.array_equal(reg1.hessian(test_model) + reg2.hessian(test_model), reg3.hessian(test_model))
+    assert np.array_equal(_to_dense(reg1.hessian(test_model) + reg2.hessian(test_model)), _to_dense(reg3.hessian(test_model)))
     assert reg1.model_size == reg2.model_size
     assert reg1.model_size == reg3.model_size
 
@@ -59,5 +64,5 @@ def test_mul_reg_with_constant():
     test_model = np.array([1,2,3])
     assert new_reg(test_model) == 10 * reg(test_model)
     assert np.array_equal(new_reg.gradient(test_model), 10 * reg.gradient(test_model))
-    assert np.array_equal(new_reg.hessian(test_model), 10 * reg.hessian(test_model))
+    assert np.array_equal(_to_dense(new_reg.hessian(test_model)), _to_dense(10 * reg.hessian(test_model)))
     assert reg.model_shape == new_reg.model_shape

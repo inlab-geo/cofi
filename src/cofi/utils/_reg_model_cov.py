@@ -1,6 +1,7 @@
 from numbers import Number
 from typing import Union, Tuple
 import numpy as np
+from scipy import sparse
 
 from ._reg_base import BaseRegularization
 from .._exceptions import DimensionMismatchError
@@ -99,7 +100,7 @@ class GaussianPrior(ModelCovariance):
         return self._Cminv
 
     def _prepare_covariance_matrix_inv(self, model_covariance_inv, mean_model):
-        if isinstance(model_covariance_inv, np.ndarray):
+        if isinstance(model_covariance_inv, np.ndarray) or sparse.issparse(model_covariance_inv):
             mu = self._mu
             Cminv = model_covariance_inv
             if Cminv.shape != (mu.shape[0], mu.shape[0]):
@@ -116,8 +117,9 @@ class GaussianPrior(ModelCovariance):
             )
         else:
             raise TypeError(
-                "numpy.ndarray or (tuple, float) expected for `model_covariance_inv` "
-                f"but got {model_covariance_inv} of type {type(model_covariance_inv)}"
+                "numpy.ndarray, scipy sparse matrix, or (tuple, float) expected "
+                f"for `model_covariance_inv` but got {model_covariance_inv} of "
+                f"type {type(model_covariance_inv)}"
             )
 
     def _generate_covariance_matrix_inv(
