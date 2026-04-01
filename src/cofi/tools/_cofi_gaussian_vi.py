@@ -29,6 +29,63 @@ def _require_cholmod():
         )
 
 
+class _CholmodFactor:
+    """Wrapper around CHOLMOD sparse Cholesky factorisation.
+
+    scikit-sparse >= 0.5 returns ``(R, perm)`` from ``cholesky(A)`` where
+    ``P A P^T = R^T R`` and R is upper triangular.  This class bundles R
+    and the permutation vector and provides convenience methods for
+    sampling and solving.
+    """
+
+    __slots__ = ("R", "perm", "perm_inv")
+
+    def __init__(self, R, perm):
+        self.R = R.tocsc()
+        self.perm = perm
+        # Inverse permutation for un-permuting results
+        self.perm_inv = np.empty_like(perm)
+        self.perm_inv[perm] = np.arange(len(perm))
+
+    def logdet(self):
+        """log|A| = 2 * sum(log(diag(R)))."""
+        return 2.0 * np.sum(np.log(self.R.diagonal()))
+
+    def solve_A(self, b):
+        """Solve A x = b where P A P^T = R^T R.
+
+        P A P^T y = R^T R y = P b
+        => y = R^{-1} R^{-T} P b,  x = P^T y
+        """
+        Pb = b[self.perm]
+        # R^T is lower triangular
+        y = splinalg.spsolve_triangular(self.R.T.tocsc(), Pb, lower=True)
+        z = splinalg.spsolve_triangular(self.R, y, lower=False)
+        return z[self.perm_inv]
+
+    def sample_delta(self, z):
+        """Given z ~ N(0,I), return v ~ N(0, A^{-1}).
+
+        A = P^T R^T R P, so A^{-1} = P^T R^{-1} R^{-T} P.
+        v = P^T R^{-1} z_perm where z_perm = z[perm] would give the
+        permuted version, but since z is i.i.d. N(0,I), permuting it
+        doesn't change the distribution. So: v = P^T R^{-1} z.
+        """
+        # R is upper triangular: solve R y = z
+        y = splinalg.spsolve_triangular(self.R, z, lower=False)
+        return y[self.perm_inv]
+
+
+def _sparse_cholesky(Omega):
+    """Compute sparse Cholesky via CHOLMOD and return a _CholmodFactor."""
+    result = _cholmod_cholesky(Omega.tocsc())
+    if isinstance(result, tuple):
+        L, perm = result
+        return _CholmodFactor(L, perm)
+    # Older scikit-sparse returns a Factor object directly
+    return result
+
+
 class VISampler:
     """Lightweight wrapper holding a fitted VI posterior for on-demand sampling.
 
@@ -58,7 +115,7 @@ class VISampler:
         self.flow_a = flow_a
         self.flow_b = flow_b
         self._rng = random_state or np.random.default_rng()
-        self._factor = _cholmod_cholesky(omega.tocsc())
+        self._factor = _sparse_cholesky(omega)
 
     def sample(self, n=1):
         """Draw n samples from the approximate posterior.
@@ -71,11 +128,9 @@ class VISampler:
         N = len(self.mu)
         Z = self._rng.standard_normal((n, N))
 
-        # P A P^T = L L^T  =>  sample = mu + P^T L^{-T} z
         samples = np.empty((n, N))
         for i in range(n):
-            y = self._factor.solve_Lt(Z[i], use_LDLt_decomposition=False)
-            samples[i] = self.mu + self._factor.apply_Pt(y)
+            samples[i] = self.mu + self._factor.sample_delta(Z[i])
 
         if self.flow_a is not None and self.flow_b is not None:
             samples = np.sinh(
@@ -230,7 +285,7 @@ class CoFIGaussianVI(BaseInferenceTool):
     def _factor_and_logdet(Omega, diag_floor):
         """Factor sparse Omega via CHOLMOD with PD enforcement.
 
-        Returns (cholmod_factor, logdet, Omega).  Omega may be
+        Returns (_CholmodFactor, logdet, Omega).  Omega may be
         ridge-corrected if the original was not PD.
         """
         N = Omega.shape[0]
@@ -242,7 +297,7 @@ class CoFIGaussianVI(BaseInferenceTool):
                     if ridge > 0
                     else Omega
                 )
-                factor = _cholmod_cholesky(test.tocsc())
+                factor = _sparse_cholesky(test.tocsc())
                 return factor, factor.logdet(), test if ridge > 0 else Omega
             except Exception:
                 continue
@@ -256,8 +311,7 @@ class CoFIGaussianVI(BaseInferenceTool):
         Z = self._rng.standard_normal((n, N))
         samples = np.empty((n, N))
         for i in range(n):
-            y = factor.solve_Lt(Z[i], use_LDLt_decomposition=False)
-            samples[i] = mu + factor.apply_Pt(y)
+            samples[i] = mu + factor.sample_delta(Z[i])
         return samples
 
     @staticmethod
