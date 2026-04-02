@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 jobs:
   build-docs:
-    runs-on: [self-hosted, ceres-bot]
+    runs-on: self-hosted
     timeout-minutes: 2000
     permissions:
       contents: write   # required to push to PR branch
