@@ -451,9 +451,16 @@ class CoFIGaussianVI(BaseInferenceTool):
                 step *= ls_shrink
 
             m = m + step * delta
-            if np.linalg.norm(step * delta) < tol:
+            step_norm = np.linalg.norm(step * delta)
+            if verbose:
+                print(
+                    f"MAP iteration {it + 1}/{max_iter},"
+                    f" cost: {f_trial:.4e}, step: {step_norm:.2e}",
+                    flush=True,
+                )
+            if step_norm < tol:
                 if verbose:
-                    print(f"MAP converged at iteration {it}")
+                    print(f"MAP converged at iteration {it + 1}", flush=True)
                 break
 
         H_map = self._get_jacobian(m)
@@ -526,7 +533,7 @@ class CoFIGaussianVI(BaseInferenceTool):
 
             if n_valid == 0:
                 if verbose:
-                    print(f"Gaussian VI iteration {it + 1}: all samples invalid, skipping")
+                    print(f"Gaussian VI iteration {it + 1}: all samples invalid, skipping", flush=True)
                 continue
 
             g_avg = g_acc / n_valid
@@ -536,7 +543,7 @@ class CoFIGaussianVI(BaseInferenceTool):
 
             if self._check_convergence(elbo_history, patience, rtol):
                 if verbose:
-                    print(f"Gaussian VI converged at iteration {it + 1}")
+                    print(f"Gaussian VI converged at iteration {it + 1}", flush=True)
                 break
 
             # Diminishing step size
@@ -560,16 +567,18 @@ class CoFIGaussianVI(BaseInferenceTool):
                     print(
                         f"Gaussian VI iteration {it + 1}: "
                         f"||H_avg||/||Omega|| = {h_norm / omega_norm:.1f} > "
-                        f"{h_reject_ratio}, skipping Omega update"
+                        f"{h_reject_ratio}, skipping Omega update",
+                        flush=True,
                     )
             else:
                 Omega = (1 - rho_omega) * Omega + rho_omega * H_avg
                 Omega = self._enforce_diagonal_floor(Omega, diag_floor)
 
-            if verbose and (it + 1) % max(1, niter // 10) == 0:
+            if verbose:
                 print(
                     f"Gaussian VI iteration {it + 1}/{niter},"
-                    f" ELBO: {elbo_history[-1]:.4f}"
+                    f" ELBO: {elbo_history[-1]:.4f}",
+                    flush=True,
                 )
 
         return mu, Omega, elbo_history
