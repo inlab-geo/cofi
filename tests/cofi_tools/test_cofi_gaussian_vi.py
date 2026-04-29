@@ -431,6 +431,42 @@ def test_nan_sample_skipping():
     assert all(np.isfinite(e) for e in res["elbo_history"])
 
 
+def test_nan_jacobian_skipping():
+    """Solver should skip samples whose Jacobian contains NaN/Inf."""
+    G, d_obs, Cd_inv, Qp, m_prior, _, _, _ = _make_linear_problem()
+
+    call_count = [0]
+    def jacobian_with_nans(m):
+        call_count[0] += 1
+        if call_count[0] % 4 == 0:
+            J = G.copy().astype(float)
+            J.data[:] = np.nan
+            return J
+        return G
+
+    inv_problem = BaseProblem()
+    inv_problem.set_forward(lambda m: np.asarray(G @ m).ravel())
+    inv_problem.set_jacobian(jacobian_with_nans)
+    inv_problem.set_data(d_obs)
+    inv_problem.set_data_covariance_inv(Cd_inv)
+    inv_problem.set_initial_model(m_prior.copy())
+
+    inv_options = InversionOptions()
+    inv_options.set_tool("cofi.gaussian_vi")
+    inv_options.set_params(
+        prior_precision=Qp,
+        num_iterations=30,
+        num_samples=8,
+        verbose=False,
+        random_seed=42,
+    )
+    solver = CoFIGaussianVI(inv_problem, inv_options)
+    res = solver()
+    assert res["success"]
+    assert all(np.isfinite(e) for e in res["elbo_history"])
+    assert np.all(np.isfinite(res["model"]))
+
+
 def test_perturbation_clamping():
     """Perturbation clamping should limit sample deviations."""
     mu = np.zeros(5)
@@ -454,9 +490,13 @@ def test_step_clipping():
     clipped = CoFIGaussianVI._clip_step(delta, max_norm=2.0, mu=mu)
     assert np.linalg.norm(clipped) <= 2.0 + 1e-10
 
-    # Adaptive: max_norm=0 → uses ||mu||
+    # Adaptive: max_norm=0 → 0.1 * max(||mu||, 1)
     clipped = CoFIGaussianVI._clip_step(delta, max_norm=0.0, mu=mu)
-    assert np.linalg.norm(clipped) <= np.linalg.norm(mu) + 1e-10
+    assert np.linalg.norm(clipped) <= 0.1 * np.linalg.norm(mu) + 1e-10
+
+    # Adaptive with small mu falls back to 0.1 * 1.0 = 0.1
+    clipped = CoFIGaussianVI._clip_step(delta, max_norm=0.0, mu=np.zeros(2))
+    assert np.linalg.norm(clipped) <= 0.1 + 1e-10
 
 
 def test_hessian_rejection_guard():
