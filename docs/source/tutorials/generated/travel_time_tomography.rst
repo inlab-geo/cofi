@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_tutorials_generated_travel_time_tomography.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -26,7 +26,7 @@ Linear & non-linear travel time tomography
 |Open In Colab|
 
 .. |Open In Colab| image:: https://img.shields.io/badge/open%20in-Colab-b5e2fa?logo=googlecolab&style=flat-square&color=ffd670
-   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/2_travel_time_tomography.ipynb
+   :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/travel_time_tomography/travel_time_tomography.ipynb
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 17-29
@@ -38,33 +38,32 @@ What we do in this notebook
 
 Here we apply CoFI to two geophysical examples:
 
--  a **linear seismic travel time tomography** problem
--  a **nonlinear travel time tomography** cross borehole problem
+- a **linear seismic travel time tomography** problem
+- a **nonlinear travel time tomography** cross borehole problem
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 32-42
+.. GENERATED FROM PYTHON SOURCE LINES 32-41
 
 Learning outcomes
 -----------------
 
--  A demonstration of running CoFI for a regularized linear parameter
-   estimation problem. Can be used as an example of a CoFI **template**.
--  A demonstration of how a (3rd party) nonlinear forward model can be
-   imported from geo-espresso and used. Fast Marching algorithm for
-   first arriving raypaths.
--  See how nonlinear iterative matrix solvers can be accessed in CoFI.
+- A demonstration of running CoFI for a regularized linear parameter
+  estimation problem. Can be used as an example of a CoFI **template**.
+- A demonstration of how a (3rd party) nonlinear forward model can be
+  used. Fast Marching algorithm for first arriving raypaths.
+- See how nonlinear iterative matrix solvers can be accessed in CoFI.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-47
+.. GENERATED FROM PYTHON SOURCE LINES 41-46
 
 .. code-block:: Python
 
 
     # Environment setup (uncomment code below)
 
-    # !pip install -U cofi geo-espresso
+    # !pip install -U cofi
 
 
 
@@ -73,7 +72,7 @@ Learning outcomes
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-119
+.. GENERATED FROM PYTHON SOURCE LINES 51-118
 
 Problem description
 -------------------
@@ -143,7 +142,7 @@ reference model, and the parameters :math:`\delta s_j` are slowness
 perturbations to the reference model.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-126
+.. GENERATED FROM PYTHON SOURCE LINES 118-128
 
 .. code-block:: Python
 
@@ -152,7 +151,10 @@ perturbations to the reference model.
     import matplotlib.pyplot as plt
 
     import cofi
-    import espresso
+    import xrayTomography as xrt # import linear travel time forward model package
+    import pyfm2d as wt          # import nonlinear travel time forward model package 
+
+    # %matplotlib inline
 
 
 
@@ -161,43 +163,72 @@ perturbations to the reference model.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-134
+.. GENERATED FROM PYTHON SOURCE LINES 133-136
 
 1. Linear Travel Time Tomography
 --------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-140
+.. GENERATED FROM PYTHON SOURCE LINES 139-144
 
-To illustrate the setting we plot a reference model supplied through the
-*espresso* Xray example, together with 100 raypaths in the dataset.
+To illustrate the setting we plot a reference model for an Xray example,
+together with 100 raypaths in the dataset.
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 140-143
-
-.. code-block:: Python
+First we read in the data set.
 
 
-    linear_tomo_example = espresso.XrayTomography()
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 145-153
+.. GENERATED FROM PYTHON SOURCE LINES 144-150
 
 .. code-block:: Python
 
 
-    # linear_tomo_example.plot_model(linear_tomo_example.good_model, paths=True);
-    # linear_tomo_example.plot_model(linear_tomo_example.good_model);
+    # load data example
+    loaded_dict = np.load("../../data/travel_time_tomography/linear_tomo_example.npz")
+    linear_tomo_example = dict(loaded_dict)
+    loaded_dict.close()
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 152-161
+
+.. code-block:: Python
+
+
+    # linear tomography problem set up
+    paths = linear_tomo_example["_paths"]
+    data = linear_tomo_example["_attns"]
+    data_size = len(data)
+    starting_model = linear_tomo_example["_start"]
+    model_size,model_shape = starting_model.size,starting_model.shape
+    attns, jacobian = xrt.tracer(starting_model,paths)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   9%|▉         | 936/10416 [00:00<00:01, 9356.86it/s]    Evaluating paths:  18%|█▊        | 1892/10416 [00:00<00:00, 9469.52it/s]    Evaluating paths:  27%|██▋       | 2839/10416 [00:00<00:00, 9313.99it/s]    Evaluating paths:  36%|███▋      | 3792/10416 [00:00<00:00, 9396.88it/s]    Evaluating paths:  45%|████▌     | 4732/10416 [00:00<00:00, 9384.69it/s]    Evaluating paths:  54%|█████▍    | 5671/10416 [00:00<00:00, 9373.98it/s]    Evaluating paths:  63%|██████▎   | 6609/10416 [00:00<00:00, 9375.93it/s]    Evaluating paths:  72%|███████▏  | 7547/10416 [00:00<00:00, 9353.46it/s]    Evaluating paths:  81%|████████▏ | 8486/10416 [00:00<00:00, 9364.78it/s]    Evaluating paths:  91%|█████████ | 9441/10416 [00:01<00:00, 9418.52it/s]    Evaluating paths: 100%|█████████▉| 10390/10416 [00:01<00:00, 9440.18it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 9398.88it/s]
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 163-169
+
+.. code-block:: Python
+
+
     plt.plot(0.5, 0.5, marker="$?$", markersize=130)
-    for p in linear_tomo_example._paths[:100]:
+    for p in paths[:100]:
          plt.plot([p[0],p[2]],[p[1],p[3]],'y',linewidth=0.5)
-    print(' Data set contains ',len(linear_tomo_example._paths),' ray paths')
+    print(' Data set contains ',len(paths),' ray paths')
 
 
 
@@ -217,45 +248,40 @@ To illustrate the setting we plot a reference model supplied through the
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-161
+.. GENERATED FROM PYTHON SOURCE LINES 174-177
 
 Step 1. Define CoFI ``BaseProblem``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 164-168
+.. GENERATED FROM PYTHON SOURCE LINES 180-184
 
 Now we: - set up the BaseProblem in CoFI, - supply it the data vector
-from espresso example, (i.e. the :math:`\mathbf{d}` vector) - supply it
-the Jacobian of the linear system (i.e. the :math:`A` matrix)
+from linear tomography example, (i.e. the :math:`\mathbf{d}` vector) -
+supply it the Jacobian of the linear system (i.e. the :math:`A` matrix)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 168-176
+.. GENERATED FROM PYTHON SOURCE LINES 184-193
 
 .. code-block:: Python
 
 
     linear_tomo_problem = cofi.BaseProblem()
-    linear_tomo_problem.set_data(linear_tomo_example.data)
-    linear_tomo_problem.set_jacobian(linear_tomo_example.jacobian(linear_tomo_example.starting_model)) # supply matrix A
+    linear_tomo_problem.set_data(data)
+    linear_tomo_problem.set_jacobian(jacobian) # supply matrix A #need to use X-ray linear code her to get Jacobian
+
     sigma = 0.1 # set noise level of data
-    data_cov_inv = np.identity(linear_tomo_example.data_size) * (1/sigma**2)
+    data_cov_inv = np.identity(data_size) * (1/sigma**2)
     linear_tomo_problem.set_data_covariance_inv(data_cov_inv)
 
 
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   8%|▊         | 883/10416 [00:00<00:01, 8829.76it/s]    Evaluating paths:  17%|█▋        | 1795/10416 [00:00<00:00, 8996.20it/s]    Evaluating paths:  26%|██▌       | 2695/10416 [00:00<00:00, 8928.29it/s]    Evaluating paths:  34%|███▍      | 3590/10416 [00:00<00:00, 8935.83it/s]    Evaluating paths:  43%|████▎     | 4491/10416 [00:00<00:00, 8961.00it/s]    Evaluating paths:  52%|█████▏    | 5388/10416 [00:00<00:00, 8918.97it/s]    Evaluating paths:  60%|██████    | 6301/10416 [00:00<00:00, 8985.76it/s]    Evaluating paths:  69%|██████▉   | 7200/10416 [00:00<00:00, 8948.43it/s]    Evaluating paths:  78%|███████▊  | 8095/10416 [00:00<00:00, 8905.91it/s]    Evaluating paths:  86%|████████▋ | 8997/10416 [00:01<00:00, 8939.01it/s]    Evaluating paths:  95%|█████████▍| 9891/10416 [00:01<00:00, 8920.57it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8959.48it/s]
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 181-194
+.. GENERATED FROM PYTHON SOURCE LINES 198-211
 
 Since :math:`\mathbf{d}` and :math:`G` have been defined then this
 implies a linear system. Now we choose to regularize the linear system
@@ -271,7 +297,7 @@ The matrix system we are solving is
    (\mathbf{A}^T \textbf{C}_d^{-1} \textbf{A} + \lambda \mathbf D^T\mathbf D) \textbf{s} = \textbf{A}^T \mathbf C_d^{-1} \textbf{d}
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 194-203
+.. GENERATED FROM PYTHON SOURCE LINES 211-220
 
 .. code-block:: Python
 
@@ -279,10 +305,10 @@ The matrix system we are solving is
     # set up regularization
     lamda = 0.5   # choose regularization constant
     reg_damping = lamda * cofi.utils.QuadraticReg(
-        model_shape=(linear_tomo_example.model_size,)
+        model_shape=(model_size,)
     )
     linear_tomo_problem.set_regularization(reg_damping)
-    print('Number of slowness parameters to be solved for = ',linear_tomo_example.model_size)
+    print('Number of slowness parameters to be solved for = ',model_size)
 
 
 
@@ -297,12 +323,12 @@ The matrix system we are solving is
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 208-210
+.. GENERATED FROM PYTHON SOURCE LINES 225-227
 
 and lets print a summary of the set up.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 210-213
+.. GENERATED FROM PYTHON SOURCE LINES 227-230
 
 .. code-block:: Python
 
@@ -335,19 +361,19 @@ and lets print a summary of the set up.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 218-221
+.. GENERATED FROM PYTHON SOURCE LINES 235-238
 
 Step 2. Define CoFI ``InversionOptions``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 224-227
+.. GENERATED FROM PYTHON SOURCE LINES 241-244
 
 Here we choose the backend tool for solving the tomographic system,
 which is scipy’s least squares solver.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 227-231
+.. GENERATED FROM PYTHON SOURCE LINES 244-248
 
 .. code-block:: Python
 
@@ -362,13 +388,13 @@ which is scipy’s least squares solver.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-239
+.. GENERATED FROM PYTHON SOURCE LINES 253-256
 
 Step 3. Define CoFI ``Inversion`` and run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 239-244
+.. GENERATED FROM PYTHON SOURCE LINES 256-261
 
 .. code-block:: Python
 
@@ -412,17 +438,17 @@ Step 3. Define CoFI ``Inversion`` and run
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 249-251
+.. GENERATED FROM PYTHON SOURCE LINES 266-268
 
 Lets plot the image to see what we got.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 251-254
+.. GENERATED FROM PYTHON SOURCE LINES 268-271
 
 .. code-block:: Python
 
 
-    ax = linear_tomo_example.plot_model(tomo_inv_result.model);
+    xrt.displayModel(tomo_inv_result.model.reshape(model_shape),cmap=plt.cm.Blues);
 
 
 
@@ -436,7 +462,7 @@ Lets plot the image to see what we got.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 259-302
+.. GENERATED FROM PYTHON SOURCE LINES 276-319
 
 Challenge: Fewer ray paths for linear travel time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -448,7 +474,7 @@ and see what you get.
 
 How many ray paths do you need before the image becomes recognizable?
 
-|Upload to Jamboard 1|
+|Upload to Excalidraw_1|
 
 Start from the code template below:
 
@@ -458,8 +484,8 @@ Start from the code template below:
    idx_from, idx_to = (<CHANGE ME>, <CHANGE ME>)
 
    # basic settings
-   d = linear_tomo_example.data
-   G = linear_tomo_example.jacobian(linear_tomo_example.starting_model)
+   d = linear_tomo_example["_attns"]
+   G = xrt.tracer(starting_model,paths)[1]
 
    # now attach all the info to a BaseProblem object
    mytomo = cofi.BaseProblem()
@@ -471,18 +497,18 @@ Start from the code template below:
    mytomo_result = mytomo_inv.run()
 
    # check result
-   fig = linear_tomo_example.plot_model(mytomo_result.model)
+   fig = xrt.displayModel(tomo_inv_result.model.reshape(model_shape),cmap=plt.cm.Blues);
    plt.title(f'Recovered model from range ({idx_from}, {idx_to})')
    plt.figure()
    plt.title(' Raypaths')
-   for p in linear_tomo_example._paths[idx_from:idx_to]:
+   for p in paths[idx_from:idx_to]:
        plt.plot([p[0],p[2]],[p[1],p[3]],'y',linewidth=0.05)
 
-.. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/15UiYLe84zlkgLmi_ssbGuxRKyU-s4XuHSHsL8VppKJs/edit?usp=sharing
+.. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=b321011e797fe6be8b57,DFQFvjtGIvVWBPOUasopIw
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 302-307
+.. GENERATED FROM PYTHON SOURCE LINES 319-323
 
 .. code-block:: Python
 
@@ -497,8 +523,7 @@ Start from the code template below:
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 309-336
+.. GENERATED FROM PYTHON SOURCE LINES 325-351
 
 .. code-block:: Python
 
@@ -509,8 +534,8 @@ Start from the code template below:
     idx_from, idx_to = (0, 3000)                    # TODO try a different range
 
     # basic settings
-    d = linear_tomo_example.data
-    G = linear_tomo_example.jacobian(linear_tomo_example.starting_model)
+    d = linear_tomo_example["_attns"]
+    G = xrt.tracer(starting_model,paths)[1]
 
     # now attach all the info to a BaseProblem object
     mytomo = cofi.BaseProblem()
@@ -522,78 +547,18 @@ Start from the code template below:
     mytomo_result = mytomo_inv.run()
 
     # check result
-    fig = linear_tomo_example.plot_model(mytomo_result.model)
-    plt.title(f'Recovered model from range ({idx_from}, {idx_to})')
-    plt.figure()
+    title = f'Recovered model from range ({idx_from}, {idx_to})'
+    xrt.displayModel(mytomo_result.model.reshape(model_shape),cmap=plt.cm.Blues,title=title);
     plt.title(' Raypaths')
-    for p in linear_tomo_example._paths[idx_from:idx_to]:
+    for p in paths[idx_from:idx_to]:
         plt.plot([p[0],p[2]],[p[1],p[3]],'y',linewidth=0.05)
 
 
 
 
-.. rst-class:: sphx-glr-horizontal
-
-
-    *
-
-      .. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_003.png
-         :alt: Recovered model from range (0, 3000)
-         :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_003.png
-         :class: sphx-glr-multi-img
-
-    *
-
-      .. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_004.png
-         :alt:  Raypaths
-         :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_004.png
-         :class: sphx-glr-multi-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   9%|▊         | 887/10416 [00:00<00:01, 8863.67it/s]    Evaluating paths:  17%|█▋        | 1791/10416 [00:00<00:00, 8962.44it/s]    Evaluating paths:  26%|██▌       | 2688/10416 [00:00<00:00, 8890.29it/s]    Evaluating paths:  34%|███▍      | 3581/10416 [00:00<00:00, 8902.22it/s]    Evaluating paths:  43%|████▎     | 4477/10416 [00:00<00:00, 8922.03it/s]    Evaluating paths:  52%|█████▏    | 5370/10416 [00:00<00:00, 8895.76it/s]    Evaluating paths:  60%|██████    | 6262/10416 [00:00<00:00, 8901.13it/s]    Evaluating paths:  69%|██████▉   | 7166/10416 [00:00<00:00, 8942.25it/s]    Evaluating paths:  77%|███████▋  | 8061/10416 [00:00<00:00, 8869.54it/s]    Evaluating paths:  86%|████████▌ | 8963/10416 [00:01<00:00, 8914.40it/s]    Evaluating paths:  95%|█████████▍| 9855/10416 [00:01<00:00, 8909.52it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 8910.81it/s]
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 341-343
-
---------------
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 346-349
-
-2. Non-linear Travel Time Tomography
-------------------------------------
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 352-358
-
-Now we demonstrate CoFI on a nonlinear iterative tomographic problem in
-a cross borehole setting.
-
-We use a different tomographic example from espresso. Here we import the
-example module and plot the reference seismic model.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 358-363
-
-.. code-block:: Python
-
-
-    nonlinear_tomo_example = espresso.FmmTomography()
-
-    nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model, with_paths=True,lw=0.5);
-
-
-
-
-.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_005.png
-   :alt: travel time tomography
-   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_005.png
+.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_003.png
+   :alt:  Raypaths
+   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_003.png
    :class: sphx-glr-single-img
 
 
@@ -601,24 +566,96 @@ example module and plot the reference seismic model.
 
  .. code-block:: none
 
-     New data set has:
-     10  receivers
-     10  sources
-     100  travel times
-     Range of travel times:  0.008911182496368759 0.0153757024856463 
-     Mean travel time: 0.01085811731230709
-
-    <Axes: xlabel='x (km)', ylabel='y (km)'>
+    Evaluating paths:   0%|          | 0/10416 [00:00<?, ?it/s]    Evaluating paths:   9%|▉         | 921/10416 [00:00<00:01, 9201.69it/s]    Evaluating paths:  18%|█▊        | 1864/10416 [00:00<00:00, 9331.64it/s]    Evaluating paths:  27%|██▋       | 2798/10416 [00:00<00:00, 9201.84it/s]    Evaluating paths:  36%|███▌      | 3733/10416 [00:00<00:00, 9256.76it/s]    Evaluating paths:  45%|████▍     | 4669/10416 [00:00<00:00, 9293.19it/s]    Evaluating paths:  54%|█████▍    | 5599/10416 [00:00<00:00, 9259.09it/s]    Evaluating paths:  63%|██████▎   | 6547/10416 [00:00<00:00, 9327.73it/s]    Evaluating paths:  72%|███████▏  | 7480/10416 [00:00<00:00, 9290.30it/s]    Evaluating paths:  81%|████████  | 8410/10416 [00:00<00:00, 9262.53it/s]    Evaluating paths:  90%|████████▉ | 9356/10416 [00:01<00:00, 9322.17it/s]    Evaluating paths:  99%|█████████▉| 10293/10416 [00:01<00:00, 9334.60it/s]    Evaluating paths: 100%|██████████| 10416/10416 [00:01<00:00, 9296.81it/s]
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 368-371
+
+.. GENERATED FROM PYTHON SOURCE LINES 356-358
+
+--------------
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 361-364
+
+2. Non-linear Travel Time Tomography
+------------------------------------
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 367-373
+
+Now we demonstrate CoFI on a nonlinear iterative tomographic problem in
+a cross borehole setting.
+
+We use a different nonlinear tomographic example. Here we import the
+example and plot the reference seismic model.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 373-378
+
+.. code-block:: Python
+
+
+    loaded_dict = np.load('../../data/travel_time_tomography/nonlinear_tomo_example.npz')
+    nonlinear_tomo_example = dict(loaded_dict)
+    loaded_dict.close()
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 380-389
+
+.. code-block:: Python
+
+
+    # set up problem
+    good_model = nonlinear_tomo_example["_mtrue"]
+    extent = nonlinear_tomo_example["extent"]
+    sources = nonlinear_tomo_example["sources"]
+    receivers = nonlinear_tomo_example["receivers"]
+    data = nonlinear_tomo_example["_data"]
+    model_size,model_shape = good_model.size,good_model.shape
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 391-397
+
+.. code-block:: Python
+
+
+    # display model and raypaths
+    options = wt.WaveTrackerOptions(paths=True,cartesian=True) # set wavetracker options
+    result = wt.calc_wavefronts(good_model,receivers,sources,extent=extent, options=options) # track wavefronts
+    wt.display_model(good_model,paths=result.paths,extent=extent,line=0.3,alpha=0.82)
+
+
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_004.png
+   :alt: travel time tomography
+   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_004.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 402-405
 
 Solving the tomographic system with optimization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 374-432
+.. GENERATED FROM PYTHON SOURCE LINES 408-466
 
 Now we solve the tomographic system of equations using either CoFI’s
 optimization method interface, or its iterative matrix-solver interface.
@@ -633,9 +670,9 @@ where :math:`\mathbf{g}(\mathbf{s})` represents the predicted travel
 times in the slowness model :math:`\mathbf{s}`, :math:`\sigma^2` is the
 noise variance on the travel times, :math:`(\lambda_1,\lambda_2)` are
 weights of damping and smoothing regularization terms respectively,
-:math:`\mathbf{s}_{0}` is the reference slowness model provided by the
-espresso example, and :math:`D` is a second derivative finite difference
-stencil for the slowness model with shape ``model_shape``.
+:math:`\mathbf{s}_{0}` is the reference slowness model in the example,
+and :math:`D` is a second derivative finite difference stencil for the
+slowness model with shape ``model_shape``.
 
 In the set up below this objective function is defined outside of CoFI
 in the function ``objective_func`` together with its gradient and
@@ -679,22 +716,22 @@ matrix solver
 with :math:`C_d^{-1} = \sigma^{-2} I`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 435-438
+.. GENERATED FROM PYTHON SOURCE LINES 469-472
 
 Step 1. Define CoFI ``BaseProblem``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 438-445
+.. GENERATED FROM PYTHON SOURCE LINES 472-479
 
 .. code-block:: Python
 
 
-    # get problem information from  espresso FmmTomography
-    model_size = nonlinear_tomo_example.model_size               # number of model parameters
-    model_shape = nonlinear_tomo_example.model_shape             # 2D spatial grid shape
-    data_size = nonlinear_tomo_example.data_size                 # number of data points
-    ref_start_slowness = nonlinear_tomo_example.starting_model   # use the starting guess supplied by the espresso example
+    # get problem information 
+    model_size = good_model.size                           # number of model parameters
+    model_shape = good_model.shape                         # 2D spatial grid shape
+    data_size = data_size = len(data)                      # number of data points
+    ref_start_slowness = nonlinear_tomo_example["_sstart"] # use the starting guess supplied by the nonlinear example
 
 
 
@@ -703,20 +740,20 @@ Step 1. Define CoFI ``BaseProblem``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 450-453
+.. GENERATED FROM PYTHON SOURCE LINES 484-487
 
 Here we define the baseproblem object and a starting velocity model
 guess.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 453-458
+.. GENERATED FROM PYTHON SOURCE LINES 487-492
 
 .. code-block:: Python
 
 
     # define CoFI BaseProblem
     nonlinear_problem = cofi.BaseProblem()
-    nonlinear_problem.set_initial_model(ref_start_slowness)
+    nonlinear_problem.set_initial_model(ref_start_slowness.flatten())
 
 
 
@@ -725,12 +762,12 @@ guess.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 463-465
+.. GENERATED FROM PYTHON SOURCE LINES 497-499
 
 Here we define regularization of the tomographic system.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 465-480
+.. GENERATED FROM PYTHON SOURCE LINES 499-514
 
 .. code-block:: Python
 
@@ -756,34 +793,41 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 482-510
+.. GENERATED FROM PYTHON SOURCE LINES 516-551
 
 .. code-block:: Python
 
 
     def objective_func(slowness, reg, sigma, data_subset=None):
         if data_subset is None: 
-            data_subset = np.arange(0, nonlinear_tomo_example.data_size)
-        ttimes = nonlinear_tomo_example.forward(slowness)
-        residual = nonlinear_tomo_example.data[data_subset] - ttimes[data_subset]
+            data_subset = np.arange(0, data_size)
+        options = wt.WaveTrackerOptions(cartesian=True) # set wavetracker options
+        result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options) # track wavefronts
+        ttimes = result.ttimes
+        residual = data[data_subset] - ttimes[data_subset]
         data_misfit = residual.T @ residual / sigma**2
         model_reg = reg(slowness)
         return  data_misfit + model_reg
 
     def gradient(slowness, reg, sigma, data_subset=None):
         if data_subset is None: 
-            data_subset = np.arange(0, nonlinear_tomo_example.data_size)
-        ttimes, A = nonlinear_tomo_example.forward(slowness, return_jacobian=True)
+            data_subset = np.arange(0, data_size)
+        options = wt.WaveTrackerOptions(paths=True,frechet=True,cartesian=True)
+        result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options) # track wavefronts
+        ttimes = result.ttimes
+        A = result.frechet.toarray()
         ttimes = ttimes[data_subset]
         A = A[data_subset]
-        data_misfit_grad = -2 * A.T @ (nonlinear_tomo_example.data[data_subset] - ttimes) / sigma**2
+        data_misfit_grad = -2 * A.T @ (data[data_subset] - ttimes) / sigma**2
         model_reg_grad = reg.gradient(slowness)
         return  data_misfit_grad + model_reg_grad
 
     def hessian(slowness, reg, sigma, data_subset=None):
         if data_subset is None: 
-            data_subset = np.arange(0, nonlinear_tomo_example.data_size)
-        A = nonlinear_tomo_example.jacobian(slowness)[data_subset]
+            data_subset = np.arange(0, data_size)
+        options = wt.WaveTrackerOptions(paths=True,frechet=True,cartesian=True)
+        result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options)
+        A = result.frechet.toarray()[data_subset]
         data_misfit_hess = 2 * A.T @ A / sigma**2 
         model_reg_hess = reg.hessian(slowness)
         return data_misfit_hess + model_reg_hess
@@ -795,12 +839,12 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 512-519
+.. GENERATED FROM PYTHON SOURCE LINES 553-560
 
 .. code-block:: Python
 
 
-    sigma = 0.00001                   # Noise is 1.0E-4 is ~5% of standard deviation of initial travel time residuals
+    sigma = nonlinear_tomo_example["noise_sigma"]  # Noise is 1.0E-4 is ~5% of standard deviation of initial travel time residuals
 
     nonlinear_problem.set_objective(objective_func, args=[reg, sigma, None])
     nonlinear_problem.set_gradient(gradient, args=[reg, sigma, None])
@@ -813,13 +857,13 @@ Here we define regularization of the tomographic system.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 524-527
+.. GENERATED FROM PYTHON SOURCE LINES 565-568
 
 Step 2. Define CoFI ``InversionOptions``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 527-538
+.. GENERATED FROM PYTHON SOURCE LINES 568-579
 
 .. code-block:: Python
 
@@ -841,7 +885,7 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 540-543
+.. GENERATED FROM PYTHON SOURCE LINES 581-584
 
 .. code-block:: Python
 
@@ -875,20 +919,55 @@ Step 2. Define CoFI ``InversionOptions``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 548-551
+.. GENERATED FROM PYTHON SOURCE LINES 589-592
 
 Step 3. Define CoFI ``Inversion`` and run
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 551-556
+.. GENERATED FROM PYTHON SOURCE LINES 592-598
 
 .. code-block:: Python
 
 
     nonlinear_inv = cofi.Inversion(nonlinear_problem, nonlinear_options)
     nonlinear_inv_result = nonlinear_inv.run()
-    nonlinear_tomo_example.plot_model(nonlinear_inv_result.model);
+    result_model = 1./nonlinear_inv_result.model.reshape(model_shape)
+    wt.display_model(result_model,extent=extent,clip=(1700,2300))
+
+
+
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_005.png
+   :alt: travel time tomography
+   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_005.png
+   :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Iteration #0, updated objective function value: 1428.2414528055272
+    Iteration #1, updated objective function value: 23.239714980816213
+    Iteration #2, updated objective function value: 1.3184287697701933
+    Iteration #3, updated objective function value: 0.11606163510463997
+    Iteration #4, updated objective function value: 0.0851964709545528
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 603-605
+
+Now lets plot the true model for comparison.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 605-608
+
+.. code-block:: Python
+
+
+    wt.display_model(good_model,extent=extent)
 
 
 
@@ -899,51 +978,10 @@ Step 3. Define CoFI ``Inversion`` and run
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Iteration #0, updated objective function value: 1787.077540309464
-    Iteration #1, updated objective function value: 121.06987606708292
-    Iteration #2, updated objective function value: 5.825780480486444
-    Iteration #3, updated objective function value: 3.671788666778372
-    Iteration #4, updated objective function value: 1.607554713000219
-
-    <Axes: xlabel='x (km)', ylabel='y (km)'>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 561-563
-
-Now lets plot the true model for comparison.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 563-566
-
-.. code-block:: Python
-
-
-    nonlinear_tomo_example.plot_model(nonlinear_tomo_example.good_model);
-
-
-
-
-.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_007.png
-   :alt: travel time tomography
-   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_007.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    <Axes: xlabel='x (km)', ylabel='y (km)'>
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 571-615
+.. GENERATED FROM PYTHON SOURCE LINES 613-657
 
 Challenge: Change the number of tomographic data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -955,7 +993,7 @@ There are 100 raypaths in the full dataset and you can tell CoFI to
 select a subset by passing an additional array of indices to the
 functions that calculate objective, gradient and hessian.
 
-|Upload to Jamboard 2|
+|Upload to Excalidraw_1|
 
 Start from the code template below:
 
@@ -969,7 +1007,7 @@ Start from the code template below:
    my_own_nonlinear_problem.set_objective(objective_func, args=[reg, sigma, data_subset])
    my_own_nonlinear_problem.set_gradient(gradient, args=[reg, sigma, data_subset])
    my_own_nonlinear_problem.set_hessian(hessian, args=[reg, sigma, data_subset])
-   my_own_nonlinear_problem.set_initial_model(ref_start_slowness)
+   my_own_nonlinear_problem.set_initial_model(ref_start_slowness.flatten())
 
    # run inversion with same options as previously
    my_own_inversion = cofi.Inversion(my_own_nonlinear_problem, nonlinear_options)
@@ -978,19 +1016,19 @@ Start from the code template below:
    # check results
    my_own_result.summary()
 
-   # plot inverted model
-   fig, paths = nonlinear_tomo_example.plot_model(my_own_result.model, return_paths=True)
+   # plot inverted model and paths
+   options = wt.WaveTrackerOptions(paths=True,cartesian=True) # set wavetracker options
+   my_own_model = 1./my_own_result.model.reshape(model_shape)
+   result = wt.calc_wavefronts(my_own_model,receivers,sources,extent=extent, options=options) # track wavefronts to get paths
+
    print(f"Number of paths used: {len(data_subset)}")
+   wt.display_model(my_own_model,extent=extent,paths=np.array(result.paths, dtype=object)[data_subset],line=0.3,cline='g',alpha=0.82)
 
-   # plot paths used
-   for p in np.array(paths, dtype=object)[data_subset]:
-       fig.axes[0].plot(p[:,0], p[:,1], "g", alpha=0.5,lw=0.5)
-
-.. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/1TlHvC6_vHLDaZzWT3cG2hV3KCrh3M6aoxDVAJ2RGJBw/edit?usp=sharing
+.. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=e7b2daaee98391d80287,lDK6zdAlW_fMfLSe_UVd3Q
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 615-620
+.. GENERATED FROM PYTHON SOURCE LINES 657-662
 
 .. code-block:: Python
 
@@ -1006,7 +1044,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 622-650
+.. GENERATED FROM PYTHON SOURCE LINES 664-693
 
 .. code-block:: Python
 
@@ -1021,7 +1059,7 @@ Start from the code template below:
     my_own_nonlinear_problem.set_objective(objective_func, args=[reg, sigma, data_subset])
     my_own_nonlinear_problem.set_gradient(gradient, args=[reg, sigma, data_subset])
     my_own_nonlinear_problem.set_hessian(hessian, args=[reg, sigma, data_subset])
-    my_own_nonlinear_problem.set_initial_model(ref_start_slowness)
+    my_own_nonlinear_problem.set_initial_model(ref_start_slowness.flatten())
 
     # run inversion with same options as previously
     my_own_inversion = cofi.Inversion(my_own_nonlinear_problem, nonlinear_options)
@@ -1031,19 +1069,20 @@ Start from the code template below:
     my_own_result.summary()
 
     # plot inverted model
-    fig, paths = nonlinear_tomo_example.plot_model(my_own_result.model, return_paths=True)
+    options = wt.WaveTrackerOptions(paths=True,cartesian=True) # set wavetracker options
+    my_own_model = 1./my_own_result.model.reshape(model_shape)
+    result = wt.calc_wavefronts(my_own_model,receivers,sources,extent=extent, options=options) # track wavefronts
+
     print(f"Number of paths used: {len(data_subset)}")
-
-    # plot paths used
-    for p in np.array(paths, dtype=object)[data_subset]:
-        fig.axes.plot(p[:,0], p[:,1], "g", alpha=0.5,lw=0.5)
+    wt.display_model(my_own_model,extent=extent,paths=np.array(result.paths, dtype=object)[data_subset],line=0.3,cline='g',alpha=0.82)
 
 
 
 
-.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_008.png
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_007.png
    :alt: travel time tomography
-   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_008.png
+   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_007.png
    :class: sphx-glr-single-img
 
 
@@ -1051,29 +1090,28 @@ Start from the code template below:
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 133.40921131094794
-    Iteration #1, updated objective function value: 2.5732294086703247
-    Iteration #2, updated objective function value: 0.4155731243675164
-    Iteration #3, updated objective function value: 0.0044721955346204685
-    Iteration #4, updated objective function value: 0.0004912544688082658
+    Iteration #0, updated objective function value: 72.27246170224387
+    Iteration #1, updated objective function value: 0.3690782572962832
+    Iteration #2, updated objective function value: 0.03651654327226778
+    Iteration #3, updated objective function value: 0.0005098393102069422
     Change in model parameters below tolerance, stopping.
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00050057 0.00050052 0.00050046 ... 0.00051289 0.00051088 0.00050873]
-    num_iterations: 4
-    objective_val: 0.0004912544688082658
-    n_obj_evaluations: 6
-    n_grad_evaluations: 5
-    n_hess_evaluations: 5
+    model: [0.00050053 0.00050055 0.00050056 ... 0.0005088  0.00050696 0.00050502]
+    num_iterations: 3
+    objective_val: 0.0005098393102069422
+    n_obj_evaluations: 5
+    n_grad_evaluations: 4
+    n_hess_evaluations: 4
     Number of paths used: 30
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 655-721
+.. GENERATED FROM PYTHON SOURCE LINES 698-771
 
 Challenge: Change regularization settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1097,7 +1135,7 @@ To repeat this solver with other settings for smoothing and damping
 strength. See the documentation for
 `cofi.utils.QuadraticReg <https://cofi.readthedocs.io/en/latest/api/generated/cofi.utils.QuadraticReg.html>`__.
 
-|Upload to Jamboard 3|
+|Upload to Excalidraw_1|
 
 You can start from the template below:
 
@@ -1128,21 +1166,28 @@ You can start from the template below:
    my_own_nonlinear_problem.set_objective(objective_func, args=[my_own_reg, sigma, None])
    my_own_nonlinear_problem.set_gradient(gradient, args=[my_own_reg, sigma, None])
    my_own_nonlinear_problem.set_hessian(hessian, args=[my_own_reg, sigma, None])
-   my_own_nonlinear_problem.set_initial_model(ref_start_slowness.copy())
+   my_own_nonlinear_problem.set_initial_model(ref_start_slowness.copy().flatten())
 
    # run inversion with same options as previously
    my_own_inversion = cofi.Inversion(my_own_nonlinear_problem, nonlinear_options)
    my_own_result = my_own_inversion.run()
 
    # check results
-   fig = nonlinear_tomo_example.plot_model(my_own_result.model)
-   fig.suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
+   my_own_result.summary()
 
-.. |Upload to Jamboard 3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/15FrdSczK_TK_COOLxfSJZ5CWMzH3qMoQKySJTAp5n-4/edit?usp=sharing
+   # plot inverted model and paths
+   options = wt.WaveTrackerOptions(paths=True,cartesian=True) # set wavetracker options
+   my_own_model = 1./my_own_result.model.reshape(model_shape)
+   result = wt.calc_wavefronts(my_own_model,receivers,sources,extent=extent, options=options) # track wavefronts to get paths
+
+   print(f"Number of paths used: {len(data_subset)}")
+   wt.display_model(my_own_model,extent=extent,paths=np.array(result.paths, dtype=object)[data_subset],line=0.3,cline='g',alpha=0.82)
+
+.. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=ef734afd2c74f472ec59,fy81-1Fm-pAgQmHdtboG7w
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 721-726
+.. GENERATED FROM PYTHON SOURCE LINES 771-776
 
 .. code-block:: Python
 
@@ -1158,7 +1203,7 @@ You can start from the template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 728-766
+.. GENERATED FROM PYTHON SOURCE LINES 778-828
 
 .. code-block:: Python
 
@@ -1190,22 +1235,34 @@ You can start from the template below:
     my_own_nonlinear_problem.set_objective(objective_func, args=[my_own_reg, sigma, None])
     my_own_nonlinear_problem.set_gradient(gradient, args=[my_own_reg, sigma, None])
     my_own_nonlinear_problem.set_hessian(hessian, args=[my_own_reg, sigma, None])
-    my_own_nonlinear_problem.set_initial_model(ref_start_slowness.copy())
+    my_own_nonlinear_problem.set_initial_model(ref_start_slowness.copy().flatten())
 
     # run inversion with same options as previously
     my_own_inversion = cofi.Inversion(my_own_nonlinear_problem, nonlinear_options)
     my_own_result = my_own_inversion.run()
 
     # check results
-    ax = nonlinear_tomo_example.plot_model(my_own_result.model)
-    ax.get_figure().suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
+    #ax = nonlinear_tomo_example.plot_model(my_own_result.model)
+    #ax.get_figure().suptitle(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
+
+    # check results
+    my_own_result.summary()
+
+    # plot inverted model
+    options = wt.WaveTrackerOptions(paths=True,cartesian=True) # set wavetracker options
+    my_own_model = 1./my_own_result.model.reshape(model_shape)
+    result = wt.calc_wavefronts(my_own_model,receivers,sources,extent=extent, options=options) # track wavefronts
+    print(f"Damping {damping_factor}, Flattening {flattening_factor}, Smoothing {smoothing_factor}");
+
+    wt.display_model(my_own_model,extent=extent,paths=result.paths,line=0.3,cline='g',alpha=0.82)
 
 
 
 
-.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_009.png
-   :alt: Damping 100, Flattening 100, Smoothing 0
-   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_009.png
+
+.. image-sg:: /tutorials/generated/images/sphx_glr_travel_time_tomography_008.png
+   :alt: travel time tomography
+   :srcset: /tutorials/generated/images/sphx_glr_travel_time_tomography_008.png
    :class: sphx-glr-single-img
 
 
@@ -1213,17 +1270,28 @@ You can start from the template below:
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 1697.7749129381455
-    Iteration #1, updated objective function value: 1645.6268255379405
-    Iteration #2, updated objective function value: 710.1208786960945
-    Iteration #3, updated objective function value: 715.5022745101638
-    Iteration #4, updated objective function value: 685.5111622410774
+    Iteration #0, updated objective function value: 1447.6958249584552
+    Iteration #1, updated objective function value: 1459.1050111755926
+    Iteration #2, updated objective function value: 947.7919889734467
+    Iteration #3, updated objective function value: 910.3305395462539
+    Iteration #4, updated objective function value: 746.2771934041161
+    ============================
+    Summary for inversion result
+    ============================
+    SUCCESS
+    ----------------------------
+    model: [0.00049956 0.00049909 0.00049768 ... 0.00050166 0.00050059 0.00050027]
+    num_iterations: 4
+    objective_val: 746.2771934041161
+    n_obj_evaluations: 6
+    n_grad_evaluations: 5
+    n_hess_evaluations: 5
+    Damping 100, Flattening 100, Smoothing 0
 
-    Text(0.5, 0.98, 'Damping 100, Flattening 100, Smoothing 0')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 771-776
+.. GENERATED FROM PYTHON SOURCE LINES 833-838
 
 --------------
 
@@ -1231,12 +1299,12 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 776-782
+.. GENERATED FROM PYTHON SOURCE LINES 838-844
 
 .. code-block:: Python
 
 
-    watermark_list = ["cofi", "espresso", "numpy", "scipy", "matplotlib"]
+    watermark_list = ["cofi", "numpy", "scipy", "matplotlib"]
     for pkg in watermark_list:
         pkg_var = __import__(pkg)
         print(pkg, getattr(pkg_var, "__version__"))
@@ -1249,23 +1317,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.7
-    espresso 0.3.13
-    numpy 1.24.4
-    scipy 1.12.0
-    matplotlib 3.8.3
+    cofi 0.2.11
+    numpy 2.3.5
+    scipy 1.17.0
+    matplotlib 3.10.8
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 783-783
+.. GENERATED FROM PYTHON SOURCE LINES 850-850
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 32.668 seconds)
+   **Total running time of the script:** (0 minutes 27.433 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_travel_time_tomography.py:
@@ -1281,6 +1348,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: travel_time_tomography.py <travel_time_tomography.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: travel_time_tomography.zip <travel_time_tomography.zip>`
 
 
 .. only:: html

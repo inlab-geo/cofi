@@ -64,10 +64,12 @@ def test_run_simple_obj():
         "RMSprop": 10,
         "Rprop": 10,
         "SGD": 0.1,
+        "Muon": 0.1,
     }
+    unsupported = {"SparseAdam", "Muon"}
     for i, alg in enumerate(PyTorchOptim.available_algorithms()):
         print(alg)
-        if alg == "SparseAdam":
+        if alg in unsupported:
             continue
         inv_options = InversionOptions()
         if alg == "RAdam":

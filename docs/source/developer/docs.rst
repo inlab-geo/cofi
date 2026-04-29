@@ -13,36 +13,36 @@ below:
 
    * - Documentation page
      - File location
-   * - `Home <index.html>`_
+   * - `Home <../index.html>`_
      - docs/index.rst
-   * - `Installation <installation.html>`_
+   * - `Installation <../installation.html>`_
      - docs/installation.rst
-   * - `Tutorials (front page) <tutorials/generated/index.html>`_
+   * - `Tutorials (front page) <../tutorials/generated/index.html>`_
      - docs/tutorials/scripts/README.rst
-   * - `Tutorials (tutorials content) <tutorials/generated/index.html>`_
+   * - `Tutorials (tutorials content) <../tutorials/generated/index.html>`_
      - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ tutorials/tutorial_name.ipynb
-   * - `Example gallery (front page) <examples/generated/index.html>`_
+   * - `Example gallery (front page) <../examples/generated/index.html>`_
      - docs/examples/scripts/README.rst
-   * - `Exmaple gallery (examples content) <examples/generated/index.html>`_
+   * - `Example gallery (examples content) <../examples/generated/index.html>`_
      - `cofi-examples <https://github.com/inlab-geo/cofi-examples>`_ examples/example_name/example_name.ipynb
-   * - `Frequently asked questions <faq.html>`_
+   * - `Frequently asked questions <../faq.html>`_
      - docs/faq.rst
-   * - `List of functions and classes (API) <api/index.html>`_
+   * - `List of functions and classes (API) <../api/index.html>`_
      - docs/api/index.rst
-   * - `API reference for BaseProblem <api/generated/cofi.BaseProblem.html>`_
+   * - `API reference for BaseProblem <../api/generated/cofi.BaseProblem.html>`_
      - src/cofi/base_problem.py
-   * - `API reference for InversionOptions <api/generated/cofi.InversionOptions.html>`_
+   * - `API reference for InversionOptions <../api/generated/cofi.InversionOptions.html>`_
      - src/cofi/inversion_options.py
-   * - `API reference for Inversion <api/generated/cofi.Inversion.html>`_
+   * - `API reference for Inversion <../api/generated/cofi.Inversion.html>`_
      - src/cofi/inversion.py
-   * - `API refernece for InversionResult <api/generated/cofi.InversionResult.html>`_
+   * - `API reference for InversionResult <../api/generated/cofi.InversionResult.html>`_
      - src/cofi/inversion.py
-   * - `API reference for BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_
+   * - `API reference for BaseInferenceTool <../api/generated/cofi.tools.BaseInferenceTool.html>`_
      - src/cofi/tools/base_inference_tool.py
-   * - `Change Log <changelog.html>`_
+   * - `Change Log <../changelog.html>`_
      - CHANGELOG.md
-   * - `Contribute to CoFI <contribute.html>`_
-     - dos/contribute.rst
+   * - `Contribute to CoFI <../contribute.html>`_
+     - docs/contribute.rst
 
 To change the **configuration** of this documentation, go change the content in file 
 ``docs/conf.py``.
@@ -78,5 +78,43 @@ To generate and check documentation locally,
     $ make html
     $ python -m http.server -d build/html
 
-Put ``localhost:8000`` into your browser address bar to read the generated 
+Put ``localhost:8000`` into your browser address bar to read the generated
 documentation.
+
+
+Updating gallery outputs
+------------------------
+
+Read the Docs (RTD) has resource limits that prevent executing sphinx-gallery
+examples during the build. To work around this, we pre-generate gallery outputs
+locally using Apptainer and commit them.
+
+**1. Build the Apptainer image** (if needed):
+
+.. code:: console
+
+    $ cd /path/to/inlab-apptainer
+    $ APPTAINER_TMPDIR=$PWD ./build.sh
+
+**2. Run sphinx build locally**:
+
+.. code:: console
+
+    $ cd docs/source
+    $ apptainer exec /path/to/inlab.fedora.sif bash -c 'conda activate inlab && make clean html'
+
+**3. Commit generated outputs**:
+
+.. code:: console
+
+    $ git add docs/source/tutorials/generated/ docs/source/examples/generated/
+    $ git commit -m "docs: regenerate gallery outputs"
+    $ git push
+
+RTD will use the pre-committed outputs instead of executing examples.
+
+.. note::
+
+    - The Apptainer image includes all dependencies (pygimli, pysurf96, espresso, etc.)
+    - RTD skips sphinx-gallery execution via ``on_rtd`` check in ``conf.py``
+    - Some examples are ignored due to compatibility issues: ``thin_plate_inversion.py``, ``travel_time_tomography.py``

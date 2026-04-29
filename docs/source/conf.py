@@ -13,9 +13,39 @@
 import os
 import datetime
 import sys
-from sphinx_gallery.sorting import FileNameSortKey
 
 import cofi
+
+# Check if building on Read the Docs
+on_rtd = os.environ.get("READTHEDOCS") == "True"
+
+
+# ---------------------------------------------------------------------------
+# Custom Sphinx Gallery sort key: respects dependencies.txt ordering
+# ---------------------------------------------------------------------------
+class DependencySortKey:
+    """Sort gallery scripts by the order declared in _ordering.txt.
+
+    gen_gallery_scripts.py writes an ``_ordering.txt`` file into each
+    gallery script directory.  Scripts listed there are executed first
+    (in the listed order); any remaining scripts fall back to alphabetical
+    order after them.
+    """
+
+    def __init__(self, src_dir):
+        self.order = {}
+        order_file = os.path.join(src_dir, "_ordering.txt")
+        if os.path.isfile(order_file):
+            with open(order_file) as f:
+                for i, line in enumerate(f):
+                    name = line.strip()
+                    if name:
+                        self.order[name] = i
+
+    def __call__(self, filename):
+        # Scripts in _ordering.txt get their declared index;
+        # unknown scripts sort after them, alphabetically.
+        return (self.order.get(filename, len(self.order)), filename)
 
 
 # -- Project information -----------------------------------------------------
@@ -40,10 +70,13 @@ extensions = [
     "myst_nb",
     "sphinxcontrib.mermaid",
     "run_sphinx_autogen",               # our own extension
-    "gen_gallery_scripts",              # our own extension
     "render_cofi_gallery",              # our own extension
-    "sphinx_gallery.gen_gallery",
 ]
+
+# On RTD, skip sphinx-gallery execution - use pre-committed outputs
+if not on_rtd:
+    extensions.append("gen_gallery_scripts")        # converts notebooks to gallery scripts
+    extensions.append("sphinx_gallery.gen_gallery") # executes gallery scripts
 
 templates_path = ["_templates"]
 
@@ -138,18 +171,33 @@ html_context = {
     "conf_py_path": "/source/", # Path in the checkout to the docs root
 }
 
+# -- Patch faulthandler for Sphinx Gallery compatibility with pyfm2d --------
+# pyfm2d calls faulthandler.enable() at import time, which requires a real
+# file descriptor on stderr. Sphinx Gallery replaces stderr with a StringIO
+# that lacks fileno(), causing an UnsupportedOperation error.
+import faulthandler
+_original_fh_enable = faulthandler.enable
+def _safe_faulthandler_enable(*args, **kwargs):
+    try:
+        return _original_fh_enable(*args, **kwargs)
+    except Exception:
+        pass
+faulthandler.enable = _safe_faulthandler_enable
 
 # -- Sphinx Gallery settings --------------------------------------------------
-sphinx_gallery_conf = {
-    "examples_dirs": ["examples", "tutorials/scripts"],
-    "gallery_dirs": ["examples/generated", "tutorials/generated"],
-    "within_subsection_order": FileNameSortKey,
-    "filename_pattern": ".",
-    "ignore_pattern": "._lib.py|_preprocessing.py",
-    "pypandoc": True,
-    "download_all_examples": False,
-    "doc_module": "cofi",
-}
+# Sphinx Gallery settings (only when not on RTD)
+if not on_rtd:
+    sphinx_gallery_conf = {
+        "examples_dirs": ["examples", "tutorials/scripts"],
+        "gallery_dirs": ["examples/generated", "tutorials/generated"],
+        "within_subsection_order": DependencySortKey,
+        "filename_pattern": ".",
+        "ignore_pattern": "._lib.py|_preprocessing.py|xrayTomography.py|neptune_deterministic_methods.py|setup_inversion.py|sw_tomography.py|fmm_tomography.py|neptune_bayesian_methods.py|finding_neptune_via_bayesian_inv.py",
+        "pypandoc": True,
+        "download_all_examples": False,
+        "doc_module": "cofi",
+        "run_stale_examples": False,
+    }
 
 
 # -- myst-nb settings ---------------------------------------------------------

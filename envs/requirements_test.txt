@@ -1,5 +1,4 @@
 pytest>=6.2.5
 coverage[toml]>=6.2
-emcee==3.1.4  # tmp fix for https://github.com/dfm/emcee/issues/515#issuecomment-2065800178
-scipy<1.13.0; python_version<"3.10"
-scipy
+emcee>=3.1.5
+scipy>=1.9.0

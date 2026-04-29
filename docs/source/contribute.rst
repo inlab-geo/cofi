@@ -88,7 +88,7 @@ submitting stages:
   - If you are going to work on `adding new forward examples <developer/new_example.html>`_, then make 
     sure you have CoFI `installed <installation.html>`_ in the usual way.
   - If you are going to work on `adding/linking new inversion tool <developer/new_tool.html>`_, 
-    or looking to `add features or fix bugs <developer/cofi_core>`_ in the library core, then 
+    or looking to `add features or fix bugs <developer/cofi_core.html>`_ in the library core, then 
     try to prepare your environment to have dependencies listed in this 
     `environment_dev.yml <https://github.com/inlab-geo/cofi/blob/main/envs/environment_dev.yml>`_
     file. It's easy to set this up using ``conda`` under your local clone:

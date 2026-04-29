@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_tutorials_generated_electrical_resistivity_tomography.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -29,9 +29,16 @@ Electrical resistivity tomography
    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/tutorials/electrical_resistivity_tomography/electrical_resistivity_tomography.ipynb
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 17-39
+.. GENERATED FROM PYTHON SOURCE LINES 17-46
 
 --------------
+
+   | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
+     (pygimli)**.
+   | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
+     for **Python 3.13**, so this notebook won’t run on 3.13 unless you
+     build from source.
+   | **Use Python 3.12 (recommended) or 3.11** for install.
 
 What we do in this notebook
 ---------------------------
@@ -44,24 +51,24 @@ problem, and explore different iterative non linear solvers.
 Learning outcomes
 -----------------
 
--  A demonstration of CoFI’s ability to interface with PyGIMLi
-   (Geophysical Inversion and Modelling Library), a mature package to
-   solve the ERT forward problem
--  An exposé of CoFI’s ability to interface with the iterative
-   non-linear solvers in SciPy specifically ``scipy.optimize`` and
-   PyTorch specificially ``torch.optim``
--  An illustration of how CoFI can be used to identify the most
-   appropriate iterative non-linear solver for a given problem
+- A demonstration of CoFI’s ability to interface with PyGIMLi
+  (Geophysical Inversion and Modelling Library), a mature package to
+  solve the ERT forward problem
+- An exposé of CoFI’s ability to interface with the iterative non-linear
+  solvers in SciPy specifically ``scipy.optimize`` and PyTorch
+  specificially ``torch.optim``
+- An illustration of how CoFI can be used to identify the most
+  appropriate iterative non-linear solver for a given problem
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-44
+.. GENERATED FROM PYTHON SOURCE LINES 46-51
 
 .. code-block:: Python
 
 
     # Environment setup (uncomment code lines below)
 
-    # !pip install -U cofi geo-espresso pygimli tetgen
+    # !pip install -U cofi pygimli tetgen
 
 
 
@@ -70,7 +77,7 @@ Learning outcomes
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-50
+.. GENERATED FROM PYTHON SOURCE LINES 53-57
 
 .. code-block:: Python
 
@@ -85,7 +92,7 @@ Learning outcomes
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-122
+.. GENERATED FROM PYTHON SOURCE LINES 62-129
 
 Problem description
 -------------------
@@ -141,21 +148,21 @@ with using the unscaled data and unscaled model parameters.
 Further reading
 ~~~~~~~~~~~~~~~
 
--  Rücker, C., Günther, T., & Spitzer, K. (2006). Three-dimensional
-   modelling and inversion of dc resistivity data incorporating
-   topography – I. Modelling. Geophys. J. Int, 166, 495–505.
-   https://doi.org/10.1111/j.1365-246X.2006.03010.x
--  Günther, T., Rücker, C., & Spitzer, K. (2006). Three-dimensional
-   modelling and inversion of dc resistivity data incorporating
-   topography - II. Inversion. Geophysical Journal International,
-   166(2), 506–517. https://doi.org/10.1111/J.1365-246X.2006.03011.X
--  Wheelock, B., Constable, S., & Key, K. (2015). The advantages of
-   logarithmically scaled data for electromagnetic inversion.
-   Geophysical Journal International, 201(3), 1765–1780.
-   https://doi.org/10.1093/GJI/GGV107
+- Rücker, C., Günther, T., & Spitzer, K. (2006). Three-dimensional
+  modelling and inversion of dc resistivity data incorporating
+  topography – I. Modelling. Geophys. J. Int, 166, 495–505.
+  https://doi.org/10.1111/j.1365-246X.2006.03010.x
+- Günther, T., Rücker, C., & Spitzer, K. (2006). Three-dimensional
+  modelling and inversion of dc resistivity data incorporating
+  topography - II. Inversion. Geophysical Journal International, 166(2),
+  506–517. https://doi.org/10.1111/J.1365-246X.2006.03011.X
+- Wheelock, B., Constable, S., & Key, K. (2015). The advantages of
+  logarithmically scaled data for electromagnetic inversion. Geophysical
+  Journal International, 201(3), 1765–1780.
+  https://doi.org/10.1093/GJI/GGV107
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-145
+.. GENERATED FROM PYTHON SOURCE LINES 132-151
 
 Interfacing to PyGIMLi
 ----------------------
@@ -169,8 +176,7 @@ model.
 
 To achieve this we first define a set of utility functions that will
 facilitate interfacing to PyGIMLi. We will also show how CoFI can
-directly interface with a mature package without the need to go via
-`Espresso <https://geo-espresso.readthedocs.io/en/latest/>`__.
+directly interface with a mature package.
 
 PyGIMLi uses different meshes and adaptive meshing capabilities via Gmsh
 https://gmsh.info/, all CoFI needs to access are the model vector, the
@@ -178,7 +184,7 @@ Jacobian, the regularization matrix and the model prediction. This makes
 for a minimal interface.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 145-157
+.. GENERATED FROM PYTHON SOURCE LINES 151-163
 
 .. code-block:: Python
 
@@ -201,7 +207,7 @@ for a minimal interface.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 159-295
+.. GENERATED FROM PYTHON SOURCE LINES 165-302
 
 .. code-block:: Python
 
@@ -318,7 +324,8 @@ for a minimal interface.
         axes[0].set_ylabel("Elevation (m)")
 
         # plot the true model
-        pygimli.show(mesh, data=rhomap, label="$\Omega m$", showMesh=True, ax=axes[1], colorBar=False)
+        rho_true_vec = model_vec(rhomap, mesh)
+        pygimli.show(mesh, data=rho_true_vec, label="$\Omega m$", showMesh=True, ax=axes[1], colorBar=False)
         axes[1].set_xlim(x_inv_start, x_inv_stop)
         axes[1].set_ylim(y_inv_start, y_inv_stop)
         axes[1].set_title("True model")
@@ -348,7 +355,7 @@ for a minimal interface.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 300-312
+.. GENERATED FROM PYTHON SOURCE LINES 307-319
 
 True model
 ~~~~~~~~~~
@@ -363,7 +370,7 @@ Further reading
 https://www.agiusa.com/dipole-dipole%E2%80%8B-%E2%80%8Barray%E2%80%8B
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 312-327
+.. GENERATED FROM PYTHON SOURCE LINES 319-337
 
 .. code-block:: Python
 
@@ -372,9 +379,12 @@ https://www.agiusa.com/dipole-dipole%E2%80%8B-%E2%80%8Barray%E2%80%8B
     scheme = survey_scheme()
     mesh, rhomap = model_true(scheme)
 
+    # convert rhomap to actual model vector for plotting
+    rho_true_vec = model_vec(rhomap, mesh)
+
     # plot the true model
     _, ax = plt.subplots(figsize=(10,8))
-    pygimli.show(mesh, data=rhomap, label="$\Omega \mathrm{m}$", showMesh=True, ax=ax, colorBar=False)
+    pygimli.show(mesh, data=rho_true_vec, label="$\Omega \mathrm{m}$", showMesh=True, ax=ax, colorBar=False)
     ax.set_xlim(x_inv_start, x_inv_stop)
     ax.set_ylim(y_inv_start, y_inv_stop)
     ax.set_title("True model")
@@ -391,10 +401,16 @@ https://www.agiusa.com/dipole-dipole%E2%80%8B-%E2%80%8Barray%E2%80%8B
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Cache /opt/miniconda3/envs/inlab/lib/python3.11/site-packages/pygimli/physics/ert/ert.py:createGeometricFactors restored (0.0s x 12): /home/jrh/.cache/pygimli/4576379230944531690
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 332-338
+
+.. GENERATED FROM PYTHON SOURCE LINES 342-348
 
 ERT measurements consist of the apparent resistivity measured between
 multiple electrode pairs and they are commonly plotted as
@@ -403,7 +419,7 @@ previously computed with PyGIMLi and noise has been added with the
 magnitude of the noise depending on the dipole dipole separation.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 338-346
+.. GENERATED FROM PYTHON SOURCE LINES 348-356
 
 .. code-block:: Python
 
@@ -422,7 +438,7 @@ magnitude of the noise depending on the dipole dipole separation.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 348-358
+.. GENERATED FROM PYTHON SOURCE LINES 358-368
 
 .. code-block:: Python
 
@@ -448,7 +464,7 @@ magnitude of the noise depending on the dipole dipole separation.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 363-372
+.. GENERATED FROM PYTHON SOURCE LINES 373-382
 
 Forward operator
 ~~~~~~~~~~~~~~~~
@@ -460,7 +476,7 @@ Gmsh and the model vector for the purpose of the inversion are the cells
 plotted in yellow.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 372-380
+.. GENERATED FROM PYTHON SOURCE LINES 382-390
 
 .. code-block:: Python
 
@@ -485,12 +501,16 @@ plotted in yellow.
 
  .. code-block:: none
 
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Found 2 regions.
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Region with smallest marker set to background (marker=1)
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Found 2 regions.
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Region with smallest marker set to background (marker=1)
 
-    Text(71.47222222222221, 0.5, 'Elevation (m)')
+    Text(29.000000000000007, 0.5, 'Elevation (m)')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 382-398
+.. GENERATED FROM PYTHON SOURCE LINES 392-408
 
 .. code-block:: Python
 
@@ -519,10 +539,18 @@ plotted in yellow.
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Creating forward mesh from region infos.
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
+    28/01/26 - 18:44:57 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 2198 Cells: 4124 Boundaries: 3228
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 403-408
+
+.. GENERATED FROM PYTHON SOURCE LINES 413-418
 
 The next step is to define the functions for CoFI. Typically, a given
 inversion solver will only require a subset of the functions we define
@@ -530,7 +558,7 @@ in the following but in this example we would like to explore a wide
 range of solvers.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 408-474
+.. GENERATED FROM PYTHON SOURCE LINES 418-484
 
 .. code-block:: Python
 
@@ -607,7 +635,7 @@ range of solvers.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 479-485
+.. GENERATED FROM PYTHON SOURCE LINES 489-495
 
 CoFI BaseProblem
 ----------------
@@ -616,7 +644,7 @@ As in the traveltime tomography example, we now use these functions to
 define our ``BaseProblem``.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 485-501
+.. GENERATED FROM PYTHON SOURCE LINES 495-511
 
 .. code-block:: Python
 
@@ -643,13 +671,13 @@ define our ``BaseProblem``.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 506-509
+.. GENERATED FROM PYTHON SOURCE LINES 516-519
 
 With the ``BaseProblem`` defined, we can ask CoFI to list the solver
 libraries we can use for our problem.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 509-512
+.. GENERATED FROM PYTHON SOURCE LINES 519-522
 
 .. code-block:: Python
 
@@ -669,28 +697,30 @@ libraries we can use for our problem.
         "optimization": [
             "scipy.optimize.minimize",
             "scipy.optimize.least_squares",
-            "torch.optim"
+            "torch.optim",
+            "neighpyI"
         ],
         "matrix solvers": [
             "cofi.simple_newton"
         ],
         "sampling": [
             "bayesbay",
-            "neighpy"
+            "neighpy",
+            "neighpyII"
         ]
     }
 
-    {'optimization': ['scipy.optimize.minimize', 'scipy.optimize.least_squares', 'torch.optim'], 'matrix solvers': ['cofi.simple_newton'], 'sampling': ['bayesbay', 'neighpy']}
+    {'optimization': ['scipy.optimize.minimize', 'scipy.optimize.least_squares', 'torch.optim', 'neighpyI'], 'matrix solvers': ['cofi.simple_newton'], 'sampling': ['bayesbay', 'neighpy', 'neighpyII']}
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 517-520
+.. GENERATED FROM PYTHON SOURCE LINES 527-530
 
 From the traveltime tomography example we know that the
 ``cofi.simple_newton`` solver worked well so we will try it.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 523-537
+.. GENERATED FROM PYTHON SOURCE LINES 533-547
 
 Newton step
 -----------
@@ -700,14 +730,14 @@ derivatives of the objective function and given the ERT inverse problem
 is non-linear, we can no longer take the full Newton step to compute a
 model update. In practice:
 
--  If the step length is chosen too large we may end up with a model
-   that is non-physical and the forward solver will crash and/or we will
-   overshoot.
--  If the step size is chosen too small too many iterations might be
-   needed to reach convergence
+- If the step length is chosen too large we may end up with a model that
+  is non-physical and the forward solver will crash and/or we will
+  overshoot.
+- If the step size is chosen too small too many iterations might be
+  needed to reach convergence
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 537-551
+.. GENERATED FROM PYTHON SOURCE LINES 547-561
 
 .. code-block:: Python
 
@@ -750,11 +780,11 @@ model update. In practice:
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 224.79875151413344
-    Iteration #1, updated objective function value: 220.3623726879774
-    Iteration #2, updated objective function value: 215.9057002091123
-    Iteration #3, updated objective function value: 211.61775613255296
-    Iteration #4, updated objective function value: 207.3825693018748
+    Iteration #0, updated objective function value: 224.79875151413358
+    Iteration #1, updated objective function value: 220.36237268797765
+    Iteration #2, updated objective function value: 215.90570020911235
+    Iteration #3, updated objective function value: 211.61775613255327
+    Iteration #4, updated objective function value: 207.3825693018749
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -763,7 +793,7 @@ model update. In practice:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 556-575
+.. GENERATED FROM PYTHON SOURCE LINES 566-585
 
 Convergence of Newton’s Method - A pathological example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -785,7 +815,7 @@ Further reading
 https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04%3A_Applications_of_Derivatives/4.09%3A_Newtons_Method
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 575-581
+.. GENERATED FROM PYTHON SOURCE LINES 585-591
 
 .. code-block:: Python
 
@@ -813,7 +843,7 @@ https://math.libretexts.org/Bookshelves/Calculus/Book%3A_Calculus\_(OpenStax)/04
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 586-600
+.. GENERATED FROM PYTHON SOURCE LINES 596-610
 
 PyGIMLi uses a line search to determine the optimal step length, that
 means the descent direction is given by the full Newton Step with the
@@ -830,7 +860,7 @@ Further reading
 https://medium.com/intro-to-artificial-intelligence/line-search-and-trust-region-optimisation-strategies-638a4a7490ca
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 603-635
+.. GENERATED FROM PYTHON SOURCE LINES 613-645
 
 First challenge
 ---------------
@@ -859,13 +889,13 @@ https://docs.scipy.org/doc/scipy/reference/optimize.minimize-dogleg.html
 - “trust-ncg”-
 https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
 
-|Upload to Jamboard 1|
+|Upload to Excalidraw_1|
 
-.. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/1d-xjFfSi-TiQC64OOchgzmlhx5f4axtC7QZwGSbjyL4/edit?usp=sharing
+.. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=7b1714bef70e8ea681fe,-tOn8_drkRknEzfJdPJ7kg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 635-651
+.. GENERATED FROM PYTHON SOURCE LINES 645-661
 
 .. code-block:: Python
 
@@ -892,7 +922,7 @@ https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 656-674
+.. GENERATED FROM PYTHON SOURCE LINES 666-684
 
 You may start from the following template:
 
@@ -913,7 +943,7 @@ You may start from the following template:
    plot_result(inv_result, "CHANGE ME")
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 674-679
+.. GENERATED FROM PYTHON SOURCE LINES 684-689
 
 .. code-block:: Python
 
@@ -929,7 +959,7 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 681-698
+.. GENERATED FROM PYTHON SOURCE LINES 691-708
 
 .. code-block:: Python
 
@@ -976,19 +1006,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 69.41232753900498
+      objective value: 69.41232753900525
     Iteration #2
-      model change: 1.9521920346072417
-      objective value: 32.313715029108025
+      model change: 1.9521920346072352
+      objective value: 32.31371502910808
     Iteration #3
-      model change: 2.0050005049883115
-      objective value: 31.171940385221326
+      model change: 2.005000504988286
+      objective value: 31.171940385221337
     Iteration #4
-      model change: 0.377479475889906
-      objective value: 27.460445380439218
+      model change: 0.3774794758899103
+      objective value: 27.46044538043952
     Iteration #5
-      model change: 1.2758048177901533
-      objective value: 17.691012544393814
+      model change: 1.2758048177901447
+      objective value: 17.691012544393775
 
     Number of objective function evaluations: 9
     Number of gradient function evaluations: 9
@@ -997,7 +1027,7 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 700-716
+.. GENERATED FROM PYTHON SOURCE LINES 710-726
 
 .. code-block:: Python
 
@@ -1042,22 +1072,22 @@ You may start from the following template:
 
  .. code-block:: none
 
-    /home/jiawen/opt/mambaforge/envs/cofi_dev/lib/python3.10/site-packages/cofi/tools/_scipy_opt_min.py:103: RuntimeWarning: Method dogleg does not use Hessian-vector product information (hessp).
+    /opt/miniconda3/envs/inlab/lib/python3.11/site-packages/cofi/tools/_scipy_opt_min.py:103: RuntimeWarning: Method dogleg does not use Hessian-vector product information (hessp).
       return minimize(
     Iteration #1
-      objective value: 157.50708172346913
+      objective value: 157.50708172346927
     Iteration #2
       model change: 2.0
-      objective value: 68.94013122104843
+      objective value: 68.94013122104847
     Iteration #3
-      model change: 3.999999999999999
-      objective value: 34.902640908752446
+      model change: 4.0
+      objective value: 34.90264090875204
     Iteration #4
       model change: 0.0
-      objective value: 34.902640908752446
+      objective value: 34.90264090875204
     Iteration #5
-      model change: 2.0
-      objective value: 22.81471892058358
+      model change: 2.0000000000000004
+      objective value: 22.814718920647856
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 5
@@ -1066,7 +1096,7 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 718-734
+.. GENERATED FROM PYTHON SOURCE LINES 728-744
 
 .. code-block:: Python
 
@@ -1112,19 +1142,19 @@ You may start from the following template:
  .. code-block:: none
 
     Iteration #1
-      objective value: 157.5070817234691
+      objective value: 157.50708172346927
     Iteration #2
-      model change: 1.9999999999999998
-      objective value: 68.94013122104843
+      model change: 1.9999999999999991
+      objective value: 68.94013122104852
     Iteration #3
-      model change: 2.0885981986782465
-      objective value: 51.744476378639355
+      model change: 2.0885981986782363
+      objective value: 51.74447637863908
     Iteration #4
-      model change: 2.235768382076457
-      objective value: 32.607757645418495
+      model change: 2.2357683820764547
+      objective value: 32.607757645417756
     Iteration #5
-      model change: 1.7295706120906524
-      objective value: 29.213175185120697
+      model change: 1.7295706120906724
+      objective value: 29.213175185119187
 
     Number of objective function evaluations: 6
     Number of gradient function evaluations: 6
@@ -1133,7 +1163,7 @@ You may start from the following template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 739-784
+.. GENERATED FROM PYTHON SOURCE LINES 749-794
 
 Second challenge
 ----------------
@@ -1159,7 +1189,7 @@ https://pytorch.org/docs/stable/generated/torch.optim.RAdam.html
 you can find a better value for the learning rate ``lr=`` which plays a
 similar role as the step length.*
 
-|Upload to Jamboard 2|
+|Upload to Excalidraw_1|
 
 You may start from this template:
 
@@ -1177,11 +1207,11 @@ You may start from this template:
 
    plot_result(inv_result, "CHANGE ME")
 
-.. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/13DkBtGDD2DQZWz9XqFgdx9PPpZJ91ZZcOOhTdITEvHY/edit?usp=sharing
+.. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=eef0bcffba01a3457231,Cm-JfEUcm-PlzmOD4NYyPA
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 784-789
+.. GENERATED FROM PYTHON SOURCE LINES 794-799
 
 .. code-block:: Python
 
@@ -1197,7 +1227,7 @@ You may start from this template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 791-805
+.. GENERATED FROM PYTHON SOURCE LINES 801-815
 
 .. code-block:: Python
 
@@ -1240,16 +1270,16 @@ You may start from this template:
 
  .. code-block:: none
 
-    Iteration #0, objective value: 229.71418345444994
-    Iteration #1, objective value: 156.9046492247734
-    Iteration #2, objective value: 107.12950312046189
-    Iteration #3, objective value: 76.24719314426017
-    Iteration #4, objective value: 59.93096014283364
-    Iteration #5, objective value: 53.93390880663921
-    Iteration #6, objective value: 53.88443707299631
-    Iteration #7, objective value: 53.813316502736086
-    Iteration #8, objective value: 53.72275180400677
-    Iteration #9, objective value: 53.61502389632316
+    Iteration #0, objective value: 229.71418345445034
+    Iteration #1, objective value: 156.90464922477355
+    Iteration #2, objective value: 107.12950312046202
+    Iteration #3, objective value: 76.24719314426027
+    Iteration #4, objective value: 59.930960142833754
+    Iteration #5, objective value: 53.93390880663932
+    Iteration #6, objective value: 53.88443707299643
+    Iteration #7, objective value: 53.813316502736214
+    Iteration #8, objective value: 53.722751804006876
+    Iteration #9, objective value: 53.61502389632328
 
     Number of objective function evaluations: 10
     Number of gradient function evaluations: 10
@@ -1257,7 +1287,7 @@ You may start from this template:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 810-820
+.. GENERATED FROM PYTHON SOURCE LINES 820-830
 
 A word about convergence criteria…
 ----------------------------------
@@ -1270,22 +1300,22 @@ minimum update to the model or minimum increase in fit to the data is
 achieved between subsequent iterations.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 823-829
+.. GENERATED FROM PYTHON SOURCE LINES 833-839
 
 Where to next?
 --------------
 
--  Induced polarisation example with a real dataset! - `link to
-   notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
+- Induced polarisation example with a real dataset! - `link to
+  notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 832-835
+.. GENERATED FROM PYTHON SOURCE LINES 842-845
 
 Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 835-841
+.. GENERATED FROM PYTHON SOURCE LINES 845-851
 
 .. code-block:: Python
 
@@ -1303,24 +1333,24 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.7
-    numpy 1.24.4
-    scipy 1.12.0
-    pygimli 1.5.0
-    torch 2.1.2.post101
-    matplotlib 3.8.3
+    cofi 0.2.10
+    numpy 1.26.4
+    scipy 1.14.1
+    pygimli 1.5.5
+    torch 2.10.0+cu128
+    matplotlib 3.10.8
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 842-842
+.. GENERATED FROM PYTHON SOURCE LINES 852-852
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 2.984 seconds)
+   **Total running time of the script:** (0 minutes 51.616 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_electrical_resistivity_tomography.py:
@@ -1336,6 +1366,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: electrical_resistivity_tomography.py <electrical_resistivity_tomography.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: electrical_resistivity_tomography.zip <electrical_resistivity_tomography.zip>`
 
 
 .. only:: html

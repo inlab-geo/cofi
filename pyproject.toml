@@ -24,7 +24,7 @@ name = "cofi"
 description = "Common Framework for Inference"
 authors = [{name = "InLab, CoFI development team"}]
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 keywords = ["inversion", "inference", "python package", "geoscience", "geophysics"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",
@@ -32,24 +32,24 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Scientific/Engineering :: Physics",
     "License :: OSI Approved :: BSD License",
 ]
 dependencies = [
-    "numpy>=1.18",
-    "scipy>=1.0.0",
+    "numpy>=1.23.0",
+    "scipy>=1.9.0",
     "emcee>=3.1.5",
-    "arviz>=0.9.0",
-    "findiff>=0.7.0",
-    "torch>=1.10",
+    "arviz>=0.18.0",
+    "findiff>=0.10.0",
+    "torch>=2.0.0",
     "bayesbay>=0.3.0",
-    "neighpy>=0.1.5",
-    "mealpy>=3.0.0",
+    "neighpy>=0.1.5,!=0.1.8",
+    "mealpy>=3.0.0,<3.0.3",
 ]
 dynamic = ["version"]
 
@@ -65,7 +65,7 @@ omit = ["*/lib*/*", "*/lib*"]
 
 [tool.black]
 line-length = 88
-target_version = ['py38']
+target_version = ['py310']
 preview = true
 exclude = '''
 (

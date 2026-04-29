@@ -1,6 +1,6 @@
 """
-Seismic Wave Tomography via Fast Marching - Demo on switching regularization and L-curve
-========================================================================================
+Seismic Travel time Tomography via Fast Marching - Demo on switching regularization and L-curve
+===============================================================================================
 
 """
 
@@ -43,13 +43,47 @@ Seismic Wave Tomography via Fast Marching - Demo on switching regularization and
 # In this notebook, we would like to demonstrate the capability of CoFI to
 # easily switch between different types of regularizations.
 # 
-# We will use ``cofi`` to run a seismic wave tomography example, in which
-# the forward calculation is based on the Fast Marching Fortran code by
-# Nick Rawlinson. The Fast Marching code is wrapped in package
-# ``espresso``.
+# We will use ``cofi`` to run a seismic tomography example.
 # 
-# We refer you to `fmm_tomography.ipynb <./fmm_tomography.ipynb>`__ for
-# further theretical details.
+
+
+######################################################################
+# Theoretical background
+# ----------------------
+# 
+
+# display theory on travel time tomography
+from IPython.display import display, Markdown
+
+with open("../../theory/geo_travel_time_tomography.md", "r") as f:
+    content = f.read()
+
+display(Markdown(content))
+
+######################################################################
+#
+
+
+######################################################################
+# For forward modelling, a fast marching wave front tracker is used,
+# utilizing the Fast Marching Fortran code within the package
+# ```FMTOMO`` <http://iearth.edu.au/codes/FMTOMO/>`__ by Nick Rawlinson.
+# The Fast Marching code is wrapped in package
+# `pyfm2d <https://github.com/inlab-geo/pyfm2d>`__. Further details can be
+# found in:
+# 
+# - Rawlinson, N., de Kool, M. and Sambridge, M., 2006. Seismic wavefront
+#   tracking in 3-D heterogeneous media: applications with multiple data
+#   classes, Explor. Geophys., 37, 322-330.
+# - Rawlinson, N. and Urvoy, M., 2006. Simultaneous inversion of active
+#   and passive source datasets for 3-D seismic structure with application
+#   to Tasmania, Geophys. Res. Lett., 33 L24313, 10.1029/2006GL028105.
+# - de Kool, M., Rawlinson, N. and Sambridge, M. 2006. A practical grid
+#   based method for tracking multiple refraction and reflection phases in
+#   3D heterogeneous media, Geophys. J. Int., 167, 253-270.
+# - Saygin, E. 2007. Seismic receiver and noise correlation based studies
+#   in Australia, PhD thesis, Australian National University,
+#   10.25911/5d7a2d1296f96.
 # 
 
 
@@ -64,7 +98,7 @@ Seismic Wave Tomography via Fast Marching - Demo on switching regularization and
 #                                                          #
 # -------------------------------------------------------- #
 
-# !pip install -U cofi geo-espresso
+# !pip install -U cofi pyfm2d
 
 ######################################################################
 #
@@ -74,7 +108,8 @@ import matplotlib.pyplot as plt
 import pprint
 
 import cofi
-import espresso
+# NB You will need to separately install pyfm2d in your python environment with `pip install pyfm2d'
+import pyfm2d as wt # import fmm package 
 
 ######################################################################
 #
@@ -92,14 +127,30 @@ import espresso
 # (red, top left) and the other with higher velocity (blue, bottom right).
 # 
 
-fmm = espresso.FmmTomography()
-
-fmm.plot_model(fmm.good_model, with_paths=True);
+# read in problem data
+loaded_dict = np.load('../../data/travel_time_tomography/nonlinear_tomo_example.npz')
+nonlinear_tomo_example = dict(loaded_dict)
+loaded_dict.close()
 
 ######################################################################
 #
 
-pprint.pprint(fmm.metadata)
+# set up problem
+good_model = nonlinear_tomo_example["_mtrue"]
+extent = nonlinear_tomo_example["extent"]
+sources = nonlinear_tomo_example["sources"]
+receivers = nonlinear_tomo_example["receivers"]
+obstimes = nonlinear_tomo_example["_data"]
+print(' New data set have:\n',len(receivers),' receivers\n',len(sources),' sources\n',len(obstimes),' travel times\n',
+'Range of travel times: ',np.min(obstimes),'to',np.max(obstimes),'\n Mean travel time:',np.mean(obstimes))
+
+######################################################################
+#
+
+# display true model and raypaths
+options = wt.WaveTrackerOptions(paths=True,cartesian=True) # set wavetracker options
+result = wt.calc_wavefronts(good_model,receivers,sources,extent=extent, options=options) # track wavefronts
+wt.display_model(good_model,paths=result.paths,extent=extent,line=0.3,alpha=0.82)
 
 ######################################################################
 #
@@ -110,31 +161,60 @@ pprint.pprint(fmm.metadata)
 # ------------------------------
 # 
 
-# get problem information from  espresso FmmTomography
-model_size = fmm.model_size         # number of model parameters
-model_shape = fmm.model_shape       # 2D spatial grids
-data_size = fmm.data_size           # number of data points
-ref_start_slowness = fmm.starting_model
+# get problem information 
+model_size = good_model.size                           # number of model parameters
+model_shape = good_model.shape                         # 2D spatial grid shape
+data_size = data_size = len(obstimes)                  # number of data
+ref_start_slowness = nonlinear_tomo_example["_sstart"] # use the starting guess supplied by the nonlinear example
 
 ######################################################################
 #
 
-def objective_func(slowness, reg):
-    ttimes = fmm.forward(slowness)
-    residual = fmm.data - ttimes
-    data_misfit = residual.T @ residual
+def objective_func(slowness, reg, sigma, reduce_data=None):  # reduce_data=(idx_from, idx_to)
+    if reduce_data is None: idx_from, idx_to = (0, data_size)
+    else: idx_from, idx_to = reduce_data
+    if(True):
+        options = wt.WaveTrackerOptions(
+            cartesian=True,
+        )
+        result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options) # track wavefronts
+        ttimes = result.ttimes
+    residual = obstimes[idx_from:idx_to] - ttimes[idx_from:idx_to]
+    data_misfit = residual.T @ residual / sigma**2
     model_reg = reg(slowness)
-    return data_misfit + model_reg
+    return  data_misfit + model_reg
 
-def gradient(slowness, reg):
-    ttimes, A = fmm.forward(slowness, return_jacobian=True)
-    data_misfit_grad = -2 * A.T @ (fmm.data - ttimes)
+def gradient(slowness, reg, sigma, reduce_data=None):       # reduce_data=(idx_from, idx_to)
+    if reduce_data is None: idx_from, idx_to = (0, data_size)
+    else: idx_from, idx_to = reduce_data
+    if(True):
+        options = wt.WaveTrackerOptions(
+                    paths=True,
+                    frechet=True,
+                    cartesian=True,
+                    )
+        result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options) # track wavefronts
+        ttimes = result.ttimes
+        A = result.frechet.toarray()
+    ttimes = ttimes[idx_from:idx_to]
+    A = A[idx_from:idx_to]
+    data_misfit_grad = -2 * A.T @ (obstimes[idx_from:idx_to] - ttimes) / sigma**2
     model_reg_grad = reg.gradient(slowness)
-    return data_misfit_grad + model_reg_grad
+    return  data_misfit_grad + model_reg_grad
 
-def hessian(slowness, reg):
-    A = fmm.jacobian(slowness)
-    data_misfit_hess = 2 * A.T @ A
+def hessian(slowness, reg, sigma, reduce_data=None):        # reduce_data=(idx_from, idx_to)
+    if reduce_data is None: idx_from, idx_to = (0, data_size)
+    else: idx_from, idx_to = reduce_data
+    if(True):
+        options = wt.WaveTrackerOptions(
+                    paths=True,
+                    frechet=True,
+                    cartesian=True,
+                    )
+        result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options)
+        A = result.frechet.toarray()
+    A = A[idx_from:idx_to]
+    data_misfit_hess = 2 * A.T @ A / sigma**2 
     model_reg_hess = reg.hessian(slowness)
     return data_misfit_hess + model_reg_hess
 
@@ -152,24 +232,26 @@ def hessian(slowness, reg):
 
 # define CoFI BaseProblem
 fmm_problem_quadratic_reg = cofi.BaseProblem()
-fmm_problem_quadratic_reg.set_initial_model(ref_start_slowness)
+fmm_problem_quadratic_reg.set_initial_model(ref_start_slowness.flatten())
 
 ######################################################################
 #
 
 # add regularization: flattening + smoothing
-smoothing_factor = 0.001
+smoothing_factor = 5e6
 reg_smoothing = smoothing_factor * cofi.utils.QuadraticReg(
     model_shape=model_shape,
     weighting_matrix="smoothing"
 )
+reg = reg_smoothing
 
 ######################################################################
 #
 
-fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg_smoothing])
-fmm_problem_quadratic_reg.set_gradient(gradient, args=[reg_smoothing])
-fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg_smoothing])
+sigma = 0.000008          # data standard deviation of noise
+fmm_problem_quadratic_reg.set_objective(objective_func, args=[reg, sigma, None])
+fmm_problem_quadratic_reg.set_gradient(gradient, args=[reg, sigma, None])
+fmm_problem_quadratic_reg.set_hessian(hessian, args=[reg, sigma, None])
 
 ######################################################################
 #
@@ -213,10 +295,9 @@ inv_result_quadratic_reg.summary()
 # ~~~~~~~~~~~~
 # 
 
-clim = (1/np.max(fmm.good_model)-1, 1/np.min(fmm.good_model)+1)
-
-fmm.plot_model(inv_result_quadratic_reg.model, clim=clim);            # inverted model
-fmm.plot_model(fmm.good_model);       # true model
+vmodel_inverted = 1./inv_result_quadratic_reg.model.reshape(model_shape)
+wt.display_model(vmodel_inverted,extent=extent) # inverted model
+wt.display_model(good_model,extent=extent) # true model
 
 ######################################################################
 #
@@ -244,7 +325,7 @@ fmm.plot_model(fmm.good_model);       # true model
 
 # define CoFI BaseProblem
 fmm_problem_gaussian_prior = cofi.BaseProblem()
-fmm_problem_gaussian_prior.set_initial_model(ref_start_slowness)
+fmm_problem_gaussian_prior.set_initial_model(ref_start_slowness.flatten())
 
 ######################################################################
 #
@@ -253,7 +334,8 @@ fmm_problem_gaussian_prior.set_initial_model(ref_start_slowness)
 corrx = 3.0
 corry = 3.0
 sigma_slowness = 0.5**2
-gaussian_prior = cofi.utils.GaussianPrior(
+sigma_slowness = 2.5E-6
+gaussian_prior = 0.01 * cofi.utils.GaussianPrior(
     model_covariance_inv=((corrx, corry), sigma_slowness),
     mean_model=ref_start_slowness.reshape(model_shape)
 )
@@ -261,9 +343,9 @@ gaussian_prior = cofi.utils.GaussianPrior(
 ######################################################################
 #
 
-fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior])
-fmm_problem_gaussian_prior.set_gradient(gradient, args=[gaussian_prior])
-fmm_problem_gaussian_prior.set_hessian(hessian, args=[gaussian_prior])
+fmm_problem_gaussian_prior.set_objective(objective_func, args=[gaussian_prior, sigma])
+fmm_problem_gaussian_prior.set_gradient(gradient, args=[gaussian_prior, sigma])
+fmm_problem_gaussian_prior.set_hessian(hessian, args=[gaussian_prior, sigma])
 
 ######################################################################
 #
@@ -288,8 +370,9 @@ inv_result_gaussian_prior.summary()
 # ~~~~~~~~~~~~
 # 
 
-fmm.plot_model(inv_result_gaussian_prior.model, clim=clim);            # gaussian prior
-fmm.plot_model(fmm.good_model);       # true model
+vmodel_inverted = 1./inv_result_gaussian_prior.model.reshape(model_shape)
+wt.display_model(vmodel_inverted,extent=extent) # inverted model
+wt.display_model(good_model,extent=extent) # true model
 
 ######################################################################
 #
@@ -302,23 +385,29 @@ fmm.plot_model(fmm.good_model);       # true model
 # Now we plot an L-curve for the smoothing regularization case.
 # 
 
-lambdas = np.logspace(-4, 4, 15)
+lambdas = np.logspace(-4, 4, 10)
 
 my_lcurve_problems = []
 for lamb in lambdas:
     my_reg = lamb * reg_smoothing
     my_problem = cofi.BaseProblem()
-    my_problem.set_objective(objective_func, args=[my_reg])
-    my_problem.set_gradient(gradient, args=[my_reg])
-    my_problem.set_hessian(hessian, args=[my_reg])
-    my_problem.set_initial_model(ref_start_slowness)
+    my_problem.set_objective(objective_func, args=[my_reg, sigma])
+    my_problem.set_gradient(gradient, args=[my_reg, sigma])
+    my_problem.set_hessian(hessian, args=[my_reg, sigma])
+    my_problem.set_initial_model(ref_start_slowness.flatten())
     my_lcurve_problems.append(my_problem)
 
 my_options.set_params(verbose=False)
 
 def my_callback(inv_result, i):
     m = inv_result.model
-    res_norm = np.linalg.norm(fmm.forward(m) - fmm.data)
+    slowness=m
+    options = wt.WaveTrackerOptions(
+            cartesian=True,
+            )
+    result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options) # track wavefronts
+    ttimes = result.ttimes
+    res_norm = np.linalg.norm(ttimes - obstimes)/sigma**2
     reg_norm = np.sqrt(reg_smoothing(m))
     print(f"Finished inversion with lambda={lambdas[i]}: {res_norm}, {reg_norm}")
     return res_norm, reg_norm
@@ -327,7 +416,7 @@ my_inversion_pool = cofi.utils.InversionPool(
     my_lcurve_problems, 
     my_options, 
     my_callback, 
-    True
+    False
 )
 all_res, all_cb_returns = my_inversion_pool.run()
 
@@ -347,7 +436,11 @@ for i in range(len(lambdas)):
 # plot the previously solved model
 my_inverted_model = inv_result_quadratic_reg.model
 my_reg_norm = np.sqrt(reg_smoothing(my_inverted_model))
-my_residual_norm = np.linalg.norm(fmm.forward(my_inverted_model) - fmm.data)
+slowness=my_inverted_model
+options = wt.WaveTrackerOptions(cartesian=True)
+result = wt.calc_wavefronts(1./slowness.reshape(model_shape),receivers,sources,extent=extent,options=options) # track wavefronts
+ttimes = result.ttimes
+my_residual_norm = np.linalg.norm(ttimes - obstimes)/sigma**2
 plt.plot(my_reg_norm, my_residual_norm, "x")
 plt.annotate(f"{smoothing_factor:.1e}", (my_reg_norm, my_residual_norm), fontsize=8);
 
@@ -370,10 +463,20 @@ plt.annotate(f"{smoothing_factor:.1e}", (my_reg_norm, my_residual_norm), fontsiz
 #    <!-- Otherwise please leave the below code cell unchanged -->
 # 
 
-watermark_list = ["cofi", "espresso", "numpy", "matplotlib"]
+watermark_list = ["cofi", "numpy", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
+
+######################################################################
+#
+
+
+
+######################################################################
+#
+
+
 
 ######################################################################
 #

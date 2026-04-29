@@ -51,7 +51,7 @@ inference tools tree under ``src/cofi/tools/__init__.py`` so that our dispatch r
 find the class from the name specified in an :class:`InversionOptions` instance.
 
 Documentation 
-`API reference - BaseInferenceTool <api/generated/cofi.tools.BaseInferenceTool.html>`_ provides
+`API reference - BaseInferenceTool <../api/generated/cofi.tools.BaseInferenceTool.html>`_ provides
 further details and examples.
 
 4. Register the new tool under CoFI tree

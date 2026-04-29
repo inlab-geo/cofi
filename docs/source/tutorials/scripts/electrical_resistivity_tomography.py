@@ -16,6 +16,13 @@ Electrical resistivity tomography
 ######################################################################
 # --------------
 # 
+#    | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
+#      (pygimli)**.
+#    | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
+#      for **Python 3.13**, so this notebook won’t run on 3.13 unless you
+#      build from source.
+#    | **Use Python 3.12 (recommended) or 3.11** for install.
+# 
 # What we do in this notebook
 # ---------------------------
 # 
@@ -27,19 +34,19 @@ Electrical resistivity tomography
 # Learning outcomes
 # -----------------
 # 
-# -  A demonstration of CoFI’s ability to interface with PyGIMLi
-#    (Geophysical Inversion and Modelling Library), a mature package to
-#    solve the ERT forward problem
-# -  An exposé of CoFI’s ability to interface with the iterative
-#    non-linear solvers in SciPy specifically ``scipy.optimize`` and
-#    PyTorch specificially ``torch.optim``
-# -  An illustration of how CoFI can be used to identify the most
-#    appropriate iterative non-linear solver for a given problem
+# - A demonstration of CoFI’s ability to interface with PyGIMLi
+#   (Geophysical Inversion and Modelling Library), a mature package to
+#   solve the ERT forward problem
+# - An exposé of CoFI’s ability to interface with the iterative non-linear
+#   solvers in SciPy specifically ``scipy.optimize`` and PyTorch
+#   specificially ``torch.optim``
+# - An illustration of how CoFI can be used to identify the most
+#   appropriate iterative non-linear solver for a given problem
 # 
 
 # Environment setup (uncomment code lines below)
 
-# !pip install -U cofi geo-espresso pygimli tetgen
+# !pip install -U cofi pygimli tetgen
 
 ######################################################################
 #
@@ -106,18 +113,18 @@ Electrical resistivity tomography
 # Further reading
 # ~~~~~~~~~~~~~~~
 # 
-# -  Rücker, C., Günther, T., & Spitzer, K. (2006). Three-dimensional
-#    modelling and inversion of dc resistivity data incorporating
-#    topography – I. Modelling. Geophys. J. Int, 166, 495–505.
-#    https://doi.org/10.1111/j.1365-246X.2006.03010.x
-# -  Günther, T., Rücker, C., & Spitzer, K. (2006). Three-dimensional
-#    modelling and inversion of dc resistivity data incorporating
-#    topography - II. Inversion. Geophysical Journal International,
-#    166(2), 506–517. https://doi.org/10.1111/J.1365-246X.2006.03011.X
-# -  Wheelock, B., Constable, S., & Key, K. (2015). The advantages of
-#    logarithmically scaled data for electromagnetic inversion.
-#    Geophysical Journal International, 201(3), 1765–1780.
-#    https://doi.org/10.1093/GJI/GGV107
+# - Rücker, C., Günther, T., & Spitzer, K. (2006). Three-dimensional
+#   modelling and inversion of dc resistivity data incorporating
+#   topography – I. Modelling. Geophys. J. Int, 166, 495–505.
+#   https://doi.org/10.1111/j.1365-246X.2006.03010.x
+# - Günther, T., Rücker, C., & Spitzer, K. (2006). Three-dimensional
+#   modelling and inversion of dc resistivity data incorporating
+#   topography - II. Inversion. Geophysical Journal International, 166(2),
+#   506–517. https://doi.org/10.1111/J.1365-246X.2006.03011.X
+# - Wheelock, B., Constable, S., & Key, K. (2015). The advantages of
+#   logarithmically scaled data for electromagnetic inversion. Geophysical
+#   Journal International, 201(3), 1765–1780.
+#   https://doi.org/10.1093/GJI/GGV107
 # 
 
 
@@ -134,8 +141,7 @@ Electrical resistivity tomography
 # 
 # To achieve this we first define a set of utility functions that will
 # facilitate interfacing to PyGIMLi. We will also show how CoFI can
-# directly interface with a mature package without the need to go via
-# `Espresso <https://geo-espresso.readthedocs.io/en/latest/>`__.
+# directly interface with a mature package.
 # 
 # PyGIMLi uses different meshes and adaptive meshing capabilities via Gmsh
 # https://gmsh.info/, all CoFI needs to access are the model vector, the
@@ -269,7 +275,8 @@ def plot_result(inv_result, title=None):
     axes[0].set_ylabel("Elevation (m)")
 
     # plot the true model
-    pygimli.show(mesh, data=rhomap, label="$\Omega m$", showMesh=True, ax=axes[1], colorBar=False)
+    rho_true_vec = model_vec(rhomap, mesh)
+    pygimli.show(mesh, data=rho_true_vec, label="$\Omega m$", showMesh=True, ax=axes[1], colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title("True model")
@@ -314,9 +321,12 @@ def plot_result(inv_result, title=None):
 scheme = survey_scheme()
 mesh, rhomap = model_true(scheme)
 
+# convert rhomap to actual model vector for plotting
+rho_true_vec = model_vec(rhomap, mesh)
+
 # plot the true model
 _, ax = plt.subplots(figsize=(10,8))
-pygimli.show(mesh, data=rhomap, label="$\Omega \mathrm{m}$", showMesh=True, ax=ax, colorBar=False)
+pygimli.show(mesh, data=rho_true_vec, label="$\Omega \mathrm{m}$", showMesh=True, ax=ax, colorBar=False)
 ax.set_xlim(x_inv_start, x_inv_stop)
 ax.set_ylim(y_inv_start, y_inv_stop)
 ax.set_title("True model")
@@ -528,11 +538,11 @@ ert_problem.suggest_tools();
 # is non-linear, we can no longer take the full Newton step to compute a
 # model update. In practice:
 # 
-# -  If the step length is chosen too large we may end up with a model
-#    that is non-physical and the forward solver will crash and/or we will
-#    overshoot.
-# -  If the step size is chosen too small too many iterations might be
-#    needed to reach convergence
+# - If the step length is chosen too large we may end up with a model that
+#   is non-physical and the forward solver will crash and/or we will
+#   overshoot.
+# - If the step size is chosen too small too many iterations might be
+#   needed to reach convergence
 # 
 
 inv_options_newton = InversionOptions()
@@ -627,10 +637,10 @@ scipy.optimize.newton(lambda x: x**3-2*x+2, x0, fprime=lambda x: 3 * x**2-2,
 # - “trust-ncg”-
 # https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
 # 
-# |Upload to Jamboard 1|
+# |Upload to Excalidraw_1|
 # 
-# .. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-#    :target: https://jamboard.google.com/d/1d-xjFfSi-TiQC64OOchgzmlhx5f4axtC7QZwGSbjyL4/edit?usp=sharing
+# .. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+#    :target: https://excalidraw.com/#room=7b1714bef70e8ea681fe,-tOn8_drkRknEzfJdPJ7kg
 # 
 
 #@title RUN ME - Utility Callback Function (hidden, no need to change)
@@ -760,7 +770,7 @@ plot_result(inv_result, "trust-krylov")
 # you can find a better value for the learning rate ``lr=`` which plays a
 # similar role as the step length.*
 # 
-# |Upload to Jamboard 2|
+# |Upload to Excalidraw_1|
 # 
 # You may start from this template:
 # 
@@ -778,8 +788,8 @@ plot_result(inv_result, "trust-krylov")
 # 
 #    plot_result(inv_result, "CHANGE ME")
 # 
-# .. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-#    :target: https://jamboard.google.com/d/13DkBtGDD2DQZWz9XqFgdx9PPpZJ91ZZcOOhTdITEvHY/edit?usp=sharing
+# .. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+#    :target: https://excalidraw.com/#room=eef0bcffba01a3457231,Cm-JfEUcm-PlzmOD4NYyPA
 # 
 
 # Copy the template above, Replace <CHANGE ME> with your answer
@@ -823,8 +833,8 @@ plot_result(inv_result, "RAdam")
 # Where to next?
 # --------------
 # 
-# -  Induced polarisation example with a real dataset! - `link to
-#    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
+# - Induced polarisation example with a real dataset! - `link to
+#   notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb>`__
 # 
 
 

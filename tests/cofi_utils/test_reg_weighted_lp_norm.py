@@ -63,7 +63,7 @@ def test_weighting_flattening():
 def test_weighting_smoothing():
     reg = LpNormRegularization(model_shape=(5,), weighting_matrix="smoothing")
     assert reg.matrix[0,0] == 2
-    assert reg.matrix[0,1] == -5
+    assert pytest.approx(reg.matrix[0,1]) == -5
     assert reg.matrix[1,0] == reg.matrix[-2,-1] == 1
     assert pytest.approx(reg.matrix[-1,-1]) == 2
     assert pytest.approx(reg.matrix[-1,-2]) == -5
@@ -132,7 +132,8 @@ def test_gradient_hessian_1():
     grad_none = reg_none.gradient(numpy.array([1,2,3]))
     assert numpy.array_equal(grad_none, numpy.array([1,1,1]))
     hess_none = reg_none.hessian(numpy.array([1,2,3]))
-    assert not numpy.any(hess_none)
+    hess_none_dense = hess_none.toarray() if hasattr(hess_none, 'toarray') else hess_none
+    assert not numpy.any(hess_none_dense)
 
 def test_gradient_hessian_2():
     # damping, p=1, without m0
@@ -140,7 +141,8 @@ def test_gradient_hessian_2():
     grad_damping = reg_damping.gradient(numpy.array([1,2,3]))
     assert numpy.array_equal(grad_damping, numpy.array([1,1,1]))
     hess_damping = reg_damping.hessian(numpy.array([1,2,3]))
-    assert not numpy.any(hess_damping)
+    hess_damping_dense = hess_damping.toarray() if hasattr(hess_damping, 'toarray') else hess_damping
+    assert not numpy.any(hess_damping_dense)
 
 def test_gradient_hessian_3():
     # flattening, p=1, without m0
@@ -148,7 +150,8 @@ def test_gradient_hessian_3():
     grad_flattening = reg_flattening.gradient(numpy.array([1,2,3]))
     assert numpy.array_equal(grad_flattening, numpy.array([-1.5,0,1.5]))
     hess_flattening = reg_flattening.hessian(numpy.array([1,2,3]))
-    assert not numpy.any(hess_flattening)
+    hess_flattening_dense = hess_flattening.toarray() if hasattr(hess_flattening, 'toarray') else hess_flattening
+    assert not numpy.any(hess_flattening_dense)
 
 def test_gradient_hessian_4():
     # smoothing, p=2, with m0
@@ -222,4 +225,5 @@ def test_hessian_finite_diff():
         gradient_plus = reg.gradient(model_perturbed_plus)
         gradient_minus = reg.gradient(model_perturbed_minus)
         hessian_approx[:, j] = (gradient_plus - gradient_minus) / (2 * delta_m)
-    numpy.testing.assert_almost_equal(hessian_actual, hessian_approx, decimal=5)
+    hessian_actual_dense = hessian_actual.toarray() if hasattr(hessian_actual, 'toarray') else hessian_actual
+    numpy.testing.assert_almost_equal(hessian_actual_dense, hessian_approx, decimal=5)

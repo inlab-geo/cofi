@@ -1,0 +1,2796 @@
+{
+ "BaseProblem": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "CallbackFunction": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "__main__",
+   "module_short": "__main__",
+   "name": "CallbackFunction"
+  }
+ ],
+ "Inversion": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "InversionOptions": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "Wm": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._coo",
+   "module_short": "scipy.sparse",
+   "name": "coo_matrix"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "coo_matrix"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "coo_matrix"
+  }
+ ],
+ "Wm.T": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._coo",
+   "module_short": "scipy.sparse",
+   "name": "coo_matrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "coo_matrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "coo_matrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._matrix",
+   "module_short": "scipy.sparse._matrix",
+   "name": "spmatrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "spmatrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "spmatrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._coo",
+   "module_short": "scipy.sparse._coo",
+   "name": "_coo_base.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "_coo_base.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "_coo_base.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._data",
+   "module_short": "scipy.sparse._data",
+   "name": "_data_matrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "_data_matrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "_data_matrix.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._data",
+   "module_short": "scipy.sparse._data",
+   "name": "_minmax_mixin.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "_minmax_mixin.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "_minmax_mixin.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse._base",
+   "module_short": "scipy.sparse._base",
+   "name": "_spbase.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.sparse",
+   "module_short": "scipy.sparse",
+   "name": "_spbase.T"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy",
+   "module_short": "scipy",
+   "name": "_spbase.T"
+  }
+ ],
+ "_": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.figure",
+   "module_short": "matplotlib.figure",
+   "name": "Figure"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Figure"
+  }
+ ],
+ "_ensure_numpy": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "ax": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes"
+  }
+ ],
+ "ax.set_title": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_title"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_title"
+  }
+ ],
+ "ax.set_xlabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_xlabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_xlabel"
+  }
+ ],
+ "ax.set_xlim": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_xlim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_xlim"
+  }
+ ],
+ "ax.set_ylabel": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_ylabel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_ylabel"
+  }
+ ],
+ "ax.set_ylim": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.set_ylim"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.set_ylim"
+  }
+ ],
+ "colorbar_data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "colorbar_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "DataContainerERT"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "DataContainerERT"
+  }
+ ],
+ "data_cov_inv": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "ert.ERTManager": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshMethodManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MethodManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  }
+ ],
+ "ert.createData": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics.ert",
+   "name": "createData"
+  }
+ ],
+ "ert.show": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics.ert",
+   "name": "show"
+  }
+ ],
+ "ert_forward_operator": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "ert_manager": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "ert_manager.fop": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "ert_manager.setMesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "ert_mgr": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager"
+  }
+ ],
+ "ert_mgr.createMesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshMethodManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks.methodManager",
+   "name": "MethodManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager.createMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MethodManager.createMesh"
+  }
+ ],
+ "ert_mgr.data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshMethodManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager.data"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MethodManager.data"
+  }
+ ],
+ "ert_mgr.paraDomain": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshMethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks.methodManager",
+   "name": "MethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MethodManager.paraDomain"
+  }
+ ],
+ "ert_mgr.paraDomain.cellCount": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshMethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks.methodManager",
+   "name": "MethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager.paraDomain"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MethodManager.paraDomain"
+  }
+ ],
+ "ert_mgr.setMesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertManager",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshMethodManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshMethodManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.methodManager",
+   "module_short": "pygimli.frameworks.methodManager",
+   "name": "MethodManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MethodManager.setMesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MethodManager.setMesh"
+  }
+ ],
+ "ert_problem": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem"
+  }
+ ],
+ "ert_problem.name": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.name"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.name"
+  }
+ ],
+ "ert_problem.objective": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi._base_problem",
+   "name": "_FunctionWrapper"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "_FunctionWrapper"
+  }
+ ],
+ "ert_problem.set_data_misfit": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_data_misfit"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_data_misfit"
+  }
+ ],
+ "ert_problem.set_forward": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_forward"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_forward"
+  }
+ ],
+ "ert_problem.set_gradient": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_gradient"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_gradient"
+  }
+ ],
+ "ert_problem.set_hessian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_hessian"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_hessian"
+  }
+ ],
+ "ert_problem.set_initial_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_initial_model"
+  }
+ ],
+ "ert_problem.set_jacobian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_jacobian"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_jacobian"
+  }
+ ],
+ "ert_problem.set_regularization": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_regularization"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_regularization"
+  }
+ ],
+ "ert_problem.set_residual": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_residual"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.set_residual"
+  }
+ ],
+ "ert_problem.suggest_tools": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._base_problem",
+   "module_short": "cofi",
+   "name": "BaseProblem.suggest_tools"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "BaseProblem.suggest_tools"
+  }
+ ],
+ "forward_oprt": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertModelling",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTModelling"
+  }
+ ],
+ "forward_oprt.regionManager": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertModelling",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertModelling",
+   "module_short": "pygimli.physics.ert.ertModelling",
+   "name": "ERTModellingBase.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics.ert",
+   "name": "ERTModellingBase.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTModellingBase.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTModellingBase.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.modelling",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshModelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.modelling",
+   "module_short": "pygimli",
+   "name": "Modelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli",
+   "name": "Modelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "Modelling.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.core",
+   "module_short": "pygimli.core",
+   "name": "ModellingBaseMT__.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ModellingBaseMT__.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "ModellingBase.regionManager"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "ModellingBase.regionManager"
+  }
+ ],
+ "forward_oprt.response": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertModelling",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert.ertModelling",
+   "module_short": "pygimli.physics.ert.ertModelling",
+   "name": "ERTModellingBase.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics.ert",
+   "module_short": "pygimli.physics.ert",
+   "name": "ERTModellingBase.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.physics",
+   "module_short": "pygimli.physics",
+   "name": "ERTModellingBase.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ERTModellingBase.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.modelling",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli.frameworks",
+   "name": "MeshModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "MeshModelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks.modelling",
+   "module_short": "pygimli",
+   "name": "Modelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.frameworks",
+   "module_short": "pygimli",
+   "name": "Modelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "Modelling.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.core",
+   "module_short": "pygimli.core",
+   "name": "ModellingBaseMT__.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "ModellingBaseMT__.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "ModellingBase.response"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "ModellingBase.response"
+  }
+ ],
+ "get_data_misfit": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_gradient": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_hessian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_jac_residual": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_jacobian": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_regularization": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_residual": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "get_response": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "inv": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion"
+  }
+ ],
+ "inv.run": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "Inversion.run"
+  }
+ ],
+ "inv_mesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "Mesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "Mesh"
+  }
+ ],
+ "inv_options_newton": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "inv_options_newton.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "inv_options_newton.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "inv_options_scipy": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "inv_options_scipy.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "inv_options_scipy.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "inv_options_torch": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions"
+  }
+ ],
+ "inv_options_torch.set_params": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_params"
+  }
+ ],
+ "inv_options_torch.set_tool": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion_options",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionOptions.set_tool"
+  }
+ ],
+ "inv_result": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inv_result.model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "inv_result.n_grad_evaluations": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "inv_result.n_hess_evaluations": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inv_result.n_obj_evaluations": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "inv_result.nfev": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inv_result.nhev": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inv_result.njev": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi._inversion",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "cofi",
+   "module_short": "cofi",
+   "name": "InversionResult"
+  }
+ ],
+ "inversion_mesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "lamda": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "float"
+  }
+ ],
+ "log_data": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "log_data.shape": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "tuple"
+  }
+ ],
+ "mesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "Mesh"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "Mesh"
+  }
+ ],
+ "meshtools.createCircle": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.meshtools",
+   "module_short": "pygimli.meshtools",
+   "name": "createCircle"
+  }
+ ],
+ "meshtools.createMesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.meshtools",
+   "module_short": "pygimli.meshtools",
+   "name": "createMesh"
+  }
+ ],
+ "meshtools.createWorld": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.meshtools",
+   "module_short": "pygimli.meshtools",
+   "name": "createWorld"
+  }
+ ],
+ "model_true": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "model_vec": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "mpl.colors.Normalize": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.colors",
+   "module_short": "matplotlib.colors",
+   "name": "Normalize"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Normalize"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.colors",
+   "module_short": "matplotlib.colors",
+   "name": "Normalize"
+  }
+ ],
+ "np.abs": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "abs"
+  }
+ ],
+ "np.arange": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "arange"
+  }
+ ],
+ "np.array": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "array"
+  }
+ ],
+ "np.exp": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "exp"
+  }
+ ],
+ "np.eye": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "eye"
+  }
+ ],
+ "np.linalg.norm": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.linalg",
+   "module_short": "numpy.linalg",
+   "name": "norm"
+  }
+ ],
+ "np.linspace": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "linspace"
+  }
+ ],
+ "np.loadtxt": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "loadtxt"
+  }
+ ],
+ "np.log": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "log"
+  }
+ ],
+ "np.max": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "max"
+  }
+ ],
+ "np.median": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "median"
+  }
+ ],
+ "np.min": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "min"
+  }
+ ],
+ "np.newaxis": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "NoneType"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "newaxis"
+  }
+ ],
+ "np.ones": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ones"
+  }
+ ],
+ "np.random.seed": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy.random",
+   "module_short": "numpy.random",
+   "name": "seed"
+  }
+ ],
+ "pkg": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "str"
+  }
+ ],
+ "pkg_var": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "module"
+  }
+ ],
+ "plot_result": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "plt.cm.ScalarMappable": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.colorizer",
+   "module_short": "matplotlib.colorizer",
+   "name": "_ScalarMappable"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_ScalarMappable"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib.colorizer",
+   "module_short": "matplotlib.colorizer",
+   "name": "_ColorizerInterface"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_ColorizerInterface"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot.cm",
+   "module_short": "matplotlib.pyplot.cm",
+   "name": "ScalarMappable"
+  }
+ ],
+ "plt.colorbar": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "colorbar"
+  }
+ ],
+ "plt.subplots": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "subplots"
+  }
+ ],
+ "pygimli.createGrid": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "createGrid"
+  }
+ ],
+ "pygimli.matrix.SparseMapMatrix": [
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "RSparseMapMatrix"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "RSparseMapMatrix"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "MatrixBase"
+  },
+  {
+   "is_class": true,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "MatrixBase"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.matrix",
+   "module_short": "pygimli.matrix",
+   "name": "SparseMapMatrix"
+  }
+ ],
+ "pygimli.meshtools.appendTriangleBoundary": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.meshtools",
+   "module_short": "pygimli.meshtools",
+   "name": "appendTriangleBoundary"
+  }
+ ],
+ "pygimli.show": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli",
+   "module_short": "pygimli",
+   "name": "show"
+  }
+ ],
+ "pygimli.solver.parseArgToArray": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.solver",
+   "module_short": "pygimli.solver",
+   "name": "parseArgToArray"
+  }
+ ],
+ "pygimli.utils.sparseMatrix2coo": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pygimli.utils",
+   "module_short": "pygimli.utils",
+   "name": "sparseMatrix2coo"
+  }
+ ],
+ "reg_matrix": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "rho_true_vec": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "RVector"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "RVector"
+  }
+ ],
+ "rhomap": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "scheme": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "DataContainerERT"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "DataContainerERT"
+  }
+ ],
+ "scheme.sensors": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "DataContainerERT.sensors"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "DataContainerERT.sensors"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore._pygimli_",
+   "module_short": "pgcore",
+   "name": "DataContainer.sensors"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "pgcore",
+   "module_short": "pgcore",
+   "name": "DataContainer.sensors"
+  }
+ ],
+ "scipy.optimize.newton": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "scipy.optimize",
+   "module_short": "scipy.optimize",
+   "name": "newton"
+  }
+ ],
+ "start_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "start_model_log": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "starting_model": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "survey_scheme": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  }
+ ],
+ "watermark_list": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "x0": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "float"
+  }
+ ],
+ "x_inv_start": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "x_inv_stop": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "x_invmesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "y_inv_start": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "y_inv_stop": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "y_invmesh": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ]
+}

@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_tutorials_generated_linear_regression.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -40,21 +40,21 @@ Here we demonstrate use of CoFI on a simple **linear regression**
 problem, where we fit a polynomial function to data, using three
 different algorithms:
 
--  by solution of a linear system of equations,
--  by optimization of a data misfit function
--  by Bayesian sampling of a Likelihood multiplied by a prior.
+- by solution of a linear system of equations,
+- by optimization of a data misfit function
+- by Bayesian sampling of a Likelihood multiplied by a prior.
 
 --------------
 
 Learning outcomes
 -----------------
 
--  A demonstration of running CoFI for a class of parameter fitting
-   problem. Example of a CoFI **template**.
--  A demonstration of how CoFI may be used to **experiment with
-   different inference approaches** under a common interface.
--  A demonstration of CoFI’s **expandability** in that it may be used
-   with pre-set, or user defined, misfits, likelihood or priors.
+- A demonstration of running CoFI for a class of parameter fitting
+  problem. Example of a CoFI **template**.
+- A demonstration of how CoFI may be used to **experiment with different
+  inference approaches** under a common interface.
+- A demonstration of CoFI’s **expandability** in that it may be used
+  with pre-set, or user defined, misfits, likelihood or priors.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 42-47
@@ -178,13 +178,13 @@ This clearly has the required general form,
 
 where:
 
--  :math:`\textbf{d}` is the vector of data values,
-   (:math:`y_0,y_1,\dots,y_N`);
--  :math:`\textbf{m}` is the vector of model parameters,
-   (:math:`m_0,m_1,m_2`);
--  :math:`G` is the basis matrix (or design matrix) of this linear
-   regression problem (also called the **Jacobian** matrix for this
-   linear problem).
+- :math:`\textbf{d}` is the vector of data values,
+  (:math:`y_0,y_1,\dots,y_N`);
+- :math:`\textbf{m}` is the vector of model parameters,
+  (:math:`m_0,m_1,m_2`);
+- :math:`G` is the basis matrix (or design matrix) of this linear
+  regression problem (also called the **Jacobian** matrix for this
+  linear problem).
 
 We have a set of noisy data values, :math:`y_i (i=0,\dots,N)`, measured
 at known locations, :math:`x_i (i=0,\dots,N)`, and wish to find the best
@@ -318,42 +318,42 @@ The structure of CoFI
 In the workflow of ``cofi``, there are three main components:
 ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 
--  ``BaseProblem`` defines the inverse problem including any user
-   supplied quantities such as data vector, number of model parameters
-   and measure of fit between model predictions and data.
+- ``BaseProblem`` defines the inverse problem including any user
+  supplied quantities such as data vector, number of model parameters
+  and measure of fit between model predictions and data.
 
-   .. code:: python
+  .. code:: python
 
-      inv_problem = BaseProblem()
-      inv_problem.set_objective(some_function_here)
-      inv_problem.set_jacobian(some_function_here)
-      inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
+     inv_problem = BaseProblem()
+     inv_problem.set_objective(some_function_here)
+     inv_problem.set_jacobian(some_function_here)
+     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
 
-    
+   
 
--  ``InversionOptions`` describes details about how one wants to run the
-   inversion, including the backend tool and solver-specific parameters.
-   It is based on the concept of a ``method`` and ``tool``.
+- ``InversionOptions`` describes details about how one wants to run the
+  inversion, including the backend tool and solver-specific parameters.
+  It is based on the concept of a ``method`` and ``tool``.
 
-   .. code:: python
+  .. code:: python
 
-      inv_options = InversionOptions()
-      inv_options.suggest_solving_methods()
-      inv_options.set_solving_method("matrix solvers")
-      inv_options.suggest_tools()
-      inv_options.set_tool("scipy.linalg.lstsq")
-      inv_options.summary()
+     inv_options = InversionOptions()
+     inv_options.suggest_solving_methods()
+     inv_options.set_solving_method("matrix solvers")
+     inv_options.suggest_tools()
+     inv_options.set_tool("scipy.linalg.lstsq")
+     inv_options.summary()
 
-    
+   
 
--  ``Inversion`` can be seen as an inversion engine that takes in the
-   above two as information, and will produce an ``InversionResult``
-   upon running.
+- ``Inversion`` can be seen as an inversion engine that takes in the
+  above two as information, and will produce an ``InversionResult`` upon
+  running.
 
-   .. code:: python
+  .. code:: python
 
-      inv = Inversion(inv_problem, inv_options)
-      result = inv.run()
+     inv = Inversion(inv_problem, inv_options)
+     result = inv.run()
 
 Internally CoFI decides the nature of the problem from the quantities
 set by the user and performs internal checks to ensure it has all that
@@ -445,7 +445,7 @@ methods.
  .. code-block:: none
 
     The following solving methods are supported:
-    {'sampling', 'optimization', 'matrix solvers'}
+    {'optimization', 'matrix solvers', 'sampling'}
 
     Use `suggest_tools()` to see a full list of backend tools for each method
 
@@ -478,16 +478,19 @@ We can ask CoFI to suggest some specific software tools as well.
             "scipy.optimize.minimize",
             "scipy.optimize.least_squares",
             "torch.optim",
-            "cofi.border_collie_optimization"
+            "cofi.border_collie_optimization",
+            "neighpyI"
         ],
         "matrix solvers": [
             "scipy.linalg.lstsq",
-            "cofi.simple_newton"
+            "cofi.simple_newton",
+            "scipy.sparse.linalg"
         ],
         "sampling": [
             "emcee",
             "bayesbay",
-            "neighpy"
+            "neighpy",
+            "neighpyII"
         ]
     }
 
@@ -707,7 +710,7 @@ this ability.
     ============================
     SUCCESS
     ----------------------------
-    fun: 14.961508008942793
+    fun: 14.961508008942802
     nit: 193
     nfev: 330
     status: 0
@@ -757,7 +760,7 @@ Try and replace the 3rd order polynomial with a 1st order polynomial
 (i.e. :math:`M=1`) by adding the required commands below. What does the
 plot looks like?
 
-|Upload to Jamboard 1|
+|Upload to Excalidraw_1|
 
 Start from code below:
 
@@ -776,8 +779,8 @@ Start from code below:
    plot_model(x,jacobian(x,n=<CHANGE ME>).dot(inv_result.model), "optimization solution", color="cornflowerblue")
    plot_model(x,true_y, "true model", color="darkorange")
 
-.. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/1Fu_vIhWIlDl-gs9gzSPBNXLjzj2CsS70fLMDN8-7Sew/edit?usp=sharing
+.. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=351ca2833e3ad8315d6a,HzlQfpPleYrpXT8GaoD_cg
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 473-478
@@ -1038,7 +1041,7 @@ Add the information and run with CoFI
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      1%|          | 116/10000 [00:00<00:08, 1152.77it/s]      2%|▏         | 232/10000 [00:00<00:08, 1154.09it/s]      3%|▎         | 348/10000 [00:00<00:08, 1153.15it/s]      5%|▍         | 464/10000 [00:00<00:08, 1152.23it/s]      6%|▌         | 580/10000 [00:00<00:08, 1152.94it/s]      7%|▋         | 696/10000 [00:00<00:08, 1153.92it/s]      8%|▊         | 812/10000 [00:00<00:07, 1154.58it/s]      9%|▉         | 928/10000 [00:00<00:07, 1154.42it/s]     10%|█         | 1044/10000 [00:00<00:07, 1154.81it/s]     12%|█▏        | 1160/10000 [00:01<00:07, 1154.95it/s]     13%|█▎        | 1276/10000 [00:01<00:07, 1152.74it/s]     14%|█▍        | 1392/10000 [00:01<00:07, 1152.77it/s]     15%|█▌        | 1508/10000 [00:01<00:07, 1152.27it/s]     16%|█▌        | 1624/10000 [00:01<00:07, 1153.27it/s]     17%|█▋        | 1740/10000 [00:01<00:07, 1153.65it/s]     19%|█▊        | 1856/10000 [00:01<00:07, 1154.34it/s]     20%|█▉        | 1972/10000 [00:01<00:06, 1154.30it/s]     21%|██        | 2088/10000 [00:01<00:06, 1153.91it/s]     22%|██▏       | 2204/10000 [00:01<00:06, 1153.46it/s]     23%|██▎       | 2320/10000 [00:02<00:06, 1153.33it/s]     24%|██▍       | 2436/10000 [00:02<00:06, 1153.49it/s]     26%|██▌       | 2552/10000 [00:02<00:06, 1154.07it/s]     27%|██▋       | 2668/10000 [00:02<00:06, 1155.02it/s]     28%|██▊       | 2784/10000 [00:02<00:06, 1154.80it/s]     29%|██▉       | 2900/10000 [00:02<00:06, 1154.09it/s]     30%|███       | 3016/10000 [00:02<00:06, 1154.09it/s]     31%|███▏      | 3132/10000 [00:02<00:05, 1154.52it/s]     32%|███▏      | 3248/10000 [00:02<00:05, 1154.23it/s]     34%|███▎      | 3364/10000 [00:02<00:05, 1154.50it/s]     35%|███▍      | 3480/10000 [00:03<00:05, 1155.09it/s]     36%|███▌      | 3596/10000 [00:03<00:05, 1153.45it/s]     37%|███▋      | 3712/10000 [00:03<00:05, 1154.06it/s]     38%|███▊      | 3828/10000 [00:03<00:05, 1153.62it/s]     39%|███▉      | 3944/10000 [00:03<00:05, 1154.14it/s]     41%|████      | 4060/10000 [00:03<00:05, 1153.83it/s]     42%|████▏     | 4176/10000 [00:03<00:05, 1154.10it/s]     43%|████▎     | 4292/10000 [00:03<00:04, 1142.69it/s]     44%|████▍     | 4408/10000 [00:03<00:04, 1145.58it/s]     45%|████▌     | 4524/10000 [00:03<00:04, 1148.15it/s]     46%|████▋     | 4640/10000 [00:04<00:04, 1149.22it/s]     48%|████▊     | 4756/10000 [00:04<00:04, 1150.73it/s]     49%|████▊     | 4872/10000 [00:04<00:04, 1151.58it/s]     50%|████▉     | 4988/10000 [00:04<00:04, 1151.46it/s]     51%|█████     | 5104/10000 [00:04<00:04, 1151.73it/s]     52%|█████▏    | 5220/10000 [00:04<00:04, 1150.77it/s]     53%|█████▎    | 5336/10000 [00:04<00:04, 1151.82it/s]     55%|█████▍    | 5452/10000 [00:04<00:03, 1152.74it/s]     56%|█████▌    | 5568/10000 [00:04<00:03, 1153.38it/s]     57%|█████▋    | 5684/10000 [00:04<00:03, 1153.25it/s]     58%|█████▊    | 5800/10000 [00:05<00:03, 1152.88it/s]     59%|█████▉    | 5916/10000 [00:05<00:03, 1153.01it/s]     60%|██████    | 6032/10000 [00:05<00:03, 1152.99it/s]     61%|██████▏   | 6148/10000 [00:05<00:03, 1149.06it/s]     63%|██████▎   | 6264/10000 [00:05<00:03, 1150.26it/s]     64%|██████▍   | 6380/10000 [00:05<00:03, 1151.74it/s]     65%|██████▍   | 6496/10000 [00:05<00:03, 1152.57it/s]     66%|██████▌   | 6612/10000 [00:05<00:02, 1153.29it/s]     67%|██████▋   | 6728/10000 [00:05<00:02, 1153.36it/s]     68%|██████▊   | 6844/10000 [00:05<00:02, 1153.45it/s]     70%|██████▉   | 6960/10000 [00:06<00:02, 1152.89it/s]     71%|███████   | 7076/10000 [00:06<00:02, 1153.35it/s]     72%|███████▏  | 7192/10000 [00:06<00:02, 1154.02it/s]     73%|███████▎  | 7308/10000 [00:06<00:02, 1153.75it/s]     74%|███████▍  | 7424/10000 [00:06<00:02, 1153.85it/s]     75%|███████▌  | 7540/10000 [00:06<00:02, 1154.15it/s]     77%|███████▋  | 7656/10000 [00:06<00:02, 1153.86it/s]     78%|███████▊  | 7772/10000 [00:06<00:01, 1154.08it/s]     79%|███████▉  | 7888/10000 [00:06<00:01, 1154.07it/s]     80%|████████  | 8004/10000 [00:06<00:01, 1154.53it/s]     81%|████████  | 8120/10000 [00:07<00:01, 1153.80it/s]     82%|████████▏ | 8236/10000 [00:07<00:01, 1153.19it/s]     84%|████████▎ | 8352/10000 [00:07<00:01, 1153.35it/s]     85%|████████▍ | 8468/10000 [00:07<00:01, 1153.79it/s]     86%|████████▌ | 8584/10000 [00:07<00:01, 1154.72it/s]     87%|████████▋ | 8700/10000 [00:07<00:01, 1154.84it/s]     88%|████████▊ | 8816/10000 [00:07<00:01, 1154.93it/s]     89%|████████▉ | 8932/10000 [00:07<00:00, 1155.69it/s]     90%|█████████ | 9048/10000 [00:07<00:00, 1155.54it/s]     92%|█████████▏| 9164/10000 [00:07<00:00, 1155.69it/s]     93%|█████████▎| 9280/10000 [00:08<00:00, 1154.70it/s]     94%|█████████▍| 9396/10000 [00:08<00:00, 1153.92it/s]     95%|█████████▌| 9512/10000 [00:08<00:00, 1153.47it/s]     96%|█████████▋| 9628/10000 [00:08<00:00, 1153.29it/s]     97%|█████████▋| 9744/10000 [00:08<00:00, 1153.35it/s]     99%|█████████▊| 9860/10000 [00:08<00:00, 1147.60it/s]    100%|█████████▉| 9976/10000 [00:08<00:00, 1149.54it/s]    100%|██████████| 10000/10000 [00:08<00:00, 1152.93it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      2%|▏         | 248/10000 [00:00<00:03, 2475.28it/s]      5%|▌         | 526/10000 [00:00<00:03, 2653.08it/s]      8%|▊         | 805/10000 [00:00<00:03, 2711.87it/s]     11%|█         | 1085/10000 [00:00<00:03, 2743.12it/s]     14%|█▎        | 1364/10000 [00:00<00:03, 2758.71it/s]     16%|█▋        | 1644/10000 [00:00<00:03, 2769.43it/s]     19%|█▉        | 1924/10000 [00:00<00:02, 2778.14it/s]     22%|██▏       | 2204/10000 [00:00<00:02, 2782.88it/s]     25%|██▍       | 2485/10000 [00:00<00:02, 2789.45it/s]     28%|██▊       | 2764/10000 [00:01<00:02, 2780.64it/s]     30%|███       | 3043/10000 [00:01<00:02, 2650.59it/s]     33%|███▎      | 3323/10000 [00:01<00:02, 2693.87it/s]     36%|███▌      | 3600/10000 [00:01<00:02, 2714.29it/s]     39%|███▉      | 3876/10000 [00:01<00:02, 2725.51it/s]     42%|████▏     | 4152/10000 [00:01<00:02, 2732.88it/s]     44%|████▍     | 4428/10000 [00:01<00:02, 2739.13it/s]     47%|████▋     | 4703/10000 [00:01<00:01, 2740.96it/s]     50%|████▉     | 4979/10000 [00:01<00:01, 2746.19it/s]     53%|█████▎    | 5256/10000 [00:01<00:01, 2753.17it/s]     55%|█████▌    | 5533/10000 [00:02<00:01, 2757.51it/s]     58%|█████▊    | 5812/10000 [00:02<00:01, 2765.04it/s]     61%|██████    | 6090/10000 [00:02<00:01, 2767.64it/s]     64%|██████▎   | 6368/10000 [00:02<00:01, 2769.68it/s]     66%|██████▋   | 6646/10000 [00:02<00:01, 2772.07it/s]     69%|██████▉   | 6924/10000 [00:02<00:01, 2773.20it/s]     72%|███████▏  | 7203/10000 [00:02<00:01, 2775.77it/s]     75%|███████▍  | 7482/10000 [00:02<00:00, 2778.91it/s]     78%|███████▊  | 7760/10000 [00:02<00:00, 2777.98it/s]     80%|████████  | 8038/10000 [00:02<00:00, 2776.65it/s]     83%|████████▎ | 8316/10000 [00:03<00:00, 2775.11it/s]     86%|████████▌ | 8594/10000 [00:03<00:00, 2775.77it/s]     89%|████████▊ | 8872/10000 [00:03<00:00, 2759.24it/s]     91%|█████████▏| 9148/10000 [00:03<00:00, 2744.69it/s]     94%|█████████▍| 9428/10000 [00:03<00:00, 2758.41it/s]     97%|█████████▋| 9706/10000 [00:03<00:00, 2764.70it/s]    100%|█████████▉| 9983/10000 [00:03<00:00, 2625.45it/s]    100%|██████████| 10000/10000 [00:03<00:00, 2738.44it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1115,38 +1118,86 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     </symbol>
     </defs>
     </svg>
-    <style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
-     *
-     */
+    <style>/* CSS stylesheet for displaying xarray objects in notebooks */
 
     :root {
-      --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
-      --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
-      --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
-      --xr-border-color: var(--jp-border-color2, #e0e0e0);
-      --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
-      --xr-background-color: var(--jp-layout-color0, white);
-      --xr-background-color-row-even: var(--jp-layout-color1, white);
-      --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+      --xr-font-color0: var(
+        --jp-content-font-color0,
+        var(--pst-color-text-base rgba(0, 0, 0, 1))
+      );
+      --xr-font-color2: var(
+        --jp-content-font-color2,
+        var(--pst-color-text-base, rgba(0, 0, 0, 0.54))
+      );
+      --xr-font-color3: var(
+        --jp-content-font-color3,
+        var(--pst-color-text-base, rgba(0, 0, 0, 0.38))
+      );
+      --xr-border-color: var(
+        --jp-border-color2,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 10))
+      );
+      --xr-disabled-color: var(
+        --jp-layout-color3,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 40))
+      );
+      --xr-background-color: var(
+        --jp-layout-color0,
+        var(--pst-color-on-background, white)
+      );
+      --xr-background-color-row-even: var(
+        --jp-layout-color1,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 5))
+      );
+      --xr-background-color-row-odd: var(
+        --jp-layout-color2,
+        hsl(from var(--pst-color-on-background, white) h s calc(l - 15))
+      );
     }
 
-    html[theme=dark],
-    body[data-theme=dark],
+    html[theme="dark"],
+    html[data-theme="dark"],
+    body[data-theme="dark"],
     body.vscode-dark {
-      --xr-font-color0: rgba(255, 255, 255, 1);
-      --xr-font-color2: rgba(255, 255, 255, 0.54);
-      --xr-font-color3: rgba(255, 255, 255, 0.38);
-      --xr-border-color: #1F1F1F;
-      --xr-disabled-color: #515151;
-      --xr-background-color: #111111;
-      --xr-background-color-row-even: #111111;
-      --xr-background-color-row-odd: #313131;
+      --xr-font-color0: var(
+        --jp-content-font-color0,
+        var(--pst-color-text-base, rgba(255, 255, 255, 1))
+      );
+      --xr-font-color2: var(
+        --jp-content-font-color2,
+        var(--pst-color-text-base, rgba(255, 255, 255, 0.54))
+      );
+      --xr-font-color3: var(
+        --jp-content-font-color3,
+        var(--pst-color-text-base, rgba(255, 255, 255, 0.38))
+      );
+      --xr-border-color: var(
+        --jp-border-color2,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 10))
+      );
+      --xr-disabled-color: var(
+        --jp-layout-color3,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 40))
+      );
+      --xr-background-color: var(
+        --jp-layout-color0,
+        var(--pst-color-on-background, #111111)
+      );
+      --xr-background-color-row-even: var(
+        --jp-layout-color1,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 5))
+      );
+      --xr-background-color-row-odd: var(
+        --jp-layout-color2,
+        hsl(from var(--pst-color-on-background, #111111) h s calc(l + 15))
+      );
     }
 
     .xr-wrap {
       display: block !important;
       min-width: 300px;
       max-width: 700px;
+      line-height: 1.6;
     }
 
     .xr-text-repr-fallback {
@@ -1169,11 +1220,18 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-obj-type,
-    .xr-array-name {
+    .xr-obj-name,
+    .xr-group-name {
       margin-left: 2px;
       margin-right: 10px;
     }
 
+    .xr-group-name::before {
+      content: "📁";
+      padding-right: 0.3em;
+    }
+
+    .xr-group-name,
     .xr-obj-type {
       color: var(--xr-font-color2);
     }
@@ -1181,7 +1239,9 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-sections {
       padding-left: 0 !important;
       display: grid;
-      grid-template-columns: 150px auto auto 1fr 20px 20px;
+      grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+      margin-block-start: 0;
+      margin-block-end: 0;
     }
 
     .xr-section-item {
@@ -1189,16 +1249,24 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-section-item input {
-      display: none;
+      display: inline-block;
+      opacity: 0;
+      height: 0;
+      margin: 0;
     }
 
     .xr-section-item input + label {
       color: var(--xr-disabled-color);
+      border: 2px solid transparent !important;
     }
 
     .xr-section-item input:enabled + label {
       cursor: pointer;
       color: var(--xr-font-color2);
+    }
+
+    .xr-section-item input:focus + label {
+      border: 2px solid var(--xr-font-color0) !important;
     }
 
     .xr-section-item input:enabled + label:hover {
@@ -1222,7 +1290,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
     .xr-section-summary-in + label:before {
       display: inline-block;
-      content: '►';
+      content: "►";
       font-size: 11px;
       width: 15px;
       text-align: center;
@@ -1233,7 +1301,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-section-summary-in:checked + label:before {
-      content: '▼';
+      content: "▼";
     }
 
     .xr-section-summary-in:checked + label > span {
@@ -1243,7 +1311,6 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-section-summary,
     .xr-section-inline-details {
       padding-top: 4px;
-      padding-bottom: 4px;
     }
 
     .xr-section-inline-details {
@@ -1253,11 +1320,38 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-section-details {
       display: none;
       grid-column: 1 / -1;
+      margin-top: 4px;
       margin-bottom: 5px;
     }
 
     .xr-section-summary-in:checked ~ .xr-section-details {
       display: contents;
+    }
+
+    .xr-group-box {
+      display: inline-grid;
+      grid-template-columns: 0px 20px auto;
+      width: 100%;
+    }
+
+    .xr-group-box-vline {
+      grid-column-start: 1;
+      border-right: 0.2em solid;
+      border-color: var(--xr-border-color);
+      width: 0px;
+    }
+
+    .xr-group-box-hline {
+      grid-column-start: 2;
+      grid-row-start: 1;
+      height: 1em;
+      width: 20px;
+      border-bottom: 0.2em solid;
+      border-color: var(--xr-border-color);
+    }
+
+    .xr-group-box-contents {
+      grid-column-start: 3;
     }
 
     .xr-array-wrap {
@@ -1305,15 +1399,15 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-dim-list:before {
-      content: '(';
+      content: "(";
     }
 
     .xr-dim-list:after {
-      content: ')';
+      content: ")";
     }
 
     .xr-dim-list li:not(:last-child):after {
-      content: ',';
+      content: ",";
       padding-right: 5px;
     }
 
@@ -1330,7 +1424,9 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-var-item label,
     .xr-var-item > .xr-var-name span {
       background-color: var(--xr-background-color-row-even);
+      border-color: var(--xr-background-color-row-odd);
       margin-bottom: 0;
+      padding-top: 2px;
     }
 
     .xr-var-item > .xr-var-name:hover span {
@@ -1341,6 +1437,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-var-list > li:nth-child(odd) > label,
     .xr-var-list > li:nth-child(odd) > .xr-var-name span {
       background-color: var(--xr-background-color-row-odd);
+      border-color: var(--xr-background-color-row-even);
     }
 
     .xr-var-name {
@@ -1390,8 +1487,15 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-var-data,
     .xr-index-data {
       display: none;
-      background-color: var(--xr-background-color) !important;
-      padding-bottom: 5px !important;
+      border-top: 2px dotted var(--xr-background-color);
+      padding-bottom: 20px !important;
+      padding-top: 10px !important;
+    }
+
+    .xr-var-attrs-in + label,
+    .xr-var-data-in + label,
+    .xr-index-data-in + label {
+      padding: 0 1px;
     }
 
     .xr-var-attrs-in:checked ~ .xr-var-attrs,
@@ -1402,6 +1506,12 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
     .xr-var-data > table {
       float: right;
+    }
+
+    .xr-var-data > pre,
+    .xr-index-data > pre,
+    .xr-var-data > table > tbody > tr {
+      background-color: transparent !important;
     }
 
     .xr-var-name span,
@@ -1463,22 +1573,30 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       stroke: currentColor;
       fill: currentColor;
     }
-    </style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+
+    .xr-var-attrs-in:checked + label > .xr-icon-file-text2,
+    .xr-var-data-in:checked + label > .xr-icon-database,
+    .xr-index-data-in:checked + label > .xr-icon-database {
+      color: var(--xr-font-color0);
+      filter: drop-shadow(1px 1px 5px var(--xr-font-color2));
+      stroke-width: 0.8px;
+    }
+    </style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 10MB
     Dimensions:  (chain: 32, draw: 10000)
     Coordinates:
-      * chain    (chain) int64 0 1 2 3 4 5 6 7 8 9 ... 22 23 24 25 26 27 28 29 30 31
-      * draw     (draw) int64 0 1 2 3 4 5 6 7 ... 9993 9994 9995 9996 9997 9998 9999
+      * chain    (chain) int64 256B 0 1 2 3 4 5 6 7 8 ... 23 24 25 26 27 28 29 30 31
+      * draw     (draw) int64 80kB 0 1 2 3 4 5 6 ... 9994 9995 9996 9997 9998 9999
     Data variables:
-        m0       (chain, draw) float64 4.696e-05 4.324e-05 ... -6.243 -6.211
-        m1       (chain, draw) float64 -1.484e-05 -1.471e-05 ... -5.121 -5.189
-        m2       (chain, draw) float64 6.432e-05 5.766e-05 0.0003288 ... 2.105 2.102
-        m3       (chain, draw) float64 0.0001544 0.0001576 0.0005567 ... 1.026 1.04
+        m0       (chain, draw) float64 3MB 4.696e-05 4.324e-05 ... -6.243 -6.211
+        m1       (chain, draw) float64 3MB -1.484e-05 -1.471e-05 ... -5.121 -5.189
+        m2       (chain, draw) float64 3MB 6.432e-05 5.766e-05 ... 2.105 2.102
+        m3       (chain, draw) float64 3MB 0.0001544 0.0001576 ... 1.026 1.04
     Attributes:
-        created_at:                 2024-04-17T06:41:48.913804
-        arviz_version:              0.17.0
+        created_at:                 2026-01-28T07:45:53.289565+00:00
+        arviz_version:              0.23.1
         inference_library:          emcee
-        inference_library_version:  3.1.4</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-c5249436-ffc4-4af1-903c-4390ffe57179' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-c5249436-ffc4-4af1-903c-4390ffe57179' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 32</li><li><span class='xr-has-index'>draw</span>: 10000</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-10f7aec9-f90a-4b79-842f-93a8acebf9df' class='xr-section-summary-in' type='checkbox'  checked><label for='section-10f7aec9-f90a-4b79-842f-93a8acebf9df' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 26 27 28 29 30 31</div><input id='attrs-f518732d-095f-4891-b6f2-998ce5cef7f1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f518732d-095f-4891-b6f2-998ce5cef7f1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-13747c95-d8ef-4bbe-aac0-a572b81d696f' class='xr-var-data-in' type='checkbox'><label for='data-13747c95-d8ef-4bbe-aac0-a572b81d696f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
-           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 9996 9997 9998 9999</div><input id='attrs-5545f908-0643-49e4-9c87-bce6e302c7a4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5545f908-0643-49e4-9c87-bce6e302c7a4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-93c4394d-776c-4b0b-a274-9a67a3a4a8b3' class='xr-var-data-in' type='checkbox'><label for='data-93c4394d-776c-4b0b-a274-9a67a3a4a8b3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 9997, 9998, 9999])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-6163419f-ce84-4747-b14d-33c583bd3a00' class='xr-section-summary-in' type='checkbox'  checked><label for='section-6163419f-ce84-4747-b14d-33c583bd3a00' class='xr-section-summary' >Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>m0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.696e-05 4.324e-05 ... -6.211</div><input id='attrs-ff45acb8-603d-4595-b259-48ea19be57ab' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ff45acb8-603d-4595-b259-48ea19be57ab' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-417b720f-717a-4224-8695-0a85bc65162c' class='xr-var-data-in' type='checkbox'><label for='data-417b720f-717a-4224-8695-0a85bc65162c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 4.69621369e-05,  4.32447115e-05, -1.66106827e-04, ...,
+        inference_library_version:  3.1.6</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-998d962c-59e0-498c-afb5-f211d5d7d147' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-998d962c-59e0-498c-afb5-f211d5d7d147' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 32</li><li><span class='xr-has-index'>draw</span>: 10000</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-891686f9-91d5-42fd-bc47-a53b14343ea1' class='xr-section-summary-in' type='checkbox'  checked><label for='section-891686f9-91d5-42fd-bc47-a53b14343ea1' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 26 27 28 29 30 31</div><input id='attrs-ac31a3a6-a4ea-4429-adf1-a9a10f85a5e2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ac31a3a6-a4ea-4429-adf1-a9a10f85a5e2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1e69eec9-f5ab-4853-a059-833cbab70dac' class='xr-var-data-in' type='checkbox'><label for='data-1e69eec9-f5ab-4853-a059-833cbab70dac' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 9996 9997 9998 9999</div><input id='attrs-d9c5e3f5-e263-4173-b781-f83120692011' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d9c5e3f5-e263-4173-b781-f83120692011' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e63a610d-8cac-4764-8d72-9f7f919f2eed' class='xr-var-data-in' type='checkbox'><label for='data-e63a610d-8cac-4764-8d72-9f7f919f2eed' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 9997, 9998, 9999])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f99a23f1-cbbe-48a5-b0b0-0269dd0a0536' class='xr-section-summary-in' type='checkbox'  checked><label for='section-f99a23f1-cbbe-48a5-b0b0-0269dd0a0536' class='xr-section-summary' >Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>m0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.696e-05 4.324e-05 ... -6.211</div><input id='attrs-8b1e0f19-9541-4dee-a421-e6a716eecf8b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8b1e0f19-9541-4dee-a421-e6a716eecf8b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-694d2c97-b5a8-48a1-8c59-b082b1e08d7c' class='xr-var-data-in' type='checkbox'><label for='data-694d2c97-b5a8-48a1-8c59-b082b1e08d7c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 4.69621369e-05,  4.32447115e-05, -1.66106827e-04, ...,
             -6.00425994e+00, -6.00506574e+00, -6.09138800e+00],
            [-3.47949875e-05, -3.83495998e-05, -3.12731408e-05, ...,
             -5.31716533e+00, -5.44423325e+00, -5.39279831e+00],
@@ -1490,7 +1608,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
            [ 2.00843973e-04,  3.51867326e-04,  3.51867326e-04, ...,
             -5.88423415e+00, -5.88423415e+00, -5.81652626e+00],
            [ 1.05025143e-04,  2.96183691e-05,  4.20439019e-05, ...,
-            -6.48819770e+00, -6.24266197e+00, -6.21136768e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-1.484e-05 -1.471e-05 ... -5.189</div><input id='attrs-c6077124-23b2-4ea4-ad71-41ac85cc49c1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c6077124-23b2-4ea4-ad71-41ac85cc49c1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1c56c1b6-7ddc-4c08-9ecc-4160cfaa5731' class='xr-var-data-in' type='checkbox'><label for='data-1c56c1b6-7ddc-4c08-9ecc-4160cfaa5731' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-1.48406903e-05, -1.47134825e-05,  3.49152074e-05, ...,
+            -6.48819770e+00, -6.24266197e+00, -6.21136768e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-1.484e-05 -1.471e-05 ... -5.189</div><input id='attrs-31389f32-b624-47c3-be2d-b5b6f1c84143' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-31389f32-b624-47c3-be2d-b5b6f1c84143' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-148bbcc0-c069-4b26-be46-9b051532297b' class='xr-var-data-in' type='checkbox'><label for='data-148bbcc0-c069-4b26-be46-9b051532297b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-1.48406903e-05, -1.47134825e-05,  3.49152074e-05, ...,
             -5.59625291e+00, -5.60119586e+00, -5.45227691e+00],
            [-3.10270145e-05, -4.11498590e-05, -1.46954992e-04, ...,
             -5.35659407e+00, -5.40651541e+00, -5.53621139e+00],
@@ -1502,7 +1620,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
            [-8.12575779e-05, -1.33635910e-04, -1.33635910e-04, ...,
             -4.85999288e+00, -4.85999288e+00, -4.82054681e+00],
            [ 5.46033440e-04,  7.53662755e-04,  1.00966175e-03, ...,
-            -5.10177208e+00, -5.12075433e+00, -5.18933694e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>6.432e-05 5.766e-05 ... 2.105 2.102</div><input id='attrs-6a852113-f876-4e30-94b2-0ce485a4ba9b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6a852113-f876-4e30-94b2-0ce485a4ba9b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a1da8345-f3c9-400c-a202-17c2b74c0f67' class='xr-var-data-in' type='checkbox'><label for='data-a1da8345-f3c9-400c-a202-17c2b74c0f67' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 6.43235990e-05,  5.76612692e-05,  3.28784442e-04, ...,
+            -5.10177208e+00, -5.12075433e+00, -5.18933694e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>6.432e-05 5.766e-05 ... 2.105 2.102</div><input id='attrs-1130f759-507e-4170-bb8a-f2304085cd41' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-1130f759-507e-4170-bb8a-f2304085cd41' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b79cd702-4337-4075-a5b8-42a87a1e9dac' class='xr-var-data-in' type='checkbox'><label for='data-b79cd702-4337-4075-a5b8-42a87a1e9dac' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 6.43235990e-05,  5.76612692e-05,  3.28784442e-04, ...,
              2.29065099e+00,  2.29375201e+00,  2.09089797e+00],
            [ 1.44452179e-04,  2.90424376e-04,  4.12538935e-04, ...,
              1.75699073e+00,  1.80003161e+00,  1.80587662e+00],
@@ -1514,7 +1632,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
            [ 2.11092575e-04,  7.36987895e-04,  7.36987895e-04, ...,
              1.82874996e+00,  1.82874996e+00,  1.70406111e+00],
            [-3.43469076e-04, -6.73533305e-04, -9.88862833e-04, ...,
-             2.19376408e+00,  2.10535824e+00,  2.10236682e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0001544 0.0001576 ... 1.026 1.04</div><input id='attrs-4b5fd761-0dc5-4be2-93f8-35605c52864a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-4b5fd761-0dc5-4be2-93f8-35605c52864a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-8aebebc1-59bc-4f38-a5f5-6ab7eefbffb5' class='xr-var-data-in' type='checkbox'><label for='data-8aebebc1-59bc-4f38-a5f5-6ab7eefbffb5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 1.54398590e-04,  1.57577824e-04,  5.56734446e-04, ...,
+             2.19376408e+00,  2.10535824e+00,  2.10236682e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0001544 0.0001576 ... 1.026 1.04</div><input id='attrs-8cbf32a4-b5cf-457a-8ddb-d83c3e8f0093' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8cbf32a4-b5cf-457a-8ddb-d83c3e8f0093' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-88e9a9eb-2405-4d77-9729-2080692a395e' class='xr-var-data-in' type='checkbox'><label for='data-88e9a9eb-2405-4d77-9729-2080692a395e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 1.54398590e-04,  1.57577824e-04,  5.56734446e-04, ...,
              1.17967808e+00,  1.18130529e+00,  1.09693799e+00],
            [ 6.66969946e-05,  1.59940716e-05, -6.39806635e-05, ...,
              1.01210574e+00,  1.01969811e+00,  1.03113708e+00],
@@ -1526,12 +1644,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
            [-1.94805940e-04, -3.70217299e-04, -3.70217299e-04, ...,
              9.37303242e-01,  9.37303242e-01,  8.85069357e-01],
            [-2.20285212e-04, -1.74483093e-04, -1.59264525e-04, ...,
-             1.04499380e+00,  1.02558207e+00,  1.04034358e+00]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-98575de5-4db3-4f5f-8f19-a48a6ebf848f' class='xr-section-summary-in' type='checkbox'  ><label for='section-98575de5-4db3-4f5f-8f19-a48a6ebf848f' class='xr-section-summary' >Indexes: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-index-name'><div>chain</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-46f1b173-0f8c-403d-96f2-22e207662b56' class='xr-index-data-in' type='checkbox'/><label for='index-46f1b173-0f8c-403d-96f2-22e207662b56' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
-           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
-          dtype=&#x27;int64&#x27;, name=&#x27;chain&#x27;))</pre></div></li><li class='xr-var-item'><div class='xr-index-name'><div>draw</div></div><div class='xr-index-preview'>PandasIndex</div><div></div><input id='index-bb3afaf5-c9c9-49bf-8b4e-8aceb4058674' class='xr-index-data-in' type='checkbox'/><label for='index-bb3afaf5-c9c9-49bf-8b4e-8aceb4058674' title='Show/Hide index repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-index-data'><pre>PandasIndex(Index([   0,    1,    2,    3,    4,    5,    6,    7,    8,    9,
-           ...
-           9990, 9991, 9992, 9993, 9994, 9995, 9996, 9997, 9998, 9999],
-          dtype=&#x27;int64&#x27;, name=&#x27;draw&#x27;, length=10000))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-9ba873ab-844a-49cb-afbd-2186ccbf77c7' class='xr-section-summary-in' type='checkbox'  checked><label for='section-9ba873ab-844a-49cb-afbd-2186ccbf77c7' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2024-04-17T06:41:48.913804</dd><dt><span>arviz_version :</span></dt><dd>0.17.0</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.4</dd></dl></div></li></ul></div></div>
+             1.04499380e+00,  1.02558207e+00,  1.04034358e+00]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-eaef56a6-7d75-46a7-ba26-324bad0d86b6' class='xr-section-summary-in' type='checkbox'  checked><label for='section-eaef56a6-7d75-46a7-ba26-324bad0d86b6' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2026-01-28T07:45:53.289565+00:00</dd><dt><span>arviz_version :</span></dt><dd>0.23.1</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.6</dd></dl></div></li></ul></div></div>
     </div>
     <br />
     <br />
@@ -1758,7 +1871,7 @@ with the true model.
 
 What does this do to the posterior distribution?
 
-|Upload to Jamboard 2|
+|Upload to Excalidraw_2|
 
 Start from the code template below:
 
@@ -1787,8 +1900,8 @@ Start from the code template below:
    plot_models(flat_samples[inds])
    plot_model(x, true_y, "True model", color="darkorange")
 
-.. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/1h_O8PNuHzpyH2zQUraqiMT4SQR0TMhUmiZzFn_HMZl4/edit?usp=sharing
+.. |Upload to Excalidraw_2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=feedcdce7f99f8ccd205,wTOddJkDrExrVTcxKsE6kA
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 848-853
@@ -1850,7 +1963,7 @@ Start from the code template below:
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      1%|          | 117/10000 [00:00<00:08, 1163.76it/s]      2%|▏         | 238/10000 [00:00<00:08, 1189.64it/s]      4%|▎         | 362/10000 [00:00<00:07, 1208.31it/s]      5%|▍         | 485/10000 [00:00<00:07, 1214.27it/s]      6%|▌         | 608/10000 [00:00<00:07, 1218.63it/s]      7%|▋         | 732/10000 [00:00<00:07, 1225.21it/s]      9%|▊         | 855/10000 [00:00<00:07, 1224.43it/s]     10%|▉         | 979/10000 [00:00<00:07, 1226.85it/s]     11%|█         | 1103/10000 [00:00<00:07, 1229.22it/s]     12%|█▏        | 1226/10000 [00:01<00:07, 1226.40it/s]     13%|█▎        | 1349/10000 [00:01<00:07, 1222.96it/s]     15%|█▍        | 1473/10000 [00:01<00:06, 1225.46it/s]     16%|█▌        | 1597/10000 [00:01<00:06, 1228.00it/s]     17%|█▋        | 1720/10000 [00:01<00:06, 1223.67it/s]     18%|█▊        | 1844/10000 [00:01<00:06, 1226.36it/s]     20%|█▉        | 1968/10000 [00:01<00:06, 1227.50it/s]     21%|██        | 2091/10000 [00:01<00:06, 1226.61it/s]     22%|██▏       | 2215/10000 [00:01<00:06, 1228.11it/s]     23%|██▎       | 2338/10000 [00:01<00:06, 1226.50it/s]     25%|██▍       | 2461/10000 [00:02<00:06, 1223.21it/s]     26%|██▌       | 2585/10000 [00:02<00:06, 1227.52it/s]     27%|██▋       | 2708/10000 [00:02<00:05, 1225.42it/s]     28%|██▊       | 2831/10000 [00:02<00:05, 1224.93it/s]     30%|██▉       | 2954/10000 [00:02<00:05, 1223.27it/s]     31%|███       | 3077/10000 [00:02<00:05, 1220.66it/s]     32%|███▏      | 3200/10000 [00:02<00:05, 1222.98it/s]     33%|███▎      | 3323/10000 [00:02<00:05, 1220.57it/s]     34%|███▍      | 3446/10000 [00:02<00:05, 1222.56it/s]     36%|███▌      | 3569/10000 [00:02<00:05, 1221.89it/s]     37%|███▋      | 3692/10000 [00:03<00:05, 1214.62it/s]     38%|███▊      | 3815/10000 [00:03<00:05, 1217.09it/s]     39%|███▉      | 3938/10000 [00:03<00:04, 1220.24it/s]     41%|████      | 4061/10000 [00:03<00:04, 1219.42it/s]     42%|████▏     | 4184/10000 [00:03<00:04, 1222.09it/s]     43%|████▎     | 4307/10000 [00:03<00:04, 1220.74it/s]     44%|████▍     | 4431/10000 [00:03<00:04, 1225.48it/s]     46%|████▌     | 4554/10000 [00:03<00:04, 1224.83it/s]     47%|████▋     | 4677/10000 [00:03<00:04, 1221.85it/s]     48%|████▊     | 4801/10000 [00:03<00:04, 1226.88it/s]     49%|████▉     | 4924/10000 [00:04<00:04, 1226.13it/s]     50%|█████     | 5048/10000 [00:04<00:04, 1227.83it/s]     52%|█████▏    | 5171/10000 [00:04<00:03, 1228.38it/s]     53%|█████▎    | 5294/10000 [00:04<00:03, 1227.04it/s]     54%|█████▍    | 5417/10000 [00:04<00:03, 1227.26it/s]     55%|█████▌    | 5540/10000 [00:04<00:03, 1226.66it/s]     57%|█████▋    | 5663/10000 [00:04<00:03, 1226.48it/s]     58%|█████▊    | 5786/10000 [00:04<00:03, 1223.80it/s]     59%|█████▉    | 5909/10000 [00:04<00:03, 1224.01it/s]     60%|██████    | 6032/10000 [00:04<00:03, 1225.35it/s]     62%|██████▏   | 6155/10000 [00:05<00:03, 1222.78it/s]     63%|██████▎   | 6278/10000 [00:05<00:03, 1222.95it/s]     64%|██████▍   | 6401/10000 [00:05<00:02, 1223.04it/s]     65%|██████▌   | 6525/10000 [00:05<00:02, 1225.64it/s]     66%|██████▋   | 6649/10000 [00:05<00:02, 1227.91it/s]     68%|██████▊   | 6772/10000 [00:05<00:02, 1226.15it/s]     69%|██████▉   | 6895/10000 [00:05<00:02, 1224.96it/s]     70%|███████   | 7018/10000 [00:05<00:02, 1224.62it/s]     71%|███████▏  | 7142/10000 [00:05<00:02, 1228.51it/s]     73%|███████▎  | 7265/10000 [00:05<00:02, 1223.14it/s]     74%|███████▍  | 7389/10000 [00:06<00:02, 1225.65it/s]     75%|███████▌  | 7513/10000 [00:06<00:02, 1227.76it/s]     76%|███████▋  | 7636/10000 [00:06<00:01, 1221.68it/s]     78%|███████▊  | 7759/10000 [00:06<00:01, 1223.02it/s]     79%|███████▉  | 7883/10000 [00:06<00:01, 1225.99it/s]     80%|████████  | 8006/10000 [00:06<00:01, 1226.62it/s]     81%|████████▏ | 8129/10000 [00:06<00:01, 1224.95it/s]     83%|████████▎ | 8252/10000 [00:06<00:01, 1225.67it/s]     84%|████████▍ | 8375/10000 [00:06<00:01, 1225.23it/s]     85%|████████▍ | 8498/10000 [00:06<00:01, 1222.35it/s]     86%|████████▌ | 8621/10000 [00:07<00:01, 1223.58it/s]     87%|████████▋ | 8744/10000 [00:07<00:01, 1225.43it/s]     89%|████████▊ | 8868/10000 [00:07<00:00, 1227.45it/s]     90%|████████▉ | 8991/10000 [00:07<00:00, 1227.79it/s]     91%|█████████ | 9114/10000 [00:07<00:00, 1225.95it/s]     92%|█████████▏| 9237/10000 [00:07<00:00, 1222.79it/s]     94%|█████████▎| 9360/10000 [00:07<00:00, 1222.13it/s]     95%|█████████▍| 9483/10000 [00:07<00:00, 1221.95it/s]     96%|█████████▌| 9607/10000 [00:07<00:00, 1225.38it/s]     97%|█████████▋| 9730/10000 [00:07<00:00, 1225.11it/s]     99%|█████████▊| 9853/10000 [00:08<00:00, 1225.88it/s]    100%|█████████▉| 9976/10000 [00:08<00:00, 1226.04it/s]    100%|██████████| 10000/10000 [00:08<00:00, 1223.90it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      3%|▎         | 286/10000 [00:00<00:03, 2856.43it/s]      6%|▌         | 578/10000 [00:00<00:03, 2892.81it/s]      9%|▊         | 871/10000 [00:00<00:03, 2909.07it/s]     12%|█▏        | 1162/10000 [00:00<00:03, 2903.35it/s]     15%|█▍        | 1453/10000 [00:00<00:02, 2902.57it/s]     17%|█▋        | 1745/10000 [00:00<00:02, 2908.05it/s]     20%|██        | 2036/10000 [00:00<00:02, 2905.38it/s]     23%|██▎       | 2329/10000 [00:00<00:02, 2911.76it/s]     26%|██▌       | 2621/10000 [00:00<00:02, 2911.29it/s]     29%|██▉       | 2913/10000 [00:01<00:02, 2908.63it/s]     32%|███▏      | 3204/10000 [00:01<00:02, 2906.62it/s]     35%|███▍      | 3495/10000 [00:01<00:02, 2904.97it/s]     38%|███▊      | 3786/10000 [00:01<00:02, 2896.80it/s]     41%|████      | 4076/10000 [00:01<00:02, 2874.13it/s]     44%|████▎     | 4364/10000 [00:01<00:01, 2871.70it/s]     47%|████▋     | 4653/10000 [00:01<00:01, 2876.87it/s]     49%|████▉     | 4941/10000 [00:01<00:01, 2753.78it/s]     52%|█████▏    | 5232/10000 [00:01<00:01, 2797.31it/s]     55%|█████▌    | 5523/10000 [00:01<00:01, 2829.15it/s]     58%|█████▊    | 5807/10000 [00:02<00:01, 2832.32it/s]     61%|██████    | 6097/10000 [00:02<00:01, 2851.78it/s]     64%|██████▍   | 6389/10000 [00:02<00:01, 2870.98it/s]     67%|██████▋   | 6677/10000 [00:02<00:01, 2865.34it/s]     70%|██████▉   | 6967/10000 [00:02<00:01, 2874.95it/s]     73%|███████▎  | 7259/10000 [00:02<00:00, 2888.23it/s]     75%|███████▌  | 7548/10000 [00:02<00:00, 2873.16it/s]     78%|███████▊  | 7842/10000 [00:02<00:00, 2890.82it/s]     81%|████████▏ | 8133/10000 [00:02<00:00, 2896.09it/s]     84%|████████▍ | 8423/10000 [00:02<00:00, 2887.91it/s]     87%|████████▋ | 8715/10000 [00:03<00:00, 2895.36it/s]     90%|█████████ | 9006/10000 [00:03<00:00, 2898.04it/s]     93%|█████████▎| 9296/10000 [00:03<00:00, 2883.62it/s]     96%|█████████▌| 9587/10000 [00:03<00:00, 2891.41it/s]     99%|█████████▉| 9877/10000 [00:03<00:00, 2877.16it/s]    100%|██████████| 10000/10000 [00:03<00:00, 2878.71it/s]
     Resulting samples with prior model lower bounds of [-1,-10,-10,-10], upper bounds of [2,10,10,10]
 
 
@@ -1929,7 +2042,7 @@ Lets return the prior to the original bounds.
 Your challenge is then to tell CoFI that the Likelihood and prior have
 changed and then to rerun the sample, and plot results.
 
-|Upload to Jamboard 3|
+|Upload to Excalidraw_3|
 
 Feel free to start from the code below:
 
@@ -1951,8 +2064,8 @@ Feel free to start from the code below:
    plot_models(flat_samples[inds])
    plot_model(x,true_y, "True model", color="darkorange")
 
-.. |Upload to Jamboard 3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/1ewIkma6uTeNWu7ACEC3vG4J0FNPQZVLdlQLhyeLh-qM/edit?usp=sharing
+.. |Upload to Excalidraw_3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=9a22d4eab8a9189d3b9b,9R8JKoHdOsbWlOLBj2V1fQ
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 964-969
@@ -2012,7 +2125,7 @@ The answer is in the next cells if you want to run them.
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      1%|▏         | 126/10000 [00:00<00:07, 1255.11it/s]      3%|▎         | 264/10000 [00:00<00:07, 1326.04it/s]      4%|▍         | 402/10000 [00:00<00:07, 1347.53it/s]      5%|▌         | 541/10000 [00:00<00:06, 1361.62it/s]      7%|▋         | 680/10000 [00:00<00:06, 1368.32it/s]      8%|▊         | 818/10000 [00:00<00:06, 1371.88it/s]     10%|▉         | 956/10000 [00:00<00:06, 1370.45it/s]     11%|█         | 1095/10000 [00:00<00:06, 1374.84it/s]     12%|█▏        | 1233/10000 [00:00<00:06, 1370.89it/s]     14%|█▎        | 1372/10000 [00:01<00:06, 1374.03it/s]     15%|█▌        | 1510/10000 [00:01<00:06, 1369.40it/s]     16%|█▋        | 1649/10000 [00:01<00:06, 1374.91it/s]     18%|█▊        | 1789/10000 [00:01<00:05, 1381.09it/s]     19%|█▉        | 1928/10000 [00:01<00:05, 1383.31it/s]     21%|██        | 2067/10000 [00:01<00:05, 1379.06it/s]     22%|██▏       | 2205/10000 [00:01<00:05, 1376.36it/s]     23%|██▎       | 2345/10000 [00:01<00:05, 1381.55it/s]     25%|██▍       | 2484/10000 [00:01<00:05, 1379.79it/s]     26%|██▋       | 2625/10000 [00:01<00:05, 1386.61it/s]     28%|██▊       | 2764/10000 [00:02<00:05, 1386.84it/s]     29%|██▉       | 2903/10000 [00:02<00:05, 1385.63it/s]     30%|███       | 3042/10000 [00:02<00:05, 1380.03it/s]     32%|███▏      | 3181/10000 [00:02<00:04, 1378.08it/s]     33%|███▎      | 3319/10000 [00:02<00:04, 1376.38it/s]     35%|███▍      | 3457/10000 [00:02<00:04, 1376.43it/s]     36%|███▌      | 3595/10000 [00:02<00:04, 1372.03it/s]     37%|███▋      | 3733/10000 [00:02<00:04, 1372.93it/s]     39%|███▊      | 3872/10000 [00:02<00:04, 1375.43it/s]     40%|████      | 4011/10000 [00:02<00:04, 1376.91it/s]     41%|████▏     | 4149/10000 [00:03<00:04, 1374.40it/s]     43%|████▎     | 4288/10000 [00:03<00:04, 1377.72it/s]     44%|████▍     | 4426/10000 [00:03<00:04, 1378.36it/s]     46%|████▌     | 4566/10000 [00:03<00:03, 1382.75it/s]     47%|████▋     | 4705/10000 [00:03<00:03, 1382.10it/s]     48%|████▊     | 4844/10000 [00:03<00:03, 1381.30it/s]     50%|████▉     | 4983/10000 [00:03<00:03, 1377.38it/s]     51%|█████     | 5123/10000 [00:03<00:03, 1383.14it/s]     53%|█████▎    | 5263/10000 [00:03<00:03, 1385.29it/s]     54%|█████▍    | 5402/10000 [00:03<00:03, 1380.28it/s]     55%|█████▌    | 5541/10000 [00:04<00:03, 1378.84it/s]     57%|█████▋    | 5679/10000 [00:04<00:03, 1373.87it/s]     58%|█████▊    | 5818/10000 [00:04<00:03, 1376.21it/s]     60%|█████▉    | 5956/10000 [00:04<00:02, 1370.52it/s]     61%|██████    | 6094/10000 [00:04<00:02, 1372.92it/s]     62%|██████▏   | 6233/10000 [00:04<00:02, 1375.60it/s]     64%|██████▎   | 6372/10000 [00:04<00:02, 1378.69it/s]     65%|██████▌   | 6511/10000 [00:04<00:02, 1380.55it/s]     66%|██████▋   | 6650/10000 [00:04<00:02, 1380.84it/s]     68%|██████▊   | 6789/10000 [00:04<00:02, 1381.15it/s]     69%|██████▉   | 6928/10000 [00:05<00:02, 1377.93it/s]     71%|███████   | 7067/10000 [00:05<00:02, 1380.36it/s]     72%|███████▏  | 7207/10000 [00:05<00:02, 1383.62it/s]     73%|███████▎  | 7346/10000 [00:05<00:01, 1376.59it/s]     75%|███████▍  | 7485/10000 [00:05<00:01, 1379.68it/s]     76%|███████▌  | 7623/10000 [00:05<00:01, 1374.75it/s]     78%|███████▊  | 7762/10000 [00:05<00:01, 1377.02it/s]     79%|███████▉  | 7902/10000 [00:05<00:01, 1382.58it/s]     80%|████████  | 8041/10000 [00:05<00:01, 1378.73it/s]     82%|████████▏ | 8180/10000 [00:05<00:01, 1380.52it/s]     83%|████████▎ | 8320/10000 [00:06<00:01, 1384.65it/s]     85%|████████▍ | 8459/10000 [00:06<00:01, 1384.91it/s]     86%|████████▌ | 8598/10000 [00:06<00:01, 1383.79it/s]     87%|████████▋ | 8737/10000 [00:06<00:00, 1383.42it/s]     89%|████████▉ | 8876/10000 [00:06<00:00, 1379.58it/s]     90%|█████████ | 9017/10000 [00:06<00:00, 1387.07it/s]     92%|█████████▏| 9156/10000 [00:06<00:00, 1386.05it/s]     93%|█████████▎| 9295/10000 [00:06<00:00, 1384.86it/s]     94%|█████████▍| 9434/10000 [00:06<00:00, 1383.75it/s]     96%|█████████▌| 9573/10000 [00:06<00:00, 1384.45it/s]     97%|█████████▋| 9712/10000 [00:07<00:00, 1385.36it/s]     99%|█████████▊| 9851/10000 [00:07<00:00, 1382.80it/s]    100%|█████████▉| 9990/10000 [00:07<00:00, 1382.58it/s]    100%|██████████| 10000/10000 [00:07<00:00, 1377.85it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      3%|▎         | 315/10000 [00:00<00:03, 3147.43it/s]      6%|▋         | 641/10000 [00:00<00:02, 3213.22it/s]     10%|▉         | 963/10000 [00:00<00:02, 3198.76it/s]     13%|█▎        | 1284/10000 [00:00<00:02, 3202.11it/s]     16%|█▌        | 1605/10000 [00:00<00:02, 3191.70it/s]     19%|█▉        | 1938/10000 [00:00<00:02, 3237.77it/s]     23%|██▎       | 2262/10000 [00:00<00:02, 3229.55it/s]     26%|██▌       | 2592/10000 [00:00<00:02, 3249.18it/s]     29%|██▉       | 2917/10000 [00:00<00:02, 3239.53it/s]     32%|███▏      | 3245/10000 [00:01<00:02, 3250.10it/s]     36%|███▌      | 3575/10000 [00:01<00:01, 3262.74it/s]     39%|███▉      | 3905/10000 [00:01<00:01, 3273.36it/s]     42%|████▏     | 4233/10000 [00:01<00:01, 3261.28it/s]     46%|████▌     | 4567/10000 [00:01<00:01, 3282.80it/s]     49%|████▉     | 4901/10000 [00:01<00:01, 3297.96it/s]     52%|█████▏    | 5231/10000 [00:01<00:01, 3289.19it/s]     56%|█████▌    | 5565/10000 [00:01<00:01, 3302.44it/s]     59%|█████▉    | 5897/10000 [00:01<00:01, 3304.82it/s]     62%|██████▏   | 6228/10000 [00:01<00:01, 3282.50it/s]     66%|██████▌   | 6565/10000 [00:02<00:01, 3306.07it/s]     69%|██████▉   | 6900/10000 [00:02<00:00, 3317.67it/s]     72%|███████▏  | 7236/10000 [00:02<00:00, 3329.92it/s]     76%|███████▌  | 7570/10000 [00:02<00:00, 3308.19it/s]     79%|███████▉  | 7906/10000 [00:02<00:00, 3322.29it/s]     82%|████████▏ | 8241/10000 [00:02<00:00, 3328.82it/s]     86%|████████▌ | 8576/10000 [00:02<00:00, 3334.71it/s]     89%|████████▉ | 8910/10000 [00:02<00:00, 3312.77it/s]     92%|█████████▏| 9247/10000 [00:02<00:00, 3327.59it/s]     96%|█████████▌| 9584/10000 [00:02<00:00, 3338.45it/s]     99%|█████████▉| 9920/10000 [00:03<00:00, 3334.15it/s]    100%|██████████| 10000/10000 [00:03<00:00, 3267.66it/s]
     Resulting samples from changed data uncertainty
 
 
@@ -2029,7 +2142,7 @@ It will be faster but perform less exploration of the model parameters.
 We suggest you reduce the number of steps taken by all 32 random walkers
 and see how it affects the posterior ensemble.
 
-|Upload to Jamboard 4|
+|Upload to Excalidraw_4|
 
 You can start from code template below:
 
@@ -2062,8 +2175,8 @@ You can start from code template below:
    plot_models(flat_samples[inds])
    plot_model(x,true_y, "True model", color="darkorange")
 
-.. |Upload to Jamboard 4| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-   :target: https://jamboard.google.com/d/1vAm3dpaI4UTZiFXzb6vEku8AlVWUw7PRxz8KJk-dVf8/edit?usp=sharing
+.. |Upload to Excalidraw_4| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+   :target: https://excalidraw.com/#room=354b4a2d26551847421f,Cqqz1tpuHdT-g0dyMMqJlQ
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 1045-1050
@@ -2129,7 +2242,7 @@ You can start from code template below:
 
  .. code-block:: none
 
-      0%|          | 0/400 [00:00<?, ?it/s]     30%|███       | 121/400 [00:00<00:00, 1202.67it/s]     60%|██████    | 242/400 [00:00<00:00, 1204.07it/s]     91%|█████████ | 363/400 [00:00<00:00, 1204.53it/s]    100%|██████████| 400/400 [00:00<00:00, 1203.61it/s]
+      0%|          | 0/400 [00:00<?, ?it/s]     75%|███████▍  | 299/400 [00:00<00:00, 2984.62it/s]    100%|██████████| 400/400 [00:00<00:00, 2984.63it/s]
     Inference results from 400 steps and 30 walkers
 
 
@@ -2142,8 +2255,8 @@ You can start from code template below:
 Where to next?
 --------------
 
--  Linear regression with Eustatic Sea-level data - `link to
-   notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
+- Linear regression with Eustatic Sea-level data - `link to
+  notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 1098-1103
@@ -2172,12 +2285,12 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.7
-    numpy 1.24.4
-    scipy 1.12.0
-    matplotlib 3.8.3
-    emcee 3.1.4
-    arviz 0.17.0
+    cofi 0.2.10
+    numpy 1.26.4
+    scipy 1.14.1
+    matplotlib 3.10.8
+    emcee 3.1.6
+    arviz 0.23.1
 
 
 
@@ -2189,7 +2302,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 29.038 seconds)
+   **Total running time of the script:** (0 minutes 12.525 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_linear_regression.py:
@@ -2205,6 +2318,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: linear_regression.py <linear_regression.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: linear_regression.zip <linear_regression.zip>`
 
 
 .. only:: html

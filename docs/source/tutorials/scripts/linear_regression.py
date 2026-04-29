@@ -23,21 +23,21 @@ Linear regression
 # problem, where we fit a polynomial function to data, using three
 # different algorithms:
 # 
-# -  by solution of a linear system of equations,
-# -  by optimization of a data misfit function
-# -  by Bayesian sampling of a Likelihood multiplied by a prior.
+# - by solution of a linear system of equations,
+# - by optimization of a data misfit function
+# - by Bayesian sampling of a Likelihood multiplied by a prior.
 # 
 # --------------
 # 
 # Learning outcomes
 # -----------------
 # 
-# -  A demonstration of running CoFI for a class of parameter fitting
-#    problem. Example of a CoFI **template**.
-# -  A demonstration of how CoFI may be used to **experiment with
-#    different inference approaches** under a common interface.
-# -  A demonstration of CoFI’s **expandability** in that it may be used
-#    with pre-set, or user defined, misfits, likelihood or priors.
+# - A demonstration of running CoFI for a class of parameter fitting
+#   problem. Example of a CoFI **template**.
+# - A demonstration of how CoFI may be used to **experiment with different
+#   inference approaches** under a common interface.
+# - A demonstration of CoFI’s **expandability** in that it may be used
+#   with pre-set, or user defined, misfits, likelihood or priors.
 # 
 
 # Environment setup (uncomment code below)
@@ -120,13 +120,13 @@ plot_data()
 # 
 # where:
 # 
-# -  :math:`\textbf{d}` is the vector of data values,
-#    (:math:`y_0,y_1,\dots,y_N`);
-# -  :math:`\textbf{m}` is the vector of model parameters,
-#    (:math:`m_0,m_1,m_2`);
-# -  :math:`G` is the basis matrix (or design matrix) of this linear
-#    regression problem (also called the **Jacobian** matrix for this
-#    linear problem).
+# - :math:`\textbf{d}` is the vector of data values,
+#   (:math:`y_0,y_1,\dots,y_N`);
+# - :math:`\textbf{m}` is the vector of model parameters,
+#   (:math:`m_0,m_1,m_2`);
+# - :math:`G` is the basis matrix (or design matrix) of this linear
+#   regression problem (also called the **Jacobian** matrix for this
+#   linear problem).
 # 
 # We have a set of noisy data values, :math:`y_i (i=0,\dots,N)`, measured
 # at known locations, :math:`x_i (i=0,\dots,N)`, and wish to find the best
@@ -219,42 +219,42 @@ plot_model(x,true_y, "true model")
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 # 
-# -  ``BaseProblem`` defines the inverse problem including any user
-#    supplied quantities such as data vector, number of model parameters
-#    and measure of fit between model predictions and data.
+# - ``BaseProblem`` defines the inverse problem including any user
+#   supplied quantities such as data vector, number of model parameters
+#   and measure of fit between model predictions and data.
 # 
-#    .. code:: python
+#   .. code:: python
 # 
-#       inv_problem = BaseProblem()
-#       inv_problem.set_objective(some_function_here)
-#       inv_problem.set_jacobian(some_function_here)
-#       inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
+#      inv_problem = BaseProblem()
+#      inv_problem.set_objective(some_function_here)
+#      inv_problem.set_jacobian(some_function_here)
+#      inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
 # 
-#     
+#    
 # 
-# -  ``InversionOptions`` describes details about how one wants to run the
-#    inversion, including the backend tool and solver-specific parameters.
-#    It is based on the concept of a ``method`` and ``tool``.
+# - ``InversionOptions`` describes details about how one wants to run the
+#   inversion, including the backend tool and solver-specific parameters.
+#   It is based on the concept of a ``method`` and ``tool``.
 # 
-#    .. code:: python
+#   .. code:: python
 # 
-#       inv_options = InversionOptions()
-#       inv_options.suggest_solving_methods()
-#       inv_options.set_solving_method("matrix solvers")
-#       inv_options.suggest_tools()
-#       inv_options.set_tool("scipy.linalg.lstsq")
-#       inv_options.summary()
+#      inv_options = InversionOptions()
+#      inv_options.suggest_solving_methods()
+#      inv_options.set_solving_method("matrix solvers")
+#      inv_options.suggest_tools()
+#      inv_options.set_tool("scipy.linalg.lstsq")
+#      inv_options.summary()
 # 
-#     
+#    
 # 
-# -  ``Inversion`` can be seen as an inversion engine that takes in the
-#    above two as information, and will produce an ``InversionResult``
-#    upon running.
+# - ``Inversion`` can be seen as an inversion engine that takes in the
+#   above two as information, and will produce an ``InversionResult`` upon
+#   running.
 # 
-#    .. code:: python
+#   .. code:: python
 # 
-#       inv = Inversion(inv_problem, inv_options)
-#       result = inv.run()
+#      inv = Inversion(inv_problem, inv_options)
+#      result = inv.run()
 # 
 # Internally CoFI decides the nature of the problem from the quantities
 # set by the user and performs internal checks to ensure it has all that
@@ -448,7 +448,7 @@ plot_model(x,true_y, "true model", color="darkorange")
 # (i.e. :math:`M=1`) by adding the required commands below. What does the
 # plot looks like?
 # 
-# |Upload to Jamboard 1|
+# |Upload to Excalidraw_1|
 # 
 # Start from code below:
 # 
@@ -467,8 +467,8 @@ plot_model(x,true_y, "true model", color="darkorange")
 #    plot_model(x,jacobian(x,n=<CHANGE ME>).dot(inv_result.model), "optimization solution", color="cornflowerblue")
 #    plot_model(x,true_y, "true model", color="darkorange")
 # 
-# .. |Upload to Jamboard 1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-#    :target: https://jamboard.google.com/d/1Fu_vIhWIlDl-gs9gzSPBNXLjzj2CsS70fLMDN8-7Sew/edit?usp=sharing
+# .. |Upload to Excalidraw_1| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+#    :target: https://excalidraw.com/#room=351ca2833e3ad8315d6a,HzlQfpPleYrpXT8GaoD_cg
 # 
 
 # Copy the template above, Replace <CHANGE ME> with your answer
@@ -813,7 +813,7 @@ for i in range(ndim):
 # 
 # What does this do to the posterior distribution?
 # 
-# |Upload to Jamboard 2|
+# |Upload to Excalidraw_2|
 # 
 # Start from the code template below:
 # 
@@ -842,8 +842,8 @@ for i in range(ndim):
 #    plot_models(flat_samples[inds])
 #    plot_model(x, true_y, "True model", color="darkorange")
 # 
-# .. |Upload to Jamboard 2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-#    :target: https://jamboard.google.com/d/1h_O8PNuHzpyH2zQUraqiMT4SQR0TMhUmiZzFn_HMZl4/edit?usp=sharing
+# .. |Upload to Excalidraw_2| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+#    :target: https://excalidraw.com/#room=feedcdce7f99f8ccd205,wTOddJkDrExrVTcxKsE6kA
 # 
 
 # Copy the template above, Replace <CHANGE ME> with your answer
@@ -936,7 +936,7 @@ def log_prior(model):    # uniform distribution
 # Your challenge is then to tell CoFI that the Likelihood and prior have
 # changed and then to rerun the sample, and plot results.
 # 
-# |Upload to Jamboard 3|
+# |Upload to Excalidraw_3|
 # 
 # Feel free to start from the code below:
 # 
@@ -958,8 +958,8 @@ def log_prior(model):    # uniform distribution
 #    plot_models(flat_samples[inds])
 #    plot_model(x,true_y, "True model", color="darkorange")
 # 
-# .. |Upload to Jamboard 3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-#    :target: https://jamboard.google.com/d/1ewIkma6uTeNWu7ACEC3vG4J0FNPQZVLdlQLhyeLh-qM/edit?usp=sharing
+# .. |Upload to Excalidraw_3| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+#    :target: https://excalidraw.com/#room=9a22d4eab8a9189d3b9b,9R8JKoHdOsbWlOLBj2V1fQ
 # 
 
 # Copy the template above, Replace <CHANGE ME> with your answer
@@ -1006,7 +1006,7 @@ plot_model(x,true_y, "True model", color="darkorange")
 # We suggest you reduce the number of steps taken by all 32 random walkers
 # and see how it affects the posterior ensemble.
 # 
-# |Upload to Jamboard 4|
+# |Upload to Excalidraw_4|
 # 
 # You can start from code template below:
 # 
@@ -1039,8 +1039,8 @@ plot_model(x,true_y, "True model", color="darkorange")
 #    plot_models(flat_samples[inds])
 #    plot_model(x,true_y, "True model", color="darkorange")
 # 
-# .. |Upload to Jamboard 4| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Jamboard-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
-#    :target: https://jamboard.google.com/d/1vAm3dpaI4UTZiFXzb6vEku8AlVWUw7PRxz8KJk-dVf8/edit?usp=sharing
+# .. |Upload to Excalidraw_4| image:: https://img.shields.io/badge/Click%20&%20upload%20your%20results%20to-Excalidraw-lightgrey?logo=jamboard&style=for-the-badge&color=fcbf49&labelColor=edede9
+#    :target: https://excalidraw.com/#room=354b4a2d26551847421f,Cqqz1tpuHdT-g0dyMMqJlQ
 # 
 
 # Copy the template above, Replace <CHANGE ME> with your answer
@@ -1089,8 +1089,8 @@ plot_model(x,true_y, "True model", color="darkorange")
 # Where to next?
 # --------------
 # 
-# -  Linear regression with Eustatic Sea-level data - `link to
-#    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
+# - Linear regression with Eustatic Sea-level data - `link to
+#   notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
 # 
 
 

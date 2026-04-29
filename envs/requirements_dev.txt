@@ -1,13 +1,13 @@
-scipy>=1.0.0
+scipy>=1.9.0
 matplotlib>=3.5
-arviz>=0.10.0
-emcee
-findiff
-torch
-bayesbay
+arviz>=0.18.0
+emcee>=3.1.5
+findiff>=0.10.0
+torch>=2.0.0
+bayesbay>=0.3.0
 pytest
 coverage[toml]
-sphinx==4.5.0
+sphinx>=7.2.6
 sphinx-book-theme>=1.0.1
 sphinx-design>=0.3.0
 sphinx-togglebutton>=0.3.2
@@ -21,4 +21,5 @@ jupyterlab
 versioningit==2.1.0
 seislib>=0.6.10
 git+https://github.com/miili/pysurf96.git
-neighpy>=0.1.1
+neighpy>=0.1.5,!=0.1.8
+mealpy>=3.0.0

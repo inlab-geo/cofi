@@ -35,18 +35,35 @@ Below is an ordered list of tutorials.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="1D Rayleigh wave phase velocity inversion">
+    <div class="sphx-glr-thumbcontainer" tooltip="Thin plate inversion">
 
 .. only:: html
 
-  .. image:: /tutorials/generated/images/thumb/sphx_glr_1D_rayleigh_wave_phase_velocity_inversion_thumb.png
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_thin_plate_inversion_thumb.png
     :alt:
 
-  :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py`
+  :doc:`/tutorials/generated/thin_plate_inversion`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">1D Rayleigh wave phase velocity inversion</div>
+      <div class="sphx-glr-thumbnail-title">Thin plate inversion</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Linear &amp; non-linear travel time tomography">
+
+.. only:: html
+
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_travel_time_tomography_thumb.png
+    :alt:
+
+  :doc:`/tutorials/generated/travel_time_tomography`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Linear & non-linear travel time tomography</div>
     </div>
 
 
@@ -59,7 +76,7 @@ Below is an ordered list of tutorials.
   .. image:: /tutorials/generated/images/thumb/sphx_glr_electrical_resistivity_tomography_thumb.png
     :alt:
 
-  :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py`
+  :doc:`/tutorials/generated/electrical_resistivity_tomography`
 
 .. raw:: html
 
@@ -76,7 +93,7 @@ Below is an ordered list of tutorials.
   .. image:: /tutorials/generated/images/thumb/sphx_glr_linear_regression_thumb.png
     :alt:
 
-  :ref:`sphx_glr_tutorials_generated_linear_regression.py`
+  :doc:`/tutorials/generated/linear_regression`
 
 .. raw:: html
 
@@ -86,18 +103,18 @@ Below is an ordered list of tutorials.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Linear &amp; non-linear travel time tomography">
+    <div class="sphx-glr-thumbcontainer" tooltip="1D Rayleigh wave phase velocity inversion">
 
 .. only:: html
 
-  .. image:: /tutorials/generated/images/thumb/sphx_glr_travel_time_tomography_thumb.png
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_1D_rayleigh_wave_phase_velocity_inversion_thumb.png
     :alt:
 
-  :ref:`sphx_glr_tutorials_generated_travel_time_tomography.py`
+  :doc:`/tutorials/generated/1D_rayleigh_wave_phase_velocity_inversion`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Linear & non-linear travel time tomography</div>
+      <div class="sphx-glr-thumbnail-title">1D Rayleigh wave phase velocity inversion</div>
     </div>
 
 
@@ -111,10 +128,11 @@ Below is an ordered list of tutorials.
 .. toctree::
    :hidden:
 
-   /tutorials/generated/1D_rayleigh_wave_phase_velocity_inversion
+   /tutorials/generated/thin_plate_inversion
+   /tutorials/generated/travel_time_tomography
    /tutorials/generated/electrical_resistivity_tomography
    /tutorials/generated/linear_regression
-   /tutorials/generated/travel_time_tomography
+   /tutorials/generated/1D_rayleigh_wave_phase_velocity_inversion
 
 
 

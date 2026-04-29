@@ -7,6 +7,7 @@ The class inheritance of regularization classes:
     graph TD;
     BaseRegularization --> LpNormRegularization;
     LpNormRegularization --> QuadraticReg;
+    QuadraticReg --> SPDEMaternReg;
     BaseRegularization --> ModelCovariance;
     ModelCovariance --> GaussianPrior;
 
@@ -19,6 +20,7 @@ from ._lik_base import BaseLikelihood
 from ._kernel import SquaredExponentialKernel
 from ._reduced_likelihood import ReducedLikelihood
 from ._reduced_likelihood_manager import ReducedLikelihoodManager
+from ._reg_matern import SPDEMaternReg
 
 from ._multiple_runs import InversionPool
 
@@ -30,6 +32,7 @@ __all__ = [
     "BaseLikelihood",
     "LpNormRegularization",
     "QuadraticReg",
+    "SPDEMaternReg",
     "ModelCovariance",
     "GaussianPrior",
     "InversionPool",

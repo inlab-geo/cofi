@@ -34,11 +34,11 @@
 # 
 # **Learning outcomes**
 # 
-# -  A demonstration of CoFI’s ability to switch between parameter
-#    estimation and ensemble methods.
-# -  A comparison between different McMC samplers that is fixed-d and
-#    trans-d samplers
-# -  An application of CoFI to field data
+# - A demonstration of CoFI’s ability to switch between parameter
+#   estimation and ensemble methods.
+# - A comparison between different McMC samplers that is fixed-d and
+#   trans-d samplers
+# - An application of CoFI to field data
 # 
 
 # -------------------------------------------------------- #
@@ -54,6 +54,13 @@
 ######################################################################
 #
 
+# If this notebook is run locally pysurf96 needs to be installed separately by uncommenting the following line, 
+# that is by removing the # and the white space between it and the exclamation mark.
+# !pip install -U cofi git+https://github.com/inlab-geo/pysurf96.git
+
+######################################################################
+#
+
 import numpy as np
 import scipy
 import matplotlib.pyplot as plt
@@ -61,6 +68,7 @@ import matplotlib.pyplot as plt
 from pysurf96 import surf96
 import bayesbay
 import cofi
+
 
 ######################################################################
 #
@@ -906,9 +914,9 @@ def forward_for_bayesbay(state):
 ######################################################################
 #
 
-targets = [bayesbay.Target("rayleigh", d_obs, covariance_mat_inv=1/noise_level**2)]
+targets = [bayesbay.likelihood.Target("rayleigh", d_obs, covariance_mat_inv=1/noise_level**2)]
 fwd_funcs = [forward_for_bayesbay]
-my_log_likelihood = bayesbay.LogLikelihood(targets, fwd_funcs)
+my_log_likelihood = bayesbay.likelihood.LogLikelihood(targets, fwd_funcs) 
 
 ######################################################################
 #
@@ -950,7 +958,7 @@ parameterization = bayesbay.parameterization.Parameterization(
         parameters=[param_vs], 
     )
 )
-my_perturbation_funcs = parameterization.perturbation_functions
+my_perturbation_funcs=parameterization.perturbation_funcs
 
 ######################################################################
 #
@@ -1530,9 +1538,9 @@ def forward_interp_for_bayesbay(state):
 ######################################################################
 #
 
-targets = [bayesbay.Target("rayleigh", field_d_obs, covariance_mat_inv=1/noise_level**2)]
+targets = [bayesbay.likelihood.Target("rayleigh", field_d_obs, covariance_mat_inv=1/noise_level**2)]
 fwd_funcs = [forward_interp_for_bayesbay]
-my_log_likelihood = bayesbay.LogLikelihood(targets, fwd_funcs)
+my_log_likelihood = bayesbay.likelihood.LogLikelihood(targets, fwd_funcs) 
 
 ######################################################################
 #
@@ -1574,7 +1582,7 @@ parameterization = bayesbay.parameterization.Parameterization(
         parameters=[param_vs], 
     )
 )
-my_perturbation_funcs = parameterization.perturbation_functions
+my_perturbation_funcs = parameterization.perturbation_funcs
 
 ######################################################################
 #
