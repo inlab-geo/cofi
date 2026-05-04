@@ -22,7 +22,7 @@ jobs:
   validate:
     name: Run notebook validation on Ceres
     runs-on: self-hosted
-    timeout-minutes: 720
+    timeout-minutes: 1440
 
     steps:
       - name: Check out cofi repo
