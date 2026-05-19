@@ -1,6 +1,6 @@
 scipy>=1.9.0
 matplotlib>=3.5
-arviz>=0.18.0
+arviz>=1.0.0
 emcee>=3.1.5
 findiff>=0.10.0
 torch>=2.0.0
