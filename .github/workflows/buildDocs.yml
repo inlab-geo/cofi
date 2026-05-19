@@ -22,6 +22,9 @@ jobs:
           ref: ${{ github.head_ref || github.ref_name }}
           fetch-depth: 0
           submodules: recursive
+      - name: Install cofi from checkout into Apptainer env
+        run: |
+          apptainer exec "$APPTAINER_IMAGE" pip install -e .
       - name: Sanity-check Apptainer image
         run: |
           set -euo pipefail
@@ -31,9 +34,6 @@ jobs:
           apptainer exec "$APPTAINER_IMAGE" python3.13 -V
           apptainer exec "$APPTAINER_IMAGE" python3.13 -c "import pygimli; print('pygimli', pygimli.__version__)"
           apptainer exec "$APPTAINER_IMAGE" python3.13 -c "import cofi; print('cofi', cofi.__version__)"
-      - name: Install cofi from checkout into Apptainer env
-        run: |
-          apptainer exec "$APPTAINER_IMAGE" pip install -e .
       - name: Update cofi-examples submodule to latest main
         run: |
           git submodule update --remote docs/source/cofi-examples
