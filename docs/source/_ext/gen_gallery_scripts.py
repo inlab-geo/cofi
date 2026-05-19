@@ -136,6 +136,7 @@ def move_data_files(src_folder, dst_folder):
         "setup_inversion.py",
         "neptune_deterministic_methods.py",
         "neptune_bayesian_methods.py",
+        "neptune_mcmc_helpers.py",
     ]
     all_data = []
     for pattern in all_patterns:

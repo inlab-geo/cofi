@@ -192,7 +192,7 @@ if not on_rtd:
         "gallery_dirs": ["examples/generated", "tutorials/generated"],
         "within_subsection_order": DependencySortKey,
         "filename_pattern": ".",
-        "ignore_pattern": "._lib.py|_preprocessing.py|xrayTomography.py|neptune_deterministic_methods.py|setup_inversion.py|sw_tomography.py|fmm_tomography.py|neptune_bayesian_methods.py|receiver_function_scaled_kernel.py",
+        "ignore_pattern": "._lib.py|_preprocessing.py|xrayTomography.py|neptune_deterministic_methods.py|setup_inversion.py|sw_tomography.py|fmm_tomography.py|neptune_bayesian_methods.py|neptune_mcmc_helpers.py|receiver_function_scaled_kernel.py",
         "pypandoc": True,
         "download_all_examples": False,
         "doc_module": "cofi",
