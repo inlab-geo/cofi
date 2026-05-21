@@ -37,10 +37,30 @@ jobs:
       - name: Update cofi-examples submodule to latest main
         run: |
           git submodule update --remote docs/source/cofi-examples
+      - name: Restore Ceres gallery cache
+        run: |
+          CACHE=/home/kitc/sphinx_gallery_cache
+          if [ -d "$CACHE/examples/generated" ]; then
+            rsync -av --update "$CACHE/examples/generated/" \
+              docs/source/examples/generated/
+          fi
+          if [ -d "$CACHE/tutorials/generated" ]; then
+            rsync -av --update "$CACHE/tutorials/generated/" \
+              docs/source/tutorials/generated/
+          fi
       - name: Build Sphinx docs inside Apptainer
         run: |
           cd docs
           apptainer exec "$APPTAINER_IMAGE" make clean html
+      - name: Save Ceres gallery cache
+        if: always()
+        run: |
+          CACHE=/home/kitc/sphinx_gallery_cache
+          mkdir -p "$CACHE/examples" "$CACHE/tutorials"
+          rsync -av docs/source/examples/generated/ \
+            "$CACHE/examples/generated/"
+          rsync -av docs/source/tutorials/generated/ \
+            "$CACHE/tutorials/generated/"
       - name: Upload built docs (HyperText Markup Language (HTML)) as artifact
         if: always()
         uses: actions/upload-artifact@v4
