@@ -12,7 +12,8 @@ jobs:
     runs-on: self-hosted
     timeout-minutes: 2000
     permissions:
-      contents: write   # required to push to PR branch
+      contents: write        # push new branch / push to PR branch
+      pull-requests: write   # open PR when running on main
     env:
       APPTAINER_IMAGE: /home/kitc/inlab-apptainer/inlab.sif
     steps:
@@ -101,3 +102,24 @@ jobs:
           git add docs/source/examples/generated docs/source/tutorials/generated
           git commit -m "docs: regenerate gallery outputs (Apptainer)"
           git push origin HEAD:${{ github.head_ref || github.ref_name }}
+      - name: Open PR with regenerated gallery outputs (main builds)
+        if: steps.diff.outputs.changed == 'true' && github.head_ref == ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="docs/gallery-update-${GITHUB_SHA::7}"
+          git config --local user.name "ceres-bot"
+          git config --local user.email "ceres-bot@inlab-geo.org"
+          git checkout -b "$BRANCH"
+          git add docs/source/examples/generated docs/source/tutorials/generated
+          git commit -m "docs: regenerate gallery outputs (Apptainer)"
+          git push origin "$BRANCH"
+          curl -s -X POST "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls" \
+            -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{
+              \"title\": \"docs: regenerate gallery outputs (Apptainer)\",
+              \"head\": \"${BRANCH}\",
+              \"base\": \"main\",
+              \"body\": \"Automatically opened by buildDocs workflow (triggered by ${GITHUB_SHA}).\"
+            }"
