@@ -94,7 +94,7 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           fi
       - name: Commit regenerated gallery outputs to PR
-        if: steps.diff.outputs.changed == 'true'
+        if: steps.diff.outputs.changed == 'true' && github.head_ref != ''
         run: |
           git config --local user.name "ceres-bot"
           git config --local user.email "ceres-bot@inlab-geo.org"
