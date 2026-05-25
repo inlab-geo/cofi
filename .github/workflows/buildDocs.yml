@@ -37,6 +37,17 @@ jobs:
       - name: Update cofi-examples submodule to latest main
         run: |
           git submodule update --remote docs/source/cofi-examples
+      - name: Pre-build kriging surrogate model
+        run: |
+          # Populate scripts_synth_data/ with current notebook content and data files.
+          # gen_gallery_scripts.py is idempotent (MD5-cached).
+          cd docs/source
+          apptainer exec "$APPTAINER_IMAGE" python _ext/gen_gallery_scripts.py
+          # Always regenerate the .pkl fresh — smt KRG pickles are version-sensitive
+          # and must be created in the same environment that loads them.
+          cd examples/scripts_synth_data
+          apptainer exec --env MPLBACKEND=Agg "$APPTAINER_IMAGE" \
+            python three_survey_lines_surrogate_model_creation.py
       - name: Restore Ceres gallery cache
         run: |
           CACHE=/home/kitc/sphinx_gallery_cache
