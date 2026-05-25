@@ -497,15 +497,15 @@ generate some random data points as our dataset.
 
 where:
 
-- :math:`\text{forward}` is the forward function that takes in a model
-  and produces synthetic data,
-- :math:`\textbf{m}` is the model vector,
-- :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
-  linear regression problem and looks like the following:
+-  :math:`\text{forward}` is the forward function that takes in a model
+   and produces synthetic data,
+-  :math:`\textbf{m}` is the model vector,
+-  :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
+   linear regression problem and looks like the following:
 
-  .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
-- :math:`\text{basis\_func}` is the basis function that converts
-  :math:`\textbf{x}` into :math:`\textbf{G}`
+   .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
+-  :math:`\text{basis\_func}` is the basis function that converts
+   :math:`\textbf{x}` into :math:`\textbf{G}`
 
 Recall that the function we are going to fit is:
 :math:`y=-6-5x+2x^2+x^3`
@@ -727,29 +727,29 @@ For this we use the ``cofi`` tool called ``Neighpy``.
  .. code-block:: none
 
     NAI - Initial Random Search
-    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:00<00:47,  2.08it/s]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:00<00:16,  6.00it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:00<00:10,  9.13it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:00<00:08, 11.55it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:00<00:06, 13.36it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:01<00:06, 14.71it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:01<00:05, 15.66it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:01<00:05, 16.37it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:01<00:04, 16.85it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:01<00:04, 17.22it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:01<00:04, 17.38it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:01<00:04, 17.63it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:01<00:04, 17.71it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:01<00:04, 17.83it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:02<00:03, 17.91it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:02<00:03, 17.99it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:02<00:03, 18.04it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:02<00:03, 18.05it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:02<00:03, 18.03it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:02<00:03, 18.40it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:02<00:03, 18.79it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:02<00:03, 18.47it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:02<00:03, 18.32it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:03<00:02, 18.26it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:03<00:02, 18.22it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:03<00:02, 18.22it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:03<00:02, 18.22it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:03<00:02, 18.25it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:03<00:02, 18.14it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:03<00:02, 18.01it/s]    NAI - Optimisation Loop:  62%|██████▏   | 62/100 [00:03<00:02, 18.45it/s]    NAI - Optimisation Loop:  64%|██████▍   | 64/100 [00:03<00:01, 18.34it/s]    NAI - Optimisation Loop:  66%|██████▌   | 66/100 [00:04<00:01, 18.20it/s]    NAI - Optimisation Loop:  68%|██████▊   | 68/100 [00:04<00:01, 18.16it/s]    NAI - Optimisation Loop:  70%|███████   | 70/100 [00:04<00:01, 18.10it/s]    NAI - Optimisation Loop:  72%|███████▏  | 72/100 [00:04<00:01, 18.03it/s]    NAI - Optimisation Loop:  74%|███████▍  | 74/100 [00:04<00:01, 18.10it/s]    NAI - Optimisation Loop:  76%|███████▌  | 76/100 [00:04<00:01, 18.10it/s]    NAI - Optimisation Loop:  78%|███████▊  | 78/100 [00:04<00:01, 18.13it/s]    NAI - Optimisation Loop:  80%|████████  | 80/100 [00:04<00:01, 18.22it/s]    NAI - Optimisation Loop:  82%|████████▏ | 82/100 [00:04<00:00, 18.28it/s]    NAI - Optimisation Loop:  84%|████████▍ | 84/100 [00:05<00:00, 18.35it/s]    NAI - Optimisation Loop:  86%|████████▌ | 86/100 [00:05<00:00, 18.43it/s]    NAI - Optimisation Loop:  88%|████████▊ | 88/100 [00:05<00:00, 18.42it/s]    NAI - Optimisation Loop:  90%|█████████ | 90/100 [00:05<00:00, 18.45it/s]    NAI - Optimisation Loop:  92%|█████████▏| 92/100 [00:05<00:00, 18.44it/s]    NAI - Optimisation Loop:  94%|█████████▍| 94/100 [00:05<00:00, 18.38it/s]    NAI - Optimisation Loop:  96%|█████████▌| 96/100 [00:05<00:00, 18.38it/s]    NAI - Optimisation Loop:  98%|█████████▊| 98/100 [00:05<00:00, 18.37it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:05<00:00, 18.38it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:05<00:00, 16.90it/s]
+    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:00<01:04,  1.53it/s]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:00<00:20,  4.75it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:00<00:12,  7.71it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:00<00:09, 10.22it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:01<00:07, 12.29it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:01<00:06, 13.95it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:01<00:05, 15.16it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:01<00:05, 15.99it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:01<00:04, 16.66it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:01<00:04, 17.04it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:01<00:04, 17.41it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:01<00:04, 17.47it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:01<00:04, 17.72it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:02<00:04, 17.70it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:02<00:04, 17.66it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:02<00:03, 17.90it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:02<00:03, 18.03it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:02<00:03, 18.18it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:02<00:03, 18.37it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:02<00:03, 18.53it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:02<00:03, 18.58it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:02<00:03, 18.53it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:03<00:02, 18.53it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:03<00:02, 18.43it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:03<00:02, 18.39it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:03<00:02, 18.49it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:03<00:02, 18.53it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:03<00:02, 18.55it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:03<00:02, 18.50it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:03<00:02, 18.58it/s]    NAI - Optimisation Loop:  61%|██████    | 61/100 [00:03<00:02, 18.63it/s]    NAI - Optimisation Loop:  63%|██████▎   | 63/100 [00:04<00:01, 18.65it/s]    NAI - Optimisation Loop:  65%|██████▌   | 65/100 [00:04<00:01, 18.66it/s]    NAI - Optimisation Loop:  67%|██████▋   | 67/100 [00:04<00:01, 18.64it/s]    NAI - Optimisation Loop:  69%|██████▉   | 69/100 [00:04<00:01, 18.56it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:04<00:01, 18.55it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:04<00:01, 18.55it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:04<00:01, 17.56it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:04<00:01, 16.92it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:04<00:01, 16.46it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:05<00:01, 16.46it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:05<00:01, 16.49it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:05<00:00, 16.14it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:05<00:00, 16.21it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:05<00:00, 16.70it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:05<00:00, 17.17it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:05<00:00, 17.40it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:05<00:00, 17.59it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:05<00:00, 17.62it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:06<00:00, 17.73it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:06<00:00, 16.22it/s]
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [-5.14652161 -4.96246574  1.69790543  0.9362182 ]
-    direct_search_samples: [[ 4.30315071  9.6334588  -1.59032364  4.2238215 ]
-     [ 4.88390623 -1.98023208 -6.31281085  0.68057225]
-     [-4.72159248 -6.04533183 -3.40762573  1.59237914]
+    model: [-1.69564123 -4.82814926  0.19981497  0.57819357]
+    direct_search_samples: [[ 6.0286382   7.48693589 -7.53702062 -9.31693008]
+     [ 0.61413281 -4.57629264 -7.54437685  0.36054905]
+     [ 6.06100933 -1.59298773  5.8267534  -5.53060417]
      ...
-     [-5.1465595  -4.96255597  1.69920219  0.93673803]
-     [-5.14655969 -4.96255519  1.69920203  0.93673864]
-     [-5.14655929 -4.96255506  1.69920124  0.9367358 ]]
-    direct_search_objectives: [1.10873989e+05 1.81170653e+04 1.63979668e+04 ... 1.75598963e+01
-     1.75598860e+01 1.75599009e+01]
-    appraisal_samples: [[-5.01084654 -3.83046926  1.48225234  0.71738155]
-     [-6.08099065 -5.14546167  1.63801569  0.80108774]
-     [-4.87490229 -4.95745315  1.27278947  0.49990531]
+     [-1.68938444 -4.84219827  0.19591709  0.59096861]
+     [-1.68907428 -4.84217954  0.19567035  0.59119974]
+     [-1.68875779 -4.84187991  0.19606059  0.5910293 ]]
+    direct_search_objectives: [1.40055403e+05 1.84745392e+04 2.08204615e+05 ... 1.14722087e+02
+     1.14770944e+02 1.14747915e+02]
+    appraisal_samples: [[-1.83533427 -4.33136074 -1.04084931  0.32342125]
+     [-1.28379221 -4.40406846 -0.60464455  0.99807683]
+     [-1.84475607 -4.39231625 -0.45672447  0.49219711]
      ...
-     [-4.79343049 -4.78931433  1.68140951 -0.13142485]
-     [-4.45093085 -4.83350508  1.58577886  0.43213919]
-     [-6.55288684 -4.33697873  1.52218279  0.29720567]]
+     [-1.90565613 -4.55701473 -0.06194402  0.33739476]
+     [-2.80441689 -4.32716963  0.93666153 -0.30853136]
+     [-2.55615054 -4.38507044  1.16476232  1.40274336]]
 
 
 
@@ -939,22 +939,22 @@ above.
  .. code-block:: none
 
     NAI - Initial Random Search
-    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:00<00:42,  2.33it/s]    NAI - Optimisation Loop:   4%|▍         | 4/100 [00:00<00:11,  8.32it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:00<00:07, 12.54it/s]    NAI - Optimisation Loop:  10%|█         | 10/100 [00:00<00:05, 15.46it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:00<00:04, 17.48it/s]    NAI - Optimisation Loop:  16%|█▌        | 16/100 [00:01<00:04, 18.13it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:01<00:04, 19.21it/s]    NAI - Optimisation Loop:  22%|██▏       | 22/100 [00:01<00:03, 19.86it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:01<00:03, 20.39it/s]    NAI - Optimisation Loop:  28%|██▊       | 28/100 [00:01<00:03, 21.08it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:01<00:03, 21.58it/s]    NAI - Optimisation Loop:  34%|███▍      | 34/100 [00:01<00:03, 21.89it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:02<00:02, 22.06it/s]    NAI - Optimisation Loop:  40%|████      | 40/100 [00:02<00:02, 22.13it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:02<00:02, 22.13it/s]    NAI - Optimisation Loop:  46%|████▌     | 46/100 [00:02<00:02, 22.11it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:02<00:02, 21.51it/s]    NAI - Optimisation Loop:  52%|█████▏    | 52/100 [00:02<00:02, 20.73it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:02<00:02, 19.90it/s]    NAI - Optimisation Loop:  58%|█████▊    | 58/100 [00:03<00:02, 19.45it/s]    NAI - Optimisation Loop:  60%|██████    | 60/100 [00:03<00:02, 19.22it/s]    NAI - Optimisation Loop:  62%|██████▏   | 62/100 [00:03<00:02, 18.97it/s]    NAI - Optimisation Loop:  64%|██████▍   | 64/100 [00:03<00:01, 18.76it/s]    NAI - Optimisation Loop:  66%|██████▌   | 66/100 [00:03<00:01, 18.62it/s]    NAI - Optimisation Loop:  68%|██████▊   | 68/100 [00:03<00:01, 18.55it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:03<00:01, 18.92it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:03<00:01, 18.74it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:04<00:01, 18.59it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:04<00:01, 18.48it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:04<00:01, 18.40it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:04<00:01, 18.40it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:04<00:00, 18.38it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:04<00:00, 18.28it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:04<00:00, 18.27it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:04<00:00, 18.32it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:04<00:00, 18.36it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:05<00:00, 18.38it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:05<00:00, 18.41it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:05<00:00, 18.46it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:05<00:00, 18.47it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:05<00:00, 18.52it/s]
+    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:00<00:58,  1.70it/s]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:00<00:18,  5.20it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:00<00:11,  8.26it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:00<00:08, 10.83it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:01<00:07, 12.79it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:01<00:06, 14.34it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:01<00:05, 15.50it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:01<00:05, 16.29it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:01<00:04, 16.86it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:01<00:04, 17.30it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:01<00:04, 17.58it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:01<00:04, 17.75it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:01<00:04, 17.39it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:02<00:04, 16.73it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:02<00:04, 16.72it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:02<00:04, 16.73it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:02<00:04, 16.54it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:02<00:03, 16.54it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:02<00:03, 16.98it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:02<00:03, 17.28it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:02<00:03, 17.59it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:02<00:03, 17.83it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:03<00:03, 17.49it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:03<00:02, 17.68it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:03<00:02, 17.90it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:03<00:02, 18.11it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:03<00:02, 18.24it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:03<00:02, 18.15it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:03<00:02, 18.11it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:03<00:02, 18.23it/s]    NAI - Optimisation Loop:  61%|██████    | 61/100 [00:03<00:02, 17.21it/s]    NAI - Optimisation Loop:  63%|██████▎   | 63/100 [00:04<00:02, 16.90it/s]    NAI - Optimisation Loop:  65%|██████▌   | 65/100 [00:04<00:02, 16.87it/s]    NAI - Optimisation Loop:  67%|██████▋   | 67/100 [00:04<00:01, 16.88it/s]    NAI - Optimisation Loop:  69%|██████▉   | 69/100 [00:04<00:01, 17.30it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:04<00:01, 17.67it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:04<00:01, 17.90it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:04<00:01, 18.05it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:04<00:01, 18.17it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:04<00:01, 18.31it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:05<00:01, 18.25it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:05<00:00, 18.25it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:05<00:00, 18.19it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:05<00:00, 18.21it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:05<00:00, 17.81it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:05<00:00, 17.40it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:05<00:00, 16.74it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:05<00:00, 16.74it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:06<00:00, 16.34it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:06<00:00, 16.47it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:06<00:00, 16.10it/s]
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [-7.24677608 -5.64104965  2.55672001  1.21052477]
-    samples: [[ 3.38478665  1.36967678 -5.33802931 -6.41521316]
-     [ 4.93389464 -0.74265504 -6.0989013   6.59286554]
-     [ 1.79344119  7.6716442   5.68142036 -4.53376007]
+    model: [-5.19061225 -5.91567135  2.36056026  1.27288721]
+    samples: [[-8.03116915 -4.23048776  5.27774061 -3.34616778]
+     [ 9.90187156  2.50707629  7.55524527  9.68013734]
+     [-1.87820399 -3.2462757  -8.02909141 -4.57374885]
      ...
-     [-7.24728828 -5.64256249  2.56162018  1.21149781]
-     [-7.24728433 -5.6425524   2.56161404  1.21150815]
-     [-7.24728467 -5.6425606   2.56161481  1.21150623]]
-    objectives: [7.76257065e+04 2.29527275e+05 1.08576819e+05 ... 2.76225376e+01
-     2.76223991e+01 2.76224233e+01]
+     [-5.19019587 -5.90916176  2.3860197   1.27321829]
+     [-5.19024293 -5.90908748  2.38600241  1.27317444]
+     [-5.19017492 -5.90901456  2.38603249  1.27328336]]
+    objectives: [9.25157466e+04 1.92221477e+05 2.43037130e+04 ... 5.96585782e+01
+     5.96500530e+01 5.96674999e+01]
 
 
 
@@ -1042,13 +1042,13 @@ we used earlier does this under the hood.
     ============================
     SUCCESS
     ----------------------------
-    new_samples: [[-6.3715037  -4.74915791  2.71179429  2.00222557]
-     [-6.62772109 -4.4841342   3.12457337  2.07132439]
-     [-6.55789312 -4.58399038  3.16234241  1.82249693]
+    new_samples: [[-5.43482645 -5.92168802  1.33037036  0.01004193]
+     [-5.16809274 -5.86727025  1.62925976  0.51685491]
+     [-6.4502057  -6.13118822  1.63266381  0.49178809]
      ...
-     [-7.04313367 -4.96028732  2.87640215  1.15838766]
-     [-7.50379194 -5.14278626  1.60150585  2.58787709]
-     [-7.63861819 -5.15423928  2.01132619  2.67645965]]
+     [-6.46651612 -6.17889176  1.91070108  1.52199875]
+     [-5.96829696 -5.64574447  1.90827674  1.59190156]
+     [-5.56221477 -5.49813968  2.06445954  1.7739334 ]]
 
 
 
@@ -1191,13 +1191,13 @@ use ``cofi`` to get the ``emcee`` samples!)
     ============================
     SUCCESS
     ----------------------------
-    new_samples: [[-5.21131743 -4.79305677  1.65521794  2.18319029]
-     [-5.42817783 -5.27555142  1.66728006  0.90835512]
-     [-5.77360863 -5.0721086   1.70029722  1.42069382]
+    new_samples: [[-5.49030657 -5.13867999  1.84577882  1.10040005]
+     [-6.32820487 -9.80679864 -1.54231433 -8.96284046]
+     [-8.75845898 -9.14943555 -4.92184315  2.02114239]
      ...
-     [-6.84652514 -5.4522786  -4.25183374  7.79902377]
-     [-8.34953411 -7.59982571 -6.76286692 -5.21127679]
-     [-9.05252779 -6.30493701 -5.25634323  1.12645863]]
+     [-4.35883717 -9.47734368 -0.28714092 -2.0451282 ]
+     [-0.81304734 -7.06419206  0.75777164  0.52980791]
+     [-7.01403911 -7.81563622 -0.5894208   8.33705105]]
 
 
 
@@ -1275,12 +1275,12 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
     emcee 3.1.6
-    arviz 0.23.4
+    arviz 1.1.0
 
 
 
@@ -1292,7 +1292,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 6.538 seconds)
+   **Total running time of the script:** (1 minutes 9.318 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_linear_regression_neighpy.py:

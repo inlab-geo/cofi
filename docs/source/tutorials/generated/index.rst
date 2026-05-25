@@ -26,6 +26,10 @@ Below is an ordered list of tutorials.
    Check `here <https://github.com/inlab-geo/cofi-examples/blob/main/README.md>`_
    for full instructions.
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 

@@ -28,12 +28,12 @@ Note : - For better understanding of ths notebook, refer to the
 designed specifically for this notebook and better insights into the
 theory.
 
-- The import methods and functions from
-  `neptune_deterministic_methods <https://github.com/inlab-geo/cofi-examples/blob/main/examples/Finding_Neptune_Inversions/neptune_deterministic_methods.py>`__
-  and
-  `setup_inversion <https://github.com/inlab-geo/cofi-examples/blob/main/examples/Finding_Neptune_Inversions/setup_inversion.py>`__
-  are used to set up the simulation and perform the necessary
-  calculations.
+-  The import methods and functions from
+   `neptune_deterministic_methods <https://github.com/inlab-geo/cofi-examples/blob/main/examples/Finding_Neptune_Inversions/neptune_deterministic_methods.py>`__
+   and
+   `setup_inversion <https://github.com/inlab-geo/cofi-examples/blob/main/examples/Finding_Neptune_Inversions/setup_inversion.py>`__
+   are used to set up the simulation and perform the necessary
+   calculations.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 21-31
@@ -65,91 +65,91 @@ theory.
 
 .. GENERATED FROM PYTHON SOURCE LINES 42-129
 
-- The following Notebook is based on the historical problem on how
-  Neptune was found by Johann Galle using mathematical predictions made
-  independently by two astronomers:
+-  The following Notebook is based on the historical problem on how
+   Neptune was found by Johann Galle using mathematical predictions made
+   independently by two astronomers:
 
-  - Urbain Le Verrier (France)
+   -  Urbain Le Verrier (France)
 
-  - John Couch Adams (England)
+   -  John Couch Adams (England)
 
-  Through this Notebook we wish to demostrate how ``CoFI`` can be used
-  to solve this problem via deterministic inversion. For more details on
-  this problem, see the following
-  `thesis <www.diva-portal.org/smash/get/diva2:1218549/FULLTEXT01.pdf>`__
+   Through this Notebook we wish to demostrate how ``CoFI`` can be used
+   to solve this problem via deterministic inversion. For more details
+   on this problem, see the following
+   `thesis <www.diva-portal.org/smash/get/diva2:1218549/FULLTEXT01.pdf>`__
 
-- In the following notebook we discuss the problem of finding Neptune’s
-  mass, its velocity components and its position coordinates in the year
-  1775, by modeling the trajectory of Uranus with and without the
-  influence of Neptune.
+-  In the following notebook we discuss the problem of finding Neptune’s
+   mass, its velocity components and its position coordinates in the
+   year 1775, by modeling the trajectory of Uranus with and without the
+   influence of Neptune.
 
-- We define $ g(m) $, our forward model, as vector-valued function that
-  predicts the position coordinates of Uranus at each observation time
-  :math:`t_j`, as a function of Neptune’s parameters :math:`m`:
+-  We define $ g(m) $, our forward model, as vector-valued function that
+   predicts the position coordinates of Uranus at each observation time
+   :math:`t_j`, as a function of Neptune’s parameters :math:`m`:
 
-  | 
+   | 
 
-    .. math::
-
-
-          g(m) =
-         \begin{bmatrix}
-         \hat x_1(m) \\
-         \vdots \\
-         \hat x_N(m) \\
-         \hat y_1(m) \\
-         \vdots \\
-         \hat y_N(m) \\
-         \hat z_1(m) \\
-         \vdots \\
-         \hat z_N(m)
-         \end{bmatrix}
-         \in \mathbb{R}^{3M \times 1}
+     .. math::
 
 
-    where $ N $ is the number of data points, and $
-    :raw-latex:`\hat `x_j(m),  :raw-latex:`\hat `y_j(m),
-     :raw-latex:`\hat `z_j(m) $ are the coordinates of Uranus at data
-    point $ j  =  1,  2,  ….  N$ as a function of Neptune’s parameters $
-    m $,
-  | where :math:`m = (m_M, m_x, m_y, m_z, {m_{v_x}}, m_{v_y}, m_{v_z})`
-    is the set of parameters describing Neptune’s mass (:math:`m_M`),
-    its position coordinates :math:`(m_x, m_y, m_z)` and its velocity
-    components :math:`(m_{v_x}, m_{v_y}, m_{v_z})`
-
-  | and :math:`d` as the data vector of positions of Uranus at different
-    time steps:
-  | 
-
-    .. math::
+           g(m) =
+          \begin{bmatrix}
+          \hat x_1(m) \\
+          \vdots \\
+          \hat x_N(m) \\
+          \hat y_1(m) \\
+          \vdots \\
+          \hat y_N(m) \\
+          \hat z_1(m) \\
+          \vdots \\
+          \hat z_N(m)
+          \end{bmatrix}
+          \in \mathbb{R}^{3M \times 1}
 
 
-         d =
-         \begin{bmatrix}
-         x_1 \\
-         \vdots \\
-         x_N \\
-         y_1 \\
-         \vdots \\
-         y_N \\
-         z_1 \\
-         \vdots \\
-         z_N
-         \end{bmatrix}
-         \in \mathbb{R}^{3M \times 1}
+     where $ N $ is the number of data points, and $
+     :raw-latex:`\hat `x_j(m),  :raw-latex:`\hat `y_j(m),
+      :raw-latex:`\hat `z_j(m) $ are the coordinates of Uranus at data
+     point $ j  =  1,  2,  ….  N$ as a function of Neptune’s parameters
+     $ m $,
+   | where :math:`m = (m_M, m_x, m_y, m_z, {m_{v_x}}, m_{v_y}, m_{v_z})`
+     is the set of parameters describing Neptune’s mass (:math:`m_M`),
+     its position coordinates :math:`(m_x, m_y, m_z)` and its velocity
+     components :math:`(m_{v_x}, m_{v_y}, m_{v_z})`
+
+   | and :math:`d` as the data vector of positions of Uranus at
+     different time steps:
+   | 
+
+     .. math::
 
 
-    where $ N $ is the number of data points, and $
-    :raw-latex:`\hat `x_j,  :raw-latex:`\hat `y_j,
-     :raw-latex:`\hat `z_j $ are the true coordinates of Uranus at data
-    point $ j  =  1,  2,  ….  N$.
+          d =
+          \begin{bmatrix}
+          x_1 \\
+          \vdots \\
+          x_N \\
+          y_1 \\
+          \vdots \\
+          y_N \\
+          z_1 \\
+          \vdots \\
+          z_N
+          \end{bmatrix}
+          \in \mathbb{R}^{3M \times 1}
 
-- hence our problem formulation changes to :
 
-  .. math::
+     where $ N $ is the number of data points, and $
+     :raw-latex:`\hat `x_j,  :raw-latex:`\hat `y_j,
+      :raw-latex:`\hat `z_j $ are the true coordinates of Uranus at data
+     point $ j  =  1,  2,  ….  N$.
+
+-  hence our problem formulation changes to :
+
+   .. math::
 
 
-      \underset{m}{\min}   || g(m) - {d} ||_{2}^2 
+       \underset{m}{\min}   || g(m) - {d} ||_{2}^2 
 
 
 
@@ -161,28 +161,28 @@ theory.
 
 .. GENERATED FROM PYTHON SOURCE LINES 138-142
 
-- This formulation uses Newton’s Law of Universal Gravitation to model
-  the **net gravitational influence** from multiple bodies on a single
-  target planet.
+-  This formulation uses Newton’s Law of Universal Gravitation to model
+   the **net gravitational influence** from multiple bodies on a single
+   target planet.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 145-162
 
-- This results in the system of differential equations:
+-  This results in the system of differential equations:
 
-  .. math::
+   .. math::
 
 
-       \frac{d}{dt}
-       \begin{bmatrix}
-       \mathbf{r}(t) \\
-       \mathbf{v}(t)
-       \end{bmatrix}
-       = 
-       \begin{bmatrix}
-       \mathbf{v}(t) \\
-       \mathbf{a}(t)
-       \end{bmatrix}
+        \frac{d}{dt}
+        \begin{bmatrix}
+        \mathbf{r}(t) \\
+        \mathbf{v}(t)
+        \end{bmatrix}
+        = 
+        \begin{bmatrix}
+        \mathbf{v}(t) \\
+        \mathbf{a}(t)
+        \end{bmatrix}
 
 
 
@@ -211,36 +211,44 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 181-184
+.. GENERATED FROM PYTHON SOURCE LINES 181-185
 
-- We solve our ODEs with the **Runge-Kutta 4 (RK4)** method, which is an
-  explicit and iterative method, well-suited for initial value problems.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 187-190
-
-- In the following cell, we import - ``acceleration`` and ``rk4_step``
-  to serve as functions for our forward model.
+-  We solve our ODEs with the **Runge-Kutta 4 (RK4)** method, which is
+   an explicit and iterative method, well-suited for initial value
+   problems.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-201
+.. GENERATED FROM PYTHON SOURCE LINES 188-194
 
-- We now demostrate our forward model, using the above defined
-  functions, in the ``run_simulation`` method, which helps us run a
-  simulation of solar system.
-
-- Throughout this notebook for the purpose of our inversion, we are
-  going to define mass in terms of solar masses, positions coordinates
-  in **Astonomical Units (AU)** and velocities for planets in **Au/day**
+We solve the system above with a fused ``@njit`` Runge-Kutta 4 (RK4)
+integrator (``integrate_all_bodies`` in
+``neptune_deterministic_methods.py``). The function ``run_simulation``
+is a thin wrapper around this integrator that returns the per-body
+trajectories, with optional plotting.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-205
+.. GENERATED FROM PYTHON SOURCE LINES 197-201
+
+We demonstrate the forward model by integrating the inner solar system
+over a 100-year window and plotting each planet’s orbit (xy plane,
+heliocentric).
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 201-213
 
 .. code-block:: Python
 
 
-    from neptune_deterministic_methods import acceleration, rk4_step, run_simulation
-    trajectories = run_simulation(T = 100, dt = 1, plot_only=['Uranus', 'Neptune', 'Saturn', 'Jupiter', 'Mars', 'Earth', 'Venus', 'Mercury'])
+    from neptune_deterministic_methods import run_simulation
+
+    # `run_simulation` builds initial-condition arrays, runs the fused @njit
+    # integrator `integrate_all_bodies`, and returns per-body trajectories.
+    trajectories = run_simulation(
+        T=100, dt=1,
+        plot_only=['Uranus', 'Neptune', 'Saturn', 'Jupiter',
+                   'Mars', 'Earth', 'Venus', 'Mercury'],
+    )
+
 
 
 
@@ -251,67 +259,59 @@ theory.
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Computing trajectories...:   0%|          | 0/36500 [00:00<?, ?it/s]    Computing trajectories...:   0%|          | 1/36500 [00:01<15:53:31,  1.57s/it]    Computing trajectories...:  34%|███▍      | 12462/36500 [00:01<00:02, 10408.69it/s]    Computing trajectories...:  68%|██████▊   | 24960/36500 [00:01<00:00, 22622.02it/s]    Computing trajectories...: 100%|██████████| 36500/36500 [00:01<00:00, 19610.08it/s]
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 218-227
 
-.. GENERATED FROM PYTHON SOURCE LINES 210-221
+3. Synthetic Data and Inversion Setup
+-------------------------------------
 
-3. Inversion on Synthetic Data
-------------------------------
-
-- We will first demonstrate the use of our deterministic inversion using
-  ``CoFI`` on synthetic data. We are going to use
-  ``levenberg-marqudt method`` to solve this deterministic inversion
-  problem.
-- The synthetic observations are generated by integrating our
-  gravitational forward model with a fourth-order Runge-Kutta (``RK4``)
-  solver to simulate Uranus’s trajectory under the influence of Neptune.
+We generate noisy synthetic observations of Uranus by perturbing the
+truth Neptune state and running the forward model, then set up the
+scaling and bounds used by the inversion. The inversion itself is
+performed in Section 4 with the χ² Morozov method on both synthetic and
+(in 4.2) real NASA Horizons data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 224-252
+.. GENERATED FROM PYTHON SOURCE LINES 230-258
 
-- We simulate observational noise by sampling from zero-mean Gaussian
-  distributions with specified variances for each coordinate:
+-  We simulate observational noise by sampling from zero-mean Gaussian
+   distributions with specified variances for each coordinate:
 
 .. math::
 
 
    x_\text{obs} = x + \epsilon_x, \quad y_\text{obs} = y + \epsilon_y, \quad z_\text{obs} = z + \epsilon_z
 
-- where
+-  where
 
-- 
+-  
 
-  .. math::
-
-
-       \epsilon_x \sim \mathcal{N}(0, \sigma_x^2), \quad 
-       \epsilon_y \sim \mathcal{N}(0, \sigma_y^2), \quad 
-       \epsilon_z \sim \mathcal{N}(0, \sigma_z^2)
-
-- with noise levels set as
-
-- 
-
-  .. math::
+   .. math::
 
 
-     \sigma_x = \sigma_y = 10^{-3}, \quad \sigma_z = 10^{-5}
+        \epsilon_x \sim \mathcal{N}(0, \sigma_x^2), \quad 
+        \epsilon_y \sim \mathcal{N}(0, \sigma_y^2), \quad 
+        \epsilon_z \sim \mathcal{N}(0, \sigma_z^2)
+
+-  with noise levels set as
+
+-  
+
+   .. math::
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 255-258
-
-- The function below generates the synthetic data with the specified
-  noise levels.
+      \sigma_x = \sigma_y = 10^{-3}, \quad \sigma_z = 10^{-5}
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 258-271
+.. GENERATED FROM PYTHON SOURCE LINES 261-264
+
+-  The function below generates the synthetic data with the specified
+   noise levels.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 264-277
 
 .. code-block:: Python
 
@@ -336,7 +336,6 @@ theory.
 
  .. code-block:: none
 
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12423/68985 [00:00<00:00, 124222.12it/s]    Computing trajectories...:  36%|███▋      | 25014/68985 [00:00<00:00, 125213.46it/s]    Computing trajectories...:  54%|█████▍    | 37536/68985 [00:00<00:00, 124450.48it/s]    Computing trajectories...:  72%|███████▏  | 49982/68985 [00:00<00:00, 123218.26it/s]    Computing trajectories...:  90%|█████████ | 62306/68985 [00:00<00:00, 123212.00it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 123545.92it/s]
 
     Synthetic data ranges:
     X: -18.298 to 20.084 (range: 38.383)
@@ -351,7 +350,7 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 273-282
+.. GENERATED FROM PYTHON SOURCE LINES 279-288
 
 .. code-block:: Python
 
@@ -371,17 +370,17 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 287-294
+.. GENERATED FROM PYTHON SOURCE LINES 293-300
 
-- Cell below is used for validating our setup and setting up the scaling
-  and unscaling functions, along with a ``build_neptune_vector`` method
-  that helps us build the scaled version of our model depending on what
-  we are inverting for. For example - if it’s just the mass then all
-  other parameters, velocities and positions, would be derived from the
-  true values.
+-  Cell below is used for validating our setup and setting up the
+   scaling and unscaling functions, along with a
+   ``build_neptune_vector`` method that helps us build the scaled
+   version of our model depending on what we are inverting for. For
+   example - if it’s just the mass then all other parameters, velocities
+   and positions, would be derived from the true values.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 294-297
+.. GENERATED FROM PYTHON SOURCE LINES 300-303
 
 .. code-block:: Python
 
@@ -402,7 +401,7 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 299-304
+.. GENERATED FROM PYTHON SOURCE LINES 305-310
 
 .. code-block:: Python
 
@@ -418,20 +417,15 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 309-319
+.. GENERATED FROM PYTHON SOURCE LINES 315-320
 
-- In the cell below, the ``predict_U`` method defines our full forward
-  model and uses the ``acceleration`` and the ``rk4_step`` methods
-  defined previously.
-
-- We also use the ``jacobian`` and the ``residual`` methods below, to be
-  used by ``CoFI`` for inversion.
-
-- The cell below sets up the starting model for our inversion and some
-  pre-defined scales to be used for scaling while running our inversion.
+-  The cell below imports ``predict_U``, our full forward model.
+   Internally it calls the fused ``@njit`` integrator
+   ``integrate_uranus`` (the Uranus-only sibling of
+   ``integrate_all_bodies`` used in Section 2).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 319-350
+.. GENERATED FROM PYTHON SOURCE LINES 320-351
 
 .. code-block:: Python
 
@@ -489,283 +483,232 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 355-358
+.. GENERATED FROM PYTHON SOURCE LINES 356-389
 
-3.1 Running the Inversion on Synthetic Data
--------------------------------------------
+4. Regularisation by χ² Discrepancy (Morozov’s principle)
+---------------------------------------------------------
 
+The L-curve method in Section 3.3 picks the regularisation strength
+:math:`\alpha` from a “knee” in a trade-off curve. A more principled
+alternative is **Morozov’s discrepancy principle**, which uses the noise
+level of the data directly.
 
-.. GENERATED FROM PYTHON SOURCE LINES 358-430
+Given per-component noise standard deviations :math:`\sigma_c` (for
+components :math:`c \in \{x,y,z\}`), the chi-squared statistic at a
+candidate solution :math:`m` is
 
-.. code-block:: Python
+.. math:: \chi^2(m) \; = \; \sum_{c \in \{x,y,z\}} \sum_{t=1}^{T} \frac{\big(d_{c,t} - g_{c,t}(m)\big)^2}{\sigma_c^2}
 
+For a model that fits the data to within the noise, the expected value
+is :math:`\mathbb{E}[\chi^2] \approx N`, where :math:`N` is the total
+number of data points (here :math:`N = 3T = 570`). The reduced
+chi-squared :math:`\chi^2/N` is then :math:`\approx 1`.
 
-    inv_problem = BaseProblem()
-    inv_problem.name = "Neptune Orbit Determination - Config Driven"
-    inv_problem.set_data(U_true)
-    inv_problem.set_forward(predict_U, args = [T, dt])
-    inv_problem.set_initial_model(np.atleast_1d(m_start_scaled))
-    inv_problem.set_residual(residual, args = (U_true, 0, T, dt))  # Pass U_true as an argument to residual function
-    inv_problem.set_jacobian(jacobian, args = (U_true, 0, T, dt))  # Pass U_true as an argument to jacobian function
-    bounds_lower_scaled = scale_param(np.array([bound[0] for bound in PARAM_BOUNDS]))
-    bounds_upper_scaled = scale_param(np.array([bound[1] for bound in PARAM_BOUNDS]))
+**Morozov’s pick**: choose the regularisation parameter :math:`\alpha`
+such that :math:`\chi^2(m_\alpha)/N` is closest to 1 — fitting to the
+noise floor, neither under- nor over-fitting.
 
-    inv_options = InversionOptions()
-    inv_options.set_tool("scipy.optimize.least_squares")
-    inv_options.set_params(
-        # bounds=(bounds_lower_scaled, bounds_upper_scaled),    # Uncomment to use bounds when using trust region reflective method
-        method="trf",   # Trust Region Reflective method, you can also try 'lm' (Levenberg-Marquardt) if you prefer
-        max_nfev=100,
-        verbose=2,
-        ftol=1e-12,
-        xtol=1e-12
-    )
+The inversion itself uses the per-parameter-weighted Tikhonov
+regularisation we built in Section 3.3 (``residual_weighted`` +
+``jacobian_weighted``). What changes here is only the **selection rule**
+for :math:`\alpha`.
 
-    print("\nRunning inversion...")
-    try:
-        inv = Inversion(inv_problem, inv_options)
-        inv_result = inv.run()
-        result = inv_result.model
-        result_unscaled = unscale_param(result)
-    
-        print("\n" + "="*50)
-        print("RESULTS")
-        print("="*50)
-    
-        param_names = ['mass', 'x', 'y', 'z', 'vx', 'vy', 'vz']
-        result_unscaled = np.atleast_1d(result_unscaled)
-    
-        print("\nInverted parameters:")
-        for i, param_idx in enumerate(INVERT_INDICES):
-            param_name = param_names[param_idx]
-            estimated = result_unscaled[i]
-            true_val = m_0[param_idx]
-            starting = STARTING_POINTS[i]
-        
-            print(f"  {param_name}: {estimated:.6e} (true: {true_val:.6e})")
-    
-        final_pred = predict_U(result, T, dt)
-        final_residual = U_true - final_pred
-        print(f"\nFinal residual norm: {np.linalg.norm(final_residual):.6f}")
-        print(f"Final residual by component:")
-        print(f"  X component: {np.linalg.norm(final_residual[:T]):.6f}")
-        print(f"  Y component: {np.linalg.norm(final_residual[T:2*T]):.6f}")
-        print(f"  Z component: {np.linalg.norm(final_residual[2*T:]):.6f}")
-    
-        print(f'initial residual norm: {np.linalg.norm(residual(m_start_scaled, U_true)):.6f}')
-        print(f'final residual norm: {np.linalg.norm(final_residual):.6f}')
-    
-    
-        if 0 in INVERT_INDICES:
-            mass_idx = INVERT_INDICES.index(0)
-            neptune_mass = result_unscaled[mass_idx]
-            print(f"\nEstimated Neptune mass: {neptune_mass:.6e} solar masses")
-            print(f"Estimated Neptune mass: {neptune_mass * 1.989e30:.6e} kg")
-    
-        print("Inversion completed successfully!")
-        print("="*50)
-    
-    except Exception as e:
-        print(f"Inversion failed: {e}")
-        import traceback
-        traceback.print_exc()
+For *synthetic* data we know the injected noise levels exactly, so the
+chi-squared criterion is directly applicable. For *real* data the noise
+is unknown and needs to be estimated — that’s deferred to a follow-up
+section.
 
 
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Running inversion...
-       Iteration     Total nfev        Cost      Cost reduction    Step norm     Optimality   
-           0              1         1.6781e-03                                    5.11e+01    
-           1              2         8.3576e-04      8.42e-04       2.62e-02       3.30e+00    
-           2              3         4.0861e-04      4.27e-04       9.39e-02       3.13e+00    
-           3              5         4.0609e-04      2.52e-06       9.58e-03       1.22e+01    
-           4              6         3.3553e-04      7.06e-05       2.39e-03       2.70e+00    
-           5              7         3.2686e-04      8.66e-06       2.39e-03       3.84e-01    
-           6              8         3.2234e-04      4.53e-06       5.99e-04       1.22e+00    
-           7             10         3.2181e-04      5.21e-07       3.74e-05       3.78e-01    
-           8             13         3.2180e-04      1.10e-08       5.85e-07       1.07e-01    
-           9             14         3.2180e-04      1.34e-09       1.46e-07       2.20e-01    
-          10             22         3.2180e-04      2.53e-13       2.23e-12       1.61e-01    
-    `xtol` termination condition is satisfied.
-    Function evaluations 22, initial cost 1.6781e-03, final cost 3.2180e-04, first-order optimality 1.61e-01.
-
-    ==================================================
-    RESULTS
-    ==================================================
-
-    Inverted parameters:
-      mass: 4.564379e-05 (true: 5.151000e-05)
-      x: -3.026160e+01 (true: -3.005587e+01)
-      y: 3.410635e+00 (true: 3.108514e+00)
-      z: 3.501530e-02 (true: 6.280746e-01)
-      vx: -3.002256e-04 (true: -3.404730e-04)
-      vy: -3.086887e-03 (true: -3.103002e-03)
-      vz: 5.584018e-05 (true: 7.188313e-05)
-
-    Final residual norm: 0.025369
-    Final residual by component:
-      X component: 0.017299
-      Y component: 0.018543
-      Z component: 0.000707
-    initial residual norm: 0.057933
-    final residual norm: 0.025369
-
-    Estimated Neptune mass: 4.564379e-05 solar masses
-    Estimated Neptune mass: 9.078549e+25 kg
-    Inversion completed successfully!
-    ==================================================
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 435-438
-
-3.2 Plotting the results
-------------------------
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 438-445
-
-.. code-block:: Python
-
-
-    from neptune_deterministic_methods import plot_uranus_orbits
-
-    predicted_uranus_trajectory = predict_U(result_unscaled, T = T, dt = dt)
-
-    plot_uranus_orbits(predicted_uranus_trajectory, U_true, T)
-
-
-
-
-.. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_002.png
-   :alt: Uranus Trajectory Projections (Observed vs Predicted), XY Plane, YZ Plane, ZX Plane
-   :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_002.png
-   :class: sphx-glr-single-img
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 447-453
-
-.. code-block:: Python
-
-
-    from setup_inversion import get_arrow_data
-    from neptune_deterministic_methods import plot_neptune_orbits
-
-    plot_neptune_orbits(result_unscaled, initial_conditions, T = T, dt = 1)
-
-
-
-
-.. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_003.png
-   :alt: Neptune Orbit Comparision  (inversion parameters vs True Parameters)
-   :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_003.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Computing trajectories...:   0%|          | 0/69350 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12423/69350 [00:00<00:00, 124215.31it/s]    Computing trajectories...:  36%|███▌      | 24972/69350 [00:00<00:00, 124962.53it/s]    Computing trajectories...:  54%|█████▍    | 37469/69350 [00:00<00:00, 124694.91it/s]    Computing trajectories...:  72%|███████▏  | 49939/69350 [00:00<00:00, 124220.91it/s]    Computing trajectories...:  90%|████████▉ | 62362/69350 [00:00<00:00, 124201.97it/s]    Computing trajectories...: 100%|██████████| 69350/69350 [00:00<00:00, 124302.57it/s]
-    Computing trajectories...:   0%|          | 0/69350 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12567/69350 [00:00<00:00, 125667.12it/s]    Computing trajectories...:  36%|███▋      | 25183/69350 [00:00<00:00, 125951.29it/s]    Computing trajectories...:  54%|█████▍    | 37779/69350 [00:00<00:00, 125632.41it/s]    Computing trajectories...:  73%|███████▎  | 50343/69350 [00:00<00:00, 125270.74it/s]    Computing trajectories...:  91%|█████████ | 62871/69350 [00:00<00:00, 124824.13it/s]    Computing trajectories...: 100%|██████████| 69350/69350 [00:00<00:00, 125145.36it/s]
-    Estimated orbit: 69351 points
-    True orbit: 69351 points
-    Number of direction arrows per orbit: 8
-    Orbital direction: Start (circle) → End (square)
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 458-461
-
-3.3 Using Regularisation to get the best regularisation parameter.
-------------------------------------------------------------------
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 464-477
-
-- In the following cells, we are going to demonstrate how ``CoFI`` can
-  be used to plot the regularisation curve or **L-Curve** in order to
-  get the best regularisation parameter for our inversion.
-
-- This will ensure that our model inferred i.e the parameters of Neptune
-  are meaningfull and the trajectories are not overshooting.
-
-- We will then use the best regularisation parameter, inferred from our
-  synthetic data, for running our final inversion on real data.
-
-- Note that the results may differ depending on where the method starts
-  the inversion and therefore one may not get the exact same l-curve.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 477-480
-
-.. code-block:: Python
-
-
-    alphas = np.logspace(-4, 2, 20)
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 482-522
+.. GENERATED FROM PYTHON SOURCE LINES 389-577
 
 .. code-block:: Python
 
 
     import cofi
-    from neptune_deterministic_methods import callback_func, set_lcurve_inversion_params
-    alphas = np.logspace(-4, 2, 10)
-    lcurve_problems = []
-    m_start = initial_conditions['Neptune'].copy()
-    m_start = scale_param(m_start)
-
-    for alpha in alphas:
-    
-        inv_problem_alpha = BaseProblem()
-        inv_problem_alpha.name = f"Neptune Orbit Determination alpha={alpha}"
-        inv_problem_alpha.set_data(U_true)
-        inv_problem_alpha.set_forward(predict_U, args = [T, dt])
-        inv_problem_alpha.set_initial_model(np.atleast_1d(m_start_scaled))
-        inv_problem_alpha.set_residual(residual, args = (U_true, alpha, T, dt))  # Pass U_true as an argument to residual function
-        inv_problem_alpha.set_jacobian(jacobian, args = (U_true, alpha, T, dt))  # Pass U_true and alpha as arguments to jacobian function
-        lcurve_problems.append(inv_problem_alpha)
-    
-    
-    inv_options_alpha = InversionOptions()
-    inv_options_alpha.set_tool("scipy.optimize.least_squares")
-    inv_options_alpha.set_params(
-        bounds=(bounds_lower_scaled, bounds_upper_scaled),
-        method="trf",
-        max_nfev=100,
-        # verbose=2, 
-        ftol=1e-14,
-        xtol=1e-14
-    )
+    from neptune_deterministic_methods import residual_weighted, jacobian_weighted, get_actual_data, plot_uranus_orbits, plot_neptune_orbits
+    import time
 
 
-    inversion_pool = cofi.utils.InversionPool(
-        list_of_inv_problems=lcurve_problems,
-        list_of_inv_options=inv_options_alpha,
-        callback=callback_func,
-        parallel=False,  # Use parallel processing if available, works only in Windows/linux due to Multiprocessing library not being able to pickle up the forward model on MacOS
-    
-    )
+    def run_chi2_morozov_sweep(U_data, alphas, m_start_scaled,
+                               sigmas_per_coord, bounds_lower_scaled, bounds_upper_scaled,
+                               T=190, dt=1, verbose=True):
+        '''Sweep alpha via cofi.utils.InversionPool, compute chi^2 at each
+        converged solution against the supplied per-coordinate sigmas.
+
+        Per-alpha inversion uses the cofi pattern (BaseProblem + InversionOptions
+        + scipy.optimize.least_squares tool), matching the L-curve sweep in
+        Section 3.3.
+
+        Parameters
+        ----------
+        U_data : np.ndarray, shape (3*T,)
+            Concatenated [x, y, z] Uranus observations.
+        alphas : iterable of float
+            Regularisation strengths to sweep.
+        m_start_scaled : np.ndarray
+            Starting model in scaled coordinates; also the centre of the Tikhonov term.
+        sigmas_per_coord : tuple (sigma_x, sigma_y, sigma_z)
+            Standard deviation of noise on each coordinate, in AU.
+        bounds_lower_scaled, bounds_upper_scaled : np.ndarray
+            Box bounds in scaled coordinates.
+        T, dt : int, float
+            Forward-model arguments.
+
+        Returns
+        -------
+        results : list of dict
+            One entry per alpha with keys: alpha, chi2, chi2_per_N, residual_norm,
+            m_scaled, m_unscaled.
+        idx_best : int
+            Index of the entry with chi^2/N closest to 1 (the Morozov pick).
+        N_data : int
+            Number of data points (= 3*T).
+        '''
+        sigma_x, sigma_y, sigma_z = sigmas_per_coord
+        inv_var = np.concatenate([
+            np.full(T, 1.0 / sigma_x**2),
+            np.full(T, 1.0 / sigma_y**2),
+            np.full(T, 1.0 / sigma_z**2),
+        ])
+        N_data = inv_var.size
+        reg_weight = 1.0 / np.abs(m_start_scaled)
+
+        # Build one BaseProblem per alpha (cofi pattern, same as Section 3.3 L-curve)
+        problems = []
+        for alpha in alphas:
+            inv_problem_alpha = BaseProblem()
+            inv_problem_alpha.name = f"Neptune Morozov chi^2 sweep alpha={alpha}"
+            inv_problem_alpha.set_data(U_data)
+            inv_problem_alpha.set_forward(predict_U, args=[T, dt])
+            inv_problem_alpha.set_initial_model(np.atleast_1d(m_start_scaled))
+            inv_problem_alpha.set_residual(
+                residual_weighted,
+                args=(U_data, m_start_scaled, reg_weight, alpha, T, dt),
+            )
+            inv_problem_alpha.set_jacobian(
+                jacobian_weighted,
+                args=(U_data, m_start_scaled, reg_weight, alpha, T, dt),
+            )
+            problems.append(inv_problem_alpha)
+
+        inv_options_sweep = InversionOptions()
+        inv_options_sweep.set_tool("scipy.optimize.least_squares")
+        inv_options_sweep.set_params(
+            bounds=(bounds_lower_scaled, bounds_upper_scaled),
+            method="trf",
+            max_nfev=100,
+            ftol=1e-12,
+            xtol=1e-12,
+            verbose=0,
+        )
+
+        # Run all alpha-inversions through cofi.utils.InversionPool
+        t0 = time.time()
+        pool = cofi.utils.InversionPool(
+            list_of_inv_problems=problems,
+            list_of_inv_options=inv_options_sweep,
+            parallel=False,
+        )
+        all_inv_results, _ = pool.run()
+        pool_time = time.time() - t0
+
+        # Compute chi^2 for each converged solution
+        results = []
+        for alpha, inv_result in zip(alphas, all_inv_results):
+            m_alpha = np.atleast_1d(inv_result.model)
+            final_pred = predict_U(m_alpha, T=T, dt=dt)
+            residuals = U_data - final_pred
+            chi2 = float(np.sum(residuals**2 * inv_var))
+            results.append({
+                'alpha': alpha,
+                'chi2': chi2,
+                'chi2_per_N': chi2 / N_data,
+                'residual_norm': float(np.linalg.norm(residuals)),
+                'm_scaled': m_alpha.copy(),
+                'm_unscaled': unscale_param(m_alpha),
+            })
+
+        if verbose:
+            print(f"Per-coordinate sigmas (AU): x = {sigma_x:.1e}, y = {sigma_y:.1e}, z = {sigma_z:.1e}")
+            print(f"N = {N_data}  (target: chi^2 = N, equivalently chi^2/N = 1)")
+            print(f"cofi.utils.InversionPool ran {len(alphas)} inversions in {pool_time:.1f}s\n")
+            print(f"{'alpha':>10}  {'chi^2':>12}  {'chi^2/N':>10}  {'||resid||':>12}")
+            print('-' * 54)
+            for r in results:
+                print(f"{r['alpha']:>10.4e}  {r['chi2']:>12.4e}  {r['chi2_per_N']:>10.4f}  {r['residual_norm']:>12.6f}")
+
+        diffs = np.abs(np.array([r['chi2_per_N'] for r in results]) - 1.0)
+        idx_best = int(np.argmin(diffs))
+        return results, idx_best, N_data
+
+
+    def iterate_chi2_morozov(U_data, m_start_scaled, alphas,
+                             bounds_lower_scaled, bounds_upper_scaled,
+                             T=190, dt=1, max_iter=5, tol=0.0005, verbose=True):
+        '''Iterative bootstrap-sigma chi^2 Morozov for unknown-noise problems.
+
+        1. Estimate per-coordinate sigma from residuals at m_start_scaled.
+        2. Run run_chi2_morozov_sweep with these sigmas; pick alpha minimising
+           |chi^2/N - 1|.
+        3. Re-estimate sigma from residuals at the picked alpha's m.
+        4. Iterate until max relative sigma change < tol.
+
+        Returns a dict with keys: alpha (final picked), m_scaled, m_unscaled,
+        chi2_per_N, sigmas, history (list of per-iteration entries).
+        '''
+        def _estimate_sigmas(r):
+            return (float(np.std(r[:T])), float(np.std(r[T:2*T])), float(np.std(r[2*T:])))
+
+        r0 = U_data - predict_U(m_start_scaled.copy(), T=T, dt=dt)
+        sigma_x, sigma_y, sigma_z = _estimate_sigmas(r0)
+        if verbose:
+            print(f"Initial residual at m_start: ||r0|| = {np.linalg.norm(r0):.6f}")
+            print(f"Initial sigmas: x={sigma_x:.4e}, y={sigma_y:.4e}, z={sigma_z:.4e}")
+
+        history = []
+        for it in range(max_iter):
+            sigmas = (sigma_x, sigma_y, sigma_z)
+            if verbose:
+                print(f"\n--- Outer iteration {it + 1}/{max_iter} ---")
+            results, idx_best, N_data = run_chi2_morozov_sweep(
+                U_data, alphas, m_start_scaled, sigmas,
+                bounds_lower_scaled, bounds_upper_scaled,
+                T=T, dt=dt, verbose=verbose,
+            )
+            best = results[idx_best]
+            r = U_data - predict_U(best['m_scaled'], T=T, dt=dt)
+            sigma_x_new, sigma_y_new, sigma_z_new = _estimate_sigmas(r)
+            rel_change = max(
+                abs(sigma_x_new - sigma_x) / max(sigma_x, 1e-30),
+                abs(sigma_y_new - sigma_y) / max(sigma_y, 1e-30),
+                abs(sigma_z_new - sigma_z) / max(sigma_z, 1e-30),
+            )
+            history.append({
+                'iter': it + 1, 'sigmas_used': sigmas,
+                'sigmas_new': (sigma_x_new, sigma_y_new, sigma_z_new),
+                'alpha_star': best['alpha'], 'chi2_per_N': best['chi2_per_N'],
+                'best': best, 'rel_change': rel_change,
+            })
+            if verbose:
+                print(f"  Pick: alpha={best['alpha']:.4e}, chi^2/N={best['chi2_per_N']:.4f}")
+                print(f"  Re-estimated sigmas: x={sigma_x_new:.4e}, y={sigma_y_new:.4e}, z={sigma_z_new:.4e}")
+                print(f"  Max relative sigma change: {rel_change:.4f}  (tol={tol})")
+            if rel_change < tol:
+                if verbose:
+                    print(f"  CONVERGED after {it + 1} outer iteration(s)")
+                sigma_x, sigma_y, sigma_z = sigma_x_new, sigma_y_new, sigma_z_new
+                break
+            sigma_x, sigma_y, sigma_z = sigma_x_new, sigma_y_new, sigma_z_new
+
+        final = history[-1]
+        return {
+            'alpha': final['alpha_star'],
+            'm_scaled': final['best']['m_scaled'],
+            'm_unscaled': final['best']['m_unscaled'],
+            'chi2_per_N': final['chi2_per_N'],
+            'sigmas': (sigma_x, sigma_y, sigma_z),
+            'history': history,
+        }
 
 
 
@@ -774,73 +717,100 @@ theory.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 524-530
+
+.. GENERATED FROM PYTHON SOURCE LINES 582-593
+
+4.1 Synthetic data — proper χ² discrepancy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The synthetic dataset was created by ``generate_synthetic_data`` with
+Gaussian noise of standard deviation
+:math:`(\sigma_x, \sigma_y, \sigma_z) = (10^{-3}, 10^{-3}, 10^{-5})` AU
+on each coordinate. We use these *exact* injected values to build the
+chi-squared statistic. Sweeping :math:`\alpha` over a wide log-spaced
+range, we report :math:`\chi^2`, :math:`\chi^2/N` and residual norm at
+each, then pick the :math:`\alpha` with :math:`\chi^2/N` closest to 1.
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 593-643
 
 .. code-block:: Python
 
 
-    all_res, all_cb_returns = inversion_pool.run()
+    # Generate the synthetic dataset with the exact RNG state used by the inversion
+    # so that the chi^2 statistic uses the data we actually inverted.
+    np.random.seed(42)
 
-    l_curve_points = list(zip(*all_cb_returns))
-    residual_norm, regularization_norm = np.array(l_curve_points)
+    T_synth, dt_synth = 190, 1
+    sigmas_synth = (1e-3, 1e-3, 1e-5)
+    U_synth = generate_synthetic_data(
+        T=T_synth, dt=dt_synth, z_scaling=False, add_noise=True,
+        noise_level=np.array(sigmas_synth),
+    )
+
+    # Setup: starting model and bounds in scaled coordinates
+    m_start_synth = scale_param(np.array(STARTING_POINTS))
+    PB = get_param_bounds()
+    bls_synth = scale_param(np.array([b[0] for b in PB]))
+    bus_synth = scale_param(np.array([b[1] for b in PB]))
+
+    # Sweep alpha and find the Morozov pick (chi^2/N closest to 1)
+    alphas_synth = np.logspace(-6, 2, 13)
+    sweep_synth, idx_synth, N_synth = run_chi2_morozov_sweep(
+        U_synth, alphas_synth,
+        m_start_synth, sigmas_synth,
+        bls_synth, bus_synth,
+        T=T_synth, dt=dt_synth,
+    )
+    best_synth = sweep_synth[idx_synth]
+
+    print()
+    print(f"Morozov pick: alpha = {best_synth['alpha']:.4e}")
+    print(f"  chi^2     = {best_synth['chi2']:.4f}     (target: N = {N_synth})")
+    print(f"  chi^2/N   = {best_synth['chi2_per_N']:.4f}     (target: 1.0)")
+    print(f"  ||resid|| = {best_synth['residual_norm']:.6f} AU")
+
+    # Compare recovered parameters with truth
+    m_0 = set_true_m()
+    param_names = ['mass', 'x', 'y', 'z', 'vx', 'vy', 'vz']
+    print("\nInverted parameters (synthetic, chi^2 Morozov):")
+    for i, idx in enumerate(get_inversion_indices()):
+        true_val = m_0[idx]
+        val = best_synth['m_unscaled'][i]
+        err = 100 * abs(val - true_val) / max(abs(true_val), 1e-30)
+        print(f"  {param_names[idx]:>4s}: {val:>14.6e}   (true: {true_val:>14.6e},   err: {err:>8.2f}%)")
+
+    # Plot Uranus and Neptune orbits at the picked alpha
+    predicted_uranus = predict_U(best_synth['m_scaled'], T=T_synth, dt=dt_synth)
+    plot_uranus_orbits(predicted_uranus, U_synth, T_synth)
+    plot_neptune_orbits(best_synth['m_unscaled'], initial_conditions, T=T_synth, dt=dt_synth)
 
 
 
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_002.png
+         :alt: Uranus Trajectory Projections (Observed vs Predicted), XY Plane, YZ Plane, ZX Plane
+         :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_002.png
+         :class: sphx-glr-multi-img
+
+    *
+
+      .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_003.png
+         :alt: Neptune Orbit Comparision  (inversion parameters vs True Parameters)
+         :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_003.png
+         :class: sphx-glr-multi-img
 
 
 .. rst-class:: sphx-glr-script-out
 
  .. code-block:: none
 
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12616/68985 [00:00<00:00, 126143.28it/s]    Computing trajectories...:  37%|███▋      | 25231/68985 [00:00<00:00, 125824.92it/s]    Computing trajectories...:  55%|█████▍    | 37814/68985 [00:00<00:00, 125506.52it/s]    Computing trajectories...:  73%|███████▎  | 50365/68985 [00:00<00:00, 125202.74it/s]    Computing trajectories...:  91%|█████████ | 62886/68985 [00:00<00:00, 124744.36it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 125094.22it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.298 to 20.083 (range: 38.382)
-    Y: -19.318 to 19.019 (range: 38.338)
-    Z: -0.272182 to 0.248330 (range: 0.520512)
-    Alpha 1.00e-04 - Residual norm: 0.041388, Solution norm: 5.961225
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12539/68985 [00:00<00:00, 125378.16it/s]    Computing trajectories...:  36%|███▋      | 25077/68985 [00:00<00:00, 123875.21it/s]    Computing trajectories...:  54%|█████▍    | 37466/68985 [00:00<00:00, 123625.27it/s]    Computing trajectories...:  72%|███████▏  | 49830/68985 [00:00<00:00, 122859.90it/s]    Computing trajectories...:  90%|█████████ | 62264/68985 [00:00<00:00, 123386.60it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 123388.08it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.297 to 20.084 (range: 38.381)
-    Y: -19.319 to 19.019 (range: 38.338)
-    Z: -0.272195 to 0.248339 (range: 0.520534)
-    Alpha 4.64e-04 - Residual norm: 0.028543, Solution norm: 5.936951
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12457/68985 [00:00<00:00, 124561.51it/s]    Computing trajectories...:  36%|███▌      | 24914/68985 [00:00<00:00, 122441.77it/s]    Computing trajectories...:  54%|█████▍    | 37165/68985 [00:00<00:00, 122467.93it/s]    Computing trajectories...:  72%|███████▏  | 49430/68985 [00:00<00:00, 122537.95it/s]    Computing trajectories...:  90%|████████▉ | 61800/68985 [00:00<00:00, 122952.98it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 122879.79it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.299 to 20.085 (range: 38.385)
-    Y: -19.318 to 19.018 (range: 38.336)
-    Z: -0.272212 to 0.248322 (range: 0.520534)
-    Alpha 2.15e-03 - Residual norm: 0.041766, Solution norm: 5.959716
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12603/68985 [00:00<00:00, 126018.40it/s]    Computing trajectories...:  37%|███▋      | 25205/68985 [00:00<00:00, 125594.93it/s]    Computing trajectories...:  55%|█████▍    | 37765/68985 [00:00<00:00, 125119.12it/s]    Computing trajectories...:  73%|███████▎  | 50278/68985 [00:00<00:00, 124442.68it/s]    Computing trajectories...:  91%|█████████ | 62723/68985 [00:00<00:00, 124169.99it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 124650.70it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.382)
-    Y: -19.319 to 19.018 (range: 38.336)
-    Z: -0.272180 to 0.248319 (range: 0.520498)
-    Alpha 1.00e-02 - Residual norm: 0.037611, Solution norm: 5.932466
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12359/68985 [00:00<00:00, 123579.22it/s]    Computing trajectories...:  36%|███▌      | 24717/68985 [00:00<00:00, 122051.74it/s]    Computing trajectories...:  54%|█████▎    | 36924/68985 [00:00<00:00, 120973.19it/s]    Computing trajectories...:  71%|███████   | 49023/68985 [00:00<00:00, 120949.59it/s]    Computing trajectories...:  89%|████████▊ | 61144/68985 [00:00<00:00, 121039.64it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 121248.72it/s]
 
     Synthetic data ranges:
     X: -18.298 to 20.084 (range: 38.383)
@@ -849,177 +819,142 @@ theory.
 
     Noisy synthetic data ranges:
     X: -18.299 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.020 (range: 38.338)
-    Z: -0.272211 to 0.248328 (range: 0.520540)
-    Alpha 4.64e-02 - Residual norm: 0.029271, Solution norm: 5.924744
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12373/68985 [00:00<00:00, 123721.27it/s]    Computing trajectories...:  36%|███▌      | 24746/68985 [00:00<00:00, 122096.36it/s]    Computing trajectories...:  54%|█████▎    | 36958/68985 [00:00<00:00, 121908.04it/s]    Computing trajectories...:  71%|███████▏  | 49173/68985 [00:00<00:00, 121998.98it/s]    Computing trajectories...:  89%|████████▉ | 61374/68985 [00:00<00:00, 121837.01it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 121921.48it/s]
+    Y: -19.321 to 19.020 (range: 38.340)
+    Z: -0.272212 to 0.248322 (range: 0.520534)
+    Per-coordinate sigmas (AU): x = 1.0e-03, y = 1.0e-03, z = 1.0e-05
+    N = 570  (target: chi^2 = N, equivalently chi^2/N = 1)
+    cofi.utils.InversionPool ran 13 inversions in 124.7s
 
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
+         alpha         chi^2     chi^2/N     ||resid||
+    ------------------------------------------------------
+    1.0000e-06    6.9974e+02      1.2276      0.018290
+    4.6416e-06    6.1285e+02      1.0752      0.018289
+    2.1544e-05    7.7775e+02      1.3645      0.018290
+    1.0000e-04    9.7418e+02      1.7091      0.018291
+    4.6416e-04    2.7175e+03      4.7676      0.018295
+    2.1544e-03    3.8774e+03      6.8024      0.018299
+    1.0000e-02    4.3661e+03      7.6598      0.018406
+    4.6416e-02    4.4774e+03      7.8551      0.019295
+    2.1544e-01    4.4629e+03      7.8296      0.019892
+    1.0000e+00    4.1566e+03      7.2923      0.021908
+    4.6416e+00    4.5414e+03      7.9674      0.036640
+    2.1544e+01    8.0232e+03     14.0758      0.054833
+    1.0000e+02    8.8285e+03     15.4885      0.057771
 
-    Noisy synthetic data ranges:
-    X: -18.298 to 20.085 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.338)
-    Z: -0.272203 to 0.248322 (range: 0.520525)
-    Alpha 2.15e-01 - Residual norm: 0.162623, Solution norm: 5.672808
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12420/68985 [00:00<00:00, 124187.09it/s]    Computing trajectories...:  36%|███▌      | 24839/68985 [00:00<00:00, 121436.44it/s]    Computing trajectories...:  54%|█████▎    | 36987/68985 [00:00<00:00, 121308.20it/s]    Computing trajectories...:  71%|███████▏  | 49224/68985 [00:00<00:00, 121720.72it/s]    Computing trajectories...:  89%|████████▉ | 61510/68985 [00:00<00:00, 122128.40it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 122047.63it/s]
+    Morozov pick: alpha = 4.6416e-06
+      chi^2     = 612.8540     (target: N = 570)
+      chi^2/N   = 1.0752     (target: 1.0)
+      ||resid|| = 0.018289 AU
 
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.299 to 20.085 (range: 38.384)
-    Y: -19.317 to 19.019 (range: 38.336)
-    Z: -0.272205 to 0.248325 (range: 0.520530)
-    Alpha 1.00e+00 - Residual norm: 0.183095, Solution norm: 0.518041
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12427/68985 [00:00<00:00, 124259.75it/s]    Computing trajectories...:  36%|███▌      | 24853/68985 [00:00<00:00, 121735.98it/s]    Computing trajectories...:  54%|█████▎    | 37031/68985 [00:00<00:00, 121691.85it/s]    Computing trajectories...:  71%|███████▏  | 49203/68985 [00:00<00:00, 121689.28it/s]    Computing trajectories...:  89%|████████▉ | 61396/68985 [00:00<00:00, 121773.43it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 121850.06it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.297 to 20.085 (range: 38.382)
-    Y: -19.318 to 19.019 (range: 38.337)
-    Z: -0.272192 to 0.248321 (range: 0.520513)
-    Alpha 4.64e+00 - Residual norm: 0.176101, Solution norm: 0.401525
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12444/68985 [00:00<00:00, 124427.96it/s]    Computing trajectories...:  36%|███▌      | 24887/68985 [00:00<00:00, 122008.43it/s]    Computing trajectories...:  54%|█████▍    | 37092/68985 [00:00<00:00, 121953.57it/s]    Computing trajectories...:  72%|███████▏  | 49341/68985 [00:00<00:00, 122160.86it/s]    Computing trajectories...:  89%|████████▉ | 61642/68985 [00:00<00:00, 122463.76it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 122428.90it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.298 to 20.086 (range: 38.384)
-    Y: -19.317 to 19.019 (range: 38.337)
-    Z: -0.272209 to 0.248335 (range: 0.520544)
-    Alpha 2.15e+01 - Residual norm: 0.165101, Solution norm: 0.485196
-    Computing trajectories...:   0%|          | 0/68985 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12611/68985 [00:00<00:00, 126102.90it/s]    Computing trajectories...:  37%|███▋      | 25222/68985 [00:00<00:00, 124932.03it/s]    Computing trajectories...:  55%|█████▍    | 37716/68985 [00:00<00:00, 124314.04it/s]    Computing trajectories...:  73%|███████▎  | 50148/68985 [00:00<00:00, 123608.15it/s]    Computing trajectories...:  91%|█████████ | 62510/68985 [00:00<00:00, 123184.85it/s]    Computing trajectories...: 100%|██████████| 68985/68985 [00:00<00:00, 123847.77it/s]
-
-    Synthetic data ranges:
-    X: -18.298 to 20.084 (range: 38.383)
-    Y: -19.319 to 19.019 (range: 38.337)
-    Z: -0.272199 to 0.248322 (range: 0.520521)
-
-    Noisy synthetic data ranges:
-    X: -18.300 to 20.085 (range: 38.385)
-    Y: -19.317 to 19.019 (range: 38.336)
-    Z: -0.272193 to 0.248311 (range: 0.520504)
-    Alpha 1.00e+02 - Residual norm: 4.188085, Solution norm: 0.641111
+    Inverted parameters (synthetic, chi^2 Morozov):
+      mass:   5.018443e-05   (true:   5.151000e-05,   err:     2.57%)
+         x:  -2.972405e+01   (true:  -3.005587e+01,   err:     1.10%)
+         y:   3.509566e+00   (true:   3.108514e+00,   err:    12.90%)
+         z:   6.731163e-01   (true:   6.280746e-01,   err:     7.17%)
+        vx:  -4.015035e-04   (true:  -3.404730e-04,   err:    17.93%)
+        vy:  -3.112996e-03   (true:  -3.103002e-03,   err:     0.32%)
+        vz:   7.406394e-05   (true:   7.188313e-05,   err:     3.03%)
+    Estimated orbit: 69351 points
+    True orbit: 69351 points
+    Number of direction arrows per orbit: 8
+    Orbital direction: Start (circle) → End (square)
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 532-554
+.. GENERATED FROM PYTHON SOURCE LINES 648-673
 
-.. code-block:: Python
+4.2 Real data — iterative bootstrap σ + χ² discrepancy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+For real Uranus data the per-coordinate noise standard deviations
+:math:`(\sigma_x, \sigma_y, \sigma_z)` are not known. We estimate them
+by an **iterative bootstrap**:
 
-    plt.figure(figsize=(10, 8))
-    plt.plot(residual_norm, regularization_norm, 'k.-')
-    plt.xlabel(r'Norm of residual $||g(m)-d||_2$')
-    plt.ylabel(r'Norm of regularization term $||Rm||_2$')
+1. Initial :math:`\hat\sigma_c` ← per-coordinate std of the residual at
+   the starting model.
+2. Run the χ² sweep with these :math:`\hat\sigma`, pick
+   :math:`\alpha^\star` via :math:`\chi^2/N \approx 1`.
+3. Re-estimate :math:`\hat\sigma_c` from residuals at the converged
+   :math:`m_{\alpha^\star}`.
+4. Iterate until :math:`\hat\sigma` stops changing (relative change
+   below tolerance).
 
-    for damping, res_norm, reg_norm in zip(alphas, residual_norm, regularization_norm):
-        plt.plot(res_norm, reg_norm, 'ro')
-        plt.text(
-            res_norm - res_norm * 2e-3,
-            reg_norm - reg_norm * 2e-3,
-            s=f"{damping:.1e}",  # Label as scientific notation
-            va='top',
-            ha='right',
-            fontsize=8,
-            color='r'
-        )
+In practice, for this problem the starting model is already close to
+truth (a known-good seed model), so the residuals at the start yield an
+excellent first estimate of :math:`\hat\sigma`, and the iteration
+usually converges in one or two outer steps.
 
-    plt.title("L-curve with damping parameters")
-    plt.grid(True)
-    plt.show()
-
-
-
-
-.. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_004.png
-   :alt: L-curve with damping parameters
-   :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_004.png
-   :class: sphx-glr-single-img
+The χ²/N at the final picked :math:`\alpha` should be ≈ 1 by
+construction — that’s the Morozov criterion telling us we’ve fit the
+data to within the estimated noise floor, no more.
 
 
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 559-584
-
-4. Real Data Inversion
-----------------------
-
-- We then apply our deterministic inversion via CoFI on actual
-  observational data obtained from `NASA JPL
-  Horizons <https://ssd.jpl.nasa.gov/horizons/app.html#/>`__.
-
-- The data consists of geometric Cartesian position and velocity vectors
-  of **Uranus**, relative to the **Solar System Barycenter**, with the
-  following settings:
-
-  - **Target body**: Uranus (799)
-  - **Center body**: Solar System Barycenter (0)
-  - **Reference frame**: Ecliptic of J2000.0
-  - **Time span**: A.D. 1775-Jan-01 to 2125-Jan-02
-  - **Step size**: 1 calendar year
-  - **Output format**: Cartesian position and velocity (AU, AU/day)
-  - **Output type**: GEOMETRIC states
-  - **Calendar mode**: Mixed Julian/Gregorian
-  - **Ephemeris source**: ``ura183_merged`` (Uranus), ``DE441`` (Solar
-    System)
-
-This dataset provides real-world observations to test the robustness of
-our inversion pipeline.
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 584-588
+.. GENERATED FROM PYTHON SOURCE LINES 673-715
 
 .. code-block:: Python
 
 
-    #uncomment to install the astroquery package
-    # !pip install astroquery
+    # Iterative chi^2 Morozov on real data
+    T_real, dt_real = 190, 1
+    U_real = get_actual_data(z_scaling=False, T=T_real)
 
+    m_start_real = scale_param(np.array(STARTING_POINTS))
+    PB = get_param_bounds()
+    bls_real = scale_param(np.array([b[0] for b in PB]))
+    bus_real = scale_param(np.array([b[1] for b in PB]))
 
+    # Wide log-spaced sweep over alpha
+    alphas_real = np.logspace(-4, 4, 9)
 
+    result_real = iterate_chi2_morozov(
+        U_real, m_start_real, alphas_real,
+        bls_real, bus_real,
+        T=T_real, dt=dt_real,
+        max_iter=5, tol=0.0005,
+    )
 
+    print()
+    print(f"Final picked alpha = {result_real['alpha']:.4e}")
+    print(f"Final chi^2/N      = {result_real['chi2_per_N']:.4f}")
+    print(f"Final sigmas       = (x:{result_real['sigmas'][0]:.4e}, y:{result_real['sigmas'][1]:.4e}, z:{result_real['sigmas'][2]:.4e})")
+    print(f"Outer iterations   = {len(result_real['history'])}")
 
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 590-607
-
-.. code-block:: Python
-
-
-    from astroquery.jplhorizons import Horizons     
-    from neptune_deterministic_methods import get_actual_data   
-    T = 190
-    dt = 1
-    U_true = get_actual_data(z_scaling=False, T=T)
-
+    # Recovered parameters vs truth
     m_0 = set_true_m()
+    param_names = ['mass', 'x', 'y', 'z', 'vx', 'vy', 'vz']
+    print("\nInverted parameters (real data, iterative chi^2 Morozov):")
+    for i, idx in enumerate(get_inversion_indices()):
+        true_val = m_0[idx]
+        val = result_real['m_unscaled'][i]
+        err = 100 * abs(val - true_val) / max(abs(true_val), 1e-30)
+        print(f"  {param_names[idx]:>4s}: {val:>14.6e}   (true: {true_val:>14.6e},   err: {err:>8.2f}%)")
 
-    initial_conditions = set_initial_conditions()
-    PARAM_BOUNDS = get_param_bounds()
-    PARAM_SCALES = get_param_scales()
-    INVERT_INDICES = get_inversion_indices()
-    STARTING_POINTS = get_starting_points()
-
-    validate_config()
+    # Plot Uranus + Neptune trajectories at the final picked alpha
+    predicted_uranus_real = predict_U(result_real['m_scaled'], T=T_real, dt=dt_real)
+    plot_uranus_orbits(predicted_uranus_real, U_real, T_real)
+    plot_neptune_orbits(result_real['m_unscaled'], initial_conditions, T=T_real, dt=dt_real)
 
 
 
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_004.png
+         :alt: Uranus Trajectory Projections (Observed vs Predicted), XY Plane, YZ Plane, ZX Plane
+         :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_004.png
+         :class: sphx-glr-multi-img
+
+    *
+
+      .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_005.png
+         :alt: Neptune Orbit Comparision  (inversion parameters vs True Parameters)
+         :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_005.png
+         :class: sphx-glr-multi-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -1032,235 +967,63 @@ our inversion pipeline.
     Z: -0.272231 to 0.248352 (range: 0.520583)
 
     Z scaling is disabled, using original Z values.
-    Inverting for: ['mass', 'x', 'y', 'z', 'vx', 'vy', 'vz']
-    Starting points: [5.129494593915012e-05, -29.91585533802299, 3.145551080953517, 0.1050744172524112, -0.0002804329678559355, -0.00311021549555015, 4.187313350941659e-05]
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 609-631
-
-.. code-block:: Python
-
-
-    m_start_scaled = scale_param(np.array(STARTING_POINTS))
-    if len(INVERT_INDICES) == 1:
-        Nmstart_scaled = m_start_scaled.item() if hasattr(m_start_scaled, 'item') else m_start_scaled
-
-    print(f"\nStarting points (unscaled): {STARTING_POINTS}")
-    print(f"Starting points (scaled): {m_start_scaled}")
-
-    print("\nTesting forward function...")
-    try:
-        pred_test = predict_U(m_start_scaled, T=T, dt=dt, z_scale_factor=z_scale_factor)
-        residual_test = residual(m_start_scaled, U_true, T=T, dt=dt)
-        print(f"Initial residual norm: {np.linalg.norm(residual_test):.6f}")
-        print(f"Residual by component:")
-        print(f"  X component: {np.linalg.norm(residual_test[:T]):.6f}")
-        print(f"  Y component: {np.linalg.norm(residual_test[T:2*T]):.6f}")
-        print(f"  Z component: {np.linalg.norm(residual_test[2*T:]):.6f}")
-    except Exception as e:
-        print(f"Forward function test failed: {e}")
-        import traceback
-        traceback.print_exc()
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Starting points (unscaled): [5.129494593915012e-05, -29.91585533802299, 3.145551080953517, 0.1050744172524112, -0.0002804329678559355, -0.00311021549555015, 4.187313350941659e-05]
-    Starting points (scaled): [ 1.83825353e-04 -4.59414276e+00  4.33575690e-01  6.82916330e-02
-     -2.24204674e-01 -3.74160049e+00  2.81992340e-03]
-
-    Testing forward function...
-    Initial residual norm: 1.501377
-    Residual by component:
-      X component: 1.098035
-      Y component: 1.023848
-      Z component: 0.013735
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 633-707
-
-.. code-block:: Python
-
-
-    alpha = 2.2e-1  # from the l curve
-
-    inv_problem = BaseProblem()
-    inv_problem.name = "Neptune Orbit Determination - Config Driven"
-    inv_problem.set_data(U_true)
-    inv_problem.set_forward(predict_U, args = [T, dt])
-    inv_problem.set_initial_model(np.atleast_1d(m_start_scaled))
-    inv_problem.set_residual(residual, args = (U_true, alpha, T, dt))  # Pass U_true as an argument to residual function
-    inv_problem.set_jacobian(jacobian, args = (U_true, alpha, T, dt))  # Pass U_true as an argument to jacobian function
-    bounds_lower_scaled = scale_param(np.array([bound[0] for bound in PARAM_BOUNDS]))
-    bounds_upper_scaled = scale_param(np.array([bound[1] for bound in PARAM_BOUNDS]))
-
-    inv_options = InversionOptions()
-    inv_options.set_tool("scipy.optimize.least_squares")
-    inv_options.set_params(
-        bounds=(bounds_lower_scaled, bounds_upper_scaled),    # Uncomment to use bounds when using trust region reflective method
-        method="trf",   # Trust Region Reflective method, you can also try 'lm' (Levenberg-Marquardt) if you prefer
-        max_nfev=100,
-        verbose=2,
-        ftol=1e-12,
-        xtol=1e-12
-    )
-
-    print("\nRunning inversion...")
-    try:
-        inv = Inversion(inv_problem, inv_options)
-        inv_result = inv.run()
-        result = inv_result.model
-        result_unscaled = unscale_param(result)
-    
-        print("\n" + "="*50)
-        print("RESULTS")
-        print("="*50)
-    
-        param_names = ['mass', 'x', 'y', 'z', 'vx', 'vy', 'vz']
-        result_unscaled = np.atleast_1d(result_unscaled)
-    
-        print("\nInverted parameters:")
-        for i, param_idx in enumerate(INVERT_INDICES):
-            param_name = param_names[param_idx]
-            estimated = result_unscaled[i]
-            true_val = m_0[param_idx]
-            starting = STARTING_POINTS[i]
-        
-            print(f"  {param_name}: {estimated:.6e} (true: {true_val:.6e}, started: {starting:.6e})")
-    
-        final_pred = predict_U(result, T, dt)
-        final_residual = U_true - final_pred
-        print(f"\nFinal residual norm: {np.linalg.norm(final_residual):.6f}")
-        print(f"Final residual by component:")
-        print(f"  X component: {np.linalg.norm(final_residual[:T]):.6f}")
-        print(f"  Y component: {np.linalg.norm(final_residual[T:2*T]):.6f}")
-        print(f"  Z component: {np.linalg.norm(final_residual[2*T:]):.6f}")
-    
-        print(f'initial residual norm: {np.linalg.norm(residual(m_start_scaled, U_true)):.6f}')
-        print(f'final residual norm: {np.linalg.norm(final_residual):.6f}')
-    
-    
-        if 0 in INVERT_INDICES:
-            mass_idx = INVERT_INDICES.index(0)
-            neptune_mass = result_unscaled[mass_idx]
-            print(f"\nEstimated Neptune mass: {neptune_mass:.6e} solar masses")
-            print(f"Estimated Neptune mass: {neptune_mass * 1.989e30:.6e} kg")
-    
-        print("Inversion completed successfully!")
-        print("="*50)
-    
-    except Exception as e:
-        print(f"Inversion failed: {e}")
-        import traceback
-        traceback.print_exc()
-
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    Running inversion...
-       Iteration     Total nfev        Cost      Cost reduction    Step norm     Optimality   
-           0              1         1.9825e+00                                    2.19e+02    
-           1              4         1.9517e+00      3.08e-02       8.92e-02       2.54e+02    
-           2              5         1.9474e+00      4.33e-03       2.23e-02       2.79e+01    
-           3              6         1.9443e+00      3.05e-03       5.58e-03       6.42e+01    
-           4              7         1.9438e+00      5.84e-04       1.39e-03       1.44e+02    
-           5             10         1.9433e+00      4.33e-04       2.18e-05       6.16e+01    
-           6             21         1.9433e+00      0.00e+00       0.00e+00       6.16e+01    
-    `xtol` termination condition is satisfied.
-    Function evaluations 21, initial cost 1.9825e+00, final cost 1.9433e+00, first-order optimality 6.16e+01.
-
-    ==================================================
-    RESULTS
-    ==================================================
-
-    Inverted parameters:
-      mass: 2.281293e-05 (true: 5.151000e-05, started: 5.129495e-05)
-      x: -2.964311e+01 (true: -3.005587e+01, started: -2.991586e+01)
-      y: 3.530712e+00 (true: 3.108514e+00, started: 3.145551e+00)
-      z: 7.839117e-02 (true: 6.280746e-01, started: 1.050744e-01)
-      vx: -2.869350e-04 (true: -3.404730e-04, started: -2.804330e-04)
-      vy: -3.082140e-03 (true: -3.103002e-03, started: -3.110215e-03)
-      vz: -5.582274e-04 (true: 7.188313e-05, started: 4.187313e-05)
-
-    Final residual norm: 1.484603
-    Final residual by component:
-      X component: 1.074883
-      Y component: 1.023876
-      Z component: 0.018795
-    initial residual norm: 1.501377
-    final residual norm: 1.484603
-
-    Estimated Neptune mass: 2.281293e-05 solar masses
-    Estimated Neptune mass: 4.537492e+25 kg
-    Inversion completed successfully!
-    ==================================================
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 709-714
-
-.. code-block:: Python
-
-
-    predicted_uranus_trajectory = predict_U(result_unscaled, T = T, dt = dt)
-
-    plot_uranus_orbits(predicted_uranus_trajectory, U_true, T)
-
-
-
-
-.. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_005.png
-   :alt: Uranus Trajectory Projections (Observed vs Predicted), XY Plane, YZ Plane, ZX Plane
-   :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_005.png
-   :class: sphx-glr-single-img
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 716-722
-
-.. code-block:: Python
-
-
-    from setup_inversion import get_arrow_data
-    from neptune_deterministic_methods import plot_neptune_orbits
-
-    plot_neptune_orbits(result_unscaled, initial_conditions, T = T, dt = 1)
-
-
-
-
-.. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_006.png
-   :alt: Neptune Orbit Comparision  (inversion parameters vs True Parameters)
-   :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_finding_neptune_via_deterministic_inv_006.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Computing trajectories...:   0%|          | 0/69350 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12365/69350 [00:00<00:00, 123643.63it/s]    Computing trajectories...:  36%|███▌      | 24801/69350 [00:00<00:00, 124059.52it/s]    Computing trajectories...:  54%|█████▎    | 37207/69350 [00:00<00:00, 123583.67it/s]    Computing trajectories...:  71%|███████▏  | 49566/69350 [00:00<00:00, 123439.81it/s]    Computing trajectories...:  89%|████████▉ | 62015/69350 [00:00<00:00, 123816.00it/s]    Computing trajectories...: 100%|██████████| 69350/69350 [00:00<00:00, 123756.42it/s]
-    Computing trajectories...:   0%|          | 0/69350 [00:00<?, ?it/s]    Computing trajectories...:  18%|█▊        | 12520/69350 [00:00<00:00, 125189.08it/s]    Computing trajectories...:  36%|███▌      | 25052/69350 [00:00<00:00, 125260.18it/s]    Computing trajectories...:  54%|█████▍    | 37579/69350 [00:00<00:00, 124733.66it/s]    Computing trajectories...:  72%|███████▏  | 50053/69350 [00:00<00:00, 124178.14it/s]    Computing trajectories...:  90%|█████████ | 62488/69350 [00:00<00:00, 124012.00it/s]    Computing trajectories...: 100%|██████████| 69350/69350 [00:00<00:00, 124404.97it/s]
+    Initial residual at m_start: ||r0|| = 1.501377
+    Initial sigmas: x=7.8311e-02, y=7.4258e-02, z=9.7920e-04
+
+    --- Outer iteration 1/5 ---
+    Per-coordinate sigmas (AU): x = 7.8e-02, y = 7.4e-02, z = 9.8e-04
+    N = 570  (target: chi^2 = N, equivalently chi^2/N = 1)
+    cofi.utils.InversionPool ran 9 inversions in 167.8s
+
+         alpha         chi^2     chi^2/N     ||resid||
+    ------------------------------------------------------
+    1.0000e-04    2.5600e+03      4.4912      0.140314
+    1.0000e-03    1.4264e+04     25.0250      0.250974
+    1.0000e-02    2.5355e+01      0.0445      0.285431
+    1.0000e-01    1.2118e+01      0.0213      0.211579
+    1.0000e+00    8.5259e+01      0.1496      0.572651
+    1.0000e+01    2.1123e+02      0.3706      0.931648
+    1.0000e+02    5.8283e+02      1.0225      1.500778
+    1.0000e+03    5.8346e+02      1.0236      1.501372
+    1.0000e+04    5.8346e+02      1.0236      1.501377
+      Pick: alpha=1.0000e+02, chi^2/N=1.0225
+      Re-estimated sigmas: x=7.8277e-02, y=7.4224e-02, z=9.7833e-04
+      Max relative sigma change: 0.0009  (tol=0.0005)
+
+    --- Outer iteration 2/5 ---
+    Per-coordinate sigmas (AU): x = 7.8e-02, y = 7.4e-02, z = 9.8e-04
+    N = 570  (target: chi^2 = N, equivalently chi^2/N = 1)
+    cofi.utils.InversionPool ran 9 inversions in 167.6s
+
+         alpha         chi^2     chi^2/N     ||resid||
+    ------------------------------------------------------
+    1.0000e-04    2.5645e+03      4.4992      0.140314
+    1.0000e-03    1.4290e+04     25.0695      0.250974
+    1.0000e-02    2.5388e+01      0.0445      0.285431
+    1.0000e-01    1.2133e+01      0.0213      0.211579
+    1.0000e+00    8.5360e+01      0.1498      0.572651
+    1.0000e+01    2.1148e+02      0.3710      0.931648
+    1.0000e+02    5.8352e+02      1.0237      1.500778
+    1.0000e+03    5.8415e+02      1.0248      1.501372
+    1.0000e+04    5.8416e+02      1.0248      1.501377
+      Pick: alpha=1.0000e+02, chi^2/N=1.0237
+      Re-estimated sigmas: x=7.8277e-02, y=7.4224e-02, z=9.7833e-04
+      Max relative sigma change: 0.0000  (tol=0.0005)
+      CONVERGED after 2 outer iteration(s)
+
+    Final picked alpha = 1.0000e+02
+    Final chi^2/N      = 1.0237
+    Final sigmas       = (x:7.8277e-02, y:7.4224e-02, z:9.7833e-04)
+    Outer iterations   = 2
+
+    Inverted parameters (real data, iterative chi^2 Morozov):
+      mass:   5.129472e-05   (true:   5.151000e-05,   err:     0.42%)
+         x:  -2.991824e+01   (true:  -3.005587e+01,   err:     0.46%)
+         y:   3.145458e+00   (true:   3.108514e+00,   err:     1.19%)
+         z:   1.050744e-01   (true:   6.280746e-01,   err:    83.27%)
+        vx:  -2.804390e-04   (true:  -3.404730e-04,   err:    17.63%)
+        vy:  -3.109318e-03   (true:  -3.103002e-03,   err:     0.20%)
+        vz:   4.187314e-05   (true:   7.188313e-05,   err:    41.75%)
     Estimated orbit: 69351 points
     True orbit: 69351 points
     Number of direction arrows per orbit: 8
@@ -1269,15 +1032,15 @@ our inversion pipeline.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 727-732
+.. GENERATED FROM PYTHON SOURCE LINES 720-725
 
 5. Watermark
 ============
 
-- For version of libraries used.
+-  For version of libraries used.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 732-739
+.. GENERATED FROM PYTHON SOURCE LINES 725-732
 
 .. code-block:: Python
 
@@ -1296,24 +1059,24 @@ our inversion pipeline.
 
  .. code-block:: none
 
-    numba 0.63.1
-    cofi 0.2.11
+    numba 0.65.1
+    cofi 0.2.11+71.gb28b5b0
     tqdm 4.67.3
-    numpy 2.3.5
-    matplotlib 3.10.8
+    numpy 2.2.6
+    matplotlib 3.10.9
     astroquery 0.4.11
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 740-740
+.. GENERATED FROM PYTHON SOURCE LINES 733-733
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (10 minutes 43.954 seconds)
+   **Total running time of the script:** (7 minutes 49.562 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_finding_neptune_via_deterministic_inv.py:

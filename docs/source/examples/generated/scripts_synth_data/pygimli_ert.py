@@ -81,10 +81,10 @@ Electrical Resistivity Tomography with PyGIMLi
 ######################################################################
 # We will need the following packages:
 # 
-# - ``numpy`` for matrices and matrix-related functions
-# - ``matplotlib`` for plotting
-# - ``pygimli`` for forward modelling of the problem
-# - ``cofi`` for accessing different inference solvers
+# -  ``numpy`` for matrices and matrix-related functions
+# -  ``matplotlib`` for plotting
+# -  ``pygimli`` for forward modelling of the problem
+# -  ``cofi`` for accessing different inference solvers
 # 
 # Additionally, we wrap some ``pygimli`` code in file
 # ``pygimli_ert_lib.py`` and import it here for conciseness.
@@ -233,13 +233,13 @@ ax[0].set_title("Starting model")
 # file ``pygimli_ert_lib.py``, so open this file if you’d like to find out
 # the details. These functions are:
 # 
-# - ``get_response``
-# - ``get_jacobian``
-# - ``get_residuals``
-# - ``get_data_misfit``
-# - ``get_regularization``
-# - ``get_gradient``
-# - ``get_hessian``
+# -  ``get_response``
+# -  ``get_jacobian``
+# -  ``get_residuals``
+# -  ``get_data_misfit``
+# -  ``get_regularization``
+# -  ``get_gradient``
+# -  ``get_hessian``
 # 
 
 

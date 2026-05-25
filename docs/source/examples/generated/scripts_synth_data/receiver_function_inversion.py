@@ -458,24 +458,42 @@ inv_result_sampler.summary()
 
 var_names = [
     "depth1 (km)", 
-    "velocity1 (km/s)", 
+    "velocity1 (km_s)", 
     "depth2 (km)", 
-    "velocity2 (km/s)", 
+    "velocity2 (km_s)", 
     "depth3 (km)", 
-    "velocity3 (km/s)", 
+    "velocity3 (km_s)", 
     "depth4 (km)", 
-    "velocity4 (km/s)", 
+    "velocity4 (km_s)", 
 ]
 true_model = get_inversion_parameters(good_model)
-var_lines = [(var_names[i],{}, true_model[i]) for i in range(len(var_names))]
 az_inf_data = inv_result_sampler.to_arviz(var_names=var_names)
 az_inf_data
 
 ######################################################################
 #
 
-arviz.plot_trace(az_inf_data, var_names=var_names,lines=var_lines);
-plt.tight_layout();
+pc = arviz.plot_trace_dist(
+    az_inf_data,
+    var_names=var_names,
+    visuals={"xlabel_trace": False, "trace": {"color": "C0", "lw": 0.5}, "dist": {"color": "C0", "lw": 0.5}},                                                            
+    figure_kwargs={"figsize": (10, 15), "constrained_layout": True},
+)
+
+n_vars = len(var_names)
+data_var_names = list(az_inf_data.posterior.data_vars)
+for i in range(n_vars):
+    ax1 = pc.iget_target(i, 0)
+    ax2 = pc.iget_target(i, 1)
+    ax1.axvline(true_model[i], linestyle="dotted", color="red")
+    ax1.set_title(data_var_names[i])
+    ax1.set_xlabel("parameter value")
+    ax1.set_ylabel("density value")
+    ax2.axhline(true_model[i], linestyle="dotted", color="red")
+    ax2.set_title(data_var_names[i])
+    ax2.set_xlabel("number of iterations")
+    ax2.set_ylabel("parameter value")
+    ax2.margins(x=0)
 
 ######################################################################
 #
@@ -511,31 +529,36 @@ else:
 # Let’s discard the initial 500 steps and make a corner plot:
 # 
 
-az_inf_data_after_500 = az_inf_data.sel(draw=slice(300,None))
+import arviz_base
+arviz_base.rcParams["plot.max_subplots"] = 80
 
-true_values = {
-    f"{var_names[i]}": true_model[i] for i in range(true_model.size)
-}
+az_inf_data_after_500 = az_inf_data.sel(draw=slice(300, None))
 
-fig, axes = plt.subplots(8, 8, figsize=(12, 10))
-_ = arviz.plot_pair(
+pm = arviz.plot_pair(
     az_inf_data_after_500,
-    marginals=True,
-    ax=axes,
-    textsize=8,
+    marginal=True,
+    triangle="lower",
+    figure_kwargs={"figsize": (20, 18)},
+    visuals={"scatter": {"s": 2}},      
 )
 
-for i, j in np.ndindex(axes.shape):
-    if i == j:
-        continue
-    xlabel = axes[-1, j].get_xlabel()
-    ylabel = axes[i, 0].get_ylabel()
-    x_true = true_values[xlabel]
-    y_true = true_values[ylabel]
-    axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=5, markeredgecolor="k")
-
-plt.show()
-
+# Add reference dots for true model values
+ref_values = list(true_model)
+n = len(ref_values)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_values[i], color="yellow", linestyle="--", lw=1, alpha=0.7)
+        elif i > j:
+            ax.plot(
+                ref_values[j], ref_values[i], "o",
+                color="yellow", markeredgecolor="k", markeredgewidth=1, ms=5, zorder=5,
+            )
+plt.tight_layout()
 
 ######################################################################
 #
@@ -545,8 +568,8 @@ plt.show()
 # Now examine the mean model of the posterior ensemble.
 # 
 
-mean_sample = np.array(az_inf_data["posterior"][var_names].mean().to_array())
-median_sample = np.array(az_inf_data["posterior"][var_names].median().to_array())
+mean_sample = np.array(az_inf_data["posterior"].ds[var_names].mean().to_array())                                                                                         
+median_sample = np.array(az_inf_data["posterior"].ds[var_names].median().to_array())                                                                                     
 
 my_mean_model = get_model_parameters(mean_sample)
 

@@ -26,13 +26,6 @@ DCIP with PyGIMLi (Synthetic example)
 # 
 # ..
 # 
-#    | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
-#      (pygimli)**.
-#    | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
-#      for **Python 3.13**, so this notebook won’t run on 3.13 unless you
-#      build from source.
-#    | **Use Python 3.12 (recommended) or 3.11** for install.
-# 
 #    If you are running this notebook locally, make sure you’ve followed
 #    `steps
 #    here <https://github.com/inlab-geo/cofi-examples#run-the-examples-with-cofi-locally>`__
@@ -111,10 +104,10 @@ DCIP with PyGIMLi (Synthetic example)
 ######################################################################
 # We will need the following packages:
 # 
-# - ``numpy`` for matrices and matrix-related functions
-# - ``matplotlib`` for plotting
-# - ``pygimli`` for forward modelling of the problem
-# - ``cofi`` for accessing different inference solvers
+# -  ``numpy`` for matrices and matrix-related functions
+# -  ``matplotlib`` for plotting
+# -  ``pygimli`` for forward modelling of the problem
+# -  ``cofi`` for accessing different inference solvers
 # 
 
 import numpy as np
@@ -248,6 +241,7 @@ def model_vector(rhomap, mesh):
 def plot_model(mesh, model_complex, title):
     rho, phi = rho_phi_from_complex(model_complex)
     fig, axes = plt.subplots(1,2,figsize=(10,3))
+    plt.figure(fig)
     pygimli.show(mesh, data=rho, label=r"$\Omega m$", ax=axes[0], fig=fig)
     axes[0].set_xlim(x_inv_start, x_inv_stop)
     axes[0].set_ylim(y_inv_start, y_inv_stop)
@@ -257,15 +251,18 @@ def plot_model(mesh, model_complex, title):
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title("Chargeability")
     fig.suptitle(title)
+    plt.show()
 
 def plot_data(pg_data, data_complex, title):
     rho, phi = rho_phi_from_complex(data_complex)
     fig, axes = plt.subplots(1,2,figsize=(10,4))
+    plt.figure(fig)
     pygimli.physics.ert.showERTData(pg_data, vals=rho, label=r"$\Omega$m", ax=axes[0])
     axes[0].set_title("Apparent Resistivity")
     pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=r"mrad", ax=axes[1])
     axes[1].set_title("Apparent Chargeability")
     fig.suptitle(title)
+    plt.show()
 
 ######################################################################
 #
@@ -385,13 +382,13 @@ plot_model(ert_mgr.paraDomain, start_model, "Starting model")
 # additional utility functions, so feel free to read them into details if
 # you want to understand more. These functions are:
 # 
-# - ``get_response``
-# - ``get_jacobian``
-# - ``get_residuals``
-# - ``get_data_misfit``
-# - ``get_regularization``
-# - ``get_gradient``
-# - ``get_hessian``
+# -  ``get_response``
+# -  ``get_jacobian``
+# -  ``get_residuals``
+# -  ``get_data_misfit``
+# -  ``get_regularization``
+# -  ``get_gradient``
+# -  ``get_hessian``
 # 
 
 # Utility Functions (additional)
@@ -575,6 +572,11 @@ watermark_list = ["cofi", "numpy", "scipy", "pygimli", "torch", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
+
+######################################################################
+#
+
+
 
 ######################################################################
 #

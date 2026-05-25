@@ -213,18 +213,35 @@ az_idata = inv_result.to_arviz()
 #
 
 labels = ["m0", "m1"]
-az.plot_trace(az_idata);
+#az.plot_trace_dist(az_idata, visuals={"xlabel_trace": False});
+az.plot_trace_dist(az_idata, visuals={"xlabel_trace": False, "trace": {"lw": 0.5}, "dist": {"lw": 0.5}});
 
 ######################################################################
 #
 
-_, axes = plt.subplots(2, 2, figsize=(14,10))
-az.plot_pair(
-    az_idata.sel(draw=slice(300,None)), 
-    marginals=True, 
-    reference_values=dict(zip([f"var_{i}" for i in range(2)], m_true   )),
-    ax = axes
-);
+pm = az.plot_pair(
+    az_idata.sel(draw=slice(300, None)),
+    marginal=True,
+    triangle="lower",
+    visuals={"scatter": {"s": 3}},
+)
+
+# Add reference dots for true model values
+ref_values = list(m_true)
+n = len(ref_values)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_values[i], color="red", linestyle="--", lw=1, alpha=0.5)
+        elif i > j:
+            ax.plot(
+                ref_values[j], ref_values[i], "o",
+                color="red", markeredgecolor="black", markeredgewidth=1.5, ms=5, zorder=5,
+            )
 
 ######################################################################
 #

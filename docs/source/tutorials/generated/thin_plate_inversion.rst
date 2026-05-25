@@ -379,7 +379,7 @@ measurement, which we will be inverting.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f02cafc0e10>
+    <matplotlib.legend.Legend object at 0x7efda2586210>
 
 
 
@@ -617,22 +617,22 @@ Plot the misfit and gradient as a function of the plate dip
 
  .. code-block:: none
 
-    pdip: [40], data misfit: 229.3294718916669, gradient: [-8.52874601]
-    pdip: [45], data misfit: 156.85538461731218, gradient: [-4.83483189]
-    pdip: [50], data misfit: 112.52181526233785, gradient: [-3.09309441]
-    pdip: [55], data misfit: 88.33347709866956, gradient: [-1.39771343]
-    pdip: [60], data misfit: 78.13208270691166, gradient: [-0.40324488]
-    pdip: [65], data misfit: 77.94389054095724, gradient: [0.40742188]
-    pdip: [70], data misfit: 85.6075194431707, gradient: [0.99216025]
-    pdip: [75], data misfit: 98.65473215121658, gradient: [1.18372005]
-    pdip: [80], data misfit: 113.24196078419779, gradient: [1.53128849]
-    pdip: [85], data misfit: 129.2495930619363, gradient: [1.68544725]
-    pdip: [90], data misfit: 149.50543170426604, gradient: [1.92828613]
-    pdip: [95], data misfit: 170.32280998716743, gradient: [1.88546256]
-    pdip: [100], data misfit: 193.51978165760536, gradient: [2.25368056]
-    pdip: [105], data misfit: 215.84170808408683, gradient: [2.42662451]
-    pdip: [110], data misfit: 243.19621367797384, gradient: [2.67847232]
-    pdip: [115], data misfit: 271.7811759511678, gradient: [3.03876865]
+    pdip: [40], data misfit: 231.708835656254, gradient: [-8.38525334]
+    pdip: [45], data misfit: 161.52059630302878, gradient: [-5.17711959]
+    pdip: [50], data misfit: 115.89689554155724, gradient: [-3.41393833]
+    pdip: [55], data misfit: 91.08438559558219, gradient: [-1.79238028]
+    pdip: [60], data misfit: 78.13208270691166, gradient: [-0.40612889]
+    pdip: [65], data misfit: 79.47542276986738, gradient: [0.60701868]
+    pdip: [70], data misfit: 86.57794284916837, gradient: [0.77951888]
+    pdip: [75], data misfit: 99.82377503892143, gradient: [1.04776418]
+    pdip: [80], data misfit: 114.82121927725917, gradient: [1.88028555]
+    pdip: [85], data misfit: 135.80364266137616, gradient: [1.99672184]
+    pdip: [90], data misfit: 158.91312196239573, gradient: [2.12201565]
+    pdip: [95], data misfit: 190.36506697630017, gradient: [1.90338506]
+    pdip: [100], data misfit: 211.34574782298415, gradient: [3.0843773]
+    pdip: [105], data misfit: 248.95857134110955, gradient: [3.54243063]
+    pdip: [110], data misfit: 283.9454162116735, gradient: [3.73187192]
+    pdip: [115], data misfit: 338.73968428973234, gradient: [3.35857177]
 
 
 
@@ -759,15 +759,15 @@ CoFI inversion
  .. code-block:: none
 
     Iteration #1
-      objective value: 77.81667956389185
+      objective value: 77.89136366904667
     Iteration #2
-      objective value: 77.56821742478712
+      objective value: 77.67785905000744
 
-    Number of objective function evaluations: 65
-    Number of gradient function evaluations: 53
+    Number of objective function evaluations: 30
+    Number of gradient function evaluations: 11
     Number of hessian function evaluations: 3
     Solution vector:
-     [62.52345268]
+     [59.18480808]
 
 
 
@@ -788,21 +788,22 @@ model, the starting model and the MAP model that is the maximum a
 posterior model, the solution found by the chosen optimisation method.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 589-601
+.. GENERATED FROM PYTHON SOURCE LINES 589-602
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
-    _, (ax1, ax2) = plt.subplots(1, 2)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
     plot_transient(true_param_value, forward, "Data from true model", ax1, ax2, color="purple")
     plot_transient(init_param_value, forward, "Data from starting model", ax1, ax2, color="green", linestyle=":")
     plot_transient(my_result.model, forward, "Data from MAP model", ax1, ax2, color="red", linestyle="-.")
-    ax1.legend(loc="upper center")
-    ax2.legend(loc="upper center")
-    ax1.set_title("vertical")
-    ax2.set_title("inline")
+    ax1.legend(loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=1, fontsize="small")
+    ax2.legend(loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=1, fontsize="small")
+    ax1.set_title("vertical", pad=55)
+    ax2.set_title("inline", pad=55)
     plt.tight_layout()
+
 
 
 
@@ -816,13 +817,13 @@ posterior model, the solution found by the chosen optimisation method.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 606-609
+.. GENERATED FROM PYTHON SOURCE LINES 607-610
 
 Model
 ^^^^^
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 609-635
+.. GENERATED FROM PYTHON SOURCE LINES 610-636
 
 .. code-block:: Python
 
@@ -866,11 +867,11 @@ Model
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f02cafc2d50>
+    <matplotlib.legend.Legend object at 0x7efda25860d0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 640-661
+.. GENERATED FROM PYTHON SOURCE LINES 641-662
 
 Ensemble method
 ---------------
@@ -894,7 +895,7 @@ is a uniform distribution with a lower boundary of :math:`10 \degree`
 and an upper boundary of :math:`80 \degree`.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 661-670
+.. GENERATED FROM PYTHON SOURCE LINES 662-671
 
 .. code-block:: Python
 
@@ -914,7 +915,7 @@ and an upper boundary of :math:`80 \degree`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 675-680
+.. GENERATED FROM PYTHON SOURCE LINES 676-681
 
 Challenge: Given the objective function define a log likelihood function.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -922,7 +923,7 @@ Challenge: Given the objective function define a log likelihood function.
 In the previous section we defined the following objective function.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 680-686
+.. GENERATED FROM PYTHON SOURCE LINES 681-687
 
 .. code-block:: Python
 
@@ -939,13 +940,13 @@ In the previous section we defined the following objective function.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 691-694
+.. GENERATED FROM PYTHON SOURCE LINES 692-695
 
 This function can be used to now create the log likelihood function,
 typically needed by the ensemble methods made available in CoFI.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 694-698
+.. GENERATED FROM PYTHON SOURCE LINES 695-699
 
 .. code-block:: Python
 
@@ -960,7 +961,7 @@ typically needed by the ensemble methods made available in CoFI.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 700-705
+.. GENERATED FROM PYTHON SOURCE LINES 701-706
 
 .. code-block:: Python
 
@@ -976,7 +977,7 @@ typically needed by the ensemble methods made available in CoFI.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 710-719
+.. GENERATED FROM PYTHON SOURCE LINES 711-720
 
 Augment the CoFI problem
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -988,7 +989,7 @@ using ``emcee``, which we already used in the linear regression
 tutorial.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 719-724
+.. GENERATED FROM PYTHON SOURCE LINES 720-725
 
 .. code-block:: Python
 
@@ -1004,13 +1005,13 @@ tutorial.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 729-732
+.. GENERATED FROM PYTHON SOURCE LINES 730-733
 
 Define CoFI options
 ~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 732-738
+.. GENERATED FROM PYTHON SOURCE LINES 733-739
 
 .. code-block:: Python
 
@@ -1027,13 +1028,13 @@ Define CoFI options
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 743-746
+.. GENERATED FROM PYTHON SOURCE LINES 744-747
 
 CoFI Inversion
 ~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 746-759
+.. GENERATED FROM PYTHON SOURCE LINES 747-760
 
 .. code-block:: Python
 
@@ -1058,7 +1059,7 @@ CoFI Inversion
 
  .. code-block:: none
 
-      0%|          | 0/50 [00:00<?, ?it/s]      2%|▏         | 1/50 [00:00<00:08,  5.84it/s]      4%|▍         | 2/50 [00:00<00:08,  5.85it/s]      6%|▌         | 3/50 [00:00<00:08,  5.84it/s]      8%|▊         | 4/50 [00:00<00:07,  5.84it/s]     10%|█         | 5/50 [00:00<00:07,  5.84it/s]     12%|█▏        | 6/50 [00:01<00:07,  5.84it/s]     14%|█▍        | 7/50 [00:01<00:07,  5.84it/s]     16%|█▌        | 8/50 [00:01<00:07,  5.84it/s]     18%|█▊        | 9/50 [00:01<00:07,  5.84it/s]     20%|██        | 10/50 [00:01<00:06,  5.84it/s]     22%|██▏       | 11/50 [00:01<00:06,  5.84it/s]     24%|██▍       | 12/50 [00:02<00:06,  5.84it/s]     26%|██▌       | 13/50 [00:02<00:06,  5.84it/s]     28%|██▊       | 14/50 [00:02<00:06,  5.84it/s]     30%|███       | 15/50 [00:02<00:05,  5.84it/s]     32%|███▏      | 16/50 [00:02<00:05,  5.85it/s]     34%|███▍      | 17/50 [00:02<00:05,  5.85it/s]     36%|███▌      | 18/50 [00:03<00:05,  5.85it/s]     38%|███▊      | 19/50 [00:03<00:05,  5.85it/s]     40%|████      | 20/50 [00:03<00:05,  5.86it/s]     42%|████▏     | 21/50 [00:03<00:04,  5.86it/s]     44%|████▍     | 22/50 [00:03<00:04,  5.86it/s]     46%|████▌     | 23/50 [00:03<00:04,  5.86it/s]     48%|████▊     | 24/50 [00:04<00:04,  5.86it/s]     50%|█████     | 25/50 [00:04<00:04,  5.86it/s]     52%|█████▏    | 26/50 [00:04<00:04,  5.85it/s]     54%|█████▍    | 27/50 [00:04<00:03,  5.85it/s]     56%|█████▌    | 28/50 [00:04<00:03,  5.85it/s]     58%|█████▊    | 29/50 [00:04<00:03,  5.86it/s]     60%|██████    | 30/50 [00:05<00:03,  5.85it/s]     62%|██████▏   | 31/50 [00:05<00:03,  5.85it/s]     64%|██████▍   | 32/50 [00:05<00:03,  5.86it/s]     66%|██████▌   | 33/50 [00:05<00:02,  5.86it/s]     68%|██████▊   | 34/50 [00:05<00:02,  5.86it/s]     70%|███████   | 35/50 [00:05<00:02,  5.86it/s]     72%|███████▏  | 36/50 [00:06<00:02,  5.86it/s]     74%|███████▍  | 37/50 [00:06<00:02,  5.86it/s]     76%|███████▌  | 38/50 [00:06<00:02,  5.86it/s]     78%|███████▊  | 39/50 [00:06<00:01,  5.87it/s]     80%|████████  | 40/50 [00:06<00:01,  5.87it/s]     82%|████████▏ | 41/50 [00:07<00:01,  5.87it/s]     84%|████████▍ | 42/50 [00:07<00:01,  5.87it/s]     86%|████████▌ | 43/50 [00:07<00:01,  5.88it/s]     88%|████████▊ | 44/50 [00:07<00:01,  5.87it/s]     90%|█████████ | 45/50 [00:07<00:00,  5.87it/s]     92%|█████████▏| 46/50 [00:07<00:00,  5.88it/s]     94%|█████████▍| 47/50 [00:08<00:00,  5.88it/s]     96%|█████████▌| 48/50 [00:08<00:00,  5.87it/s]     98%|█████████▊| 49/50 [00:08<00:00,  5.87it/s]    100%|██████████| 50/50 [00:08<00:00,  5.87it/s]    100%|██████████| 50/50 [00:08<00:00,  5.86it/s]
+      0%|          | 0/50 [00:00<?, ?it/s]      2%|▏         | 1/50 [00:00<00:27,  1.79it/s]      4%|▍         | 2/50 [00:01<00:26,  1.79it/s]      6%|▌         | 3/50 [00:01<00:26,  1.79it/s]      8%|▊         | 4/50 [00:02<00:25,  1.79it/s]     10%|█         | 5/50 [00:02<00:25,  1.79it/s]     12%|█▏        | 6/50 [00:03<00:24,  1.78it/s]     14%|█▍        | 7/50 [00:03<00:24,  1.77it/s]     16%|█▌        | 8/50 [00:04<00:23,  1.77it/s]     18%|█▊        | 9/50 [00:05<00:23,  1.78it/s]     20%|██        | 10/50 [00:05<00:22,  1.78it/s]     22%|██▏       | 11/50 [00:06<00:21,  1.78it/s]     24%|██▍       | 12/50 [00:06<00:21,  1.78it/s]     26%|██▌       | 13/50 [00:07<00:20,  1.78it/s]     28%|██▊       | 14/50 [00:07<00:20,  1.78it/s]     30%|███       | 15/50 [00:08<00:19,  1.78it/s]     32%|███▏      | 16/50 [00:09<00:19,  1.77it/s]     34%|███▍      | 17/50 [00:09<00:18,  1.77it/s]     36%|███▌      | 18/50 [00:10<00:18,  1.78it/s]     38%|███▊      | 19/50 [00:10<00:17,  1.78it/s]     40%|████      | 20/50 [00:11<00:16,  1.78it/s]     42%|████▏     | 21/50 [00:11<00:16,  1.78it/s]     44%|████▍     | 22/50 [00:12<00:15,  1.78it/s]     46%|████▌     | 23/50 [00:12<00:15,  1.78it/s]     48%|████▊     | 24/50 [00:13<00:14,  1.77it/s]     50%|█████     | 25/50 [00:14<00:14,  1.77it/s]     52%|█████▏    | 26/50 [00:14<00:13,  1.77it/s]     54%|█████▍    | 27/50 [00:15<00:12,  1.78it/s]     56%|█████▌    | 28/50 [00:15<00:12,  1.78it/s]     58%|█████▊    | 29/50 [00:16<00:11,  1.78it/s]     60%|██████    | 30/50 [00:16<00:11,  1.78it/s]     62%|██████▏   | 31/50 [00:17<00:10,  1.78it/s]     64%|██████▍   | 32/50 [00:17<00:10,  1.78it/s]     66%|██████▌   | 33/50 [00:18<00:09,  1.78it/s]     68%|██████▊   | 34/50 [00:19<00:09,  1.77it/s]     70%|███████   | 35/50 [00:19<00:08,  1.78it/s]     72%|███████▏  | 36/50 [00:20<00:07,  1.78it/s]     74%|███████▍  | 37/50 [00:20<00:07,  1.78it/s]     76%|███████▌  | 38/50 [00:21<00:06,  1.78it/s]     78%|███████▊  | 39/50 [00:21<00:06,  1.79it/s]     80%|████████  | 40/50 [00:22<00:05,  1.78it/s]     82%|████████▏ | 41/50 [00:23<00:05,  1.78it/s]     84%|████████▍ | 42/50 [00:23<00:04,  1.78it/s]     86%|████████▌ | 43/50 [00:24<00:03,  1.78it/s]     88%|████████▊ | 44/50 [00:24<00:03,  1.78it/s]     90%|█████████ | 45/50 [00:25<00:02,  1.79it/s]     92%|█████████▏| 46/50 [00:25<00:02,  1.80it/s]     94%|█████████▍| 47/50 [00:26<00:01,  1.80it/s]     96%|█████████▌| 48/50 [00:26<00:01,  1.80it/s]     98%|█████████▊| 49/50 [00:27<00:00,  1.78it/s]    100%|██████████| 50/50 [00:28<00:00,  1.78it/s]    100%|██████████| 50/50 [00:28<00:00,  1.78it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1071,20 +1072,34 @@ CoFI Inversion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 761-772
+.. GENERATED FROM PYTHON SOURCE LINES 762-787
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
     sampler = my_result.sampler
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
     var_names = [
-        "plate dip (\u00b0)", 
+        "plate dip (°)", 
     ]
     az_idata = my_result.to_arviz(var_names=var_names)
-    arviz.plot_trace(az_idata.sel(draw=slice(0,None)),lines=(('plate dip (\u00b0)', {}, 60),));
-    plt.tight_layout()
+    true_values = [60]
+    pc = arviz.plot_trace_dist(
+        az_idata.sel(draw=slice(0, None)),
+        visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+        figure_kwargs={"figsize": (12, 4), "constrained_layout": True},
+    )
+    var_list = list(az_idata.posterior.data_vars)
+    for i, vname in enumerate(var_list):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.set_title(vname)
+        ax_trace.set_title(vname)
+        ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.margins(x=0)
+
 
 
 
@@ -1098,7 +1113,7 @@ CoFI Inversion
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 777-783
+.. GENERATED FROM PYTHON SOURCE LINES 792-798
 
 While both chains have moved away from the starting model in the
 direction of the true dip the 50 samples are not enough to recover the
@@ -1107,7 +1122,7 @@ this would increase the number of times we need to call the forward
 problem which is computationally expensive.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 786-804
+.. GENERATED FROM PYTHON SOURCE LINES 801-819
 
 Limited computational resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1128,7 +1143,7 @@ hypercube
 sampling <https://en.wikipedia.org/wiki/Latin_hypercube_sampling>`__.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 804-822
+.. GENERATED FROM PYTHON SOURCE LINES 819-837
 
 .. code-block:: Python
 
@@ -1138,7 +1153,7 @@ sampling <https://en.wikipedia.org/wiki/Latin_hypercube_sampling>`__.
     xlimits=numpy.array([[10,90]])
     ntrain=25
     ntest=5
-    sampling = smt.sampling_methods.LHS(xlimits=xlimits,random_state=42)
+    sampling = smt.sampling_methods.LHS(xlimits=xlimits,seed=42)
     xtrain=sampling(ntrain)
     ytrain=[]
     xtest=sampling(ntest)
@@ -1158,19 +1173,19 @@ sampling <https://en.wikipedia.org/wiki/Latin_hypercube_sampling>`__.
 
  .. code-block:: none
 
-      0%|          | 0/25 [00:00<?, ?it/s]      8%|▊         | 2/25 [00:00<00:01, 11.72it/s]     16%|█▌        | 4/25 [00:00<00:01, 11.78it/s]     24%|██▍       | 6/25 [00:00<00:01, 11.75it/s]     32%|███▏      | 8/25 [00:00<00:01, 11.77it/s]     40%|████      | 10/25 [00:00<00:01, 11.72it/s]     48%|████▊     | 12/25 [00:01<00:01, 11.71it/s]     56%|█████▌    | 14/25 [00:01<00:00, 11.67it/s]     64%|██████▍   | 16/25 [00:01<00:00, 11.69it/s]     72%|███████▏  | 18/25 [00:01<00:00, 11.68it/s]     80%|████████  | 20/25 [00:01<00:00, 11.72it/s]     88%|████████▊ | 22/25 [00:01<00:00, 11.67it/s]     96%|█████████▌| 24/25 [00:02<00:00, 11.59it/s]    100%|██████████| 25/25 [00:02<00:00, 11.68it/s]
-      0%|          | 0/5 [00:00<?, ?it/s]     40%|████      | 2/5 [00:00<00:00, 11.63it/s]     80%|████████  | 4/5 [00:00<00:00, 11.70it/s]    100%|██████████| 5/5 [00:00<00:00, 11.70it/s]
+      0%|          | 0/25 [00:00<?, ?it/s]      4%|▍         | 1/25 [00:00<00:06,  3.46it/s]      8%|▊         | 2/25 [00:00<00:06,  3.53it/s]     12%|█▏        | 3/25 [00:00<00:06,  3.57it/s]     16%|█▌        | 4/25 [00:01<00:05,  3.55it/s]     20%|██        | 5/25 [00:01<00:05,  3.56it/s]     24%|██▍       | 6/25 [00:01<00:05,  3.58it/s]     28%|██▊       | 7/25 [00:01<00:04,  3.61it/s]     32%|███▏      | 8/25 [00:02<00:04,  3.60it/s]     36%|███▌      | 9/25 [00:02<00:04,  3.58it/s]     40%|████      | 10/25 [00:02<00:04,  3.56it/s]     44%|████▍     | 11/25 [00:03<00:03,  3.58it/s]     48%|████▊     | 12/25 [00:03<00:03,  3.56it/s]     52%|█████▏    | 13/25 [00:03<00:03,  3.54it/s]     56%|█████▌    | 14/25 [00:03<00:03,  3.57it/s]     60%|██████    | 15/25 [00:04<00:02,  3.57it/s]     64%|██████▍   | 16/25 [00:04<00:02,  3.59it/s]     68%|██████▊   | 17/25 [00:04<00:02,  3.57it/s]     72%|███████▏  | 18/25 [00:05<00:01,  3.60it/s]     76%|███████▌  | 19/25 [00:05<00:01,  3.60it/s]     80%|████████  | 20/25 [00:05<00:01,  3.59it/s]     84%|████████▍ | 21/25 [00:05<00:01,  3.59it/s]     88%|████████▊ | 22/25 [00:06<00:00,  3.52it/s]     92%|█████████▏| 23/25 [00:06<00:00,  3.50it/s]     96%|█████████▌| 24/25 [00:06<00:00,  3.49it/s]    100%|██████████| 25/25 [00:07<00:00,  3.53it/s]    100%|██████████| 25/25 [00:07<00:00,  3.56it/s]
+      0%|          | 0/5 [00:00<?, ?it/s]     20%|██        | 1/5 [00:00<00:01,  3.62it/s]     40%|████      | 2/5 [00:00<00:00,  3.53it/s]     60%|██████    | 3/5 [00:00<00:00,  3.55it/s]     80%|████████  | 4/5 [00:01<00:00,  3.59it/s]    100%|██████████| 5/5 [00:01<00:00,  3.61it/s]    100%|██████████| 5/5 [00:01<00:00,  3.59it/s]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 827-830
+.. GENERATED FROM PYTHON SOURCE LINES 842-845
 
 Next we create the surrogate model itself, that is here the construction
 of a response surface using Kriging.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 830-835
+.. GENERATED FROM PYTHON SOURCE LINES 845-850
 
 .. code-block:: Python
 
@@ -1201,18 +1216,18 @@ of a response surface using Kriging.
      Training
    
        Training ...
-       Training - done. Time (sec):  0.2824416
+       Training - done. Time (sec):  0.5426669
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 840-843
+.. GENERATED FROM PYTHON SOURCE LINES 855-858
 
 Finally, we test how well our surrogate model predicts the value of the
 objective function.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 843-864
+.. GENERATED FROM PYTHON SOURCE LINES 858-879
 
 .. code-block:: Python
 
@@ -1249,7 +1264,7 @@ objective function.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 869-876
+.. GENERATED FROM PYTHON SOURCE LINES 884-891
 
 Now we run ``emcee`` again, but we call the surrogate model instead of
 the P223 kernel and thus we can generate more samples of the posterior
@@ -1259,7 +1274,7 @@ have a limited accuracy particularly if we increase the number of
 declared model parameters.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 876-882
+.. GENERATED FROM PYTHON SOURCE LINES 891-897
 
 .. code-block:: Python
 
@@ -1276,7 +1291,7 @@ declared model parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 884-892
+.. GENERATED FROM PYTHON SOURCE LINES 899-907
 
 .. code-block:: Python
 
@@ -1295,7 +1310,7 @@ declared model parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 894-907
+.. GENERATED FROM PYTHON SOURCE LINES 909-922
 
 .. code-block:: Python
 
@@ -1320,7 +1335,7 @@ declared model parameters.
 
  .. code-block:: none
 
-      0%|          | 0/500 [00:00<?, ?it/s]     20%|██        | 101/500 [00:00<00:00, 1009.92it/s]     42%|████▏     | 210/500 [00:00<00:00, 1052.45it/s]     64%|██████▎   | 318/500 [00:00<00:00, 1064.33it/s]     85%|████████▌ | 427/500 [00:00<00:00, 1071.33it/s]    100%|██████████| 500/500 [00:00<00:00, 1065.43it/s]
+      0%|          | 0/500 [00:00<?, ?it/s]     19%|█▉        | 97/500 [00:00<00:00, 963.57it/s]     39%|███▉      | 194/500 [00:00<00:00, 955.00it/s]     58%|█████▊    | 290/500 [00:00<00:00, 956.63it/s]     77%|███████▋  | 386/500 [00:00<00:00, 954.24it/s]     96%|█████████▋| 482/500 [00:00<00:00, 946.63it/s]    100%|██████████| 500/500 [00:00<00:00, 949.63it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1333,20 +1348,34 @@ declared model parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 909-920
+.. GENERATED FROM PYTHON SOURCE LINES 924-949
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
     sampler = my_result.sampler
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
     var_names = [
-        "plate dip (\u00b0)", 
+        "plate dip (°)", 
     ]
     az_idata = my_result.to_arviz(var_names=var_names)
-    arviz.plot_trace(az_idata.sel(draw=slice(100,None)),lines=(('plate dip (\u00b0)', {}, 60),));
-    plt.tight_layout()
+    true_values = [60]
+    pc = arviz.plot_trace_dist(
+        az_idata.sel(draw=slice(100, None)),
+        visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+        figure_kwargs={"figsize": (12, 4), "constrained_layout": True},
+    )
+    var_list = list(az_idata.posterior.data_vars)
+    for i, vname in enumerate(var_list):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.set_title(vname)
+        ax_trace.set_title(vname)
+        ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.margins(x=0)
+
 
 
 
@@ -1360,7 +1389,7 @@ declared model parameters.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 925-933
+.. GENERATED FROM PYTHON SOURCE LINES 954-962
 
 Inverting for a thin plate given three survey lines
 ===================================================
@@ -1371,7 +1400,7 @@ the easting, depth of the plate reference point, the plate dip and plate
 azimuth and the plate length.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 936-941
+.. GENERATED FROM PYTHON SOURCE LINES 965-970
 
 Problem setup
 -------------
@@ -1379,7 +1408,7 @@ Problem setup
 In the following we define three survey lines covering the thin plate
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 941-955
+.. GENERATED FROM PYTHON SOURCE LINES 970-984
 
 .. code-block:: Python
 
@@ -1404,7 +1433,7 @@ In the following we define three survey lines covering the thin plate
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 957-964
+.. GENERATED FROM PYTHON SOURCE LINES 986-993
 
 .. code-block:: Python
 
@@ -1422,7 +1451,7 @@ In the following we define three survey lines covering the thin plate
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 966-983
+.. GENERATED FROM PYTHON SOURCE LINES 995-1012
 
 .. code-block:: Python
 
@@ -1450,13 +1479,13 @@ In the following we define three survey lines covering the thin plate
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 988-991
+.. GENERATED FROM PYTHON SOURCE LINES 1017-1020
 
 True model
 ~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 991-1007
+.. GENERATED FROM PYTHON SOURCE LINES 1020-1036
 
 .. code-block:: Python
 
@@ -1483,7 +1512,7 @@ True model
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1012-1025
+.. GENERATED FROM PYTHON SOURCE LINES 1041-1054
 
 We now increase the number of declared model parameters and they include
 the plate dip, the plate dip azimuth, the easting of the plate reference
@@ -1499,7 +1528,7 @@ that are not overflying the thin plate, as this is not the case in our
 setup we do not invert for plate length.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1025-1029
+.. GENERATED FROM PYTHON SOURCE LINES 1054-1058
 
 .. code-block:: Python
 
@@ -1520,7 +1549,7 @@ setup we do not invert for plate length.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1031-1035
+.. GENERATED FROM PYTHON SOURCE LINES 1060-1064
 
 .. code-block:: Python
 
@@ -1541,7 +1570,7 @@ setup we do not invert for plate length.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1037-1040
+.. GENERATED FROM PYTHON SOURCE LINES 1066-1069
 
 .. code-block:: Python
 
@@ -1555,7 +1584,7 @@ setup we do not invert for plate length.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1042-1060
+.. GENERATED FROM PYTHON SOURCE LINES 1071-1089
 
 .. code-block:: Python
 
@@ -1591,11 +1620,11 @@ setup we do not invert for plate length.
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f02c01665d0>
+    <matplotlib.legend.Legend object at 0x7efda24a5450>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1065-1071
+.. GENERATED FROM PYTHON SOURCE LINES 1094-1100
 
 Generate synthetic data
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1604,7 +1633,7 @@ We again generate a synthetic data set and add a realisation of the
 noise.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1071-1083
+.. GENERATED FROM PYTHON SOURCE LINES 1100-1112
 
 .. code-block:: Python
 
@@ -1627,7 +1656,7 @@ noise.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1088-1120
+.. GENERATED FROM PYTHON SOURCE LINES 1117-1149
 
 Challenge: Implement a parameter estimation or ensemble method in CoFI
 ----------------------------------------------------------------------
@@ -1662,18 +1691,18 @@ to use an ensemble method.**
    :target: https://excalidraw.com/#room=52f0ac5f10e0111ee085,3nYggMVJOpmqlV1ZbYj0Eg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1123-1126
+.. GENERATED FROM PYTHON SOURCE LINES 1152-1155
 
 Parameter estimation applied to three survey lines
 --------------------------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1129-1131
+.. GENERATED FROM PYTHON SOURCE LINES 1158-1160
 
 **Initialise a model for inversion**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1131-1134
+.. GENERATED FROM PYTHON SOURCE LINES 1160-1163
 
 .. code-block:: Python
 
@@ -1693,7 +1722,7 @@ Parameter estimation applied to three survey lines
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1136-1139
+.. GENERATED FROM PYTHON SOURCE LINES 1165-1168
 
 .. code-block:: Python
 
@@ -1707,12 +1736,12 @@ Parameter estimation applied to three survey lines
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1144-1146
+.. GENERATED FROM PYTHON SOURCE LINES 1173-1175
 
 **Define helper functions for CoFI**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1146-1173
+.. GENERATED FROM PYTHON SOURCE LINES 1175-1202
 
 .. code-block:: Python
 
@@ -1750,12 +1779,12 @@ Parameter estimation applied to three survey lines
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1178-1180
+.. GENERATED FROM PYTHON SOURCE LINES 1207-1209
 
 **Define CoFI problem**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1180-1187
+.. GENERATED FROM PYTHON SOURCE LINES 1209-1216
 
 .. code-block:: Python
 
@@ -1773,7 +1802,7 @@ Parameter estimation applied to three survey lines
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1192-1226
+.. GENERATED FROM PYTHON SOURCE LINES 1221-1255
 
 Challenge: Choose a parameter estimation method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1810,12 +1839,12 @@ https://docs.scipy.org/doc/scipy/reference/optimize.minimize-trustncg.html
    :target: https://excalidraw.com/#room=52f0ac5f10e0111ee085,3nYggMVJOpmqlV1ZbYj0Eg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1229-1231
+.. GENERATED FROM PYTHON SOURCE LINES 1258-1260
 
 **Define CoFI options**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1234-1243
+.. GENERATED FROM PYTHON SOURCE LINES 1263-1272
 
 Use the template below and set the CoFI tool to ``newton-cg`` or
 ``trust-ncg``
@@ -1827,7 +1856,7 @@ Use the template below and set the CoFI tool to ``newton-cg`` or
    my_options.set_params(method=<DEFINE_ME>,callback=PerIterationCallbackFunction(),options={"maxiter": 10})
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1243-1246
+.. GENERATED FROM PYTHON SOURCE LINES 1272-1275
 
 .. code-block:: Python
 
@@ -1841,7 +1870,7 @@ Use the template below and set the CoFI tool to ``newton-cg`` or
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1248-1254
+.. GENERATED FROM PYTHON SOURCE LINES 1277-1283
 
 .. code-block:: Python
 
@@ -1858,7 +1887,7 @@ Use the template below and set the CoFI tool to ``newton-cg`` or
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1256-1262
+.. GENERATED FROM PYTHON SOURCE LINES 1285-1291
 
 .. code-block:: Python
 
@@ -1875,12 +1904,12 @@ Use the template below and set the CoFI tool to ``newton-cg`` or
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1267-1269
+.. GENERATED FROM PYTHON SOURCE LINES 1296-1298
 
 **Run CoFI inversion**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1269-1273
+.. GENERATED FROM PYTHON SOURCE LINES 1298-1302
 
 .. code-block:: Python
 
@@ -1897,42 +1926,42 @@ Use the template below and set the CoFI tool to ``newton-cg`` or
  .. code-block:: none
 
     Iteration #1
-      objective value: 72634.55061476903
+      objective value: 81782.04925107711
     Iteration #2
-      objective value: 61004.49809243162
+      objective value: 69010.63281493413
     Iteration #3
-      objective value: 43307.2936365902
+      objective value: 49533.378739060325
     Iteration #4
-      objective value: 24292.684094930162
+      objective value: 27942.1106349338
     Iteration #5
-      objective value: 11507.731095245315
+      objective value: 13518.328094206927
     Iteration #6
-      objective value: 7728.471754744907
+      objective value: 8809.363813455235
     Iteration #7
-      objective value: 3481.699758803225
+      objective value: 3944.3620556606566
     Iteration #8
-      objective value: 2097.082824963296
+      objective value: 2342.7727354235585
     Iteration #9
-      objective value: 1836.0053664379384
+      objective value: 1997.313570697696
     Iteration #10
-      objective value: 1631.574644639748
+      objective value: 1698.473407253146
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1278-1281
+.. GENERATED FROM PYTHON SOURCE LINES 1307-1310
 
 Plotting
 ~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1284-1287
+.. GENERATED FROM PYTHON SOURCE LINES 1313-1316
 
 Data - Profiles
 ^^^^^^^^^^^^^^^
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1287-1306
+.. GENERATED FROM PYTHON SOURCE LINES 1316-1335
 
 .. code-block:: Python
 
@@ -1967,13 +1996,13 @@ Data - Profiles
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1311-1314
+.. GENERATED FROM PYTHON SOURCE LINES 1340-1343
 
 Model
 ^^^^^
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1314-1342
+.. GENERATED FROM PYTHON SOURCE LINES 1343-1371
 
 .. code-block:: Python
 
@@ -2019,11 +2048,11 @@ Model
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f02c8c09d10>
+    <matplotlib.legend.Legend object at 0x7efd9290ac10>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1347-1364
+.. GENERATED FROM PYTHON SOURCE LINES 1376-1393
 
 Ensemble methods applied to three survey lines
 ----------------------------------------------
@@ -2043,7 +2072,7 @@ Sampling <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max
 creation <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max/three_survey_lines_surrogate_model_creation.ipynb>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1364-1389
+.. GENERATED FROM PYTHON SOURCE LINES 1393-1418
 
 .. code-block:: Python
 
@@ -2094,17 +2123,17 @@ creation <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max
      Training
    
        Training ...
-       Training - done. Time (sec):  5.9321184
+       Training - done. Time (sec):  4.5371859
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1394-1396
+.. GENERATED FROM PYTHON SOURCE LINES 1423-1425
 
 **Initialise a model for inversion and define prior distribution**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1396-1401
+.. GENERATED FROM PYTHON SOURCE LINES 1425-1430
 
 .. code-block:: Python
 
@@ -2120,12 +2149,12 @@ creation <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1406-1408
+.. GENERATED FROM PYTHON SOURCE LINES 1435-1437
 
 **Define helper functions for CoFI**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1408-1425
+.. GENERATED FROM PYTHON SOURCE LINES 1437-1454
 
 .. code-block:: Python
 
@@ -2153,7 +2182,7 @@ creation <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1430-1460
+.. GENERATED FROM PYTHON SOURCE LINES 1459-1489
 
 Challenge: Select an ensemble method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2186,7 +2215,7 @@ complete the relevant section and upload your solution.*
    :target: https://excalidraw.com/#room=52f0ac5f10e0111ee085,3nYggMVJOpmqlV1ZbYj0Eg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1463-1478
+.. GENERATED FROM PYTHON SOURCE LINES 1492-1507
 
 Affine Invariant Markov chain Monte Carlo Ensemble sampler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2204,7 +2233,7 @@ posterior distribution. (See more details about
    :target: https://excalidraw.com/#room=52f0ac5f10e0111ee085,3nYggMVJOpmqlV1ZbYj0Eg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1478-1484
+.. GENERATED FROM PYTHON SOURCE LINES 1507-1513
 
 .. code-block:: Python
 
@@ -2221,12 +2250,12 @@ posterior distribution. (See more details about
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1489-1491
+.. GENERATED FROM PYTHON SOURCE LINES 1518-1520
 
 **Define CoFI options**
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1491-1498
+.. GENERATED FROM PYTHON SOURCE LINES 1520-1527
 
 .. code-block:: Python
 
@@ -2244,7 +2273,7 @@ posterior distribution. (See more details about
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1503-1519
+.. GENERATED FROM PYTHON SOURCE LINES 1532-1548
 
 Use the template below and set the CoFI tool to ``emcee``
 
@@ -2263,7 +2292,7 @@ Use the template below and set the CoFI tool to ``emcee``
    my_result.summary()
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1519-1522
+.. GENERATED FROM PYTHON SOURCE LINES 1548-1551
 
 .. code-block:: Python
 
@@ -2277,7 +2306,7 @@ Use the template below and set the CoFI tool to ``emcee``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1524-1539
+.. GENERATED FROM PYTHON SOURCE LINES 1553-1568
 
 .. code-block:: Python
 
@@ -2304,7 +2333,7 @@ Use the template below and set the CoFI tool to ``emcee``
 
  .. code-block:: none
 
-      0%|          | 0/5000 [00:00<?, ?it/s]      1%|          | 34/5000 [00:00<00:14, 335.32it/s]      2%|▏         | 89/5000 [00:00<00:10, 460.59it/s]      3%|▎         | 141/5000 [00:00<00:09, 486.04it/s]      4%|▍         | 193/5000 [00:00<00:09, 497.70it/s]      5%|▍         | 245/5000 [00:00<00:09, 503.71it/s]      6%|▌         | 297/5000 [00:00<00:09, 507.41it/s]      7%|▋         | 349/5000 [00:00<00:09, 510.97it/s]      8%|▊         | 401/5000 [00:00<00:08, 511.68it/s]      9%|▉         | 454/5000 [00:00<00:08, 514.61it/s]     10%|█         | 506/5000 [00:01<00:08, 515.51it/s]     11%|█         | 558/5000 [00:01<00:08, 514.49it/s]     12%|█▏        | 610/5000 [00:01<00:08, 514.08it/s]     13%|█▎        | 662/5000 [00:01<00:08, 513.47it/s]     14%|█▍        | 714/5000 [00:01<00:08, 513.53it/s]     15%|█▌        | 766/5000 [00:01<00:08, 513.20it/s]     16%|█▋        | 818/5000 [00:01<00:08, 513.31it/s]     17%|█▋        | 870/5000 [00:01<00:08, 513.25it/s]     18%|█▊        | 923/5000 [00:01<00:07, 515.88it/s]     20%|█▉        | 978/5000 [00:01<00:07, 525.46it/s]     21%|██        | 1033/5000 [00:02<00:07, 530.53it/s]     22%|██▏       | 1088/5000 [00:02<00:07, 534.69it/s]     23%|██▎       | 1145/5000 [00:02<00:07, 543.92it/s]     24%|██▍       | 1201/5000 [00:02<00:06, 547.97it/s]     25%|██▌       | 1256/5000 [00:02<00:06, 545.52it/s]     26%|██▌       | 1312/5000 [00:02<00:06, 547.39it/s]     27%|██▋       | 1367/5000 [00:02<00:06, 546.80it/s]     28%|██▊       | 1423/5000 [00:02<00:06, 548.46it/s]     30%|██▉       | 1478/5000 [00:02<00:06, 548.19it/s]     31%|███       | 1534/5000 [00:02<00:06, 550.06it/s]     32%|███▏      | 1592/5000 [00:03<00:06, 558.41it/s]     33%|███▎      | 1648/5000 [00:03<00:06, 557.18it/s]     34%|███▍      | 1705/5000 [00:03<00:05, 558.29it/s]     35%|███▌      | 1761/5000 [00:03<00:05, 558.71it/s]     36%|███▋      | 1817/5000 [00:03<00:05, 555.52it/s]     37%|███▋      | 1873/5000 [00:03<00:05, 550.77it/s]     39%|███▊      | 1929/5000 [00:03<00:05, 550.22it/s]     40%|███▉      | 1985/5000 [00:03<00:05, 552.56it/s]     41%|████      | 2041/5000 [00:03<00:05, 553.31it/s]     42%|████▏     | 2098/5000 [00:03<00:05, 556.43it/s]     43%|████▎     | 2154/5000 [00:04<00:05, 554.07it/s]     44%|████▍     | 2211/5000 [00:04<00:05, 555.84it/s]     45%|████▌     | 2268/5000 [00:04<00:04, 558.42it/s]     46%|████▋     | 2324/5000 [00:04<00:04, 553.82it/s]     48%|████▊     | 2380/5000 [00:04<00:04, 548.13it/s]     49%|████▊     | 2437/5000 [00:04<00:04, 551.91it/s]     50%|████▉     | 2493/5000 [00:04<00:04, 552.74it/s]     51%|█████     | 2550/5000 [00:04<00:04, 555.83it/s]     52%|█████▏    | 2606/5000 [00:04<00:04, 554.25it/s]     53%|█████▎    | 2662/5000 [00:04<00:04, 553.61it/s]     54%|█████▍    | 2718/5000 [00:05<00:04, 550.80it/s]     56%|█████▌    | 2775/5000 [00:05<00:04, 553.99it/s]     57%|█████▋    | 2834/5000 [00:05<00:03, 564.44it/s]     58%|█████▊    | 2892/5000 [00:05<00:03, 566.57it/s]     59%|█████▉    | 2949/5000 [00:05<00:03, 565.76it/s]     60%|██████    | 3006/5000 [00:05<00:03, 563.69it/s]     61%|██████▏   | 3063/5000 [00:05<00:03, 560.51it/s]     62%|██████▏   | 3120/5000 [00:05<00:03, 561.45it/s]     64%|██████▎   | 3177/5000 [00:05<00:03, 560.05it/s]     65%|██████▍   | 3234/5000 [00:05<00:03, 555.31it/s]     66%|██████▌   | 3290/5000 [00:06<00:03, 553.79it/s]     67%|██████▋   | 3346/5000 [00:06<00:02, 551.44it/s]     68%|██████▊   | 3403/5000 [00:06<00:02, 555.54it/s]     69%|██████▉   | 3459/5000 [00:06<00:02, 553.24it/s]     70%|███████   | 3515/5000 [00:06<00:02, 552.18it/s]     71%|███████▏  | 3571/5000 [00:06<00:02, 547.74it/s]     73%|███████▎  | 3627/5000 [00:06<00:02, 551.13it/s]     74%|███████▎  | 3683/5000 [00:06<00:02, 552.73it/s]     75%|███████▍  | 3739/5000 [00:06<00:02, 552.65it/s]     76%|███████▌  | 3795/5000 [00:07<00:02, 549.65it/s]     77%|███████▋  | 3853/5000 [00:07<00:02, 556.69it/s]     78%|███████▊  | 3909/5000 [00:07<00:01, 557.02it/s]     79%|███████▉  | 3966/5000 [00:07<00:01, 560.30it/s]     80%|████████  | 4023/5000 [00:07<00:01, 560.20it/s]     82%|████████▏ | 4080/5000 [00:07<00:01, 556.28it/s]     83%|████████▎ | 4136/5000 [00:07<00:01, 554.54it/s]     84%|████████▍ | 4192/5000 [00:07<00:01, 553.92it/s]     85%|████████▍ | 4248/5000 [00:07<00:01, 551.29it/s]     86%|████████▌ | 4306/5000 [00:07<00:01, 557.95it/s]     87%|████████▋ | 4362/5000 [00:08<00:01, 556.38it/s]     88%|████████▊ | 4423/5000 [00:08<00:01, 569.60it/s]     90%|████████▉ | 4482/5000 [00:08<00:00, 574.33it/s]     91%|█████████ | 4540/5000 [00:08<00:00, 572.51it/s]     92%|█████████▏| 4598/5000 [00:08<00:00, 566.70it/s]     93%|█████████▎| 4656/5000 [00:08<00:00, 568.34it/s]     94%|█████████▍| 4714/5000 [00:08<00:00, 569.88it/s]     95%|█████████▌| 4771/5000 [00:08<00:00, 565.91it/s]     97%|█████████▋| 4829/5000 [00:08<00:00, 567.96it/s]     98%|█████████▊| 4886/5000 [00:08<00:00, 567.72it/s]     99%|█████████▉| 4943/5000 [00:09<00:00, 568.04it/s]    100%|██████████| 5000/5000 [00:09<00:00, 568.40it/s]    100%|██████████| 5000/5000 [00:09<00:00, 547.30it/s]
+      0%|          | 0/5000 [00:00<?, ?it/s]      1%|          | 33/5000 [00:00<00:15, 325.08it/s]      2%|▏         | 85/5000 [00:00<00:11, 437.69it/s]      3%|▎         | 132/5000 [00:00<00:10, 451.25it/s]      4%|▎         | 181/5000 [00:00<00:10, 464.47it/s]      5%|▍         | 229/5000 [00:00<00:10, 467.58it/s]      6%|▌         | 277/5000 [00:00<00:10, 470.46it/s]      7%|▋         | 326/5000 [00:00<00:09, 473.97it/s]      8%|▊         | 375/5000 [00:00<00:09, 477.36it/s]      8%|▊         | 424/5000 [00:00<00:09, 478.96it/s]      9%|▉         | 473/5000 [00:01<00:09, 479.88it/s]     10%|█         | 522/5000 [00:01<00:09, 480.14it/s]     11%|█▏        | 571/5000 [00:01<00:09, 479.21it/s]     12%|█▏        | 619/5000 [00:01<00:09, 479.41it/s]     13%|█▎        | 667/5000 [00:01<00:09, 477.21it/s]     14%|█▍        | 715/5000 [00:01<00:08, 476.38it/s]     15%|█▌        | 763/5000 [00:01<00:08, 475.84it/s]     16%|█▌        | 811/5000 [00:01<00:08, 476.55it/s]     17%|█▋        | 859/5000 [00:01<00:08, 475.28it/s]     18%|█▊        | 907/5000 [00:01<00:08, 475.35it/s]     19%|█▉        | 955/5000 [00:02<00:08, 473.51it/s]     20%|██        | 1004/5000 [00:02<00:08, 476.53it/s]     21%|██        | 1056/5000 [00:02<00:08, 486.55it/s]     22%|██▏       | 1106/5000 [00:02<00:07, 489.39it/s]     23%|██▎       | 1157/5000 [00:02<00:07, 492.80it/s]     24%|██▍       | 1209/5000 [00:02<00:07, 498.63it/s]     25%|██▌       | 1263/5000 [00:02<00:07, 509.26it/s]     26%|██▋       | 1315/5000 [00:02<00:07, 510.82it/s]     27%|██▋       | 1367/5000 [00:02<00:07, 509.74it/s]     28%|██▊       | 1419/5000 [00:02<00:06, 512.75it/s]     29%|██▉       | 1471/5000 [00:03<00:06, 512.45it/s]     30%|███       | 1524/5000 [00:03<00:06, 515.85it/s]     32%|███▏      | 1576/5000 [00:03<00:06, 514.87it/s]     33%|███▎      | 1628/5000 [00:03<00:06, 510.77it/s]     34%|███▎      | 1681/5000 [00:03<00:06, 514.25it/s]     35%|███▍      | 1735/5000 [00:03<00:06, 519.69it/s]     36%|███▌      | 1787/5000 [00:03<00:06, 518.64it/s]     37%|███▋      | 1839/5000 [00:03<00:06, 515.81it/s]     38%|███▊      | 1891/5000 [00:03<00:06, 509.72it/s]     39%|███▉      | 1942/5000 [00:03<00:06, 508.31it/s]     40%|███▉      | 1993/5000 [00:04<00:05, 507.50it/s]     41%|████      | 2046/5000 [00:04<00:05, 511.32it/s]     42%|████▏     | 2101/5000 [00:04<00:05, 519.26it/s]     43%|████▎     | 2154/5000 [00:04<00:05, 519.82it/s]     44%|████▍     | 2206/5000 [00:04<00:05, 514.55it/s]     45%|████▌     | 2258/5000 [00:04<00:05, 507.43it/s]     46%|████▌     | 2309/5000 [00:04<00:05, 502.74it/s]     47%|████▋     | 2360/5000 [00:04<00:05, 500.74it/s]     48%|████▊     | 2413/5000 [00:04<00:05, 506.98it/s]     49%|████▉     | 2466/5000 [00:04<00:04, 512.02it/s]     50%|█████     | 2518/5000 [00:05<00:04, 513.06it/s]     51%|█████▏    | 2570/5000 [00:05<00:04, 512.89it/s]     52%|█████▏    | 2622/5000 [00:05<00:04, 511.78it/s]     54%|█████▎    | 2675/5000 [00:05<00:04, 514.83it/s]     55%|█████▍    | 2727/5000 [00:05<00:04, 515.39it/s]     56%|█████▌    | 2779/5000 [00:05<00:04, 515.42it/s]     57%|█████▋    | 2832/5000 [00:05<00:04, 519.73it/s]     58%|█████▊    | 2884/5000 [00:05<00:04, 516.19it/s]     59%|█████▊    | 2936/5000 [00:05<00:03, 516.12it/s]     60%|█████▉    | 2988/5000 [00:05<00:03, 512.53it/s]     61%|██████    | 3040/5000 [00:06<00:03, 507.49it/s]     62%|██████▏   | 3091/5000 [00:06<00:03, 504.41it/s]     63%|██████▎   | 3144/5000 [00:06<00:03, 510.85it/s]     64%|██████▍   | 3197/5000 [00:06<00:03, 514.73it/s]     65%|██████▍   | 3249/5000 [00:06<00:03, 512.01it/s]     66%|██████▌   | 3302/5000 [00:06<00:03, 515.19it/s]     67%|██████▋   | 3354/5000 [00:06<00:03, 514.94it/s]     68%|██████▊   | 3406/5000 [00:06<00:03, 508.19it/s]     69%|██████▉   | 3457/5000 [00:06<00:03, 506.62it/s]     70%|███████   | 3510/5000 [00:07<00:02, 511.84it/s]     71%|███████   | 3562/5000 [00:07<00:02, 508.48it/s]     72%|███████▏  | 3613/5000 [00:07<00:02, 508.76it/s]     73%|███████▎  | 3664/5000 [00:07<00:02, 505.83it/s]     74%|███████▍  | 3716/5000 [00:07<00:02, 509.29it/s]     75%|███████▌  | 3769/5000 [00:07<00:02, 514.08it/s]     76%|███████▋  | 3821/5000 [00:07<00:02, 513.72it/s]     77%|███████▋  | 3874/5000 [00:07<00:02, 516.47it/s]     79%|███████▊  | 3926/5000 [00:07<00:02, 517.30it/s]     80%|███████▉  | 3981/5000 [00:07<00:01, 525.55it/s]     81%|████████  | 4034/5000 [00:08<00:01, 525.35it/s]     82%|████████▏ | 4087/5000 [00:08<00:01, 517.61it/s]     83%|████████▎ | 4139/5000 [00:08<00:01, 516.26it/s]     84%|████████▍ | 4193/5000 [00:08<00:01, 521.22it/s]     85%|████████▍ | 4246/5000 [00:08<00:01, 522.74it/s]     86%|████████▌ | 4299/5000 [00:08<00:01, 520.78it/s]     87%|████████▋ | 4352/5000 [00:08<00:01, 519.42it/s]     88%|████████▊ | 4405/5000 [00:08<00:01, 521.92it/s]     89%|████████▉ | 4459/5000 [00:08<00:01, 525.21it/s]     90%|█████████ | 4514/5000 [00:08<00:00, 530.01it/s]     91%|█████████▏| 4568/5000 [00:09<00:00, 531.83it/s]     92%|█████████▏| 4622/5000 [00:09<00:00, 524.44it/s]     94%|█████████▎| 4675/5000 [00:09<00:00, 523.60it/s]     95%|█████████▍| 4728/5000 [00:09<00:00, 523.40it/s]     96%|█████████▌| 4781/5000 [00:09<00:00, 520.48it/s]     97%|█████████▋| 4834/5000 [00:09<00:00, 520.93it/s]     98%|█████████▊| 4887/5000 [00:09<00:00, 519.42it/s]     99%|█████████▉| 4940/5000 [00:09<00:00, 520.45it/s]    100%|█████████▉| 4993/5000 [00:09<00:00, 520.66it/s]    100%|██████████| 5000/5000 [00:09<00:00, 505.90it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -2317,34 +2346,41 @@ Use the template below and set the CoFI tool to ``emcee``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1541-1566
+.. GENERATED FROM PYTHON SOURCE LINES 1570-1602
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
     var_names = [
-        "Dip (\u00b0)",
-        "Dip azimuth (\u00b0)",
+        "Dip (°)",
+        "Dip azimuth (°)",
         "Easting (m)",
         "Depth (m)",
         "Width (m)",
     ]
 
-    var_lines=(
-            ('Dip (\u00b0)', {}, 60),
-            ('Dip azimuth (\u00b0)', {}, 65),
-            ('Easting (m)', {}, 175),
-            ('Depth (m)', {}, 30),
-            ('Width (m)', {}, 90)
-    )
+    true_values = [60, 65, 175, 30, 90]
     sampler = my_result.sampler
     az_idata = my_result.to_arviz(var_names=var_names)
-    arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines);
-    plt.tight_layout()
+    pc = arviz.plot_trace_dist(
+        az_idata.sel(draw=slice(2000, None)),
+        visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+        figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
+    )
+    var_list = list(az_idata.posterior.data_vars)
+    for i, vname in enumerate(var_list):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.set_title(vname)
+        ax_trace.set_title(vname)
+        ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.margins(x=0)
+
 
 
 
@@ -2358,7 +2394,7 @@ Use the template below and set the CoFI tool to ``emcee``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1568-1598
+.. GENERATED FROM PYTHON SOURCE LINES 1604-1635
 
 .. code-block:: Python
 
@@ -2368,29 +2404,30 @@ Use the template below and set the CoFI tool to ``emcee``
     true_values = {
         f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
     }
-    fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-    _ = arviz.plot_pair(
-    az_idata.sel(draw=slice(4000,None)), 
-        marginals=True,
-        kind="kde",
-        kde_kwargs={
-            "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-            "contourf_kwargs": {"cmap": "Blues"},
-        },
-        ax=axes,
-        textsize=10,
+    import arviz_base
+    arviz_base.rcParams["plot.max_subplots"] = 80
+    pm = arviz.plot_pair(
+        az_idata.sel(draw=slice(4000, None)),
+        marginal=True,
+        triangle="lower",
     )
+    ref_names = list(true_values.keys())
+    ref_vals = list(true_values.values())
+    n = len(ref_vals)
+    for i in range(n):
+        for j in range(n):
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            if i == j:
+                ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+            elif i > j:
+                ax.plot(
+                    ref_vals[j], ref_vals[i], "o",
+                    color="yellow", markeredgecolor="k", ms=10, zorder=5,
+                )
 
-    for i, j in numpy.ndindex(axes.shape):
-        if i == j:
-            continue
-        xlabel = axes[-1, j].get_xlabel()
-        ylabel = axes[i, 0].get_ylabel()
-        x_true = true_values[xlabel]
-        y_true = true_values[ylabel]        
-        axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
-
-    plt.show()
 
 
 
@@ -2404,14 +2441,14 @@ Use the template below and set the CoFI tool to ``emcee``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1600-1658
+.. GENERATED FROM PYTHON SOURCE LINES 1637-1712
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
     _, axes = plt.subplots(2, 2)
     axes[1,1].axis("off")
@@ -2424,19 +2461,30 @@ Use the template below and set the CoFI tool to ``emcee``
         axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
     )
 
-
     plt.tight_layout()
 
+    posterior = az_idata.posterior
+    has_chain = "chain" in posterior.dims
+    n_chains = int(posterior.sizes["chain"]) if has_chain else 1
+    n_draws = int(posterior.sizes["draw"])
 
-    ichain=0
-    idraw=2500
-    sample=numpy.zeros(5)
+    ichain = 0
+    idraw = min(2500, n_draws - 1)
+    sample = numpy.zeros(5)
 
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    if has_chain:
+        sample[0] = float(posterior["Dip (°)"].isel(chain=ichain, draw=idraw))
+        sample[1] = float(posterior["Dip azimuth (°)"].isel(chain=ichain, draw=idraw))
+        sample[2] = float(posterior["Easting (m)"].isel(chain=ichain, draw=idraw))
+        sample[3] = float(posterior["Depth (m)"].isel(chain=ichain, draw=idraw))
+        sample[4] = float(posterior["Width (m)"].isel(chain=ichain, draw=idraw))
+    else:
+        sample[0] = float(posterior["Dip (°)"].isel(draw=idraw))
+        sample[1] = float(posterior["Dip azimuth (°)"].isel(draw=idraw))
+        sample[2] = float(posterior["Easting (m)"].isel(draw=idraw))
+        sample[3] = float(posterior["Depth (m)"].isel(draw=idraw))
+        sample[4] = float(posterior["Width (m)"].isel(draw=idraw))
+
     plot_plate_faces(
         "plate_inverted", forward, sample, 
         axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -2450,20 +2498,26 @@ Use the template below and set the CoFI tool to ``emcee``
 
     axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-    # plot 10 randomly selected samples of the posterior distirbution
+    # plot 10 randomly selected samples of the posterior distribution
     for i in range(10):
-        ichain=numpy.random.randint(0,12)
-        idraw=numpy.random.randint(2000,5000)
-        sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-        sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-        sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-        sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-        sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+        ichain = numpy.random.randint(0, n_chains)
+        idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+        if has_chain:
+            sample[0] = float(posterior["Dip (°)"].isel(chain=ichain, draw=idraw))
+            sample[1] = float(posterior["Dip azimuth (°)"].isel(chain=ichain, draw=idraw))
+            sample[2] = float(posterior["Easting (m)"].isel(chain=ichain, draw=idraw))
+            sample[3] = float(posterior["Depth (m)"].isel(chain=ichain, draw=idraw))
+            sample[4] = float(posterior["Width (m)"].isel(chain=ichain, draw=idraw))
+        else:
+            sample[0] = float(posterior["Dip (°)"].isel(draw=idraw))
+            sample[1] = float(posterior["Dip azimuth (°)"].isel(draw=idraw))
+            sample[2] = float(posterior["Easting (m)"].isel(draw=idraw))
+            sample[3] = float(posterior["Depth (m)"].isel(draw=idraw))
+            sample[4] = float(posterior["Width (m)"].isel(draw=idraw))
         plot_plate_faces(
-        "plate_inverted", forward, sample, 
-        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-    )
+            "plate_inverted", forward, sample, 
+            axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+        )
 
 
 
@@ -2478,7 +2532,7 @@ Use the template below and set the CoFI tool to ``emcee``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1663-1686
+.. GENERATED FROM PYTHON SOURCE LINES 1717-1740
 
 Neighbourhood algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -2504,7 +2558,7 @@ accessed by using ``neighpy`` as the string in
    :target: https://excalidraw.com/#room=52f0ac5f10e0111ee085,3nYggMVJOpmqlV1ZbYj0Eg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1686-1690
+.. GENERATED FROM PYTHON SOURCE LINES 1740-1744
 
 .. code-block:: Python
 
@@ -2519,7 +2573,7 @@ accessed by using ``neighpy`` as the string in
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1695-1703
+.. GENERATED FROM PYTHON SOURCE LINES 1749-1757
 
 Using the template below set the CoFI tool to ``neighpy``
 
@@ -2530,7 +2584,7 @@ Using the template below set the CoFI tool to ``neighpy``
    inv_options.suggest_solver_params()
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1703-1706
+.. GENERATED FROM PYTHON SOURCE LINES 1757-1760
 
 .. code-block:: Python
 
@@ -2544,7 +2598,7 @@ Using the template below set the CoFI tool to ``neighpy``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1708-1714
+.. GENERATED FROM PYTHON SOURCE LINES 1762-1768
 
 .. code-block:: Python
 
@@ -2564,14 +2618,14 @@ Using the template below set the CoFI tool to ``neighpy``
 
     Current backend tool neighpy has the following solver-specific parameters:
     Required parameters:
-    {'n_iterations', 'n_samples_per_iteration', 'n_cells_to_resample', 'n_resample', 'bounds', 'n_initial_samples', 'n_walkers'}
+    {'n_cells_to_resample', 'n_initial_samples', 'n_walkers', 'bounds', 'n_resample', 'n_iterations', 'n_samples_per_iteration'}
     Optional parameters & default settings:
     {'serial': False}
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1716-1735
+.. GENERATED FROM PYTHON SOURCE LINES 1770-1789
 
 .. code-block:: Python
 
@@ -2603,61 +2657,69 @@ Using the template below set the CoFI tool to ``neighpy``
  .. code-block:: none
 
     NAI - Initial Random Search
-    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:02<04:31,  2.75s/it]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:02<01:13,  1.31it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:02<00:37,  2.50it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:03<00:23,  3.92it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:03<00:16,  5.53it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:03<00:12,  7.06it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:03<00:10,  8.53it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:03<00:08,  9.83it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:03<00:07, 10.95it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:03<00:06, 11.85it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:04<00:06, 12.56it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:04<00:05, 13.09it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:04<00:05, 13.48it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:04<00:05, 13.76it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:04<00:05, 13.96it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:04<00:04, 14.10it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:04<00:04, 14.19it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:05<00:04, 14.26it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:05<00:04, 14.28it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:05<00:04, 14.27it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:05<00:04, 14.30it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:05<00:03, 14.31it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:05<00:03, 14.31it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:05<00:03, 14.30it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:05<00:03, 14.48it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:06<00:03, 14.41it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:06<00:03, 14.56it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:06<00:03, 14.44it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:06<00:02, 14.38it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:06<00:02, 14.31it/s]    NAI - Optimisation Loop:  61%|██████    | 61/100 [00:06<00:02, 14.31it/s]    NAI - Optimisation Loop:  63%|██████▎   | 63/100 [00:06<00:02, 14.27it/s]    NAI - Optimisation Loop:  65%|██████▌   | 65/100 [00:07<00:02, 14.21it/s]    NAI - Optimisation Loop:  67%|██████▋   | 67/100 [00:07<00:02, 14.05it/s]    NAI - Optimisation Loop:  69%|██████▉   | 69/100 [00:07<00:02, 14.03it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:07<00:02, 14.03it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:07<00:01, 14.04it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:07<00:01, 14.02it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:07<00:01, 14.04it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:08<00:01, 14.01it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:08<00:01, 13.98it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:08<00:01, 13.91it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:08<00:01, 13.94it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:08<00:00, 13.92it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:08<00:00, 13.95it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:08<00:00, 13.92it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:09<00:00, 13.94it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:09<00:00, 14.03it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:09<00:00, 14.01it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:09<00:00, 14.03it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:09<00:00, 10.39it/s]
+    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:02<04:44,  2.88s/it]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:03<01:17,  1.25it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:03<00:40,  2.35it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:03<00:25,  3.61it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:03<00:18,  5.00it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:03<00:13,  6.43it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:03<00:11,  7.82it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:03<00:09,  9.05it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:04<00:08, 10.20it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:04<00:07, 11.10it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:04<00:06, 11.69it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:04<00:06, 12.24it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:04<00:06, 12.30it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:04<00:05, 12.60it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:04<00:05, 12.87it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:05<00:05, 13.07it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:05<00:05, 13.36it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:05<00:04, 13.50it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:05<00:04, 13.72it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:05<00:04, 13.25it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:05<00:04, 13.10it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:05<00:04, 13.36it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:06<00:04, 13.58it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:06<00:03, 13.72it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:06<00:03, 13.84it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:06<00:03, 13.93it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:06<00:03, 13.42it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:06<00:03, 13.20it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:07<00:03, 13.42it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:07<00:03, 13.59it/s]    NAI - Optimisation Loop:  61%|██████    | 61/100 [00:07<00:02, 13.63it/s]    NAI - Optimisation Loop:  63%|██████▎   | 63/100 [00:07<00:02, 13.80it/s]    NAI - Optimisation Loop:  65%|██████▌   | 65/100 [00:07<00:02, 13.89it/s]    NAI - Optimisation Loop:  67%|██████▋   | 67/100 [00:07<00:02, 13.45it/s]    NAI - Optimisation Loop:  69%|██████▉   | 69/100 [00:07<00:02, 12.99it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:08<00:02, 13.25it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:08<00:02, 13.48it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:08<00:01, 13.53it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:08<00:01, 13.41it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:08<00:01, 13.59it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:08<00:01, 13.28it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:08<00:01, 12.83it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:09<00:01, 12.66it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:09<00:00, 13.03it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:09<00:00, 12.98it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:09<00:00, 12.74it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:09<00:00, 12.83it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:09<00:00, 12.38it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:10<00:00, 12.16it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:10<00:00, 12.23it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:10<00:00,  9.69it/s]
     The inversion result from `neighpy`:
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [ 57.11813619  66.8392679  182.70337399  38.61582867 104.45287136]
-    direct_search_samples: [[ 52.1916133  126.2160533  181.19845212  37.3108892   96.28835044]
-     [ 33.91287522  56.8102908  184.09361941  36.53961479 109.71946258]
-     [ 52.86975402 135.58339465 162.90716946  37.33717762  68.86352767]
+    model: [ 23.72857143  60.1643069  184.59628132  37.00981831  69.35691629]
+    direct_search_samples: [[ 28.5992124   51.76986253 160.76969216  36.68089787 113.94439725]
+     [ 22.32906315  55.99849951 182.97693452  36.60204959  73.38038643]
+     [ 26.85229621  73.32979535 160.83702553  32.88803251 106.42735064]
      ...
-     [ 57.11785217  66.84760475 182.63649209  38.61658817 104.44276152]
-     [ 57.11751592  66.84760511 182.63651556  38.61658789 104.44276268]
-     [ 57.11776557  66.84759141 182.63649715  38.61660461 104.44275953]]
-    direct_search_objectives: [4.18006146e+04 6.40588752e+04 5.66104878e+04 ... 1.00000000e-03
-     1.00000000e-03 1.00000000e-03]
-    appraisal_samples: [[ 48.77539158  71.54598971 167.55427416  37.16605155 106.22523364]
-     [ 54.09005981  87.08225348 171.63661219  35.83031891 104.62102762]
-     [ 50.77776725  87.63939151 172.6754682   39.10894653  96.25008532]
+     [ 23.73103012  60.16619679 184.43034114  37.01024757  69.39008754]
+     [ 23.73104021  60.16621931 184.43026621  37.01025554  69.39056737]
+     [ 23.7311485   60.16617287 184.43015926  37.0102626   69.3905519 ]]
+    direct_search_objectives: [167021.88345958  14954.62891599 202454.94361509 ...  11714.95844992
+      11714.9105204   11714.9379198 ]
+    appraisal_samples: [[ 21.23139207  57.1795549  184.72223782  36.83256783  69.83223415]
+     [ 24.21589905  68.34014554 184.60095886  36.98444938  69.60130723]
+     [ 24.79687323  62.1964014  184.72861247  37.09766029  69.83960096]
      ...
-     [ 47.9593729   84.1088433  176.44462411  38.59983624  97.73631372]
-     [ 56.2808576   61.45536285 181.39007332  38.33851134 102.51160405]
-     [ 46.00471079  56.922463   168.03498628  37.2501801   99.59096922]]
+     [ 23.49542463  69.3660225  184.8174731   36.8674073   68.6628274 ]
+     [ 28.76544302  58.15223988 184.91913196  37.34169443  67.8928283 ]
+     [ 38.40301131  84.28735035 184.98616416  37.11189966  66.66546015]]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1737-1761
+.. GENERATED FROM PYTHON SOURCE LINES 1791-1823
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
+    import arviz_base
 
-    arviz.style.use("default")
-    var_names = [
-        "Dip (\u00b0)", 
-        "Dip azimuth (\u00b0)", 
+    arviz.style.use("arviz-variat")
+    display_names = [
+        "Dip (°)", 
+        "Dip azimuth (°)", 
         "Easting (m)", 
         "Depth (m)", 
         "Width (m)"
     ]
+    clean_names = ["Dip_deg", "Dip_azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
-    var_lines=(
-        ('Dip (\u00b0)', {}, 60),
-            ('Dip azimuth (\u00b0)', {}, 65),
-            ('Easting (m)', {}, 175),
-            ('Depth (m)', {}, 30),
-            ('Width (m)', {}, 90)
+    true_values = [60, 65, 175, 30, 90]
+    d = {k: v[numpy.newaxis, :] for k, v in zip(clean_names, my_result.appraisal_samples.T)}
+    az_idata = arviz_base.from_dict({"posterior": d})
+    pc = arviz.plot_trace_dist(
+        az_idata.sel(draw=slice(2000, None)),
+        visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+        figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
     )
-    d = {k: v for k, v in zip(var_names, my_result.appraisal_samples.T)}
-    az_idata = arviz.convert_to_inference_data(d)
-    arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines)
-    plt.tight_layout()
+    for i, dname in enumerate(display_names):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.set_title(dname)
+        ax_trace.set_title(dname)
+        ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.margins(x=0)
+
 
 
 
@@ -2671,22 +2733,23 @@ Using the template below set the CoFI tool to ``neighpy``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1763-1776
+.. GENERATED FROM PYTHON SOURCE LINES 1825-1839
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
-    _, axes = plt.subplots(5, 5, figsize=(12,12))
-    arviz.plot_pair(
-        az_idata.sel(draw=slice(4000,None)), 
-        marginals=True, 
-        ax = axes
+    import arviz_base
+    arviz_base.rcParams["plot.max_subplots"] = 80
+    pm = arviz.plot_pair(
+        az_idata.sel(draw=slice(4000, None)),
+        marginal=True,
+        triangle="lower",
     )
-    plt.tight_layout()
+
 
 
 
@@ -2700,14 +2763,14 @@ Using the template below set the CoFI tool to ``neighpy``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1778-1835
+.. GENERATED FROM PYTHON SOURCE LINES 1841-1903
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
     _, axes = plt.subplots(2, 2)
     axes[1,1].axis("off")
@@ -2720,19 +2783,24 @@ Using the template below set the CoFI tool to ``neighpy``
         axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
     )
 
-
     plt.tight_layout()
 
+    posterior = az_idata.posterior
+    has_chain = "chain" in posterior.dims
+    n_chains = int(posterior.sizes["chain"]) if has_chain else 1
+    n_draws = int(posterior.sizes["draw"])
 
-    ichain=0
-    idraw=2500
-    sample=numpy.zeros(5)
+    ichain = 0
+    idraw = min(2500, n_draws - 1)
+    sample = numpy.zeros(5)
 
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    if has_chain:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+    else:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(draw=idraw))
+
     plot_plate_faces(
         "plate_inverted", forward, sample, 
         axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -2746,19 +2814,19 @@ Using the template below set the CoFI tool to ``neighpy``
 
     axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-    # plot 10 randomly selected samples of the posterior distirbution
+    # plot 10 randomly selected samples of the posterior distribution
     for i in range(10):
-        idraw=numpy.random.randint(2000,5000)
-        sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-        sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-        sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-        sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-        sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+        idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+        if has_chain:
+            for idx, cn in enumerate(clean_names):
+                sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+        else:
+            for idx, cn in enumerate(clean_names):
+                sample[idx] = float(posterior[cn].isel(draw=idraw))
         plot_plate_faces(
-        "plate_inverted", forward, sample, 
-        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-    )
+            "plate_inverted", forward, sample, 
+            axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+        )
 
 
 
@@ -2773,7 +2841,7 @@ Using the template below set the CoFI tool to ``neighpy``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1840-1862
+.. GENERATED FROM PYTHON SOURCE LINES 1908-1930
 
 Metropolis Hastings algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2798,7 +2866,7 @@ trans-dimensional inverse problem is given
    :target: https://excalidraw.com/#room=52f0ac5f10e0111ee085,3nYggMVJOpmqlV1ZbYj0Eg
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1862-1887
+.. GENERATED FROM PYTHON SOURCE LINES 1930-1955
 
 .. code-block:: Python
 
@@ -2834,7 +2902,7 @@ trans-dimensional inverse problem is given
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1889-1900
+.. GENERATED FROM PYTHON SOURCE LINES 1957-1968
 
 .. code-block:: Python
 
@@ -2856,7 +2924,7 @@ trans-dimensional inverse problem is given
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1902-1911
+.. GENERATED FROM PYTHON SOURCE LINES 1970-1979
 
 .. code-block:: Python
 
@@ -2876,7 +2944,7 @@ trans-dimensional inverse problem is given
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1916-1934
+.. GENERATED FROM PYTHON SOURCE LINES 1984-2002
 
 Using the template below set the CoFI tool to ``bayesbay``
 
@@ -2897,7 +2965,7 @@ Using the template below set the CoFI tool to ``bayesbay``
    )
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1934-1937
+.. GENERATED FROM PYTHON SOURCE LINES 2002-2005
 
 .. code-block:: Python
 
@@ -2911,7 +2979,7 @@ Using the template below set the CoFI tool to ``bayesbay``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1939-1955
+.. GENERATED FROM PYTHON SOURCE LINES 2007-2023
 
 .. code-block:: Python
 
@@ -2938,7 +3006,7 @@ Using the template below set the CoFI tool to ``bayesbay``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1957-1961
+.. GENERATED FROM PYTHON SOURCE LINES 2025-2029
 
 .. code-block:: Python
 
@@ -2953,7 +3021,7 @@ Using the template below set the CoFI tool to ``bayesbay``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1963-1966
+.. GENERATED FROM PYTHON SOURCE LINES 2031-2034
 
 .. code-block:: Python
 
@@ -2967,56 +3035,57 @@ Using the template below set the CoFI tool to ``bayesbay``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1968-2015
+.. GENERATED FROM PYTHON SOURCE LINES 2036-2084
 
 .. code-block:: Python
 
 
     #@title plotting function (hidden)
+    import arviz_base
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
     var_names = [
-        "Dip (\u00b0)",
-        "Dip Azimuth (\u00b0)",
+        "Dip (°)",
+        "Dip Azimuth (°)",
         "Easting (m)",
         "Depth (m)",
         "Width (m)",
     ]
+    clean_names = ["Dip_deg", "Dip_Azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
     results = my_result.models
     posterior_samples = {
-        f"{var_names[i]}": numpy.concatenate(results[f"param_space.m{i}"])
+        clean_names[i]: numpy.concatenate(results[f"param_space.m{i}"])[numpy.newaxis, :]
         for i in range(init_param_value.size)
     }
 
     true_values = {
-        f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
+        var_names[i]: true_param_value[i] for i in range(init_param_value.size)
     }
 
-
-    fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-    _ = arviz.plot_pair(
-        posterior_samples,
-        marginals=True,
-        kind="kde",
-        kde_kwargs={
-            "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-            "contourf_kwargs": {"cmap": "Blues"},
-        },
-        ax=axes,
-        textsize=10,
+    arviz_base.rcParams["plot.max_subplots"] = 80
+    az_idata = arviz_base.from_dict({"posterior": posterior_samples})
+    pm = arviz.plot_pair(
+        az_idata,
+        marginal=True,
+        triangle="lower",
     )
+    ref_vals = list(true_values.values())
+    n = len(ref_vals)
+    for i in range(n):
+        for j in range(n):
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            if i == j:
+                ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+            elif i > j:
+                ax.plot(
+                    ref_vals[j], ref_vals[i], "o",
+                    color="yellow", markeredgecolor="k", ms=10, zorder=5,
+                )
 
-    for i, j in numpy.ndindex(axes.shape):
-        if i == j:
-            continue
-        xlabel = axes[-1, j].get_xlabel()
-        ylabel = axes[i, 0].get_ylabel()
-        x_true = true_values[xlabel]
-        y_true = true_values[ylabel]
-        axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
-
-    plt.show()
 
 
 
@@ -3030,7 +3099,7 @@ Using the template below set the CoFI tool to ``bayesbay``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 2017-2093
+.. GENERATED FROM PYTHON SOURCE LINES 2086-2162
 
 .. code-block:: Python
 
@@ -3061,8 +3130,8 @@ Using the template below set the CoFI tool to ``bayesbay``
     )
 
     plt.tight_layout()
-    idraw = numpy.random.randint(0, len(posterior_samples[var_names[0]]))
-    sample = numpy.array([posterior_samples[name][idraw] for name in var_names])
+    idraw = numpy.random.randint(0, (posterior_samples[clean_names[0]].shape[1]))
+    sample = numpy.array([posterior_samples[name][0, idraw] for name in clean_names])
 
     plot_plate_faces(
         "plate_inverted",
@@ -3094,10 +3163,10 @@ Using the template below set the CoFI tool to ``bayesbay``
 
     # plot 10 randomly selected samples of the posterior distribution
     idraws = numpy.random.choice(
-        numpy.arange(0, len(posterior_samples[var_names[0]])), 10, replace=False
+        numpy.arange(0, (posterior_samples[clean_names[0]].shape[1])), 10, replace=False
     )
     for idraw in idraws:
-        sample = numpy.array([posterior_samples[name][idraw] for name in var_names])
+        sample = numpy.array([posterior_samples[name][0, idraw] for name in clean_names])
         plot_plate_faces(
             "plate_inverted",
             forward,
@@ -3122,7 +3191,7 @@ Using the template below set the CoFI tool to ``bayesbay``
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 2098-2113
+.. GENERATED FROM PYTHON SOURCE LINES 2167-2182
 
 Where to next?
 ==============
@@ -3140,7 +3209,7 @@ tutorial. -
 `Inversion <https://github.com/inlab-geo/cofi-examples/blob/main/examples/vtem_max/caber_inversion.ipynb>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 2116-2129
+.. GENERATED FROM PYTHON SOURCE LINES 2185-2198
 
 --------------
 
@@ -3156,7 +3225,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 2129-2135
+.. GENERATED FROM PYTHON SOURCE LINES 2198-2204
 
 .. code-block:: Python
 
@@ -3174,25 +3243,25 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
-    bayesbay 0.3.7
-    smt 2.10.1
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
+    bayesbay 0.3.10
+    smt 2.13.0
     neighpy 0.1.9
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 2136-2136
+.. GENERATED FROM PYTHON SOURCE LINES 2205-2205
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (8 minutes 16.832 seconds)
+   **Total running time of the script:** (11 minutes 50.796 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_thin_plate_inversion.py:

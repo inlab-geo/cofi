@@ -6,6 +6,10 @@
 Synthetic Examples
 ==================
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
@@ -27,6 +31,23 @@ Synthetic Examples
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Surface wave and receiver function - joint inversion (synthetic data)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Finding Neptune using Uranus">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_finding_neptune_via_bayesian_inv_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/finding_neptune_via_bayesian_inv`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Finding Neptune using Uranus</div>
     </div>
 
 
@@ -304,6 +325,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This notebook demonstrates CoFI’s ReducedLikelihood class for handling unknown data covariance in inverse problems.">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_linear_regression_reduced_likelihood_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/linear_regression_reduced_likelihood`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Reduced Likelihood for Linear Regression</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Trans-dimensional Bayesian partition modelling of Eustatic Sea-level heights over time">
 
 .. only:: html
@@ -355,6 +393,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Receiver Function Inversion with the Neighbourhood Algorithm">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_receiver_function_neighpy_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/receiver_function_neighpy`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Receiver Function Inversion with the Neighbourhood Algorithm</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Modified Himmelblau function">
 
 .. only:: html
@@ -367,6 +422,23 @@ Synthetic Examples
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Modified Himmelblau function</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rosenbrock function with the Neighbourhood Algorithm">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_rosenbrock_neighpy_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/rosenbrock_neighpy`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rosenbrock function with the Neighbourhood Algorithm</div>
     </div>
 
 
@@ -432,6 +504,7 @@ Synthetic Examples
    :hidden:
 
    /examples/generated/scripts_synth_data/sw_rf_joint_synthetic
+   /examples/generated/scripts_synth_data/finding_neptune_via_bayesian_inv
    /examples/generated/scripts_synth_data/finding_neptune_via_deterministic_inv
    /examples/generated/scripts_synth_data/pygimli_ert
    /examples/generated/scripts_synth_data/xray_tomography
@@ -448,10 +521,13 @@ Synthetic Examples
    /examples/generated/scripts_synth_data/nonlinear_curve_fitting
    /examples/generated/scripts_synth_data/linear_regression
    /examples/generated/scripts_synth_data/linear_regression_neighpy
+   /examples/generated/scripts_synth_data/linear_regression_reduced_likelihood
    /examples/generated/scripts_synth_data/Partition_modelling_sealevel_bayesbay
    /examples/generated/scripts_synth_data/pygimli_dcip
    /examples/generated/scripts_synth_data/receiver_function_inversion
+   /examples/generated/scripts_synth_data/receiver_function_neighpy
    /examples/generated/scripts_synth_data/border_collie_algorithm_demo
+   /examples/generated/scripts_synth_data/rosenbrock_neighpy
    /examples/generated/scripts_synth_data/slime_mould_algorithm_demo
    /examples/generated/scripts_synth_data/fmm_tomography_regularization_discussion
    /examples/generated/scripts_synth_data/modified_himmelblau

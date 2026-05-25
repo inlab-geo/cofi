@@ -29,7 +29,7 @@ Century DCIP Inversion with a Triangular Mesh
    :target: https://colab.research.google.com/github/inlab-geo/cofi-examples/blob/main/examples/pygimli_dcip/pygimli_dcip_century_tri_mesh.ipynb
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 17-43
+.. GENERATED FROM PYTHON SOURCE LINES 17-36
 
 .. raw:: html
 
@@ -43,13 +43,6 @@ Century DCIP Inversion with a Triangular Mesh
 
 ..
 
-   | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
-     (pygimli)**.
-   | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
-     for **Python 3.13**, so this notebook won’t run on 3.13 unless you
-     build from source.
-   | **Use Python 3.12 (recommended) or 3.11** for install.
-
    If you are running this notebook locally, make sure you’ve followed
    `steps
    here <https://github.com/inlab-geo/cofi-examples#run-the-examples-with-cofi-locally>`__
@@ -58,7 +51,7 @@ Century DCIP Inversion with a Triangular Mesh
    file specifies a list of packages required to run the notebooks)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 46-99
+.. GENERATED FROM PYTHON SOURCE LINES 39-92
 
 Motivation
 ----------
@@ -114,7 +107,7 @@ the Century zinc deposit. Geophysics, 65(6), 1946–1960.
 https://doi.org/10.1190/1.1444878
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-108
+.. GENERATED FROM PYTHON SOURCE LINES 95-101
 
 1. Set up environment 
 ----------------------
@@ -123,7 +116,7 @@ We’ll do the following: 1. Install PyGIMLi (if on CoLab) 2. Download
 processed dataset (if on CoLab) 3. Import modules
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 108-117
+.. GENERATED FROM PYTHON SOURCE LINES 101-110
 
 .. code-block:: Python
 
@@ -143,7 +136,7 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-129
+.. GENERATED FROM PYTHON SOURCE LINES 112-122
 
 .. code-block:: Python
 
@@ -164,18 +157,18 @@ processed dataset (if on CoLab) 3. Import modules
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-142
+.. GENERATED FROM PYTHON SOURCE LINES 127-135
 
 We will need the following packages:
 
-- ``os`` to list and load dataset
-- ``numpy`` for matrices and matrix-related functions
-- ``matplotlib`` for plotting
-- ``pygimli`` for forward modelling of the problem
-- ``cofi`` for accessing different inference solvers
+-  ``os`` to list and load dataset
+-  ``numpy`` for matrices and matrix-related functions
+-  ``matplotlib`` for plotting
+-  ``pygimli`` for forward modelling of the problem
+-  ``cofi`` for accessing different inference solvers
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-150
+.. GENERATED FROM PYTHON SOURCE LINES 135-143
 
 .. code-block:: Python
 
@@ -194,7 +187,7 @@ We will need the following packages:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-162
+.. GENERATED FROM PYTHON SOURCE LINES 148-155
 
 2. Load the data 
 -----------------
@@ -204,7 +197,7 @@ We will need to download the preprocessed dataset first. This notebook
 contains the code for data preprocessing.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-166
+.. GENERATED FROM PYTHON SOURCE LINES 155-159
 
 .. code-block:: Python
 
@@ -219,7 +212,7 @@ contains the code for data preprocessing.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-177
+.. GENERATED FROM PYTHON SOURCE LINES 164-170
 
 Converting measurements of chargeability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -228,7 +221,7 @@ PyGIMLi expresses chargeability in :math:`\mathrm{radians}` and we
 convert the apparent chargeabilites as we load the data.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 177-195
+.. GENERATED FROM PYTHON SOURCE LINES 170-188
 
 .. code-block:: Python
 
@@ -263,7 +256,7 @@ convert the apparent chargeabilites as we load the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-217
+.. GENERATED FROM PYTHON SOURCE LINES 190-210
 
 .. code-block:: Python
 
@@ -294,7 +287,7 @@ convert the apparent chargeabilites as we load the data.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 222-229
+.. GENERATED FROM PYTHON SOURCE LINES 215-222
 
 3. Utility wrappers to PyGIMLi functions 
 -----------------------------------------
@@ -304,13 +297,13 @@ generating data and making plots. Feel free to skip reading the details
 of these utility functions and come back later if you want.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 232-235
+.. GENERATED FROM PYTHON SOURCE LINES 225-228
 
 3.1. Helper functions for complex numbers 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 235-248
+.. GENERATED FROM PYTHON SOURCE LINES 228-241
 
 .. code-block:: Python
 
@@ -334,13 +327,13 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 253-256
+.. GENERATED FROM PYTHON SOURCE LINES 246-249
 
 3.2. Helper functions for PyGIMLi modelling 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 256-355
+.. GENERATED FROM PYTHON SOURCE LINES 249-348
 
 .. code-block:: Python
 
@@ -450,7 +443,7 @@ of these utility functions and come back later if you want.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 360-366
+.. GENERATED FROM PYTHON SOURCE LINES 353-359
 
 3.3. Plotting utilities 
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -459,7 +452,7 @@ Note: We lifted out the plotting of colorbars only for Colab
 compatibility.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 366-448
+.. GENERATED FROM PYTHON SOURCE LINES 359-447
 
 .. code-block:: Python
 
@@ -481,12 +474,13 @@ compatibility.
     def plot_model(mesh, model_complex, title):
         rho, phi = rho_phi_from_complex(model_complex)
         fig, axes = plt.subplots(2,1,figsize=(12,5))
-        pygimli.show(mesh, data=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+        plt.figure(fig)
+        pygimli.show(mesh, data=rho, label=resistivity_label, ax=axes[0], fig=fig, colorBar=False)
         axes[0].set_xlim(x_inv_start, x_inv_stop)
         axes[0].set_ylim(y_inv_start, y_inv_stop)
         axes[0].set_title("Resistivity")
         plot_colorbar(axes[0], 136, 170, resistivity_label)
-        pygimli.show(mesh, data=phi * 1000, label=chargeability_label, cMin=-4.76, cMax=-4, ax=axes[1], colorBar=False)
+        pygimli.show(mesh, data=phi * 1000, label=chargeability_label, cMin=-4.76, cMax=-4, ax=axes[1], fig=fig, colorBar=False)
         axes[1].set_xlim(x_inv_start, x_inv_stop)
         axes[1].set_ylim(y_inv_start, y_inv_stop)
         axes[1].set_title("Chargeability")
@@ -495,55 +489,60 @@ compatibility.
             plot_geologic_section(geologic_section, axes[0])
             plot_geologic_section(geologic_section, axes[1])
         fig.suptitle(title)
+        plt.show()
 
     def plot_data(pg_data, data_complex, title):
         rho, phi = rho_phi_from_complex(data_complex)
         fig, axes = plt.subplots(1,2,figsize=(10,4))
-        # pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+        plt.figure(fig)
         pygimli.physics.ert.showERTData(pg_data, vals=rho, ax=axes[0], colorBar=False)
         axes[0].set_title("Apparent Resistivity")
         plot_colorbar(axes[0], np.min(rho), np.max(rho), resistivity_label)
         pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, ax=axes[1], colorBar=False)
-        # pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
         axes[1].set_title("Apparent Chargeability")
         plot_colorbar(axes[1], np.min(phi*1000), np.max(phi*1000), chargeability_label)
         fig.suptitle(title)
+        plt.show()
 
     def plot_mesh(mesh, title="Mesh used for inversion"):
-        _, ax = plt.subplots(1, 1)
-        pygimli.show(mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
+        fig, ax = plt.subplots(1, 1)
+        plt.figure(fig)
+        pygimli.show(mesh, showMesh=True, markers=False, colorBar=False, ax=ax, fig=fig)
         ax.set_title(title)
         ax.set_xlabel("Northing (m)")
         ax.set_ylabel("Elevation (m)")
+        plt.show()
 
     def plot_comparison(mesh1, model1, title1, mesh2, model2, title2, rho_min, rho_max, phi_min, phi_max):
         rho1, phi1 = rho_phi_from_complex(model1)
         rho2, phi2 = rho_phi_from_complex(model2)
         fig, axes = plt.subplots(4, 1, figsize=(10,12))
-        pygimli.show(mesh1, data=rho1, label=resistivity_label, ax=axes[0], colorBar=False)
+        plt.figure(fig)
+        pygimli.show(mesh1, data=rho1, label=resistivity_label, ax=axes[0], fig=fig, colorBar=False)
         axes[0].set_xlim(x_inv_start, x_inv_stop)
         axes[0].set_ylim(y_inv_start, y_inv_stop)
         axes[0].set_title(f"{title1} - Resistivity")
         plot_colorbar(axes[0], rho_min, rho_max, resistivity_label)
         plot_geologic_section(geologic_section, axes[0])
-        pygimli.show(mesh2, data=rho2, label=resistivity_label, ax=axes[1], cMin=rho_min, cMax=rho_max, colorBar=False)
+        pygimli.show(mesh2, data=rho2, label=resistivity_label, ax=axes[1], fig=fig, cMin=rho_min, cMax=rho_max, colorBar=False)
         axes[1].set_xlim(x_inv_start, x_inv_stop)
         axes[1].set_ylim(y_inv_start, y_inv_stop)
         axes[1].set_title(f"{title2} - Resistivity")
         plot_colorbar(axes[1], rho_min, rho_max, resistivity_label)
         plot_geologic_section(geologic_section, axes[1])
-        pygimli.show(mesh1, data=phi1 * 1000, label=chargeability_label, ax=axes[2], colorBar=False)
+        pygimli.show(mesh1, data=phi1 * 1000, label=chargeability_label, ax=axes[2], fig=fig, colorBar=False)
         axes[2].set_xlim(x_inv_start, x_inv_stop)
         axes[2].set_ylim(y_inv_start, y_inv_stop)
         axes[2].set_title(f"{title1} - Chargeability")
         plot_colorbar(axes[2], phi_min*1000, phi_max*1000, chargeability_label)
         plot_geologic_section(geologic_section, axes[2])
-        pygimli.show(mesh2, data=phi2 * 1000, label=chargeability_label, ax=axes[3], cMin=phi_min*1000, cMax=phi_max*1000, colorBar=False)
+        pygimli.show(mesh2, data=phi2 * 1000, label=chargeability_label, ax=axes[3], fig=fig, cMin=phi_min*1000, cMax=phi_max*1000, colorBar=False)
         axes[3].set_xlim(x_inv_start, x_inv_stop)
         axes[3].set_ylim(y_inv_start, y_inv_stop)
         axes[3].set_title(f"{title2} - Chargeability")
         plot_colorbar(axes[3], phi_min*1000, phi_max*1000, chargeability_label)
         plot_geologic_section(geologic_section, axes[3])
+        plt.show()
 
 
 
@@ -552,7 +551,7 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 453-459
+.. GENERATED FROM PYTHON SOURCE LINES 452-458
 
 4. PyGIMLi problem setup 
 -------------------------
@@ -561,7 +560,7 @@ compatibility.
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 459-463
+.. GENERATED FROM PYTHON SOURCE LINES 458-462
 
 .. code-block:: Python
 
@@ -577,13 +576,13 @@ compatibility.
 
  .. code-block:: none
 
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Cache /opt/gimli/gimli/pygimli/physics/ert/ert.py:createGeometricFactors restored (1.0s x 3): /home/kitc/.cache/pygimli/7794602563829040112
+    25/05/26 - 15:49:19 - pyGIMLi - INFO - Cache /opt/gimli/gimli/pygimli/physics/ert/ert.py:createGeometricFactors restored (1.0s x 21): /home/kitc/.cache/pygimli/9982093101414986962
 
     Data: Sensors: 33 data: 151, nonzero entries: ['a', 'b', 'err', 'iperr', 'k', 'm', 'n', 'phia', 'rhoa', 'valid']
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 465-470
+.. GENERATED FROM PYTHON SOURCE LINES 464-469
 
 .. code-block:: Python
 
@@ -616,13 +615,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 475-478
+.. GENERATED FROM PYTHON SOURCE LINES 474-477
 
 4.2. ERT manager 
 ~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 478-481
+.. GENERATED FROM PYTHON SOURCE LINES 477-480
 
 .. code-block:: Python
 
@@ -636,13 +635,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 486-489
+.. GENERATED FROM PYTHON SOURCE LINES 485-488
 
 4.3. Inversion mesh 
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 489-495
+.. GENERATED FROM PYTHON SOURCE LINES 488-494
 
 .. code-block:: Python
 
@@ -665,25 +664,25 @@ compatibility.
 
  .. code-block:: none
 
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Found 2 regions.
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Region with smallest marker set to background (marker=1)
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Found 2 regions.
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Region with smallest marker set to background (marker=1)
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Creating forward mesh from region infos.
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
-    18/02/26 - 11:34:29 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 5657 Cells: 10912 Boundaries: 8384
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Found 2 regions.
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Region with smallest marker set to background (marker=1)
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Found 2 regions.
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Region with smallest marker set to background (marker=1)
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Creating forward mesh from region infos.
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Creating refined mesh (H2) to solve forward task.
+    25/05/26 - 15:49:20 - pyGIMLi - INFO - Mesh for forward task: Mesh: Nodes: 5657 Cells: 10912 Boundaries: 8384
     model size 1912
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 500-503
+.. GENERATED FROM PYTHON SOURCE LINES 499-502
 
 4.4. Forward operator 
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 503-506
+.. GENERATED FROM PYTHON SOURCE LINES 502-505
 
 .. code-block:: Python
 
@@ -697,13 +696,13 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 511-514
+.. GENERATED FROM PYTHON SOURCE LINES 510-513
 
 4.5. Regularization matrix 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 514-517
+.. GENERATED FROM PYTHON SOURCE LINES 513-516
 
 .. code-block:: Python
 
@@ -718,19 +717,19 @@ compatibility.
 
  .. code-block:: none
 
-    18/02/26 - 11:34:29 - Core - INFO - More than 50 regions, so we assume single regions only.
-    18/02/26 - 11:34:29 - Core - INFO - Applying *:* interregion constraints.
+    25/05/26 - 15:49:20 - Core - INFO - More than 50 regions, so we assume single regions only.
+    25/05/26 - 15:49:20 - Core - INFO - Applying *:* interregion constraints.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 522-525
+.. GENERATED FROM PYTHON SOURCE LINES 521-524
 
 4.6. Starting model 
 ~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 525-530
+.. GENERATED FROM PYTHON SOURCE LINES 524-529
 
 .. code-block:: Python
 
@@ -751,7 +750,7 @@ compatibility.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 535-552
+.. GENERATED FROM PYTHON SOURCE LINES 534-551
 
 5. Create utility functions to pass to CoFI 
 --------------------------------------------
@@ -762,16 +761,16 @@ standardised interfaces. All these functions are defined below as
 additional utility functions, so feel free to read them into details if
 you want to understand more. These functions are:
 
-- ``get_response``
-- ``get_jacobian``
-- ``get_residuals``
-- ``get_data_misfit``
-- ``get_regularization``
-- ``get_gradient``
-- ``get_hessian``
+-  ``get_response``
+-  ``get_jacobian``
+-  ``get_residuals``
+-  ``get_data_misfit``
+-  ``get_regularization``
+-  ``get_gradient``
+-  ``get_hessian``
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 552-639
+.. GENERATED FROM PYTHON SOURCE LINES 551-638
 
 .. code-block:: Python
 
@@ -869,7 +868,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 641-649
+.. GENERATED FROM PYTHON SOURCE LINES 640-648
 
 .. code-block:: Python
 
@@ -894,7 +893,7 @@ you want to understand more. These functions are:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 651-656
+.. GENERATED FROM PYTHON SOURCE LINES 650-655
 
 .. code-block:: Python
 
@@ -911,13 +910,13 @@ you want to understand more. These functions are:
 
  .. code-block:: none
 
-    data misfit: 16.48522124494225, reg: 0.0
+    data misfit: 16.485221244233287, reg: 0.0
 
-    np.float64(16.48522124494225)
+    np.float64(16.485221244233287)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 658-663
+.. GENERATED FROM PYTHON SOURCE LINES 657-662
 
 .. code-block:: Python
 
@@ -935,11 +934,11 @@ you want to understand more. These functions are:
  .. code-block:: none
 
 
-    ((3824,), 3824 [-0.03303060426225682,...,-9.278041140050176e-06])
+    ((3824,), 3824 [-0.03303060426311309,...,-9.278041144011839e-06])
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 665-670
+.. GENERATED FROM PYTHON SOURCE LINES 664-669
 
 .. code-block:: Python
 
@@ -958,30 +957,30 @@ you want to understand more. These functions are:
 
 
     ((3824, 3824), array([[ 5.38948398e-03,  2.13205609e-03,  2.52937620e-03, ...,
-            -2.99516663e-17, -3.07921667e-17, -2.49903368e-17],
+            -6.45285436e-17, -5.64235034e-17, -5.86610604e-17],
            [ 2.13205609e-03,  1.52260555e-03,  1.36485591e-03, ...,
-            -1.90186089e-17, -1.93683962e-17, -1.65793338e-17],
+            -2.37272761e-17, -1.89940905e-17, -2.07644790e-17],
            [ 2.52937620e-03,  1.36485591e-03,  2.07533134e-03, ...,
-            -2.23630556e-17, -2.18306907e-17, -1.91456089e-17],
+            -3.20246649e-17, -2.60267796e-17, -2.82835695e-17],
            ...,
-           [-2.99516636e-17, -1.90186061e-17, -2.23630509e-17, ...,
+           [-6.45284666e-17, -2.37272373e-17, -3.20246109e-17, ...,
              3.01850225e-04,  1.83937474e-06, -9.81551500e-05],
-           [-3.07921642e-17, -1.93683936e-17, -2.18306865e-17, ...,
+           [-5.64234321e-17, -1.89940546e-17, -2.60267296e-17, ...,
              1.83937474e-06,  2.01883370e-04, -9.81077661e-05],
-           [-2.49903347e-17, -1.65793316e-17, -1.91456054e-17, ...,
+           [-5.86610094e-17, -2.07644533e-17, -2.82835337e-17, ...,
             -9.81551500e-05, -9.81077661e-05,  3.01974672e-04]],
           shape=(3824, 3824)))
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 675-679
+.. GENERATED FROM PYTHON SOURCE LINES 674-678
 
 With all the above forward operations set up with PyGIMLi, we now define
 the problem in ``cofi`` by setting the problem information for a
 ``BaseProblem`` object.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 679-691
+.. GENERATED FROM PYTHON SOURCE LINES 678-690
 
 .. code-block:: Python
 
@@ -1004,7 +1003,7 @@ the problem in ``cofi`` by setting the problem information for a
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 696-701
+.. GENERATED FROM PYTHON SOURCE LINES 695-700
 
 6. Define the inversion options and run 
 ----------------------------------------
@@ -1012,7 +1011,7 @@ the problem in ``cofi`` by setting the problem information for a
 Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 701-714
+.. GENERATED FROM PYTHON SOURCE LINES 700-713
 
 .. code-block:: Python
 
@@ -1036,7 +1035,7 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 716-721
+.. GENERATED FROM PYTHON SOURCE LINES 715-720
 
 .. code-block:: Python
 
@@ -1053,68 +1052,85 @@ Triangular mesh solved with SciPy’s optimizer (trust-ncg)
 
  .. code-block:: none
 
-    data misfit: 16.48522124494225, reg: 0.0
-    data misfit: 13.070065613488788, reg: 0.0011545790036818213
-    data misfit: 13.070065613488788, reg: 0.0011545790036818213
-    Iteration #1, objective value: 13.07122019249247
-    data misfit: 8.149530828803195, reg: 0.0101857942882096
-    data misfit: 8.149530828803195, reg: 0.0101857942882096
-    Iteration #2, objective value: 8.159716623091406
-    data misfit: 4.195195896507279, reg: 0.04204069484023103
-    data misfit: 4.195195896507279, reg: 0.04204069484023103
-    Iteration #3, objective value: 4.23723659134751
-    data misfit: 1.5202708554392053, reg: 0.08827130735249229
-    data misfit: 1.5202708554392053, reg: 0.08827130735249229
-    Iteration #4, objective value: 1.6085421627916976
-    data misfit: 0.2834523500424587, reg: 0.10407508739690977
-    data misfit: 0.2834523500424587, reg: 0.10407508739690977
-    Iteration #5, objective value: 0.38752743743936846
-    data misfit: 0.06483596931748187, reg: 0.09306755759948883
-    data misfit: 0.06483596931748187, reg: 0.09306755759948883
-    Iteration #6, objective value: 0.15790352691697068
-    data misfit: 0.041215627920426656, reg: 0.08547780709327646
-    data misfit: 0.041215627920426656, reg: 0.08547780709327646
-    Iteration #7, objective value: 0.12669343501370312
-    data misfit: 0.03897588367531759, reg: 0.072530773349228
-    data misfit: 0.03897588367531759, reg: 0.072530773349228
-    Iteration #8, objective value: 0.1115066570245456
-    data misfit: 0.022376489791071243, reg: 0.07117635919527511
-    data misfit: 0.022376489791071243, reg: 0.07117635919527511
-    Iteration #9, objective value: 0.09355284898634636
-    data misfit: 0.022916144111075617, reg: 0.06704862230988642
-    data misfit: 0.022916144111075617, reg: 0.06704862230988642
-    Iteration #10, objective value: 0.08996476642096204
+    data misfit: 16.485221244233287, reg: 0.0
+    data misfit: 13.070065613180743, reg: 0.0011545790036776183
+    data misfit: 13.070065613180743, reg: 0.0011545790036776183
+    Iteration #1, objective value: 13.071220192184422
+    data misfit: 8.149530828558241, reg: 0.010185794288287
+    data misfit: 8.149530828558241, reg: 0.010185794288287
+    Iteration #2, objective value: 8.159716622846528
+    data misfit: 4.195195896061289, reg: 0.042040694839517535
+    data misfit: 4.195195896061289, reg: 0.042040694839517535
+    Iteration #3, objective value: 4.237236590900807
+    data misfit: 1.5202708550804063, reg: 0.08827130735032783
+    data misfit: 1.5202708550804063, reg: 0.08827130735032783
+    Iteration #4, objective value: 1.6085421624307341
+    data misfit: 0.2834523499194207, reg: 0.10407508739901813
+    data misfit: 0.2834523499194207, reg: 0.10407508739901813
+    Iteration #5, objective value: 0.38752743731843886
+    data misfit: 0.06483596932329709, reg: 0.09306755760334977
+    data misfit: 0.06483596932329709, reg: 0.09306755760334977
+    Iteration #6, objective value: 0.15790352692664686
+    data misfit: 0.04121562791972462, reg: 0.08547780709079501
+    data misfit: 0.04121562791972462, reg: 0.08547780709079501
+    Iteration #7, objective value: 0.12669343501051963
+    data misfit: 0.03897274600436662, reg: 0.07253360643157752
+    data misfit: 0.03897274600436662, reg: 0.07253360643157752
+    Iteration #8, objective value: 0.11150635243594414
+    data misfit: 0.02237556360941236, reg: 0.07117720861460443
+    data misfit: 0.02237556360941236, reg: 0.07117720861460443
+    Iteration #9, objective value: 0.09355277222401678
+    data misfit: 0.0223631942784902, reg: 0.06724000712012713
+    data misfit: 0.0223631942784902, reg: 0.06724000712012713
+    Iteration #10, objective value: 0.08960320139861733
 
     Solver message: Maximum number of iterations has been exceeded.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 723-730
+.. GENERATED FROM PYTHON SOURCE LINES 722-729
 
 .. code-block:: Python
 
 
     model_scipy = np.exp(complex_from_real(inv_result_scipy.model))
-    # plot_model(inv_mesh, model_scipy, "Inferred model (scipy's trust-ncg)")
+    plot_model(ert_mgr.paraDomain, model_scipy, "Inferred model (scipy's trust-ncg)")
 
     synth_data_scipy = np.exp(get_response(np.log(model_scipy), forward_oprt))
-    # plot_data(pg_data, synth_data_scipy, "Inferred model produced data")
+    plot_data(pg_data, synth_data_scipy, "Inferred model produced data")
+
+
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image-sg:: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_005.png
+         :alt: Inferred model (scipy's trust-ncg), Resistivity, Chargeability
+         :srcset: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_005.png
+         :class: sphx-glr-multi-img
+
+    *
+
+      .. image-sg:: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_006.png
+         :alt: Inferred model produced data, Apparent Resistivity, Apparent Chargeability
+         :srcset: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_006.png
+         :class: sphx-glr-multi-img
 
 
 
 
 
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 735-738
+.. GENERATED FROM PYTHON SOURCE LINES 734-737
 
 Comparison with published results 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 738-757
+.. GENERATED FROM PYTHON SOURCE LINES 737-756
 
 .. code-block:: Python
 
@@ -1140,16 +1156,16 @@ Comparison with published results
 
 
 
-.. image-sg:: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_005.png
+.. image-sg:: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_007.png
    :alt: Mutton A. J. (2000). - Resistivity, Inference result - Resistivity, Mutton A. J. (2000). - Chargeability, Inference result - Chargeability
-   :srcset: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_005.png
+   :srcset: /examples/generated/scripts_field_data/images/sphx_glr_pygimli_dcip_century_tri_mesh_007.png
    :class: sphx-glr-single-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 762-770
+.. GENERATED FROM PYTHON SOURCE LINES 761-769
 
 The use of an adaptive triangular mesh means that we use fewer model
 parameters when compared with the original example and that our mesh is
@@ -1160,7 +1176,7 @@ sufficient to obtain a result that compares favorably with the original
 solution.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 770-774
+.. GENERATED FROM PYTHON SOURCE LINES 769-773
 
 .. code-block:: Python
 
@@ -1182,7 +1198,7 @@ solution.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 779-784
+.. GENERATED FROM PYTHON SOURCE LINES 778-783
 
 --------------
 
@@ -1190,7 +1206,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 784-790
+.. GENERATED FROM PYTHON SOURCE LINES 783-789
 
 .. code-block:: Python
 
@@ -1208,24 +1224,24 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    pygimli 1.5.5.post2+18.g09193dc5
-    torch 2.10.0+cu128
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    pygimli 1.5.5.post2+56.ge792d84b
+    torch 2.11.0+cu130
+    matplotlib 3.10.9
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 791-791
+.. GENERATED FROM PYTHON SOURCE LINES 795-795
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (2 minutes 12.284 seconds)
+   **Total running time of the script:** (2 minutes 22.976 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_field_data_pygimli_dcip_century_tri_mesh.py:

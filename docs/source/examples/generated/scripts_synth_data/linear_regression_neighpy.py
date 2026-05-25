@@ -438,15 +438,15 @@ def plot_appraisal_marginals(_m_true, bounds, appraised, extras=[]):
 # 
 # where:
 # 
-# - :math:`\text{forward}` is the forward function that takes in a model
-#   and produces synthetic data,
-# - :math:`\textbf{m}` is the model vector,
-# - :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
-#   linear regression problem and looks like the following:
+# -  :math:`\text{forward}` is the forward function that takes in a model
+#    and produces synthetic data,
+# -  :math:`\textbf{m}` is the model vector,
+# -  :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
+#    linear regression problem and looks like the following:
 # 
-#   .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
-# - :math:`\text{basis\_func}` is the basis function that converts
-#   :math:`\textbf{x}` into :math:`\textbf{G}`
+#    .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
+# -  :math:`\text{basis\_func}` is the basis function that converts
+#    :math:`\textbf{x}` into :math:`\textbf{G}`
 # 
 # Recall that the function we are going to fit is:
 # :math:`y=-6-5x+2x^2+x^3`

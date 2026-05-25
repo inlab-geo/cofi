@@ -2179,8 +2179,8 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "_cython_3_2_1",
-   "module_short": "_cython_3_2_1",
+   "module": "_cython_3_0_12",
+   "module_short": "_cython_3_0_12",
    "name": "cython_function_or_method"
   },
   {
@@ -2287,6 +2287,38 @@
    "module": "builtins",
    "module_short": "builtins",
    "name": "function"
+  }
+ ],
+ "plt.figure": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "figure"
+  }
+ ],
+ "plt.show": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.pyplot",
+   "module_short": "matplotlib.pyplot",
+   "name": "show"
   }
  ],
  "plt.subplots": [

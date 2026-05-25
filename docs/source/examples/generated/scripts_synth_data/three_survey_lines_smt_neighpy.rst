@@ -433,7 +433,7 @@ Ensemble method using the surrogate model
 
     Current backend tool neighpy has the following solver-specific parameters:
     Required parameters:
-    {'n_iterations', 'n_samples_per_iteration', 'n_cells_to_resample', 'n_resample', 'bounds', 'n_initial_samples', 'n_walkers'}
+    {'n_cells_to_resample', 'n_initial_samples', 'n_walkers', 'bounds', 'n_resample', 'n_iterations', 'n_samples_per_iteration'}
     Optional parameters & default settings:
     {'serial': False}
 
@@ -471,30 +471,30 @@ Ensemble method using the surrogate model
  .. code-block:: none
 
     NAI - Initial Random Search
-    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:00<00:33,  2.94it/s]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:00<00:12,  7.98it/s]    NAI - Optimisation Loop:   6%|▌         | 6/100 [00:00<00:07, 13.07it/s]    NAI - Optimisation Loop:   8%|▊         | 8/100 [00:00<00:06, 14.93it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:00<00:05, 17.31it/s]    NAI - Optimisation Loop:  14%|█▍        | 14/100 [00:00<00:04, 18.78it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:01<00:04, 19.65it/s]    NAI - Optimisation Loop:  20%|██        | 20/100 [00:01<00:03, 20.33it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:01<00:03, 20.74it/s]    NAI - Optimisation Loop:  26%|██▌       | 26/100 [00:01<00:03, 20.98it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:01<00:03, 21.27it/s]    NAI - Optimisation Loop:  32%|███▏      | 32/100 [00:01<00:03, 21.33it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:01<00:03, 21.42it/s]    NAI - Optimisation Loop:  38%|███▊      | 38/100 [00:02<00:02, 21.45it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:02<00:02, 21.43it/s]    NAI - Optimisation Loop:  44%|████▍     | 44/100 [00:02<00:02, 21.46it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:02<00:02, 21.44it/s]    NAI - Optimisation Loop:  50%|█████     | 50/100 [00:02<00:02, 21.51it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:02<00:02, 20.76it/s]    NAI - Optimisation Loop:  56%|█████▌    | 56/100 [00:02<00:02, 20.51it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:03<00:02, 20.09it/s]    NAI - Optimisation Loop:  62%|██████▏   | 62/100 [00:03<00:01, 19.39it/s]    NAI - Optimisation Loop:  64%|██████▍   | 64/100 [00:03<00:01, 19.12it/s]    NAI - Optimisation Loop:  66%|██████▌   | 66/100 [00:03<00:01, 18.80it/s]    NAI - Optimisation Loop:  68%|██████▊   | 68/100 [00:03<00:01, 18.60it/s]    NAI - Optimisation Loop:  70%|███████   | 70/100 [00:03<00:01, 18.29it/s]    NAI - Optimisation Loop:  72%|███████▏  | 72/100 [00:03<00:01, 18.24it/s]    NAI - Optimisation Loop:  74%|███████▍  | 74/100 [00:03<00:01, 18.08it/s]    NAI - Optimisation Loop:  76%|███████▌  | 76/100 [00:04<00:01, 18.10it/s]    NAI - Optimisation Loop:  78%|███████▊  | 78/100 [00:04<00:01, 18.17it/s]    NAI - Optimisation Loop:  80%|████████  | 80/100 [00:04<00:01, 18.09it/s]    NAI - Optimisation Loop:  82%|████████▏ | 82/100 [00:04<00:00, 18.20it/s]    NAI - Optimisation Loop:  84%|████████▍ | 84/100 [00:04<00:00, 18.28it/s]    NAI - Optimisation Loop:  86%|████████▌ | 86/100 [00:04<00:00, 18.29it/s]    NAI - Optimisation Loop:  88%|████████▊ | 88/100 [00:04<00:00, 18.25it/s]    NAI - Optimisation Loop:  90%|█████████ | 90/100 [00:04<00:00, 18.21it/s]    NAI - Optimisation Loop:  92%|█████████▏| 92/100 [00:04<00:00, 18.24it/s]    NAI - Optimisation Loop:  94%|█████████▍| 94/100 [00:05<00:00, 18.30it/s]    NAI - Optimisation Loop:  96%|█████████▌| 96/100 [00:05<00:00, 18.25it/s]    NAI - Optimisation Loop:  98%|█████████▊| 98/100 [00:05<00:00, 18.25it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:05<00:00, 18.27it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:05<00:00, 18.70it/s]
+    NAI - Optimisation Loop:   0%|          | 0/100 [00:00<?, ?it/s]    NAI - Optimisation Loop:   1%|          | 1/100 [00:00<00:36,  2.73it/s]    NAI - Optimisation Loop:   3%|▎         | 3/100 [00:00<00:13,  7.46it/s]    NAI - Optimisation Loop:   5%|▌         | 5/100 [00:00<00:08, 10.62it/s]    NAI - Optimisation Loop:   7%|▋         | 7/100 [00:00<00:07, 12.86it/s]    NAI - Optimisation Loop:   9%|▉         | 9/100 [00:00<00:06, 14.38it/s]    NAI - Optimisation Loop:  11%|█         | 11/100 [00:00<00:05, 15.48it/s]    NAI - Optimisation Loop:  13%|█▎        | 13/100 [00:01<00:05, 16.19it/s]    NAI - Optimisation Loop:  15%|█▌        | 15/100 [00:01<00:05, 16.64it/s]    NAI - Optimisation Loop:  17%|█▋        | 17/100 [00:01<00:04, 16.87it/s]    NAI - Optimisation Loop:  19%|█▉        | 19/100 [00:01<00:04, 17.10it/s]    NAI - Optimisation Loop:  21%|██        | 21/100 [00:01<00:04, 17.65it/s]    NAI - Optimisation Loop:  23%|██▎       | 23/100 [00:01<00:04, 17.72it/s]    NAI - Optimisation Loop:  25%|██▌       | 25/100 [00:01<00:04, 17.70it/s]    NAI - Optimisation Loop:  27%|██▋       | 27/100 [00:01<00:04, 17.67it/s]    NAI - Optimisation Loop:  29%|██▉       | 29/100 [00:01<00:04, 17.61it/s]    NAI - Optimisation Loop:  31%|███       | 31/100 [00:02<00:03, 17.50it/s]    NAI - Optimisation Loop:  33%|███▎      | 33/100 [00:02<00:03, 17.76it/s]    NAI - Optimisation Loop:  35%|███▌      | 35/100 [00:02<00:03, 17.66it/s]    NAI - Optimisation Loop:  37%|███▋      | 37/100 [00:02<00:03, 17.50it/s]    NAI - Optimisation Loop:  39%|███▉      | 39/100 [00:02<00:03, 17.25it/s]    NAI - Optimisation Loop:  41%|████      | 41/100 [00:02<00:03, 17.20it/s]    NAI - Optimisation Loop:  43%|████▎     | 43/100 [00:02<00:03, 17.24it/s]    NAI - Optimisation Loop:  45%|████▌     | 45/100 [00:02<00:03, 17.27it/s]    NAI - Optimisation Loop:  47%|████▋     | 47/100 [00:02<00:03, 17.23it/s]    NAI - Optimisation Loop:  49%|████▉     | 49/100 [00:03<00:02, 17.22it/s]    NAI - Optimisation Loop:  51%|█████     | 51/100 [00:03<00:02, 17.12it/s]    NAI - Optimisation Loop:  53%|█████▎    | 53/100 [00:03<00:02, 17.04it/s]    NAI - Optimisation Loop:  55%|█████▌    | 55/100 [00:03<00:02, 16.99it/s]    NAI - Optimisation Loop:  57%|█████▋    | 57/100 [00:03<00:02, 17.06it/s]    NAI - Optimisation Loop:  59%|█████▉    | 59/100 [00:03<00:02, 17.07it/s]    NAI - Optimisation Loop:  61%|██████    | 61/100 [00:03<00:02, 16.96it/s]    NAI - Optimisation Loop:  63%|██████▎   | 63/100 [00:03<00:02, 16.87it/s]    NAI - Optimisation Loop:  65%|██████▌   | 65/100 [00:04<00:02, 16.75it/s]    NAI - Optimisation Loop:  67%|██████▋   | 67/100 [00:04<00:01, 16.70it/s]    NAI - Optimisation Loop:  69%|██████▉   | 69/100 [00:04<00:01, 16.76it/s]    NAI - Optimisation Loop:  71%|███████   | 71/100 [00:04<00:01, 16.59it/s]    NAI - Optimisation Loop:  73%|███████▎  | 73/100 [00:04<00:01, 16.59it/s]    NAI - Optimisation Loop:  75%|███████▌  | 75/100 [00:04<00:01, 16.58it/s]    NAI - Optimisation Loop:  77%|███████▋  | 77/100 [00:04<00:01, 16.68it/s]    NAI - Optimisation Loop:  79%|███████▉  | 79/100 [00:04<00:01, 16.60it/s]    NAI - Optimisation Loop:  81%|████████  | 81/100 [00:05<00:01, 16.22it/s]    NAI - Optimisation Loop:  83%|████████▎ | 83/100 [00:05<00:01, 16.37it/s]    NAI - Optimisation Loop:  85%|████████▌ | 85/100 [00:05<00:00, 16.60it/s]    NAI - Optimisation Loop:  87%|████████▋ | 87/100 [00:05<00:00, 16.54it/s]    NAI - Optimisation Loop:  89%|████████▉ | 89/100 [00:05<00:00, 16.56it/s]    NAI - Optimisation Loop:  91%|█████████ | 91/100 [00:05<00:00, 16.75it/s]    NAI - Optimisation Loop:  93%|█████████▎| 93/100 [00:05<00:00, 16.75it/s]    NAI - Optimisation Loop:  95%|█████████▌| 95/100 [00:05<00:00, 16.33it/s]    NAI - Optimisation Loop:  97%|█████████▋| 97/100 [00:05<00:00, 15.99it/s]    NAI - Optimisation Loop:  99%|█████████▉| 99/100 [00:06<00:00, 15.51it/s]    NAI - Optimisation Loop: 100%|██████████| 100/100 [00:06<00:00, 16.18it/s]
     The inversion result from `neighpy`:
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [ 50.2039176   62.31291085 179.84629859  33.59939855  84.92667202]
-    direct_search_samples: [[ 27.30805166  86.90819551 161.32121014  35.29395961  95.26341259]
-     [ 59.30772131  85.21660685 159.18378384  34.09817922 105.8524577 ]
-     [ 46.87599605 135.1494007  167.31731388  33.30701327  85.57942333]
+    model: [ 60.54890045  68.21943427 179.34874008  38.03067502 102.4513261 ]
+    direct_search_samples: [[ 56.6912376   61.72943964 165.30224057  39.25708288  65.24360417]
+     [ 64.07747464  94.20427513 166.36617511  32.13264507 111.92329337]
+     [ 39.33555312  55.25951694 156.03017994  39.42022733  84.52241171]
      ...
-     [ 50.19594555  62.31296759 179.84648752  33.59930939  84.92619563]
-     [ 50.19595869  62.31289365 179.84642109  33.59929952  84.92627819]
-     [ 50.19593458  62.31293704 179.84646929  33.59924643  84.9262933 ]]
-    direct_search_objectives: [120505.09019857  25610.31036339  56042.05767874 ...   2253.74619367
-       2253.73847124   2253.7428978 ]
-    appraisal_samples: [[ 53.27448783  59.61000921 179.42609492  33.57964336  94.20084172]
-     [ 58.52040404  49.43360893 175.0378161   33.20216381  99.80741814]
-     [ 44.10038575  53.7896248  180.19543538  34.48941605  96.38059253]
+     [ 60.32016867  68.21948407 179.35088011  38.03887313 102.45475841]
+     [ 60.32017207  68.21948739 179.35087916  38.03887312 102.45475954]
+     [ 60.32017157  68.21948501 179.35088322  38.03887402 102.45475897]]
+    direct_search_objectives: [4.12243928e+04 2.48002996e+04 3.03365076e+04 ... 1.00000000e-03
+     1.00000000e-03 1.00000000e-03]
+    appraisal_samples: [[ 56.72072038  52.22306732 176.15083527  38.19021261 111.16926771]
+     [ 55.22087425  49.68086801 176.86884413  38.41193374 110.4078104 ]
+     [ 56.62957613  55.41558994 173.9893494   35.65224388 108.4636213 ]
      ...
-     [ 55.96501538  43.21097325 174.02052912  33.39708774  93.03405425]
-     [ 54.118708    37.64039389 177.83245697  34.81622126  94.572675  ]
-     [ 49.71064488  61.21224746 175.92491245  34.27626732  96.8879932 ]]
+     [ 45.08009491  61.27801175 181.71420978  38.51149541  97.89571622]
+     [ 52.81663461  50.63049815 184.57462469  34.88042899  98.21648662]
+     [ 53.89568914  60.7444161  181.90052107  33.99459004 107.94323154]]
 
 
 
@@ -505,31 +505,39 @@ Plotting
 --------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 294-316
+.. GENERATED FROM PYTHON SOURCE LINES 294-324
 
 .. code-block:: Python
 
 
-    arviz.style.use("default")
-    var_names = [
-        "Dip (\u00b0)", 
-        "Dip azimuth (\u00b0)", 
+    import arviz_base
+    arviz.style.use("arviz-variat")
+    display_names = [
+        "Dip (°)", 
+        "Dip azimuth (°)", 
         "Easting (m)", 
         "Depth (m)", 
         "Width (m)"
     ]
+    clean_names = ["Dip_deg", "Dip_azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
-    var_lines=(
-        ('Dip (\u00b0)', {}, 60),
-            ('Dip azimuth (\u00b0)', {}, 65),
-            ('Easting (m)', {}, 175),
-            ('Depth (m)', {}, 30),
-            ('Width (m)', {}, 90)
+    true_values = [60, 65, 175, 30, 90]
+    d = {k: v[numpy.newaxis, :] for k, v in zip(clean_names, inv_result.appraisal_samples.T)}
+    az_idata = arviz_base.from_dict({"posterior": d})
+    pc = arviz.plot_trace_dist(
+        az_idata.sel(draw=slice(2000, None)),
+        visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+        figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
     )
-    d = {k: v for k, v in zip(var_names, inv_result.appraisal_samples.T)}
-    az_idata = arviz.convert_to_inference_data(d)
-    arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines)
-    plt.tight_layout()
+    for i, dname in enumerate(display_names):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.set_title(dname)
+        ax_trace.set_title(dname)
+        ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.margins(x=0)
+
 
 
 
@@ -543,20 +551,73 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 318-329
+.. GENERATED FROM PYTHON SOURCE LINES 326-390
 
 .. code-block:: Python
 
 
-    arviz.style.use("default")
+    from scipy.stats import gaussian_kde
 
-    _, axes = plt.subplots(5, 5, figsize=(12,12))
-    arviz.plot_pair(
-        az_idata.sel(draw=slice(4000,None)), 
-        marginals=True, 
-        ax = axes
-    )
-    plt.tight_layout()
+    true_values_dict = {
+        display_names[i]: true_param_value[i] for i in range(init_param_value.size)
+    }
+
+    # Set to True for KDE contours (old style), False for scatter (arviz 1.0 default)
+    USE_KDE_CONTOURS = True
+
+    arviz_base.rcParams["plot.max_subplots"] = 80
+
+    if USE_KDE_CONTOURS:
+        pm = arviz.plot_pair(
+            az_idata.sel(draw=slice(4000, None)),
+            marginal=True,
+            triangle="lower",
+            visuals={"scatter": False},
+        )
+        # Add KDE contours to off-diagonal panels
+        posterior = az_idata.posterior.sel(draw=slice(4000, None))
+        n = len(clean_names)
+        for i in range(n):
+            for j in range(n):
+                if i <= j:
+                    continue
+                try:
+                    ax = pm.iget_target(i, j)
+                except (ValueError, IndexError):
+                    continue
+                x = posterior[clean_names[j]].values.flatten()
+                y = posterior[clean_names[i]].values.flatten()
+                kde = gaussian_kde(numpy.vstack([x, y]))
+                xmin, xmax = x.min(), x.max()
+                ymin, ymax = y.min(), y.max()
+                xx, yy = numpy.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+                zz = kde(numpy.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+                ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+                ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+    else:
+        pm = arviz.plot_pair(
+            az_idata.sel(draw=slice(4000, None)),
+            marginal=True,
+            triangle="lower",
+        )
+
+    # Add reference values
+    ref_vals = list(true_values_dict.values())
+    n = len(ref_vals)
+    for i in range(n):
+        for j in range(n):
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            if i == j:
+                ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+            elif i > j:
+                ax.plot(
+                    ref_vals[j], ref_vals[i], "o",
+                    color="yellow", markeredgecolor="k", ms=10, zorder=5,
+                )
+
 
 
 
@@ -570,12 +631,12 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 331-386
+.. GENERATED FROM PYTHON SOURCE LINES 392-452
 
 .. code-block:: Python
 
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
     _, axes = plt.subplots(2, 2)
     axes[1,1].axis("off")
@@ -588,19 +649,24 @@ Plotting
         axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
     )
 
-
     plt.tight_layout()
 
+    posterior = az_idata.posterior
+    has_chain = "chain" in posterior.dims
+    n_chains = int(posterior.sizes["chain"]) if has_chain else 1
+    n_draws = int(posterior.sizes["draw"])
 
-    ichain=0
-    idraw=2500
-    sample=numpy.zeros(5)
+    ichain = 0
+    idraw = min(2500, n_draws - 1)
+    sample = numpy.zeros(5)
 
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    if has_chain:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+    else:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(draw=idraw))
+
     plot_plate_faces(
         "plate_inverted", forward, sample, 
         axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -614,19 +680,19 @@ Plotting
 
     axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-    # plot 10 randomly selected samples of the posterior distirbution
+    # plot 10 randomly selected samples of the posterior distribution
     for i in range(10):
-        idraw=numpy.random.randint(2000,5000)
-        sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-        sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-        sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-        sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-        sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+        idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+        if has_chain:
+            for idx, cn in enumerate(clean_names):
+                sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+        else:
+            for idx, cn in enumerate(clean_names):
+                sample[idx] = float(posterior[cn].isel(draw=idraw))
         plot_plate_faces(
-        "plate_inverted", forward, sample, 
-        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-    )
+            "plate_inverted", forward, sample, 
+            axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+        )
 
 
 
@@ -641,7 +707,7 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 391-404
+.. GENERATED FROM PYTHON SOURCE LINES 457-470
 
 --------------
 
@@ -657,7 +723,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 404-410
+.. GENERATED FROM PYTHON SOURCE LINES 470-476
 
 .. code-block:: Python
 
@@ -675,22 +741,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 411-411
+.. GENERATED FROM PYTHON SOURCE LINES 477-477
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 32.438 seconds)
+   **Total running time of the script:** (0 minutes 44.679 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_three_survey_lines_smt_neighpy.py:

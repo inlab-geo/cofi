@@ -364,36 +364,36 @@ The structure of CoFI
 In the workflow of ``cofi``, there are three main components:
 ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 
-- ``BaseProblem`` defines the inverse problem including any user
-  supplied quantities such as data vector, number of model parameters
-  and measure of fit between model predictions and data.
-  ``python   inv_problem = BaseProblem()   inv_problem.set_objective(some_function_here)   inv_problem.set_jacobian(some_function_here)   inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
+-  ``BaseProblem`` defines the inverse problem including any user
+   supplied quantities such as data vector, number of model parameters
+   and measure of fit between model predictions and data.
+   ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_jacobian(some_function_here)     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
 
-   
+    
 
-- ``InversionOptions`` describes details about how one wants to run the
-  inversion, including the backend tool and solver-specific parameters.
-  It is based on the concept of a ``method`` and ``tool``.
+-  ``InversionOptions`` describes details about how one wants to run the
+   inversion, including the backend tool and solver-specific parameters.
+   It is based on the concept of a ``method`` and ``tool``.
 
-  .. code:: python
+   .. code:: python
 
-     inv_options = InversionOptions()
-     inv_options.suggest_solving_methods()
-     inv_options.set_solving_method("matrix solvers")
-     inv_options.suggest_tools()
-     inv_options.set_tool("scipy.linalg.lstsq")
-     inv_options.summary()
+      inv_options = InversionOptions()
+      inv_options.suggest_solving_methods()
+      inv_options.set_solving_method("matrix solvers")
+      inv_options.suggest_tools()
+      inv_options.set_tool("scipy.linalg.lstsq")
+      inv_options.summary()
 
-   
+    
 
-- ``Inversion`` can be seen as an inversion engine that takes in the
-  above two as information, and will produce an ``InversionResult`` upon
-  running.
+-  ``Inversion`` can be seen as an inversion engine that takes in the
+   above two as information, and will produce an ``InversionResult``
+   upon running.
 
-  .. code:: python
+   .. code:: python
 
-     inv = Inversion(inv_problem, inv_options)
-     result = inv.run()
+      inv = Inversion(inv_problem, inv_options)
+      result = inv.run()
 
 Internally CoFI decides the nature of the problem from the quantities
 set by the user and performs internal checks to ensure it has all that
@@ -824,12 +824,12 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
     emcee 3.1.6
-    arviz 0.23.4
+    arviz 1.1.0
 
 
 
@@ -841,7 +841,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 38.295 seconds)
+   **Total running time of the script:** (1 minutes 54.510 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_Partition_modelling_sealevel_bayesbay.py:

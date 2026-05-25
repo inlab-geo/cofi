@@ -305,17 +305,17 @@ each problem, or problem class.
 
 Key SMA parameters to experiment with:
 
-- **``epoch``**: Number of iterations (higher = more thorough search)
-- **``pop_size``**: Population size (higher = better exploration)
-- **``pr``**: Probability parameter (controls exploration/exploitation
-  balance)
-- **``algorithm``**: Choose between “OriginalSMA” and “DevSMA”
-- **``mode``**: Parallel execution (“single” (default), “thread”,
-  “process”, “swarm”)
-- **``log_to``**: Logging control (None = no logging, “console” =
-  console output, “file” = log to file)
-- **``log_file``**: Filename when using ``log_to="file"`` (default:
-  “mealpy.log”)
+-  **``epoch``**: Number of iterations (higher = more thorough search)
+-  **``pop_size``**: Population size (higher = better exploration)
+-  **``pr``**: Probability parameter (controls exploration/exploitation
+   balance)
+-  **``algorithm``**: Choose between “OriginalSMA” and “DevSMA”
+-  **``mode``**: Parallel execution (“single” (default), “thread”,
+   “process”, “swarm”)
+-  **``log_to``**: Logging control (None = no logging, “console” =
+   console output, “file” = log to file)
+-  **``log_file``**: Filename when using ``log_to="file"`` (default:
+   “mealpy.log”)
 
 For further details on control parameters the reader is refered to `The
 mealpy documentation for
@@ -331,23 +331,23 @@ Parallelization Modes
 The SMA optimizer supports different parallelization modes through the
 ``mode`` parameter:
 
-- **``"single"``** (default): Sequential execution, no parallelization
-- **``"thread"``**: Thread-based parallelization (good for I/O-bound
-  tasks)
-- **``"process"``**: Process-based parallelization (good for CPU-bound
-  tasks)
-- **``"swarm"``**: Swarm-based parallelization (mealpy’s special mode)
+-  **``"single"``** (default): Sequential execution, no parallelization
+-  **``"thread"``**: Thread-based parallelization (good for I/O-bound
+   tasks)
+-  **``"process"``**: Process-based parallelization (good for CPU-bound
+   tasks)
+-  **``"swarm"``**: Swarm-based parallelization (mealpy’s special mode)
 
 Important Notes:
 ~~~~~~~~~~~~~~~~
 
-- On **macOS in Jupyter notebooks**, ``mode="process"`` may have issues
-  due to how macOS handles multiprocessing (uses ‘spawn’ instead of
-  ‘fork’)
-- If ``mode="process"`` hangs on macOS, use ``"single"`` or ``"thread"``
-  instead
-- The CoFI wrapper now uses picklable objective functions to improve
-  compatibility with multiprocessing
+-  On **macOS in Jupyter notebooks**, ``mode="process"`` may have issues
+   due to how macOS handles multiprocessing (uses ‘spawn’ instead of
+   ‘fork’)
+-  If ``mode="process"`` hangs on macOS, use ``"single"`` or
+   ``"thread"`` instead
+-  The CoFI wrapper now uses picklable objective functions to improve
+   compatibility with multiprocessing
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 269-306
@@ -408,10 +408,10 @@ Important Notes:
 
      Starting SMA optimization...
      SMA Optimization Complete!
-     Optimal solution: [3.000322, 1.999501]
-     Objective value: 0.00000521
+     Optimal solution: [2.999950, 1.999936]
+     Objective value: 0.00000023
      Success: True
-     Distance from true optimum (3, 2): 0.000594
+     Distance from true optimum (3, 2): 0.000081
 
 
 
@@ -479,14 +479,14 @@ test problem and compares results.
      Comparing SMA Algorithm Variants...
 
      Running OriginalSMA...
-        Solution: [3.0000, 2.0000]
+        Solution: [3.0001, 2.0000]
         Objective: 0.000000
-        Distance: 0.000049
+        Distance: 0.000071
 
      Running DevSMA...
-        Solution: [3.0019, 1.9983]
-        Objective: 0.000123
-        Distance: 0.002557
+        Solution: [3.0005, 1.9991]
+        Objective: 0.000016
+        Distance: 0.001068
 
      Algorithm Comparison Complete!
 
@@ -683,21 +683,21 @@ Now we repeat optimizations with different random seeds
 
      Running 10 independent SMA optimizations...
 
-    Run  1: [3.0002, 1.9992] | Obj: 9.94e-06 | Dist: 0.0008
-    Run  2: [3.0002, 1.9999] | Obj: 1.61e-06 | Dist: 0.0003
-    Run  3: [2.9997, 1.9999] | Obj: 4.86e-06 | Dist: 0.0003
-    Run  4: [3.0000, 2.0002] | Obj: 9.99e-07 | Dist: 0.0002
-    Run  5: [3.0009, 2.0010] | Obj: 7.20e-05 | Dist: 0.0014
-    Run  6: [3.0006, 1.9978] | Obj: 7.65e-05 | Dist: 0.0023
-    Run  7: [2.9999, 1.9995] | Obj: 5.21e-06 | Dist: 0.0005
-    Run  8: [3.0002, 1.9997] | Obj: 1.48e-06 | Dist: 0.0003
-    Run  9: [3.0002, 2.0004] | Obj: 5.73e-06 | Dist: 0.0005
-    Run 10: [3.0019, 1.9974] | Obj: 1.63e-04 | Dist: 0.0032
+    Run  1: [3.0010, 1.9990] | Obj: 3.78e-05 | Dist: 0.0014
+    Run  2: [3.0001, 1.9997] | Obj: 1.27e-06 | Dist: 0.0003
+    Run  3: [2.9988, 2.0012] | Obj: 5.02e-05 | Dist: 0.0017
+    Run  4: [3.0007, 1.9994] | Obj: 1.78e-05 | Dist: 0.0010
+    Run  5: [3.0011, 1.9989] | Obj: 4.08e-05 | Dist: 0.0015
+    Run  6: [2.9984, 2.0000] | Obj: 1.02e-04 | Dist: 0.0016
+    Run  7: [3.0015, 1.9995] | Obj: 7.09e-05 | Dist: 0.0015
+    Run  8: [2.9996, 1.9990] | Obj: 3.30e-05 | Dist: 0.0011
+    Run  9: [2.9998, 2.0007] | Obj: 8.15e-06 | Dist: 0.0008
+    Run 10: [3.0012, 1.9992] | Obj: 4.64e-05 | Dist: 0.0014
 
      Statistical Summary:
-     Objective - Mean: 3.41e-05, Std: 5.11e-05
-     Distance  - Mean: 0.0010, Std: 0.0010
-     Best objective: 9.99e-07
+     Objective - Mean: 4.08e-05, Std: 2.83e-05
+     Distance  - Mean: 0.0012, Std: 0.0004
+     Best objective: 1.27e-06
      Success rate (dist < 0.1): 10/10 (100.0%)
 
 
@@ -891,15 +891,15 @@ same class.
      Testing Multiple Optimizers...
 
      Running SMA (OriginalSMA)...
-        Solution: [3.0001, 2.0005]
-        Objective: 0.000006
-        Distance: 0.000517
+        Solution: [2.9980, 2.0030]
+        Objective: 0.000191
+        Distance: 0.003570
         Success: True
 
      Running SMA (DevSMA)...
-        Solution: [2.9997, 1.9974]
-        Objective: 0.000133
-        Distance: 0.002568
+        Solution: [2.9991, 2.0030]
+        Objective: 0.000143
+        Distance: 0.003176
         Success: True
 
      Running Border Collie...
@@ -1061,12 +1061,12 @@ CoFI Integration Benefits
 
 The integration of SMA into CoFI demonstrates several advantages:
 
-- **Unified Interface**: Same problem definition works with all
-  optimizers
-- **Easy Configuration**: Simple parameter setting and algorithm
-  selection
-- **Consistent Results**: Standardized result format across all tools
-- **Extensibility**: Easy to add new algorithms and compare performance
+-  **Unified Interface**: Same problem definition works with all
+   optimizers
+-  **Easy Configuration**: Simple parameter setting and algorithm
+   selection
+-  **Consistent Results**: Standardized result format across all tools
+-  **Extensibility**: Easy to add new algorithms and compare performance
 
 Applications in Geophysics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1074,11 +1074,11 @@ Applications in Geophysics
 At present experience is limited, but SMA is may be suited for
 geophysical inverse problems because:
 
-- **Multi-modal Landscapes**: Many geophysical problems have multiple
-  local minima
-- **Gradient-free**: Works with non-differentiable objective functions
-- **Global Search**: Able to find global solutions in complex parameter
-  spaces
+-  **Multi-modal Landscapes**: Many geophysical problems have multiple
+   local minima
+-  **Gradient-free**: Works with non-differentiable objective functions
+-  **Global Search**: Able to find global solutions in complex parameter
+   spaces
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 816-852
@@ -1125,14 +1125,14 @@ Here’s how
 Further Reading
 ~~~~~~~~~~~~~~~
 
-- **Original SMA Paper**: Li et al. (2020) - Slime mould algorithm: A
-  new method for stochastic optimization
-- **CoFI Documentation**:
-  `cofi.readthedocs.io <https://cofi.readthedocs.io>`__
-- **Mealpy Library**:
-  `mealpy.readthedocs.io <https://mealpy.readthedocs.io>`__
-- **Bio-inspired Optimization**: Yang (2020) - Nature-Inspired
-  Optimization Algorithms
+-  **Original SMA Paper**: Li et al. (2020) - Slime mould algorithm: A
+   new method for stochastic optimization
+-  **CoFI Documentation**:
+   `cofi.readthedocs.io <https://cofi.readthedocs.io>`__
+-  **Mealpy Library**:
+   `mealpy.readthedocs.io <https://mealpy.readthedocs.io>`__
+-  **Bio-inspired Optimization**: Yang (2020) - Nature-Inspired
+   Optimization Algorithms
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 870-875
@@ -1161,10 +1161,10 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
     mealpy 3.0.2
 
 
@@ -1177,7 +1177,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.448 seconds)
+   **Total running time of the script:** (0 minutes 4.967 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_slime_mould_algorithm_demo.py:

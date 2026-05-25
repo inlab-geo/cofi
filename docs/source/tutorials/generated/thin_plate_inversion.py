@@ -588,15 +588,16 @@ print(f"Solution vector:\n",my_result.model)
 # 
 
 #@title plotting function (hidden)
-_, (ax1, ax2) = plt.subplots(1, 2)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
 plot_transient(true_param_value, forward, "Data from true model", ax1, ax2, color="purple")
 plot_transient(init_param_value, forward, "Data from starting model", ax1, ax2, color="green", linestyle=":")
 plot_transient(my_result.model, forward, "Data from MAP model", ax1, ax2, color="red", linestyle="-.")
-ax1.legend(loc="upper center")
-ax2.legend(loc="upper center")
-ax1.set_title("vertical")
-ax2.set_title("inline")
+ax1.legend(loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=1, fontsize="small")
+ax2.legend(loc="lower center", bbox_to_anchor=(0.5, 1.02), ncol=1, fontsize="small")
+ax1.set_title("vertical", pad=55)
+ax2.set_title("inline", pad=55)
 plt.tight_layout()
+
 
 ######################################################################
 #
@@ -761,13 +762,27 @@ my_result.summary()
 
 #@title plotting function (hidden)
 sampler = my_result.sampler
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 var_names = [
-    "plate dip (\u00b0)", 
+    "plate dip (°)", 
 ]
 az_idata = my_result.to_arviz(var_names=var_names)
-arviz.plot_trace(az_idata.sel(draw=slice(0,None)),lines=(('plate dip (\u00b0)', {}, 60),));
-plt.tight_layout()
+true_values = [60]
+pc = arviz.plot_trace_dist(
+    az_idata.sel(draw=slice(0, None)),
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (12, 4), "constrained_layout": True},
+)
+var_list = list(az_idata.posterior.data_vars)
+for i, vname in enumerate(var_list):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.set_title(vname)
+    ax_trace.set_title(vname)
+    ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.margins(x=0)
+
 
 ######################################################################
 #
@@ -807,7 +822,7 @@ ndim=len(true_param_value)
 xlimits=numpy.array([[10,90]])
 ntrain=25
 ntest=5
-sampling = smt.sampling_methods.LHS(xlimits=xlimits,random_state=42)
+sampling = smt.sampling_methods.LHS(xlimits=xlimits,seed=42)
 xtrain=sampling(ntrain)
 ytrain=[]
 xtest=sampling(ntest)
@@ -909,13 +924,27 @@ my_result.summary()
 
 #@title plotting function (hidden)
 sampler = my_result.sampler
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 var_names = [
-    "plate dip (\u00b0)", 
+    "plate dip (°)", 
 ]
 az_idata = my_result.to_arviz(var_names=var_names)
-arviz.plot_trace(az_idata.sel(draw=slice(100,None)),lines=(('plate dip (\u00b0)', {}, 60),));
-plt.tight_layout()
+true_values = [60]
+pc = arviz.plot_trace_dist(
+    az_idata.sel(draw=slice(100, None)),
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (12, 4), "constrained_layout": True},
+)
+var_list = list(az_idata.posterior.data_vars)
+for i, vname in enumerate(var_list):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.set_title(vname)
+    ax_trace.set_title(vname)
+    ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.margins(x=0)
+
 
 ######################################################################
 #
@@ -1541,27 +1570,34 @@ my_result.summary()
 
 #@title plotting function (hidden)
 
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 
 var_names = [
-    "Dip (\u00b0)",
-    "Dip azimuth (\u00b0)",
+    "Dip (°)",
+    "Dip azimuth (°)",
     "Easting (m)",
     "Depth (m)",
     "Width (m)",
 ]
 
-var_lines=(
-        ('Dip (\u00b0)', {}, 60),
-        ('Dip azimuth (\u00b0)', {}, 65),
-        ('Easting (m)', {}, 175),
-        ('Depth (m)', {}, 30),
-        ('Width (m)', {}, 90)
-)
+true_values = [60, 65, 175, 30, 90]
 sampler = my_result.sampler
 az_idata = my_result.to_arviz(var_names=var_names)
-arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines);
-plt.tight_layout()
+pc = arviz.plot_trace_dist(
+    az_idata.sel(draw=slice(2000, None)),
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
+)
+var_list = list(az_idata.posterior.data_vars)
+for i, vname in enumerate(var_list):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.set_title(vname)
+    ax_trace.set_title(vname)
+    ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.margins(x=0)
+
 
 ######################################################################
 #
@@ -1571,36 +1607,37 @@ plt.tight_layout()
 true_values = {
     f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
 }
-fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-_ = arviz.plot_pair(
-az_idata.sel(draw=slice(4000,None)), 
-    marginals=True,
-    kind="kde",
-    kde_kwargs={
-        "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-        "contourf_kwargs": {"cmap": "Blues"},
-    },
-    ax=axes,
-    textsize=10,
+import arviz_base
+arviz_base.rcParams["plot.max_subplots"] = 80
+pm = arviz.plot_pair(
+    az_idata.sel(draw=slice(4000, None)),
+    marginal=True,
+    triangle="lower",
 )
+ref_names = list(true_values.keys())
+ref_vals = list(true_values.values())
+n = len(ref_vals)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        elif i > j:
+            ax.plot(
+                ref_vals[j], ref_vals[i], "o",
+                color="yellow", markeredgecolor="k", ms=10, zorder=5,
+            )
 
-for i, j in numpy.ndindex(axes.shape):
-    if i == j:
-        continue
-    xlabel = axes[-1, j].get_xlabel()
-    ylabel = axes[i, 0].get_ylabel()
-    x_true = true_values[xlabel]
-    y_true = true_values[ylabel]        
-    axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
-
-plt.show()
 
 ######################################################################
 #
 
 #@title plotting function (hidden)
 
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 
 _, axes = plt.subplots(2, 2)
 axes[1,1].axis("off")
@@ -1613,19 +1650,30 @@ plot_plate_faces(
     axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
 )
 
-
 plt.tight_layout()
 
+posterior = az_idata.posterior
+has_chain = "chain" in posterior.dims
+n_chains = int(posterior.sizes["chain"]) if has_chain else 1
+n_draws = int(posterior.sizes["draw"])
 
-ichain=0
-idraw=2500
-sample=numpy.zeros(5)
+ichain = 0
+idraw = min(2500, n_draws - 1)
+sample = numpy.zeros(5)
 
-sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+if has_chain:
+    sample[0] = float(posterior["Dip (°)"].isel(chain=ichain, draw=idraw))
+    sample[1] = float(posterior["Dip azimuth (°)"].isel(chain=ichain, draw=idraw))
+    sample[2] = float(posterior["Easting (m)"].isel(chain=ichain, draw=idraw))
+    sample[3] = float(posterior["Depth (m)"].isel(chain=ichain, draw=idraw))
+    sample[4] = float(posterior["Width (m)"].isel(chain=ichain, draw=idraw))
+else:
+    sample[0] = float(posterior["Dip (°)"].isel(draw=idraw))
+    sample[1] = float(posterior["Dip azimuth (°)"].isel(draw=idraw))
+    sample[2] = float(posterior["Easting (m)"].isel(draw=idraw))
+    sample[3] = float(posterior["Depth (m)"].isel(draw=idraw))
+    sample[4] = float(posterior["Width (m)"].isel(draw=idraw))
+
 plot_plate_faces(
     "plate_inverted", forward, sample, 
     axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -1639,20 +1687,26 @@ handles.extend([point])
 
 axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-# plot 10 randomly selected samples of the posterior distirbution
+# plot 10 randomly selected samples of the posterior distribution
 for i in range(10):
-    ichain=numpy.random.randint(0,12)
-    idraw=numpy.random.randint(2000,5000)
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    ichain = numpy.random.randint(0, n_chains)
+    idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+    if has_chain:
+        sample[0] = float(posterior["Dip (°)"].isel(chain=ichain, draw=idraw))
+        sample[1] = float(posterior["Dip azimuth (°)"].isel(chain=ichain, draw=idraw))
+        sample[2] = float(posterior["Easting (m)"].isel(chain=ichain, draw=idraw))
+        sample[3] = float(posterior["Depth (m)"].isel(chain=ichain, draw=idraw))
+        sample[4] = float(posterior["Width (m)"].isel(chain=ichain, draw=idraw))
+    else:
+        sample[0] = float(posterior["Dip (°)"].isel(draw=idraw))
+        sample[1] = float(posterior["Dip azimuth (°)"].isel(draw=idraw))
+        sample[2] = float(posterior["Easting (m)"].isel(draw=idraw))
+        sample[3] = float(posterior["Depth (m)"].isel(draw=idraw))
+        sample[4] = float(posterior["Width (m)"].isel(draw=idraw))
     plot_plate_faces(
-    "plate_inverted", forward, sample, 
-    axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-)
+        "plate_inverted", forward, sample, 
+        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+    )
 
 
 ######################################################################
@@ -1736,49 +1790,58 @@ my_result.summary()
 #
 
 #@title plotting function (hidden)
+import arviz_base
 
-arviz.style.use("default")
-var_names = [
-    "Dip (\u00b0)", 
-    "Dip azimuth (\u00b0)", 
+arviz.style.use("arviz-variat")
+display_names = [
+    "Dip (°)", 
+    "Dip azimuth (°)", 
     "Easting (m)", 
     "Depth (m)", 
     "Width (m)"
 ]
+clean_names = ["Dip_deg", "Dip_azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
-var_lines=(
-    ('Dip (\u00b0)', {}, 60),
-        ('Dip azimuth (\u00b0)', {}, 65),
-        ('Easting (m)', {}, 175),
-        ('Depth (m)', {}, 30),
-        ('Width (m)', {}, 90)
+true_values = [60, 65, 175, 30, 90]
+d = {k: v[numpy.newaxis, :] for k, v in zip(clean_names, my_result.appraisal_samples.T)}
+az_idata = arviz_base.from_dict({"posterior": d})
+pc = arviz.plot_trace_dist(
+    az_idata.sel(draw=slice(2000, None)),
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
 )
-d = {k: v for k, v in zip(var_names, my_result.appraisal_samples.T)}
-az_idata = arviz.convert_to_inference_data(d)
-arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines)
-plt.tight_layout()
+for i, dname in enumerate(display_names):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.set_title(dname)
+    ax_trace.set_title(dname)
+    ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.margins(x=0)
+
 
 ######################################################################
 #
 
 #@title plotting function (hidden)
 
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 
-_, axes = plt.subplots(5, 5, figsize=(12,12))
-arviz.plot_pair(
-    az_idata.sel(draw=slice(4000,None)), 
-    marginals=True, 
-    ax = axes
+import arviz_base
+arviz_base.rcParams["plot.max_subplots"] = 80
+pm = arviz.plot_pair(
+    az_idata.sel(draw=slice(4000, None)),
+    marginal=True,
+    triangle="lower",
 )
-plt.tight_layout()
+
 
 ######################################################################
 #
 
 #@title plotting function (hidden)
 
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 
 _, axes = plt.subplots(2, 2)
 axes[1,1].axis("off")
@@ -1791,19 +1854,24 @@ plot_plate_faces(
     axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
 )
 
-
 plt.tight_layout()
 
+posterior = az_idata.posterior
+has_chain = "chain" in posterior.dims
+n_chains = int(posterior.sizes["chain"]) if has_chain else 1
+n_draws = int(posterior.sizes["draw"])
 
-ichain=0
-idraw=2500
-sample=numpy.zeros(5)
+ichain = 0
+idraw = min(2500, n_draws - 1)
+sample = numpy.zeros(5)
 
-sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+if has_chain:
+    for idx, cn in enumerate(clean_names):
+        sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+else:
+    for idx, cn in enumerate(clean_names):
+        sample[idx] = float(posterior[cn].isel(draw=idraw))
+
 plot_plate_faces(
     "plate_inverted", forward, sample, 
     axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -1817,19 +1885,19 @@ handles.extend([point])
 
 axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-# plot 10 randomly selected samples of the posterior distirbution
+# plot 10 randomly selected samples of the posterior distribution
 for i in range(10):
-    idraw=numpy.random.randint(2000,5000)
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+    if has_chain:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+    else:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(draw=idraw))
     plot_plate_faces(
-    "plate_inverted", forward, sample, 
-    axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-)
+        "plate_inverted", forward, sample, 
+        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+    )
 
 
 ######################################################################
@@ -1967,50 +2035,51 @@ results = my_result.models
 #
 
 #@title plotting function (hidden)
+import arviz_base
 
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 var_names = [
-    "Dip (\u00b0)",
-    "Dip Azimuth (\u00b0)",
+    "Dip (°)",
+    "Dip Azimuth (°)",
     "Easting (m)",
     "Depth (m)",
     "Width (m)",
 ]
+clean_names = ["Dip_deg", "Dip_Azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
 results = my_result.models
 posterior_samples = {
-    f"{var_names[i]}": numpy.concatenate(results[f"param_space.m{i}"])
+    clean_names[i]: numpy.concatenate(results[f"param_space.m{i}"])[numpy.newaxis, :]
     for i in range(init_param_value.size)
 }
 
 true_values = {
-    f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
+    var_names[i]: true_param_value[i] for i in range(init_param_value.size)
 }
 
-
-fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-_ = arviz.plot_pair(
-    posterior_samples,
-    marginals=True,
-    kind="kde",
-    kde_kwargs={
-        "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-        "contourf_kwargs": {"cmap": "Blues"},
-    },
-    ax=axes,
-    textsize=10,
+arviz_base.rcParams["plot.max_subplots"] = 80
+az_idata = arviz_base.from_dict({"posterior": posterior_samples})
+pm = arviz.plot_pair(
+    az_idata,
+    marginal=True,
+    triangle="lower",
 )
+ref_vals = list(true_values.values())
+n = len(ref_vals)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        elif i > j:
+            ax.plot(
+                ref_vals[j], ref_vals[i], "o",
+                color="yellow", markeredgecolor="k", ms=10, zorder=5,
+            )
 
-for i, j in numpy.ndindex(axes.shape):
-    if i == j:
-        continue
-    xlabel = axes[-1, j].get_xlabel()
-    ylabel = axes[i, 0].get_ylabel()
-    x_true = true_values[xlabel]
-    y_true = true_values[ylabel]
-    axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
-
-plt.show()
 
 ######################################################################
 #
@@ -2041,8 +2110,8 @@ plot_plate_faces(
 )
 
 plt.tight_layout()
-idraw = numpy.random.randint(0, len(posterior_samples[var_names[0]]))
-sample = numpy.array([posterior_samples[name][idraw] for name in var_names])
+idraw = numpy.random.randint(0, (posterior_samples[clean_names[0]].shape[1]))
+sample = numpy.array([posterior_samples[name][0, idraw] for name in clean_names])
 
 plot_plate_faces(
     "plate_inverted",
@@ -2074,10 +2143,10 @@ axes[1, 0].legend(handles=handles, bbox_to_anchor=(1.04, 0), loc="lower left")
 
 # plot 10 randomly selected samples of the posterior distribution
 idraws = numpy.random.choice(
-    numpy.arange(0, len(posterior_samples[var_names[0]])), 10, replace=False
+    numpy.arange(0, (posterior_samples[clean_names[0]].shape[1])), 10, replace=False
 )
 for idraw in idraws:
-    sample = numpy.array([posterior_samples[name][idraw] for name in var_names])
+    sample = numpy.array([posterior_samples[name][0, idraw] for name in clean_names])
     plot_plate_faces(
         "plate_inverted",
         forward,

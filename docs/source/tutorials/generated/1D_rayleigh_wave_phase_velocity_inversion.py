@@ -34,11 +34,11 @@
 # 
 # **Learning outcomes**
 # 
-# - A demonstration of CoFI’s ability to switch between parameter
-#   estimation and ensemble methods.
-# - A comparison between different McMC samplers that is fixed-d and
-#   trans-d samplers
-# - An application of CoFI to field data
+# -  A demonstration of CoFI’s ability to switch between parameter
+#    estimation and ensemble methods.
+# -  A comparison between different McMC samplers that is fixed-d and
+#    trans-d samplers
+# -  An application of CoFI to field data
 # 
 
 # -------------------------------------------------------- #
@@ -780,19 +780,24 @@ labels = ["v0", "t0", "v1", "t1", "v2", "t2", "v3", "t3", "v4", "t4", "v5", "t5"
 prior_results_sampler = prior_results.sampler
 az_idata_prior = az.from_emcee(prior_results_sampler, var_names=labels)
 
-axes = az.plot_trace(
-    az_idata_prior, 
-    backend_kwargs={"constrained_layout":True}, 
-    figsize=(10,20),
+pc = az.plot_trace_dist(
+    az_idata_prior,
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (10, 25), "constrained_layout": True},
 )
 
-for i, axes_pair in enumerate(axes):
-    ax1 = axes_pair[0]
-    ax2 = axes_pair[1]
+n_vars = len(az_idata_prior.posterior.data_vars)
+var_names = list(az_idata_prior.posterior.data_vars)
+for i in range(n_vars):
+    ax1 = pc.iget_target(i, 0)
+    ax2 = pc.iget_target(i, 1)
+    ax1.set_title(var_names[i])
     ax1.set_xlabel("parameter value")
     ax1.set_ylabel("density value")
+    ax2.set_title(var_names[i])
     ax2.set_xlabel("number of iterations")
     ax2.set_ylabel("parameter value")
+    ax2.margins(x=0)
 
 ######################################################################
 #
@@ -856,20 +861,27 @@ axes[1].legend(loc="lower center", bbox_to_anchor=(0.5, -0.46));
 ######################################################################
 #
 
-axes = az.plot_trace(
-    az_idata, 
-    backend_kwargs={"constrained_layout":True},
-    figsize=(10,20)
+labels = ["v0", "t0", "v1", "t1", "v2", "t2", "v3", "t3", "v4", "t4", "v5", "t5", "v6", "t6", "v7", "t7", "v8"]
+
+pc = az.plot_trace_dist(
+    az_idata,
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (10, 25), "constrained_layout": True},
 )
 
-for i, axes_pair in enumerate(axes):
-    ax1 = axes_pair[0]
-    ax2 = axes_pair[1]
-    ax1.axvline(true_model[i], linestyle='dotted', color='red')
+n_vars = len(az_idata.posterior.data_vars)
+var_names = list(az_idata.posterior.data_vars)
+for i in range(n_vars):
+    ax1 = pc.iget_target(i, 0)
+    ax2 = pc.iget_target(i, 1)
+    ax1.axvline(true_model[i], linestyle="dotted", color="red")
+    ax1.set_title(var_names[i])
     ax1.set_xlabel("parameter value")
     ax1.set_ylabel("density value")
+    ax2.set_title(var_names[i])
     ax2.set_xlabel("number of iterations")
     ax2.set_ylabel("parameter value")
+    ax2.margins(x=0)
 
 ######################################################################
 #

@@ -33,9 +33,9 @@ Linear regression with Eustatic Sea-level data
 # problem, where we fit a polynomial function to Eustatic Sea-level
 # heights.
 # 
-# - by solution of a linear system of equations,
-# - by optimization of a data misfit function
-# - by Bayesian sampling of a Likelihood multiplied by a prior.
+# -  by solution of a linear system of equations,
+# -  by optimization of a data misfit function
+# -  by Bayesian sampling of a Likelihood multiplied by a prior.
 # 
 # --------------
 # 
@@ -215,36 +215,36 @@ plot_model(ref_x,ref_y, "Reference model")
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 # 
-# - ``BaseProblem`` defines the inverse problem including any user
-#   supplied quantities such as data vector, number of model parameters
-#   and measure of fit between model predictions and data.
-#   ``python   inv_problem = BaseProblem()   inv_problem.set_objective(some_function_here)   inv_problem.set_jacobian(some_function_here)   inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
+# -  ``BaseProblem`` defines the inverse problem including any user
+#    supplied quantities such as data vector, number of model parameters
+#    and measure of fit between model predictions and data.
+#    ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_jacobian(some_function_here)     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization``
 # 
-#    
+#     
 # 
-# - ``InversionOptions`` describes details about how one wants to run the
-#   inversion, including the backend tool and solver-specific parameters.
-#   It is based on the concept of a ``method`` and ``tool``.
+# -  ``InversionOptions`` describes details about how one wants to run the
+#    inversion, including the backend tool and solver-specific parameters.
+#    It is based on the concept of a ``method`` and ``tool``.
 # 
-#   .. code:: python
+#    .. code:: python
 # 
-#      inv_options = InversionOptions()
-#      inv_options.suggest_solving_methods()
-#      inv_options.set_solving_method("matrix solvers")
-#      inv_options.suggest_tools()
-#      inv_options.set_tool("scipy.linalg.lstsq")
-#      inv_options.summary()
+#       inv_options = InversionOptions()
+#       inv_options.suggest_solving_methods()
+#       inv_options.set_solving_method("matrix solvers")
+#       inv_options.suggest_tools()
+#       inv_options.set_tool("scipy.linalg.lstsq")
+#       inv_options.summary()
 # 
-#    
+#     
 # 
-# - ``Inversion`` can be seen as an inversion engine that takes in the
-#   above two as information, and will produce an ``InversionResult`` upon
-#   running.
+# -  ``Inversion`` can be seen as an inversion engine that takes in the
+#    above two as information, and will produce an ``InversionResult``
+#    upon running.
 # 
-#   .. code:: python
+#    .. code:: python
 # 
-#      inv = Inversion(inv_problem, inv_options)
-#      result = inv.run()
+#       inv = Inversion(inv_problem, inv_options)
+#       result = inv.run()
 # 
 # Internally CoFI decides the nature of the problem from the quantities
 # set by the user and performs internal checks to ensure it has all that
@@ -697,15 +697,18 @@ az_idata.get("posterior")
 #
 
 # a standard `trace` plot
-axes = az.plot_trace(az_idata, backend_kwargs={"constrained_layout":True}); 
+labels = ["m0", "m1", "m2", "m3", "m4"]
+pc = az.plot_trace_dist(az_idata, visuals={"xlabel_trace": False, "trace": {"lw": 0.5}, "dist": {"lw": 0.5}});
 
 # add legends
-for i, axes_pair in enumerate(axes):
-    ax1 = axes_pair[0]
-    ax2 = axes_pair[1]
-    #ax1.axvline(true_model[i], linestyle='dotted', color='red')
+n_vars = len(az_idata.posterior.data_vars)
+for i in range(n_vars):
+    ax1 = pc.iget_target(i, 0)  # dist (KDE) column
+    ax2 = pc.iget_target(i, 1)  # trace column
+    ax1.set_title(labels[i])
     ax1.set_xlabel("parameter value")
     ax1.set_ylabel("density value")
+    ax2.set_title(labels[i])
     ax2.set_xlabel("number of iterations")
     ax2.set_ylabel("parameter value")
 
@@ -720,27 +723,20 @@ for i, axes_pair in enumerate(axes):
 
 # a Corner plot
 
-fig, axes = plt.subplots(nparams, nparams, figsize=(12,8))
-
 if(True): # if we are plotting the model ensemble use this
-    az.plot_pair(
-        az_idata.sel(draw=slice(300,None)), 
-        marginals=True, 
-        #reference_values=dict(zip([f"m{i}" for i in range(4)], true_model.tolist())),
-        ax=axes,
-    );
+    pm = az.plot_pair(
+        az_idata.sel(draw=slice(300,None)),
+        marginal=True,
+        triangle="lower",
+        visuals={"scatter": {"s": 2}},
+    )
 else: # if we wish to plot a kernel density plot then use this option
-    az.plot_pair(
-        az_idata.sel(draw=slice(300,None)), 
-        marginals=True, 
-        #reference_values=dict(zip([f"m{i}" for i in range(4)], true_model.tolist())),
-        kind="kde",
-        kde_kwargs={
-            "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-            "contourf_kwargs": {"cmap": "Blues"},
-        },
-        ax=axes,
-    );
+    pm = az.plot_pair(
+        az_idata.sel(draw=slice(300,None)),
+        marginal=True,
+        triangle="lower",
+        visuals={"scatter": False, "dist": {"kind": "kde"}},
+    )
 
 ######################################################################
 #

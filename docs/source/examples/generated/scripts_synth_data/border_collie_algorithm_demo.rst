@@ -61,7 +61,7 @@ file specifies a list of packages required to run the notebooks)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 37-50
+.. GENERATED FROM PYTHON SOURCE LINES 37-48
 
 .. code-block:: Python
 
@@ -70,8 +70,6 @@ file specifies a list of packages required to run the notebooks)
     import matplotlib.pyplot as plt
     import matplotlib.colors as colors
     from matplotlib.animation import FuncAnimation
-
-    import arviz as az
 
     from cofi import BaseProblem, InversionOptions, Inversion
     from cofi.utils import QuadraticReg
@@ -85,7 +83,7 @@ file specifies a list of packages required to run the notebooks)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-61
+.. GENERATED FROM PYTHON SOURCE LINES 50-59
 
 .. code-block:: Python
 
@@ -111,7 +109,7 @@ file specifies a list of packages required to run the notebooks)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 66-72
+.. GENERATED FROM PYTHON SOURCE LINES 64-70
 
 Analytical solution
 -------------------
@@ -120,7 +118,7 @@ We first use sympy https://www.sympy.org/ to find the minimum of our
 modfified Himmelblau function.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-81
+.. GENERATED FROM PYTHON SOURCE LINES 70-79
 
 .. code-block:: Python
 
@@ -146,7 +144,7 @@ modfified Himmelblau function.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 86-92
+.. GENERATED FROM PYTHON SOURCE LINES 84-90
 
 Objective function
 ------------------
@@ -155,7 +153,7 @@ We begin by loading all the required modules and then plot the obejctive
 function
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-96
+.. GENERATED FROM PYTHON SOURCE LINES 90-94
 
 .. code-block:: Python
 
@@ -170,7 +168,7 @@ function
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-113
+.. GENERATED FROM PYTHON SOURCE LINES 96-111
 
 .. code-block:: Python
 
@@ -203,11 +201,11 @@ function
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f02cab151d0>
+    <matplotlib.colorbar.Colorbar object at 0x7efd957b3d90>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-124
+.. GENERATED FROM PYTHON SOURCE LINES 116-122
 
 BFGS
 ~~~~
@@ -216,7 +214,7 @@ Use BFGS and :math:`(-1,-1)` as the intial model which will result in a
 local minimum being found.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-132
+.. GENERATED FROM PYTHON SOURCE LINES 122-130
 
 .. code-block:: Python
 
@@ -235,7 +233,7 @@ local minimum being found.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 134-144
+.. GENERATED FROM PYTHON SOURCE LINES 132-142
 
 .. code-block:: Python
 
@@ -262,21 +260,21 @@ local minimum being found.
     ============================
     SUCCESS
     ----------------------------
-    fun: 71.84222128219835
-    jac: [-9.53674316e-06  2.86102295e-06]
-    hess_inv: [[0.01084335 0.00361916]
-     [0.00361916 0.01428301]]
+    fun: 71.8422212821983
+    jac: [-8.58306885e-06  4.76837158e-06]
+    hess_inv: [[0.01084531 0.00362151]
+     [0.00362151 0.01428307]]
     nfev: 48
     njev: 16
     status: 0
     message: Optimization terminated successfully.
     nit: 10
-    model: [-3.61235325 -3.10165561]
+    model: [-3.61235324 -3.10165559]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-155
+.. GENERATED FROM PYTHON SOURCE LINES 147-153
 
 Border collie optimisation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -285,7 +283,7 @@ Use CofI’s implementation of Border Collie optimisation which gets us
 into the vicinity of the global minimum.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-161
+.. GENERATED FROM PYTHON SOURCE LINES 153-159
 
 .. code-block:: Python
 
@@ -302,7 +300,7 @@ into the vicinity of the global minimum.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-177
+.. GENERATED FROM PYTHON SOURCE LINES 161-175
 
 .. code-block:: Python
 
@@ -327,7 +325,7 @@ into the vicinity of the global minimum.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-182
+.. GENERATED FROM PYTHON SOURCE LINES 177-180
 
 .. code-block:: Python
 
@@ -347,7 +345,7 @@ into the vicinity of the global minimum.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 187-192
+.. GENERATED FROM PYTHON SOURCE LINES 185-190
 
 Next we plot the states of the flock of sheep and the pack of dogs. We
 can observe how the lead dog goes to a minimum (i.e. the farm) and once
@@ -355,7 +353,7 @@ it has arrived there it runs away to gather more sheep. Similarly the
 sheep get herded towards the global minimum.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 192-217
+.. GENERATED FROM PYTHON SOURCE LINES 190-215
 
 .. code-block:: Python
 
@@ -396,7 +394,7 @@ sheep get herded towards the global minimum.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 222-227
+.. GENERATED FROM PYTHON SOURCE LINES 220-225
 
 --------------
 
@@ -404,7 +402,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 227-233
+.. GENERATED FROM PYTHON SOURCE LINES 225-231
 
 .. code-block:: Python
 
@@ -422,22 +420,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 234-234
+.. GENERATED FROM PYTHON SOURCE LINES 232-232
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.567 seconds)
+   **Total running time of the script:** (0 minutes 3.575 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_border_collie_algorithm_demo.py:

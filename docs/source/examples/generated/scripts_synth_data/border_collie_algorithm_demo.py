@@ -40,8 +40,6 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 from matplotlib.animation import FuncAnimation
 
-import arviz as az
-
 from cofi import BaseProblem, InversionOptions, Inversion
 from cofi.utils import QuadraticReg
 

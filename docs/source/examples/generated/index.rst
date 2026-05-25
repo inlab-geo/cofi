@@ -31,6 +31,10 @@ Example Gallery
    -- Benjamin Franklin
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
@@ -48,6 +52,10 @@ Example Gallery
 Data Examples
 =============
 
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
 
 
 .. raw:: html
@@ -117,6 +125,10 @@ Data Examples
 Synthetic Examples
 ==================
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
@@ -138,6 +150,23 @@ Synthetic Examples
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Surface wave and receiver function - joint inversion (synthetic data)</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Finding Neptune using Uranus">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_finding_neptune_via_bayesian_inv_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/finding_neptune_via_bayesian_inv`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Finding Neptune using Uranus</div>
     </div>
 
 
@@ -415,6 +444,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This notebook demonstrates CoFI’s ReducedLikelihood class for handling unknown data covariance in inverse problems.">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_linear_regression_reduced_likelihood_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/linear_regression_reduced_likelihood`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Reduced Likelihood for Linear Regression</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Trans-dimensional Bayesian partition modelling of Eustatic Sea-level heights over time">
 
 .. only:: html
@@ -466,6 +512,23 @@ Synthetic Examples
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Receiver Function Inversion with the Neighbourhood Algorithm">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_receiver_function_neighpy_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/receiver_function_neighpy`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Receiver Function Inversion with the Neighbourhood Algorithm</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Modified Himmelblau function">
 
 .. only:: html
@@ -478,6 +541,23 @@ Synthetic Examples
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Modified Himmelblau function</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Rosenbrock function with the Neighbourhood Algorithm">
+
+.. only:: html
+
+  .. image:: /examples/generated/scripts_synth_data/images/thumb/sphx_glr_rosenbrock_neighpy_thumb.png
+    :alt:
+
+  :doc:`/examples/generated/scripts_synth_data/rosenbrock_neighpy`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rosenbrock function with the Neighbourhood Algorithm</div>
     </div>
 
 

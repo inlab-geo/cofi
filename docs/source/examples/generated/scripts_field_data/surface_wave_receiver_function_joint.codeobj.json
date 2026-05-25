@@ -1897,46 +1897,130 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data.inference_data",
-   "module_short": "arviz",
-   "name": "InferenceData"
+   "module": "xarray.core.datatree",
+   "module_short": "xarray.core.datatree",
+   "name": "DataTree"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data",
-   "module_short": "arviz",
-   "name": "InferenceData"
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTree"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz",
-   "module_short": "arviz",
-   "name": "InferenceData"
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTree"
   }
  ],
  "az_idata.get": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data.inference_data",
-   "module_short": "arviz",
-   "name": "InferenceData.get"
+   "module": "xarray.core.datatree",
+   "module_short": "xarray.core.datatree",
+   "name": "DataTree.get"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data",
-   "module_short": "arviz",
-   "name": "InferenceData.get"
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTree.get"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz",
-   "module_short": "arviz",
-   "name": "InferenceData.get"
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTree.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.treenode",
+   "module_short": "xarray.core.treenode",
+   "name": "NamedNode.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "NamedNode.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "NamedNode.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core._aggregations",
+   "module_short": "xarray.core._aggregations",
+   "name": "DataTreeAggregations.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTreeAggregations.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTreeAggregations.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core._typed_ops",
+   "module_short": "xarray.core._typed_ops",
+   "name": "DataTreeOpsMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTreeOpsMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTreeOpsMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.common",
+   "module_short": "xarray.core.common",
+   "name": "TreeAttrAccessMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "TreeAttrAccessMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "TreeAttrAccessMixin.get"
   },
   {
    "is_class": false,
@@ -1955,9 +2039,44 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "typing",
-   "module_short": "typing",
-   "name": "Generic.get"
+   "module": "xarray.core.treenode",
+   "module_short": "xarray.core.treenode",
+   "name": "TreeNode.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "TreeNode.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "TreeNode.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.common",
+   "module_short": "xarray.core.common",
+   "name": "AttrAccessMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "AttrAccessMixin.get"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "AttrAccessMixin.get"
   },
   {
    "is_class": false,

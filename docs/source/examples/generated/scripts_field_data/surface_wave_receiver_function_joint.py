@@ -40,10 +40,10 @@ Surface wave and receiver function - joint inversion (field data)
 # 
 # **Learning outcomes**
 # 
-# - A demonstration of CoFI’s ability to switch between parameter
-#   estimation and ensemble methods.
-# - An application of CoFI for a joint inversion, here of Rayleigh wave
-#   pahse velocity and receiver function data, to a field dataset
+# -  A demonstration of CoFI’s ability to switch between parameter
+#    estimation and ensemble methods.
+# -  An application of CoFI for a joint inversion, here of Rayleigh wave
+#    pahse velocity and receiver function data, to a field dataset
 # 
 
 
