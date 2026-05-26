@@ -62,10 +62,10 @@ graph TD;
     base_problem --> inversion;
     inversion_options --> inversion;
 
-    classDef cls_base_problem fill: oldlace, stroke-width: 0, color: #333;
-    classDef cls_inversion_options fill: oldlace, stroke-width: 0, color: #333;
-    classDef cls_inversion fill: lavender, stroke-width: 0, color: #333;
-    classDef cls_code_block fill: lightgrey, stroke-width: 0, text-align: left, color: #333;
+    classDef cls_base_problem fill: oldlace, stroke-width: 0, color: black;
+    classDef cls_inversion_options fill: oldlace, stroke-width: 0, color: black;
+    classDef cls_inversion fill: lavender, stroke-width: 0, color: black;
+    classDef cls_code_block fill: lightgrey, stroke-width: 0, text-align: left, color: black;
 
     class base_problem cls_base_problem;
     class inversion_options cls_inversion_options;
