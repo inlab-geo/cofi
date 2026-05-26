@@ -248,7 +248,7 @@ xlimits=numpy.array([[10,80],[30,150],[150,190],[25,45],[60,120]])
 ######################################################################
 #
 
-sampling = smt.sampling_methods.LHS(xlimits=xlimits,random_state=42)
+sampling = smt.sampling_methods.LHS(xlimits=xlimits,seed=42)
 xtrain=sampling(ntrain)
 ytrain=[]
 xtest=sampling(ntest)

@@ -26,13 +26,6 @@ Century DCIP Inversion with a Triangular Mesh
 # 
 # ..
 # 
-#    | **Note (pyGIMLi + Python 3.13):** This notebook uses **pyGIMLi
-#      (pygimli)**.
-#    | pyGIMLi’s compiled core (``pgcore``) does not currently ship wheels
-#      for **Python 3.13**, so this notebook won’t run on 3.13 unless you
-#      build from source.
-#    | **Use Python 3.12 (recommended) or 3.11** for install.
-# 
 #    If you are running this notebook locally, make sure you’ve followed
 #    `steps
 #    here <https://github.com/inlab-geo/cofi-examples#run-the-examples-with-cofi-locally>`__
@@ -133,11 +126,11 @@ Century DCIP Inversion with a Triangular Mesh
 ######################################################################
 # We will need the following packages:
 # 
-# - ``os`` to list and load dataset
-# - ``numpy`` for matrices and matrix-related functions
-# - ``matplotlib`` for plotting
-# - ``pygimli`` for forward modelling of the problem
-# - ``cofi`` for accessing different inference solvers
+# -  ``os`` to list and load dataset
+# -  ``numpy`` for matrices and matrix-related functions
+# -  ``matplotlib`` for plotting
+# -  ``pygimli`` for forward modelling of the problem
+# -  ``cofi`` for accessing different inference solvers
 # 
 
 import os
@@ -381,12 +374,13 @@ def plot_colorbar(ax, cMin, cMax, label, orientation="horizontal"):
 def plot_model(mesh, model_complex, title):
     rho, phi = rho_phi_from_complex(model_complex)
     fig, axes = plt.subplots(2,1,figsize=(12,5))
-    pygimli.show(mesh, data=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+    plt.figure(fig)
+    pygimli.show(mesh, data=rho, label=resistivity_label, ax=axes[0], fig=fig, colorBar=False)
     axes[0].set_xlim(x_inv_start, x_inv_stop)
     axes[0].set_ylim(y_inv_start, y_inv_stop)
     axes[0].set_title("Resistivity")
     plot_colorbar(axes[0], 136, 170, resistivity_label)
-    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, cMin=-4.76, cMax=-4, ax=axes[1], colorBar=False)
+    pygimli.show(mesh, data=phi * 1000, label=chargeability_label, cMin=-4.76, cMax=-4, ax=axes[1], fig=fig, colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title("Chargeability")
@@ -395,55 +389,60 @@ def plot_model(mesh, model_complex, title):
         plot_geologic_section(geologic_section, axes[0])
         plot_geologic_section(geologic_section, axes[1])
     fig.suptitle(title)
+    plt.show()
 
 def plot_data(pg_data, data_complex, title):
     rho, phi = rho_phi_from_complex(data_complex)
     fig, axes = plt.subplots(1,2,figsize=(10,4))
-    # pygimli.physics.ert.showERTData(pg_data, vals=rho, label=resistivity_label, ax=axes[0], colorBar=False)
+    plt.figure(fig)
     pygimli.physics.ert.showERTData(pg_data, vals=rho, ax=axes[0], colorBar=False)
     axes[0].set_title("Apparent Resistivity")
     plot_colorbar(axes[0], np.min(rho), np.max(rho), resistivity_label)
     pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, ax=axes[1], colorBar=False)
-    # pygimli.physics.ert.showERTData(pg_data, vals=phi*1000, label=chargeability_label, ax=axes[1], colorBar=False)
     axes[1].set_title("Apparent Chargeability")
     plot_colorbar(axes[1], np.min(phi*1000), np.max(phi*1000), chargeability_label)
     fig.suptitle(title)
+    plt.show()
 
 def plot_mesh(mesh, title="Mesh used for inversion"):
-    _, ax = plt.subplots(1, 1)
-    pygimli.show(mesh, showMesh=True, markers=False, colorBar=False, ax=ax)
+    fig, ax = plt.subplots(1, 1)
+    plt.figure(fig)
+    pygimli.show(mesh, showMesh=True, markers=False, colorBar=False, ax=ax, fig=fig)
     ax.set_title(title)
     ax.set_xlabel("Northing (m)")
     ax.set_ylabel("Elevation (m)")
+    plt.show()
 
 def plot_comparison(mesh1, model1, title1, mesh2, model2, title2, rho_min, rho_max, phi_min, phi_max):
     rho1, phi1 = rho_phi_from_complex(model1)
     rho2, phi2 = rho_phi_from_complex(model2)
     fig, axes = plt.subplots(4, 1, figsize=(10,12))
-    pygimli.show(mesh1, data=rho1, label=resistivity_label, ax=axes[0], colorBar=False)
+    plt.figure(fig)
+    pygimli.show(mesh1, data=rho1, label=resistivity_label, ax=axes[0], fig=fig, colorBar=False)
     axes[0].set_xlim(x_inv_start, x_inv_stop)
     axes[0].set_ylim(y_inv_start, y_inv_stop)
     axes[0].set_title(f"{title1} - Resistivity")
     plot_colorbar(axes[0], rho_min, rho_max, resistivity_label)
     plot_geologic_section(geologic_section, axes[0])
-    pygimli.show(mesh2, data=rho2, label=resistivity_label, ax=axes[1], cMin=rho_min, cMax=rho_max, colorBar=False)
+    pygimli.show(mesh2, data=rho2, label=resistivity_label, ax=axes[1], fig=fig, cMin=rho_min, cMax=rho_max, colorBar=False)
     axes[1].set_xlim(x_inv_start, x_inv_stop)
     axes[1].set_ylim(y_inv_start, y_inv_stop)
     axes[1].set_title(f"{title2} - Resistivity")
     plot_colorbar(axes[1], rho_min, rho_max, resistivity_label)
     plot_geologic_section(geologic_section, axes[1])
-    pygimli.show(mesh1, data=phi1 * 1000, label=chargeability_label, ax=axes[2], colorBar=False)
+    pygimli.show(mesh1, data=phi1 * 1000, label=chargeability_label, ax=axes[2], fig=fig, colorBar=False)
     axes[2].set_xlim(x_inv_start, x_inv_stop)
     axes[2].set_ylim(y_inv_start, y_inv_stop)
     axes[2].set_title(f"{title1} - Chargeability")
     plot_colorbar(axes[2], phi_min*1000, phi_max*1000, chargeability_label)
     plot_geologic_section(geologic_section, axes[2])
-    pygimli.show(mesh2, data=phi2 * 1000, label=chargeability_label, ax=axes[3], cMin=phi_min*1000, cMax=phi_max*1000, colorBar=False)
+    pygimli.show(mesh2, data=phi2 * 1000, label=chargeability_label, ax=axes[3], fig=fig, cMin=phi_min*1000, cMax=phi_max*1000, colorBar=False)
     axes[3].set_xlim(x_inv_start, x_inv_stop)
     axes[3].set_ylim(y_inv_start, y_inv_stop)
     axes[3].set_title(f"{title2} - Chargeability")
     plot_colorbar(axes[3], phi_min*1000, phi_max*1000, chargeability_label)
     plot_geologic_section(geologic_section, axes[3])
+    plt.show()
 
 ######################################################################
 #
@@ -541,13 +540,13 @@ plot_model(ert_mgr.paraDomain, start_model_complex, "Starting model")
 # additional utility functions, so feel free to read them into details if
 # you want to understand more. These functions are:
 # 
-# - ``get_response``
-# - ``get_jacobian``
-# - ``get_residuals``
-# - ``get_data_misfit``
-# - ``get_regularization``
-# - ``get_gradient``
-# - ``get_hessian``
+# -  ``get_response``
+# -  ``get_jacobian``
+# -  ``get_residuals``
+# -  ``get_data_misfit``
+# -  ``get_regularization``
+# -  ``get_gradient``
+# -  ``get_hessian``
 # 
 
 # Utility Functions (additional)
@@ -722,10 +721,10 @@ print(f"\nSolver message: {inv_result_scipy.message}")
 #
 
 model_scipy = np.exp(complex_from_real(inv_result_scipy.model))
-# plot_model(inv_mesh, model_scipy, "Inferred model (scipy's trust-ncg)")
+plot_model(ert_mgr.paraDomain, model_scipy, "Inferred model (scipy's trust-ncg)")
 
 synth_data_scipy = np.exp(get_response(np.log(model_scipy), forward_oprt))
-# plot_data(pg_data, synth_data_scipy, "Inferred model produced data")
+plot_data(pg_data, synth_data_scipy, "Inferred model produced data")
 
 ######################################################################
 #
@@ -786,6 +785,11 @@ watermark_list = ["cofi", "numpy", "scipy", "pygimli", "torch", "matplotlib"]
 for pkg in watermark_list:
     pkg_var = __import__(pkg)
     print(pkg, getattr(pkg_var, "__version__"))
+
+######################################################################
+#
+
+
 
 ######################################################################
 #

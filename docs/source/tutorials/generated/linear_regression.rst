@@ -40,21 +40,21 @@ Here we demonstrate use of CoFI on a simple **linear regression**
 problem, where we fit a polynomial function to data, using three
 different algorithms:
 
-- by solution of a linear system of equations,
-- by optimization of a data misfit function
-- by Bayesian sampling of a Likelihood multiplied by a prior.
+-  by solution of a linear system of equations,
+-  by optimization of a data misfit function
+-  by Bayesian sampling of a Likelihood multiplied by a prior.
 
 --------------
 
 Learning outcomes
 -----------------
 
-- A demonstration of running CoFI for a class of parameter fitting
-  problem. Example of a CoFI **template**.
-- A demonstration of how CoFI may be used to **experiment with different
-  inference approaches** under a common interface.
-- A demonstration of CoFI’s **expandability** in that it may be used
-  with pre-set, or user defined, misfits, likelihood or priors.
+-  A demonstration of running CoFI for a class of parameter fitting
+   problem. Example of a CoFI **template**.
+-  A demonstration of how CoFI may be used to **experiment with
+   different inference approaches** under a common interface.
+-  A demonstration of CoFI’s **expandability** in that it may be used
+   with pre-set, or user defined, misfits, likelihood or priors.
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 42-47
@@ -178,13 +178,13 @@ This clearly has the required general form,
 
 where:
 
-- :math:`\textbf{d}` is the vector of data values,
-  (:math:`y_0,y_1,\dots,y_N`);
-- :math:`\textbf{m}` is the vector of model parameters,
-  (:math:`m_0,m_1,m_2`);
-- :math:`G` is the basis matrix (or design matrix) of this linear
-  regression problem (also called the **Jacobian** matrix for this
-  linear problem).
+-  :math:`\textbf{d}` is the vector of data values,
+   (:math:`y_0,y_1,\dots,y_N`);
+-  :math:`\textbf{m}` is the vector of model parameters,
+   (:math:`m_0,m_1,m_2`);
+-  :math:`G` is the basis matrix (or design matrix) of this linear
+   regression problem (also called the **Jacobian** matrix for this
+   linear problem).
 
 We have a set of noisy data values, :math:`y_i (i=0,\dots,N)`, measured
 at known locations, :math:`x_i (i=0,\dots,N)`, and wish to find the best
@@ -318,42 +318,42 @@ The structure of CoFI
 In the workflow of ``cofi``, there are three main components:
 ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 
-- ``BaseProblem`` defines the inverse problem including any user
-  supplied quantities such as data vector, number of model parameters
-  and measure of fit between model predictions and data.
+-  ``BaseProblem`` defines the inverse problem including any user
+   supplied quantities such as data vector, number of model parameters
+   and measure of fit between model predictions and data.
 
-  .. code:: python
+   .. code:: python
 
-     inv_problem = BaseProblem()
-     inv_problem.set_objective(some_function_here)
-     inv_problem.set_jacobian(some_function_here)
-     inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
+      inv_problem = BaseProblem()
+      inv_problem.set_objective(some_function_here)
+      inv_problem.set_jacobian(some_function_here)
+      inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
 
-   
+    
 
-- ``InversionOptions`` describes details about how one wants to run the
-  inversion, including the backend tool and solver-specific parameters.
-  It is based on the concept of a ``method`` and ``tool``.
+-  ``InversionOptions`` describes details about how one wants to run the
+   inversion, including the backend tool and solver-specific parameters.
+   It is based on the concept of a ``method`` and ``tool``.
 
-  .. code:: python
+   .. code:: python
 
-     inv_options = InversionOptions()
-     inv_options.suggest_solving_methods()
-     inv_options.set_solving_method("matrix solvers")
-     inv_options.suggest_tools()
-     inv_options.set_tool("scipy.linalg.lstsq")
-     inv_options.summary()
+      inv_options = InversionOptions()
+      inv_options.suggest_solving_methods()
+      inv_options.set_solving_method("matrix solvers")
+      inv_options.suggest_tools()
+      inv_options.set_tool("scipy.linalg.lstsq")
+      inv_options.summary()
 
-   
+    
 
-- ``Inversion`` can be seen as an inversion engine that takes in the
-  above two as information, and will produce an ``InversionResult`` upon
-  running.
+-  ``Inversion`` can be seen as an inversion engine that takes in the
+   above two as information, and will produce an ``InversionResult``
+   upon running.
 
-  .. code:: python
+   .. code:: python
 
-     inv = Inversion(inv_problem, inv_options)
-     result = inv.run()
+      inv = Inversion(inv_problem, inv_options)
+      result = inv.run()
 
 Internally CoFI decides the nature of the problem from the quantities
 set by the user and performs internal checks to ensure it has all that
@@ -445,7 +445,7 @@ methods.
  .. code-block:: none
 
     The following solving methods are supported:
-    {'optimization', 'matrix solvers', 'sampling'}
+    {'matrix solvers', 'optimization', 'sampling'}
 
     Use `suggest_tools()` to see a full list of backend tools for each method
 
@@ -479,7 +479,9 @@ We can ask CoFI to suggest some specific software tools as well.
             "scipy.optimize.least_squares",
             "torch.optim",
             "cofi.border_collie_optimization",
-            "neighpyI"
+            "neighpyI",
+            "mealpy.sma",
+            "mealpy.slime_mould"
         ],
         "matrix solvers": [
             "scipy.linalg.lstsq",
@@ -710,7 +712,7 @@ this ability.
     ============================
     SUCCESS
     ----------------------------
-    fun: 14.961508008942802
+    fun: 14.961508008942793
     nit: 193
     nfev: 330
     status: 0
@@ -1041,7 +1043,7 @@ Add the information and run with CoFI
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      2%|▏         | 248/10000 [00:00<00:03, 2475.28it/s]      5%|▌         | 526/10000 [00:00<00:03, 2653.08it/s]      8%|▊         | 805/10000 [00:00<00:03, 2711.87it/s]     11%|█         | 1085/10000 [00:00<00:03, 2743.12it/s]     14%|█▎        | 1364/10000 [00:00<00:03, 2758.71it/s]     16%|█▋        | 1644/10000 [00:00<00:03, 2769.43it/s]     19%|█▉        | 1924/10000 [00:00<00:02, 2778.14it/s]     22%|██▏       | 2204/10000 [00:00<00:02, 2782.88it/s]     25%|██▍       | 2485/10000 [00:00<00:02, 2789.45it/s]     28%|██▊       | 2764/10000 [00:01<00:02, 2780.64it/s]     30%|███       | 3043/10000 [00:01<00:02, 2650.59it/s]     33%|███▎      | 3323/10000 [00:01<00:02, 2693.87it/s]     36%|███▌      | 3600/10000 [00:01<00:02, 2714.29it/s]     39%|███▉      | 3876/10000 [00:01<00:02, 2725.51it/s]     42%|████▏     | 4152/10000 [00:01<00:02, 2732.88it/s]     44%|████▍     | 4428/10000 [00:01<00:02, 2739.13it/s]     47%|████▋     | 4703/10000 [00:01<00:01, 2740.96it/s]     50%|████▉     | 4979/10000 [00:01<00:01, 2746.19it/s]     53%|█████▎    | 5256/10000 [00:01<00:01, 2753.17it/s]     55%|█████▌    | 5533/10000 [00:02<00:01, 2757.51it/s]     58%|█████▊    | 5812/10000 [00:02<00:01, 2765.04it/s]     61%|██████    | 6090/10000 [00:02<00:01, 2767.64it/s]     64%|██████▎   | 6368/10000 [00:02<00:01, 2769.68it/s]     66%|██████▋   | 6646/10000 [00:02<00:01, 2772.07it/s]     69%|██████▉   | 6924/10000 [00:02<00:01, 2773.20it/s]     72%|███████▏  | 7203/10000 [00:02<00:01, 2775.77it/s]     75%|███████▍  | 7482/10000 [00:02<00:00, 2778.91it/s]     78%|███████▊  | 7760/10000 [00:02<00:00, 2777.98it/s]     80%|████████  | 8038/10000 [00:02<00:00, 2776.65it/s]     83%|████████▎ | 8316/10000 [00:03<00:00, 2775.11it/s]     86%|████████▌ | 8594/10000 [00:03<00:00, 2775.77it/s]     89%|████████▊ | 8872/10000 [00:03<00:00, 2759.24it/s]     91%|█████████▏| 9148/10000 [00:03<00:00, 2744.69it/s]     94%|█████████▍| 9428/10000 [00:03<00:00, 2758.41it/s]     97%|█████████▋| 9706/10000 [00:03<00:00, 2764.70it/s]    100%|█████████▉| 9983/10000 [00:03<00:00, 2625.45it/s]    100%|██████████| 10000/10000 [00:03<00:00, 2738.44it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      1%|          | 119/10000 [00:00<00:08, 1181.13it/s]      2%|▏         | 238/10000 [00:00<00:08, 1183.18it/s]      4%|▎         | 357/10000 [00:00<00:08, 1183.64it/s]      5%|▍         | 476/10000 [00:00<00:08, 1183.92it/s]      6%|▌         | 595/10000 [00:00<00:07, 1183.64it/s]      7%|▋         | 714/10000 [00:00<00:07, 1183.68it/s]      8%|▊         | 833/10000 [00:00<00:07, 1183.50it/s]     10%|▉         | 952/10000 [00:00<00:07, 1183.21it/s]     11%|█         | 1071/10000 [00:00<00:07, 1184.12it/s]     12%|█▏        | 1190/10000 [00:01<00:07, 1184.85it/s]     13%|█▎        | 1309/10000 [00:01<00:07, 1184.97it/s]     14%|█▍        | 1428/10000 [00:01<00:07, 1184.99it/s]     15%|█▌        | 1547/10000 [00:01<00:07, 1185.10it/s]     17%|█▋        | 1666/10000 [00:01<00:07, 1178.93it/s]     18%|█▊        | 1785/10000 [00:01<00:06, 1181.03it/s]     19%|█▉        | 1904/10000 [00:01<00:06, 1183.00it/s]     20%|██        | 2023/10000 [00:01<00:06, 1184.17it/s]     21%|██▏       | 2142/10000 [00:01<00:06, 1184.76it/s]     23%|██▎       | 2261/10000 [00:01<00:06, 1184.47it/s]     24%|██▍       | 2380/10000 [00:02<00:06, 1184.71it/s]     25%|██▍       | 2499/10000 [00:02<00:06, 1184.32it/s]     26%|██▌       | 2618/10000 [00:02<00:06, 1184.22it/s]     27%|██▋       | 2737/10000 [00:02<00:06, 1184.61it/s]     29%|██▊       | 2856/10000 [00:02<00:06, 1185.28it/s]     30%|██▉       | 2975/10000 [00:02<00:05, 1185.97it/s]     31%|███       | 3094/10000 [00:02<00:05, 1186.16it/s]     32%|███▏      | 3213/10000 [00:02<00:05, 1185.60it/s]     33%|███▎      | 3332/10000 [00:02<00:05, 1183.35it/s]     35%|███▍      | 3451/10000 [00:02<00:05, 1184.16it/s]     36%|███▌      | 3570/10000 [00:03<00:05, 1182.17it/s]     37%|███▋      | 3689/10000 [00:03<00:05, 1183.22it/s]     38%|███▊      | 3808/10000 [00:03<00:05, 1183.89it/s]     39%|███▉      | 3927/10000 [00:03<00:05, 1160.98it/s]     40%|████      | 4046/10000 [00:03<00:05, 1167.76it/s]     42%|████▏     | 4165/10000 [00:03<00:04, 1172.44it/s]     43%|████▎     | 4284/10000 [00:03<00:04, 1175.80it/s]     44%|████▍     | 4403/10000 [00:03<00:04, 1179.05it/s]     45%|████▌     | 4522/10000 [00:03<00:04, 1181.32it/s]     46%|████▋     | 4641/10000 [00:03<00:04, 1182.82it/s]     48%|████▊     | 4760/10000 [00:04<00:04, 1183.11it/s]     49%|████▉     | 4879/10000 [00:04<00:04, 1183.79it/s]     50%|████▉     | 4998/10000 [00:04<00:04, 1184.58it/s]     51%|█████     | 5117/10000 [00:04<00:04, 1185.07it/s]     52%|█████▏    | 5236/10000 [00:04<00:04, 1185.72it/s]     54%|█████▎    | 5355/10000 [00:04<00:03, 1184.21it/s]     55%|█████▍    | 5474/10000 [00:04<00:03, 1174.57it/s]     56%|█████▌    | 5592/10000 [00:04<00:03, 1161.57it/s]     57%|█████▋    | 5709/10000 [00:04<00:03, 1152.08it/s]     58%|█████▊    | 5825/10000 [00:04<00:03, 1147.00it/s]     59%|█████▉    | 5940/10000 [00:05<00:03, 1133.21it/s]     61%|██████    | 6054/10000 [00:05<00:03, 1133.69it/s]     62%|██████▏   | 6168/10000 [00:05<00:03, 1132.84it/s]     63%|██████▎   | 6282/10000 [00:05<00:03, 1132.43it/s]     64%|██████▍   | 6396/10000 [00:05<00:03, 1104.02it/s]     65%|██████▌   | 6507/10000 [00:05<00:03, 1085.50it/s]     66%|██████▌   | 6620/10000 [00:05<00:03, 1096.95it/s]     67%|██████▋   | 6734/10000 [00:05<00:02, 1107.29it/s]     68%|██████▊   | 6847/10000 [00:05<00:02, 1113.38it/s]     70%|██████▉   | 6961/10000 [00:05<00:02, 1120.03it/s]     71%|███████   | 7075/10000 [00:06<00:02, 1124.91it/s]     72%|███████▏  | 7188/10000 [00:06<00:02, 1125.16it/s]     73%|███████▎  | 7302/10000 [00:06<00:02, 1126.72it/s]     74%|███████▍  | 7417/10000 [00:06<00:02, 1132.00it/s]     75%|███████▌  | 7532/10000 [00:06<00:02, 1135.91it/s]     76%|███████▋  | 7646/10000 [00:06<00:02, 1135.73it/s]     78%|███████▊  | 7760/10000 [00:06<00:01, 1136.65it/s]     79%|███████▊  | 7874/10000 [00:06<00:01, 1133.16it/s]     80%|███████▉  | 7988/10000 [00:06<00:01, 1133.36it/s]     81%|████████  | 8103/10000 [00:06<00:01, 1135.95it/s]     82%|████████▏ | 8217/10000 [00:07<00:01, 1134.62it/s]     83%|████████▎ | 8332/10000 [00:07<00:01, 1136.57it/s]     84%|████████▍ | 8446/10000 [00:07<00:01, 1137.25it/s]     86%|████████▌ | 8561/10000 [00:07<00:01, 1140.24it/s]     87%|████████▋ | 8676/10000 [00:07<00:01, 1139.34it/s]     88%|████████▊ | 8790/10000 [00:07<00:01, 1137.18it/s]     89%|████████▉ | 8904/10000 [00:07<00:00, 1137.32it/s]     90%|█████████ | 9019/10000 [00:07<00:00, 1139.77it/s]     91%|█████████▏| 9134/10000 [00:07<00:00, 1140.53it/s]     92%|█████████▏| 9249/10000 [00:07<00:00, 1140.90it/s]     94%|█████████▎| 9364/10000 [00:08<00:00, 1139.17it/s]     95%|█████████▍| 9478/10000 [00:08<00:00, 1134.34it/s]     96%|█████████▌| 9592/10000 [00:08<00:00, 1131.31it/s]     97%|█████████▋| 9706/10000 [00:08<00:00, 1099.90it/s]     98%|█████████▊| 9818/10000 [00:08<00:00, 1104.39it/s]     99%|█████████▉| 9932/10000 [00:08<00:00, 1114.06it/s]    100%|██████████| 10000/10000 [00:08<00:00, 1155.82it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -1068,17 +1070,19 @@ have access to a range of analysis functions. (See more details in
 documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 679-688
+.. GENERATED FROM PYTHON SOURCE LINES 679-691
 
 .. code-block:: Python
 
 
-    import arviz as az
+    import arviz
+    import arviz_base
+    from scipy.stats import gaussian_kde
 
     labels = ["m0", "m1", "m2","m3"]
 
     sampler = inv_result_3.sampler
-    az_idata = az.from_emcee(sampler, var_names=labels)
+    az_idata = arviz_base.from_emcee(sampler, var_names=labels)
     # az_idata = inv_result_3.to_arviz()      # alternatively
 
 
@@ -1088,7 +1092,8 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 690-693
+
+.. GENERATED FROM PYTHON SOURCE LINES 693-696
 
 .. code-block:: Python
 
@@ -1198,6 +1203,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       min-width: 300px;
       max-width: 700px;
       line-height: 1.6;
+      padding-bottom: 4px;
     }
 
     .xr-text-repr-fallback {
@@ -1208,8 +1214,11 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     .xr-header {
       padding-top: 6px;
       padding-bottom: 6px;
-      margin-bottom: 4px;
+    }
+
+    .xr-header {
       border-bottom: solid 1px var(--xr-border-color);
+      margin-bottom: 4px;
     }
 
     .xr-header > div,
@@ -1220,20 +1229,15 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-obj-type,
-    .xr-obj-name,
-    .xr-group-name {
+    .xr-obj-name {
       margin-left: 2px;
       margin-right: 10px;
     }
 
-    .xr-group-name::before {
-      content: "📁";
-      padding-right: 0.3em;
-    }
-
-    .xr-group-name,
-    .xr-obj-type {
+    .xr-obj-type,
+    .xr-group-box-contents > label {
       color: var(--xr-font-color2);
+      display: block;
     }
 
     .xr-sections {
@@ -1248,28 +1252,39 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       display: contents;
     }
 
-    .xr-section-item input {
-      display: inline-block;
+    .xr-section-item > input,
+    .xr-group-box-contents > input,
+    .xr-array-wrap > input {
+      display: block;
       opacity: 0;
       height: 0;
       margin: 0;
     }
 
-    .xr-section-item input + label {
+    .xr-section-item > input + label,
+    .xr-var-item > input + label {
       color: var(--xr-disabled-color);
-      border: 2px solid transparent !important;
     }
 
-    .xr-section-item input:enabled + label {
+    .xr-section-item > input:enabled + label,
+    .xr-var-item > input:enabled + label,
+    .xr-array-wrap > input:enabled + label,
+    .xr-group-box-contents > input:enabled + label {
       cursor: pointer;
       color: var(--xr-font-color2);
     }
 
-    .xr-section-item input:focus + label {
-      border: 2px solid var(--xr-font-color0) !important;
+    .xr-section-item > input:focus-visible + label,
+    .xr-var-item > input:focus-visible + label,
+    .xr-array-wrap > input:focus-visible + label,
+    .xr-group-box-contents > input:focus-visible + label {
+      outline: auto;
     }
 
-    .xr-section-item input:enabled + label:hover {
+    .xr-section-item > input:enabled + label:hover,
+    .xr-var-item > input:enabled + label:hover,
+    .xr-array-wrap > input:enabled + label:hover,
+    .xr-group-box-contents > input:enabled + label:hover {
       color: var(--xr-font-color0);
     }
 
@@ -1277,11 +1292,25 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       grid-column: 1;
       color: var(--xr-font-color2);
       font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .xr-section-summary > em {
+      font-weight: normal;
+    }
+
+    .xr-span-grid {
+      grid-column-end: -1;
     }
 
     .xr-section-summary > span {
       display: inline-block;
-      padding-left: 0.5em;
+      padding-left: 0.3em;
+    }
+
+    .xr-group-box-contents > input:checked + label > span {
+      display: inline-block;
+      padding-left: 0.6em;
     }
 
     .xr-section-summary-in:disabled + label {
@@ -1309,7 +1338,8 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-section-summary,
-    .xr-section-inline-details {
+    .xr-section-inline-details,
+    .xr-group-box-contents > label {
       padding-top: 4px;
     }
 
@@ -1318,20 +1348,29 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
     }
 
     .xr-section-details {
-      display: none;
       grid-column: 1 / -1;
       margin-top: 4px;
       margin-bottom: 5px;
+    }
+
+    .xr-section-summary-in ~ .xr-section-details {
+      display: none;
     }
 
     .xr-section-summary-in:checked ~ .xr-section-details {
       display: contents;
     }
 
+    .xr-children {
+      display: inline-grid;
+      grid-template-columns: 100%;
+      grid-column: 1 / -1;
+      padding-top: 4px;
+    }
+
     .xr-group-box {
       display: inline-grid;
-      grid-template-columns: 0px 20px auto;
-      width: 100%;
+      grid-template-columns: 0px 30px auto;
     }
 
     .xr-group-box-vline {
@@ -1345,13 +1384,43 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       grid-column-start: 2;
       grid-row-start: 1;
       height: 1em;
-      width: 20px;
+      width: 26px;
       border-bottom: 0.2em solid;
       border-color: var(--xr-border-color);
     }
 
     .xr-group-box-contents {
       grid-column-start: 3;
+      padding-bottom: 4px;
+    }
+
+    .xr-group-box-contents > label::before {
+      content: "📂";
+      padding-right: 0.3em;
+    }
+
+    .xr-group-box-contents > input:checked + label::before {
+      content: "📁";
+    }
+
+    .xr-group-box-contents > input:checked + label {
+      padding-bottom: 0px;
+    }
+
+    .xr-group-box-contents > input:checked ~ .xr-sections {
+      display: none;
+    }
+
+    .xr-group-box-contents > input + label > span {
+      display: none;
+    }
+
+    .xr-group-box-ellipsis {
+      font-size: 1.4em;
+      font-weight: 900;
+      color: var(--xr-font-color2);
+      letter-spacing: 0.15em;
+      cursor: default;
     }
 
     .xr-array-wrap {
@@ -1581,97 +1650,106 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
       filter: drop-shadow(1px 1px 5px var(--xr-font-color2));
       stroke-width: 0.8px;
     }
-    </style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt; Size: 10MB
-    Dimensions:  (chain: 32, draw: 10000)
-    Coordinates:
-      * chain    (chain) int64 256B 0 1 2 3 4 5 6 7 8 ... 23 24 25 26 27 28 29 30 31
-      * draw     (draw) int64 80kB 0 1 2 3 4 5 6 ... 9994 9995 9996 9997 9998 9999
-    Data variables:
-        m0       (chain, draw) float64 3MB 4.696e-05 4.324e-05 ... -6.243 -6.211
-        m1       (chain, draw) float64 3MB -1.484e-05 -1.471e-05 ... -5.121 -5.189
-        m2       (chain, draw) float64 3MB 6.432e-05 5.766e-05 ... 2.105 2.102
-        m3       (chain, draw) float64 3MB 0.0001544 0.0001576 ... 1.026 1.04
-    Attributes:
-        created_at:                 2026-01-28T07:45:53.289565+00:00
-        arviz_version:              0.23.1
-        inference_library:          emcee
-        inference_library_version:  3.1.6</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-998d962c-59e0-498c-afb5-f211d5d7d147' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-998d962c-59e0-498c-afb5-f211d5d7d147' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>chain</span>: 32</li><li><span class='xr-has-index'>draw</span>: 10000</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-891686f9-91d5-42fd-bc47-a53b14343ea1' class='xr-section-summary-in' type='checkbox'  checked><label for='section-891686f9-91d5-42fd-bc47-a53b14343ea1' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 26 27 28 29 30 31</div><input id='attrs-ac31a3a6-a4ea-4429-adf1-a9a10f85a5e2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-ac31a3a6-a4ea-4429-adf1-a9a10f85a5e2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-1e69eec9-f5ab-4853-a059-833cbab70dac' class='xr-var-data-in' type='checkbox'><label for='data-1e69eec9-f5ab-4853-a059-833cbab70dac' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
-           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 9996 9997 9998 9999</div><input id='attrs-d9c5e3f5-e263-4173-b781-f83120692011' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d9c5e3f5-e263-4173-b781-f83120692011' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e63a610d-8cac-4764-8d72-9f7f919f2eed' class='xr-var-data-in' type='checkbox'><label for='data-e63a610d-8cac-4764-8d72-9f7f919f2eed' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 9997, 9998, 9999])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-f99a23f1-cbbe-48a5-b0b0-0269dd0a0536' class='xr-section-summary-in' type='checkbox'  checked><label for='section-f99a23f1-cbbe-48a5-b0b0-0269dd0a0536' class='xr-section-summary' >Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>m0</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.696e-05 4.324e-05 ... -6.211</div><input id='attrs-8b1e0f19-9541-4dee-a421-e6a716eecf8b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8b1e0f19-9541-4dee-a421-e6a716eecf8b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-694d2c97-b5a8-48a1-8c59-b082b1e08d7c' class='xr-var-data-in' type='checkbox'><label for='data-694d2c97-b5a8-48a1-8c59-b082b1e08d7c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 4.69621369e-05,  4.32447115e-05, -1.66106827e-04, ...,
-            -6.00425994e+00, -6.00506574e+00, -6.09138800e+00],
-           [-3.47949875e-05, -3.83495998e-05, -3.12731408e-05, ...,
-            -5.31716533e+00, -5.44423325e+00, -5.39279831e+00],
-           [-1.51789861e-04, -9.99824205e-05,  2.39828695e-05, ...,
-            -6.33625405e+00, -6.33625405e+00, -5.95247263e+00],
+    </style><pre class='xr-text-repr-fallback'>&lt;xarray.DataTree &#x27;posterior&#x27;&gt;
+    Group: /posterior
+        Dimensions:  (draw: 10000, chain: 32)
+        Coordinates:
+          * draw     (draw) int64 80kB 0 1 2 3 4 5 6 ... 9994 9995 9996 9997 9998 9999
+          * chain    (chain) int64 256B 0 1 2 3 4 5 6 7 8 ... 23 24 25 26 27 28 29 30 31
+        Data variables:
+            m0       (draw, chain) float64 3MB -5.218e-05 -0.0001615 ... -6.416 -5.742
+            m1       (draw, chain) float64 3MB -3.98e-05 0.0002699 ... -5.395 -4.984
+            m2       (draw, chain) float64 3MB 2.051e-05 5.136e-05 ... 2.154 1.714
+            m3       (draw, chain) float64 3MB 3.563e-05 -5.848e-05 ... 1.112 0.9212
+        Attributes:
+            created_at:                 2026-05-25T06:49:06.886821+00:00
+            creation_library:           ArviZ
+            creation_library_version:   1.1.0
+            creation_library_language:  Python
+            inference_library:          emcee
+            inference_library_version:  3.1.6
+            sample_dims:                [&#x27;draw&#x27;, &#x27;chain&#x27;]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataTree</div><div class='xr-obj-name'>&#x27;posterior&#x27;</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-beb2e4b0-3298-4b62-976c-dc70389c810d' class='xr-section-summary-in' type='checkbox' disabled /><label for='section-beb2e4b0-3298-4b62-976c-dc70389c810d' class='xr-section-summary'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>draw</span>: 10000</li><li><span class='xr-has-index'>chain</span>: 32</li></ul></div></li><li class='xr-section-item'><input id='section-43234e7e-314c-4754-8391-5762c2385eec' class='xr-section-summary-in' type='checkbox' checked /><label for='section-43234e7e-314c-4754-8391-5762c2385eec' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>draw</span></div><div class='xr-var-dims'>(draw)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 ... 9996 9997 9998 9999</div><input id='attrs-7198f697-8aaa-40e2-aec9-d3a67bd5ae0d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7198f697-8aaa-40e2-aec9-d3a67bd5ae0d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bcbedbd0-55cc-4d1c-bbdf-46150ab7cc52' class='xr-var-data-in' type='checkbox'><label for='data-bcbedbd0-55cc-4d1c-bbdf-46150ab7cc52' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([   0,    1,    2, ..., 9997, 9998, 9999], shape=(10000,))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>chain</span></div><div class='xr-var-dims'>(chain)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 ... 26 27 28 29 30 31</div><input id='attrs-0481f85a-656d-448f-a3a4-796eb7819b27' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-0481f85a-656d-448f-a3a4-796eb7819b27' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d02e0847-9da2-4555-a6d3-d4d288a13f88' class='xr-var-data-in' type='checkbox'><label for='data-d02e0847-9da2-4555-a6d3-d4d288a13f88' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15, 16, 17,
+           18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-6127f8de-32a7-47f2-80d0-0593827614cf' class='xr-section-summary-in' type='checkbox' checked /><label for='section-6127f8de-32a7-47f2-80d0-0593827614cf' class='xr-section-summary' title='Expand/collapse section'>Data variables: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>m0</span></div><div class='xr-var-dims'>(draw, chain)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-5.218e-05 -0.0001615 ... -5.742</div><input id='attrs-00d6a42b-ee62-4689-939b-fc0401e96720' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-00d6a42b-ee62-4689-939b-fc0401e96720' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-803c977a-b9e5-4062-9037-5780ba8824bd' class='xr-var-data-in' type='checkbox'><label for='data-803c977a-b9e5-4062-9037-5780ba8824bd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-5.21846508e-05, -1.61478642e-04,  2.21175979e-05, ...,
+             2.64734948e-05,  4.17077685e-05,  2.42446280e-04],
+           [-8.02829379e-05, -1.61478642e-04,  7.41168326e-05, ...,
+            -1.48534178e-05,  2.93941214e-05,  2.80709946e-04],
+           [-6.40499374e-05, -1.23056707e-04,  7.43088197e-05, ...,
+            -1.71806143e-05,  1.31657174e-04,  2.63093311e-04],
            ...,
-           [ 7.60861000e-06,  6.81590656e-06,  6.81590656e-06, ...,
-            -5.53089703e+00, -5.53089703e+00, -5.44182574e+00],
-           [ 2.00843973e-04,  3.51867326e-04,  3.51867326e-04, ...,
-            -5.88423415e+00, -5.88423415e+00, -5.81652626e+00],
-           [ 1.05025143e-04,  2.96183691e-05,  4.20439019e-05, ...,
-            -6.48819770e+00, -6.24266197e+00, -6.21136768e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m1</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-1.484e-05 -1.471e-05 ... -5.189</div><input id='attrs-31389f32-b624-47c3-be2d-b5b6f1c84143' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-31389f32-b624-47c3-be2d-b5b6f1c84143' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-148bbcc0-c069-4b26-be46-9b051532297b' class='xr-var-data-in' type='checkbox'><label for='data-148bbcc0-c069-4b26-be46-9b051532297b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-1.48406903e-05, -1.47134825e-05,  3.49152074e-05, ...,
-            -5.59625291e+00, -5.60119586e+00, -5.45227691e+00],
-           [-3.10270145e-05, -4.11498590e-05, -1.46954992e-04, ...,
-            -5.35659407e+00, -5.40651541e+00, -5.53621139e+00],
-           [-1.09300008e-04, -1.79388137e-06,  1.49112452e-04, ...,
-            -5.17469777e+00, -5.17469777e+00, -5.24114261e+00],
+           [-5.83444486e+00, -6.41919903e+00, -5.51393149e+00, ...,
+            -6.07615427e+00, -6.32971027e+00, -5.72011053e+00],
+           [-5.77891908e+00, -6.41919903e+00, -5.13181569e+00, ...,
+            -6.07615427e+00, -6.41578424e+00, -5.71986790e+00],
+           [-5.77891908e+00, -6.29348632e+00, -5.18615740e+00, ...,
+            -6.07615427e+00, -6.41578424e+00, -5.74168423e+00]],
+          shape=(10000, 32))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m1</span></div><div class='xr-var-dims'>(draw, chain)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-3.98e-05 0.0002699 ... -4.984</div><input id='attrs-9ab177f7-9d5f-4f80-b93d-a88ae361d9f4' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9ab177f7-9d5f-4f80-b93d-a88ae361d9f4' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-36e52d60-4bca-4c13-81c5-2c21a1f7bea5' class='xr-var-data-in' type='checkbox'><label for='data-36e52d60-4bca-4c13-81c5-2c21a1f7bea5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-3.98019565e-05,  2.69921866e-04,  9.30368891e-05, ...,
+            -7.50256362e-05,  6.91469737e-05, -3.59816078e-04],
+           [-1.36200584e-04,  2.69921866e-04,  2.65690209e-04, ...,
+            -9.28087469e-05,  2.40075662e-04, -4.52828977e-04],
+           [-1.09839406e-04,  1.28596545e-04,  2.66902129e-04, ...,
+            -9.19780220e-05,  6.28913752e-04, -6.52704082e-04],
            ...,
-           [-1.41373004e-04, -1.38524879e-04, -1.38524879e-04, ...,
-            -5.17578055e+00, -5.17578055e+00, -5.18266661e+00],
-           [-8.12575779e-05, -1.33635910e-04, -1.33635910e-04, ...,
-            -4.85999288e+00, -4.85999288e+00, -4.82054681e+00],
-           [ 5.46033440e-04,  7.53662755e-04,  1.00966175e-03, ...,
-            -5.10177208e+00, -5.12075433e+00, -5.18933694e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m2</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>6.432e-05 5.766e-05 ... 2.105 2.102</div><input id='attrs-1130f759-507e-4170-bb8a-f2304085cd41' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-1130f759-507e-4170-bb8a-f2304085cd41' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b79cd702-4337-4075-a5b8-42a87a1e9dac' class='xr-var-data-in' type='checkbox'><label for='data-b79cd702-4337-4075-a5b8-42a87a1e9dac' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 6.43235990e-05,  5.76612692e-05,  3.28784442e-04, ...,
-             2.29065099e+00,  2.29375201e+00,  2.09089797e+00],
-           [ 1.44452179e-04,  2.90424376e-04,  4.12538935e-04, ...,
-             1.75699073e+00,  1.80003161e+00,  1.80587662e+00],
-           [ 5.97551492e-06, -5.72990899e-05, -1.04812616e-04, ...,
-             1.87314304e+00,  1.87314304e+00,  1.87629362e+00],
+           [-5.64413503e+00, -5.48679065e+00, -4.99898628e+00, ...,
+            -5.15823159e+00, -5.38509839e+00, -4.97736929e+00],
+           [-5.60569154e+00, -5.48679065e+00, -4.84709317e+00, ...,
+            -5.15823159e+00, -5.39522058e+00, -4.97735892e+00],
+           [-5.60569154e+00, -5.56473501e+00, -4.87223075e+00, ...,
+            -5.15823159e+00, -5.39522058e+00, -4.98371202e+00]],
+          shape=(10000, 32))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m2</span></div><div class='xr-var-dims'>(draw, chain)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>2.051e-05 5.136e-05 ... 2.154 1.714</div><input id='attrs-95967a15-ad5d-441a-9117-b00f7a2bd67a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-95967a15-ad5d-441a-9117-b00f7a2bd67a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-637cbe2a-d476-4941-a533-1de7939f220b' class='xr-var-data-in' type='checkbox'><label for='data-637cbe2a-d476-4941-a533-1de7939f220b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 2.05102249e-05,  5.13583666e-05, -1.46668641e-04, ...,
+            -5.41044607e-04, -3.94090450e-05,  7.37364556e-05],
+           [ 7.17390822e-05,  5.13583666e-05, -2.74760308e-04, ...,
+            -1.56360472e-04, -1.28224367e-04,  8.97348953e-05],
+           [ 3.98015448e-05,  4.02789312e-05, -2.74901868e-04, ...,
+            -1.72214690e-04, -3.17187142e-04,  2.50269863e-04],
            ...,
-           [ 1.70350433e-04,  1.63861242e-04,  1.63861242e-04, ...,
-             1.84908524e+00,  1.84908524e+00,  1.81701487e+00],
-           [ 2.11092575e-04,  7.36987895e-04,  7.36987895e-04, ...,
-             1.82874996e+00,  1.82874996e+00,  1.70406111e+00],
-           [-3.43469076e-04, -6.73533305e-04, -9.88862833e-04, ...,
-             2.19376408e+00,  2.10535824e+00,  2.10236682e+00]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m3</span></div><div class='xr-var-dims'>(chain, draw)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0001544 0.0001576 ... 1.026 1.04</div><input id='attrs-8cbf32a4-b5cf-457a-8ddb-d83c3e8f0093' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-8cbf32a4-b5cf-457a-8ddb-d83c3e8f0093' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-88e9a9eb-2405-4d77-9729-2080692a395e' class='xr-var-data-in' type='checkbox'><label for='data-88e9a9eb-2405-4d77-9729-2080692a395e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 1.54398590e-04,  1.57577824e-04,  5.56734446e-04, ...,
-             1.17967808e+00,  1.18130529e+00,  1.09693799e+00],
-           [ 6.66969946e-05,  1.59940716e-05, -6.39806635e-05, ...,
-             1.01210574e+00,  1.01969811e+00,  1.03113708e+00],
-           [-3.65914587e-05, -9.54517376e-05, -9.63893480e-05, ...,
-             9.96500154e-01,  9.96500154e-01,  1.00704895e+00],
+           [ 2.01728495e+00,  2.24558120e+00,  1.60689618e+00, ...,
+             2.09963794e+00,  2.13912397e+00,  1.70853510e+00],
+           [ 2.01095628e+00,  2.24558120e+00,  1.35781044e+00, ...,
+             2.09963794e+00,  2.15430867e+00,  1.70849262e+00],
+           [ 2.01095628e+00,  2.14831496e+00,  1.39630853e+00, ...,
+             2.09963794e+00,  2.15430867e+00,  1.71361773e+00]],
+          shape=(10000, 32))</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>m3</span></div><div class='xr-var-dims'>(draw, chain)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>3.563e-05 -5.848e-05 ... 0.9212</div><input id='attrs-010df163-628b-40c2-9816-9d9eba5d0e34' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-010df163-628b-40c2-9816-9d9eba5d0e34' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-b6e9ada2-94a7-4319-baeb-53080790f0d3' class='xr-var-data-in' type='checkbox'><label for='data-b6e9ada2-94a7-4319-baeb-53080790f0d3' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[ 3.56335942e-05, -5.84767512e-05, -1.05060726e-05, ...,
+             2.26101539e-05, -4.48685354e-05,  3.41982358e-05],
+           [ 4.30062270e-05, -5.84767512e-05,  1.47197188e-05, ...,
+            -2.52721208e-05,  1.42283628e-05,  2.98044757e-05],
+           [ 4.89776349e-05,  3.76570369e-05,  1.47614438e-05, ...,
+            -2.39683913e-05,  2.72250811e-05, -2.09079568e-05],
            ...,
-           [ 1.23757522e-04,  1.24552189e-04,  1.24552189e-04, ...,
-             9.69310878e-01,  9.69310878e-01,  9.62269020e-01],
-           [-1.94805940e-04, -3.70217299e-04, -3.70217299e-04, ...,
-             9.37303242e-01,  9.37303242e-01,  8.85069357e-01],
-           [-2.20285212e-04, -1.74483093e-04, -1.59264525e-04, ...,
-             1.04499380e+00,  1.02558207e+00,  1.04034358e+00]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-eaef56a6-7d75-46a7-ba26-324bad0d86b6' class='xr-section-summary-in' type='checkbox'  checked><label for='section-eaef56a6-7d75-46a7-ba26-324bad0d86b6' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2026-01-28T07:45:53.289565+00:00</dd><dt><span>arviz_version :</span></dt><dd>0.23.1</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.6</dd></dl></div></li></ul></div></div>
+           [ 1.10608314e+00,  1.12406996e+00,  8.91702908e-01, ...,
+             1.03783241e+00,  1.10710216e+00,  9.20485624e-01],
+           [ 1.09965100e+00,  1.12406996e+00,  8.15091423e-01, ...,
+             1.03783241e+00,  1.11244154e+00,  9.20472847e-01],
+           [ 1.09965100e+00,  1.10237123e+00,  8.27730730e-01, ...,
+             1.03783241e+00,  1.11244154e+00,  9.21241229e-01]],
+          shape=(10000, 32))</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-e79e716a-5cbb-4b0c-869c-4ffa8583950f' class='xr-section-summary-in' type='checkbox' checked /><label for='section-e79e716a-5cbb-4b0c-869c-4ffa8583950f' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(7)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>created_at :</span></dt><dd>2026-05-25T06:49:06.886821+00:00</dd><dt><span>creation_library :</span></dt><dd>ArviZ</dd><dt><span>creation_library_version :</span></dt><dd>1.1.0</dd><dt><span>creation_library_language :</span></dt><dd>Python</dd><dt><span>inference_library :</span></dt><dd>emcee</dd><dt><span>inference_library_version :</span></dt><dd>3.1.6</dd><dt><span>sample_dims :</span></dt><dd>[&#x27;draw&#x27;, &#x27;chain&#x27;]</dd></dl></div></li></ul></div></div>
     </div>
     <br />
     <br />
 
-.. GENERATED FROM PYTHON SOURCE LINES 695-709
+.. GENERATED FROM PYTHON SOURCE LINES 698-713
 
 .. code-block:: Python
 
 
     # a standard `trace` plot
-    axes = az.plot_trace(az_idata, backend_kwargs={"constrained_layout":True}); 
+    pc = arviz.plot_trace_dist(az_idata)
 
-    # add legends
-    for i, axes_pair in enumerate(axes):
-        ax1 = axes_pair[0]
-        ax2 = axes_pair[1]
-        ax1.axvline(true_model[i], linestyle='dotted', color='red')
-        ax1.set_xlabel("parameter value")
-        ax1.set_ylabel("density value")
-        ax2.set_xlabel("number of iterations")
-        ax2.set_ylabel("parameter value")
+    # add reference lines for true parameter values
+    for i, label in enumerate(labels):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.axvline(true_model[i], linestyle='dotted', color='red')
+        ax_kde.set_xlabel("parameter value")
+        ax_kde.set_ylabel("density value")
+        ax_trace.set_xlabel("number of iterations")
+        ax_trace.set_ylabel("parameter value")
+
 
 
 
 
 .. image-sg:: /tutorials/generated/images/sphx_glr_linear_regression_006.png
-   :alt: m0, m0, m1, m1, m2, m2, m3, m3
+   :alt: linear regression
    :srcset: /tutorials/generated/images/sphx_glr_linear_regression_006.png
    :class: sphx-glr-single-img
 
@@ -1679,7 +1757,7 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 711-715
+.. GENERATED FROM PYTHON SOURCE LINES 715-719
 
 .. code-block:: Python
 
@@ -1695,39 +1773,51 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
  .. code-block:: none
 
-    autocorrelation time: [ 87.58993647 110.95951699  68.36367543  89.68019852]
+    autocorrelation time: [105.07741488 132.35000821 101.77953645 125.36233305]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 717-742
+.. GENERATED FROM PYTHON SOURCE LINES 721-758
 
 .. code-block:: Python
 
 
     # a Corner plot
+    import numpy as np
 
-    fig, axes = plt.subplots(nparams, nparams, figsize=(12,8))
+    pm = arviz.plot_pair(
+        az_idata.sel(draw=slice(300,None)),
+        marginal=True,
+        triangle="lower",
+        visuals={"scatter": False},
+    )
 
-    if(False): # if we are plotting the model ensemble use this
-        az.plot_pair(
-            az_idata.sel(draw=slice(300,None)), 
-            marginals=True, 
-            reference_values=dict(zip([f"m{i}" for i in range(4)], true_model.tolist())),
-            ax=axes,
-        );
-    else: # if we wish to plot a kernel density plot then use this option
-        az.plot_pair(
-            az_idata.sel(draw=slice(300,None)), 
-            marginals=True, 
-            reference_values=dict(zip([f"m{i}" for i in range(4)], true_model.tolist())),
-            kind="kde",
-            kde_kwargs={
-                "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-                "contourf_kwargs": {"cmap": "Blues"},
-            },
-            ax=axes,
-        );
+    # Add KDE contours and reference values manually
+    posterior = az_idata.sel(draw=slice(300,None))["posterior"]
+    var_list = list(posterior.data_vars)
+    n_vars = len(var_list)
+
+    for ii in range(n_vars):
+        for jj in range(n_vars):
+            try:
+                ax = pm.iget_target(ii, jj)
+            except (ValueError, IndexError):
+                continue
+            if ii == jj:
+                ax.axvline(true_model[ii], linestyle='dotted', color='red')
+            elif ii > jj:
+                xd = posterior[var_list[jj]].values.flatten()
+                yd = posterior[var_list[ii]].values.flatten()
+                kde = gaussian_kde(np.vstack([xd, yd]))
+                xmin, xmax = xd.min(), xd.max()
+                ymin, ymax = yd.min(), yd.max()
+                xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+                zz = kde(np.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+                ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+                ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+                ax.plot(true_model[jj], true_model[ii], 'x', color='red', ms=8, markeredgewidth=2)
+
 
 
 
@@ -1741,13 +1831,13 @@ documentation <https://python.arviz.org/en/latest/index.html>`__).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 747-750
+.. GENERATED FROM PYTHON SOURCE LINES 763-766
 
 Now we plot the predicted curves for the posterior ensemble of
 solutions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 750-758
+.. GENERATED FROM PYTHON SOURCE LINES 766-774
 
 .. code-block:: Python
 
@@ -1771,13 +1861,13 @@ solutions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 763-766
+.. GENERATED FROM PYTHON SOURCE LINES 779-782
 
 Expected values, credible intervals and model covariance matrix from the ensemble
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 766-772
+.. GENERATED FROM PYTHON SOURCE LINES 782-788
 
 .. code-block:: Python
 
@@ -1797,15 +1887,15 @@ Expected values, credible intervals and model covariance matrix from the ensembl
 
 
      Expected value and 95% credible intervals 
-     m0  -5.713 [ -6.436,  -4.994]
-     m1  -5.112 [ -5.601,  -4.631]
-     m2   1.822 [  1.445,   2.193]
-     m3   0.974 [  0.839,   1.108]
+     m0  -5.728 [ -6.442,  -4.999]
+     m1  -5.113 [ -5.599,  -4.632]
+     m2   1.829 [  1.451,   2.205]
+     m3   0.976 [  0.840,   1.112]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 774-782
+.. GENERATED FROM PYTHON SOURCE LINES 790-798
 
 .. code-block:: Python
 
@@ -1826,32 +1916,32 @@ Expected values, credible intervals and model covariance matrix from the ensembl
  .. code-block:: none
 
     Posterior model covariance matrix
-     [[ 0.19127786  0.05764904 -0.08160666 -0.02533072]
-     [ 0.05764904  0.08724585 -0.03311225 -0.01816461]
-     [-0.08160666 -0.03311225  0.05134851  0.01683258]
-     [-0.02533072 -0.01816461  0.01683258  0.00668753]]
+     [[ 0.19264364  0.05776038 -0.08318596 -0.02588999]
+     [ 0.05776038  0.08567037 -0.03291992 -0.01798015]
+     [-0.08318596 -0.03291992  0.05253655  0.01720623]
+     [-0.02588999 -0.01798015  0.01720623  0.00678861]]
 
      Posterior estimate of model standard deviations in each parameter
-        m0  0.4373
-        m1  0.2954
-        m2  0.2266
-        m3  0.0818
+        m0  0.4389
+        m1  0.2927
+        m2  0.2292
+        m3  0.0824
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 787-789
+.. GENERATED FROM PYTHON SOURCE LINES 803-805
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 792-795
+.. GENERATED FROM PYTHON SOURCE LINES 808-811
 
 Challenge: Change the prior model bounds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 798-848
+.. GENERATED FROM PYTHON SOURCE LINES 814-864
 
 Replace the previous prior bounds to new values
 
@@ -1904,7 +1994,7 @@ Start from the code template below:
    :target: https://excalidraw.com/#room=feedcdce7f99f8ccd205,wTOddJkDrExrVTcxKsE6kA
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 848-853
+.. GENERATED FROM PYTHON SOURCE LINES 864-869
 
 .. code-block:: Python
 
@@ -1920,7 +2010,7 @@ Start from the code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 855-881
+.. GENERATED FROM PYTHON SOURCE LINES 871-897
 
 .. code-block:: Python
 
@@ -1963,23 +2053,23 @@ Start from the code template below:
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      3%|▎         | 286/10000 [00:00<00:03, 2856.43it/s]      6%|▌         | 578/10000 [00:00<00:03, 2892.81it/s]      9%|▊         | 871/10000 [00:00<00:03, 2909.07it/s]     12%|█▏        | 1162/10000 [00:00<00:03, 2903.35it/s]     15%|█▍        | 1453/10000 [00:00<00:02, 2902.57it/s]     17%|█▋        | 1745/10000 [00:00<00:02, 2908.05it/s]     20%|██        | 2036/10000 [00:00<00:02, 2905.38it/s]     23%|██▎       | 2329/10000 [00:00<00:02, 2911.76it/s]     26%|██▌       | 2621/10000 [00:00<00:02, 2911.29it/s]     29%|██▉       | 2913/10000 [00:01<00:02, 2908.63it/s]     32%|███▏      | 3204/10000 [00:01<00:02, 2906.62it/s]     35%|███▍      | 3495/10000 [00:01<00:02, 2904.97it/s]     38%|███▊      | 3786/10000 [00:01<00:02, 2896.80it/s]     41%|████      | 4076/10000 [00:01<00:02, 2874.13it/s]     44%|████▎     | 4364/10000 [00:01<00:01, 2871.70it/s]     47%|████▋     | 4653/10000 [00:01<00:01, 2876.87it/s]     49%|████▉     | 4941/10000 [00:01<00:01, 2753.78it/s]     52%|█████▏    | 5232/10000 [00:01<00:01, 2797.31it/s]     55%|█████▌    | 5523/10000 [00:01<00:01, 2829.15it/s]     58%|█████▊    | 5807/10000 [00:02<00:01, 2832.32it/s]     61%|██████    | 6097/10000 [00:02<00:01, 2851.78it/s]     64%|██████▍   | 6389/10000 [00:02<00:01, 2870.98it/s]     67%|██████▋   | 6677/10000 [00:02<00:01, 2865.34it/s]     70%|██████▉   | 6967/10000 [00:02<00:01, 2874.95it/s]     73%|███████▎  | 7259/10000 [00:02<00:00, 2888.23it/s]     75%|███████▌  | 7548/10000 [00:02<00:00, 2873.16it/s]     78%|███████▊  | 7842/10000 [00:02<00:00, 2890.82it/s]     81%|████████▏ | 8133/10000 [00:02<00:00, 2896.09it/s]     84%|████████▍ | 8423/10000 [00:02<00:00, 2887.91it/s]     87%|████████▋ | 8715/10000 [00:03<00:00, 2895.36it/s]     90%|█████████ | 9006/10000 [00:03<00:00, 2898.04it/s]     93%|█████████▎| 9296/10000 [00:03<00:00, 2883.62it/s]     96%|█████████▌| 9587/10000 [00:03<00:00, 2891.41it/s]     99%|█████████▉| 9877/10000 [00:03<00:00, 2877.16it/s]    100%|██████████| 10000/10000 [00:03<00:00, 2878.71it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      1%|          | 114/10000 [00:00<00:08, 1137.27it/s]      2%|▏         | 233/10000 [00:00<00:08, 1164.52it/s]      4%|▎         | 350/10000 [00:00<00:08, 1123.95it/s]      5%|▍         | 466/10000 [00:00<00:08, 1134.83it/s]      6%|▌         | 585/10000 [00:00<00:08, 1153.80it/s]      7%|▋         | 705/10000 [00:00<00:07, 1168.04it/s]      8%|▊         | 823/10000 [00:00<00:07, 1171.22it/s]      9%|▉         | 943/10000 [00:00<00:07, 1177.64it/s]     11%|█         | 1062/10000 [00:00<00:07, 1180.14it/s]     12%|█▏        | 1182/10000 [00:01<00:07, 1183.58it/s]     13%|█▎        | 1303/10000 [00:01<00:07, 1191.20it/s]     14%|█▍        | 1423/10000 [00:01<00:07, 1191.74it/s]     15%|█▌        | 1545/10000 [00:01<00:07, 1198.86it/s]     17%|█▋        | 1666/10000 [00:01<00:06, 1201.15it/s]     18%|█▊        | 1787/10000 [00:01<00:06, 1197.67it/s]     19%|█▉        | 1907/10000 [00:01<00:06, 1193.50it/s]     20%|██        | 2027/10000 [00:01<00:06, 1182.99it/s]     21%|██▏       | 2146/10000 [00:01<00:06, 1182.55it/s]     23%|██▎       | 2267/10000 [00:01<00:06, 1190.37it/s]     24%|██▍       | 2387/10000 [00:02<00:06, 1183.39it/s]     25%|██▌       | 2507/10000 [00:02<00:06, 1186.80it/s]     26%|██▋       | 2629/10000 [00:02<00:06, 1193.68it/s]     27%|██▋       | 2749/10000 [00:02<00:06, 1189.26it/s]     29%|██▊       | 2869/10000 [00:02<00:05, 1191.51it/s]     30%|██▉       | 2989/10000 [00:02<00:05, 1188.49it/s]     31%|███       | 3108/10000 [00:02<00:05, 1179.94it/s]     32%|███▏      | 3228/10000 [00:02<00:05, 1182.77it/s]     33%|███▎      | 3347/10000 [00:02<00:05, 1182.30it/s]     35%|███▍      | 3467/10000 [00:02<00:05, 1185.73it/s]     36%|███▌      | 3586/10000 [00:03<00:05, 1182.44it/s]     37%|███▋      | 3705/10000 [00:03<00:05, 1178.40it/s]     38%|███▊      | 3823/10000 [00:03<00:05, 1175.65it/s]     39%|███▉      | 3941/10000 [00:03<00:05, 1170.95it/s]     41%|████      | 4059/10000 [00:03<00:05, 1160.52it/s]     42%|████▏     | 4179/10000 [00:03<00:04, 1171.85it/s]     43%|████▎     | 4298/10000 [00:03<00:04, 1175.55it/s]     44%|████▍     | 4417/10000 [00:03<00:04, 1179.22it/s]     45%|████▌     | 4537/10000 [00:03<00:04, 1183.27it/s]     47%|████▋     | 4656/10000 [00:03<00:04, 1178.12it/s]     48%|████▊     | 4774/10000 [00:04<00:04, 1175.99it/s]     49%|████▉     | 4892/10000 [00:04<00:04, 1175.24it/s]     50%|█████     | 5012/10000 [00:04<00:04, 1180.24it/s]     51%|█████▏    | 5132/10000 [00:04<00:04, 1184.76it/s]     53%|█████▎    | 5251/10000 [00:04<00:04, 1171.31it/s]     54%|█████▎    | 5369/10000 [00:04<00:03, 1163.27it/s]     55%|█████▍    | 5486/10000 [00:04<00:03, 1149.79it/s]     56%|█████▌    | 5602/10000 [00:04<00:03, 1136.70it/s]     57%|█████▋    | 5717/10000 [00:04<00:03, 1138.12it/s]     58%|█████▊    | 5834/10000 [00:04<00:03, 1145.42it/s]     60%|█████▉    | 5950/10000 [00:05<00:03, 1147.49it/s]     61%|██████    | 6068/10000 [00:05<00:03, 1155.84it/s]     62%|██████▏   | 6189/10000 [00:05<00:03, 1170.31it/s]     63%|██████▎   | 6307/10000 [00:05<00:03, 1154.03it/s]     64%|██████▍   | 6423/10000 [00:05<00:03, 1126.14it/s]     65%|██████▌   | 6542/10000 [00:05<00:03, 1144.25it/s]     67%|██████▋   | 6662/10000 [00:05<00:02, 1158.10it/s]     68%|██████▊   | 6779/10000 [00:05<00:02, 1160.07it/s]     69%|██████▉   | 6896/10000 [00:05<00:02, 1159.85it/s]     70%|███████   | 7016/10000 [00:05<00:02, 1171.24it/s]     71%|███████▏  | 7135/10000 [00:06<00:02, 1175.00it/s]     73%|███████▎  | 7255/10000 [00:06<00:02, 1179.79it/s]     74%|███████▎  | 7374/10000 [00:06<00:02, 1169.87it/s]     75%|███████▍  | 7492/10000 [00:06<00:02, 1167.15it/s]     76%|███████▌  | 7610/10000 [00:06<00:02, 1170.34it/s]     77%|███████▋  | 7728/10000 [00:06<00:01, 1166.58it/s]     78%|███████▊  | 7846/10000 [00:06<00:01, 1168.08it/s]     80%|███████▉  | 7963/10000 [00:06<00:01, 1168.41it/s]     81%|████████  | 8081/10000 [00:06<00:01, 1169.27it/s]     82%|████████▏ | 8202/10000 [00:06<00:01, 1178.72it/s]     83%|████████▎ | 8320/10000 [00:07<00:01, 1178.62it/s]     84%|████████▍ | 8439/10000 [00:07<00:01, 1181.77it/s]     86%|████████▌ | 8558/10000 [00:07<00:01, 1179.20it/s]     87%|████████▋ | 8677/10000 [00:07<00:01, 1180.78it/s]     88%|████████▊ | 8797/10000 [00:07<00:01, 1185.73it/s]     89%|████████▉ | 8916/10000 [00:07<00:00, 1186.11it/s]     90%|█████████ | 9035/10000 [00:07<00:00, 1184.64it/s]     92%|█████████▏| 9154/10000 [00:07<00:00, 1181.40it/s]     93%|█████████▎| 9273/10000 [00:07<00:00, 1178.06it/s]     94%|█████████▍| 9391/10000 [00:08<00:00, 1176.11it/s]     95%|█████████▌| 9509/10000 [00:08<00:00, 1176.27it/s]     96%|█████████▋| 9628/10000 [00:08<00:00, 1177.63it/s]     97%|█████████▋| 9746/10000 [00:08<00:00, 1173.10it/s]     99%|█████████▊| 9864/10000 [00:08<00:00, 1173.06it/s]    100%|█████████▉| 9982/10000 [00:08<00:00, 1171.48it/s]    100%|██████████| 10000/10000 [00:08<00:00, 1173.17it/s]
     Resulting samples with prior model lower bounds of [-1,-10,-10,-10], upper bounds of [2,10,10,10]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 886-888
+.. GENERATED FROM PYTHON SOURCE LINES 902-904
 
 Why do you think the posterior distribution looks like this?
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 891-893
+.. GENERATED FROM PYTHON SOURCE LINES 907-909
 
 --------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 896-906
+.. GENERATED FROM PYTHON SOURCE LINES 912-922
 
 Challenge: Change the data uncertainty
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1992,7 +2082,7 @@ Here we increase the assumed data standard deviation by a factor of of
 than they actually are.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 906-915
+.. GENERATED FROM PYTHON SOURCE LINES 922-931
 
 .. code-block:: Python
 
@@ -2012,12 +2102,12 @@ than they actually are.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 920-922
+.. GENERATED FROM PYTHON SOURCE LINES 936-938
 
 Lets return the prior to the original bounds.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 922-931
+.. GENERATED FROM PYTHON SOURCE LINES 938-947
 
 .. code-block:: Python
 
@@ -2037,7 +2127,7 @@ Lets return the prior to the original bounds.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 936-964
+.. GENERATED FROM PYTHON SOURCE LINES 952-980
 
 Your challenge is then to tell CoFI that the Likelihood and prior have
 changed and then to rerun the sample, and plot results.
@@ -2068,7 +2158,7 @@ Feel free to start from the code below:
    :target: https://excalidraw.com/#room=9a22d4eab8a9189d3b9b,9R8JKoHdOsbWlOLBj2V1fQ
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 964-969
+.. GENERATED FROM PYTHON SOURCE LINES 980-985
 
 .. code-block:: Python
 
@@ -2084,12 +2174,12 @@ Feel free to start from the code below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 974-976
+.. GENERATED FROM PYTHON SOURCE LINES 990-992
 
 The answer is in the next cells if you want to run them.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 976-995
+.. GENERATED FROM PYTHON SOURCE LINES 992-1011
 
 .. code-block:: Python
 
@@ -2125,13 +2215,13 @@ The answer is in the next cells if you want to run them.
 
  .. code-block:: none
 
-      0%|          | 0/10000 [00:00<?, ?it/s]      3%|▎         | 315/10000 [00:00<00:03, 3147.43it/s]      6%|▋         | 641/10000 [00:00<00:02, 3213.22it/s]     10%|▉         | 963/10000 [00:00<00:02, 3198.76it/s]     13%|█▎        | 1284/10000 [00:00<00:02, 3202.11it/s]     16%|█▌        | 1605/10000 [00:00<00:02, 3191.70it/s]     19%|█▉        | 1938/10000 [00:00<00:02, 3237.77it/s]     23%|██▎       | 2262/10000 [00:00<00:02, 3229.55it/s]     26%|██▌       | 2592/10000 [00:00<00:02, 3249.18it/s]     29%|██▉       | 2917/10000 [00:00<00:02, 3239.53it/s]     32%|███▏      | 3245/10000 [00:01<00:02, 3250.10it/s]     36%|███▌      | 3575/10000 [00:01<00:01, 3262.74it/s]     39%|███▉      | 3905/10000 [00:01<00:01, 3273.36it/s]     42%|████▏     | 4233/10000 [00:01<00:01, 3261.28it/s]     46%|████▌     | 4567/10000 [00:01<00:01, 3282.80it/s]     49%|████▉     | 4901/10000 [00:01<00:01, 3297.96it/s]     52%|█████▏    | 5231/10000 [00:01<00:01, 3289.19it/s]     56%|█████▌    | 5565/10000 [00:01<00:01, 3302.44it/s]     59%|█████▉    | 5897/10000 [00:01<00:01, 3304.82it/s]     62%|██████▏   | 6228/10000 [00:01<00:01, 3282.50it/s]     66%|██████▌   | 6565/10000 [00:02<00:01, 3306.07it/s]     69%|██████▉   | 6900/10000 [00:02<00:00, 3317.67it/s]     72%|███████▏  | 7236/10000 [00:02<00:00, 3329.92it/s]     76%|███████▌  | 7570/10000 [00:02<00:00, 3308.19it/s]     79%|███████▉  | 7906/10000 [00:02<00:00, 3322.29it/s]     82%|████████▏ | 8241/10000 [00:02<00:00, 3328.82it/s]     86%|████████▌ | 8576/10000 [00:02<00:00, 3334.71it/s]     89%|████████▉ | 8910/10000 [00:02<00:00, 3312.77it/s]     92%|█████████▏| 9247/10000 [00:02<00:00, 3327.59it/s]     96%|█████████▌| 9584/10000 [00:02<00:00, 3338.45it/s]     99%|█████████▉| 9920/10000 [00:03<00:00, 3334.15it/s]    100%|██████████| 10000/10000 [00:03<00:00, 3267.66it/s]
+      0%|          | 0/10000 [00:00<?, ?it/s]      1%|          | 123/10000 [00:00<00:08, 1227.35it/s]      3%|▎         | 258/10000 [00:00<00:07, 1297.49it/s]      4%|▍         | 390/10000 [00:00<00:07, 1305.05it/s]      5%|▌         | 523/10000 [00:00<00:07, 1314.16it/s]      7%|▋         | 655/10000 [00:00<00:07, 1311.62it/s]      8%|▊         | 787/10000 [00:00<00:07, 1306.19it/s]      9%|▉         | 918/10000 [00:00<00:06, 1307.19it/s]     10%|█         | 1049/10000 [00:00<00:06, 1306.88it/s]     12%|█▏        | 1180/10000 [00:00<00:06, 1306.46it/s]     13%|█▎        | 1314/10000 [00:01<00:06, 1315.36it/s]     14%|█▍        | 1446/10000 [00:01<00:06, 1302.26it/s]     16%|█▌        | 1577/10000 [00:01<00:06, 1285.98it/s]     17%|█▋        | 1706/10000 [00:01<00:06, 1271.02it/s]     18%|█▊        | 1841/10000 [00:01<00:06, 1293.14it/s]     20%|█▉        | 1973/10000 [00:01<00:06, 1299.19it/s]     21%|██        | 2106/10000 [00:01<00:06, 1308.23it/s]     22%|██▏       | 2240/10000 [00:01<00:05, 1317.30it/s]     24%|██▎       | 2372/10000 [00:01<00:05, 1299.14it/s]     25%|██▌       | 2502/10000 [00:01<00:05, 1285.36it/s]     26%|██▋       | 2631/10000 [00:02<00:05, 1275.20it/s]     28%|██▊       | 2763/10000 [00:02<00:05, 1287.17it/s]     29%|██▉       | 2895/10000 [00:02<00:05, 1295.74it/s]     30%|███       | 3026/10000 [00:02<00:05, 1297.87it/s]     32%|███▏      | 3160/10000 [00:02<00:05, 1308.55it/s]     33%|███▎      | 3293/10000 [00:02<00:05, 1312.34it/s]     34%|███▍      | 3425/10000 [00:02<00:05, 1313.56it/s]     36%|███▌      | 3557/10000 [00:02<00:04, 1303.92it/s]     37%|███▋      | 3688/10000 [00:02<00:04, 1297.32it/s]     38%|███▊      | 3818/10000 [00:02<00:04, 1279.47it/s]     39%|███▉      | 3947/10000 [00:03<00:04, 1279.09it/s]     41%|████      | 4076/10000 [00:03<00:04, 1282.07it/s]     42%|████▏     | 4207/10000 [00:03<00:04, 1287.38it/s]     43%|████▎     | 4336/10000 [00:03<00:04, 1276.95it/s]     45%|████▍     | 4464/10000 [00:03<00:04, 1277.39it/s]     46%|████▌     | 4592/10000 [00:03<00:04, 1274.11it/s]     47%|████▋     | 4721/10000 [00:03<00:04, 1276.06it/s]     49%|████▊     | 4852/10000 [00:03<00:04, 1283.98it/s]     50%|████▉     | 4981/10000 [00:03<00:03, 1281.63it/s]     51%|█████     | 5112/10000 [00:03<00:03, 1287.79it/s]     52%|█████▏    | 5242/10000 [00:04<00:03, 1289.81it/s]     54%|█████▎    | 5372/10000 [00:04<00:03, 1291.01it/s]     55%|█████▌    | 5505/10000 [00:04<00:03, 1300.24it/s]     56%|█████▋    | 5637/10000 [00:04<00:03, 1303.78it/s]     58%|█████▊    | 5772/10000 [00:04<00:03, 1315.65it/s]     59%|█████▉    | 5904/10000 [00:04<00:03, 1313.87it/s]     60%|██████    | 6036/10000 [00:04<00:03, 1313.78it/s]     62%|██████▏   | 6169/10000 [00:04<00:02, 1315.86it/s]     63%|██████▎   | 6301/10000 [00:04<00:02, 1316.00it/s]     64%|██████▍   | 6435/10000 [00:04<00:02, 1322.73it/s]     66%|██████▌   | 6568/10000 [00:05<00:02, 1323.10it/s]     67%|██████▋   | 6701/10000 [00:05<00:02, 1319.34it/s]     68%|██████▊   | 6833/10000 [00:05<00:02, 1317.74it/s]     70%|██████▉   | 6967/10000 [00:05<00:02, 1320.90it/s]     71%|███████   | 7102/10000 [00:05<00:02, 1328.35it/s]     72%|███████▏  | 7235/10000 [00:05<00:02, 1325.63it/s]     74%|███████▎  | 7368/10000 [00:05<00:01, 1320.57it/s]     75%|███████▌  | 7501/10000 [00:05<00:01, 1316.76it/s]     76%|███████▋  | 7633/10000 [00:05<00:01, 1312.81it/s]     78%|███████▊  | 7766/10000 [00:05<00:01, 1316.32it/s]     79%|███████▉  | 7898/10000 [00:06<00:01, 1312.93it/s]     80%|████████  | 8031/10000 [00:06<00:01, 1314.98it/s]     82%|████████▏ | 8163/10000 [00:06<00:01, 1301.51it/s]     83%|████████▎ | 8294/10000 [00:06<00:01, 1291.81it/s]     84%|████████▍ | 8426/10000 [00:06<00:01, 1298.02it/s]     86%|████████▌ | 8559/10000 [00:06<00:01, 1304.88it/s]     87%|████████▋ | 8690/10000 [00:06<00:01, 1303.99it/s]     88%|████████▊ | 8823/10000 [00:06<00:00, 1309.37it/s]     90%|████████▉ | 8956/10000 [00:06<00:00, 1315.16it/s]     91%|█████████ | 9088/10000 [00:06<00:00, 1291.25it/s]     92%|█████████▏| 9218/10000 [00:07<00:00, 1279.38it/s]     94%|█████████▎| 9350/10000 [00:07<00:00, 1290.59it/s]     95%|█████████▍| 9481/10000 [00:07<00:00, 1295.64it/s]     96%|█████████▌| 9616/10000 [00:07<00:00, 1310.76it/s]     97%|█████████▋| 9748/10000 [00:07<00:00, 1310.47it/s]     99%|█████████▉| 9880/10000 [00:07<00:00, 1304.73it/s]    100%|██████████| 10000/10000 [00:07<00:00, 1301.52it/s]
     Resulting samples from changed data uncertainty
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1000-1045
+.. GENERATED FROM PYTHON SOURCE LINES 1016-1061
 
 Challenge: Change the number of walkers / steps in the McMC algorithm (optional)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2179,7 +2269,7 @@ You can start from code template below:
    :target: https://excalidraw.com/#room=354b4a2d26551847421f,Cqqz1tpuHdT-g0dyMMqJlQ
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1045-1050
+.. GENERATED FROM PYTHON SOURCE LINES 1061-1066
 
 .. code-block:: Python
 
@@ -2195,7 +2285,7 @@ You can start from code template below:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1052-1082
+.. GENERATED FROM PYTHON SOURCE LINES 1068-1098
 
 .. code-block:: Python
 
@@ -2242,24 +2332,24 @@ You can start from code template below:
 
  .. code-block:: none
 
-      0%|          | 0/400 [00:00<?, ?it/s]     75%|███████▍  | 299/400 [00:00<00:00, 2984.62it/s]    100%|██████████| 400/400 [00:00<00:00, 2984.63it/s]
+      0%|          | 0/400 [00:00<?, ?it/s]     29%|██▉       | 116/400 [00:00<00:00, 1152.88it/s]     58%|█████▊    | 232/400 [00:00<00:00, 1154.83it/s]     87%|████████▋ | 349/400 [00:00<00:00, 1161.03it/s]    100%|██████████| 400/400 [00:00<00:00, 1155.58it/s]
     Inference results from 400 steps and 30 walkers
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1087-1095
+.. GENERATED FROM PYTHON SOURCE LINES 1103-1111
 
 --------------
 
 Where to next?
 --------------
 
-- Linear regression with Eustatic Sea-level data - `link to
-  notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
+-  Linear regression with Eustatic Sea-level data - `link to
+   notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1098-1103
+.. GENERATED FROM PYTHON SOURCE LINES 1114-1119
 
 --------------
 
@@ -2267,7 +2357,7 @@ Watermark
 ---------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1103-1109
+.. GENERATED FROM PYTHON SOURCE LINES 1119-1125
 
 .. code-block:: Python
 
@@ -2285,24 +2375,24 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.10
-    numpy 1.26.4
-    scipy 1.14.1
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
     emcee 3.1.6
-    arviz 0.23.1
+    arviz 1.1.0
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 1110-1110
+.. GENERATED FROM PYTHON SOURCE LINES 1126-1126
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 12.525 seconds)
+   **Total running time of the script:** (5 minutes 9.609 seconds)
 
 
 .. _sphx_glr_download_tutorials_generated_linear_regression.py:

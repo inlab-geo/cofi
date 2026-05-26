@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**08:44.265** total execution time for 5 files **from tutorials/generated**:
+**19:07.416** total execution time for 5 files **from tutorials/generated**:
 
 .. container::
 
@@ -33,17 +33,17 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_tutorials_generated_thin_plate_inversion.py` (``thin_plate_inversion.py``)
-     - 08:16.832
+     - 11:50.796
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_travel_time_tomography.py` (``travel_time_tomography.py``)
-     - 00:27.433
+   * - :ref:`sphx_glr_tutorials_generated_linear_regression.py` (``linear_regression.py``)
+     - 05:09.609
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py` (``1D_rayleigh_wave_phase_velocity_inversion.py``)
-     - 00:00.000
+     - 02:07.011
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py` (``electrical_resistivity_tomography.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_linear_regression.py` (``linear_regression.py``)
+   * - :ref:`sphx_glr_tutorials_generated_travel_time_tomography.py` (``travel_time_tomography.py``)
      - 00:00.000
      - 0.0

@@ -55,17 +55,17 @@ Polynomial Linear Regression
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 # 
-# - ``BaseProblem`` defines three things: 1) the forward problem; 2) model
-#   parameter space (the unknowns); and 3) other information about the
-#   inverse problem we are solving, such as the jacobian matrix
-#   (i.e. design matrix for our linear problem) for the least squares
-#   solver we will be using initially in the following
-# - ``InversionOptions`` describes details about how one wants to run the
-#   inversion, including the inversion approach, backend tool and
-#   solver-specific parameters.
-# - ``Inversion`` can be seen as an inversion engine that takes in the
-#   above two as information, and will produce an ``InversionResult`` upon
-#   running.
+# -  ``BaseProblem`` defines three things: 1) the forward problem; 2)
+#    model parameter space (the unknowns); and 3) other information about
+#    the inverse problem we are solving, such as the jacobian matrix
+#    (i.e. design matrix for our linear problem) for the least squares
+#    solver we will be using initially in the following
+# -  ``InversionOptions`` describes details about how one wants to run the
+#    inversion, including the inversion approach, backend tool and
+#    solver-specific parameters.
+# -  ``Inversion`` can be seen as an inversion engine that takes in the
+#    above two as information, and will produce an ``InversionResult``
+#    upon running.
 # 
 # For each of the above components, there’s a ``summary()`` method to
 # check the current status.
@@ -74,14 +74,14 @@ Polynomial Linear Regression
 # 
 # 1. we begin by defining the ``BaseProblem``. This can be done through a
 #    series of set functions
-#    ``python  inv_problem = BaseProblem()  inv_problem.set_objective(some_function_here)  inv_problem.set_initial_model(a_starting_point)``
+#    ``python     inv_problem = BaseProblem()     inv_problem.set_objective(some_function_here)     inv_problem.set_initial_model(a_starting_point)``
 # 
 # 2. define ``InversionOptions``. Some useful methods include:
 # 
-#    - ``set_solving_method()`` and ``suggest_tools()``. Once you’ve set a
-#      solving method (from “least squares” and “optimization”, more will
-#      be supported), you can use ``suggest_tools()`` to see a list of
-#      backend tools to choose from.
+#    -  ``set_solving_method()`` and ``suggest_tools()``. Once you’ve set
+#       a solving method (from “least squares” and “optimization”, more
+#       will be supported), you can use ``suggest_tools()`` to see a list
+#       of backend tools to choose from.
 # 
 # 3. start an ``Inversion``. This step is common:
 # 
@@ -154,15 +154,15 @@ np.random.seed(42)
 # 
 # where:
 # 
-# - :math:`\text{forward}` is the forward function that takes in a model
-#   and produces synthetic data,
-# - :math:`\textbf{m}` is the model vector,
-# - :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
-#   linear regression problem and looks like the following:
+# -  :math:`\text{forward}` is the forward function that takes in a model
+#    and produces synthetic data,
+# -  :math:`\textbf{m}` is the model vector,
+# -  :math:`\textbf{G}` is the basis matrix (i.e. design matrix) of this
+#    linear regression problem and looks like the following:
 # 
-#   .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
-# - :math:`\text{basis\_func}` is the basis function that converts
-#   :math:`\textbf{x}` into :math:`\textbf{G}`
+#    .. math:: \left(\begin{array}{ccc}1&x_1&x_1^2&x_1^3\\1&x_2&x_2^2&x_2^3\\\vdots&\vdots&\vdots\\1&x_N&x_N^2&x_N^3\end{array}\right)
+# -  :math:`\text{basis\_func}` is the basis function that converts
+#    :math:`\textbf{x}` into :math:`\textbf{G}`
 # 
 # Recall that the function we are going to fit is:
 # :math:`y=-6-5x+2x^2+x^3`
@@ -204,9 +204,9 @@ plt.legend();
 # 
 # Other helper methods for ``BaseProblem`` include:
 # 
-# - ``defined_components()`` (review what have been set)
-# - ``summary()`` (better displayed information)
-# - ``suggest_tools()``
+# -  ``defined_components()`` (review what have been set)
+# -  ``summary()`` (better displayed information)
+# -  ``suggest_tools()``
 # 
 # We refer readers to `cofi’s API reference
 # page <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html>`__
@@ -601,12 +601,12 @@ plt.legend();
 # 
 # where:
 # 
-# - :math:`p(\textbf{m}|\textbf{d})` (posterior) is the probability of a
-#   model given data observations
-# - :math:`p(\textbf{d}|\textbf{m})` (likelihood) is the probability of
-#   which data is observed given a certain model
-# - :math:`p(\textbf{m})` (prior) is the probability of a certain model
-#   and reflects your belief / domain knowledge on the model
+# -  :math:`p(\textbf{m}|\textbf{d})` (posterior) is the probability of a
+#    model given data observations
+# -  :math:`p(\textbf{d}|\textbf{m})` (likelihood) is the probability of
+#    which data is observed given a certain model
+# -  :math:`p(\textbf{m})` (prior) is the probability of a certain model
+#    and reflects your belief / domain knowledge on the model
 # 
 # Coding
 # ^^^^^^
@@ -620,14 +620,14 @@ plt.legend();
 # 
 # So in ``cofi``, you can either define:
 # 
-# - log of the posterior, using ``BaseProblem.set_log_posterior``
-#   (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_posterior>`__),
-#   or
-# - log of prior and log of likelihood, using
-#   ``BaseProblem.set_log_prior()``
-#   (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_prior>`__)
-#   and ``BaseProblem.set_log_likelihood()``
-#   (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_likelihood>`__)
+# -  log of the posterior, using ``BaseProblem.set_log_posterior``
+#    (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_posterior>`__),
+#    or
+# -  log of prior and log of likelihood, using
+#    ``BaseProblem.set_log_prior()``
+#    (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_prior>`__)
+#    and ``BaseProblem.set_log_likelihood()``
+#    (`ref <https://cofi.readthedocs.io/en/latest/api/generated/cofi.BaseProblem.html#cofi.BaseProblem.set_log_likelihood>`__)
 # 
 # We use the second option in this demo.
 # 
@@ -807,7 +807,7 @@ az_idata = inv_result_3.to_arviz()
 # 
 
 labels = ["m0", "m1", "m2","m3"]
-az.plot_trace(az_idata);
+az.plot_trace_dist(az_idata, visuals={"xlabel_trace": False, "trace": {"lw": 0.5}, "dist": {"lw": 0.5}});
 
 ######################################################################
 #
@@ -850,13 +850,26 @@ print(f"autocorrelation time: {tau}")
 # results: a corner plot.
 # 
 
-_, axes = plt.subplots(4, 4, figsize=(14,10))
-az.plot_pair(
-    az_idata.sel(draw=slice(300,None)), 
-    marginals=True, 
-    reference_values=dict(zip([f"var_{i}" for i in range(4)], _m_true.tolist())),
-    ax = axes
-);
+pm = az.plot_pair(
+    az_idata.sel(draw=slice(300,None)),
+    marginal=True,
+    triangle="lower",
+    visuals={"scatter": {"s": 2}},
+)
+
+# Add reference dots for true model values
+ref_values = _m_true.tolist()
+n = len(ref_values)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_values[i], color="red", linestyle="--", lw=1, alpha=0.5)
+        elif i > j:
+            ax.plot(ref_values[j], ref_values[i],  "o", color="red", markeredgecolor="black", ms=5, zorder=5)
 
 ######################################################################
 #

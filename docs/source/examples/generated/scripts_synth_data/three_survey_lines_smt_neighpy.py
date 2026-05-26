@@ -292,44 +292,105 @@ inv_result.summary()
 # --------
 # 
 
-arviz.style.use("default")
-var_names = [
-    "Dip (\u00b0)", 
-    "Dip azimuth (\u00b0)", 
+import arviz_base
+arviz.style.use("arviz-variat")
+display_names = [
+    "Dip (°)", 
+    "Dip azimuth (°)", 
     "Easting (m)", 
     "Depth (m)", 
     "Width (m)"
 ]
+clean_names = ["Dip_deg", "Dip_azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
-var_lines=(
-    ('Dip (\u00b0)', {}, 60),
-        ('Dip azimuth (\u00b0)', {}, 65),
-        ('Easting (m)', {}, 175),
-        ('Depth (m)', {}, 30),
-        ('Width (m)', {}, 90)
+true_values = [60, 65, 175, 30, 90]
+d = {k: v[numpy.newaxis, :] for k, v in zip(clean_names, inv_result.appraisal_samples.T)}
+az_idata = arviz_base.from_dict({"posterior": d})
+pc = arviz.plot_trace_dist(
+    az_idata.sel(draw=slice(2000, None)),
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
 )
-d = {k: v for k, v in zip(var_names, inv_result.appraisal_samples.T)}
-az_idata = arviz.convert_to_inference_data(d)
-arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines)
-plt.tight_layout()
+for i, dname in enumerate(display_names):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.set_title(dname)
+    ax_trace.set_title(dname)
+    ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.margins(x=0)
+
 
 ######################################################################
 #
 
-arviz.style.use("default")
+from scipy.stats import gaussian_kde
 
-_, axes = plt.subplots(5, 5, figsize=(12,12))
-arviz.plot_pair(
-    az_idata.sel(draw=slice(4000,None)), 
-    marginals=True, 
-    ax = axes
-)
-plt.tight_layout()
+true_values_dict = {
+    display_names[i]: true_param_value[i] for i in range(init_param_value.size)
+}
+
+# Set to True for KDE contours (old style), False for scatter (arviz 1.0 default)
+USE_KDE_CONTOURS = True
+
+arviz_base.rcParams["plot.max_subplots"] = 80
+
+if USE_KDE_CONTOURS:
+    pm = arviz.plot_pair(
+        az_idata.sel(draw=slice(4000, None)),
+        marginal=True,
+        triangle="lower",
+        visuals={"scatter": False},
+    )
+    # Add KDE contours to off-diagonal panels
+    posterior = az_idata.posterior.sel(draw=slice(4000, None))
+    n = len(clean_names)
+    for i in range(n):
+        for j in range(n):
+            if i <= j:
+                continue
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            x = posterior[clean_names[j]].values.flatten()
+            y = posterior[clean_names[i]].values.flatten()
+            kde = gaussian_kde(numpy.vstack([x, y]))
+            xmin, xmax = x.min(), x.max()
+            ymin, ymax = y.min(), y.max()
+            xx, yy = numpy.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+            zz = kde(numpy.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+            ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+            ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+else:
+    pm = arviz.plot_pair(
+        az_idata.sel(draw=slice(4000, None)),
+        marginal=True,
+        triangle="lower",
+    )
+
+# Add reference values
+ref_vals = list(true_values_dict.values())
+n = len(ref_vals)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        elif i > j:
+            ax.plot(
+                ref_vals[j], ref_vals[i], "o",
+                color="yellow", markeredgecolor="k", ms=10, zorder=5,
+            )
+
 
 ######################################################################
 #
 
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 
 _, axes = plt.subplots(2, 2)
 axes[1,1].axis("off")
@@ -342,19 +403,24 @@ plot_plate_faces(
     axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
 )
 
-
 plt.tight_layout()
 
+posterior = az_idata.posterior
+has_chain = "chain" in posterior.dims
+n_chains = int(posterior.sizes["chain"]) if has_chain else 1
+n_draws = int(posterior.sizes["draw"])
 
-ichain=0
-idraw=2500
-sample=numpy.zeros(5)
+ichain = 0
+idraw = min(2500, n_draws - 1)
+sample = numpy.zeros(5)
 
-sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+if has_chain:
+    for idx, cn in enumerate(clean_names):
+        sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+else:
+    for idx, cn in enumerate(clean_names):
+        sample[idx] = float(posterior[cn].isel(draw=idraw))
+
 plot_plate_faces(
     "plate_inverted", forward, sample, 
     axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -368,19 +434,19 @@ handles.extend([point])
 
 axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-# plot 10 randomly selected samples of the posterior distirbution
+# plot 10 randomly selected samples of the posterior distribution
 for i in range(10):
-    idraw=numpy.random.randint(2000,5000)
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+    if has_chain:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(chain=ichain, draw=idraw))
+    else:
+        for idx, cn in enumerate(clean_names):
+            sample[idx] = float(posterior[cn].isel(draw=idraw))
     plot_plate_faces(
-    "plate_inverted", forward, sample, 
-    axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-)
+        "plate_inverted", forward, sample, 
+        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+    )
 
 
 ######################################################################

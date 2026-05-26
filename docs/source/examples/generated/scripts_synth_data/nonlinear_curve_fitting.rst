@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -181,7 +181,7 @@ Define the problem
  .. code-block:: none
 
 
-    Text(38.097222222222214, 0.5, 'y')
+    Text(38.222222222222214, 0.5, 'y')
 
 
 
@@ -249,27 +249,27 @@ Example 1. least squares optimizer (levenber marquardt)
 
  .. code-block:: none
 
-    The inversion result from `scipy.optimize.minimize`: [5.06442618 3.54842172]
+    The inversion result from `scipy.optimize.minimize`: [5.06442618 3.54842171]
 
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    cost: 751.5703778228749
-    fun: [ 8.46834974e-02 -1.77230955e-02 -5.52853293e-01  8.89806503e-01
-      2.91152920e-01 -6.80792317e-01 -1.14702071e+00 -2.15801090e-01
-      1.82952940e-01 -5.26482030e-01 -7.76017779e-01 -5.59530381e-01
-     -4.95847931e-01 -4.13394792e-01 -5.36314270e-01 -1.56467760e+00
-      4.20608348e-01 -1.91245184e-01 -7.95757076e-02  4.30437727e-01
-     -1.36307871e-02 -3.20414157e-01 -3.61292253e-01 -1.97016377e-01
-      1.47256652e+00  1.95462598e-01  6.42560479e-01  1.17710109e+00
-      1.82720280e-01 -5.85651733e-01 -4.32433161e+00 -4.33451431e-01
-      1.59207006e-02  4.24747095e-01  5.23801008e+00  2.40244378e-01
-     -2.85673020e-01 -6.65912029e+00  1.06971709e+00 -1.41328842e-01
-      1.44236334e+00  7.70525925e+00 -4.25388813e+00 -1.75601284e+00
-     -1.98652707e+00  1.44619318e+01 -9.86284710e+00  2.35903628e+01
-     -2.98371685e-02 -2.11903105e+01]
+    cost: 751.5703778228752
+    fun: [ 8.46834890e-02 -1.77231040e-02 -5.52853301e-01  8.89806495e-01
+      2.91152911e-01 -6.80792325e-01 -1.14702072e+00 -2.15801098e-01
+      1.82952932e-01 -5.26482038e-01 -7.76017787e-01 -5.59530390e-01
+     -4.95847940e-01 -4.13394800e-01 -5.36314278e-01 -1.56467760e+00
+      4.20608340e-01 -1.91245192e-01 -7.95757156e-02  4.30437719e-01
+     -1.36307950e-02 -3.20414165e-01 -3.61292261e-01 -1.97016385e-01
+      1.47256652e+00  1.95462591e-01  6.42560473e-01  1.17710109e+00
+      1.82720274e-01 -5.85651739e-01 -4.32433162e+00 -4.33451436e-01
+      1.59206971e-02  4.24747091e-01  5.23801008e+00  2.40244375e-01
+     -2.85673023e-01 -6.65912029e+00  1.06971709e+00 -1.41328840e-01
+      1.44236334e+00  7.70525926e+00 -4.25388811e+00 -1.75601283e+00
+     -1.98652705e+00  1.44619318e+01 -9.86284706e+00  2.35903629e+01
+     -2.98371239e-02 -2.11903104e+01]
     jac: [[2.28462443e-02 1.00000000e+00]
      [4.09307227e-02 1.00000000e+00]
      [5.87699128e-02 1.00000000e+00]
@@ -298,7 +298,7 @@ Example 1. least squares optimizer (levenber marquardt)
      [4.08975791e+00 1.00000000e+00]
      [4.59341502e+00 1.00000000e+00]
      [6.07964753e+00 1.00000000e+00]
-     [6.95336935e+00 1.00000000e+00]
+     [6.95336936e+00 1.00000000e+00]
      [7.24310829e+00 1.00000000e+00]
      [7.48401301e+00 1.00000000e+00]
      [8.71405798e+00 1.00000000e+00]
@@ -310,7 +310,7 @@ Example 1. least squares optimizer (levenber marquardt)
      [1.89839544e+01 1.00000000e+00]
      [2.18847690e+01 1.00000000e+00]
      [2.55534573e+01 1.00000000e+00]
-     [2.98190139e+01 1.00000000e+00]
+     [2.98190140e+01 1.00000000e+00]
      [4.18720384e+01 1.00000000e+00]
      [4.84904621e+01 1.00000000e+00]
      [5.63991081e+01 1.00000000e+00]
@@ -320,14 +320,14 @@ Example 1. least squares optimizer (levenber marquardt)
      [1.17246757e+02 1.00000000e+00]
      [1.28432017e+02 1.00000000e+00]
      [1.31826241e+02 1.00000000e+00]]
-    grad: [1.46155217e-04 9.56170254e-10]
-    optimality: 0.0001461552166447607
+    grad: [1.72526347e-04 1.33278988e-09]
+    optimality: 0.0001725263465452648
     active_mask: [0 0]
-    nfev: 7
-    njev: 5
+    nfev: 8
+    njev: 6
     status: 2
     message: `ftol` termination condition is satisfied.
-    model: [5.06442618 3.54842172]
+    model: [5.06442618 3.54842171]
 
 
 
@@ -463,19 +463,20 @@ Example 2. emcee
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-218
+.. GENERATED FROM PYTHON SOURCE LINES 214-219
 
 .. code-block:: Python
 
 
     labels = ["m0", "m1"]
-    az.plot_trace(az_idata);
+    #az.plot_trace_dist(az_idata, visuals={"xlabel_trace": False});
+    az.plot_trace_dist(az_idata, visuals={"xlabel_trace": False, "trace": {"lw": 0.5}, "dist": {"lw": 0.5}});
 
 
 
 
 .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_nonlinear_curve_fitting_002.png
-   :alt: var_0, var_0, var_1, var_1
+   :alt: nonlinear curve fitting
    :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_nonlinear_curve_fitting_002.png
    :class: sphx-glr-single-img
 
@@ -485,25 +486,38 @@ Example 2. emcee
  .. code-block:: none
 
 
-    array([[<Axes: title={'center': 'var_0'}>,
-            <Axes: title={'center': 'var_0'}>],
-           [<Axes: title={'center': 'var_1'}>,
-            <Axes: title={'center': 'var_1'}>]], dtype=object)
+    <arviz_plots.plot_collection.PlotCollection object at 0x7efdbd251370>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-229
+.. GENERATED FROM PYTHON SOURCE LINES 221-246
 
 .. code-block:: Python
 
 
-    _, axes = plt.subplots(2, 2, figsize=(14,10))
-    az.plot_pair(
-        az_idata.sel(draw=slice(300,None)), 
-        marginals=True, 
-        reference_values=dict(zip([f"var_{i}" for i in range(2)], m_true   )),
-        ax = axes
-    );
+    pm = az.plot_pair(
+        az_idata.sel(draw=slice(300, None)),
+        marginal=True,
+        triangle="lower",
+        visuals={"scatter": {"s": 3}},
+    )
+
+    # Add reference dots for true model values
+    ref_values = list(m_true)
+    n = len(ref_values)
+    for i in range(n):
+        for j in range(n):
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            if i == j:
+                ax.axvline(ref_values[i], color="red", linestyle="--", lw=1, alpha=0.5)
+            elif i > j:
+                ax.plot(
+                    ref_values[j], ref_values[i], "o",
+                    color="red", markeredgecolor="black", markeredgewidth=1.5, ms=5, zorder=5,
+                )
 
 
 
@@ -514,17 +528,10 @@ Example 2. emcee
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-
-    array([[<Axes: >, <Axes: >],
-           [<Axes: xlabel='var_0', ylabel='var_1'>, <Axes: >]], dtype=object)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-250
+.. GENERATED FROM PYTHON SOURCE LINES 248-267
 
 .. code-block:: Python
 
@@ -561,11 +568,11 @@ Example 2. emcee
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f8252221b70>
+    <matplotlib.legend.Legend object at 0x7efd94226490>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 255-268
+.. GENERATED FROM PYTHON SOURCE LINES 272-285
 
 --------------
 
@@ -581,7 +588,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 268-274
+.. GENERATED FROM PYTHON SOURCE LINES 285-291
 
 .. code-block:: Python
 
@@ -599,24 +606,24 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.7
-    numpy 1.24.4
-    scipy 1.12.0
-    matplotlib 3.8.3
-    emcee 3.1.4
-    arviz 0.17.0
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
+    emcee 3.1.6
+    arviz 1.1.0
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 275-275
+.. GENERATED FROM PYTHON SOURCE LINES 292-292
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.879 seconds)
+   **Total running time of the script:** (0 minutes 1.759 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py:
@@ -632,6 +639,10 @@ sphinx_gallery_thumbnail_number = -1
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: nonlinear_curve_fitting.py <nonlinear_curve_fitting.py>`
+
+    .. container:: sphx-glr-download sphx-glr-download-zip
+
+      :download:`Download zipped: nonlinear_curve_fitting.zip <nonlinear_curve_fitting.zip>`
 
 
 .. only:: html

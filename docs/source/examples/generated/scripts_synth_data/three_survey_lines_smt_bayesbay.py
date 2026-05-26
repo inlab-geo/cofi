@@ -329,49 +329,89 @@ inv_result = inv.run()
 # --------
 # 
 
-arviz.style.use("default")
+import arviz_base
+from scipy.stats import gaussian_kde
+arviz.style.use("arviz-variat")
 var_names = [
-    "Dip (\u00b0)",
-    "Dip Azimuth (\u00b0)",
+    "Dip (°)",
+    "Dip Azimuth (°)",
     "Easting (m)",
     "Depth (m)",
     "Width (m)",
 ]
+clean_names = ["Dip_deg", "Dip_Azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
 results = inv_result.models
+# Keep raw 1D samples for plate visualization in next cell
 posterior_samples = {
-    f"{var_names[i]}": np.concatenate(results[f"param_space.m{i}"])
+    clean_names[i]: np.concatenate(results[f"param_space.m{i}"])
     for i in range(init_param_value.size)
 }
 
 true_values = {
-    f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
+    var_names[i]: true_param_value[i] for i in range(init_param_value.size)
 }
 
+# Set to True for KDE contours (old style), False for scatter (arviz 1.0 default)
+USE_KDE_CONTOURS = True
 
-fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-_ = arviz.plot_pair(
-    posterior_samples,
-    marginals=True,
-    kind="kde",
-    kde_kwargs={
-        "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-        "contourf_kwargs": {"cmap": "Blues"},
-    },
-    ax=axes,
-    textsize=10,
-)
+# Convert to DataTree with fake chain for plot_pair
+posterior_for_arviz = {
+    k: v[np.newaxis, :] for k, v in posterior_samples.items()
+}
+arviz_base.rcParams["plot.max_subplots"] = 80
+az_idata = arviz_base.from_dict({"posterior": posterior_for_arviz})
 
-for i, j in np.ndindex(axes.shape):
-    if i == j:
-        continue
-    xlabel = axes[-1, j].get_xlabel()
-    ylabel = axes[i, 0].get_ylabel()
-    x_true = true_values[xlabel]
-    y_true = true_values[ylabel]
-    axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
+if USE_KDE_CONTOURS:
+    pm = arviz.plot_pair(
+        az_idata,
+        marginal=True,
+        triangle="lower",
+        visuals={"scatter": False},
+    )
+    # Add KDE contours to off-diagonal panels
+    n = len(clean_names)
+    for i in range(n):
+        for j in range(n):
+            if i <= j:
+                continue
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            x = posterior_samples[clean_names[j]]
+            y = posterior_samples[clean_names[i]]
+            kde = gaussian_kde(np.vstack([x, y]))
+            xmin, xmax = x.min(), x.max()
+            ymin, ymax = y.min(), y.max()
+            xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+            zz = kde(np.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+            ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+            ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+else:
+    pm = arviz.plot_pair(
+        az_idata,
+        marginal=True,
+        triangle="lower",
+    )
 
-plt.show()
+# Add reference values
+ref_vals = list(true_values.values())
+n = len(ref_vals)
+for i in range(n):
+    for j in range(n):
+        try:
+            ax = pm.iget_target(i, j)
+        except (ValueError, IndexError):
+            continue
+        if i == j:
+            ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        elif i > j:
+            ax.plot(
+                ref_vals[j], ref_vals[i], "o",
+                color="yellow", markeredgecolor="k", ms=10, zorder=5,
+            )
+
 
 ######################################################################
 #
@@ -399,13 +439,10 @@ plot_plate_faces(
     label="Starting model",
 )
 
-
 plt.tight_layout()
 
-
-idraw = np.random.randint(0, len(posterior_samples[var_names[0]]))
-
-sample = np.array([posterior_samples[name][idraw] for name in var_names])
+idraw = np.random.randint(0, len(posterior_samples[clean_names[0]]))
+sample = np.array([posterior_samples[name][idraw] for name in clean_names])
 
 plot_plate_faces(
     "plate_inverted",
@@ -435,14 +472,12 @@ handles.extend([point])
 
 axes[1, 0].legend(handles=handles, bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
 # plot 10 randomly selected samples of the posterior distribution
-
 idraws = np.random.choice(
-    np.arange(0, len(posterior_samples[var_names[0]])), 10, replace=False
+    np.arange(0, len(posterior_samples[clean_names[0]])), 10, replace=False
 )
 for idraw in idraws:
-    sample = np.array([posterior_samples[name][idraw] for name in var_names])
+    sample = np.array([posterior_samples[name][idraw] for name in clean_names])
     plot_plate_faces(
         "plate_inverted",
         forward,
@@ -454,6 +489,7 @@ for idraw in idraws:
         label="Posterior sample",
         linestyle="dotted",
     )
+
 
 ######################################################################
 #

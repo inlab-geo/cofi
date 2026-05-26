@@ -481,7 +481,7 @@ Ensemble method using the surrogate model
 
  .. code-block:: none
 
-      0%|          | 0/5000 [00:00<?, ?it/s]      1%|          | 52/5000 [00:00<00:09, 517.77it/s]      2%|▏         | 104/5000 [00:00<00:09, 513.92it/s]      3%|▎         | 156/5000 [00:00<00:09, 511.53it/s]      4%|▍         | 208/5000 [00:00<00:09, 510.46it/s]      5%|▌         | 260/5000 [00:00<00:09, 509.84it/s]      6%|▌         | 312/5000 [00:00<00:09, 510.11it/s]      7%|▋         | 364/5000 [00:00<00:09, 510.23it/s]      8%|▊         | 416/5000 [00:00<00:08, 510.35it/s]      9%|▉         | 468/5000 [00:00<00:08, 509.85it/s]     10%|█         | 519/5000 [00:01<00:08, 509.53it/s]     11%|█▏        | 571/5000 [00:01<00:08, 509.82it/s]     12%|█▏        | 622/5000 [00:01<00:08, 508.60it/s]     13%|█▎        | 673/5000 [00:01<00:08, 509.02it/s]     14%|█▍        | 724/5000 [00:01<00:08, 508.67it/s]     16%|█▌        | 778/5000 [00:01<00:08, 516.48it/s]     17%|█▋        | 830/5000 [00:01<00:08, 509.78it/s]     18%|█▊        | 881/5000 [00:01<00:08, 508.88it/s]     19%|█▊        | 932/5000 [00:01<00:07, 509.17it/s]     20%|█▉        | 983/5000 [00:01<00:07, 508.88it/s]     21%|██        | 1034/5000 [00:02<00:07, 509.03it/s]     22%|██▏       | 1086/5000 [00:02<00:07, 509.61it/s]     23%|██▎       | 1142/5000 [00:02<00:07, 524.01it/s]     24%|██▍       | 1199/5000 [00:02<00:07, 537.18it/s]     25%|██▌       | 1253/5000 [00:02<00:07, 534.09it/s]     26%|██▌       | 1307/5000 [00:02<00:07, 526.56it/s]     27%|██▋       | 1360/5000 [00:02<00:06, 521.44it/s]     28%|██▊       | 1413/5000 [00:02<00:06, 517.46it/s]     29%|██▉       | 1465/5000 [00:02<00:06, 514.47it/s]     30%|███       | 1517/5000 [00:02<00:06, 513.10it/s]     31%|███▏      | 1569/5000 [00:03<00:06, 511.85it/s]     32%|███▏      | 1621/5000 [00:03<00:06, 510.71it/s]     33%|███▎      | 1673/5000 [00:03<00:06, 509.80it/s]     34%|███▍      | 1724/5000 [00:03<00:06, 509.22it/s]     36%|███▌      | 1775/5000 [00:03<00:06, 508.52it/s]     37%|███▋      | 1826/5000 [00:03<00:06, 508.52it/s]     38%|███▊      | 1877/5000 [00:03<00:06, 508.24it/s]     39%|███▊      | 1929/5000 [00:03<00:06, 508.80it/s]     40%|███▉      | 1980/5000 [00:03<00:05, 508.65it/s]     41%|████      | 2032/5000 [00:03<00:05, 509.18it/s]     42%|████▏     | 2083/5000 [00:04<00:05, 509.12it/s]     43%|████▎     | 2134/5000 [00:04<00:05, 508.28it/s]     44%|████▎     | 2185/5000 [00:04<00:05, 508.52it/s]     45%|████▍     | 2236/5000 [00:04<00:05, 508.54it/s]     46%|████▌     | 2287/5000 [00:04<00:05, 508.87it/s]     47%|████▋     | 2338/5000 [00:04<00:05, 507.58it/s]     48%|████▊     | 2389/5000 [00:04<00:05, 507.66it/s]     49%|████▉     | 2440/5000 [00:04<00:05, 508.32it/s]     50%|████▉     | 2491/5000 [00:04<00:04, 508.55it/s]     51%|█████     | 2543/5000 [00:04<00:04, 509.11it/s]     52%|█████▏    | 2594/5000 [00:05<00:04, 509.23it/s]     53%|█████▎    | 2646/5000 [00:05<00:04, 509.61it/s]     54%|█████▍    | 2698/5000 [00:05<00:04, 509.92it/s]     55%|█████▌    | 2750/5000 [00:05<00:04, 510.02it/s]     56%|█████▌    | 2802/5000 [00:05<00:04, 510.26it/s]     57%|█████▋    | 2854/5000 [00:05<00:04, 510.77it/s]     58%|█████▊    | 2906/5000 [00:05<00:04, 510.37it/s]     59%|█████▉    | 2958/5000 [00:05<00:04, 509.91it/s]     60%|██████    | 3009/5000 [00:05<00:03, 509.57it/s]     61%|██████    | 3060/5000 [00:05<00:03, 509.44it/s]     62%|██████▏   | 3111/5000 [00:06<00:03, 509.51it/s]     63%|██████▎   | 3162/5000 [00:06<00:03, 509.54it/s]     64%|██████▍   | 3214/5000 [00:06<00:03, 509.67it/s]     65%|██████▌   | 3266/5000 [00:06<00:03, 509.78it/s]     66%|██████▋   | 3317/5000 [00:06<00:03, 509.53it/s]     67%|██████▋   | 3369/5000 [00:06<00:03, 509.69it/s]     68%|██████▊   | 3421/5000 [00:06<00:03, 509.97it/s]     69%|██████▉   | 3473/5000 [00:06<00:02, 509.98it/s]     70%|███████   | 3525/5000 [00:06<00:02, 510.23it/s]     72%|███████▏  | 3577/5000 [00:06<00:02, 510.13it/s]     73%|███████▎  | 3629/5000 [00:07<00:02, 510.59it/s]     74%|███████▎  | 3681/5000 [00:07<00:02, 510.89it/s]     75%|███████▍  | 3733/5000 [00:07<00:02, 511.01it/s]     76%|███████▌  | 3785/5000 [00:07<00:02, 510.87it/s]     77%|███████▋  | 3837/5000 [00:07<00:02, 510.87it/s]     78%|███████▊  | 3889/5000 [00:07<00:02, 510.79it/s]     79%|███████▉  | 3941/5000 [00:07<00:02, 510.60it/s]     80%|███████▉  | 3993/5000 [00:07<00:01, 510.58it/s]     81%|████████  | 4045/5000 [00:07<00:01, 505.47it/s]     82%|████████▏ | 4096/5000 [00:08<00:01, 505.72it/s]     83%|████████▎ | 4147/5000 [00:08<00:01, 506.38it/s]     84%|████████▍ | 4198/5000 [00:08<00:01, 507.17it/s]     85%|████████▍ | 4249/5000 [00:08<00:01, 507.89it/s]     86%|████████▌ | 4300/5000 [00:08<00:01, 508.46it/s]     87%|████████▋ | 4351/5000 [00:08<00:01, 508.64it/s]     88%|████████▊ | 4402/5000 [00:08<00:01, 508.84it/s]     89%|████████▉ | 4453/5000 [00:08<00:01, 508.81it/s]     90%|█████████ | 4505/5000 [00:08<00:00, 509.34it/s]     91%|█████████ | 4557/5000 [00:08<00:00, 509.59it/s]     92%|█████████▏| 4609/5000 [00:09<00:00, 509.92it/s]     93%|█████████▎| 4660/5000 [00:09<00:00, 509.17it/s]     94%|█████████▍| 4712/5000 [00:09<00:00, 509.50it/s]     95%|█████████▌| 4763/5000 [00:09<00:00, 509.33it/s]     96%|█████████▋| 4815/5000 [00:09<00:00, 509.59it/s]     97%|█████████▋| 4866/5000 [00:09<00:00, 509.38it/s]     98%|█████████▊| 4917/5000 [00:09<00:00, 509.01it/s]     99%|█████████▉| 4968/5000 [00:09<00:00, 508.71it/s]    100%|██████████| 5000/5000 [00:09<00:00, 510.62it/s]
+      0%|          | 0/5000 [00:00<?, ?it/s]      1%|          | 52/5000 [00:00<00:09, 508.24it/s]      2%|▏         | 105/5000 [00:00<00:09, 519.80it/s]      3%|▎         | 157/5000 [00:00<00:09, 516.37it/s]      4%|▍         | 213/5000 [00:00<00:09, 530.95it/s]      5%|▌         | 273/5000 [00:00<00:08, 553.50it/s]      7%|▋         | 329/5000 [00:00<00:08, 542.74it/s]      8%|▊         | 384/5000 [00:00<00:08, 530.67it/s]      9%|▉         | 438/5000 [00:00<00:08, 531.68it/s]     10%|▉         | 492/5000 [00:00<00:08, 521.83it/s]     11%|█         | 545/5000 [00:01<00:08, 510.66it/s]     12%|█▏        | 597/5000 [00:01<00:08, 510.57it/s]     13%|█▎        | 649/5000 [00:01<00:08, 508.50it/s]     14%|█▍        | 702/5000 [00:01<00:08, 512.76it/s]     15%|█▌        | 754/5000 [00:01<00:08, 501.87it/s]     16%|█▌        | 805/5000 [00:01<00:08, 493.29it/s]     17%|█▋        | 857/5000 [00:01<00:08, 498.97it/s]     18%|█▊        | 909/5000 [00:01<00:08, 503.22it/s]     19%|█▉        | 961/5000 [00:01<00:07, 507.24it/s]     20%|██        | 1016/5000 [00:01<00:07, 518.19it/s]     21%|██▏       | 1068/5000 [00:02<00:07, 504.89it/s]     22%|██▏       | 1119/5000 [00:02<00:07, 501.97it/s]     23%|██▎       | 1171/5000 [00:02<00:07, 505.29it/s]     24%|██▍       | 1222/5000 [00:02<00:07, 497.47it/s]     25%|██▌       | 1272/5000 [00:02<00:07, 488.70it/s]     26%|██▋       | 1321/5000 [00:02<00:07, 485.88it/s]     27%|██▋       | 1370/5000 [00:02<00:07, 477.79it/s]     28%|██▊       | 1418/5000 [00:02<00:07, 476.51it/s]     29%|██▉       | 1466/5000 [00:02<00:07, 475.49it/s]     30%|███       | 1520/5000 [00:03<00:07, 493.94it/s]     32%|███▏      | 1577/5000 [00:03<00:06, 513.77it/s]     33%|███▎      | 1632/5000 [00:03<00:06, 522.97it/s]     34%|███▎      | 1687/5000 [00:03<00:06, 529.19it/s]     35%|███▍      | 1740/5000 [00:03<00:06, 519.78it/s]     36%|███▌      | 1793/5000 [00:03<00:06, 506.00it/s]     37%|███▋      | 1844/5000 [00:03<00:06, 495.70it/s]     38%|███▊      | 1894/5000 [00:03<00:06, 488.54it/s]     39%|███▉      | 1943/5000 [00:03<00:06, 485.46it/s]     40%|███▉      | 1992/5000 [00:03<00:06, 482.20it/s]     41%|████      | 2041/5000 [00:04<00:06, 479.21it/s]     42%|████▏     | 2090/5000 [00:04<00:06, 481.74it/s]     43%|████▎     | 2139/5000 [00:04<00:05, 481.75it/s]     44%|████▍     | 2188/5000 [00:04<00:05, 482.06it/s]     45%|████▍     | 2237/5000 [00:04<00:05, 480.63it/s]     46%|████▌     | 2286/5000 [00:04<00:05, 477.28it/s]     47%|████▋     | 2334/5000 [00:04<00:05, 476.52it/s]     48%|████▊     | 2382/5000 [00:04<00:05, 476.73it/s]     49%|████▊     | 2430/5000 [00:04<00:05, 476.65it/s]     50%|████▉     | 2478/5000 [00:04<00:05, 466.54it/s]     50%|█████     | 2525/5000 [00:05<00:05, 461.25it/s]     51%|█████▏    | 2573/5000 [00:05<00:05, 465.88it/s]     52%|█████▏    | 2621/5000 [00:05<00:05, 467.91it/s]     53%|█████▎    | 2669/5000 [00:05<00:04, 471.27it/s]     54%|█████▍    | 2717/5000 [00:05<00:04, 470.54it/s]     55%|█████▌    | 2765/5000 [00:05<00:04, 471.93it/s]     56%|█████▋    | 2815/5000 [00:05<00:04, 477.78it/s]     57%|█████▋    | 2867/5000 [00:05<00:04, 487.33it/s]     58%|█████▊    | 2916/5000 [00:05<00:04, 487.20it/s]     59%|█████▉    | 2967/5000 [00:05<00:04, 492.92it/s]     60%|██████    | 3018/5000 [00:06<00:03, 496.88it/s]     61%|██████▏   | 3070/5000 [00:06<00:03, 503.17it/s]     62%|██████▏   | 3121/5000 [00:06<00:03, 499.10it/s]     63%|██████▎   | 3173/5000 [00:06<00:03, 503.65it/s]     64%|██████▍   | 3225/5000 [00:06<00:03, 505.83it/s]     66%|██████▌   | 3277/5000 [00:06<00:03, 509.31it/s]     67%|██████▋   | 3329/5000 [00:06<00:03, 511.73it/s]     68%|██████▊   | 3381/5000 [00:06<00:03, 508.77it/s]     69%|██████▊   | 3433/5000 [00:06<00:03, 510.26it/s]     70%|██████▉   | 3485/5000 [00:07<00:02, 511.26it/s]     71%|███████   | 3537/5000 [00:07<00:02, 507.20it/s]     72%|███████▏  | 3588/5000 [00:07<00:02, 494.40it/s]     73%|███████▎  | 3638/5000 [00:07<00:02, 488.91it/s]     74%|███████▍  | 3690/5000 [00:07<00:02, 496.39it/s]     75%|███████▍  | 3741/5000 [00:07<00:02, 498.35it/s]     76%|███████▌  | 3794/5000 [00:07<00:02, 504.67it/s]     77%|███████▋  | 3847/5000 [00:07<00:02, 509.77it/s]     78%|███████▊  | 3899/5000 [00:07<00:02, 511.82it/s]     79%|███████▉  | 3951/5000 [00:07<00:02, 513.87it/s]     80%|████████  | 4004/5000 [00:08<00:01, 516.80it/s]     81%|████████  | 4056/5000 [00:08<00:01, 511.00it/s]     82%|████████▏ | 4108/5000 [00:08<00:01, 507.88it/s]     83%|████████▎ | 4160/5000 [00:08<00:01, 510.48it/s]     84%|████████▍ | 4214/5000 [00:08<00:01, 518.00it/s]     85%|████████▌ | 4266/5000 [00:08<00:01, 517.33it/s]     86%|████████▋ | 4318/5000 [00:08<00:01, 516.87it/s]     87%|████████▋ | 4373/5000 [00:08<00:01, 523.93it/s]     89%|████████▊ | 4426/5000 [00:08<00:01, 525.09it/s]     90%|████████▉ | 4479/5000 [00:08<00:00, 524.87it/s]     91%|█████████ | 4532/5000 [00:09<00:00, 520.51it/s]     92%|█████████▏| 4585/5000 [00:09<00:00, 519.60it/s]     93%|█████████▎| 4637/5000 [00:09<00:00, 512.62it/s]     94%|█████████▍| 4689/5000 [00:09<00:00, 513.23it/s]     95%|█████████▍| 4741/5000 [00:09<00:00, 510.75it/s]     96%|█████████▌| 4793/5000 [00:09<00:00, 509.30it/s]     97%|█████████▋| 4845/5000 [00:09<00:00, 509.62it/s]     98%|█████████▊| 4896/5000 [00:09<00:00, 508.16it/s]     99%|█████████▉| 4947/5000 [00:09<00:00, 507.80it/s]    100%|█████████▉| 4998/5000 [00:09<00:00, 507.71it/s]    100%|██████████| 5000/5000 [00:09<00:00, 501.47it/s]
     The inversion result from `emcee`:
     ============================
     Summary for inversion result
@@ -500,32 +500,39 @@ Plotting
 --------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 299-322
+.. GENERATED FROM PYTHON SOURCE LINES 299-329
 
 .. code-block:: Python
 
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
     var_names = [
-        "Dip (\u00b0)",
-        "Dip azimuth (\u00b0)",
+        "Dip (°)",
+        "Dip azimuth (°)",
         "Easting (m)",
         "Depth (m)",
         "Width (m)",
     ]
 
-    var_lines=(
-            ('Dip (\u00b0)', {}, 60),
-            ('Dip azimuth (\u00b0)', {}, 65),
-            ('Easting (m)', {}, 175),
-            ('Depth (m)', {}, 30),
-            ('Width (m)', {}, 90)
-    )
+    true_values = [60, 65, 175, 30, 90]
     sampler = inv_result.sampler
     az_idata = inv_result.to_arviz(var_names=var_names)
-    arviz.plot_trace(az_idata.sel(draw=slice(2000,None)),lines=var_lines);
-    plt.tight_layout()
+    pc = arviz.plot_trace_dist(
+        az_idata.sel(draw=slice(2000, None)),
+        visuals={"xlabel_trace": False, "trace": {"color": "C0", "lw": 0.5}, "dist": {"color": "C0", "lw": 0.5}},
+        figure_kwargs={"figsize": (12, 20), "constrained_layout": True},
+    )
+    var_list = list(az_idata.posterior.data_vars)
+    for i, vname in enumerate(var_list):
+        ax_kde = pc.iget_target(i, 0)
+        ax_trace = pc.iget_target(i, 1)
+        ax_kde.set_title(vname)
+        ax_trace.set_title(vname)
+        ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+        ax_trace.margins(x=0)
+
 
 
 
@@ -539,37 +546,75 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 324-352
+.. GENERATED FROM PYTHON SOURCE LINES 331-397
 
 .. code-block:: Python
 
 
-    true_values = {
+    from scipy.stats import gaussian_kde
+    import arviz_base
+
+    true_values_dict = {
         f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
     }
-    fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-    _ = arviz.plot_pair(
-    az_idata.sel(draw=slice(4000,None)), 
-        marginals=True,
-        kind="kde",
-        kde_kwargs={
-            "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-            "contourf_kwargs": {"cmap": "Blues"},
-        },
-        ax=axes,
-        textsize=10,
-    )
 
-    for i, j in numpy.ndindex(axes.shape):
-        if i == j:
-            continue
-        xlabel = axes[-1, j].get_xlabel()
-        ylabel = axes[i, 0].get_ylabel()
-        x_true = true_values[xlabel]
-        y_true = true_values[ylabel]        
-        axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
+    # Set to True for KDE contours (old style), False for scatter (arviz 1.0 default)
+    USE_KDE_CONTOURS = True
 
-    plt.show()
+    arviz_base.rcParams["plot.max_subplots"] = 80
+
+    if USE_KDE_CONTOURS:
+        pm = arviz.plot_pair(
+            az_idata.sel(draw=slice(4000, None)),
+            marginal=True,
+            triangle="lower",
+            visuals={"scatter": False},
+        )
+        # Add KDE contours to off-diagonal panels
+        posterior = az_idata.posterior.sel(draw=slice(4000, None))
+        var_list = list(posterior.data_vars)
+        n = len(var_list)
+        for i in range(n):
+            for j in range(n):
+                if i <= j:
+                    continue
+                try:
+                    ax = pm.iget_target(i, j)
+                except (ValueError, IndexError):
+                    continue
+                x = posterior[var_list[j]].values.flatten()
+                y = posterior[var_list[i]].values.flatten()
+                kde = gaussian_kde(numpy.vstack([x, y]))
+                xmin, xmax = x.min(), x.max()
+                ymin, ymax = y.min(), y.max()
+                xx, yy = numpy.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+                zz = kde(numpy.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+                ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+                ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+    else:
+        pm = arviz.plot_pair(
+            az_idata.sel(draw=slice(4000, None)),
+            marginal=True,
+            triangle="lower",
+        )
+
+    # Add reference values
+    ref_vals = list(true_values_dict.values())
+    n = len(ref_vals)
+    for i in range(n):
+        for j in range(n):
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            if i == j:
+                ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+            elif i > j:
+                ax.plot(
+                    ref_vals[j], ref_vals[i], "o",
+                    color="yellow", markeredgecolor="k", ms=10, zorder=5,
+                )
+
 
 
 
@@ -583,12 +628,12 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 354-410
+.. GENERATED FROM PYTHON SOURCE LINES 399-452
 
 .. code-block:: Python
 
 
-    arviz.style.use("default")
+    arviz.style.use("arviz-variat")
 
     _, axes = plt.subplots(2, 2)
     axes[1,1].axis("off")
@@ -601,19 +646,20 @@ Plotting
         axes[0,0], axes[0,1], axes[1,0], color="green", label="Starting model"
     )
 
-
     plt.tight_layout()
 
+    posterior = az_idata.posterior
+    var_list = list(posterior.data_vars)
+    n_chains = int(posterior.sizes["chain"])
+    n_draws = int(posterior.sizes["draw"])
 
-    ichain=0
-    idraw=2500
-    sample=numpy.zeros(5)
+    ichain = 0
+    idraw = min(2500, n_draws - 1)
+    sample = numpy.zeros(5)
 
-    sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-    sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-    sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-    sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-    sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+    for idx, vn in enumerate(var_list):
+        sample[idx] = float(posterior[vn].isel(chain=ichain, draw=idraw))
+
     plot_plate_faces(
         "plate_inverted", forward, sample, 
         axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
@@ -627,20 +673,16 @@ Plotting
 
     axes[1,0].legend(handles=handles,bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
-    # plot 10 randomly selected samples of the posterior distirbution
+    # plot 10 randomly selected samples of the posterior distribution
     for i in range(10):
-        ichain=numpy.random.randint(0,12)
-        idraw=numpy.random.randint(2000,5000)
-        sample[0]=az_idata.posterior['Dip (\u00b0)'][ichain][idraw]
-        sample[1]=az_idata.posterior['Dip azimuth (\u00b0)'][ichain][idraw]
-        sample[2]=az_idata.posterior['Easting (m)'][ichain][idraw]
-        sample[3]=az_idata.posterior['Depth (m)'][ichain][idraw]
-        sample[4]=az_idata.posterior['Width (m)'][ichain][idraw]
+        ichain = numpy.random.randint(0, n_chains)
+        idraw = numpy.random.randint(min(2000, n_draws), n_draws)
+        for idx, vn in enumerate(var_list):
+            sample[idx] = float(posterior[vn].isel(chain=ichain, draw=idraw))
         plot_plate_faces(
-        "plate_inverted", forward, sample, 
-        axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
-    )
+            "plate_inverted", forward, sample, 
+            axes[0,0], axes[0,1], axes[1,0], color="red", label="Posterior sample", linestyle="dotted"
+        )
 
 
 
@@ -655,7 +697,7 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 415-428
+.. GENERATED FROM PYTHON SOURCE LINES 457-470
 
 --------------
 
@@ -671,7 +713,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 428-434
+.. GENERATED FROM PYTHON SOURCE LINES 470-476
 
 .. code-block:: Python
 
@@ -689,22 +731,22 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 440-440
+.. GENERATED FROM PYTHON SOURCE LINES 482-482
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 11.598 seconds)
+   **Total running time of the script:** (0 minutes 26.419 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_three_survey_lines_smt_emcee.py:

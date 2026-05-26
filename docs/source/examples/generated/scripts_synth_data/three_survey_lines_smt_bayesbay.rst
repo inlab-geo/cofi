@@ -511,54 +511,94 @@ Plotting
 --------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 331-376
+.. GENERATED FROM PYTHON SOURCE LINES 331-416
 
 .. code-block:: Python
 
 
-    arviz.style.use("default")
+    import arviz_base
+    from scipy.stats import gaussian_kde
+    arviz.style.use("arviz-variat")
     var_names = [
-        "Dip (\u00b0)",
-        "Dip Azimuth (\u00b0)",
+        "Dip (°)",
+        "Dip Azimuth (°)",
         "Easting (m)",
         "Depth (m)",
         "Width (m)",
     ]
+    clean_names = ["Dip_deg", "Dip_Azimuth_deg", "Easting_m", "Depth_m", "Width_m"]
 
     results = inv_result.models
+    # Keep raw 1D samples for plate visualization in next cell
     posterior_samples = {
-        f"{var_names[i]}": np.concatenate(results[f"param_space.m{i}"])
+        clean_names[i]: np.concatenate(results[f"param_space.m{i}"])
         for i in range(init_param_value.size)
     }
 
     true_values = {
-        f"{var_names[i]}": true_param_value[i] for i in range(init_param_value.size)
+        var_names[i]: true_param_value[i] for i in range(init_param_value.size)
     }
 
+    # Set to True for KDE contours (old style), False for scatter (arviz 1.0 default)
+    USE_KDE_CONTOURS = True
 
-    fig, axes = plt.subplots(5, 5, figsize=(10, 8))
-    _ = arviz.plot_pair(
-        posterior_samples,
-        marginals=True,
-        kind="kde",
-        kde_kwargs={
-            "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-            "contourf_kwargs": {"cmap": "Blues"},
-        },
-        ax=axes,
-        textsize=10,
-    )
+    # Convert to DataTree with fake chain for plot_pair
+    posterior_for_arviz = {
+        k: v[np.newaxis, :] for k, v in posterior_samples.items()
+    }
+    arviz_base.rcParams["plot.max_subplots"] = 80
+    az_idata = arviz_base.from_dict({"posterior": posterior_for_arviz})
 
-    for i, j in np.ndindex(axes.shape):
-        if i == j:
-            continue
-        xlabel = axes[-1, j].get_xlabel()
-        ylabel = axes[i, 0].get_ylabel()
-        x_true = true_values[xlabel]
-        y_true = true_values[ylabel]
-        axes[i, j].plot(x_true, y_true, "yellow", marker="o", ms=10, markeredgecolor="k")
+    if USE_KDE_CONTOURS:
+        pm = arviz.plot_pair(
+            az_idata,
+            marginal=True,
+            triangle="lower",
+            visuals={"scatter": False},
+        )
+        # Add KDE contours to off-diagonal panels
+        n = len(clean_names)
+        for i in range(n):
+            for j in range(n):
+                if i <= j:
+                    continue
+                try:
+                    ax = pm.iget_target(i, j)
+                except (ValueError, IndexError):
+                    continue
+                x = posterior_samples[clean_names[j]]
+                y = posterior_samples[clean_names[i]]
+                kde = gaussian_kde(np.vstack([x, y]))
+                xmin, xmax = x.min(), x.max()
+                ymin, ymax = y.min(), y.max()
+                xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+                zz = kde(np.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+                ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+                ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+    else:
+        pm = arviz.plot_pair(
+            az_idata,
+            marginal=True,
+            triangle="lower",
+        )
 
-    plt.show()
+    # Add reference values
+    ref_vals = list(true_values.values())
+    n = len(ref_vals)
+    for i in range(n):
+        for j in range(n):
+            try:
+                ax = pm.iget_target(i, j)
+            except (ValueError, IndexError):
+                continue
+            if i == j:
+                ax.axvline(ref_vals[i], color="green", linestyle="--", lw=1, alpha=0.5)
+            elif i > j:
+                ax.plot(
+                    ref_vals[j], ref_vals[i], "o",
+                    color="yellow", markeredgecolor="k", ms=10, zorder=5,
+                )
+
 
 
 
@@ -572,7 +612,7 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 378-458
+.. GENERATED FROM PYTHON SOURCE LINES 418-494
 
 .. code-block:: Python
 
@@ -600,13 +640,10 @@ Plotting
         label="Starting model",
     )
 
-
     plt.tight_layout()
 
-
-    idraw = np.random.randint(0, len(posterior_samples[var_names[0]]))
-
-    sample = np.array([posterior_samples[name][idraw] for name in var_names])
+    idraw = np.random.randint(0, len(posterior_samples[clean_names[0]]))
+    sample = np.array([posterior_samples[name][idraw] for name in clean_names])
 
     plot_plate_faces(
         "plate_inverted",
@@ -636,14 +673,12 @@ Plotting
 
     axes[1, 0].legend(handles=handles, bbox_to_anchor=(1.04, 0), loc="lower left")
 
-
     # plot 10 randomly selected samples of the posterior distribution
-
     idraws = np.random.choice(
-        np.arange(0, len(posterior_samples[var_names[0]])), 10, replace=False
+        np.arange(0, len(posterior_samples[clean_names[0]])), 10, replace=False
     )
     for idraw in idraws:
-        sample = np.array([posterior_samples[name][idraw] for name in var_names])
+        sample = np.array([posterior_samples[name][idraw] for name in clean_names])
         plot_plate_faces(
             "plate_inverted",
             forward,
@@ -659,6 +694,7 @@ Plotting
 
 
 
+
 .. image-sg:: /examples/generated/scripts_synth_data/images/sphx_glr_three_survey_lines_smt_bayesbay_002.png
    :alt: three survey lines smt bayesbay
    :srcset: /examples/generated/scripts_synth_data/images/sphx_glr_three_survey_lines_smt_bayesbay_002.png
@@ -668,7 +704,7 @@ Plotting
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 463-476
+.. GENERATED FROM PYTHON SOURCE LINES 499-512
 
 --------------
 
@@ -684,7 +720,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 476-482
+.. GENERATED FROM PYTHON SOURCE LINES 512-518
 
 .. code-block:: Python
 
@@ -702,24 +738,24 @@ Watermark
 
  .. code-block:: none
 
-    bayesbay 0.3.7
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    matplotlib 3.10.8
-    smt 2.10.1
+    bayesbay 0.3.10
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    matplotlib 3.10.9
+    smt 2.13.0
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 483-483
+.. GENERATED FROM PYTHON SOURCE LINES 519-519
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 6.113 seconds)
+   **Total running time of the script:** (0 minutes 9.964 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_three_survey_lines_smt_bayesbay.py:

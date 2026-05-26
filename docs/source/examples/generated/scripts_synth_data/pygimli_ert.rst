@@ -116,10 +116,10 @@ inversion <https://www.pygimli.org/_examples_auto/3_dc_and_ip/plot_07_simple_com
 
 We will need the following packages:
 
-- ``numpy`` for matrices and matrix-related functions
-- ``matplotlib`` for plotting
-- ``pygimli`` for forward modelling of the problem
-- ``cofi`` for accessing different inference solvers
+-  ``numpy`` for matrices and matrix-related functions
+-  ``matplotlib`` for plotting
+-  ``pygimli`` for forward modelling of the problem
+-  ``cofi`` for accessing different inference solvers
 
 Additionally, we wrap some ``pygimli`` code in file
 ``pygimli_ert_lib.py`` and import it here for conciseness.
@@ -367,13 +367,13 @@ standardised interfaces. All these functions are defined in the library
 file ``pygimli_ert_lib.py``, so open this file if you’d like to find out
 the details. These functions are:
 
-- ``get_response``
-- ``get_jacobian``
-- ``get_residuals``
-- ``get_data_misfit``
-- ``get_regularization``
-- ``get_gradient``
-- ``get_hessian``
+-  ``get_response``
+-  ``get_jacobian``
+-  ``get_residuals``
+-  ``get_data_misfit``
+-  ``get_regularization``
+-  ``get_gradient``
+-  ``get_hessian``
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 247-251
@@ -682,11 +682,11 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    scipy 1.17.0
-    pygimli 1.5.5.post2+18.g09193dc5
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    scipy 1.17.1
+    pygimli 1.5.5.post2+56.ge792d84b
+    matplotlib 3.10.9
 
 
 
@@ -698,7 +698,7 @@ sphinx_gallery_thumbnail_number = -1
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 25.262 seconds)
+   **Total running time of the script:** (0 minutes 24.181 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_pygimli_ert.py:

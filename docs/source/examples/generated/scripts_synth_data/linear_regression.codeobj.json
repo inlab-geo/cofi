@@ -176,22 +176,6 @@
    "name": "QuadraticReg"
   }
  ],
- "_": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.figure",
-   "module_short": "matplotlib.figure",
-   "name": "Figure"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib",
-   "module_short": "matplotlib",
-   "name": "Figure"
-  }
- ],
  "_G_plot": [
   {
    "is_class": false,
@@ -264,13 +248,143 @@
    "name": "ndarray"
   }
  ],
- "axes": [
+ "ax": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes"
+  }
+ ],
+ "ax.axvline": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.axvline"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.axvline"
+  }
+ ],
+ "ax.plot": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "Axes.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Axes.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes._base",
+   "module_short": "matplotlib.axes._base",
+   "name": "_AxesBase.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.axes",
+   "module_short": "matplotlib.axes",
+   "name": "_AxesBase.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "_AxesBase.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib.artist",
+   "module_short": "matplotlib.artist",
+   "name": "Artist.plot"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "matplotlib",
+   "module_short": "matplotlib",
+   "name": "Artist.plot"
   }
  ],
  "az.plot_pair": [
@@ -289,7 +403,7 @@
    "name": "plot_pair"
   }
  ],
- "az.plot_trace": [
+ "az.plot_trace_dist": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -302,53 +416,137 @@
    "is_explicit": false,
    "module": "arviz",
    "module_short": "arviz",
-   "name": "plot_trace"
+   "name": "plot_trace_dist"
   }
  ],
  "az_idata": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data.inference_data",
-   "module_short": "arviz",
-   "name": "InferenceData"
+   "module": "xarray.core.datatree",
+   "module_short": "xarray.core.datatree",
+   "name": "DataTree"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data",
-   "module_short": "arviz",
-   "name": "InferenceData"
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTree"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz",
-   "module_short": "arviz",
-   "name": "InferenceData"
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTree"
   }
  ],
  "az_idata.sel": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data.inference_data",
-   "module_short": "arviz",
-   "name": "InferenceData.sel"
+   "module": "xarray.core.datatree",
+   "module_short": "xarray.core.datatree",
+   "name": "DataTree.sel"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz.data",
-   "module_short": "arviz",
-   "name": "InferenceData.sel"
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTree.sel"
   },
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "arviz",
-   "module_short": "arviz",
-   "name": "InferenceData.sel"
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTree.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.treenode",
+   "module_short": "xarray.core.treenode",
+   "name": "NamedNode.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "NamedNode.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "NamedNode.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core._aggregations",
+   "module_short": "xarray.core._aggregations",
+   "name": "DataTreeAggregations.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTreeAggregations.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTreeAggregations.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core._typed_ops",
+   "module_short": "xarray.core._typed_ops",
+   "name": "DataTreeOpsMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "DataTreeOpsMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "DataTreeOpsMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.common",
+   "module_short": "xarray.core.common",
+   "name": "TreeAttrAccessMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "TreeAttrAccessMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "TreeAttrAccessMixin.sel"
   },
   {
    "is_class": false,
@@ -367,9 +565,44 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "typing",
-   "module_short": "typing",
-   "name": "Generic.sel"
+   "module": "xarray.core.treenode",
+   "module_short": "xarray.core.treenode",
+   "name": "TreeNode.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "TreeNode.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "TreeNode.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core.common",
+   "module_short": "xarray.core.common",
+   "name": "AttrAccessMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray.core",
+   "module_short": "xarray.core",
+   "name": "AttrAccessMixin.sel"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "xarray",
+   "module_short": "xarray",
+   "name": "AttrAccessMixin.sel"
   },
   {
    "is_class": false,
@@ -1170,6 +1403,15 @@
    "name": "InversionResult.to_arviz"
   }
  ],
+ "j": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
  "labels": [
   {
    "is_class": false,
@@ -1222,6 +1464,15 @@
    "module": "numpy",
    "module_short": "numpy",
    "name": "ndarray"
+  }
+ ],
+ "n": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
   }
  ],
  "ndim": [
@@ -1429,8 +1680,8 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "_cython_3_2_1",
-   "module_short": "_cython_3_2_1",
+   "module": "_cython_3_0_12",
+   "module_short": "_cython_3_0_12",
    "name": "cython_function_or_method"
   },
   {
@@ -1573,22 +1824,6 @@
    "name": "scatter"
   }
  ],
- "plt.subplots": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "subplots"
-  }
- ],
  "plt.xlabel": [
   {
    "is_class": false,
@@ -1621,6 +1856,52 @@
    "name": "ylabel"
   }
  ],
+ "pm": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz_plots.plot_matrix",
+   "module_short": "arviz_plots",
+   "name": "PlotMatrix"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz_plots",
+   "module_short": "arviz_plots",
+   "name": "PlotMatrix"
+  }
+ ],
+ "pm.iget_target": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz_plots.plot_matrix",
+   "module_short": "arviz_plots",
+   "name": "PlotMatrix.iget_target"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz_plots",
+   "module_short": "arviz_plots",
+   "name": "PlotMatrix.iget_target"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz_plots.plot_collection",
+   "module_short": "arviz_plots",
+   "name": "PlotCollection.iget_target"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "arviz_plots",
+   "module_short": "arviz_plots",
+   "name": "PlotCollection.iget_target"
+  }
+ ],
  "q": [
   {
    "is_class": false,
@@ -1628,6 +1909,15 @@
    "module": "numpy",
    "module_short": "numpy",
    "name": "ndarray"
+  }
+ ],
+ "ref_values": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
   }
  ],
  "sample": [

@@ -575,13 +575,27 @@ inv_result.summary()
 #
 
 sampler = inv_result.sampler
-arviz.style.use("default")
+arviz.style.use("arviz-variat")
 var_names = [
-    "plate dip (\u00b0)", 
+    "plate dip (°)", 
 ]
 az_idata = inv_result.to_arviz(var_names=var_names)
-arviz.plot_trace(az_idata.sel(draw=slice(100,None)),lines=(('plate dip (\u00b0)', {}, 60),));
-plt.tight_layout()
+true_values = [60]
+pc = arviz.plot_trace_dist(
+    az_idata.sel(draw=slice(100, None)),
+    visuals={"xlabel_trace": False, "trace": {"color": "C0"}, "dist": {"color": "C0"}},
+    figure_kwargs={"figsize": (12, 4), "constrained_layout": True},
+)
+var_list = list(az_idata.posterior.data_vars)
+for i, vname in enumerate(var_list):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.set_title(vname)
+    ax_trace.set_title(vname)
+    ax_kde.axvline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.axhline(true_values[i], color="green", linestyle="--", lw=1, alpha=0.5)
+    ax_trace.margins(x=0)
+
 
 ######################################################################
 #

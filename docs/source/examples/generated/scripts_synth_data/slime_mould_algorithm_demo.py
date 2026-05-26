@@ -222,17 +222,17 @@ print("\n Ready for optimization with Slime Mould Algorithm!")
 # 
 # Key SMA parameters to experiment with:
 # 
-# - **``epoch``**: Number of iterations (higher = more thorough search)
-# - **``pop_size``**: Population size (higher = better exploration)
-# - **``pr``**: Probability parameter (controls exploration/exploitation
-#   balance)
-# - **``algorithm``**: Choose between “OriginalSMA” and “DevSMA”
-# - **``mode``**: Parallel execution (“single” (default), “thread”,
-#   “process”, “swarm”)
-# - **``log_to``**: Logging control (None = no logging, “console” =
-#   console output, “file” = log to file)
-# - **``log_file``**: Filename when using ``log_to="file"`` (default:
-#   “mealpy.log”)
+# -  **``epoch``**: Number of iterations (higher = more thorough search)
+# -  **``pop_size``**: Population size (higher = better exploration)
+# -  **``pr``**: Probability parameter (controls exploration/exploitation
+#    balance)
+# -  **``algorithm``**: Choose between “OriginalSMA” and “DevSMA”
+# -  **``mode``**: Parallel execution (“single” (default), “thread”,
+#    “process”, “swarm”)
+# -  **``log_to``**: Logging control (None = no logging, “console” =
+#    console output, “file” = log to file)
+# -  **``log_file``**: Filename when using ``log_to="file"`` (default:
+#    “mealpy.log”)
 # 
 # For further details on control parameters the reader is refered to `The
 # mealpy documentation for
@@ -248,23 +248,23 @@ print("\n Ready for optimization with Slime Mould Algorithm!")
 # The SMA optimizer supports different parallelization modes through the
 # ``mode`` parameter:
 # 
-# - **``"single"``** (default): Sequential execution, no parallelization
-# - **``"thread"``**: Thread-based parallelization (good for I/O-bound
-#   tasks)
-# - **``"process"``**: Process-based parallelization (good for CPU-bound
-#   tasks)
-# - **``"swarm"``**: Swarm-based parallelization (mealpy’s special mode)
+# -  **``"single"``** (default): Sequential execution, no parallelization
+# -  **``"thread"``**: Thread-based parallelization (good for I/O-bound
+#    tasks)
+# -  **``"process"``**: Process-based parallelization (good for CPU-bound
+#    tasks)
+# -  **``"swarm"``**: Swarm-based parallelization (mealpy’s special mode)
 # 
 # Important Notes:
 # ~~~~~~~~~~~~~~~~
 # 
-# - On **macOS in Jupyter notebooks**, ``mode="process"`` may have issues
-#   due to how macOS handles multiprocessing (uses ‘spawn’ instead of
-#   ‘fork’)
-# - If ``mode="process"`` hangs on macOS, use ``"single"`` or ``"thread"``
-#   instead
-# - The CoFI wrapper now uses picklable objective functions to improve
-#   compatibility with multiprocessing
+# -  On **macOS in Jupyter notebooks**, ``mode="process"`` may have issues
+#    due to how macOS handles multiprocessing (uses ‘spawn’ instead of
+#    ‘fork’)
+# -  If ``mode="process"`` hangs on macOS, use ``"single"`` or
+#    ``"thread"`` instead
+# -  The CoFI wrapper now uses picklable objective functions to improve
+#    compatibility with multiprocessing
 # 
 
 # Configure SMA optimization options
@@ -791,12 +791,12 @@ print(" One problem definition, multiple solvers - that's the power of CoFI!")
 # 
 # The integration of SMA into CoFI demonstrates several advantages:
 # 
-# - **Unified Interface**: Same problem definition works with all
-#   optimizers
-# - **Easy Configuration**: Simple parameter setting and algorithm
-#   selection
-# - **Consistent Results**: Standardized result format across all tools
-# - **Extensibility**: Easy to add new algorithms and compare performance
+# -  **Unified Interface**: Same problem definition works with all
+#    optimizers
+# -  **Easy Configuration**: Simple parameter setting and algorithm
+#    selection
+# -  **Consistent Results**: Standardized result format across all tools
+# -  **Extensibility**: Easy to add new algorithms and compare performance
 # 
 # Applications in Geophysics
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -804,11 +804,11 @@ print(" One problem definition, multiple solvers - that's the power of CoFI!")
 # At present experience is limited, but SMA is may be suited for
 # geophysical inverse problems because:
 # 
-# - **Multi-modal Landscapes**: Many geophysical problems have multiple
-#   local minima
-# - **Gradient-free**: Works with non-differentiable objective functions
-# - **Global Search**: Able to find global solutions in complex parameter
-#   spaces
+# -  **Multi-modal Landscapes**: Many geophysical problems have multiple
+#    local minima
+# -  **Gradient-free**: Works with non-differentiable objective functions
+# -  **Global Search**: Able to find global solutions in complex parameter
+#    spaces
 # 
 
 
@@ -855,14 +855,14 @@ print(" One problem definition, multiple solvers - that's the power of CoFI!")
 # Further Reading
 # ~~~~~~~~~~~~~~~
 # 
-# - **Original SMA Paper**: Li et al. (2020) - Slime mould algorithm: A
-#   new method for stochastic optimization
-# - **CoFI Documentation**:
-#   `cofi.readthedocs.io <https://cofi.readthedocs.io>`__
-# - **Mealpy Library**:
-#   `mealpy.readthedocs.io <https://mealpy.readthedocs.io>`__
-# - **Bio-inspired Optimization**: Yang (2020) - Nature-Inspired
-#   Optimization Algorithms
+# -  **Original SMA Paper**: Li et al. (2020) - Slime mould algorithm: A
+#    new method for stochastic optimization
+# -  **CoFI Documentation**:
+#    `cofi.readthedocs.io <https://cofi.readthedocs.io>`__
+# -  **Mealpy Library**:
+#    `mealpy.readthedocs.io <https://mealpy.readthedocs.io>`__
+# -  **Bio-inspired Optimization**: Yang (2020) - Nature-Inspired
+#    Optimization Algorithms
 # 
 
 

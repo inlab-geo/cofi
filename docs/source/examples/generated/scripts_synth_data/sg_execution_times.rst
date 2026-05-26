@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**73:38.030** total execution time for 24 files **from examples/generated/scripts_synth_data**:
+**44:56.494** total execution time for 28 files **from examples/generated/scripts_synth_data**:
 
 .. container::
 
@@ -32,75 +32,87 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_caber_inversion.py` (``caber_inversion.py``)
-     - 25:04.009
-     - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_inversion.py` (``receiver_function_inversion.py``)
-     - 11:22.593
+     - 12:11.620
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_finding_neptune_via_deterministic_inv.py` (``finding_neptune_via_deterministic_inv.py``)
-     - 10:43.954
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_parameter_estimation.py` (``three_survey_lines_parameter_estimation.py``)
-     - 05:42.213
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_latin_hypercube_sampling.py` (``three_survey_lines_latin_hypercube_sampling.py``)
-     - 04:46.500
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``pygimli_dcip.py``)
-     - 02:40.469
+     - 07:49.562
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_thin_plate_inversion.py` (``thin_plate_inversion.py``)
-     - 02:34.436
+     - 07:37.191
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_latin_hypercube_sampling.py` (``three_survey_lines_latin_hypercube_sampling.py``)
+     - 04:34.975
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_fmm_tomography_regularization_discussion.py` (``fmm_tomography_regularization_discussion.py``)
-     - 01:57.845
+     - 02:55.467
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_single_survey_line.py` (``single_survey_line.py``)
-     - 01:48.656
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_dcip.py` (``pygimli_dcip.py``)
+     - 02:49.980
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_Partition_modelling_sealevel_bayesbay.py` (``Partition_modelling_sealevel_bayesbay.py``)
-     - 01:38.295
+     - 01:54.510
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_sw_rf_joint_synthetic.py` (``sw_rf_joint_synthetic.py``)
-     - 01:25.944
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_single_survey_line_vertical_only.py` (``single_survey_line_vertical_only.py``)
-     - 01:09.065
+     - 01:48.654
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_linear_regression_neighpy.py` (``linear_regression_neighpy.py``)
-     - 01:06.538
+     - 01:09.318
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_smt_neighpy.py` (``three_survey_lines_smt_neighpy.py``)
-     - 00:32.438
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``pygimli_ert.py``)
-     - 00:25.262
+     - 00:44.679
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_smt_emcee.py` (``three_survey_lines_smt_emcee.py``)
-     - 00:11.598
+     - 00:26.419
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_linear_regression.py` (``linear_regression.py``)
-     - 00:06.443
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_pygimli_ert.py` (``pygimli_ert.py``)
+     - 00:24.181
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_smt_bayesbay.py` (``three_survey_lines_smt_bayesbay.py``)
-     - 00:06.113
+     - 00:09.964
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_linear_regression.py` (``linear_regression.py``)
+     - 00:09.672
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_slime_mould_algorithm_demo.py` (``slime_mould_algorithm_demo.py``)
-     - 00:04.448
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_surrogate_model_creation.py` (``three_survey_lines_surrogate_model_creation.py``)
-     - 00:04.049
-     - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``xray_tomography.py``)
-     - 00:03.596
+     - 00:04.967
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_border_collie_algorithm_demo.py` (``border_collie_algorithm_demo.py``)
-     - 00:03.567
+     - 00:03.575
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py` (``nonlinear_curve_fitting.py``)
+     - 00:01.759
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_caber_inversion.py` (``caber_inversion.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_finding_neptune_via_bayesian_inv.py` (``finding_neptune_via_bayesian_inv.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_linear_regression_reduced_likelihood.py` (``linear_regression_reduced_likelihood.py``)
+     - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_examples_generated_scripts_synth_data_modified_himmelblau.py` (``modified_himmelblau.py``)
      - 00:00.000
      - 0.0
-   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_nonlinear_curve_fitting.py` (``nonlinear_curve_fitting.py``)
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_receiver_function_neighpy.py` (``receiver_function_neighpy.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_rosenbrock_neighpy.py` (``rosenbrock_neighpy.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_single_survey_line.py` (``single_survey_line.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_single_survey_line_vertical_only.py` (``single_survey_line_vertical_only.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_parameter_estimation.py` (``three_survey_lines_parameter_estimation.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_three_survey_lines_surrogate_model_creation.py` (``three_survey_lines_surrogate_model_creation.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_examples_generated_scripts_synth_data_xray_tomography.py` (``xray_tomography.py``)
      - 00:00.000
      - 0.0

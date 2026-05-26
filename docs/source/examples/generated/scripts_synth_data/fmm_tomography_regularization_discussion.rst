@@ -95,7 +95,7 @@ Theoretical background
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-88
+.. GENERATED FROM PYTHON SOURCE LINES 68-89
 
 For forward modelling, a fast marching wave front tracker is used,
 utilizing the Fast Marching Fortran code within the package
@@ -104,27 +104,28 @@ The Fast Marching code is wrapped in package
 `pyfm2d <https://github.com/inlab-geo/pyfm2d>`__. Further details can be
 found in:
 
-- Rawlinson, N., de Kool, M. and Sambridge, M., 2006. Seismic wavefront
-  tracking in 3-D heterogeneous media: applications with multiple data
-  classes, Explor. Geophys., 37, 322-330.
-- Rawlinson, N. and Urvoy, M., 2006. Simultaneous inversion of active
-  and passive source datasets for 3-D seismic structure with application
-  to Tasmania, Geophys. Res. Lett., 33 L24313, 10.1029/2006GL028105.
-- de Kool, M., Rawlinson, N. and Sambridge, M. 2006. A practical grid
-  based method for tracking multiple refraction and reflection phases in
-  3D heterogeneous media, Geophys. J. Int., 167, 253-270.
-- Saygin, E. 2007. Seismic receiver and noise correlation based studies
-  in Australia, PhD thesis, Australian National University,
-  10.25911/5d7a2d1296f96.
+-  Rawlinson, N., de Kool, M. and Sambridge, M., 2006. Seismic wavefront
+   tracking in 3-D heterogeneous media: applications with multiple data
+   classes, Explor. Geophys., 37, 322-330.
+-  Rawlinson, N. and Urvoy, M., 2006. Simultaneous inversion of active
+   and passive source datasets for 3-D seismic structure with
+   application to Tasmania, Geophys. Res. Lett., 33 L24313,
+   10.1029/2006GL028105.
+-  de Kool, M., Rawlinson, N. and Sambridge, M. 2006. A practical grid
+   based method for tracking multiple refraction and reflection phases
+   in 3D heterogeneous media, Geophys. J. Int., 167, 253-270.
+-  Saygin, E. 2007. Seismic receiver and noise correlation based studies
+   in Australia, PhD thesis, Australian National University,
+   10.25911/5d7a2d1296f96.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 91-94
+.. GENERATED FROM PYTHON SOURCE LINES 92-95
 
 0. Import modules
 -----------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-103
+.. GENERATED FROM PYTHON SOURCE LINES 95-104
 
 .. code-block:: Python
 
@@ -144,7 +145,7 @@ found in:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-114
+.. GENERATED FROM PYTHON SOURCE LINES 106-115
 
 .. code-block:: Python
 
@@ -164,7 +165,7 @@ found in:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-129
+.. GENERATED FROM PYTHON SOURCE LINES 120-130
 
 Understanding the inference problem
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -177,7 +178,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 (red, top left) and the other with higher velocity (blue, bottom right).
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-135
+.. GENERATED FROM PYTHON SOURCE LINES 130-136
 
 .. code-block:: Python
 
@@ -194,7 +195,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 137-147
+.. GENERATED FROM PYTHON SOURCE LINES 138-148
 
 .. code-block:: Python
 
@@ -226,7 +227,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-155
+.. GENERATED FROM PYTHON SOURCE LINES 150-156
 
 .. code-block:: Python
 
@@ -248,13 +249,13 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-163
+.. GENERATED FROM PYTHON SOURCE LINES 161-164
 
 1. Problem setup and utilities
 ------------------------------
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 163-170
+.. GENERATED FROM PYTHON SOURCE LINES 164-171
 
 .. code-block:: Python
 
@@ -272,7 +273,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 172-221
+.. GENERATED FROM PYTHON SOURCE LINES 173-222
 
 .. code-block:: Python
 
@@ -332,7 +333,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 226-232
+.. GENERATED FROM PYTHON SOURCE LINES 227-233
 
 2. Invert with quadratic smoothing and damping regularization terms
 -------------------------------------------------------------------
@@ -341,7 +342,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 232-237
+.. GENERATED FROM PYTHON SOURCE LINES 233-238
 
 .. code-block:: Python
 
@@ -357,7 +358,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 239-248
+.. GENERATED FROM PYTHON SOURCE LINES 240-249
 
 .. code-block:: Python
 
@@ -377,7 +378,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 250-256
+.. GENERATED FROM PYTHON SOURCE LINES 251-257
 
 .. code-block:: Python
 
@@ -394,13 +395,13 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 261-264
+.. GENERATED FROM PYTHON SOURCE LINES 262-265
 
 2.2 Define InversionOptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 264-276
+.. GENERATED FROM PYTHON SOURCE LINES 265-277
 
 .. code-block:: Python
 
@@ -423,13 +424,13 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 281-284
+.. GENERATED FROM PYTHON SOURCE LINES 282-285
 
 2.3 Start an inversion
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 284-289
+.. GENERATED FROM PYTHON SOURCE LINES 285-290
 
 .. code-block:: Python
 
@@ -446,36 +447,43 @@ model. As you can see, there are two anomalies, one with lower velocity
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 2732.626320099507
-    Iteration #1, updated objective function value: 14.571773140801513
-    Iteration #2, updated objective function value: 0.864153252963869
-    Iteration #3, updated objective function value: 0.09545236565095974
-    Iteration #4, updated objective function value: 0.048804903439369156
-    Iteration #5, updated objective function value: 0.0410238856603939
-    Iteration #6, updated objective function value: 0.037028541092116334
-    Change in model parameters below tolerance, stopping.
+    Iteration #0, updated objective function value: 37346.04444673342
+    Iteration #1, updated objective function value: 1496.5260409442917
+    Iteration #2, updated objective function value: 186.6540128296109
+    Iteration #3, updated objective function value: 49.72207315667848
+    Iteration #4, updated objective function value: 44.59552267851312
+    Iteration #5, updated objective function value: 87.36430757337139
+    Iteration #6, updated objective function value: 25.36158241794411
+    Iteration #7, updated objective function value: 36.87090297015299
+    Iteration #8, updated objective function value: 12.617214770325097
+    Iteration #9, updated objective function value: 13.857067302487787
+    Iteration #10, updated objective function value: 7.8961362057078714
+    Iteration #11, updated objective function value: 10.282043752198193
+    Iteration #12, updated objective function value: 14.08368705414384
+    Iteration #13, updated objective function value: 10.513448351701289
+    Iteration #14, updated objective function value: 5.3676081138584415
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00050249 0.00050006 0.00049594 ... 0.00050292 0.00050061 0.00049852]
-    num_iterations: 6
-    objective_val: 0.037028541092116334
-    n_obj_evaluations: 8
-    n_grad_evaluations: 7
-    n_hess_evaluations: 7
+    model: [0.00037221 0.00037399 0.00037577 ... 0.00061149 0.00061299 0.00061453]
+    num_iterations: 14
+    objective_val: 5.3676081138584415
+    n_obj_evaluations: 16
+    n_grad_evaluations: 15
+    n_hess_evaluations: 15
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 294-297
+.. GENERATED FROM PYTHON SOURCE LINES 295-298
 
 2.4 Plotting
 ~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 297-302
+.. GENERATED FROM PYTHON SOURCE LINES 298-303
 
 .. code-block:: Python
 
@@ -508,7 +516,7 @@ model. As you can see, there are two anomalies, one with lower velocity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 307-325
+.. GENERATED FROM PYTHON SOURCE LINES 308-326
 
 --------------
 
@@ -529,7 +537,7 @@ prior term.
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 325-330
+.. GENERATED FROM PYTHON SOURCE LINES 326-331
 
 .. code-block:: Python
 
@@ -545,7 +553,7 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 332-343
+.. GENERATED FROM PYTHON SOURCE LINES 333-344
 
 .. code-block:: Python
 
@@ -567,7 +575,7 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 345-350
+.. GENERATED FROM PYTHON SOURCE LINES 346-351
 
 .. code-block:: Python
 
@@ -583,13 +591,13 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 355-358
+.. GENERATED FROM PYTHON SOURCE LINES 356-359
 
 3.2 Start an inversion
 ~~~~~~~~~~~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 358-364
+.. GENERATED FROM PYTHON SOURCE LINES 359-365
 
 .. code-block:: Python
 
@@ -607,29 +615,29 @@ prior term.
 
  .. code-block:: none
 
-    Iteration #0, updated objective function value: 2110.777937099585
-    Iteration #1, updated objective function value: 66.67816301775082
-    Iteration #2, updated objective function value: 29.022854221611688
-    Iteration #3, updated objective function value: 25.97646790604363
-    Iteration #4, updated objective function value: 26.106093789467163
-    Iteration #5, updated objective function value: 25.98797008585241
-    Iteration #6, updated objective function value: 26.18580740001535
-    Iteration #7, updated objective function value: 26.025381395065104
-    Iteration #8, updated objective function value: 26.243153536733825
-    Iteration #9, updated objective function value: 26.048405322757883
-    Iteration #10, updated objective function value: 26.265545779528757
-    Iteration #11, updated objective function value: 26.055737806284025
-    Iteration #12, updated objective function value: 26.27918090585651
-    Iteration #13, updated objective function value: 26.052390481283368
-    Iteration #14, updated objective function value: 26.276045299377042
+    Iteration #0, updated objective function value: 2248.1364063962765
+    Iteration #1, updated objective function value: 92.79030072251801
+    Iteration #2, updated objective function value: 28.63098462661843
+    Iteration #3, updated objective function value: 26.08983730748967
+    Iteration #4, updated objective function value: 26.279799379783867
+    Iteration #5, updated objective function value: 26.071267115197394
+    Iteration #6, updated objective function value: 26.298470633668593
+    Iteration #7, updated objective function value: 26.079080995248482
+    Iteration #8, updated objective function value: 26.309599744775284
+    Iteration #9, updated objective function value: 26.07521806350919
+    Iteration #10, updated objective function value: 26.310385039780268
+    Iteration #11, updated objective function value: 26.074474718579328
+    Iteration #12, updated objective function value: 26.31244771548592
+    Iteration #13, updated objective function value: 26.075721652167612
+    Iteration #14, updated objective function value: 26.31302076319902
     ============================
     Summary for inversion result
     ============================
     SUCCESS
     ----------------------------
-    model: [0.00049592 0.00049447 0.00049258 ... 0.00050235 0.00050184 0.00050141]
+    model: [0.00049594 0.00049449 0.00049261 ... 0.00050232 0.00050181 0.00050139]
     num_iterations: 14
-    objective_val: 26.276045299377042
+    objective_val: 26.31302076319902
     n_obj_evaluations: 16
     n_grad_evaluations: 15
     n_hess_evaluations: 15
@@ -637,13 +645,13 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 369-372
+.. GENERATED FROM PYTHON SOURCE LINES 370-373
 
 3.3 Plotting
 ~~~~~~~~~~~~
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 372-377
+.. GENERATED FROM PYTHON SOURCE LINES 373-378
 
 .. code-block:: Python
 
@@ -676,7 +684,7 @@ prior term.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 382-387
+.. GENERATED FROM PYTHON SOURCE LINES 383-388
 
 4. L-curve
 ----------
@@ -684,7 +692,7 @@ prior term.
 Now we plot an L-curve for the smoothing regularization case.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 387-425
+.. GENERATED FROM PYTHON SOURCE LINES 388-426
 
 .. code-block:: Python
 
@@ -734,21 +742,21 @@ Now we plot an L-curve for the smoothing regularization case.
 
  .. code-block:: none
 
-    Finished inversion with lambda=0.0001: 4919.208862276753, 1.1077215497512172
-    Finished inversion with lambda=0.000774263682681127: 4909.46037589609, 1.107678330038469
-    Finished inversion with lambda=0.005994842503189409: 4907.201775560682, 1.1073606445617408
-    Finished inversion with lambda=0.046415888336127774: 3981.191191477827, 0.500019772787643
-    Finished inversion with lambda=0.3593813663804626: 2885.7472952376897, 0.21299589652291462
-    Finished inversion with lambda=2.782559402207126: 4068.2145006740657, 0.15884407930522168
-    Finished inversion with lambda=21.54434690031882: 7303.950121244663, 0.13542507680334792
-    Finished inversion with lambda=166.81005372000558: 41359.80997352429, 0.12603013923706388
-    Finished inversion with lambda=1291.5496650148827: 180651.95172363485, 0.11200860363980408
-    Finished inversion with lambda=10000.0: 492827.50044315314, 0.09598002399274089
+    Finished inversion with lambda=0.0001: 211500.44428776175, 0.13483254428280728
+    Finished inversion with lambda=0.000774263682681127: 260731.1744337502, 0.13496174203337225
+    Finished inversion with lambda=0.005994842503189409: 271386.6695804191, 0.13502504598278992
+    Finished inversion with lambda=0.046415888336127774: 451370.3900748823, 0.1327427726565774
+    Finished inversion with lambda=0.3593813663804626: 453312.5962048154, 0.13102864469172437
+    Finished inversion with lambda=2.782559402207126: 264044.6349749823, 0.13441418768920918
+    Finished inversion with lambda=21.54434690031882: 618549.3299736021, 0.13133502515213039
+    Finished inversion with lambda=166.81005372000558: 723609.8417236926, 0.12674068778075587
+    Finished inversion with lambda=1291.5496650148827: 316054.01961665374, 0.11347506334192359
+    Finished inversion with lambda=10000.0: 503616.0297332419, 0.09505699526967784
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 427-447
+.. GENERATED FROM PYTHON SOURCE LINES 428-448
 
 .. code-block:: Python
 
@@ -786,11 +794,11 @@ Now we plot an L-curve for the smoothing regularization case.
  .. code-block:: none
 
 
-    Text(0.19064224558106915, 3269.3541313701407, '5.0e+06')
+    Text(0.1341853290376085, 289115.0941701654, '5.0e+06')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 452-465
+.. GENERATED FROM PYTHON SOURCE LINES 453-466
 
 --------------
 
@@ -806,7 +814,7 @@ Watermark
    <!-- Otherwise please leave the below code cell unchanged -->
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 465-471
+.. GENERATED FROM PYTHON SOURCE LINES 466-472
 
 .. code-block:: Python
 
@@ -824,21 +832,21 @@ Watermark
 
  .. code-block:: none
 
-    cofi 0.2.11
-    numpy 2.3.5
-    matplotlib 3.10.8
+    cofi 0.2.11+71.gb28b5b0
+    numpy 2.2.6
+    matplotlib 3.10.9
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 482-482
+.. GENERATED FROM PYTHON SOURCE LINES 483-483
 
 sphinx_gallery_thumbnail_number = -1
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 57.845 seconds)
+   **Total running time of the script:** (2 minutes 55.467 seconds)
 
 
 .. _sphx_glr_download_examples_generated_scripts_synth_data_fmm_tomography_regularization_discussion.py:

@@ -31,38 +31,6 @@
    "name": "list"
   }
  ],
- "INVERT_INDICES.index": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "builtin_function_or_method"
-  }
- ],
- "Inversion": [
-  {
-   "is_class": true,
-   "is_explicit": false,
-   "module": "cofi._inversion",
-   "module_short": "cofi",
-   "name": "Inversion"
-  },
-  {
-   "is_class": true,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "Inversion"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "Inversion"
-  }
- ],
  "InversionOptions": [
   {
    "is_class": true,
@@ -86,6 +54,15 @@
    "name": "InversionOptions"
   }
  ],
+ "N_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
  "PARAM_BOUNDS": [
   {
    "is_class": false,
@@ -96,6 +73,15 @@
   }
  ],
  "PARAM_SCALES": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "PB": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -122,6 +108,42 @@
    "name": "int"
   }
  ],
+ "T_real": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "T_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "U_real": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "U_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
  "U_true": [
   {
    "is_class": false,
@@ -131,34 +153,7 @@
    "name": "ndarray"
   }
  ],
- "all_cb_returns": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "tuple"
-  }
- ],
- "all_res": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "tuple"
-  }
- ],
- "alpha": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "float"
-  }
- ],
- "alphas": [
+ "alphas_real": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -167,7 +162,7 @@
    "name": "ndarray"
   }
  ],
- "bounds_lower_scaled": [
+ "alphas_synth": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -176,29 +171,49 @@
    "name": "ndarray"
   }
  ],
- "bounds_upper_scaled": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
-  }
- ],
- "callback_func": [
+ "best_synth": [
   {
    "is_class": false,
    "is_explicit": false,
    "module": "builtins",
    "module_short": "builtins",
-   "name": "function"
-  },
+   "name": "dict"
+  }
+ ],
+ "bls_real": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "neptune_deterministic_methods",
-   "module_short": "neptune_deterministic_methods",
-   "name": "callback_func"
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "bls_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "bus_real": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
+  }
+ ],
+ "bus_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
   }
  ],
  "cofi.utils.InversionPool": [
@@ -231,15 +246,6 @@
    "name": "InversionPool"
   }
  ],
- "damping": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "float64"
-  }
- ],
  "dt": [
   {
    "is_class": false,
@@ -249,31 +255,31 @@
    "name": "int"
   }
  ],
- "estimated": [
+ "dt_real": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "dt_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "err": [
   {
    "is_class": false,
    "is_explicit": false,
    "module": "numpy",
    "module_short": "numpy",
    "name": "float64"
-  }
- ],
- "final_pred": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
-  }
- ],
- "final_residual": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
   }
  ],
  "generate_synthetic_data": [
@@ -381,6 +387,24 @@
    "name": "int"
   }
  ],
+ "idx": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
+ "idx_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "int"
+  }
+ ],
  "initial_conditions": [
   {
    "is_class": false,
@@ -399,430 +423,16 @@
    "name": "builtin_function_or_method"
   }
  ],
- "inv": [
+ "iterate_chi2_morozov": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "cofi._inversion",
-   "module_short": "cofi",
-   "name": "Inversion"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "Inversion"
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
   }
  ],
- "inv.run": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion",
-   "module_short": "cofi",
-   "name": "Inversion.run"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "Inversion.run"
-  }
- ],
- "inv_options": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion_options",
-   "module_short": "cofi",
-   "name": "InversionOptions"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionOptions"
-  }
- ],
- "inv_options.set_params": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion_options",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_params"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_params"
-  }
- ],
- "inv_options.set_tool": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion_options",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_tool"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_tool"
-  }
- ],
- "inv_options_alpha": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion_options",
-   "module_short": "cofi",
-   "name": "InversionOptions"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionOptions"
-  }
- ],
- "inv_options_alpha.set_params": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion_options",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_params"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_params"
-  }
- ],
- "inv_options_alpha.set_tool": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion_options",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_tool"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionOptions.set_tool"
-  }
- ],
- "inv_problem": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem"
-  }
- ],
- "inv_problem.name": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.name"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.name"
-  }
- ],
- "inv_problem.set_data": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_data"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_data"
-  }
- ],
- "inv_problem.set_forward": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_forward"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_forward"
-  }
- ],
- "inv_problem.set_initial_model": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_initial_model"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_initial_model"
-  }
- ],
- "inv_problem.set_jacobian": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_jacobian"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_jacobian"
-  }
- ],
- "inv_problem.set_residual": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_residual"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_residual"
-  }
- ],
- "inv_problem_alpha": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem"
-  }
- ],
- "inv_problem_alpha.name": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.name"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.name"
-  }
- ],
- "inv_problem_alpha.set_data": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_data"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_data"
-  }
- ],
- "inv_problem_alpha.set_forward": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_forward"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_forward"
-  }
- ],
- "inv_problem_alpha.set_initial_model": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_initial_model"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_initial_model"
-  }
- ],
- "inv_problem_alpha.set_jacobian": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_jacobian"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_jacobian"
-  }
- ],
- "inv_problem_alpha.set_residual": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._base_problem",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_residual"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "BaseProblem.set_residual"
-  }
- ],
- "inv_result": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi._inversion",
-   "module_short": "cofi",
-   "name": "InversionResult"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionResult"
-  }
- ],
- "inv_result.model": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
-  }
- ],
- "inversion_pool": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi.utils._multiple_runs",
-   "module_short": "cofi.utils",
-   "name": "InversionPool"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi.utils",
-   "module_short": "cofi.utils",
-   "name": "InversionPool"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionPool"
-  }
- ],
- "inversion_pool.run": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi.utils._multiple_runs",
-   "module_short": "cofi.utils",
-   "name": "InversionPool.run"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi.utils",
-   "module_short": "cofi.utils",
-   "name": "InversionPool.run"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "cofi",
-   "module_short": "cofi",
-   "name": "InversionPool.run"
-  }
- ],
- "jacobian": [
+ "jacobian_weighted": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -835,34 +445,7 @@
    "is_explicit": false,
    "module": "neptune_deterministic_methods",
    "module_short": "neptune_deterministic_methods",
-   "name": "jacobian"
-  }
- ],
- "l_curve_points": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "list"
-  }
- ],
- "lcurve_problems": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "list"
-  }
- ],
- "lcurve_problems.append": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "builtin_function_or_method"
+   "name": "jacobian_weighted"
   }
  ],
  "m_0": [
@@ -874,7 +457,7 @@
    "name": "ndarray"
   }
  ],
- "m_start": [
+ "m_start_real": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -892,6 +475,15 @@
    "name": "ndarray"
   }
  ],
+ "m_start_scaled.copy": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  }
+ ],
  "m_start_scaled.item": [
   {
    "is_class": false,
@@ -901,13 +493,13 @@
    "name": "builtin_function_or_method"
   }
  ],
- "mass_idx": [
+ "m_start_synth": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "int"
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "ndarray"
   }
  ],
  "n_bodies": [
@@ -937,13 +529,36 @@
    "name": "builtin_function_or_method"
   }
  ],
- "neptune_mass": [
+ "np.abs": [
   {
    "is_class": false,
    "is_explicit": false,
    "module": "numpy",
    "module_short": "numpy",
-   "name": "float64"
+   "name": "ufunc"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "abs"
+  }
+ ],
+ "np.argmin": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "argmin"
   }
  ],
  "np.array": [
@@ -976,6 +591,38 @@
    "module": "numpy",
    "module_short": "numpy",
    "name": "atleast_1d"
+  }
+ ],
+ "np.concatenate": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "concatenate"
+  }
+ ],
+ "np.full": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "full"
   }
  ],
  "np.linalg.norm": [
@@ -1014,8 +661,8 @@
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "_cython_3_2_1",
-   "module_short": "_cython_3_2_1",
+   "module": "_cython_3_0_12",
+   "module_short": "_cython_3_0_12",
    "name": "cython_function_or_method"
   },
   {
@@ -1026,22 +673,36 @@
    "name": "seed"
   }
  ],
- "param_idx": [
+ "np.std": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "int"
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "std"
   }
  ],
- "param_name": [
+ "np.sum": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "str"
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "_ArrayFunctionDispatcher"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "sum"
   }
  ],
  "param_names": [
@@ -1103,134 +764,6 @@
    "name": "plot_uranus_orbits"
   }
  ],
- "plt.figure": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "figure"
-  }
- ],
- "plt.grid": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "grid"
-  }
- ],
- "plt.plot": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "plot"
-  }
- ],
- "plt.show": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "show"
-  }
- ],
- "plt.text": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "text"
-  }
- ],
- "plt.title": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "title"
-  }
- ],
- "plt.xlabel": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "xlabel"
-  }
- ],
- "plt.ylabel": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "builtins",
-   "module_short": "builtins",
-   "name": "function"
-  },
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "matplotlib.pyplot",
-   "module_short": "matplotlib.pyplot",
-   "name": "ylabel"
-  }
- ],
  "pred_test": [
   {
    "is_class": false,
@@ -1256,7 +789,7 @@
    "name": "predict_U"
   }
  ],
- "predicted_uranus_trajectory": [
+ "predicted_uranus": [
   {
    "is_class": false,
    "is_explicit": false,
@@ -1265,31 +798,13 @@
    "name": "ndarray"
   }
  ],
- "reg_norm": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "float64"
-  }
- ],
- "regularization_norm": [
+ "predicted_uranus_real": [
   {
    "is_class": false,
    "is_explicit": false,
    "module": "numpy",
    "module_short": "numpy",
    "name": "ndarray"
-  }
- ],
- "res_norm": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "float64"
   }
  ],
  "residual": [
@@ -1308,15 +823,6 @@
    "name": "residual"
   }
  ],
- "residual_norm": [
-  {
-   "is_class": false,
-   "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
-  }
- ],
  "residual_test": [
   {
    "is_class": false,
@@ -1326,22 +832,38 @@
    "name": "ndarray"
   }
  ],
- "result": [
+ "residual_weighted": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "neptune_deterministic_methods",
+   "module_short": "neptune_deterministic_methods",
+   "name": "residual_weighted"
   }
  ],
- "result_unscaled": [
+ "result_real": [
   {
    "is_class": false,
    "is_explicit": false,
-   "module": "numpy",
-   "module_short": "numpy",
-   "name": "ndarray"
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "dict"
+  }
+ ],
+ "run_chi2_morozov_sweep": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "function"
   }
  ],
  "run_simulation": [
@@ -1408,13 +930,38 @@
    "name": "set_true_m"
   }
  ],
- "starting": [
+ "sigmas_synth": [
   {
    "is_class": false,
    "is_explicit": false,
    "module": "builtins",
    "module_short": "builtins",
-   "name": "float"
+   "name": "tuple"
+  }
+ ],
+ "sweep_synth": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "list"
+  }
+ ],
+ "time.time": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "builtins",
+   "module_short": "builtins",
+   "name": "builtin_function_or_method"
+  },
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "time",
+   "module_short": "time",
+   "name": "time"
   }
  ],
  "traceback.print_exc": [
@@ -1467,6 +1014,15 @@
    "module": "builtins",
    "module_short": "builtins",
    "name": "int"
+  }
+ ],
+ "val": [
+  {
+   "is_class": false,
+   "is_explicit": false,
+   "module": "numpy",
+   "module_short": "numpy",
+   "name": "float64"
   }
  ],
  "validate_config": [

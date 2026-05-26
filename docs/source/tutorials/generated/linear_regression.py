@@ -23,21 +23,21 @@ Linear regression
 # problem, where we fit a polynomial function to data, using three
 # different algorithms:
 # 
-# - by solution of a linear system of equations,
-# - by optimization of a data misfit function
-# - by Bayesian sampling of a Likelihood multiplied by a prior.
+# -  by solution of a linear system of equations,
+# -  by optimization of a data misfit function
+# -  by Bayesian sampling of a Likelihood multiplied by a prior.
 # 
 # --------------
 # 
 # Learning outcomes
 # -----------------
 # 
-# - A demonstration of running CoFI for a class of parameter fitting
-#   problem. Example of a CoFI **template**.
-# - A demonstration of how CoFI may be used to **experiment with different
-#   inference approaches** under a common interface.
-# - A demonstration of CoFI’s **expandability** in that it may be used
-#   with pre-set, or user defined, misfits, likelihood or priors.
+# -  A demonstration of running CoFI for a class of parameter fitting
+#    problem. Example of a CoFI **template**.
+# -  A demonstration of how CoFI may be used to **experiment with
+#    different inference approaches** under a common interface.
+# -  A demonstration of CoFI’s **expandability** in that it may be used
+#    with pre-set, or user defined, misfits, likelihood or priors.
 # 
 
 # Environment setup (uncomment code below)
@@ -120,13 +120,13 @@ plot_data()
 # 
 # where:
 # 
-# - :math:`\textbf{d}` is the vector of data values,
-#   (:math:`y_0,y_1,\dots,y_N`);
-# - :math:`\textbf{m}` is the vector of model parameters,
-#   (:math:`m_0,m_1,m_2`);
-# - :math:`G` is the basis matrix (or design matrix) of this linear
-#   regression problem (also called the **Jacobian** matrix for this
-#   linear problem).
+# -  :math:`\textbf{d}` is the vector of data values,
+#    (:math:`y_0,y_1,\dots,y_N`);
+# -  :math:`\textbf{m}` is the vector of model parameters,
+#    (:math:`m_0,m_1,m_2`);
+# -  :math:`G` is the basis matrix (or design matrix) of this linear
+#    regression problem (also called the **Jacobian** matrix for this
+#    linear problem).
 # 
 # We have a set of noisy data values, :math:`y_i (i=0,\dots,N)`, measured
 # at known locations, :math:`x_i (i=0,\dots,N)`, and wish to find the best
@@ -219,42 +219,42 @@ plot_model(x,true_y, "true model")
 # In the workflow of ``cofi``, there are three main components:
 # ``BaseProblem``, ``InversionOptions``, and ``Inversion``.
 # 
-# - ``BaseProblem`` defines the inverse problem including any user
-#   supplied quantities such as data vector, number of model parameters
-#   and measure of fit between model predictions and data.
+# -  ``BaseProblem`` defines the inverse problem including any user
+#    supplied quantities such as data vector, number of model parameters
+#    and measure of fit between model predictions and data.
 # 
-#   .. code:: python
+#    .. code:: python
 # 
-#      inv_problem = BaseProblem()
-#      inv_problem.set_objective(some_function_here)
-#      inv_problem.set_jacobian(some_function_here)
-#      inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
+#       inv_problem = BaseProblem()
+#       inv_problem.set_objective(some_function_here)
+#       inv_problem.set_jacobian(some_function_here)
+#       inv_problem.set_initial_model(a_starting_point) # if needed, e.g. we are solving a nonlinear problem by optimization
 # 
-#    
+#     
 # 
-# - ``InversionOptions`` describes details about how one wants to run the
-#   inversion, including the backend tool and solver-specific parameters.
-#   It is based on the concept of a ``method`` and ``tool``.
+# -  ``InversionOptions`` describes details about how one wants to run the
+#    inversion, including the backend tool and solver-specific parameters.
+#    It is based on the concept of a ``method`` and ``tool``.
 # 
-#   .. code:: python
+#    .. code:: python
 # 
-#      inv_options = InversionOptions()
-#      inv_options.suggest_solving_methods()
-#      inv_options.set_solving_method("matrix solvers")
-#      inv_options.suggest_tools()
-#      inv_options.set_tool("scipy.linalg.lstsq")
-#      inv_options.summary()
+#       inv_options = InversionOptions()
+#       inv_options.suggest_solving_methods()
+#       inv_options.set_solving_method("matrix solvers")
+#       inv_options.suggest_tools()
+#       inv_options.set_tool("scipy.linalg.lstsq")
+#       inv_options.summary()
 # 
-#    
+#     
 # 
-# - ``Inversion`` can be seen as an inversion engine that takes in the
-#   above two as information, and will produce an ``InversionResult`` upon
-#   running.
+# -  ``Inversion`` can be seen as an inversion engine that takes in the
+#    above two as information, and will produce an ``InversionResult``
+#    upon running.
 # 
-#   .. code:: python
+#    .. code:: python
 # 
-#      inv = Inversion(inv_problem, inv_options)
-#      result = inv.run()
+#       inv = Inversion(inv_problem, inv_options)
+#       result = inv.run()
 # 
 # Internally CoFI decides the nature of the problem from the quantities
 # set by the user and performs internal checks to ensure it has all that
@@ -677,13 +677,16 @@ inv_result_3.summary()
 # documentation <https://python.arviz.org/en/latest/index.html>`__).
 # 
 
-import arviz as az
+import arviz
+import arviz_base
+from scipy.stats import gaussian_kde
 
 labels = ["m0", "m1", "m2","m3"]
 
 sampler = inv_result_3.sampler
-az_idata = az.from_emcee(sampler, var_names=labels)
+az_idata = arviz_base.from_emcee(sampler, var_names=labels)
 # az_idata = inv_result_3.to_arviz()      # alternatively
+
 
 ######################################################################
 #
@@ -694,17 +697,18 @@ az_idata.get("posterior")
 #
 
 # a standard `trace` plot
-axes = az.plot_trace(az_idata, backend_kwargs={"constrained_layout":True}); 
+pc = arviz.plot_trace_dist(az_idata)
 
-# add legends
-for i, axes_pair in enumerate(axes):
-    ax1 = axes_pair[0]
-    ax2 = axes_pair[1]
-    ax1.axvline(true_model[i], linestyle='dotted', color='red')
-    ax1.set_xlabel("parameter value")
-    ax1.set_ylabel("density value")
-    ax2.set_xlabel("number of iterations")
-    ax2.set_ylabel("parameter value")
+# add reference lines for true parameter values
+for i, label in enumerate(labels):
+    ax_kde = pc.iget_target(i, 0)
+    ax_trace = pc.iget_target(i, 1)
+    ax_kde.axvline(true_model[i], linestyle='dotted', color='red')
+    ax_kde.set_xlabel("parameter value")
+    ax_kde.set_ylabel("density value")
+    ax_trace.set_xlabel("number of iterations")
+    ax_trace.set_ylabel("parameter value")
+
 
 ######################################################################
 #
@@ -716,28 +720,40 @@ print(f"autocorrelation time: {tau}")
 #
 
 # a Corner plot
+import numpy as np
 
-fig, axes = plt.subplots(nparams, nparams, figsize=(12,8))
+pm = arviz.plot_pair(
+    az_idata.sel(draw=slice(300,None)),
+    marginal=True,
+    triangle="lower",
+    visuals={"scatter": False},
+)
 
-if(False): # if we are plotting the model ensemble use this
-    az.plot_pair(
-        az_idata.sel(draw=slice(300,None)), 
-        marginals=True, 
-        reference_values=dict(zip([f"m{i}" for i in range(4)], true_model.tolist())),
-        ax=axes,
-    );
-else: # if we wish to plot a kernel density plot then use this option
-    az.plot_pair(
-        az_idata.sel(draw=slice(300,None)), 
-        marginals=True, 
-        reference_values=dict(zip([f"m{i}" for i in range(4)], true_model.tolist())),
-        kind="kde",
-        kde_kwargs={
-            "hdi_probs": [0.3, 0.6, 0.9],  # Plot 30%, 60% and 90% HDI contours
-            "contourf_kwargs": {"cmap": "Blues"},
-        },
-        ax=axes,
-    );
+# Add KDE contours and reference values manually
+posterior = az_idata.sel(draw=slice(300,None))["posterior"]
+var_list = list(posterior.data_vars)
+n_vars = len(var_list)
+
+for ii in range(n_vars):
+    for jj in range(n_vars):
+        try:
+            ax = pm.iget_target(ii, jj)
+        except (ValueError, IndexError):
+            continue
+        if ii == jj:
+            ax.axvline(true_model[ii], linestyle='dotted', color='red')
+        elif ii > jj:
+            xd = posterior[var_list[jj]].values.flatten()
+            yd = posterior[var_list[ii]].values.flatten()
+            kde = gaussian_kde(np.vstack([xd, yd]))
+            xmin, xmax = xd.min(), xd.max()
+            ymin, ymax = yd.min(), yd.max()
+            xx, yy = np.mgrid[xmin:xmax:100j, ymin:ymax:100j]
+            zz = kde(np.vstack([xx.ravel(), yy.ravel()])).reshape(xx.shape)
+            ax.contourf(xx, yy, zz, levels=10, cmap="Blues")
+            ax.contour(xx, yy, zz, levels=10, colors="grey", linewidths=0.5, alpha=0.5)
+            ax.plot(true_model[jj], true_model[ii], 'x', color='red', ms=8, markeredgewidth=2)
+
 
 ######################################################################
 #
@@ -1089,8 +1105,8 @@ plot_model(x,true_y, "True model", color="darkorange")
 # Where to next?
 # --------------
 # 
-# - Linear regression with Eustatic Sea-level data - `link to
-#   notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
+# -  Linear regression with Eustatic Sea-level data - `link to
+#    notebook <https://github.com/inlab-geo/cofi-examples/blob/main/examples/linear_regression/linear_regression_sealevel.ipynb>`__
 # 
 
 
