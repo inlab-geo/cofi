@@ -5,6 +5,8 @@ Installation
 Install CoFI
 ------------
 
+**Note**: When installing CoFI we recommend using Python version 3.12 for stability
+
 **Step 1**: (*Optional*) Set up a virtual environment.
 
 We strongly recommend installing CoFI within a 
@@ -20,7 +22,7 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
     .. tab-item:: venv
 
-      Ensure you have `python>=3.8`. Then, you can create a new virtual environment by 
+      Ensure you have `python>=3.10`. Then, you can create a new virtual environment by 
       running the command:
 
       .. code-block:: console
@@ -156,9 +158,68 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
     CoFI is available on `PyPI <https://pypi.org/project/cofi/>`_, so for most users
     installation is as simple as:
 
-    .. code-block:: console
+    1. Install CoFI from PyPI
 
+      .. code-block:: console 
+
+      $ pip install --upgrade pip
       $ pip install cofi
+
+    2. Clone the examples repository
+
+      .. code-block:: console  
+
+      $ git clone https://github.com/inlab-geo/cofi-examples.git
+      $ cd cofi-examples
+
+    3. Install the full dependency set for the examples
+
+      .. code-block:: console 
+
+      $ pip install -r envs/requirements.txt
+
+    4. Optional: run the examples in JupyterLab
+
+      .. code-block:: console 
+
+      $ jupyter-lab
+
+  .. tab-item:: Docker
+
+    CoFI is also available through the pre-built INLAB Docker image.
+
+    1. Ensure Docker is installed
+
+    2. Download the pre-built CoFI environment
+
+       .. code-block:: console
+
+          $ docker pull inlabgeo/inlab:latest
+
+    3. Start the Docker container
+
+       .. code-block:: console
+
+          $ docker run -p 8888:8888 inlabgeo/inlab:latest
+
+    4. Open JupyterLab in your browser
+
+       Go to:
+
+       .. code-block:: console
+
+          http://127.0.0.1:8888
+
+    5. Retrieve the access token from the terminal
+
+       It will look similar to:
+
+       .. code-block:: console
+
+          http://27ddc0449990:8888/lab?token=fa9af2f42563a048c58316c690e416a01956238ba580e963
+
+       Copy the token after ``token=`` and paste it into the
+       ``Password or token`` field in JupyterLab.
 
   .. tab-item:: conda / mamba
 
