@@ -160,29 +160,29 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
     1. Install CoFI from PyPI
 
-      .. code-block:: console 
+    .. code-block:: console 
 
-        $ pip install --upgrade pip
-        $ pip install cofi
+      $ pip install --upgrade pip
+      $ pip install cofi
 
     2. Clone the examples repository
 
-      .. code-block:: console  
+    .. code-block:: console  
 
-        $ git clone https://github.com/inlab-geo/cofi-examples.git
-        $ cd cofi-examples
+      $ git clone https://github.com/inlab-geo/cofi-examples.git
+      $ cd cofi-examples
 
     3. Install the full dependency set for the examples
 
-      .. code-block:: console 
+    .. code-block:: console 
 
-        $ pip install -r envs/requirements.txt
+      $ pip install -r envs/requirements.txt
 
     4. Optional: run the examples in JupyterLab
 
-      .. code-block:: console 
+    .. code-block:: console 
 
-        $ jupyter-lab
+      $ jupyter-lab
 
   .. tab-item:: Docker
 
