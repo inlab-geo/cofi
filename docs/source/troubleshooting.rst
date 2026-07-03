@@ -1,3 +1,7 @@
+===============
+Troubleshooting
+===============
+
 Mac users should first update or reinstall Xcode, or at least the Xcode
 Command Line Tools, so that scientific Python packages can be built from
 source correctly.

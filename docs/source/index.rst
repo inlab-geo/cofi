@@ -18,6 +18,7 @@ Welcome to CoFI!
 
     introduction.rst
     installation.rst
+    troubleshooting.rst
     tutorials/generated/index.rst
     examples/generated/index.rst
     gallery/generated/index.rst
