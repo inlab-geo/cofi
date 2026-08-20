@@ -31,8 +31,17 @@ def all_tools_from_folder():
     tool_names_all_cap = {n.upper().replace("_", "") for n in tool_names}
     return tool_names_all_cap
 
+# public API in cofi.tools.__all__ that isn't a BaseInferenceTool subclass, so
+# it's exempt from the file-per-solver correspondence checked below
+NON_SOLVER_PUBLIC_API = {
+    "BaseInferenceTool",
+    "ToolCapabilities",
+    "CofiCapabilities",
+    "describe_capabilities",
+}
+
 def all_tools_from_init_all():
-    tool_names = {name for name in cofi.tools.__all__ if name != "BaseInferenceTool"}
+    tool_names = {name for name in cofi.tools.__all__ if name not in NON_SOLVER_PUBLIC_API}
     return tool_names
 
 def all_tools_from_init_table():

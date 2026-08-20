@@ -6,6 +6,7 @@ from ._inversion import Inversion, InversionResult, SamplingResult
 
 from . import utils
 from . import tools
+from .tools import describe_capabilities
 
 from ._version import __version__
 
@@ -16,6 +17,7 @@ __all__ = [
     "Inversion",  # public API, basic usage
     "InversionResult",  # public API, for advanced usage (own solver)
     "SamplingResult",  # public API, for advanced usage (own solver)
+    "describe_capabilities",  # public API, capabilities introspection
 ]
 
 

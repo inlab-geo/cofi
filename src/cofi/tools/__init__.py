@@ -11,6 +11,11 @@ from ._bayes_bay import BayesBay
 from ._neighpy import Neighpy, NeighpyI, NeighpyII
 from ._scipy_sparse_lstsq import ScipySparseLstSq
 from ._mealpy_sma import MealpySma
+from ._capabilities import (
+    ToolCapabilities,
+    CofiCapabilities,
+    describe_capabilities,
+)
 
 
 __all__ = [
@@ -28,6 +33,9 @@ __all__ = [
     "NeighpyII",
     "ScipySparseLstSq",
     "MealpySma",
+    "ToolCapabilities",  # public API, capabilities introspection
+    "CofiCapabilities",  # public API, capabilities introspection
+    "describe_capabilities",  # public API, capabilities introspection
 ]
 
 # inference tools table grouped by method:
