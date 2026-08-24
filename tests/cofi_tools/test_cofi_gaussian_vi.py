@@ -2,6 +2,10 @@ import numpy as np
 import pytest
 from scipy import sparse
 
+# CoFIGaussianVI needs CHOLMOD; it is an optional extra (pip install cofi[gaussian-vi])
+# because scikit-sparse is a compiled extension requiring SuiteSparse headers.
+pytest.importorskip("sksparse.cholmod", reason="requires scikit-sparse (CHOLMOD)")
+
 from cofi.tools import CoFIGaussianVI
 from cofi.tools._cofi_gaussian_vi import VISampler
 from cofi import BaseProblem, InversionOptions, Inversion
@@ -473,12 +477,21 @@ def test_perturbation_clamping():
     samples = np.array([[10.0, -20.0, 3.0, -1.0, 0.5]])
 
     # At iteration 0 with warmup=10, effective threshold = 0.1 * max_pert = 0.5
-    clamped = CoFIGaussianVI._clamp_perturbation(samples, mu, max_pert=5.0, iteration=0, warmup=10)
+    clamped, clipped = CoFIGaussianVI._clamp_perturbation(samples, mu, max_pert=5.0, iteration=0, warmup=10)
     assert np.all(np.abs(clamped - mu) <= 0.5 + 1e-10)
+    assert clipped is True
 
     # At iteration 10 (past warmup), threshold = full max_pert = 5.0
-    clamped = CoFIGaussianVI._clamp_perturbation(samples, mu, max_pert=5.0, iteration=10, warmup=10)
+    clamped, clipped = CoFIGaussianVI._clamp_perturbation(samples, mu, max_pert=5.0, iteration=10, warmup=10)
     assert np.all(np.abs(clamped - mu) <= 5.0 + 1e-10)
+    assert clipped is True
+
+    # Samples already inside the threshold must report clipped=False, which is
+    # what gates an iteration's ELBO into the convergence history.
+    small = np.array([[0.1, -0.2, 0.05, 0.0, 0.3]])
+    unclamped, clipped = CoFIGaussianVI._clamp_perturbation(small, mu, max_pert=5.0, iteration=10, warmup=10)
+    assert clipped is False
+    np.testing.assert_allclose(unclamped, small)
 
 
 def test_step_clipping():
@@ -564,6 +577,241 @@ def test_diminishing_step_size():
 def test_hessian_diagonal_floor():
     """Per-sample Hessian diagonal floor should prevent near-zero diagonals."""
     H = sparse.csc_matrix(np.array([[1e-10, 0.0], [0.0, 5.0]]))
-    H_floored = CoFIGaussianVI._enforce_hessian_diagonal_floor(H.copy(), 1e-4)
+    H_floored = CoFIGaussianVI._enforce_diagonal_floor(H.copy(), 1e-4)
     assert H_floored.diagonal()[0] >= 1e-4
     assert H_floored.diagonal()[1] == 5.0
+
+
+# ---------------------------------------------------------------------------
+# Regression tests for fixes on the gaussian-vi branch
+# ---------------------------------------------------------------------------
+
+
+def _linear_problem(N=4, M=6, seed=0):
+    """Small well-posed linear problem, returned as (problem, options)."""
+    rng = np.random.default_rng(seed)
+    G = rng.standard_normal((M, N))
+    d = G @ np.ones(N)
+    p = BaseProblem()
+    p.set_forward(lambda m: G @ m)
+    p.set_jacobian(lambda m: sparse.csr_matrix(G))
+    p.set_data(d)
+    p.set_data_covariance_inv(sparse.eye(M).tocsc())
+    p.set_initial_model(np.zeros(N))
+    o = InversionOptions()
+    o.set_tool("cofi.gaussian_vi")
+    o.set_params(prior_precision=sparse.eye(N).tocsc(), verbose=False)
+    return p, o
+
+
+def test_flow_grad_z_matches_finite_difference():
+    """Latent gradient must match d/dz of -log p(d,T(z)) - log|det J_T(z)|.
+
+    The log-det half is identically zero at a=1, b=0, so this asserts at
+    non-identity flow parameters where omitting it is a real error.
+    """
+    rng = np.random.default_rng(3)
+    N = 5
+    A = rng.standard_normal((N, N))
+    Qp = sparse.csc_matrix(A @ A.T + N * np.eye(N))
+    m_ref = rng.standard_normal(N)
+
+    def neg_log_joint(m):
+        dm = m - m_ref
+        return 0.5 * dm @ (Qp @ dm)
+
+    def grad_neg_log_joint(m):
+        return Qp @ (m - m_ref)
+
+    def objective(z, a, b):
+        m = CoFIGaussianVI._flow_forward(z, a, b)
+        return neg_log_joint(m) - CoFIGaussianVI._flow_log_det_jac(z, a, b)
+
+    for a, b in [
+        (np.ones(N), np.zeros(N)),                       # identity: term is 0
+        (np.full(N, 1.4), np.full(N, 0.3)),              # moved
+        (rng.uniform(0.5, 1.8, N), rng.normal(0, 0.4, N)),
+    ]:
+        z = rng.standard_normal(N) * 0.7
+        g_m = grad_neg_log_joint(CoFIGaussianVI._flow_forward(z, a, b))
+        analytic, _ = CoFIGaussianVI._flow_grad_z(g_m, z, a, b)
+
+        fd = np.zeros(N)
+        h = 1e-6
+        for i in range(N):
+            zp, zm = z.copy(), z.copy()
+            zp[i] += h
+            zm[i] -= h
+            fd[i] = (objective(zp, a, b) - objective(zm, a, b)) / (2 * h)
+
+        assert np.allclose(analytic, fd, rtol=1e-5, atol=1e-6), (
+            f"a={a}, b={b}: analytic={analytic}, fd={fd}"
+        )
+
+
+def test_flow_grad_z_omitting_logdet_is_detectably_wrong():
+    """Guard the guard: the naive (log-det-free) gradient must fail the check."""
+    rng = np.random.default_rng(11)
+    N = 4
+    a = np.full(N, 1.5)
+    b = np.full(N, 0.4)
+    z = rng.standard_normal(N)
+    g_m = rng.standard_normal(N)
+    correct, dTdz = CoFIGaussianVI._flow_grad_z(g_m, z, a, b)
+    naive = g_m * dTdz
+    assert not np.allclose(correct, naive, atol=1e-8)
+
+
+def test_non_symmetric_prior_precision_rejected():
+    """A non-symmetric precision must raise, not be silently symmetrised."""
+    p, o = _linear_problem()
+    D = sparse.diags([1.0, 1.0, 1.0, 1.0]).tolil()
+    D[0, 1] = 5.0  # break symmetry
+    o.set_params(prior_precision=D.tocsc(), verbose=False)
+    with pytest.raises(ValueError, match="symmetric"):
+        CoFIGaussianVI(p, o)
+
+
+def test_non_symmetric_data_covariance_inv_rejected():
+    p, o = _linear_problem()
+    Cd = sparse.eye(6).tolil()
+    Cd[0, 1] = 3.0
+    p.set_data_covariance_inv(Cd.tocsc())
+    with pytest.raises(ValueError, match="symmetric"):
+        CoFIGaussianVI(p, o)()
+
+
+def test_zero_line_search_steps_does_not_crash():
+    """map_line_search_steps=0 used to raise UnboundLocalError on f_trial."""
+    p, o = _linear_problem()
+    o.set_params(
+        prior_precision=sparse.eye(4).tocsc(),
+        map_line_search_steps=0,
+        map_num_iterations=2,
+        num_iterations=2,
+        verbose=True,
+    )
+    result = CoFIGaussianVI(p, o)()
+    assert np.all(np.isfinite(result["model"]))
+
+
+def test_zero_diagonal_floor_still_factorises():
+    """diagonal_floor=0 must not collapse the ridge escalation to all zeros."""
+    p, o = _linear_problem()
+    o.set_params(
+        prior_precision=sparse.eye(4).tocsc(),
+        diagonal_floor=0.0,
+        num_iterations=3,
+        verbose=False,
+    )
+    result = CoFIGaussianVI(p, o)()
+    assert np.all(np.isfinite(result["model"]))
+
+
+def test_non_positive_flow_a_min_rejected():
+    p, o = _linear_problem()
+    o.set_params(prior_precision=sparse.eye(4).tocsc(), flow_a_min=0.0, verbose=False)
+    with pytest.raises(ValueError, match="flow_a_min"):
+        CoFIGaussianVI(p, o)
+
+
+def test_clip_step_rejects_non_finite():
+    """inf in the step must not be laundered into nan by the rescaling."""
+    out = CoFIGaussianVI._clip_step(np.array([np.inf, 1.0, 2.0]), 5.0, np.ones(3))
+    assert np.all(np.isfinite(out))
+    assert np.allclose(out, 0.0)
+
+
+def test_convergence_not_permanently_disabled_by_early_spike():
+    """A single early high ELBO must not switch off early stopping forever.
+
+    The spike sits inside the 2*patience window, so a running-prefix-max
+    baseline would give improvement < 0 and refuse to converge; a windowed
+    baseline sees a flat plateau and converges.
+    """
+    patience, rtol = 3, 1e-4
+    history = [1.0, 1.0, 100.0] + [1.0] * 6  # spike within 2*patience of the tail
+    assert CoFIGaussianVI._check_convergence(history, patience, rtol)
+
+
+def test_convergence_still_false_while_improving():
+    history = [float(i) for i in range(40)]
+    assert not CoFIGaussianVI._check_convergence(history, 3, 1e-4)
+
+
+def test_batched_sampling_matches_per_draw():
+    """sample_deltas must agree with looped sample_delta on the same inputs."""
+    from cofi.tools._cofi_gaussian_vi import _sparse_cholesky
+
+    rng = np.random.default_rng(5)
+    n_dim = 12
+    B = rng.standard_normal((n_dim, n_dim))
+    Omega = sparse.csc_matrix(B @ B.T + n_dim * np.eye(n_dim))
+    factor = _sparse_cholesky(Omega)
+    Z = rng.standard_normal((7, n_dim))
+    batched = factor.sample_deltas(Z)
+    looped = np.array([factor.sample_delta(z) for z in Z])
+    assert np.allclose(batched, looped)
+
+
+def test_sampler_covariance_matches_precision_inverse():
+    """End-to-end check that draws really have covariance Omega^{-1}."""
+    rng = np.random.default_rng(7)
+    n_dim = 5
+    B = rng.standard_normal((n_dim, n_dim))
+    Omega = sparse.csc_matrix(B @ B.T + n_dim * np.eye(n_dim))
+    sampler = VISampler(
+        np.zeros(n_dim), Omega, random_state=np.random.default_rng(0)
+    )
+    draws = sampler.sample(40000)
+    emp = np.cov(draws.T)
+    target = np.linalg.inv(Omega.toarray())
+    assert np.max(np.abs(emp - target)) / np.max(np.abs(target)) < 0.15
+
+
+def test_solve_raises_on_rank_deficient_hessian():
+    """A singular Gauss-Newton Hessian must raise, not be silently ridged."""
+    G = np.array([[1.0, 2.0, 1.0], [2.0, 4.0, 0.0], [3.0, 6.0, 1.0]])  # col1 = 2*col0
+    H = sparse.csc_matrix(G.T @ G)
+    assert np.linalg.matrix_rank(H.toarray()) < H.shape[0]
+    with pytest.raises(np.linalg.LinAlgError):
+        CoFIGaussianVI._solve(H, np.array([1.0, 2.0, 3.0]))
+
+
+def test_convergence_reachable_when_clamp_always_binds():
+    """A posterior wider than max_perturbation must still be able to converge.
+
+    Excluding every clamped iteration from the convergence view would leave
+    it permanently empty here, silently disabling convergence_patience.
+    """
+    p, o = _linear_problem()
+    o.set_params(
+        prior_precision=sparse.eye(4).tocsc(),
+        max_perturbation=1e-6,   # clamp binds on every iteration, forever
+        perturbation_warmup=1,
+        num_iterations=80,
+        convergence_patience=5,
+        convergence_rtol=1e-3,
+        verbose=False,
+        random_seed=0,
+    )
+    result = CoFIGaussianVI(p, o)()
+    assert len(result["elbo_history"]) < 80, "convergence never fired under clamping"
+
+
+def test_to_arviz_path_with_vi_sampler():
+    """Inversion -> to_arviz must work for VISampler on arviz >= 1.0.
+
+    arviz 1.0 moved the group mapping to from_dict's first positional
+    argument; the pre-1.0 ``posterior=`` keyword form raises TypeError.
+    """
+    pytest.importorskip("arviz")
+    p, o = _linear_problem()
+    o.set_params(
+        prior_precision=sparse.eye(4).tocsc(), num_iterations=5, verbose=False
+    )
+    res = Inversion(p, o).run()
+    idata = res.to_arviz(num_samples=200)
+    model = idata.posterior["model"]
+    assert model.shape == (1, 200, 4)
+    assert model.dims == ("chain", "draw", "model_dim_0")

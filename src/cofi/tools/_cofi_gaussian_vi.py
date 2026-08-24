@@ -35,6 +35,32 @@ def _require_sparse(M, name):
         )
 
 
+def _require_symmetric(M, name, tol=1e-10):
+    """Raise ValueError if sparse ``M`` is not symmetric to within ``tol``.
+
+    CHOLMOD reads only one triangle of its input, so a non-symmetric matrix
+    is factorised as if it were ``triu(M) + triu(M).T`` -- silently giving a
+    posterior for a different matrix than the one used to build the
+    gradient.  The classic way to trip this is passing a first-difference
+    operator ``D`` as ``prior_precision`` instead of ``D.T @ D``.
+    """
+    # Via CSR: dia_matrix (what sparse.diags returns) has no .max().
+    Mc = M.tocsr()
+    diff = abs(Mc - Mc.T)
+    if diff.nnz == 0:
+        return
+    scale = max(float(abs(Mc).max()), 1.0)
+    asym = float(diff.max())
+    if asym > tol * scale:
+        raise ValueError(
+            f"{name} must be symmetric (max asymmetry {asym:.3e} exceeds "
+            f"{tol:.1e} * {scale:.3e}). CHOLMOD reads only one triangle, so a "
+            "non-symmetric matrix would be silently symmetrised and the "
+            "returned posterior would be wrong. If this is a regularisation "
+            "operator D, pass D.T @ D."
+        )
+
+
 def _require_cholmod():
     """Raise ImportError if CHOLMOD is not available.
 
@@ -86,6 +112,17 @@ class _CholmodFactor:
         """
         y = self._factor.solve(z, system="Lt")
         return y[self._perm_inv]
+
+    def sample_deltas(self, Z):
+        """Batched :meth:`sample_delta`.
+
+        Given ``Z`` of shape (n, N) with rows ~ N(0, I), return an (n, N)
+        array whose rows are ~ N(0, A^{-1}).  CHOLMOD accepts a 2-D
+        right-hand side, so all ``n`` triangular solves happen in a single C
+        call instead of ``n`` Python-level round-trips.
+        """
+        Y = self._factor.solve(np.asarray(Z, dtype=float).T, system="Lt")
+        return Y[self._perm_inv].T
 
 
 def _sparse_cholesky(Omega):
@@ -189,9 +226,7 @@ class VISampler:
         N = len(self.mu)
         Z = self._rng.standard_normal((n, N))
 
-        samples = np.empty((n, N))
-        for i in range(n):
-            samples[i] = self.mu + self._factor.sample_delta(Z[i])
+        samples = self.mu[np.newaxis, :] + self._factor.sample_deltas(Z)
 
         if self.flow_a is not None and self.flow_b is not None:
             samples = np.sinh(
@@ -199,6 +234,56 @@ class VISampler:
                 + self.flow_b[np.newaxis, :]
             )
         return samples
+
+    def to_arviz(self, num_samples=1000, **kwargs):
+        """Draw ``num_samples`` and wrap them in an :class:`arviz.InferenceData`.
+
+        ``SamplingResult.to_arviz`` has its own branch for this sampler, but it
+        calls ``arviz.from_dict(posterior=...)``, and arviz 1.0 moved the group
+        mapping to the first positional argument, so that keyword form raises
+        ``TypeError`` on arviz >= 1.0. We therefore do the conversion here and
+        shadow the inherited method (see :class:`_VIToArviz`), accepting either
+        arviz generation so the tool works whichever one is installed.
+
+        The result is cached on the sampler as ``arviz_inference_data``. Note
+        that it is *not* set on the ``SamplingResult``: the sampler is built
+        before that object exists, so this path cannot reach it.
+        """
+        import arviz
+
+        samples = self.sample(num_samples)
+        posterior = {"model": samples[np.newaxis, ...]}
+        try:
+            idata = arviz.from_dict({"posterior": posterior}, **kwargs)
+        except TypeError:  # arviz < 1.0
+            idata = arviz.from_dict(posterior=posterior, **kwargs)
+        self.arviz_inference_data = idata
+        return idata
+
+
+class _VIToArviz:
+    """Callable placed in the result dict under the key ``to_arviz``.
+
+    ``InversionResult.__init__`` does ``self.__dict__.update(res)``, so a
+    ``to_arviz`` entry becomes an instance attribute and shadows the
+    ``SamplingResult.to_arviz`` method for VI results only. That is what keeps
+    the arviz >= 1.0 fix inside this module instead of in ``_inversion.py``.
+
+    It exists as a class rather than a bound method so that ``summary()``,
+    which prints every result key, does not leak a memory address (see
+    ``test_summary``, which asserts no ``0x`` in the output).
+    """
+
+    __slots__ = ("_sampler",)
+
+    def __init__(self, sampler):
+        self._sampler = sampler
+
+    def __call__(self, num_samples=1000, **kwargs):
+        return self._sampler.to_arviz(num_samples, **kwargs)
+
+    def __repr__(self):
+        return "<bound VISampler.to_arviz>"
 
 
 class CoFIGaussianVI(BaseInferenceTool):
@@ -469,7 +554,7 @@ class CoFIGaussianVI(BaseInferenceTool):
 
     @classmethod
     def optional_in_problem(cls) -> dict:
-        return {"data_covariance": None}
+        return {}
 
     @classmethod
     def required_in_options(cls) -> set:
@@ -520,13 +605,26 @@ class CoFIGaussianVI(BaseInferenceTool):
             If scikit-sparse >= 0.5 (CHOLMOD) is unavailable.
         TypeError
             If ``prior_precision`` is not a scipy sparse matrix.
+        ValueError
+            If ``prior_precision`` is not symmetric, or if ``flow_a_min`` is
+            not strictly positive.
         """
         super().__init__(inv_problem, inv_options)
         _require_cholmod()
 
         self._Qp = self._params["prior_precision"]
         _require_sparse(self._Qp, "prior_precision")
+        _require_symmetric(self._Qp, "prior_precision")
         self._Qp = self._Qp.tocsc()
+
+        # log(a) and 1/a appear in the flow log-det and its gradient, so a
+        # non-positive lower clip would produce NaN/Inf rather than a bad fit.
+        if self._params["flow_a_min"] <= 0:
+            raise ValueError(
+                "flow_a_min must be strictly positive (got "
+                f"{self._params['flow_a_min']}); the sinh-arcsinh log-det "
+                "involves log(a) and 1/a."
+            )
 
         self._m_prior = (
             self._params["prior_mean"]
@@ -555,13 +653,19 @@ class CoFIGaussianVI(BaseInferenceTool):
         TypeError
             If ``data_covariance_inv`` or any ``jacobian(m)`` returned at
             runtime is not a scipy sparse matrix.
+        ValueError
+            If ``data_covariance_inv`` is not symmetric.  CHOLMOD reads only
+            one triangle, so a non-symmetric matrix would be silently
+            symmetrised and the posterior would be wrong.
         numpy.linalg.LinAlgError
-            If the precision matrix cannot be made positive-definite even
+            If the Gauss-Newton Hessian is singular during Phase 1, or if
+            the variational precision cannot be made positive-definite even
             after ridge regularisation.
         """
         m0 = np.asarray(self.inv_problem.initial_model).copy()
         Cd_inv = self.inv_problem.data_covariance_inv
         _require_sparse(Cd_inv, "data_covariance_inv")
+        _require_symmetric(Cd_inv, "data_covariance_inv")
         Cd_inv = Cd_inv.tocsc()
         d_obs = np.asarray(self.inv_problem.data)
 
@@ -593,6 +697,7 @@ class CoFIGaussianVI(BaseInferenceTool):
             "model": mu,
             "success": True,
             "sampler": sampler,
+            "to_arviz": _VIToArviz(sampler),
             "precision": Omega,
             "elbo_history": elbo_history,
             "num_iterations": len(elbo_history),
@@ -605,15 +710,30 @@ class CoFIGaussianVI(BaseInferenceTool):
     # ------------------------------------------------------------------
 
     @staticmethod
-    def _factor_and_logdet(Omega, diag_floor):
+    def _factor_and_logdet(Omega):
         """Factor sparse Omega via CHOLMOD with PD enforcement.
 
         Returns (_CholmodFactor, logdet, Omega).  Omega may be
         ridge-corrected if the original was not PD.
+
+        The ridge base is derived from Omega's own scale.  It used to be
+        derived from the ``diagonal_floor`` option, which meant setting that
+        option to 0 (a legitimate way to disable diagonal clamping) made
+        every ridge zero and simply retried the identical failing
+        factorisation ten times.
+
+        This escalation is appropriate for the VI precision, which is a
+        running average that may drift indefinite.  It is *not* appropriate
+        for a one-off solve of a possibly rank-deficient matrix, where
+        silently ridging would return the solution to a different system --
+        see :meth:`_solve`.
         """
         N = Omega.shape[0]
+        diag = Omega.diagonal()
+        scale = float(np.mean(np.abs(diag))) if diag.size else 0.0
+        base = max(1e-12 * max(scale, 1.0), 1e-12)
         for attempt in range(10):
-            ridge = diag_floor * (10**attempt) if attempt > 0 else 0.0
+            ridge = base * (10**attempt) if attempt > 0 else 0.0
             try:
                 test = (
                     Omega + ridge * sparse.eye(N, format="csc")
@@ -622,20 +742,19 @@ class CoFIGaussianVI(BaseInferenceTool):
                 )
                 factor = _sparse_cholesky(test.tocsc())
                 return factor, factor.logdet(), test if ridge > 0 else Omega
-            except Exception:
+            except _cholmod.CholmodNotPositiveDefiniteError:
                 continue
         raise np.linalg.LinAlgError(
             "Precision matrix not positive definite after ridge correction"
         )
 
     def _sample_from_factor(self, mu, factor, n):
-        """Draw n samples from N(mu, Omega^{-1}) using CHOLMOD factor."""
-        N = len(mu)
-        Z = self._rng.standard_normal((n, N))
-        samples = np.empty((n, N))
-        for i in range(n):
-            samples[i] = mu + factor.sample_delta(Z[i])
-        return samples
+        """Draw n samples from N(mu, Omega^{-1}) using CHOLMOD factor.
+
+        All ``n`` right-hand sides go through CHOLMOD in one call.
+        """
+        Z = self._rng.standard_normal((n, len(mu)))
+        return mu[np.newaxis, :] + factor.sample_deltas(Z)
 
     @staticmethod
     def _solve_from_factor(factor, b):
@@ -648,8 +767,30 @@ class CoFIGaussianVI(BaseInferenceTool):
 
     @staticmethod
     def _solve(Omega, b):
-        """Solve Omega x = b via sparse direct solve."""
-        return splinalg.spsolve(Omega.tocsc(), b)
+        """Solve Omega x = b via sparse direct solve.
+
+        Solves via CHOLMOD and *raises* on a non-PD or rank-deficient
+        matrix.  scipy's ``spsolve`` returns inf/nan with only a
+        MatrixRankWarning, silently poisoning the MAP iterate.  Note this
+        deliberately does not go through :meth:`_factor_and_logdet`: its
+        ridge escalation would quietly return the solution to a *different*
+        system, which for a Gauss-Newton step is no better than the nan.
+        """
+        try:
+            factor = _sparse_cholesky(Omega.tocsc())
+        except _cholmod.CholmodError as exc:
+            raise np.linalg.LinAlgError(
+                "Gauss-Newton Hessian is not positive definite (it may be "
+                "rank-deficient: check that the Jacobian has full column rank "
+                "and that prior_precision regularises the null space)."
+            ) from exc
+        x = factor.solve_A(b)
+        if not np.all(np.isfinite(x)):
+            raise np.linalg.LinAlgError(
+                "Gauss-Newton solve produced non-finite values; the Hessian "
+                "is numerically singular."
+            )
+        return x
 
     @staticmethod
     def _enforce_diagonal_floor(Omega, floor):
@@ -657,13 +798,6 @@ class CoFIGaussianVI(BaseInferenceTool):
         Omega = Omega.tocsc()
         Omega.setdiag(np.maximum(Omega.diagonal(), floor))
         return Omega
-
-    @staticmethod
-    def _enforce_hessian_diagonal_floor(H, floor):
-        """Clamp diagonal entries of a per-sample sparse Hessian to at least floor."""
-        H = H.tocsc()
-        H.setdiag(np.maximum(H.diagonal(), floor))
-        return H
 
     @staticmethod
     def _clamp_perturbation(samples, mu, max_pert, iteration, warmup):
@@ -674,14 +808,25 @@ class CoFIGaussianVI(BaseInferenceTool):
         ``max_pert`` is interpreted in the model's native units, applied
         coordinate-wise. For models whose components span very different
         scales, scale them externally (or set ``max_pert=0`` to disable).
+
+        Returns
+        -------
+        samples : numpy.ndarray
+            The clamped samples.
+        clipped : bool
+            True if the clamp actually bound on at least one coordinate.
+            Callers use this to tell whether the resulting log-joints are
+            drawn from the nominal Gaussian (and so whether they may be
+            combined with that Gaussian's entropy to form an ELBO).
         """
         if max_pert <= 0:
-            return samples
+            return samples, False
         frac = min(1.0, 0.1 + 0.9 * iteration / max(warmup, 1))
         threshold = frac * max_pert
         delta = samples - mu[np.newaxis, :]
+        clipped = bool(np.any(np.abs(delta) > threshold))
         delta = np.clip(delta, -threshold, threshold)
-        return mu[np.newaxis, :] + delta
+        return mu[np.newaxis, :] + delta, clipped
 
     @staticmethod
     def _clip_step(delta_mu, max_norm, mu):
@@ -691,7 +836,14 @@ class CoFIGaussianVI(BaseInferenceTool):
         ``0.1 * max(||mu||, 1)``, so a single update can move the mean by at
         most ~10% of its current magnitude. Set ``max_norm`` explicitly to
         override.
+
+        A non-finite step is rejected outright rather than rescaled: with
+        ``norm = inf`` the rescaling below would compute ``inf * 0.0 = nan``
+        for the offending entries and zero out every finite one, silently
+        turning the whole mean into NaN on the next update.
         """
+        if not np.all(np.isfinite(delta_mu)):
+            return np.zeros_like(delta_mu)
         if max_norm <= 0:
             max_norm = 0.1 * max(np.linalg.norm(mu), 1.0)
         norm = np.linalg.norm(delta_mu)
@@ -726,13 +878,23 @@ class CoFIGaussianVI(BaseInferenceTool):
 
     @staticmethod
     def _check_convergence(elbo_history, patience, rtol):
-        """True if ELBO has not improved significantly in patience iterations."""
+        """True if ELBO has not improved significantly in patience iterations.
+
+        The baseline is the best value in the ``patience`` iterations
+        immediately preceding the recent window, not a running maximum over
+        the whole history.  A running maximum makes ``improvement`` negative
+        forever after any single early high reading, which permanently
+        disables early stopping instead of merely deferring it.
+        """
         if patience <= 0 or len(elbo_history) < patience + 1:
             return False
         window = elbo_history[-(patience + 1) :]
         if not all(np.isfinite(e) for e in window):
             return False
-        baseline = max(elbo_history[: -patience])
+        prior = elbo_history[-(2 * patience) : -patience]
+        if not prior:
+            prior = elbo_history[:-patience]
+        baseline = max(prior)
         best_recent = max(elbo_history[-patience:])
         improvement = best_recent - baseline
         if improvement < 0:
@@ -791,25 +953,51 @@ class CoFIGaussianVI(BaseInferenceTool):
             f0 = 0.5 * res @ (Cd_inv @ res) + 0.5 * dm_prior @ (self._Qp @ dm_prior)
             slope = g @ delta
 
-            step = 1.0
+            # A Gauss-Newton H is PSD, so slope < 0 normally holds. If a
+            # user-supplied Q_p makes H indefinite, delta can be an ascent
+            # direction, and the Armijo test would then have a *raised*
+            # right-hand side and rubber-stamp a cost-increasing step.
+            if slope >= 0:
+                delta = -g
+                slope = g @ delta
+
+            # Only a step whose cost was actually evaluated and which passed
+            # Armijo may be committed. If every trial fails, take none: the
+            # previous code fell out of the loop having shrunk one extra
+            # time and committed an unevaluated point, whose tiny step_norm
+            # then tripped the tolerance test and printed "MAP converged".
+            step = 0.0
+            f_accepted = f0
+            trial_step = 1.0
             for _ in range(max_ls):
-                m_trial = m + step * delta
+                m_trial = m + trial_step * delta
                 res_trial = self.inv_problem.forward(m_trial) - d_obs
                 dm_trial = m_trial - self._m_prior
                 f_trial = (
                     0.5 * res_trial @ (Cd_inv @ res_trial)
                     + 0.5 * dm_trial @ (self._Qp @ dm_trial)
                 )
-                if f_trial <= f0 + armijo_c * step * slope:
+                if f_trial <= f0 + armijo_c * trial_step * slope:
+                    step = trial_step
+                    f_accepted = f_trial
                     break
-                step *= ls_shrink
+                trial_step *= ls_shrink
+
+            if step == 0.0:
+                if verbose:
+                    print(
+                        f"MAP iteration {it + 1}/{max_iter}: line search failed "
+                        f"after {max_ls} trials, stopping at cost {f0:.4e}",
+                        flush=True,
+                    )
+                break
 
             m = m + step * delta
             step_norm = np.linalg.norm(step * delta)
             if verbose:
                 print(
                     f"MAP iteration {it + 1}/{max_iter},"
-                    f" cost: {f_trial:.4e}, step: {step_norm:.2e}",
+                    f" cost: {f_accepted:.4e}, step: {step_norm:.2e}",
                     flush=True,
                 )
             if step_norm < tol:
@@ -884,13 +1072,20 @@ class CoFIGaussianVI(BaseInferenceTool):
         rtol = self._params["convergence_rtol"]
 
         elbo_history = []
+        # ELBOs are only comparable within a single clamping regime (see the
+        # note at the ELBO append below), so the convergence view is reset
+        # whenever the clamp switches between binding and not binding.
+        elbo_for_convergence = []
+        clamp_regime = None
 
         for it in range(niter):
-            factor, logdet_Omega, Omega = self._factor_and_logdet(Omega, diag_floor)
+            factor, logdet_Omega, Omega = self._factor_and_logdet(Omega)
             samples = self._sample_from_factor(mu, factor, nsamp)
 
             # Perturbation clamping with warmup
-            samples = self._clamp_perturbation(samples, mu, max_pert, it, warmup)
+            samples, clipped = self._clamp_perturbation(
+                samples, mu, max_pert, it, warmup
+            )
 
             g_acc = np.zeros(N)
             H_list = []
@@ -918,7 +1113,7 @@ class CoFIGaussianVI(BaseInferenceTool):
                 H_s = (J_s.T @ Cd_inv @ J_s + self._Qp).tocsc()
 
                 # Per-sample Hessian diagonal floor
-                H_s = self._enforce_hessian_diagonal_floor(H_s, h_diag_floor)
+                H_s = self._enforce_diagonal_floor(H_s, h_diag_floor)
 
                 g_acc += g_s
                 H_list.append(H_s)
@@ -937,9 +1132,22 @@ class CoFIGaussianVI(BaseInferenceTool):
             g_avg = g_acc / n_valid
             H_avg = sum(H_list[1:], H_list[0]) / n_valid
 
+            # When the clamp binds, `lls` are log-joints of a *truncated*
+            # distribution while the entropy term is that of the full
+            # Gaussian, so the sum is not the ELBO of any distribution -- it
+            # is biased upward. Within one regime every value carries the
+            # same bias and comparisons are still meaningful; it is only
+            # across the transition that they are not. So reset the window
+            # on a regime change rather than dropping clamped iterations,
+            # which would starve the test forever on a problem whose
+            # posterior is permanently wider than `max_perturbation`.
             elbo_history.append(self._compute_elbo(lls, logdet_Omega, N))
+            if clipped != clamp_regime:
+                clamp_regime = clipped
+                elbo_for_convergence = []
+            elbo_for_convergence.append(elbo_history[-1])
 
-            if self._check_convergence(elbo_history, patience, rtol):
+            if self._check_convergence(elbo_for_convergence, patience, rtol):
                 if verbose:
                     print(f"Gaussian VI converged at iteration {it + 1}", flush=True)
                 break
@@ -999,7 +1207,10 @@ class CoFIGaussianVI(BaseInferenceTool):
         - \tfrac{1}{2}\log(1 + z_i^2)\big]`.
         """
         s = a * np.arcsinh(z) + b
-        return np.sum(np.log(a) + np.log(np.cosh(s)) - 0.5 * np.log(1 + z**2))
+        # logaddexp(s, -s) - log 2 == log(cosh(s)) without the intermediate
+        # cosh, which overflows to inf for |s| > ~710.
+        log_cosh = np.logaddexp(s, -s) - np.log(2.0)
+        return np.sum(np.log(a) + log_cosh - 0.5 * np.log(1 + z**2))
 
     @staticmethod
     def _flow_grad_logdet(z, a, b):
@@ -1017,6 +1228,50 @@ class CoFIGaussianVI(BaseInferenceTool):
         s = a * arcsinh_z + b
         tanh_s = np.tanh(s)
         return 1.0 / a + arcsinh_z * tanh_s, tanh_s
+
+    @staticmethod
+    def _flow_grad_z(g_m, z, a, b):
+        r"""Latent-space descent gradient and the diagonal of :math:`\partial T/\partial z`.
+
+        The objective minimised in :math:`z`-space is
+
+        .. math::
+
+            L(z) = -\log p(d, T(z)) - \log|\det J_T(z)|
+
+        so its gradient is
+
+        .. math::
+
+            \nabla_z L = \frac{\partial T}{\partial z}\, g_m
+                       - \nabla_z \log|\det J_T(z)|
+
+        where ``g_m`` is the gradient of the *negative* log-joint with
+        respect to :math:`m`.  The second term is identically zero at
+        :math:`a = 1, b = 0`, so omitting it is invisible at warm start and
+        only biases the fit once the flow parameters move.
+
+        Parameters
+        ----------
+        g_m : numpy.ndarray, shape (N,)
+            Gradient of the negative log-joint w.r.t. the model.
+        z : numpy.ndarray, shape (N,)
+            Latent sample.
+        a, b : numpy.ndarray, shape (N,)
+            Sinh-arcsinh tail-weight and skewness parameters.
+
+        Returns
+        -------
+        grad_z : numpy.ndarray, shape (N,)
+            Descent gradient in latent space.
+        dTdz : numpy.ndarray, shape (N,)
+            Diagonal of the flow Jacobian, reused for the Hessian pull-back.
+        """
+        s = a * np.arcsinh(z) + b
+        sqrt_term = np.sqrt(1 + z**2)
+        dTdz = a * np.cosh(s) / sqrt_term
+        grad_logdet = np.tanh(s) * a / sqrt_term - z / (1 + z**2)
+        return g_m * dTdz - grad_logdet, dTdz
 
     @staticmethod
     def _flow_dTdparams(z, a, b):
@@ -1108,13 +1363,17 @@ class CoFIGaussianVI(BaseInferenceTool):
         mb, vb = np.zeros(N), np.zeros(N)
 
         elbo_history = []
+        elbo_for_convergence = []
+        clamp_regime = None
 
         for it in range(niter):
-            factor, logdet_Omega, Omega = self._factor_and_logdet(Omega, diag_floor)
+            factor, logdet_Omega, Omega = self._factor_and_logdet(Omega)
             z_samples = self._sample_from_factor(mu, factor, nsamp)
 
             # Perturbation clamping with warmup
-            z_samples = self._clamp_perturbation(z_samples, mu, max_pert, it, warmup)
+            z_samples, clipped = self._clamp_perturbation(
+                z_samples, mu, max_pert, it, warmup
+            )
 
             g_acc = np.zeros(N)
             H_list = []
@@ -1145,15 +1404,19 @@ class CoFIGaussianVI(BaseInferenceTool):
                 H_m = (J_s.T @ Cd_inv @ J_s + self._Qp).tocsc()
 
                 # Per-sample Hessian diagonal floor
-                H_m = self._enforce_hessian_diagonal_floor(H_m, h_diag_floor)
+                H_m = self._enforce_diagonal_floor(H_m, h_diag_floor)
 
-                # Chain rule through flow: dT/dz is diagonal
-                arcsinh_z = np.arcsinh(z_s)
-                s = a_flow * arcsinh_z + b_flow
-                dTdz = a_flow * np.cosh(s) / np.sqrt(1 + z_s**2)
+                # Chain rule through flow: dT/dz is diagonal. The latent
+                # gradient includes the flow log-det term; without it mu and
+                # Omega ascend a different function than the ELBO recorded
+                # below. g_acc is a *descent* accumulator (mu -= delta_mu),
+                # whereas ga_acc/gb_acc just below are *ascent*.
+                grad_z, dTdz = self._flow_grad_z(g_m, z_s, a_flow, b_flow)
+                if not np.all(np.isfinite(grad_z)):
+                    continue
 
                 D = sparse.diags(dTdz)
-                g_acc += g_m * dTdz
+                g_acc += grad_z
                 H_list.append((D @ H_m @ D).tocsc())
 
                 # Flow parameter gradients
@@ -1184,11 +1447,16 @@ class CoFIGaussianVI(BaseInferenceTool):
             ga_avg = ga_acc / n_valid
             gb_avg = gb_acc / n_valid
 
-            # ELBO: E_q(z)[log p(d,T(z)) + log|det J_T|] + H[q_z]
-            entropy = 0.5 * N * (1 + np.log(2 * np.pi)) - 0.5 * logdet_Omega
-            elbo_history.append(np.mean(elbo_terms) + entropy)
+            # ELBO: E_q(z)[log p(d,T(z)) + log|det J_T|] + H[q_z].
+            # See the Phase 2 note on why clamped iterations are excluded
+            # from the convergence view.
+            elbo_history.append(self._compute_elbo(elbo_terms, logdet_Omega, N))
+            if clipped != clamp_regime:
+                clamp_regime = clipped
+                elbo_for_convergence = []
+            elbo_for_convergence.append(elbo_history[-1])
 
-            if self._check_convergence(elbo_history, patience, rtol):
+            if self._check_convergence(elbo_for_convergence, patience, rtol):
                 if verbose:
                     print(f"SAS VI converged at iteration {it + 1}", flush=True)
                 break
