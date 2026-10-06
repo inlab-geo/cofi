@@ -378,6 +378,8 @@ cofi.BaseProblem
 
     .. automethod:: BaseProblem.forward
 
+    .. automethod:: BaseProblem.forward_and_jacobian
+
 
 
 
@@ -546,6 +548,10 @@ cofi.BaseProblem
 
     .. automethod:: BaseProblem.set_forward
 
+    .. automethod:: BaseProblem.set_forward_and_jacobian
+
+    .. automethod:: BaseProblem.clear_evaluation_cache
+
 
 
 
@@ -694,6 +700,8 @@ cofi.BaseProblem
     .. autoattribute:: BaseProblem.data_misfit_defined
 
     .. autoattribute:: BaseProblem.forward_defined
+
+    .. autoattribute:: BaseProblem.forward_and_jacobian_defined
 
     .. autoattribute:: BaseProblem.gradient_defined
 

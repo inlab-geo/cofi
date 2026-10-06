@@ -231,6 +231,7 @@ class BaseProblem:
         "regularization",
         "regularization_matrix",
         "forward",
+        "forward_and_jacobian",
         "data",
         "data_covariance",
         "data_covariance_inv",
@@ -467,6 +468,27 @@ class BaseProblem:
             when this method is not set and cannot be generated from known information
         """
         raise NotDefinedError(needs="jacobian")
+
+    def forward_and_jacobian(self, model: np.ndarray):
+        r"""method for computing the forward and its jacobian together, given a model
+
+        Parameters
+        ----------
+        model : np.ndarray
+            a model to evaluate
+
+        Returns
+        -------
+        tuple
+            ``(forward, jacobian)``, the same values :meth:`forward` and
+            :meth:`jacobian` would return for this model
+
+        Raises
+        ------
+        NotDefinedError
+            when this method is not set
+        """
+        raise NotDefinedError(needs="forward_and_jacobian")
 
     def jacobian_times_vector(
         self, model: np.ndarray, vector: np.ndarray, *args, **kwargs
@@ -870,6 +892,7 @@ class BaseProblem:
             )
         else:
             self.jacobian = _FunctionWrapper("jacobian", jac_func, args, kwargs)
+        self.__dict__.pop("forward_and_jacobian", None)
         self._update_autogen("jacobian")
 
     def set_jacobian_times_vector(
@@ -1067,7 +1090,54 @@ class BaseProblem:
             extra dict of keyword arguments for forward function
         """
         self.forward = _FunctionWrapper("forward", forward, args, kwargs)
+        self.__dict__.pop("forward_and_jacobian", None)
         self._update_autogen("forward")
+
+    def set_forward_and_jacobian(
+        self,
+        func: Callable[[np.ndarray], tuple],
+        args: list = None,
+        kwargs: dict = None,
+    ):
+        r"""Sets one function that computes the forward and its Jacobian together
+
+        Useful when both come out of the same expensive calculation. The result for
+        the most recent model is cached, so :meth:`forward` followed by
+        :meth:`jacobian` (or the reverse) at the same model calls ``func`` only once.
+        This replaces any existing forward and jacobian.
+
+        The function must be pure for a fixed model and fixed ``args``/``kwargs``. If
+        something it depends on changes, call :meth:`clear_evaluation_cache`. A later
+        :meth:`set_forward` or :meth:`set_jacobian` removes the combined function
+        (:attr:`forward_and_jacobian_defined` becomes ``False``) and keeps the other
+        projection.
+
+        Parameters
+        ----------
+        func : function - np.ndarray -> tuple
+            takes a model and returns a ``tuple`` of ``(forward, jacobian)``
+        args : list, optional
+            extra list of positional arguments for the function
+        kwargs : dict, optional
+            extra dict of keyword arguments for the function
+        """
+        joint = _JointFunctionWrapper("forward_and_jacobian", func, args, kwargs)
+        self.forward_and_jacobian = joint
+        self._joint_fj = joint  # kept after individual setters drop the public attribute
+        self.forward = _FunctionWrapper(
+            "forward", _joint_component, args=[joint, 0], autogen=True
+        )
+        self.jacobian = _FunctionWrapper(
+            "jacobian", _joint_component, args=[joint, 1], autogen=True
+        )
+        self._update_autogen("forward")
+        self._update_autogen("jacobian")
+
+    def clear_evaluation_cache(self):
+        r"""Clears the cached result of :meth:`forward_and_jacobian`, if one is set"""
+        joint = self.__dict__.get("_joint_fj")
+        if isinstance(joint, _JointFunctionWrapper):
+            joint.clear_cache()
 
     def set_data(
         self,
@@ -1492,6 +1562,11 @@ class BaseProblem:
         return self._check_defined(self.forward)
 
     @property
+    def forward_and_jacobian_defined(self) -> bool:
+        r"""indicates whether :meth:`forward_and_jacobian` has been defined"""
+        return self._check_defined(self.forward_and_jacobian)
+
+    @property
     def data_defined(self) -> bool:
         r"""indicates whether :meth:`data` has been defined"""
         return self._check_property_defined("data")
@@ -1824,6 +1899,10 @@ def _jacobian_times_vector_from_jcb(model, vector, jacobian):
         ) from exception
 
 
+def _joint_component(model, joint, index):
+    return joint(model)[index]
+
+
 def _matrix_to_func(_, matrix):
     return matrix
 
@@ -1880,3 +1959,46 @@ class _FunctionWrapper:
                 raise
             else:
                 raise InvocationError(func_name=self.name, autogen=self.autogen) from e
+
+
+class _JointFunctionWrapper(_FunctionWrapper):
+    """Wraps a function returning ``(forward, jacobian)``, caching the last model
+
+    Subclasses ``_FunctionWrapper`` so ``BaseProblem._check_defined`` does not call it
+    with a dummy model. The cache holds one entry, compared on model values, shape and
+    dtype. Failed or invalid evaluations are not cached.
+    """
+
+    def __init__(self, name, func, args: list = None, kwargs: dict = None):
+        super().__init__(name, func, args, kwargs)
+        self._cache = None
+
+    def __call__(self, model):
+        model = np.asarray(model)
+        if self._cache is not None:
+            cached_model, cached_result = self._cache
+            if (
+                cached_model.shape == model.shape
+                and cached_model.dtype == model.dtype
+                and np.array_equal(cached_model, model)
+            ):
+                return cached_result
+        result = super().__call__(model)
+        if not isinstance(result, tuple) or len(result) != 2:
+            try:
+                raise TypeError(
+                    f"expected a tuple of 2 elements, got {type(result).__name__}"
+                    + (f" of length {len(result)}" if hasattr(result, "__len__") else "")
+                )
+            except TypeError as e:
+                raise InvocationError(func_name=self.name, autogen=False) from e
+        self._cache = (model.copy(), result)
+        return result
+
+    def clear_cache(self):
+        self._cache = None
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state["_cache"] = None
+        return state
