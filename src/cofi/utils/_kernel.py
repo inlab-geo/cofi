@@ -27,14 +27,13 @@ class SquaredExponentialKernel:
 
     Attributes
     ----------
-    n_params : int
-        Number of kernel hyperparameters (always 1 for this kernel).
     n_data : int
         Number of data points.
     D2 : np.ndarray
         Precomputed squared-distance matrix, shape ``(n_data, n_data)``.
     """
 
+    #: Number of kernel hyperparameters (always 1 for this kernel).
     n_params = 1
 
     def __init__(self, positions, nugget=1e-10):
