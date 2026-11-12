@@ -6,8 +6,8 @@ Install CoFI
 ------------
 
 **Note**: CoFI requires Python 3.10 or newer and is tested with Python 3.10--3.13.
-We recommend Python 3.12 when using the optional examples because support for the
-newest Python release can lag across the wider scientific Python ecosystem.
+We recommend Python 3.12 when running cofi-examples because support for the
+newest Python releases can lag across the wider scientific Python ecosystem.
 
 **Step 1**: (*Optional*) Set up a virtual environment.
 
@@ -161,7 +161,7 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
     installation is as simple as:
 
     Step 1 installs the core CoFI package. Steps 2--4 are optional and are only
-    needed to run the examples.
+    needed to run cofi-examples.
 
     1. Install CoFI from PyPI
 
