@@ -26,12 +26,12 @@ class ReducedLikelihoodManager:
     cases : Union[str, List[str]], default='none'
         Covariance case(s). Either a single string applied to all, or a list
         with one case per dataset. Options: 'none', 'scaled', 'kernel',
-        'spherical', 'diag', 'full'
+        'spherical', 'diag', 'diag_legacy', 'full'
     Cd_refs : Optional[Union[np.ndarray, List[np.ndarray]]], default=None
         Reference covariance matrix(ces). Either a single matrix applied to all,
         or a list with one per dataset. Required for 'scaled' case.
         For 'none' case: defaults to identity matrix if not provided.
-        Not used for 'spherical', 'diag', or 'full' cases.
+        Not used for 'spherical', 'diag', 'diag_legacy', or 'full' cases.
     kernels : optional
         Kernel instance(s) for 'kernel' case. Either a single kernel
         applied to all datasets using 'kernel', or a list with one per

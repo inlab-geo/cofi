@@ -68,6 +68,7 @@ interface, CoFI empowers you to focus on what truly matters - the science.
 
     inv_problem = cofi.BaseProblem()
     inv_problem.set_objective(my_objective_func)
+    inv_problem.set_gradient(my_gradient_func)
     inv_problem.set_initial_model(my_starting_point)
 
     # Once a problem is defined, `cofi` can tell you what inference tools you can 
@@ -77,7 +78,7 @@ interface, CoFI empowers you to focus on what truly matters - the science.
     # Run an inversion with these lines:
     inv_options = cofi.InversionOptions()
     inv_options.set_tool("torch.optim")
-    inv_options.set_params(options={"num_iterations": 50, "algorithm": "Adam"})
+    inv_options.set_params(num_iterations=50, algorithm="Adam")
 
     inv = cofi.Inversion(inv_problem, inv_options)
     result = inv.run()

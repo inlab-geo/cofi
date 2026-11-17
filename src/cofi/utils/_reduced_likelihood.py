@@ -35,7 +35,7 @@ class ReducedLikelihood(BaseLikelihood):
         The observed data vector of shape (n_data,)
     forward_func : Callable
         A callable that takes model parameters and returns predicted data
-        of shape (n_data,). Should accept **fwd_kwargs if provided.
+        of shape (n_data,). Should accept ``**fwd_kwargs`` if provided.
     fwd_kwargs : dict, optional
         Keyword arguments to pass to forward_func
     G : Optional[np.ndarray], default=None

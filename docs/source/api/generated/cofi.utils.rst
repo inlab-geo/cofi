@@ -19,6 +19,8 @@ cofi.utils
 .. autosummary::
   :toctree: ./
 
+  cofi.utils.BaseLikelihood
+
   cofi.utils.BaseRegularization
 
   cofi.utils.GaussianPrior
@@ -30,6 +32,14 @@ cofi.utils
   cofi.utils.ModelCovariance
 
   cofi.utils.QuadraticReg
+
+  cofi.utils.ReducedLikelihood
+
+  cofi.utils.ReducedLikelihoodManager
+
+  cofi.utils.SPDEMaternReg
+
+  cofi.utils.SquaredExponentialKernel
 
 
 

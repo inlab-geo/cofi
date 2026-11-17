@@ -77,11 +77,21 @@ class BaseLikelihood(metaclass=ABCMeta):
 
         It works exactly the same as :meth:`log_likelihood`.
 
-        In other words, the following two usages are exactly the same::
+        In other words, the following two usages are exactly the same:
 
-        >>> my_likelihood = GaussianLikelihood(data, forward_func)
-        >>> log_p = my_likelihood(np.array([1,2,3]))                    # usage 1
-        >>> log_p = my_likelihood.log_likelihood(np.array([1,2,3]))     # usage 2
+        .. code-block:: pycon
+
+            >>> import numpy as np
+            >>> from cofi.utils import ReducedLikelihood
+            >>> my_likelihood = ReducedLikelihood(
+            ...     data=np.array([1.0, 2.0]),
+            ...     forward_func=lambda model: model,
+            ...     case="none",
+            ...     n_params=2,
+            ... )
+            >>> model = np.array([1.0, 2.0])
+            >>> my_likelihood(model) == my_likelihood.log_likelihood(model)
+            True
 
         Parameters
         ----------

@@ -133,7 +133,9 @@ def test_basic_shapes_multi_dataset(multi_dataset):
 # ---------------------------
 # Cases handling tests
 # ---------------------------
-@pytest.mark.parametrize("case", ["none", "scaled", "spherical", "diag", "full"])
+@pytest.mark.parametrize(
+    "case", ["none", "scaled", "spherical", "diag", "diag_legacy", "full"]
+)
 def test_single_case_string(single_dataset, case):
     """Test that single case string is applied to all datasets."""
     fwd_funcs, d_obs_list, model = single_dataset
@@ -213,7 +215,7 @@ def test_cd_refs_list(multi_dataset):
 # ---------------------------
 # Numerical correctness tests
 # ---------------------------
-@pytest.mark.parametrize("case", ["spherical", "diag", "full"])
+@pytest.mark.parametrize("case", ["spherical", "diag", "diag_legacy", "full"])
 def test_gradient_numerical_agreement(single_dataset, case):
     """Compare analytic gradient against finite-difference."""
     fwd_funcs, d_obs_list, model = single_dataset
@@ -231,7 +233,7 @@ def test_gradient_numerical_agreement(single_dataset, case):
     atol = 1e-4 if case == "diag" else 1e-5
     assert_allclose(an_grad, num_grad, atol=atol, rtol=1e-5)
 
-@pytest.mark.parametrize("case", ["spherical", "diag", "full"])
+@pytest.mark.parametrize("case", ["spherical", "diag", "diag_legacy", "full"])
 def test_hessian_numerical_agreement(single_dataset, case):
     """Compare analytic Hessian against finite-difference."""
     fwd_funcs, d_obs_list, model = single_dataset

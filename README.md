@@ -79,6 +79,7 @@ import cofi
 
 inv_problem = cofi.BaseProblem()
 inv_problem.set_objective(my_objective_func)
+inv_problem.set_gradient(my_gradient_func)
 inv_problem.set_initial_model(my_starting_point)
 ```
 
@@ -94,7 +95,7 @@ Run an inversion with these lines:
 ```python
 inv_options = cofi.InversionOptions()
 inv_options.set_tool("torch.optim")
-inv_options.set_params(options={"num_iterations": 50, "algorithm": "Adam"})
+inv_options.set_params(num_iterations=50, algorithm="Adam")
 
 inv = cofi.Inversion(inv_problem, inv_options)
 result = inv.run()
