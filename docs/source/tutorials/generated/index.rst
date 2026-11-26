@@ -56,6 +56,23 @@ Below is an ordered list of tutorials.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Curve fitting with CoFI: from polynomials to change-point models">
+
+.. only:: html
+
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_sea_level_change_thumb.png
+    :alt:
+
+  :doc:`/tutorials/generated/sea_level_change`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Curve fitting with CoFI: from polynomials to change-point models</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Linear &amp; non-linear travel time tomography">
 
 .. only:: html
@@ -107,6 +124,23 @@ Below is an ordered list of tutorials.
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Extending CoFI with a new inference tool">
+
+.. only:: html
+
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_extending_cofi_new_solver_thumb.png
+    :alt:
+
+  :doc:`/tutorials/generated/extending_cofi_new_solver`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Extending CoFI with a new inference tool</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="1D Rayleigh wave phase velocity inversion">
 
 .. only:: html
@@ -122,6 +156,57 @@ Below is an ordered list of tutorials.
     </div>
 
 
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Ambient noise tomography with CoFI: from optimisation to Bayesian sampling">
+
+.. only:: html
+
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_surface_wave_tomography_thumb.png
+    :alt:
+
+  :doc:`/tutorials/generated/surface_wave_tomography`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Ambient noise tomography with CoFI: from optimisation to Bayesian sampling</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Gaussian variational inference for surface wave tomography">
+
+.. only:: html
+
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_surface_wave_tomography_variational_inference_extension_thumb.png
+    :alt:
+
+  :doc:`/tutorials/generated/surface_wave_tomography_variational_inference_extension`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Gaussian variational inference for surface wave tomography</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Variational Inference for Nonlinear Inverse Problems">
+
+.. only:: html
+
+  .. image:: /tutorials/generated/images/thumb/sphx_glr_variational_inference_thumb.png
+    :alt:
+
+  :doc:`/tutorials/generated/variational_inference`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Variational Inference for Nonlinear Inverse Problems</div>
+    </div>
+
+
 .. thumbnail-parent-div-close
 
 .. raw:: html
@@ -133,10 +218,15 @@ Below is an ordered list of tutorials.
    :hidden:
 
    /tutorials/generated/thin_plate_inversion
+   /tutorials/generated/sea_level_change
    /tutorials/generated/travel_time_tomography
    /tutorials/generated/electrical_resistivity_tomography
    /tutorials/generated/linear_regression
+   /tutorials/generated/extending_cofi_new_solver
    /tutorials/generated/1D_rayleigh_wave_phase_velocity_inversion
+   /tutorials/generated/surface_wave_tomography
+   /tutorials/generated/surface_wave_tomography_variational_inference_extension
+   /tutorials/generated/variational_inference
 
 
 
