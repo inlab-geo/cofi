@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**19:07.416** total execution time for 5 files **from tutorials/generated**:
+**03:44.624** total execution time for 10 files **from tutorials/generated**:
 
 .. container::
 
@@ -32,16 +32,31 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_tutorials_generated_thin_plate_inversion.py` (``thin_plate_inversion.py``)
-     - 11:50.796
+   * - :ref:`sphx_glr_tutorials_generated_surface_wave_tomography_variational_inference_extension.py` (``surface_wave_tomography_variational_inference_extension.py``)
+     - 03:33.017
      - 0.0
-   * - :ref:`sphx_glr_tutorials_generated_linear_regression.py` (``linear_regression.py``)
-     - 05:09.609
+   * - :ref:`sphx_glr_tutorials_generated_variational_inference.py` (``variational_inference.py``)
+     - 00:11.606
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_1D_rayleigh_wave_phase_velocity_inversion.py` (``1D_rayleigh_wave_phase_velocity_inversion.py``)
-     - 02:07.011
+     - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_electrical_resistivity_tomography.py` (``electrical_resistivity_tomography.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_extending_cofi_new_solver.py` (``extending_cofi_new_solver.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_linear_regression.py` (``linear_regression.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_sea_level_change.py` (``sea_level_change.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_surface_wave_tomography.py` (``surface_wave_tomography.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_tutorials_generated_thin_plate_inversion.py` (``thin_plate_inversion.py``)
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_tutorials_generated_travel_time_tomography.py` (``travel_time_tomography.py``)
