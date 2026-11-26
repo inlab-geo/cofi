@@ -5,7 +5,9 @@ Installation
 Install CoFI
 ------------
 
-**Note**: When installing CoFI we recommend using Python version 3.12 for stability
+**Note**: CoFI requires Python 3.10 or newer and is tested with Python 3.10--3.13.
+We recommend Python 3.12 when running cofi-examples because support for the
+newest Python releases can lag across the wider scientific Python ecosystem.
 
 **Step 1**: (*Optional*) Set up a virtual environment.
 
@@ -158,6 +160,9 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
     CoFI is available on `PyPI <https://pypi.org/project/cofi/>`_, so for most users
     installation is as simple as:
 
+    Step 1 installs the core CoFI package. Steps 2--4 are optional and are only
+    needed to run cofi-examples.
+
     1. Install CoFI from PyPI
 
     .. code-block:: console 
@@ -216,7 +221,7 @@ facilitate this, including `venv`, `virtualenv`, `conda` and `mamba`.
 
        .. code-block:: console
 
-          http://27ddc0449990:8888/lab?token=fa9af2f42563a048c58316c690e416a01956238ba580e963
+          http://<container-host>:8888/lab?token=<access-token>
 
        Copy the token after ``token=`` and paste it into the
        ``Password or token`` field in JupyterLab.
